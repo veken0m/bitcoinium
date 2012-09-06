@@ -1,0 +1,98 @@
+# view res/layout/abs__screen_action_bar.xml #generated:43
+# view res/layout/abs__screen_action_bar_overlay.xml #generated:26
+# view res/layout/abs__screen_simple.xml #generated:32
+# view res/layout/abs__screen_simple_overlay_action_mode.xml #generated:27
+# view xlarge\res/layout-xlarge/abs__screen_action_bar.xml #generated:43
+# view xlarge\res/layout-xlarge/abs__screen_action_bar_overlay.xml #generated:24
+-keep class com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout { <init>(...); }
+
+# view large\res/layout-large/abs__action_mode_close_item.xml #generated:17
+# view res/layout/abs__action_mode_close_item.xml #generated:17
+-keep class com.actionbarsherlock.internal.nineoldandroids.widget.NineLinearLayout { <init>(...); }
+
+# view res/layout/abs__action_menu_item_layout.xml #generated:17
+-keep class com.actionbarsherlock.internal.view.menu.ActionMenuItemView { <init>(...); }
+
+# view res/layout/abs__action_menu_layout.xml #generated:17
+-keep class com.actionbarsherlock.internal.view.menu.ActionMenuView { <init>(...); }
+
+# view res/layout/abs__list_menu_item_layout.xml #generated:17
+# view res/layout/abs__popup_menu_item_layout.xml #generated:17
+-keep class com.actionbarsherlock.internal.view.menu.ListMenuItemView { <init>(...); }
+
+# view res/layout/abs__screen_action_bar.xml #generated:26
+# view res/layout/abs__screen_action_bar.xml #generated:50
+# view res/layout/abs__screen_action_bar_overlay.xml #generated:29
+# view res/layout/abs__screen_action_bar_overlay.xml #generated:52
+# view xlarge\res/layout-xlarge/abs__screen_action_bar.xml #generated:26
+# view xlarge\res/layout-xlarge/abs__screen_action_bar_overlay.xml #generated:27
+-keep class com.actionbarsherlock.internal.widget.ActionBarContainer { <init>(...); }
+
+# view res/layout/abs__action_mode_bar.xml #generated:19
+# view res/layout/abs__screen_action_bar.xml #generated:36
+# view res/layout/abs__screen_action_bar_overlay.xml #generated:40
+# view xlarge\res/layout-xlarge/abs__screen_action_bar.xml #generated:36
+# view xlarge\res/layout-xlarge/abs__screen_action_bar_overlay.xml #generated:37
+-keep class com.actionbarsherlock.internal.widget.ActionBarContextView { <init>(...); }
+
+# view res/layout/abs__screen_action_bar.xml #generated:31
+# view res/layout/abs__screen_action_bar_overlay.xml #generated:35
+# view xlarge\res/layout-xlarge/abs__screen_action_bar.xml #generated:31
+# view xlarge\res/layout-xlarge/abs__screen_action_bar_overlay.xml #generated:32
+-keep class com.actionbarsherlock.internal.widget.ActionBarView { <init>(...); }
+
+# view res/layout/abs__action_bar_home.xml #generated:17
+-keep class com.actionbarsherlock.internal.widget.ActionBarView$HomeView { <init>(...); }
+
+# view res/layout/abs__action_menu_item_layout.xml #generated:40
+-keep class com.actionbarsherlock.internal.widget.CapitalizingButton { <init>(...); }
+
+# view res/layout/abs__dialog_title_holo.xml #generated:23
+-keep class com.actionbarsherlock.internal.widget.FakeDialogPhoneWindow { <init>(...); }
+
+# view res/layout/abs__action_bar_tab_bar_view.xml #generated:3
+# view res/layout/abs__activity_chooser_view.xml #generated:19
+-keep class com.actionbarsherlock.internal.widget.IcsLinearLayout { <init>(...); }
+
+# view res/layout/abs__action_bar_tab.xml #generated:3
+-keep class com.actionbarsherlock.internal.widget.ScrollingTabContainerView$TabView { <init>(...); }
+
+# view AndroidManifest.xml #generated:94
+-keep class com.google.ads.AdActivity { <init>(...); }
+
+# view res/layout/main.xml #generated:18
+-keep class com.google.ads.AdView { <init>(...); }
+
+# view AndroidManifest.xml #generated:67
+-keep class com.veken0m.cavirtex.Graph { <init>(...); }
+
+# view AndroidManifest.xml #generated:52
+-keep class com.veken0m.cavirtex.MainActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:72
+-keep class com.veken0m.cavirtex.MinerStats { <init>(...); }
+
+# view res/layout/main.xml #generated:9
+-keep class com.veken0m.cavirtex.MtGoxFragment { <init>(...); }
+
+# view AndroidManifest.xml #generated:62
+-keep class com.veken0m.cavirtex.OrderBook { <init>(...); }
+
+# view AndroidManifest.xml #generated:77
+-keep class com.veken0m.cavirtex.Preferences { <init>(...); }
+
+# view AndroidManifest.xml #generated:20
+-keep class com.veken0m.cavirtex.WatcherWidgetProvider { <init>(...); }
+
+# view AndroidManifest.xml #generated:34
+-keep class com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService { <init>(...); }
+
+# view AndroidManifest.xml #generated:36
+-keep class com.veken0m.cavirtex.WatcherWidgetProvider2 { <init>(...); }
+
+# view AndroidManifest.xml #generated:50
+-keep class com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2 { <init>(...); }
+
+# view AndroidManifest.xml #generated:81
+-keep class com.veken0m.cavirtex.WebViewer { <init>(...); }
+
