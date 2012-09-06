@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="fill_parent" 
+                android:layout_width="wrap_content"
+                android:padding="5dp" 
+                android:id="@+id/changeColorHere"
+                android:background="#90000000">
+         
+         <TextView android:text="MtGox" 
+              android:id="@+id/widgetExchange2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              android:layout_centerHorizontal="true"
+              android:textColor="#FDD017"
+              ></TextView>
+         
+         <TextView android:text="Low" 
+              android:id="@+id/widgetLowText2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              android:layout_alignParentLeft="true"
+              ></TextView>
+              
+        <TextView android:text="High" 
+              android:id="@+id/widgetHighText2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              android:layout_alignParentRight="true"
+              ></TextView>
+        
+        <TextView android:text="Last" 
+              android:id="@+id/widgetLastText2" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:layout_below="@id/widgetLowText2"
+              android:textSize="18sp"
+              android:layout_centerHorizontal="true"
+              android:textColor="#FDD017"/>  
+        
+        	<TextView android:text="Vol" 
+        	  android:id="@+id/widgetVolText2" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:layout_below="@id/widgetLastText2"
+              android:textSize="12sp"
+              android:layout_centerHorizontal="true"
+              ></TextView>
+        	      
+        	  <TextView android:id="@+id/label2" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:layout_below="@id/widgetVolText2"
+              android:textSize="10sp"
+              android:layout_centerHorizontal="true"
+              android:text="Time" /> 
+              
+        	  <Button android:id="@+id/widgetButton2" 
+        	  android:background="#00000000"
+              android:layout_width="fill_parent" 
+              android:layout_height="fill_parent"
+              android:layout_centerHorizontal="true"/> 
+
+ 
+    <!--  <TextView android:id="@+id/infoSource" 
+              android:layout_width="fill_parent" 
+              android:layout_height="wrap_content" 
+              android:layout_below="@id/label"
+              android:layout_toRightOf="@id/bitcoinButton"
+              android:text="Click coin to refresh from Mt. Gox" />-->
+
+</RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/fragment_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+     <fragment
+        android:id="@+id/menuFragment"
+        android:layout_weight="1" 
+        android:name="com.veken0m.cavirtex.MtGoxFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" > 
+        
+    </fragment>
+    
+    <com.google.ads.AdView android:id="@+id/adView"
+
+                         android:layout_width="320dip" 
+                     	 android:layout_height="50dip"
+                         ads:adUnitId="a14fe62988ba245"
+                         ads:adSize="BANNER"
+        				 ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID"
+                         ads:loadAdOnCreate="true"/>
+</LinearLayout>
+
+
