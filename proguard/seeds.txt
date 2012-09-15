@@ -1338,6 +1338,7 @@ com.actionbarsherlock.R$id: int changeColorHere
 com.actionbarsherlock.R$id: int difficultyTable
 com.actionbarsherlock.R$id: int disableHome
 com.actionbarsherlock.R$id: int displaygraph
+com.actionbarsherlock.R$id: int fragment_lay
 com.actionbarsherlock.R$id: int fragment_layout
 com.actionbarsherlock.R$id: int homeAsUp
 com.actionbarsherlock.R$id: int label
@@ -1345,7 +1346,6 @@ com.actionbarsherlock.R$id: int label2
 com.actionbarsherlock.R$id: int listMode
 com.actionbarsherlock.R$id: int mainLayout
 com.actionbarsherlock.R$id: int marketdepth
-com.actionbarsherlock.R$id: int menuFragment
 com.actionbarsherlock.R$id: int minerStatlist
 com.actionbarsherlock.R$id: int minerStatslayout
 com.actionbarsherlock.R$id: int minerstats
@@ -5185,8 +5185,6 @@ com.veken0m.cavirtex.MainActivity
 com.veken0m.cavirtex.MainActivity: MainActivity()
 com.veken0m.cavirtex.MinerStats
 com.veken0m.cavirtex.MinerStats: MinerStats()
-com.veken0m.cavirtex.MtGoxFragment
-com.veken0m.cavirtex.MtGoxFragment: MtGoxFragment()
 com.veken0m.cavirtex.OrderBook
 com.veken0m.cavirtex.OrderBook: OrderBook()
 com.veken0m.cavirtex.Preferences

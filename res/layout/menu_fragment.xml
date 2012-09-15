@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/mainLayout"
+    android:layout_weight="1"
     android:orientation="vertical" >
 
     <!--
@@ -26,8 +26,7 @@
         android:id="@+id/widgetrefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.38"
-        
+        android:layout_weight="1"
         android:text="Refresh Widget" />
     
     
@@ -36,33 +35,30 @@
         android:id="@+id/orderbook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.38"
+        android:layout_weight="1"
         android:text="OrderBook" />
     
     <Button
         android:id="@+id/minerstats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.36"
+        android:layout_weight="1"
         android:text="Miner Stats" />
     
     <Button
         android:id="@+id/displaygraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.40"
+        android:layout_weight="1"
         android:text="Display Price Graph" />
     
     <Button
         android:id="@+id/marketdepth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.38"
+        android:layout_weight="1"
         android:text="External Orderbook and Graphs" />
-    
-
-
-     
+   
 
 </LinearLayout>
 

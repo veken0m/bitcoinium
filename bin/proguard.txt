@@ -72,9 +72,6 @@
 # view AndroidManifest.xml #generated:72
 -keep class com.veken0m.cavirtex.MinerStats { <init>(...); }
 
-# view res/layout/main.xml #generated:9
--keep class com.veken0m.cavirtex.MtGoxFragment { <init>(...); }
-
 # view AndroidManifest.xml #generated:62
 -keep class com.veken0m.cavirtex.OrderBook { <init>(...); }
 

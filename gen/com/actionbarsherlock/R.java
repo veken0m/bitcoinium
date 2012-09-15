@@ -831,6 +831,7 @@ containing a value of this type.
         public static final int difficultyTable=0x7f050033;
         public static final int disableHome=0x7f050009;
         public static final int displaygraph=0x7f05002e;
+        public static final int fragment_lay=0x7f050028;
         public static final int fragment_layout=0x7f050027;
         public static final int homeAsUp=0x7f050006;
         public static final int label=0x7f05003c;
@@ -838,7 +839,6 @@ containing a value of this type.
         public static final int listMode=0x7f050002;
         public static final int mainLayout=0x7f05002a;
         public static final int marketdepth=0x7f05002f;
-        public static final int menuFragment=0x7f050028;
         public static final int minerStatlist=0x7f050032;
         public static final int minerStatslayout=0x7f050030;
         public static final int minerstats=0x7f05002d;
