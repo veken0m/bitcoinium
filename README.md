@@ -6,11 +6,13 @@ Bitcoinium is an Android application used to monitor Bitcoin price on various ex
 Features
 ===============
 - Compact widget that displays the following information:
-  • Price of last trade
-  • Lowest price last 24 hours
-  • Highest price last 24 hours
-  • Volume of last 24 hours
-  • Time of last data refresh (Green for successful, Red for unsuccessful)
+ 
+      - Price of last trade
+      - Lowest price last 24 hours
+      - Highest price last 24 hours
+      - Volume of last 24 hours
+      - Time of last data refresh (Green for successful, Red for unsuccessful)
+      -
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
 - Customizable widget refresh intervals and power saving mode to reduce battery usage
@@ -25,8 +27,11 @@ To build Bitcoinium, prefered environment is Eclipse with ADT (Android Developme
 What you will need to build Bitcoinium:
 
 Elipse: http://www.eclipse.org/downloads/
+
 Android SDK: http://developer.android.com/sdk/index.html
+
 Android Development Tools (ADT) plugin: http://developer.android.com/sdk/installing/installing-adt.html
+
 Sherlock ActionBar: http://actionbarsherlock.com/
 
 
