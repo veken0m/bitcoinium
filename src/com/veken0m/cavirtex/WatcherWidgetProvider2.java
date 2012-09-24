@@ -22,7 +22,25 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.*;
 
+import com.veken0m.cavirtex.BaseWidgetProvider;
+import com.veken0m.cavirtex.MainActivity;
+import com.veken0m.cavirtex.Preferences;
+import com.veken0m.cavirtex.R;
+import com.xeiam.xchange.Currencies;
+import com.xeiam.xchange.Exchange;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.dto.marketdata.Ticker;
+import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
+import com.veken0m.cavirtex.WatcherWidgetProvider;
+import com.veken0m.cavirtex.WebViewer;
+import com.veken0m.cavirtex.R.drawable;
+import com.veken0m.cavirtex.R.id;
+import com.veken0m.cavirtex.R.layout;
+
 public class WatcherWidgetProvider2 extends BaseWidgetProvider {
+
+	private static PollingMarketDataService marketDataService;
 
 	@Override
 	public void onReceive(Context ctxt, Intent intent) {
@@ -132,100 +150,63 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 			RemoteViews views = new RemoteViews(context.getPackageName(),
 					R.layout.watcher_appwidget2);
 
-			// widgetButtonAction(context);
-
 			Intent intent = new Intent(this, MainActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 					intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton2, pendingIntent);
 
-			// HttpClient client = new DefaultHttpClient();
-			// client = WebClientDevWrapper.wrapClient(client);
-			// HttpGet post = new
-			// HttpGet("https://mtgox.com/api/0/data/ticker.php");
-			// HttpGet post = new
-			// HttpGet("http://anyorigin.com/get/?url=https://mtgox.com/api/0/data/ticker.php");
-			// HttpGet post = new
-			// HttpGet("http://bitcoincharts.com/t/markets.json");
-
-			HttpClient client = new DefaultHttpClient();
-			HttpGet post = new HttpGet();
-
 			try {
-				HttpResponse response = null;
-				try {
-					post = new HttpGet("https://mtgox.com/api/0/data/ticker.php");
-					response = client.execute(post);
 
-				} catch (Exception e) {
-					post = new HttpGet(
-							"http://anyorigin.com/get/?url=https://mtgox.com/api/0/data/ticker.php");
-					response = client.execute(post);
-				}
+				// Use the factory to get the version 1 MtGox exchange API using
+				// default settings
+				Exchange mtGox = ExchangeFactory.INSTANCE
+						.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
 
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(
-								response.getEntity().getContent(), "UTF-8"));
-				String text = reader.readLine();
-				JSONTokener tokener = new JSONTokener(text);
+				// Interested in the public polling market data feed (no
+				// authentication)
+				marketDataService = mtGox.getPollingMarketDataService();
 
-				// String text = new String(new InputStreamReader(new
-				// URL("https://mtgox.com/code/data/ticker.php").openStream());
-
-				// Map jsonArray = JSON.parse(new InputStreamReader(new
-				// URL("https://mtgox.com/code/data/ticker.php").openStream()));
-
-				JSONObject jObject = new JSONObject(tokener);
-				JSONObject jTicker = new JSONObject();
-
-				try {
-					JSONObject jcontents = jObject.getJSONObject("contents");
-					jTicker = jcontents.getJSONObject("ticker");
-				} catch (Exception e) {
-					jTicker = jObject.getJSONObject("ticker");
-				}
-				
+				// Get the latest ticker data showing BTC to USD
+				Ticker ticker = marketDataService.getTicker(Currencies.BTC,
+						Currencies.USD);
 
 				NumberFormat numberFormat = DecimalFormat.getInstance();
 				numberFormat.setMaximumFractionDigits(2);
 				numberFormat.setMinimumFractionDigits(2);
+				numberFormat.setGroupingUsed(false);
 
-				String lastPrice = numberFormat.format(Float.valueOf(jTicker
-						.getString("last")));
+				float lastValue = ticker.getLast().getAmount().floatValue();
 
-				// highText.setText("High: " + jTicker.getString("high"));
-				// lowText.setText("Low: " + jTicker.getString("low"));
+				String lastPrice = "$" + numberFormat.format(lastValue)
+						+ " USD";
+				String highPrice = "$"
+						+ numberFormat.format(ticker.getBid().getAmount()// Need
+																			// 24hr
+																			// High
+																			// value
+																			// from
+																			// ticker
+								.floatValue());
+				String lowPrice = "$"
+						+ numberFormat.format(ticker.getAsk().getAmount() // Need
+																			// 24hr
+																			// High
+																			// value
+																			// from
+																			// ticker
+								.floatValue());
+				String volume = numberFormat
+						.format(ticker.getVolume() / 100000000.0);// Volume long
+																	// instead
+																	// of
+																	// float...
 
-				views.setTextViewText(R.id.widgetVolText2,
-						"Volume: " + jTicker.getString("vol"));
+				views.setTextViewText(R.id.widgetLowText2, highPrice);
+				views.setTextViewText(R.id.widgetHighText2, lowPrice);
+				views.setTextViewText(R.id.widgetLastText2, lastPrice);
+				views.setTextViewText(R.id.widgetVolText2, "Volume: " + volume);
 
-				// views.setTextViewText(R.id.widgetBuyText,"Bid: $" +
-				// numberFormat.format(new Float(jTicker.getString("buy"))));
-				// views.setTextViewText(R.id.widgetSellText,"Ask: $" +
-				// numberFormat.format(new Float(jTicker.getString("sell"))));
-				// views.setTextViewText(R.id.widgetBuyText,"Bid: $" + "N/A");
-				// views.setTextViewText(R.id.widgetSellText,"Ask: $" + "N/A");
-				views.setTextViewText(
-						R.id.widgetLowText2,
-						"$"
-								+ numberFormat.format(Float.valueOf(jTicker
-										.getString("low"))));
-				views.setTextViewText(
-						R.id.widgetHighText2,
-						"$"
-								+ numberFormat.format(Float.valueOf(jTicker
-										.getString("high"))));
-				String s = "$" + lastPrice + " USD";
-				views.setTextViewText(R.id.widgetLastText2, s);
-				// views.setTextViewText(R.id.widgetLastText,s + " CAD");
-				// views.setTextColor(R.id.widgetVolText,Color.CYAN);
-				// views.setTextColor(R.id.widgetLowText,Color.CYAN);
-				// views.setTextColor(R.id.widgetHighText,Color.CYAN);
-
-				// Date date = new Date();
-				// DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT,
-				// Locale.US);
-				// String currentTime = df.format(date);
+				// Date for widget "Refreshed" label
 				SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 				String currentTime = sdf.format(new Date());
 				views.setTextViewText(R.id.label2, "Refreshed @ " + currentTime);
@@ -237,40 +218,36 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 				if (pref_mtgoxTicker) {
 					createPermanentNotification(getApplicationContext(),
-							R.drawable.bitcoin, "Bitcoin at $" + lastPrice
-									+ " USD", "Bitcoin value: $" + lastPrice
-									+ " USD on MtGox", NOTIFY_ID_MTGOX);
+							R.drawable.bitcoin, "Bitcoin at " + lastPrice,
+							"Bitcoin value: " + lastPrice + " on MtGox",
+							NOTIFY_ID_MTGOX);
 				}
 
 				try {
 					if (pref_PriceAlarm) {
 						if (!pref_mtgoxLower.equalsIgnoreCase("")) {
 
-							if (Float.valueOf(jTicker.getString("last")) <= Float
-									.valueOf(pref_mtgoxLower)) {
+							if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
 								createNotification(getApplicationContext(),
 										R.drawable.bitcoin,
 										"Bitcoin alarm value has been reached! \n"
-												+ "Bitcoin valued at $"
-												+ lastPrice + " USD on MtGox",
-												"BTC @ $" + lastPrice + " USD",
-										"Bitcoin value: $" + lastPrice
-												+ " USD on MtGox",
+												+ "Bitcoin valued at "
+												+ lastPrice + " on MtGox",
+										"BTC @ " + lastPrice, "Bitcoin value: "
+												+ lastPrice + " on MtGox",
 										NOTIFY_ID_MTGOX);
 							}
 						}
 
 						if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
-							if (Float.valueOf(jTicker.getString("last")) >= Float
-									.valueOf(pref_mtgoxUpper)) {
+							if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
 								createNotification(getApplicationContext(),
 										R.drawable.bitcoin,
 										"Bitcoin alarm value has been reached! \n"
-												+ "Bitcoin valued at $"
-												+ lastPrice + " USD on MtGox",
-												"BTC @ $" + lastPrice + " USD",
-										"Bitcoin value: $" + lastPrice
-												+ " USD on MtGox",
+												+ "Bitcoin valued at "
+												+ lastPrice + " on MtGox",
+										"BTC @ " + lastPrice, "Bitcoin value: "
+												+ lastPrice + " on MtGox",
 										NOTIFY_ID_MTGOX);
 							}
 
@@ -284,11 +261,6 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				// tv.setText(getStackTrace(e));
-				// views.setTextViewText(R.id.widgetBuyText,"Error retrieving data from Mt. Gox.");
-
-				// views.setTextViewText(R.id.label,"Make sure you have cell or internet reception. Last attempted at "
-				// + currentTime);
 				if (pref_DisplayUpdates == true) {
 					createTicker(context, R.drawable.bitcoin,
 							"MtGox Update failed!");
@@ -296,9 +268,6 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 				views.setTextColor(R.id.label2, Color.RED);
 
 			}
-
-			// Tell the AppWidgetManager to perform an update on the current App
-			// Widget
 			return views;
 		}
 
@@ -323,29 +292,16 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 			}
 
 			else if (pref_widgetBehaviour.equalsIgnoreCase("openGraph")) {
-				// Intent intent = new Intent(getBaseContext(),
-				// MainActivity.class);
-				// intent.setAction(GRAPH);
-
-				// PendingIntent pendingIntent =
-				// PendingIntent.getActivity(context, 0, intent, 0);
-				// views.setOnClickPendingIntent(R.id.widgetButton,
-				// pendingIntent);
 
 				Intent intent = new Intent(this, MainActivity.class);
 				intent.setAction(GRAPH);
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						context, 0, intent, 0);
 				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-				// startActivity(intent);
-
 			}
 
 			else if (pref_widgetBehaviour.equalsIgnoreCase("pref")) {
-				// context.startService(new Intent(context,
-				// UpdateService.class)); //find a way to set to button
-				// context.startSe(new Intent(context, UpdateService.class));
-				// context.startService(service).set
+
 				Intent intent = new Intent(this, Preferences.class);
 				PendingIntent pendingIntent = PendingIntent.getActivity(
 						context, 0, intent, 0);
