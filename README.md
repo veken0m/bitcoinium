@@ -34,6 +34,8 @@ Android Development Tools (ADT) plugin: http://developer.android.com/sdk/install
 
 Sherlock ActionBar: http://actionbarsherlock.com/
 
+Modified GraphView library: https://github.com/veken0m/GraphView
+
 
 Google Play
 ===============
