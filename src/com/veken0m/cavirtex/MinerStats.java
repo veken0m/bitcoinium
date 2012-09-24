@@ -1,4 +1,12 @@
 package com.veken0m.cavirtex;
+import com.xeiam.xchange.Currencies;  
+import com.xeiam.xchange.Exchange;  
+import com.xeiam.xchange.ExchangeFactory;  
+import com.xeiam.xchange.dto.marketdata.Ticker;  
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
+import com.xeiam.xchange.service.marketdata.streaming.StreamingMarketDataService;
+import com.xeiam.xchange.mtgox.v1.MtGoxExchange;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -50,9 +58,10 @@ public class MinerStats extends SherlockActivity {
 	public String Stales = "";
 	public String Worker1 = "";
 	Boolean connectionFail = false;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
-
+		
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 
