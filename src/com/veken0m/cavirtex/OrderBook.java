@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -33,9 +35,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import com.xeiam.xchange.Currencies;
+import com.xeiam.xchange.Exchange;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.dto.trade.LimitOrder;
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
 public class OrderBook extends SherlockActivity {
 
@@ -56,18 +64,19 @@ public class OrderBook extends SherlockActivity {
 	public static final String sUSD = "USD";
 	public static String exchangeName = "";
 	public static String currency = "";
-	
+	public List listAsks;
+	public List listBids;
 	/**
 	 * List of preference variables
 	 */
 	static int pref_highlightHigh;
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
-	
-	
+
 	public static String mtGoxOrderbook = "https://mtgox.com/api/0/data/getDepth.php?Currency=USD";
 	public static String mtGoxOrderbookAlternative = "http://anyorigin.com/get/?url=https://mtgox.com/api/0/data/getDepth.php?Currency=USD";
 	public static String virtExOrderbook = "https://www.cavirtex.com/api/CAD/orderbook.json";
+	private static PollingMarketDataService marketDataService;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,7 +98,7 @@ public class OrderBook extends SherlockActivity {
 			exchangeName = sVirtex;
 			currency = sCAD;
 		}
-		
+
 		readPreferences(getApplicationContext());
 		viewOrderbook();
 	}
@@ -127,7 +136,7 @@ public class OrderBook extends SherlockActivity {
 		readPreferences(getApplicationContext());
 		drawOrderbookUI();
 	}
-	
+
 	protected static void readPreferences(Context context) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
@@ -136,8 +145,7 @@ public class OrderBook extends SherlockActivity {
 		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
 					String key) {
-			
-				
+
 				pref_enableHighlight = pPrefs.getBoolean("highlightPref", true);
 				pref_highlightHigh = Integer.parseInt(pPrefs.getString(
 						"highlightUpper", "50"));
@@ -149,10 +157,10 @@ public class OrderBook extends SherlockActivity {
 		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
 		pref_enableHighlight = prefs.getBoolean("highlightPref", true);
-		pref_highlightHigh = Integer.parseInt(prefs.getString(
-				"highlightUpper", "50"));
-		pref_highlightLow = Integer.parseInt(prefs.getString(
-				"highlightLower", "10"));
+		pref_highlightHigh = Integer.parseInt(prefs.getString("highlightUpper",
+				"50"));
+		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
+				"10"));
 	}
 
 	public void drawOrderbookUI() {
@@ -161,14 +169,18 @@ public class OrderBook extends SherlockActivity {
 		// if(limiter != 0){
 		// length = limiter;
 		// }
-		
 
 		TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-
+		LimitOrder limitorderBid;
+		LimitOrder limitorderAsk;
+		String bidPrice = "";
+		String bidAmount = "";
+		String askPrice = "";
+		String askAmount = "";
 
 		for (int i = 0; i < length; i++) {
 
-			int reverse = length - 1 - i; // use this to read array from last
+			int reverse = lengthBidArray - 1 - i; // use this to read array from last
 											// value
 											// to first value
 			TableRow tr1 = new TableRow(this);
@@ -178,31 +190,64 @@ public class OrderBook extends SherlockActivity {
 			TextView tvBidAmount = new TextView(this);
 
 			tr1.setId(100 + i);
+			
+			
 
-			tvBidAmount.setText("" + bidData[reverse][0] + "          "
-					+ bidData[reverse][1]);
+			NumberFormat numberFormat = DecimalFormat.getInstance();
+			numberFormat.setMaximumFractionDigits(5);
+			numberFormat.setMinimumFractionDigits(5);
+			NumberFormat numberFormat2 = DecimalFormat.getInstance();
+			numberFormat2.setMaximumFractionDigits(2);
+			numberFormat2.setMinimumFractionDigits(2);
+			numberFormat.setGroupingUsed(false);
+			numberFormat2.setGroupingUsed(false);
 
-			tvAskAmount.setText("" + askData[i][0] + "          "
-					+ askData[i][1]);
+			if (exchange.equalsIgnoreCase(MTGOX)) {
+			limitorderBid = (LimitOrder) listBids.get(reverse);
+			limitorderAsk = (LimitOrder) listAsks.get(i);
+			
+			limitorderBid.getLimitPrice().getAmount().floatValue();
+			limitorderAsk.getLimitPrice().getAmount().floatValue();
+
+			bidPrice = numberFormat.format(limitorderBid.getLimitPrice()
+					.getAmount().floatValue());
+			bidAmount = numberFormat2.format(limitorderBid
+					.getTradableAmount().floatValue());
+			askPrice = numberFormat.format(limitorderAsk.getLimitPrice()
+					.getAmount().floatValue());
+			askAmount = numberFormat2.format(limitorderBid
+					.getTradableAmount().floatValue());
+			} 
+			
+			if (exchange.equalsIgnoreCase(VIRTEX)) {
+				bidPrice = bidData[reverse][0];
+				bidAmount = bidData[reverse][1];
+				askPrice = askData[i][0];
+				askAmount = askData[i][1];
+			}
+
+			tvBidAmount.setText("" + bidPrice + "          " + bidAmount);
+
+			tvAskAmount.setText("" + askPrice + "          " + askAmount);
 
 			if (pref_enableHighlight) {
-				if ((int) Double.parseDouble(bidData[reverse][1]) < pref_highlightLow) {
+				if ((int) Double.parseDouble(bidAmount) < pref_highlightLow) {
 					tvBidAmount.setTextColor(Color.RED);
 				}
-				if ((int) Double.parseDouble(bidData[reverse][1]) >= pref_highlightLow) {
+				if ((int) Double.parseDouble(bidAmount) >= pref_highlightLow) {
 					tvBidAmount.setTextColor(Color.YELLOW);
 				}
-				if ((int) Double.parseDouble(bidData[reverse][1]) >= pref_highlightHigh) {
+				if ((int) Double.parseDouble(bidAmount) >= pref_highlightHigh) {
 					tvBidAmount.setTextColor(Color.GREEN);
 				}
 
-				if ((int) Double.parseDouble(askData[i][1]) < pref_highlightLow) {
+				if ((int) Double.parseDouble(askAmount) < pref_highlightLow) {
 					tvAskAmount.setTextColor(Color.RED);
 				}
-				if ((int) Double.parseDouble(askData[i][1]) >= pref_highlightLow) {
+				if ((int) Double.parseDouble(askAmount) >= pref_highlightLow) {
 					tvAskAmount.setTextColor(Color.YELLOW);
 				}
-				if ((int) Double.parseDouble(askData[i][1]) >= pref_highlightHigh) {
+				if ((int) Double.parseDouble(askAmount) >= pref_highlightHigh) {
 					tvAskAmount.setTextColor(Color.GREEN);
 				}
 			}
@@ -277,55 +322,39 @@ public class OrderBook extends SherlockActivity {
 	}
 
 	public void getOrderBook() {
-
-		HttpClient client = new DefaultHttpClient();
-		HttpResponse response = null;
-
 		try {
 
 			if (exchange.equalsIgnoreCase(VIRTEX)) {
+				HttpClient client = new DefaultHttpClient();
+				HttpResponse response = null;
 				response = client.execute(new HttpGet(virtExOrderbook));
-			}
 
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-				try {
-					response = client.execute(new HttpGet(mtGoxOrderbook));
-				} catch (Exception e) {
-					response = client.execute(new HttpGet(
-							mtGoxOrderbookAlternative));
-				}
-			}
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"));
-			String text = reader.readLine();
-			JSONTokener tokener = new JSONTokener(text);
-			JSONObject jOrderbook = new JSONObject(tokener);
-			JSONArray jAskArray = new JSONArray();
-			JSONArray jBidArray = new JSONArray();
-
-			try {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(
+								response.getEntity().getContent(), "UTF-8"));
+				String text = reader.readLine();
+				JSONTokener tokener = new JSONTokener(text);
+				JSONObject jOrderbook = new JSONObject(tokener);
+				JSONArray jAskArray = new JSONArray();
+				JSONArray jBidArray = new JSONArray();
 				jAskArray = jOrderbook.getJSONArray("asks");
 				jBidArray = jOrderbook.getJSONArray("bids");
-			} catch (Exception e) {
-				JSONObject jcontents = jOrderbook.getJSONObject("contents");
-				jAskArray = jcontents.getJSONArray("asks");
-				jBidArray = jcontents.getJSONArray("bids");
-			}
-
-			lengthAskArray = jAskArray.length();
-			lengthBidArray = jBidArray.length();
-
-			Boolean sortMe = true;
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				sortMe = true;
+				lengthAskArray = jAskArray.length();
+				lengthBidArray = jBidArray.length();
+				askData = sortJSON(jAskArray, true);
+				bidData = sortJSON(jBidArray, true);
 			}
 			if (exchange.equalsIgnoreCase(MTGOX)) {
-				sortMe = false;
+				Exchange mtGox = ExchangeFactory.INSTANCE
+						.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+				marketDataService = mtGox.getPollingMarketDataService();
+				com.xeiam.xchange.dto.marketdata.OrderBook orderbook = marketDataService
+						.getOrderBook(Currencies.BTC, Currencies.USD);
+				listAsks = orderbook.getAsks();
+				listBids = orderbook.getBids();
+				lengthAskArray = listAsks.size();
+				lengthBidArray = listBids.size();
 			}
-
-			askData = sortJSON(jAskArray, sortMe);
-			bidData = sortJSON(jBidArray, sortMe);
 
 			if (lengthAskArray < lengthBidArray) {
 				length = lengthAskArray;
