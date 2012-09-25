@@ -1,6 +1,5 @@
 Description
 ===============
-
 Bitcoinium is an Android application used to monitor Bitcoin price on various exchanges. Currently supported exchanges include MtGox (www.mtgox.com) and Canadian Virtual Exchange (www.cavirtex.com)
 
 Features
