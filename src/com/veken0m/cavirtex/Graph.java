@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -17,6 +20,14 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.xeiam.xchange.Currencies;
+import com.xeiam.xchange.Exchange;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.dto.marketdata.OrderBook;
+import com.xeiam.xchange.dto.marketdata.Trade;
+import com.xeiam.xchange.dto.marketdata.Trades;
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,6 +35,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 public class Graph extends SherlockActivity {
 
@@ -39,13 +51,15 @@ public class Graph extends SherlockActivity {
 	public static final String sUSD = "USD";
 	public static String exchangeName = "";
 	public static String currency = "";
+	private static PollingMarketDataService marketDataService;
+	public List tradesList;
 
 	public String exchange = VIRTEX;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.minerstats);
-		
+
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
 
@@ -65,7 +79,7 @@ public class Graph extends SherlockActivity {
 
 		viewGraph();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
@@ -91,7 +105,6 @@ public class Graph extends SherlockActivity {
 		// }
 		return super.onOptionsItemSelected(item);
 	}
-	
 
 	public class GraphThread extends Thread {
 
@@ -128,77 +141,86 @@ public class Graph extends SherlockActivity {
 	private void generatePreviousPriceGraph() {
 
 		g_graphView = null;
+
+		if (exchange.equalsIgnoreCase(MTGOX)) {
+			Exchange mtGox = ExchangeFactory.INSTANCE
+					.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+			marketDataService = mtGox.getPollingMarketDataService();
+			Trades trades = marketDataService.getTrades(Currencies.BTC,
+					Currencies.USD);
+
+			tradesList = trades.getTrades();
+
+		}
+
 		HttpClient client = new DefaultHttpClient();
 
 		HttpGet post = new HttpGet();
-
-		if (exchange.equalsIgnoreCase(MTGOX)) {
-			post = new HttpGet("https://mtgox.com/api/1/BTCUSD/trades");
-		}
 
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
 			post = new HttpGet("https://www.cavirtex.com/api/CAD/trades.json");
 
 		}
 		try {
-			HttpResponse response = null;
 
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-				try {
-					response = client.execute(post);
-				} catch (Exception e) {
-					post = new HttpGet(
-							"http://anyorigin.com/get/?url=https://mtgox.com/api/1/BTCUSD/trades");
-					response = client.execute(post);
-				}
-
-			}
+			List<Float> priceList = new ArrayList();
+			List<Float> dateList = new ArrayList();
 
 			if (exchange.equalsIgnoreCase(VIRTEX)) {
+				HttpResponse response = null;
 				response = client.execute(post);
-			}
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(
+								response.getEntity().getContent(), "UTF-8"));
+				String text = reader.readLine();
+				JSONTokener tokener = new JSONTokener(text);
+				JSONArray jArray = new JSONArray();
+				jArray = new JSONArray(tokener);
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"));
-			String text = reader.readLine();
-			JSONTokener tokener = new JSONTokener(text);
-			JSONArray jArray = new JSONArray();
+				JSONObject jKey;
 
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-				JSONObject jJSON = new JSONObject(tokener);
-				try {
-					jArray = jJSON.getJSONArray("return");
-				} catch (Exception e) {
-					JSONObject jcontents = jJSON.getJSONObject("contents");
-					jArray = jcontents.getJSONArray("return");
+				for (int i = 0; i < jArray.length(); i++) {
+					jKey = jArray.getJSONObject(i);
+					priceList.add(i, Float.valueOf(jKey.getString("price")));
 				}
 
+				/**
+				 * Lets count the min and max values so we can set our axis
+				 */
+
+				for (int i = 0; i < jArray.length(); i++) {
+					jKey = jArray.getJSONObject(i);
+					dateList.add(i, Float.valueOf(jKey.getString("date")));
+				}
+			}
+			
+			String sOldestDate = "";
+			String sNewestDate = "";
+			String sMidDate = "";
+
+			if (exchange.equalsIgnoreCase(MTGOX)) {
+
+				for (int i = 0; i < tradesList.size(); i++) {
+					Trade trade = (Trade) tradesList.get(i);
+					priceList.add(i, trade.getPrice().getAmount().floatValue());
+					dateList.add(i, Float.valueOf(trade.getTimestamp().getMillis()));// fix it
+					
+					if(i == tradesList.size() - 1) 
+						sNewestDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+					if(i == 0) 
+						sOldestDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+					if(i == tradesList.size()/2 - 1) 
+						sMidDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+				}
 			}
 
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				jArray = new JSONArray(tokener);
-			}
+			float[] values = new float[priceList.size()];
+			float[] dates = new float[dateList.size()];
 
-			JSONObject jKey;
+			for (int i = 0; i < priceList.size(); i++) {
+				values[i] = priceList.get(i);
+				dates[i] = dateList.get(i);
 
-			if (jArray.length() <= 0)
-				return;
-
-			float[] values = new float[jArray.length()];
-			float[] dates = new float[jArray.length()];
-
-			for (int i = 0; i < jArray.length(); i++) {
-				jKey = jArray.getJSONObject(i);
-				values[i] = Float.valueOf(jKey.getString("price"));
-			}
-
-			/**
-			 * Lets count the min and max values so we can set our axis
-			 */
-
-			for (int i = 0; i < jArray.length(); i++) {
-				jKey = jArray.getJSONObject(i);
-				dates[i] = Float.valueOf(jKey.getString("date"));
 			}
 
 			float largest = Integer.MIN_VALUE;
@@ -213,18 +235,12 @@ public class Graph extends SherlockActivity {
 
 			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 
-			String sOldestDate = formatter.format(oldestDate * 1000);
-			String sNewestDate = formatter.format(newestDate * 1000);
-			String sMidDate = formatter.format(midDate * 1000);
-
-			// String sOldestDate =
-			// DateFormat.getDateInstance(DateFormat.MEDIUM,
-			// Locale.US).format(oldestDate*1000);
-			// String sNewestDate =
-			// DateFormat.getDateInstance(DateFormat.MEDIUM,
-			// Locale.US).format(newestDate*1000);
-			// String sMidDate = DateFormat.getDateInstance(DateFormat.MEDIUM,
-			// Locale.US).format(midDate*1000);
+			if (exchange.equalsIgnoreCase(VIRTEX)) {
+				sOldestDate = formatter.format(oldestDate * 1000);
+				sNewestDate = formatter.format(newestDate * 1000);
+				sMidDate = formatter.format(midDate * 1000);
+				
+			}
 
 			for (int i = 0; i < values.length; i++)
 				if (values[i] < smallest)
