@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OrderBook"
+            android:name=".Orderbook"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Orderbook" >
         </activity>

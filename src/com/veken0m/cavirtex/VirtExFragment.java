@@ -91,7 +91,7 @@ public class VirtExFragment extends SherlockFragment {
 			public void onClick(View v) {
 				// setMyView(R.id.orderbook);
 				Intent orderbookActivity = new Intent(getActivity()
-						.getBaseContext(), OrderBook.class);
+						.getBaseContext(), Orderbook.class);
 				orderbookActivity.putExtra("exchange", VIRTEX);
 				startActivity(orderbookActivity);
 			}
