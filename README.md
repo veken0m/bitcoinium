@@ -11,7 +11,7 @@ Features
       - Highest price last 24 hours
       - Volume of last 24 hours
       - Time of last data refresh (Green for successful, Red for unsuccessful)
-      -
+
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
 - Customizable widget refresh intervals and power saving mode to reduce battery usage
