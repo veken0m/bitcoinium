@@ -1,17 +1,9 @@
 package com.veken0m.cavirtex;
-import com.xeiam.xchange.Currencies;  
-import com.xeiam.xchange.Exchange;  
-import com.xeiam.xchange.ExchangeFactory;  
-import com.xeiam.xchange.dto.marketdata.Ticker;  
-import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
-import com.xeiam.xchange.service.marketdata.streaming.StreamingMarketDataService;
-import com.xeiam.xchange.mtgox.v1.MtGoxExchange;
-
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -19,11 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,6 +29,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MinerStats extends SherlockActivity {
 

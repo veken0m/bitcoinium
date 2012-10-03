@@ -1,12 +1,13 @@
 package com.veken0m.cavirtex;
 
+import java.text.NumberFormat;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.view.View;
-import java.text.NumberFormat;
 
 /**
  * GraphView creates a scaled line or bar graph with x and y axis labels.

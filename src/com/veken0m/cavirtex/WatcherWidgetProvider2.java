@@ -2,6 +2,9 @@ package com.veken0m.cavirtex;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -11,32 +14,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.widget.RemoteViews;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.*;
 
-import com.veken0m.cavirtex.BaseWidgetProvider;
-import com.veken0m.cavirtex.MainActivity;
-import com.veken0m.cavirtex.Preferences;
-import com.veken0m.cavirtex.R;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
 import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
-import com.veken0m.cavirtex.WatcherWidgetProvider;
-import com.veken0m.cavirtex.WebViewer;
-import com.veken0m.cavirtex.R.drawable;
-import com.veken0m.cavirtex.R.id;
-import com.veken0m.cavirtex.R.layout;
 
 public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 

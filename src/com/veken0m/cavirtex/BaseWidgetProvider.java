@@ -2,9 +2,6 @@ package com.veken0m.cavirtex;
 
 import java.util.Calendar;
 
-import com.veken0m.cavirtex.WatcherWidgetProvider.UpdateService;
-import com.veken0m.cavirtex.WatcherWidgetProvider2.UpdateService2;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -14,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.veken0m.cavirtex.WatcherWidgetProvider.UpdateService;
+import com.veken0m.cavirtex.WatcherWidgetProvider2.UpdateService2;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 

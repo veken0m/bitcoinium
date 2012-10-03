@@ -5,7 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
-import android.webkit.*;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 public class WebViewer extends Activity {
 	WebView mWebView;
