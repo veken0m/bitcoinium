@@ -1,7 +1,5 @@
 package com.veken0m.cavirtex;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -127,28 +125,25 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			Ticker ticker = marketDataService.getTicker(Currencies.BTC,
 					Currencies.CAD);
 
-				NumberFormat numberFormat = DecimalFormat.getInstance();
-				numberFormat.setMaximumFractionDigits(2);
-				numberFormat.setMinimumFractionDigits(2);
-
-				String lastPrice = "" + numberFormat.format(ticker.getLast().getAmount().floatValue());
+				String lastPrice = "" + Utils.formatTwoDecimals(ticker.getLast().getAmount().floatValue());
 				
 				views.setTextViewText(R.id.widgetVolText,
-						"Volume: " + numberFormat.format(ticker.getVolume().doubleValue()));
+						"Volume: " + Utils.formatTwoDecimals(ticker.getVolume().floatValue()));
 				
 				
 				views.setTextViewText(
 						R.id.widgetLowText,
 						"$"
-								+ numberFormat.format(ticker.getLow().getAmount().floatValue()));
+								+ Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue()));
 
 				views.setTextViewText(
 						R.id.widgetHighText,
 						"$"
-								+ numberFormat.format(ticker.getHigh().getAmount().floatValue()));
+								+ Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue()));
 
-				String s = "$" + lastPrice + " CAD";
+				String s = Utils.formatMoney(lastPrice, Currencies.CAD);
 				views.setTextViewText(R.id.widgetLastText, s);
+				
 				SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 				String currentTime = sdf.format(new Date());
 				views.setTextViewText(R.id.label, "Refreshed @ " + currentTime);

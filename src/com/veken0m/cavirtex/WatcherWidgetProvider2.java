@@ -134,17 +134,13 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
         // Get the latest ticker data showing BTC to USD
         Ticker ticker = marketDataService.getTicker(Currencies.BTC, Currencies.USD);
 
-        NumberFormat numberFormat = DecimalFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(2);
-        numberFormat.setMinimumFractionDigits(2);
-        numberFormat.setGroupingUsed(false);
-
         float lastValue = ticker.getLast().getAmount().floatValue();
 
-        String lastPrice = "$" + numberFormat.format(lastValue) + " USD";
-        String highPrice = "$" + numberFormat.format(ticker.getHigh().getAmount().floatValue());
-        String lowPrice = "$" + numberFormat.format(ticker.getLow().getAmount().floatValue());
-        String volume = numberFormat.format(ticker.getVolume());
+        String lastPrice = Utils.formatMoney(Utils.formatTwoDecimals(lastValue), Currencies.USD);
+        String highPrice = "$" + Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue());
+        String lowPrice = "$" + Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue());
+        String volume = Utils.formatTwoDecimals(ticker.getVolume().floatValue());
+        
         views.setTextViewText(R.id.widgetLowText2, lowPrice);
         views.setTextViewText(R.id.widgetHighText2, highPrice);
         views.setTextViewText(R.id.widgetLastText2, lastPrice);

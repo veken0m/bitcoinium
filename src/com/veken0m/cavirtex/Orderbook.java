@@ -24,6 +24,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
@@ -59,9 +60,6 @@ public class Orderbook extends SherlockActivity {
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
 
-	public static String mtGoxOrderbook = "https://mtgox.com/api/0/data/getDepth.php?Currency=USD";
-	public static String mtGoxOrderbookAlternative = "http://anyorigin.com/get/?url=https://mtgox.com/api/0/data/getDepth.php?Currency=USD";
-	public static String virtExOrderbook = "https://www.cavirtex.com/api/CAD/orderbook.json";
 	private static PollingMarketDataService marketDataService;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -160,43 +158,30 @@ public class Orderbook extends SherlockActivity {
 
 		for (int i = 0; i < length; i++) {
 
-			int reverse = lengthBidArray - 1 - i; // use this to read array from last
-											// value
-											// to first value
+			int reverse = lengthBidArray - 1 - i; //Read Bid array backwards
 			TableRow tr1 = new TableRow(this);
 			TextView tvAskAmount = new TextView(this);
 			TextView tvAskPrice = new TextView(this);
 			TextView tvBidPrice = new TextView(this);
 			TextView tvBidAmount = new TextView(this);
-
 			tr1.setId(100 + i);
-			
-			
-
-			NumberFormat numberFormat = DecimalFormat.getInstance();
-			numberFormat.setMaximumFractionDigits(5);
-			numberFormat.setMinimumFractionDigits(5);
-			NumberFormat numberFormat2 = DecimalFormat.getInstance();
-			numberFormat2.setMaximumFractionDigits(2);
-			numberFormat2.setMinimumFractionDigits(2);
-			numberFormat.setGroupingUsed(false);
-			numberFormat2.setGroupingUsed(false);
 
 			limitorderBid = (LimitOrder) listBids.get(reverse);
 			limitorderAsk = (LimitOrder) listAsks.get(i);
 			
-				
-			
 			limitorderBid.getLimitPrice().getAmount().floatValue();
 			limitorderAsk.getLimitPrice().getAmount().floatValue();
 
-			bidPrice = numberFormat.format(limitorderBid.getLimitPrice()
+			bidPrice = Utils.formatFiveDecimals(limitorderBid.getLimitPrice()
 					.getAmount().floatValue());
-			bidAmount = numberFormat2.format(limitorderBid
+			
+			bidAmount = Utils.formatTwoDecimals(limitorderBid
 					.getTradableAmount().floatValue());
-			askPrice = numberFormat.format(limitorderAsk.getLimitPrice()
+			
+			askPrice = Utils.formatFiveDecimals(limitorderAsk.getLimitPrice()
 					.getAmount().floatValue());
-			askAmount = numberFormat2.format(limitorderAsk
+			
+			askAmount = Utils.formatTwoDecimals(limitorderAsk
 					.getTradableAmount().floatValue());
 
 

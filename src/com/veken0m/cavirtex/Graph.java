@@ -35,8 +35,6 @@ public class Graph extends SherlockActivity {
 
 	public static final String sVirtex = "VirtEx";
 	public static final String sMtgox = "MtGox";
-	public static final String sCAD = "CAD";
-	public static final String sUSD = "USD";
 	public static String exchangeName = "";
 	public static String currency = "";
 	private static PollingMarketDataService marketDataService;
@@ -58,11 +56,11 @@ public class Graph extends SherlockActivity {
 
 		if (exchange.equalsIgnoreCase(MTGOX)) {
 			exchangeName = sMtgox;
-			currency = sUSD;
+			currency = Currencies.USD;
 		}
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
 			exchangeName = sVirtex;
-			currency = sCAD;
+			currency = Currencies.CAD;
 		}
 
 		viewGraph();
@@ -85,12 +83,6 @@ public class Graph extends SherlockActivity {
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, Preferences.class));
 		}
-		// if (item.getItemId() == R.id.scores) {
-		// startActivity(new Intent(this, ScoresActivity.class));
-		// }
-		// if (item.getItemId() == R.id.handicap) {
-		// startActivity(new Intent(this, HandicapActivity.class));
-		// }
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -99,8 +91,7 @@ public class Graph extends SherlockActivity {
 		@Override
 		public void run() {
 			generatePreviousPriceGraph();
-			mOrderHandler.post(mGraphView); // after retrieveOrders is done, do
-											// this
+			mOrderHandler.post(mGraphView);
 		}
 
 	}
@@ -152,25 +143,26 @@ public class Graph extends SherlockActivity {
 				tradesList = trades.getTrades();
 			}
 
-			List<Float> priceList = new ArrayList();
-			List<Float> dateList = new ArrayList();
+			List<Float> priceList = new ArrayList<Float>();
+			List<Float> dateList = new ArrayList<Float>();
 			
 			String sOldestDate = "";
 			String sNewestDate = "";
 			String sMidDate = "";
 			
-			//TODO: Date is incorrect, needs to be fixed
+			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
+			
 				for (int i = 0; i < tradesList.size(); i++) {
 					Trade trade = (Trade) tradesList.get(i);
 					priceList.add(i, trade.getPrice().getAmount().floatValue());
-					dateList.add(i, Float.valueOf(trade.getTimestamp().getMillis()));// fix it
+					dateList.add(i, Float.valueOf(trade.getTimestamp().getMillis()));
 					
 					if(i == tradesList.size() - 1) 
-						sNewestDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+						sNewestDate = formatter.format(trade.getTimestamp().getMillis());
 					if(i == 0) 
-						sOldestDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+						sOldestDate = formatter.format(trade.getTimestamp().getMillis());
 					if(i == tradesList.size()/2 - 1) 
-						sMidDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
+						sMidDate = formatter.format(trade.getTimestamp().getMillis());
 				}
 
 			float[] values = new float[priceList.size()];
@@ -184,15 +176,11 @@ public class Graph extends SherlockActivity {
 
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
-			float oldestDate = dates[0];
-			float newestDate = dates[dates.length - 1];
-			float midDate = dates[dates.length / 2 - 1];
 
 			for (int i = 0; i < values.length; i++)
 				if (values[i] > largest)
 					largest = values[i];
 
-			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 
 			for (int i = 0; i < values.length; i++)
 				if (values[i] < smallest)
