@@ -1,19 +1,9 @@
 package com.veken0m.cavirtex;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -151,53 +141,26 @@ public class Graph extends SherlockActivity {
 
 		}
 
-		HttpClient client = new DefaultHttpClient();
-
-		HttpGet post = new HttpGet();
-
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
-			post = new HttpGet("https://www.cavirtex.com/api/CAD/trades.json");
+			Exchange virtex = ExchangeFactory.INSTANCE
+					.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
+			marketDataService = virtex.getPollingMarketDataService();
+			Trades trades = marketDataService.getTrades(Currencies.BTC,
+					Currencies.CAD);
+
+			tradesList = trades.getTrades();
 
 		}
 		try {
 
 			List<Float> priceList = new ArrayList();
 			List<Float> dateList = new ArrayList();
-
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				HttpResponse response = null;
-				response = client.execute(post);
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(
-								response.getEntity().getContent(), "UTF-8"));
-				String text = reader.readLine();
-				JSONTokener tokener = new JSONTokener(text);
-				JSONArray jArray = new JSONArray();
-				jArray = new JSONArray(tokener);
-
-				JSONObject jKey;
-
-				for (int i = 0; i < jArray.length(); i++) {
-					jKey = jArray.getJSONObject(i);
-					priceList.add(i, Float.valueOf(jKey.getString("price")));
-				}
-
-				/**
-				 * Lets count the min and max values so we can set our axis
-				 */
-
-				for (int i = 0; i < jArray.length(); i++) {
-					jKey = jArray.getJSONObject(i);
-					dateList.add(i, Float.valueOf(jKey.getString("date")));
-				}
-			}
 			
 			String sOldestDate = "";
 			String sNewestDate = "";
 			String sMidDate = "";
-
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-
+			
+			//TODO: Date is incorrect, needs to be fixed
 				for (int i = 0; i < tradesList.size(); i++) {
 					Trade trade = (Trade) tradesList.get(i);
 					priceList.add(i, trade.getPrice().getAmount().floatValue());
@@ -210,7 +173,6 @@ public class Graph extends SherlockActivity {
 					if(i == tradesList.size()/2 - 1) 
 						sMidDate = trade.getTimestamp().toString("MMM dd @ HH:mm");
 				}
-			}
 
 			float[] values = new float[priceList.size()];
 			float[] dates = new float[dateList.size()];
@@ -233,12 +195,14 @@ public class Graph extends SherlockActivity {
 
 			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 
+			/*
 			if (exchange.equalsIgnoreCase(VIRTEX)) {
 				sOldestDate = formatter.format(oldestDate * 1000);
 				sNewestDate = formatter.format(newestDate * 1000);
 				sMidDate = formatter.format(midDate * 1000);
 				
 			}
+			*/
 
 			for (int i = 0; i < values.length; i++)
 				if (values[i] < smallest)

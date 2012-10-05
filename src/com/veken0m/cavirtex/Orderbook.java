@@ -1,23 +1,8 @@
 package com.veken0m.cavirtex;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -121,12 +106,6 @@ public class Orderbook extends SherlockActivity {
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, Preferences.class));
 		}
-		// if (item.getItemId() == R.id.scores) {
-		// startActivity(new Intent(this, ScoresActivity.class));
-		// }
-		// if (item.getItemId() == R.id.handicap) {
-		// startActivity(new Intent(this, HandicapActivity.class));
-		// }
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -203,9 +182,10 @@ public class Orderbook extends SherlockActivity {
 			numberFormat.setGroupingUsed(false);
 			numberFormat2.setGroupingUsed(false);
 
-			if (exchange.equalsIgnoreCase(MTGOX)) {
 			limitorderBid = (LimitOrder) listBids.get(reverse);
 			limitorderAsk = (LimitOrder) listAsks.get(i);
+			
+				
 			
 			limitorderBid.getLimitPrice().getAmount().floatValue();
 			limitorderAsk.getLimitPrice().getAmount().floatValue();
@@ -218,14 +198,7 @@ public class Orderbook extends SherlockActivity {
 					.getAmount().floatValue());
 			askAmount = numberFormat2.format(limitorderAsk
 					.getTradableAmount().floatValue());
-			} 
-			
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				bidPrice = bidData[reverse][0];
-				bidAmount = bidData[reverse][1];
-				askPrice = askData[i][0];
-				askAmount = askData[i][1];
-			}
+
 
 			tvBidAmount.setText("" + bidPrice + "          " + bidAmount);
 
@@ -284,8 +257,7 @@ public class Orderbook extends SherlockActivity {
 		@Override
 		public void run() {
 			getOrderBook();
-			mOrderHandler.post(mGraphView); // after retrieveOrders is done, do
-											// this
+			mOrderHandler.post(mGraphView);
 		}
 
 	}
@@ -326,24 +298,17 @@ public class Orderbook extends SherlockActivity {
 		try {
 
 			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				HttpClient client = new DefaultHttpClient();
-				HttpResponse response = null;
-				response = client.execute(new HttpGet(virtExOrderbook));
-
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(
-								response.getEntity().getContent(), "UTF-8"));
-				String text = reader.readLine();
-				JSONTokener tokener = new JSONTokener(text);
-				JSONObject jOrderbook = new JSONObject(tokener);
-				JSONArray jAskArray = new JSONArray();
-				JSONArray jBidArray = new JSONArray();
-				jAskArray = jOrderbook.getJSONArray("asks");
-				jBidArray = jOrderbook.getJSONArray("bids");
-				lengthAskArray = jAskArray.length();
-				lengthBidArray = jBidArray.length();
-				askData = sortJSON(jAskArray, true);
-				bidData = sortJSON(jBidArray, true);
+				Exchange virtex = ExchangeFactory.INSTANCE
+						.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
+				
+				marketDataService = virtex.getPollingMarketDataService();
+				OrderBook orderbook = marketDataService
+						.getOrderBook(Currencies.BTC, Currencies.CAD);
+				
+				listAsks = orderbook.getAsks();
+				listBids = orderbook.getBids();
+				lengthAskArray = listAsks.size();
+				lengthBidArray = listBids.size();
 			}
 			if (exchange.equalsIgnoreCase(MTGOX)) {
 				Exchange mtGox = ExchangeFactory.INSTANCE
@@ -363,65 +328,10 @@ public class Orderbook extends SherlockActivity {
 				length = lengthBidArray;
 			}
 
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			connectionFail = true;
-		} catch (ClientProtocolException e) {
-			connectionFail = true;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			connectionFail = true;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+	
 
 	}
-
-	public String[][] sortJSON(JSONArray jsonArray, Boolean sort)
-			throws JSONException {
-
-		String[][] data = new String[jsonArray.length()][2];
-
-		NumberFormat numberFormat = DecimalFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(5);
-		numberFormat.setMinimumFractionDigits(5);
-		NumberFormat numberFormat2 = DecimalFormat.getInstance();
-		numberFormat2.setMaximumFractionDigits(2);
-		numberFormat2.setMinimumFractionDigits(2);
-		numberFormat.setGroupingUsed(false);
-		numberFormat2.setGroupingUsed(false);
-
-		if (jsonArray != null) {
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				data[i][0] = numberFormat.format(Float.valueOf(jsonArray
-						.getJSONArray(i).getString(0)));
-				data[i][1] = numberFormat2.format(Float.valueOf(jsonArray
-						.getJSONArray(i).getString(1)));
-
-			}
-		}
-
-		if (sort) {
-			Arrays.sort(data, new Comparator<String[]>() {
-
-				public int compare(String[] entry1, String[] entry2) {
-					if ((Double.parseDouble(entry1[0]) > Double
-							.parseDouble(entry2[0]))) {
-						return 1;
-					} else if (Double.parseDouble(entry1[0]) < Double
-							.parseDouble(entry2[0])) {
-						return -1;
-					} else
-						return 0;
-
-				}
-
-			});
-		}
-		return data;
-
-	}
-
 }

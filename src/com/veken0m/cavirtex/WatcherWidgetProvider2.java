@@ -142,23 +142,11 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
         float lastValue = ticker.getLast().getAmount().floatValue();
 
         String lastPrice = "$" + numberFormat.format(lastValue) + " USD";
-        String highPrice = "$" + numberFormat.format(ticker.getHigh().getAmount()// Need
-            // 24hr
-            // High
-            // value
-            // from
-            // ticker
-            .floatValue());
-        String lowPrice = "$" + numberFormat.format(ticker.getLow().getAmount() // Need
-            // 24hr
-            // High
-            // value
-            // from
-            // ticker
-            .floatValue());
+        String highPrice = "$" + numberFormat.format(ticker.getHigh().getAmount().floatValue());
+        String lowPrice = "$" + numberFormat.format(ticker.getLow().getAmount().floatValue());
         String volume = numberFormat.format(ticker.getVolume());
-        views.setTextViewText(R.id.widgetLowText2, highPrice);
-        views.setTextViewText(R.id.widgetHighText2, lowPrice);
+        views.setTextViewText(R.id.widgetLowText2, lowPrice);
+        views.setTextViewText(R.id.widgetHighText2, highPrice);
         views.setTextViewText(R.id.widgetLastText2, lastPrice);
         views.setTextViewText(R.id.widgetVolText2, "Volume: " + volume);
 

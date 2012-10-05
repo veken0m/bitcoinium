@@ -1,19 +1,16 @@
 package com.veken0m.cavirtex;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import com.xeiam.xchange.Currencies;
+import com.xeiam.xchange.Exchange;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.dto.marketdata.Ticker;
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -26,6 +23,9 @@ import android.widget.RemoteViews;
 
 public class WatcherWidgetProvider extends BaseWidgetProvider {
 
+	private static PollingMarketDataService marketDataService;
+
+	
 	@Override
 	public void onReceive(Context ctxt, Intent intent) {
 
@@ -109,46 +109,44 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			RemoteViews views = new RemoteViews(context.getPackageName(),
 					R.layout.watcher_appwidget);
 
-
 			Intent intent = new Intent(this, MainActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 					intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 
-			HttpClient client = new DefaultHttpClient();
-			HttpGet post = new HttpGet(
-					"https://www.cavirtex.com/api/CAD/ticker.json");
-			try {
+			Exchange virtex = ExchangeFactory.INSTANCE
+					.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
 
-				HttpResponse response = client.execute(post); // some response
-																// object
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(
-								response.getEntity().getContent(), "UTF-8"));
-				String text = reader.readLine();
-				JSONTokener tokener = new JSONTokener(text);
+			// Interested in the public polling market data feed (no
+			// authentication)
+			marketDataService = virtex.getPollingMarketDataService();
+
+			// Get the latest ticker data showing BTC to USD
+			Ticker ticker = marketDataService.getTicker(Currencies.BTC,
+					Currencies.CAD);
+			
+			
+			try {
 
 				NumberFormat numberFormat = DecimalFormat.getInstance();
 				numberFormat.setMaximumFractionDigits(2);
 				numberFormat.setMinimumFractionDigits(2);
 
-				JSONObject jTicker = new JSONObject(tokener);
-				String lastPrice = numberFormat.format(Float.valueOf(jTicker
-						.getString("last")));
-
+				String lastPrice = "" + numberFormat.format(ticker.getLast().getAmount().floatValue());
+				
 				views.setTextViewText(R.id.widgetVolText,
-						"Volume: " + jTicker.getString("volume"));
+						"Volume: " + numberFormat.format(ticker.getVolume().doubleValue()));
+				
+				
 				views.setTextViewText(
 						R.id.widgetLowText,
 						"$"
-								+ numberFormat.format(Float.valueOf(jTicker
-										.getString("low"))));
+								+ numberFormat.format(ticker.getLow().getAmount().floatValue()));
 
 				views.setTextViewText(
 						R.id.widgetHighText,
 						"$"
-								+ numberFormat.format(Float.valueOf(jTicker
-										.getString("high"))));
+								+ numberFormat.format(ticker.getHigh().getAmount().floatValue()));
 
 				String s = "$" + lastPrice + " CAD";
 				views.setTextViewText(R.id.widgetLastText, s);
