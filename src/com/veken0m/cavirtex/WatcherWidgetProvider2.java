@@ -1,7 +1,5 @@
 package com.veken0m.cavirtex;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -123,15 +121,8 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
       try {
 
-        // Use the factory to get the version 1 MtGox exchange API using
-        // default settings
         Exchange mtGox = ExchangeFactory.INSTANCE.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
-
-        // Interested in the public polling market data feed (no
-        // authentication)
         marketDataService = mtGox.getPollingMarketDataService();
-
-        // Get the latest ticker data showing BTC to USD
         Ticker ticker = marketDataService.getTicker(Currencies.BTC, Currencies.USD);
 
         float lastValue = ticker.getLast().getAmount().floatValue();

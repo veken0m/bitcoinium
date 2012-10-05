@@ -1,7 +1,5 @@
 package com.veken0m.cavirtex;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -36,8 +34,6 @@ public class Orderbook extends SherlockActivity {
 
 	private ProgressDialog orderbookProgressDialog;
 	final Handler mOrderHandler = new Handler();
-	String[][] bidData = null;
-	String[][] askData = null;
 	int lengthAskArray = 0;
 	int lengthBidArray = 0;
 	int length = 0;
@@ -47,12 +43,11 @@ public class Orderbook extends SherlockActivity {
 	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
 	public static final String sVirtex = "VirtEx";
 	public static final String sMtgox = "MtGox";
-	public static final String sCAD = "CAD";
-	public static final String sUSD = "USD";
 	public static String exchangeName = "";
 	public static String currency = "";
-	public List listAsks;
-	public List listBids;
+	public String xchangeExchange = null;
+	public List<LimitOrder> listAsks;
+	public List<LimitOrder> listBids;
 	/**
 	 * List of preference variables
 	 */
@@ -76,11 +71,13 @@ public class Orderbook extends SherlockActivity {
 
 		if (exchange.equalsIgnoreCase(MTGOX)) {
 			exchangeName = sMtgox;
-			currency = sUSD;
+			xchangeExchange =  "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
+			currency = Currencies.USD;
 		}
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
 			exchangeName = sVirtex;
-			currency = sCAD;
+			xchangeExchange =  "com.xeiam.xchange.virtex.VirtExExchange";
+			currency = Currencies.CAD;
 		}
 
 		readPreferences(getApplicationContext());
@@ -114,7 +111,7 @@ public class Orderbook extends SherlockActivity {
 		readPreferences(getApplicationContext());
 		drawOrderbookUI();
 	}
-
+	
 	protected static void readPreferences(Context context) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
@@ -140,25 +137,53 @@ public class Orderbook extends SherlockActivity {
 		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
 				"10"));
 	}
+	
+	/**
+	 * Fetch the Orderbook and split into Ask/Bids lists
+	 */
+	public void getOrderBook() {
+		try {
+				Exchange exchange = ExchangeFactory.INSTANCE
+						.createExchange(xchangeExchange);
+				marketDataService = exchange.getPollingMarketDataService();
+				OrderBook orderbook = marketDataService
+						.getOrderBook(Currencies.BTC, currency);
+				listAsks = orderbook.getAsks();
+				listBids = orderbook.getBids();
+				lengthAskArray = listAsks.size();
+				lengthBidArray = listBids.size();
+			
 
+			if (lengthAskArray < lengthBidArray) {
+				length = lengthAskArray;
+			} else {
+				length = lengthBidArray;
+			}
+
+		} catch (Exception e) {
+			connectionFail = true;
+		}
+	
+
+	}
+	
+	/**
+	 * Draw the Orders to the screen in a table
+	 */
 	public void drawOrderbookUI() {
 
-		// int limiter = 25;
-		// if(limiter != 0){
-		// length = limiter;
-		// }
+		//Limit Orderbook orders drawn to speed up performance
+		int limiter = 100;
+		 if(limiter != 0 && limiter < length){
+		 length = limiter;
+		 }
 
 		TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-		LimitOrder limitorderBid;
-		LimitOrder limitorderAsk;
-		String bidPrice = "";
-		String bidAmount = "";
-		String askPrice = "";
-		String askAmount = "";
 
 		for (int i = 0; i < length; i++) {
 
-			int reverse = lengthBidArray - 1 - i; //Read Bid array backwards
+			int reverse = lengthBidArray - 1 - i; //To read Bid array backwards
+			
 			TableRow tr1 = new TableRow(this);
 			TextView tvAskAmount = new TextView(this);
 			TextView tvAskPrice = new TextView(this);
@@ -166,47 +191,40 @@ public class Orderbook extends SherlockActivity {
 			TextView tvBidAmount = new TextView(this);
 			tr1.setId(100 + i);
 
-			limitorderBid = (LimitOrder) listBids.get(reverse);
-			limitorderAsk = (LimitOrder) listAsks.get(i);
+			LimitOrder limitorderBid = (LimitOrder) listBids.get(reverse);
+			LimitOrder limitorderAsk = (LimitOrder) listAsks.get(i);
 			
-			limitorderBid.getLimitPrice().getAmount().floatValue();
-			limitorderAsk.getLimitPrice().getAmount().floatValue();
+			float bidPrice = limitorderBid.getLimitPrice().getAmount().floatValue();
+			float bidAmount = limitorderBid.getTradableAmount().floatValue();
+			float askPrice = limitorderAsk.getLimitPrice().getAmount().floatValue();
+			float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-			bidPrice = Utils.formatFiveDecimals(limitorderBid.getLimitPrice()
-					.getAmount().floatValue());
-			
-			bidAmount = Utils.formatTwoDecimals(limitorderBid
-					.getTradableAmount().floatValue());
-			
-			askPrice = Utils.formatFiveDecimals(limitorderAsk.getLimitPrice()
-					.getAmount().floatValue());
-			
-			askAmount = Utils.formatTwoDecimals(limitorderAsk
-					.getTradableAmount().floatValue());
+			String sBidPrice = Utils.formatFiveDecimals(bidPrice);
+			String sBidAmount = Utils.formatTwoDecimals(bidAmount);
+			String sAskPrice = Utils.formatFiveDecimals(askPrice);
+			String sAskAmount = Utils.formatTwoDecimals(askAmount);
 
-
-			tvBidAmount.setText("" + bidPrice + "          " + bidAmount);
-
-			tvAskAmount.setText("" + askPrice + "          " + askAmount);
+			tvBidAmount.setText("" + sBidPrice + "          " + sBidAmount);
+			tvAskAmount.setText("" + sAskPrice + "          " + sAskAmount);
 
 			if (pref_enableHighlight) {
-				if ((int) Double.parseDouble(bidAmount) < pref_highlightLow) {
+				if ((int) bidAmount < pref_highlightLow) {
 					tvBidAmount.setTextColor(Color.RED);
 				}
-				if ((int) Double.parseDouble(bidAmount) >= pref_highlightLow) {
+				if ((int) bidAmount >= pref_highlightLow) {
 					tvBidAmount.setTextColor(Color.YELLOW);
 				}
-				if ((int) Double.parseDouble(bidAmount) >= pref_highlightHigh) {
+				if ((int) bidAmount >= pref_highlightHigh) {
 					tvBidAmount.setTextColor(Color.GREEN);
 				}
 
-				if ((int) Double.parseDouble(askAmount) < pref_highlightLow) {
+				if ((int) askAmount < pref_highlightLow) {
 					tvAskAmount.setTextColor(Color.RED);
 				}
-				if ((int) Double.parseDouble(askAmount) >= pref_highlightLow) {
+				if ((int) askAmount >= pref_highlightLow) {
 					tvAskAmount.setTextColor(Color.YELLOW);
 				}
-				if ((int) Double.parseDouble(askAmount) >= pref_highlightHigh) {
+				if ((int) askAmount >= pref_highlightHigh) {
 					tvAskAmount.setTextColor(Color.GREEN);
 				}
 			}
@@ -275,48 +293,6 @@ public class Orderbook extends SherlockActivity {
 
 			AlertDialog alert = builder.create();
 			alert.show();
-		} else {
 		}
-	}
-
-	public void getOrderBook() {
-		try {
-
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				Exchange virtex = ExchangeFactory.INSTANCE
-						.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
-				
-				marketDataService = virtex.getPollingMarketDataService();
-				OrderBook orderbook = marketDataService
-						.getOrderBook(Currencies.BTC, Currencies.CAD);
-				
-				listAsks = orderbook.getAsks();
-				listBids = orderbook.getBids();
-				lengthAskArray = listAsks.size();
-				lengthBidArray = listBids.size();
-			}
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-				Exchange mtGox = ExchangeFactory.INSTANCE
-						.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
-				marketDataService = mtGox.getPollingMarketDataService();
-				OrderBook orderbook = marketDataService
-						.getOrderBook(Currencies.BTC, Currencies.USD);
-				listAsks = orderbook.getAsks();
-				listBids = orderbook.getBids();
-				lengthAskArray = listAsks.size();
-				lengthBidArray = listBids.size();
-			}
-
-			if (lengthAskArray < lengthBidArray) {
-				length = lengthAskArray;
-			} else {
-				length = lengthBidArray;
-			}
-
-		} catch (Exception e) {
-			connectionFail = true;
-		}
-	
-
 	}
 }

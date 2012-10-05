@@ -2,7 +2,6 @@ package com.veken0m.cavirtex;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -32,19 +31,15 @@ public class Graph extends SherlockActivity {
 	final Handler mOrderHandler = new Handler();
 	public static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
 	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
-
-	public static final String sVirtex = "VirtEx";
-	public static final String sMtgox = "MtGox";
 	public static String exchangeName = "";
 	public static String currency = "";
 	private static PollingMarketDataService marketDataService;
-	public List tradesList;
-
 	public String exchange = VIRTEX;
+	public String xchangeExchange = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.minerstats);
+		setContentView(R.layout.graph);
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
@@ -55,11 +50,13 @@ public class Graph extends SherlockActivity {
 		}
 
 		if (exchange.equalsIgnoreCase(MTGOX)) {
-			exchangeName = sMtgox;
+			exchangeName = "MtGox";
+			xchangeExchange =  "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
 			currency = Currencies.USD;
 		}
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
-			exchangeName = sVirtex;
+			exchangeName = "VirtEx";
+			xchangeExchange =  "com.xeiam.xchange.virtex.VirtExExchange";
 			currency = Currencies.CAD;
 		}
 
@@ -122,69 +119,39 @@ public class Graph extends SherlockActivity {
 		g_graphView = null;
 
 		try {
-			if (exchange.equalsIgnoreCase(MTGOX)) {
-				Exchange mtGox = ExchangeFactory.INSTANCE
-						.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
-				marketDataService = mtGox.getPollingMarketDataService();
-				Trades trades = marketDataService.getTrades(Currencies.BTC,
-						Currencies.USD);
 
-				tradesList = trades.getTrades();
+			Exchange exchange = ExchangeFactory.INSTANCE
+					.createExchange(xchangeExchange);
+			marketDataService = exchange.getPollingMarketDataService();
+			Trades trades = marketDataService.getTrades(Currencies.BTC,
+					currency);
 
-			}
+			List<Trade> tradesList = trades.getTrades();
 
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				Exchange virtex = ExchangeFactory.INSTANCE
-						.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
-				marketDataService = virtex.getPollingMarketDataService();
-				Trades trades = marketDataService.getTrades(Currencies.BTC,
-						Currencies.CAD);
-
-				tradesList = trades.getTrades();
-			}
-
-			List<Float> priceList = new ArrayList<Float>();
-			List<Float> dateList = new ArrayList<Float>();
-			
-			String sOldestDate = "";
-			String sNewestDate = "";
-			String sMidDate = "";
+			float[] values = new float[tradesList.size()];
+			float[] dates = new float[tradesList.size()];
 			
 			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 			
-				for (int i = 0; i < tradesList.size(); i++) {
-					Trade trade = (Trade) tradesList.get(i);
-					priceList.add(i, trade.getPrice().getAmount().floatValue());
-					dateList.add(i, Float.valueOf(trade.getTimestamp().getMillis()));
-					
-					if(i == tradesList.size() - 1) 
-						sNewestDate = formatter.format(trade.getTimestamp().getMillis());
-					if(i == 0) 
-						sOldestDate = formatter.format(trade.getTimestamp().getMillis());
-					if(i == tradesList.size()/2 - 1) 
-						sMidDate = formatter.format(trade.getTimestamp().getMillis());
-				}
-
-			float[] values = new float[priceList.size()];
-			float[] dates = new float[dateList.size()];
-
-			for (int i = 0; i < priceList.size(); i++) {
-				values[i] = priceList.get(i);
-				dates[i] = dateList.get(i);
-
-			}
-
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
 
-			for (int i = 0; i < values.length; i++)
-				if (values[i] > largest)
+			for (int i = 0; i < tradesList.size(); i++) {
+				Trade trade = tradesList.get(i);
+				values[i] = trade.getPrice().getAmount().floatValue();
+				dates[i] = Float.valueOf(trade.getTimestamp().getMillis());
+				
+				if (values[i] > largest){
 					largest = values[i];
-
-
-			for (int i = 0; i < values.length; i++)
-				if (values[i] < smallest)
+				}
+				if (values[i] < smallest){
 					smallest = values[i];
+				}
+			}
+
+			String sOldestDate = formatter.format(dates[0]);
+			String sMidDate = formatter.format(dates[dates.length / 2 - 1]);
+			String sNewestDate = formatter.format(dates[dates.length - 1]);
 
 			// min, max, steps, pre string, post string, number of decimal
 			// places

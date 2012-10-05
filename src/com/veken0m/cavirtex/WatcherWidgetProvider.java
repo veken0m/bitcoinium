@@ -99,7 +99,7 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 		 * the actual update method where we perform an HTTP request to VirtEx,
 		 * read the JSON, and update the text.
 		 * 
-		 * This displays a notfication if successful and sets the time to green,
+		 * This displays a notification if successful and sets the time to green,
 		 * otherwise displays failure and sets text to red
 		 */
 		private RemoteViews buildUpdate(Context context) {
@@ -114,35 +114,21 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			
 			try {
 
-			Exchange virtex = ExchangeFactory.INSTANCE
-					.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
-
-			// Interested in the public polling market data feed (no
-			// authentication)
+			Exchange virtex = ExchangeFactory.INSTANCE.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
 			marketDataService = virtex.getPollingMarketDataService();
+			Ticker ticker = marketDataService.getTicker(Currencies.BTC, Currencies.CAD);
+			
+	        float lastValue = ticker.getLast().getAmount().floatValue();
 
-			// Get the latest ticker data showing BTC to USD
-			Ticker ticker = marketDataService.getTicker(Currencies.BTC,
-					Currencies.CAD);
-
-				String lastPrice = "" + Utils.formatTwoDecimals(ticker.getLast().getAmount().floatValue());
-				
-				views.setTextViewText(R.id.widgetVolText,
-						"Volume: " + Utils.formatTwoDecimals(ticker.getVolume().floatValue()));
-				
-				
-				views.setTextViewText(
-						R.id.widgetLowText,
-						"$"
-								+ Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue()));
-
-				views.setTextViewText(
-						R.id.widgetHighText,
-						"$"
-								+ Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue()));
-
-				String s = Utils.formatMoney(lastPrice, Currencies.CAD);
-				views.setTextViewText(R.id.widgetLastText, s);
+	        String lastPrice = Utils.formatMoney(Utils.formatTwoDecimals(lastValue), Currencies.CAD);
+	        String highPrice = "$" + Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue());
+	        String lowPrice = "$" + Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue());
+	        String volume = Utils.formatTwoDecimals(ticker.getVolume().floatValue());
+	        
+	        views.setTextViewText(R.id.widgetLowText, lowPrice);
+	        views.setTextViewText(R.id.widgetHighText, highPrice);
+	        views.setTextViewText(R.id.widgetLastText, lastPrice);
+	        views.setTextViewText(R.id.widgetVolText, "Volume: " + volume);
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 				String currentTime = sdf.format(new Date());
@@ -155,40 +141,37 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 
 				if (pref_virtexTicker) {
 					createPermanentNotification(getApplicationContext(),
-							R.drawable.bitcoin, "Bitcoin at $" + lastPrice
-									+ " CAD", "Bitcoin value: $" + lastPrice
-									+ " CAD on VirtEx", NOTIFY_ID_VIRTEX);
+							R.drawable.bitcoin, "Bitcoin at " + lastPrice, "Bitcoin value: " + lastPrice
+									+ " on VirtEx", NOTIFY_ID_VIRTEX);
 				}
 
 				try {
 					if (pref_PriceAlarm) {
 
 						if (!pref_virtexLower.equalsIgnoreCase("")) {
-							if (Float.valueOf(lastPrice) <= Float
-									.valueOf(pref_virtexLower)) {
+							if (lastValue <= Float.valueOf(pref_virtexLower)) {
 								createNotification(getApplicationContext(),
 										R.drawable.bitcoin,
 										"Bitcoin alarm value has been reached! \n"
-												+ "Bitcoin valued at $"
-												+ lastPrice + " CAD on VirtEx",
-												"BTC @ $" + lastPrice + " CAD",
-										"Bitcoin value: $" + lastPrice
-												+ " CAD on VirtEx",
+												+ "Bitcoin valued at "
+												+ lastPrice + " on VirtEx",
+												"BTC @ " + lastPrice,
+										"Bitcoin value: " + lastPrice
+												+ " on VirtEx",
 										NOTIFY_ID_VIRTEX);
 							}
 						}
 
 						if (!pref_virtexUpper.equalsIgnoreCase("")) {
-							if (Float.valueOf(lastPrice) >= Float
-									.valueOf(pref_virtexUpper)) {
+							if (lastValue >= Float.valueOf(pref_virtexUpper)) {
 								createNotification(getApplicationContext(),
 										R.drawable.bitcoin,
 										"Bitcoin alarm value has been reached! \n"
-												+ "Bitcoin valued at $"
-												+ lastPrice + " CAD on VirtEx",
-												"BTC @ $" + lastPrice + " CAD",
-										"Bitcoin value: $" + lastPrice
-												+ " CAD on VirtEx",
+												+ "Bitcoin valued at "
+												+ lastPrice + " on VirtEx",
+												"BTC @ " + lastPrice,
+										"Bitcoin value: " + lastPrice
+												+ " on VirtEx",
 										NOTIFY_ID_VIRTEX);
 							}
 
