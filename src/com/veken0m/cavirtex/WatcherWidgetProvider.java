@@ -113,6 +113,8 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 					intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+			
+			try {
 
 			Exchange virtex = ExchangeFactory.INSTANCE
 					.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
@@ -124,9 +126,6 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			// Get the latest ticker data showing BTC to USD
 			Ticker ticker = marketDataService.getTicker(Currencies.BTC,
 					Currencies.CAD);
-			
-			
-			try {
 
 				NumberFormat numberFormat = DecimalFormat.getInstance();
 				numberFormat.setMaximumFractionDigits(2);

@@ -124,34 +124,33 @@ public class Graph extends SherlockActivity {
 
 	/**
 	 * generatePreviousPriceGraph prepares price graph of the last 48 hrs -It
-	 * connects to Virtex, reads the JSON, and plots a GraphView of it
+	 * connects to exchange, reads the JSON, and plots a GraphView of it
 	 */
 	private void generatePreviousPriceGraph() {
 
 		g_graphView = null;
 
-		if (exchange.equalsIgnoreCase(MTGOX)) {
-			Exchange mtGox = ExchangeFactory.INSTANCE
-					.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
-			marketDataService = mtGox.getPollingMarketDataService();
-			Trades trades = marketDataService.getTrades(Currencies.BTC,
-					Currencies.USD);
-
-			tradesList = trades.getTrades();
-
-		}
-
-		if (exchange.equalsIgnoreCase(VIRTEX)) {
-			Exchange virtex = ExchangeFactory.INSTANCE
-					.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
-			marketDataService = virtex.getPollingMarketDataService();
-			Trades trades = marketDataService.getTrades(Currencies.BTC,
-					Currencies.CAD);
-
-			tradesList = trades.getTrades();
-
-		}
 		try {
+			if (exchange.equalsIgnoreCase(MTGOX)) {
+				Exchange mtGox = ExchangeFactory.INSTANCE
+						.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+				marketDataService = mtGox.getPollingMarketDataService();
+				Trades trades = marketDataService.getTrades(Currencies.BTC,
+						Currencies.USD);
+
+				tradesList = trades.getTrades();
+
+			}
+
+			if (exchange.equalsIgnoreCase(VIRTEX)) {
+				Exchange virtex = ExchangeFactory.INSTANCE
+						.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
+				marketDataService = virtex.getPollingMarketDataService();
+				Trades trades = marketDataService.getTrades(Currencies.BTC,
+						Currencies.CAD);
+
+				tradesList = trades.getTrades();
+			}
 
 			List<Float> priceList = new ArrayList();
 			List<Float> dateList = new ArrayList();
@@ -195,23 +194,9 @@ public class Graph extends SherlockActivity {
 
 			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 
-			/*
-			if (exchange.equalsIgnoreCase(VIRTEX)) {
-				sOldestDate = formatter.format(oldestDate * 1000);
-				sNewestDate = formatter.format(newestDate * 1000);
-				sMidDate = formatter.format(midDate * 1000);
-				
-			}
-			*/
-
 			for (int i = 0; i < values.length; i++)
 				if (values[i] < smallest)
 					smallest = values[i];
-
-			// Add spacing between edge of screen and graph
-			double graphPadding = 0.01;
-			smallest -= graphPadding;
-			largest += graphPadding;
 
 			// min, max, steps, pre string, post string, number of decimal
 			// places
@@ -231,7 +216,6 @@ public class Graph extends SherlockActivity {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
 		}
 
 	}
