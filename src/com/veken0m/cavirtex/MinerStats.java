@@ -40,12 +40,17 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class MinerStats extends SherlockActivity {
+	
+	static String pref_deepbitKey = "";
+	static String pref_bitminterKey = "";
+	static String pref_miningpool =  "";
 
-	public String APIToken = "";
+	public static String APIToken = "";
+	public static String miningPool = "";
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
-	public String currentDifficulty = "";
-	public String nextDifficulty = "";
+	public static String currentDifficulty = "";
+	public static String nextDifficulty = "";
 	public String jRewards = "";
 	public String jHashrate = "";
 	public String jIpa = "";
@@ -58,29 +63,12 @@ public class MinerStats extends SherlockActivity {
 	
 
 	public void onCreate(Bundle savedInstanceState) {
+
+		readPreferences(getApplicationContext());
 		
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-				String pref_deepbitKey = pPrefs.getString("deepbitKey", "null");
-
-				APIToken = pref_deepbitKey;
-
-			}
-		};
-
-		String pref_deepbitKey = prefs.getString("deepbitKey", "");
-
-		APIToken = pref_deepbitKey;
-		//APIToken = "4de7e447816197d782000000_5BA98E3B73"; //Test
-
-		if (APIToken.equalsIgnoreCase("")) {
+		if (APIToken.equalsIgnoreCase("") && miningPool.equalsIgnoreCase("")) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.minerstats);
-			
 			
 			int duration = Toast.LENGTH_LONG;
 			CharSequence text = "Please enter your Deepbit API Token to use MinerStats";
@@ -134,15 +122,18 @@ public class MinerStats extends SherlockActivity {
 
 	public void getMinerStats(Context context) {
 
-		HttpClient client = new DefaultHttpClient();
-		HttpGet post;
-			post = new HttpGet("http://deepbit.net/api/" + APIToken);
+		//HttpClient client = new DefaultHttpClient();
+		//HttpGet post;
+		//	post = new HttpGet("http://deepbit.net/api/" + APIToken);
 		try {
 			
 			String poolData[] = new String[8];
-			poolData = fetchDeepbitData(APIToken);
-			//poolData = fetchBitMinterData(APIToken);
 			
+			if(miningPool.equalsIgnoreCase("deepbit")){
+			poolData = fetchDeepbitData(APIToken);
+			} else {
+			poolData = fetchBitMinterData(pref_bitminterKey);
+			}
 			/* Old Code, Moved to fetchDeepBitData method
 			HttpResponse response = client.execute(post);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -182,19 +173,8 @@ public class MinerStats extends SherlockActivity {
 		}
 
 		try {
-			post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
-			HttpResponse response = client.execute(post);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"));
-			currentDifficulty = reader.readLine();
-			reader.close();
-
-			post = new HttpGet("http://blockexplorer.com/q/estimate");
-			response = client.execute(post);
-			reader = new BufferedReader(new InputStreamReader(response
-					.getEntity().getContent(), "UTF-8"));
-			nextDifficulty = reader.readLine();
-			reader.close();
+		
+			fetchDifficulty();
 
 		} catch (Exception e) {
 			Log.e("Orderbook error", "exception", e);
@@ -322,14 +302,10 @@ public class MinerStats extends SherlockActivity {
 			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr10.setGravity(Gravity.CENTER_HORIZONTAL);
 
-			NumberFormat numberFormat0 = DecimalFormat.getInstance();
-			numberFormat0.setMaximumFractionDigits(0);
-			numberFormat0.setMinimumFractionDigits(0);
-
 			tvCurrentDifficulty.setText("\nCurrent Difficulty: "
-					+ numberFormat0.format(Float.valueOf(currentDifficulty)));
+					+ Utils.formatNoDecimals(Float.valueOf(currentDifficulty)));
 			tvNextDifficulty.setText("Estimated Next Difficulty: "
-					+ numberFormat0.format(Float.valueOf(nextDifficulty)));
+					+ Utils.formatNoDecimals(Float.valueOf(nextDifficulty)));
 
 			if (Float.valueOf(currentDifficulty) > Float
 					.valueOf(nextDifficulty)) {
@@ -347,6 +323,57 @@ public class MinerStats extends SherlockActivity {
 			e.printStackTrace();
 
 		}
+	}
+	
+	protected static void readPreferences(Context context) {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+
+		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
+					String key) {
+				pref_deepbitKey = pPrefs.getString("deepbitKey", "null");
+				pref_bitminterKey = pPrefs.getString("bitminterKey", "null");
+				pref_miningpool =  pPrefs.getString("favpoolPref", "deepbit");
+
+				APIToken = pref_deepbitKey;
+
+			}
+		};
+
+		pref_deepbitKey = prefs.getString("deepbitKey", "");
+		pref_bitminterKey = prefs.getString("bitminterKey", "null");
+		pref_miningpool =  prefs.getString("favpoolPref", "deepbit");
+
+		APIToken = pref_deepbitKey;
+		//APIToken = "4de7e447816197d782000000_5BA98E3B73"; //Deepbit Test
+	}
+	
+	public static String[] fetchDifficulty()
+			throws ClientProtocolException, IOException, JSONException {
+
+		String[] difficultyData = new String[2];
+
+		HttpClient client = new DefaultHttpClient();
+		HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
+		HttpResponse response = client.execute(post);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				response.getEntity().getContent(), "UTF-8"));
+		//difficultyData[0] = reader.readLine();
+		currentDifficulty = reader.readLine();
+		
+		reader.close();
+
+		post = new HttpGet("http://blockexplorer.com/q/estimate");
+		response = client.execute(post);
+		reader = new BufferedReader(new InputStreamReader(response
+				.getEntity().getContent(), "UTF-8"));
+		//difficultyData[1] = reader.readLine();
+		nextDifficulty = reader.readLine();
+		
+		reader.close();
+
+		return difficultyData;
 	}
 	
 	public static String[] fetchDeepbitData(String APIToken)

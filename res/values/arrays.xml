@@ -33,6 +33,7 @@
     </string-array>
     <string-array name="miningpools">
         <item>DeepBit</item>
+        <item>BitMinter</item>
     </string-array>
     <string-array name="poolvalues">
         <item>deepbit</item>

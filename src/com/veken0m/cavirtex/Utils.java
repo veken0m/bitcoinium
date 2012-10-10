@@ -45,6 +45,18 @@ public class Utils {
 
 		return numberFormat.format(valueToFormat);
 	}
+	
+	public static String formatNoDecimals(float valueToFormat) {
+
+		NumberFormat numberFormat0 = DecimalFormat.getInstance();
+		numberFormat0.setMaximumFractionDigits(0);
+		numberFormat0.setMinimumFractionDigits(0);
+		// Remove grouping because the commas cause errors when parsing to
+		// double/float
+		numberFormat0.setGroupingUsed(false);
+
+		return numberFormat0.format(valueToFormat);
+	}
 
 	public static String formatMoney(String moneyToFormat, String currency) {
 

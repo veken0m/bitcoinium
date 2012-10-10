@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.veken0m.cavirtex.ScaleGestureDetector;
+
 
 /**
  * GraphView is a Android View for creating zoomable and scrollable graphs.

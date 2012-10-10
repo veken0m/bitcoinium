@@ -14,12 +14,15 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.cavirtex.GraphView.GraphViewData;
+import com.veken0m.cavirtex.GraphView.GraphViewSeries;
 import com.veken0m.cavirtex.LineGraphView;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.Exchange;
@@ -73,6 +76,7 @@ public class Graph extends SherlockActivity {
 			currency = Currencies.CAD;
 		}
 
+		readPreferences(getApplicationContext());
 		viewGraph();
 	}
 
@@ -113,9 +117,12 @@ public class Graph extends SherlockActivity {
 		@Override
 		public void run() {
 			safelyDismiss(graphProgressDialog);
-			if (g_graphView != null) {
-
-				setContentView(g_graphView);
+			if (g_graphView != null || graphView != null) {
+				if(!pref_graphMode){
+					setContentView(graphView);
+				} else {
+					setContentView(g_graphView);	
+				}
 			} else {
 				createPopup("Unable to retrieve transactions from "
 						+ exchangeName + ", check your 3G or WiFi connection");
@@ -124,8 +131,8 @@ public class Graph extends SherlockActivity {
 	};
 
 	/**
-	 * generatePreviousPriceGraph prepares price graph of the last 48 hrs -It
-	 * connects to exchange, reads the JSON, and plots a GraphView of it
+	 * generatePreviousPriceGraph prepares price graph of all the values available from the API 
+	 * It connects to exchange, reads the JSON, and plots a GraphView of it
 	 */
 	private void generatePreviousPriceGraph() {
 
@@ -143,8 +150,9 @@ public class Graph extends SherlockActivity {
 
 			float[] values = new float[tradesList.size()];
 			float[] dates = new float[tradesList.size()];
+			GraphViewData[] data = new GraphViewData[values.length];
 
-			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
+			final Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
 
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
@@ -173,7 +181,8 @@ public class Graph extends SherlockActivity {
 
 			String[] horlabels = new String[] { sOldestDate, "", "", sMidDate,
 					"", "", sNewestDate };
-
+			
+			if (pref_graphMode) {
 			g_graphView = new GraphViewer(this, values, currency
 					+ "/BTC since " + sOldestDate, // title
 					horlabels, // horizontal labels
@@ -181,19 +190,40 @@ public class Graph extends SherlockActivity {
 					GraphViewer.LINE, // type of graph
 					smallest, // min
 					largest); // max
-
-			// Code for improved GraphView
-			/*
-			 * 
-			 * graphView = new LineGraphView(this, exchangeName + ": " +
-			 * currency + "/BTC") {
-			 * 
-			 * @Override protected String formatLabel(double value, boolean
-			 * isValueX) { if (isValueX) { Format formatter = new
-			 * SimpleDateFormat( "MMM dd @ HH:mm"); // convert unix time to
-			 * human time return formatter.format(value * 1000); } else return
-			 * super.formatLabel(value, isValueX); } };
-			 */
+			} else {
+				
+				for (int i = 0; i < values.length; i++) {
+					data[i] = new GraphViewData(dates[i], values[i]);
+				}
+				graphView = new LineGraphView(this, exchangeName + ": "
+						+ currency + "/BTC") {
+					@Override
+					protected String formatLabel(double value, boolean isValueX) {
+						if (isValueX) {
+							return formatter.format(value);
+						} else
+							return super.formatLabel(value, isValueX);
+					}
+				};
+				
+				double windowSize;
+				if (exchangeName.equalsIgnoreCase("mtgox")) {
+					windowSize = pref_mtgoxWindowSize * 3600000;
+				} else {
+					windowSize = pref_virtexWindowSize * 3600000;
+				}
+				//startValue enables graph window to be aligned with latest trades
+				double startValue = dates[dates.length - 1] - windowSize;
+				graphView.addSeries(new GraphViewSeries(data));
+				graphView.setViewPort(startValue, windowSize);
+				graphView.setScrollable(true);
+				graphView.setScalable(true); 
+				if (!pref_scaleMode) {
+					graphView.setManualYAxisBounds(largest, smallest);
+				}
+		
+				
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
