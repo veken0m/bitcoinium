@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+     <PreferenceCategory android:title="General" >
+                    <ListPreference
+                    android:defaultValue="mtgox"
+                    android:entries="@array/exchanges"
+                    android:entryValues="@array/exchangesvalues"
+                    android:key="favExchangePref"
+                    android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
+                    android:title="Favorite Exchange" />
+                    </PreferenceCategory>
 
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen
@@ -12,14 +22,6 @@
                     android:key="checkboxPref"
                     android:summary="Display update notification in taskbar"
                     android:title="Display Updates" />
-
-                <ListPreference
-                    android:defaultValue="mtgox"
-                    android:entries="@array/exchanges"
-                    android:entryValues="@array/exchangesvalues"
-                    android:key="favExchangePref"
-                    android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
-                    android:title="Favortite Exchange" />
 
                 <!--
                      <ListPreference
@@ -122,11 +124,23 @@
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats" >
+                  <ListPreference
+                    android:defaultValue="deepbit"
+                    android:entries="@array/miningpools"
+                    android:entryValues="@array/poolvalues"
+                    android:key="favpoolPref"
+                    android:summary="Select mining pool used for MinerStats"
+                    android:title="Main Mining Pool" />
         <EditTextPreference
             android:defaultValue=""
             android:key="deepbitKey"
             android:summary="Enter your Deepbit API token to use MinerStats"
             android:title="Deepbit API token" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="bitminterKey"
+            android:summary="Enter your BitMinter API token to use MinerStats"
+            android:title="BitMinter API token" />
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen

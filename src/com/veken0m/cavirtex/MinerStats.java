@@ -229,15 +229,7 @@ public class MinerStats extends SherlockActivity {
 		@Override
 		public void run() {
 			safelyDismiss(minerProgressDialog);
-			// if(g_graphView != null) {
-
-			// setMyView(g_graphView);
-			// setContentView(R.layout.orderbook);
-			// } else {
 			drawMinerUI();
-			// setContentView(R.layout.orderbook);
-			// createPopup("Unable to retrieve transactions, check your 3G or WiFi connection");
-			// }
 		}
 	};
 
