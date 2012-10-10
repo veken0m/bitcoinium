@@ -1,45 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Display" >
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="checkboxPref"
-            android:summary="Display update notification in taskbar"
-            android:title="Display Updates" />
-        <ListPreference
-            android:defaultValue="mtgox"
-            android:entries="@array/exchanges"
-            android:entryValues="@array/exchangesvalues"
-            android:key="favExchangePref"
-            android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
-            android:title="Favortite Exchange" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Miner Stats" >
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="deepbitKey"
-            android:summary="Enter your Deepbit API token to use MinerStats"
-            android:title="Deepbit API token" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Power Saving" >
-        <Preference
-            android:key="customPref"
-            android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
+    <PreferenceCategory android:title="Widget Settings" >
+        <PreferenceScreen
+            android:key="SecondPrefScreen"
+            android:summary="Configure the Widget(s)"
+            android:title="Widget Settings" >
+            <PreferenceCategory android:title="Display" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="checkboxPref"
+                    android:summary="Display update notification in taskbar"
+                    android:title="Display Updates" />
 
-        <ListPreference
-            android:defaultValue="30"
-            android:entries="@array/interval"
-            android:entryValues="@array/intervalvalues"
-            android:key="listPref"
-            android:summary="Time interval between widget refresh \n *WARNING* \nLow values will increase battery drain \n "
-            android:title="Widget Refresh Interval" />
+                <ListPreference
+                    android:defaultValue="mtgox"
+                    android:entries="@array/exchanges"
+                    android:entryValues="@array/exchangesvalues"
+                    android:key="favExchangePref"
+                    android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
+                    android:title="Favortite Exchange" />
 
+                <!--
+                     <ListPreference
+			           android:title="Tapping Widget Behaviour"
+			           android:summary="Choose the action performed when widget is pressed \n *WARNING* \nTapping widget more than once on Widget Refresh mode will cause mutiple refresh requests. May lead to sluggish performance"
+			           android:key="listPref2"
+			           android:defaultValue="mainMenu"
+			           android:entries="@array/widgetBehaviour"
+			           android:entryValues="@array/widgetBehaviours" />
+                -->
+
+
+                <!--
+        <PreferenceCategory
+                android:title="Notification Menu Ticker">
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="wakeupPref"
-            android:summary="Will not wake up the phone from sleep to update widget"
-            android:title="Battery Saving Mode" />
+                        android:title="Enable VirtEx Notification Menu Ticker (widget needs to be active)"
+                        android:defaultValue="false"
+                        android:summary="Will enable a permanent VirtEx ticker notification in the notification menu"
+                        android:key="virtexTickerPref" />
+        
+        <CheckBoxPreference
+                        android:title="Enable MtGox Notification Menu Ticker (widget needs to be active)"
+                        android:defaultValue="false"
+                        android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
+                        android:key="mtgoxTickerPref" />
+
+        </PreferenceCategory>
+                -->
+
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Power Saving" >
+                <Preference
+                    android:key="customPref"
+                    android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
+
+                <ListPreference
+                    android:defaultValue="30"
+                    android:entries="@array/interval"
+                    android:entryValues="@array/intervalvalues"
+                    android:key="listPref"
+                    android:summary="Time interval between widget refresh \n *WARNING* \nLow values will increase battery drain \n "
+                    android:title="Widget Refresh Interval" />
+
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="wakeupPref"
+                    android:summary="Will not wake up the phone from sleep to update widget"
+                    android:title="Battery Saving Mode" />
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Alarm" >
         <PreferenceScreen
@@ -90,7 +121,13 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-    
+    <PreferenceCategory android:title="Miner Stats" >
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="deepbitKey"
+            android:summary="Enter your Deepbit API token to use MinerStats"
+            android:title="Deepbit API token" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen
             android:key="SecondPrefScreen"
@@ -123,36 +160,42 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
+    <PreferenceCategory android:title="Price Graph Settings" >
+        <PreferenceScreen
+            android:key="SecondPrefScreen"
+            android:summary="Configure the Price Graph"
+            android:title="Price Graph Settings" >
+            <PreferenceCategory android:title="Price Graph Mode" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="graphmodePref"
+                    android:summary="Price graph will be displayed using original GraphView library. Classic mode displays past 2-3 days in one viewing without scrolling"
+                    android:title="Classic Mode" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Price Graph Settings" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="graphscalePref"
+                    android:summary="When the price graph is scrolled, max and min values will be reajusted to maximize viewing"
+                    android:title="View Window Scaling" />
 
-    <!--
-                     <ListPreference
-			           android:title="Tapping Widget Behaviour"
-			           android:summary="Choose the action performed when widget is pressed \n *WARNING* \nTapping widget more than once on Widget Refresh mode will cause mutiple refresh requests. May lead to sluggish performance"
-			           android:key="listPref2"
-			           android:defaultValue="mainMenu"
-			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
-    -->
-
-
-    <!--
-        <PreferenceCategory
-                android:title="Notification Menu Ticker">
-        <CheckBoxPreference
-                        android:title="Enable VirtEx Notification Menu Ticker (widget needs to be active)"
-                        android:defaultValue="false"
-                        android:summary="Will enable a permanent VirtEx ticker notification in the notification menu"
-                        android:key="virtexTickerPref" />
-        
-        <CheckBoxPreference
-                        android:title="Enable MtGox Notification Menu Ticker (widget needs to be active)"
-                        android:defaultValue="false"
-                        android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
-                        android:key="mtgoxTickerPref" />
-
-        </PreferenceCategory>
-    -->
-
+                <EditTextPreference
+                    android:defaultValue="4"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="mtgoxWindowSize"
+                    android:summary="# of hours viewable in graph window"
+                    android:title="MtGox Window Size" />
+                <EditTextPreference
+                    android:defaultValue="36"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="virtexWindowSize"
+                    android:summary="# of hours viewable in graph window"
+                    android:title="VirtEx Window Size" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
     <PreferenceCategory android:title="About" >
         <Preference
             android:key="customPref"
@@ -172,7 +215,7 @@
             android:title="Email" />
         <Preference
             android:key="customPref"
-            android:summary="1.2.4"
+            android:summary="1.2.5"
             android:title="Version" />
         <Preference
             android:key="customPref"
@@ -189,7 +232,7 @@
                         android:summary="This is a preference in the second PreferenceScreen"
                         android:title="Edit text"
                         android:key="SecondEditTextPref" />
-        </PreferenceScreen>
+        </PreferenceScreen>
         -->
 
     </PreferenceCategory>

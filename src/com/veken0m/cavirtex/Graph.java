@@ -6,17 +6,21 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.cavirtex.LineGraphView;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
@@ -37,6 +41,15 @@ public class Graph extends SherlockActivity {
 	public String exchange = VIRTEX;
 	public String xchangeExchange = null;
 
+	/**
+	 * Variables required for LineGraphView
+	 */
+	LineGraphView graphView = null;
+	static Boolean pref_graphMode;
+	static Boolean pref_scaleMode;
+	static int pref_mtgoxWindowSize;
+	static int pref_virtexWindowSize;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph);
@@ -51,12 +64,12 @@ public class Graph extends SherlockActivity {
 
 		if (exchange.equalsIgnoreCase(MTGOX)) {
 			exchangeName = "MtGox";
-			xchangeExchange =  "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
+			xchangeExchange = "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
 			currency = Currencies.USD;
 		}
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
 			exchangeName = "VirtEx";
-			xchangeExchange =  "com.xeiam.xchange.virtex.VirtExExchange";
+			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
 			currency = Currencies.CAD;
 		}
 
@@ -130,9 +143,9 @@ public class Graph extends SherlockActivity {
 
 			float[] values = new float[tradesList.size()];
 			float[] dates = new float[tradesList.size()];
-			
+
 			Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
-			
+
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
 
@@ -140,11 +153,11 @@ public class Graph extends SherlockActivity {
 				Trade trade = tradesList.get(i);
 				values[i] = trade.getPrice().getAmount().floatValue();
 				dates[i] = Float.valueOf(trade.getTimestamp().getMillis());
-				
-				if (values[i] > largest){
+
+				if (values[i] > largest) {
 					largest = values[i];
 				}
-				if (values[i] < smallest){
+				if (values[i] < smallest) {
 					smallest = values[i];
 				}
 			}
@@ -168,6 +181,19 @@ public class Graph extends SherlockActivity {
 					GraphViewer.LINE, // type of graph
 					smallest, // min
 					largest); // max
+
+			// Code for improved GraphView
+			/*
+			 * 
+			 * graphView = new LineGraphView(this, exchangeName + ": " +
+			 * currency + "/BTC") {
+			 * 
+			 * @Override protected String formatLabel(double value, boolean
+			 * isValueX) { if (isValueX) { Format formatter = new
+			 * SimpleDateFormat( "MMM dd @ HH:mm"); // convert unix time to
+			 * human time return formatter.format(value * 1000); } else return
+			 * super.formatLabel(value, isValueX); } };
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -214,6 +240,34 @@ public class Graph extends SherlockActivity {
 				"Retrieving trades", true, true);
 		GraphThread gt = new GraphThread();
 		gt.start();
+	}
+
+	protected static void readPreferences(Context context) {
+		// Get the xml/preferences.xml preferences
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+
+		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
+					String key) {
+
+				pref_graphMode = pPrefs.getBoolean("graphmodePref", false);
+				pref_scaleMode = pPrefs.getBoolean("graphscalePref", false);
+				pref_mtgoxWindowSize = Integer.parseInt(pPrefs.getString(
+						"mtgoxWindowSize", "4"));
+				pref_virtexWindowSize = Integer.parseInt(pPrefs.getString(
+						"virtexWindowSize", "36"));
+			}
+		};
+
+		prefs.registerOnSharedPreferenceChangeListener(prefListener);
+
+		pref_graphMode = prefs.getBoolean("graphmodePref", false);
+		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
+		pref_mtgoxWindowSize = Integer.parseInt(prefs.getString(
+				"mtgoxWindowSize", "4"));
+		pref_virtexWindowSize = Integer.parseInt(prefs.getString(
+				"virtexWindowSize", "36"));
 	}
 
 }

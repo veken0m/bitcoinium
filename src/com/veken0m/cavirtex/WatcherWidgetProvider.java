@@ -113,7 +113,7 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 			
 			try {
-
+			
 			Exchange virtex = ExchangeFactory.INSTANCE.createExchange("com.xeiam.xchange.virtex.VirtExExchange");
 			marketDataService = virtex.getPollingMarketDataService();
 			Ticker ticker = marketDataService.getTicker(Currencies.BTC, Currencies.CAD);
@@ -125,10 +125,23 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 	        String lowPrice = "$" + Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue());
 	        String volume = Utils.formatTwoDecimals(ticker.getVolume().floatValue());
 	        
+	        /* Alternative Code used for testing
+				double ticker[] = new double[4];
+				ticker = Utils.fetchVirtexTickerAlt();
+				double lastValue = ticker[0];
+
+		        String lastPrice = Utils.formatMoney(Utils.formatTwoDecimals((float) lastValue), Currencies.CAD);
+		        String highPrice = "$" + Utils.formatTwoDecimals((float) ticker[2]);
+		        String lowPrice = "$" + Utils.formatTwoDecimals((float) ticker[1]);
+		        String volume = Utils.formatTwoDecimals((float) ticker[3]);
+		        */
+	        
 	        views.setTextViewText(R.id.widgetLowText, lowPrice);
 	        views.setTextViewText(R.id.widgetHighText, highPrice);
 	        views.setTextViewText(R.id.widgetLastText, lastPrice);
 	        views.setTextViewText(R.id.widgetVolText, "Volume: " + volume);
+	        
+				
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 				String currentTime = sdf.format(new Date());
