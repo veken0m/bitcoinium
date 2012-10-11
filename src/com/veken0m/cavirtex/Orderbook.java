@@ -147,7 +147,7 @@ public class Orderbook extends SherlockActivity {
 						.createExchange(xchangeExchange);
 				marketDataService = exchange.getPollingMarketDataService();
 				OrderBook orderbook = marketDataService
-						.getOrderBook(Currencies.BTC, currency);
+						.getFullOrderBook(Currencies.BTC, currency);
 				listAsks = orderbook.getAsks();
 				listBids = orderbook.getBids();
 				lengthAskArray = listAsks.size();
