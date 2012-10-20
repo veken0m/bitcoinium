@@ -1,6 +1,5 @@
 package com.veken0m.cavirtex;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
@@ -12,10 +11,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
 import com.xeiam.xchange.virtex.dto.marketdata.VirtExTicker;
@@ -51,9 +46,7 @@ public class Utils {
 		NumberFormat numberFormat0 = DecimalFormat.getInstance();
 		numberFormat0.setMaximumFractionDigits(0);
 		numberFormat0.setMinimumFractionDigits(0);
-		// Remove grouping because the commas cause errors when parsing to
-		// double/float
-		numberFormat0.setGroupingUsed(false);
+		numberFormat0.setGroupingUsed(true);
 
 		return numberFormat0.format(valueToFormat);
 	}

@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragment;
-//import com.google.ads.AdView;
-//import android.app.Fragment;
-//import android.support.v4.app.Fragment;
 
 public class MtGoxFragment extends SherlockFragment {
 
@@ -20,7 +17,7 @@ public class MtGoxFragment extends SherlockFragment {
 	public static final String GRAPH = "com.veken0m.cavirtex.GRAPH";
 	public static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
 	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
-	//private AdView adView;
+
 	/**
 	 * Menu options we display when launching
 	 */
@@ -87,7 +84,6 @@ public class MtGoxFragment extends SherlockFragment {
 		orderbookButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// setMyView(R.id.orderbook);
 				Intent orderbookActivity = new Intent(getActivity()
 						.getBaseContext(), Orderbook.class);
 				orderbookActivity.putExtra("exchange", MTGOX);
@@ -100,7 +96,6 @@ public class MtGoxFragment extends SherlockFragment {
 		minerStatsButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// setMyView(R.id.orderbook);
 				Intent minerstatsActivity = new Intent(getActivity()
 						.getBaseContext(), MinerStats.class);
 				startActivity(minerstatsActivity);
@@ -111,7 +106,6 @@ public class MtGoxFragment extends SherlockFragment {
 		marketDepth.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// displayMenu();
 				Intent intent = new Intent(getActivity().getBaseContext(),
 						WebViewer.class);
 				startActivity(intent);

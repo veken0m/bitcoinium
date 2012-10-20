@@ -185,7 +185,7 @@ abstract public class GraphView extends LinearLayout {
 	 */
 	static public class GraphViewStyle {
 		public int color = Color.GREEN;
-		public int thickness = 3;
+		public int thickness = 2;
 		public GraphViewStyle() {
 			super();
 		}

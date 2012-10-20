@@ -38,16 +38,16 @@ public class Orderbook extends SherlockActivity {
 	int lengthBidArray = 0;
 	int length = 0;
 	Boolean connectionFail = false;
-	String exchange = VIRTEX;
-	public static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
-	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
-	public static final String sVirtex = "VirtEx";
-	public static final String sMtgox = "MtGox";
-	public static String exchangeName = "";
-	public static String currency = "";
-	public String xchangeExchange = null;
-	public List<LimitOrder> listAsks;
-	public List<LimitOrder> listBids;
+	protected String exchange = VIRTEX;
+	protected static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
+	protected static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
+	protected static final String sVirtex = "VirtEx";
+	protected static final String sMtgox = "MtGox";
+	protected static String exchangeName = "";
+	protected static String currency = "";
+	protected String xchangeExchange = null;
+	protected List<LimitOrder> listAsks;
+	protected List<LimitOrder> listBids;
 	/**
 	 * List of preference variables
 	 */

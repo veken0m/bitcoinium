@@ -1,9 +1,7 @@
 android.support.v4.app.ActivityCompat -> android.support.v4.app.ActivityCompat:
     boolean invalidateOptionsMenu(android.app.Activity) -> invalidateOptionsMenu
-    boolean startActivities(android.app.Activity,android.content.Intent[]) -> startActivities
 android.support.v4.app.ActivityCompatHoneycomb -> android.support.v4.app.ActivityCompatHoneycomb:
     void invalidateOptionsMenu(android.app.Activity) -> invalidateOptionsMenu
-    void startActivities(android.app.Activity,android.content.Intent[]) -> startActivities
     void dump(android.app.Activity,java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> dump
 android.support.v4.app.BackStackRecord -> android.support.v4.app.BackStackRecord:
     java.lang.String TAG -> TAG
@@ -119,12 +117,14 @@ android.support.v4.app.DialogFragment -> android.support.v4.app.DialogFragment:
     boolean mShowsDialog -> mShowsDialog
     int mBackStackId -> mBackStackId
     android.app.Dialog mDialog -> mDialog
-    boolean mDestroyed -> mDestroyed
-    boolean mRemoved -> mRemoved
+    boolean mViewDestroyed -> mViewDestroyed
+    boolean mDismissed -> mDismissed
+    boolean mShownByMe -> mShownByMe
     void setStyle(int,int) -> setStyle
     void show(android.support.v4.app.FragmentManager,java.lang.String) -> show
     int show(android.support.v4.app.FragmentTransaction,java.lang.String) -> show
     void dismiss() -> dismiss
+    void dismissAllowingStateLoss() -> dismissAllowingStateLoss
     void dismissInternal(boolean) -> dismissInternal
     android.app.Dialog getDialog() -> getDialog
     int getTheme() -> getTheme
@@ -132,6 +132,8 @@ android.support.v4.app.DialogFragment -> android.support.v4.app.DialogFragment:
     boolean isCancelable() -> isCancelable
     void setShowsDialog(boolean) -> setShowsDialog
     boolean getShowsDialog() -> getShowsDialog
+    void onAttach(android.app.Activity) -> onAttach
+    void onDetach() -> onDetach
     void onCreate(android.os.Bundle) -> onCreate
     android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> getLayoutInflater
     android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
@@ -290,7 +292,7 @@ android.support.v4.app.FragmentActivity -> android.support.v4.app.FragmentActivi
     boolean mOptionsMenuInvalidated -> mOptionsMenuInvalidated
     boolean mCheckedForLoaderManager -> mCheckedForLoaderManager
     boolean mLoadersStarted -> mLoadersStarted
-    android.support.v4.app.HCSparseArray mAllLoaderManagers -> mAllLoaderManagers
+    android.support.v4.util.SparseArrayCompat mAllLoaderManagers -> mAllLoaderManagers
     android.support.v4.app.LoaderManagerImpl mLoaderManager -> mLoaderManager
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     void onBackPressed() -> onBackPressed
@@ -306,6 +308,7 @@ android.support.v4.app.FragmentActivity -> android.support.v4.app.FragmentActivi
     void onPause() -> onPause
     void onResume() -> onResume
     void onPostResume() -> onPostResume
+    void onResumeFragments() -> onResumeFragments
     boolean onPreparePanel(int,android.view.View,android.view.Menu) -> onPreparePanel
     java.lang.Object onRetainNonConfigurationInstance() -> onRetainNonConfigurationInstance
     void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
@@ -337,7 +340,7 @@ android.support.v4.app.FragmentActivity$NonConfigurationInstances -> android.sup
     java.lang.Object custom -> custom
     java.util.HashMap children -> children
     java.util.ArrayList fragments -> fragments
-    android.support.v4.app.HCSparseArray loaders -> loaders
+    android.support.v4.util.SparseArrayCompat loaders -> loaders
 android.support.v4.app.FragmentManager -> android.support.v4.app.FragmentManager:
     int POP_BACK_STACK_INCLUSIVE -> POP_BACK_STACK_INCLUSIVE
     android.support.v4.app.FragmentTransaction beginTransaction() -> beginTransaction
@@ -430,7 +433,7 @@ android.support.v4.app.FragmentManagerImpl -> android.support.v4.app.FragmentMan
     android.view.animation.Animation makeFadeAnimation(android.content.Context,float,float) -> makeFadeAnimation
     android.view.animation.Animation loadAnimation(android.support.v4.app.Fragment,int,boolean,int) -> loadAnimation
     void performPendingDeferredStart(android.support.v4.app.Fragment) -> performPendingDeferredStart
-    void moveToState(android.support.v4.app.Fragment,int,int,int) -> moveToState
+    void moveToState(android.support.v4.app.Fragment,int,int,int,boolean) -> moveToState
     void moveToState(android.support.v4.app.Fragment) -> moveToState
     void moveToState(int,boolean) -> moveToState
     void moveToState(int,int,int,boolean) -> moveToState
@@ -528,7 +531,8 @@ android.support.v4.app.FragmentPagerAdapter -> android.support.v4.app.FragmentPa
     boolean isViewFromObject(android.view.View,java.lang.Object) -> isViewFromObject
     android.os.Parcelable saveState() -> saveState
     void restoreState(android.os.Parcelable,java.lang.ClassLoader) -> restoreState
-    java.lang.String makeFragmentName(int,int) -> makeFragmentName
+    long getItemId(int) -> getItemId
+    java.lang.String makeFragmentName(int,long) -> makeFragmentName
 android.support.v4.app.FragmentState -> android.support.v4.app.FragmentState:
     java.lang.String mClassName -> mClassName
     int mIndex -> mIndex
@@ -599,30 +603,6 @@ android.support.v4.app.FragmentTransaction -> android.support.v4.app.FragmentTra
     android.support.v4.app.FragmentTransaction setBreadCrumbShortTitle(java.lang.CharSequence) -> setBreadCrumbShortTitle
     int commit() -> commit
     int commitAllowingStateLoss() -> commitAllowingStateLoss
-android.support.v4.app.HCSparseArray -> android.support.v4.app.HCSparseArray:
-    java.lang.Object DELETED -> DELETED
-    boolean mGarbage -> mGarbage
-    int[] mKeys -> mKeys
-    java.lang.Object[] mValues -> mValues
-    int mSize -> mSize
-    java.lang.Object get(int) -> get
-    java.lang.Object get(int,java.lang.Object) -> get
-    void delete(int) -> delete
-    void remove(int) -> remove
-    void removeAt(int) -> removeAt
-    void gc() -> gc
-    void put(int,java.lang.Object) -> put
-    int size() -> size
-    int keyAt(int) -> keyAt
-    java.lang.Object valueAt(int) -> valueAt
-    void setValueAt(int,java.lang.Object) -> setValueAt
-    int indexOfKey(int) -> indexOfKey
-    int indexOfValue(java.lang.Object) -> indexOfValue
-    void clear() -> clear
-    void append(int,java.lang.Object) -> append
-    int binarySearch(int[],int,int,int) -> binarySearch
-    int idealByteArraySize(int) -> idealByteArraySize
-    int idealIntArraySize(int) -> idealIntArraySize
 android.support.v4.app.ListFragment -> android.support.v4.app.ListFragment:
     int INTERNAL_EMPTY_ID -> INTERNAL_EMPTY_ID
     int INTERNAL_PROGRESS_CONTAINER_ID -> INTERNAL_PROGRESS_CONTAINER_ID
@@ -674,8 +654,8 @@ android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.L
 android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.LoaderManagerImpl:
     java.lang.String TAG -> TAG
     boolean DEBUG -> DEBUG
-    android.support.v4.app.HCSparseArray mLoaders -> mLoaders
-    android.support.v4.app.HCSparseArray mInactiveLoaders -> mInactiveLoaders
+    android.support.v4.util.SparseArrayCompat mLoaders -> mLoaders
+    android.support.v4.util.SparseArrayCompat mInactiveLoaders -> mInactiveLoaders
     android.support.v4.app.FragmentActivity mActivity -> mActivity
     boolean mStarted -> mStarted
     boolean mRetaining -> mRetaining
@@ -728,6 +708,7 @@ android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.Lo
 android.support.v4.app.NavUtils -> android.support.v4.app.NavUtils:
     java.lang.String TAG -> TAG
     java.lang.String PARENT_ACTIVITY -> PARENT_ACTIVITY
+    android.support.v4.app.NavUtils$NavUtilsImpl IMPL -> IMPL
     boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> shouldUpRecreateTask
     void navigateUpFromSameTask(android.app.Activity) -> navigateUpFromSameTask
     void navigateUpTo(android.app.Activity,android.content.Intent) -> navigateUpTo
@@ -736,14 +717,53 @@ android.support.v4.app.NavUtils -> android.support.v4.app.NavUtils:
     android.content.Intent getParentActivityIntent(android.content.Context,android.content.ComponentName) -> getParentActivityIntent
     java.lang.String getParentActivityName(android.app.Activity) -> getParentActivityName
     java.lang.String getParentActivityName(android.content.Context,android.content.ComponentName) -> getParentActivityName
+android.support.v4.app.NavUtils$NavUtilsImpl -> android.support.v4.app.NavUtils$NavUtilsImpl:
+    android.content.Intent getParentActivityIntent(android.app.Activity) -> getParentActivityIntent
+    boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> shouldUpRecreateTask
+    void navigateUpTo(android.app.Activity,android.content.Intent) -> navigateUpTo
+    java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> getParentActivityName
+android.support.v4.app.NavUtils$NavUtilsImplBase -> android.support.v4.app.NavUtils$NavUtilsImplBase:
+    android.content.Intent getParentActivityIntent(android.app.Activity) -> getParentActivityIntent
+    boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> shouldUpRecreateTask
+    void navigateUpTo(android.app.Activity,android.content.Intent) -> navigateUpTo
+    java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> getParentActivityName
+android.support.v4.app.NavUtils$NavUtilsImplJB -> android.support.v4.app.NavUtils$NavUtilsImplJB:
+    android.content.Intent getParentActivityIntent(android.app.Activity) -> getParentActivityIntent
+    boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> shouldUpRecreateTask
+    void navigateUpTo(android.app.Activity,android.content.Intent) -> navigateUpTo
+    java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> getParentActivityName
+android.support.v4.app.NavUtilsJB -> android.support.v4.app.NavUtilsJB:
+    android.content.Intent getParentActivityIntent(android.app.Activity) -> getParentActivityIntent
+    boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> shouldUpRecreateTask
+    void navigateUpTo(android.app.Activity,android.content.Intent) -> navigateUpTo
+    java.lang.String getParentActivityName(android.content.pm.ActivityInfo) -> getParentActivityName
 android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.NoSaveStateFrameLayout:
     android.view.ViewGroup wrap(android.view.View) -> wrap
     void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
     void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
 android.support.v4.app.NotificationCompat -> android.support.v4.app.NotificationCompat:
     int FLAG_HIGH_PRIORITY -> FLAG_HIGH_PRIORITY
+    int PRIORITY_DEFAULT -> PRIORITY_DEFAULT
+    int PRIORITY_LOW -> PRIORITY_LOW
+    int PRIORITY_MIN -> PRIORITY_MIN
+    int PRIORITY_HIGH -> PRIORITY_HIGH
+    int PRIORITY_MAX -> PRIORITY_MAX
     android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL -> IMPL
     android.support.v4.app.NotificationCompat$NotificationCompatImpl access$000() -> access$000
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.NotificationCompat$Action:
+    int icon -> icon
+    java.lang.CharSequence title -> title
+    android.app.PendingIntent actionIntent -> actionIntent
+android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.NotificationCompat$BigPictureStyle:
+    android.graphics.Bitmap mPicture -> mPicture
+    android.support.v4.app.NotificationCompat$BigPictureStyle setBigContentTitle(java.lang.CharSequence) -> setBigContentTitle
+    android.support.v4.app.NotificationCompat$BigPictureStyle setSummaryText(java.lang.CharSequence) -> setSummaryText
+    android.support.v4.app.NotificationCompat$BigPictureStyle bigPicture(android.graphics.Bitmap) -> bigPicture
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.NotificationCompat$BigTextStyle:
+    java.lang.CharSequence mBigText -> mBigText
+    android.support.v4.app.NotificationCompat$BigTextStyle setBigContentTitle(java.lang.CharSequence) -> setBigContentTitle
+    android.support.v4.app.NotificationCompat$BigTextStyle setSummaryText(java.lang.CharSequence) -> setSummaryText
+    android.support.v4.app.NotificationCompat$BigTextStyle bigText(java.lang.CharSequence) -> bigText
 android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.NotificationCompat$Builder:
     android.content.Context mContext -> mContext
     java.lang.CharSequence mContentTitle -> mContentTitle
@@ -754,14 +774,25 @@ android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.Noti
     android.graphics.Bitmap mLargeIcon -> mLargeIcon
     java.lang.CharSequence mContentInfo -> mContentInfo
     int mNumber -> mNumber
+    int mPriority -> mPriority
+    boolean mUseChronometer -> mUseChronometer
+    android.support.v4.app.NotificationCompat$Style mStyle -> mStyle
+    java.lang.CharSequence mSubText -> mSubText
+    int mProgressMax -> mProgressMax
+    int mProgress -> mProgress
+    boolean mProgressIndeterminate -> mProgressIndeterminate
+    java.util.ArrayList mActions -> mActions
     android.app.Notification mNotification -> mNotification
     android.support.v4.app.NotificationCompat$Builder setWhen(long) -> setWhen
+    android.support.v4.app.NotificationCompat$Builder setUsesChronometer(boolean) -> setUsesChronometer
     android.support.v4.app.NotificationCompat$Builder setSmallIcon(int) -> setSmallIcon
     android.support.v4.app.NotificationCompat$Builder setSmallIcon(int,int) -> setSmallIcon
     android.support.v4.app.NotificationCompat$Builder setContentTitle(java.lang.CharSequence) -> setContentTitle
     android.support.v4.app.NotificationCompat$Builder setContentText(java.lang.CharSequence) -> setContentText
+    android.support.v4.app.NotificationCompat$Builder setSubText(java.lang.CharSequence) -> setSubText
     android.support.v4.app.NotificationCompat$Builder setNumber(int) -> setNumber
     android.support.v4.app.NotificationCompat$Builder setContentInfo(java.lang.CharSequence) -> setContentInfo
+    android.support.v4.app.NotificationCompat$Builder setProgress(int,int,boolean) -> setProgress
     android.support.v4.app.NotificationCompat$Builder setContent(android.widget.RemoteViews) -> setContent
     android.support.v4.app.NotificationCompat$Builder setContentIntent(android.app.PendingIntent) -> setContentIntent
     android.support.v4.app.NotificationCompat$Builder setDeleteIntent(android.app.PendingIntent) -> setDeleteIntent
@@ -778,15 +809,44 @@ android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.Noti
     android.support.v4.app.NotificationCompat$Builder setAutoCancel(boolean) -> setAutoCancel
     android.support.v4.app.NotificationCompat$Builder setDefaults(int) -> setDefaults
     void setFlag(int,boolean) -> setFlag
+    android.support.v4.app.NotificationCompat$Builder setPriority(int) -> setPriority
+    android.support.v4.app.NotificationCompat$Builder addAction(int,java.lang.CharSequence,android.app.PendingIntent) -> addAction
+    android.support.v4.app.NotificationCompat$Builder setStyle(android.support.v4.app.NotificationCompat$Style) -> setStyle
     android.app.Notification getNotification() -> getNotification
+    android.app.Notification build() -> build
+android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.NotificationCompat$InboxStyle:
+    java.util.ArrayList mTexts -> mTexts
+    android.support.v4.app.NotificationCompat$InboxStyle setBigContentTitle(java.lang.CharSequence) -> setBigContentTitle
+    android.support.v4.app.NotificationCompat$InboxStyle setSummaryText(java.lang.CharSequence) -> setSummaryText
+    android.support.v4.app.NotificationCompat$InboxStyle addLine(java.lang.CharSequence) -> addLine
 android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.NotificationCompat$NotificationCompatImpl:
-    android.app.Notification getNotification(android.support.v4.app.NotificationCompat$Builder) -> getNotification
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> build
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.NotificationCompat$NotificationCompatImplBase:
-    android.app.Notification getNotification(android.support.v4.app.NotificationCompat$Builder) -> getNotification
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> build
 android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb:
-    android.app.Notification getNotification(android.support.v4.app.NotificationCompat$Builder) -> getNotification
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> build
+android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> build
+android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> build
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.NotificationCompat$Style:
+    android.support.v4.app.NotificationCompat$Builder mBuilder -> mBuilder
+    java.lang.CharSequence mBigContentTitle -> mBigContentTitle
+    java.lang.CharSequence mSummaryText -> mSummaryText
+    boolean mSummaryTextSet -> mSummaryTextSet
+    void setBuilder(android.support.v4.app.NotificationCompat$Builder) -> setBuilder
+    android.app.Notification build() -> build
 android.support.v4.app.NotificationCompatHoneycomb -> android.support.v4.app.NotificationCompatHoneycomb:
     android.app.Notification add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap) -> add
+android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.NotificationCompatIceCreamSandwich:
+    android.app.Notification add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean) -> add
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.NotificationCompatJellybean:
+    android.app.Notification$Builder b -> b
+    void addAction(int,java.lang.CharSequence,android.app.PendingIntent) -> addAction
+    void addBigTextStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,java.lang.CharSequence) -> addBigTextStyle
+    void addBigPictureStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,android.graphics.Bitmap) -> addBigPictureStyle
+    void addInboxStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,java.util.ArrayList) -> addInboxStyle
+    android.app.Notification build() -> build
 android.support.v4.app.ServiceCompat -> android.support.v4.app.ServiceCompat:
     int START_STICKY -> START_STICKY
 android.support.v4.app.ShareCompat -> android.support.v4.app.ShareCompat:
@@ -797,6 +857,7 @@ android.support.v4.app.ShareCompat -> android.support.v4.app.ShareCompat:
     android.content.ComponentName getCallingActivity(android.app.Activity) -> getCallingActivity
     void configureMenuItem(android.view.MenuItem,android.support.v4.app.ShareCompat$IntentBuilder) -> configureMenuItem
     void configureMenuItem(android.view.Menu,int,android.support.v4.app.ShareCompat$IntentBuilder) -> configureMenuItem
+    android.support.v4.app.ShareCompat$ShareCompatImpl access$000() -> access$000
 android.support.v4.app.ShareCompat$IntentBuilder -> android.support.v4.app.ShareCompat$IntentBuilder:
     android.app.Activity mActivity -> mActivity
     android.content.Intent mIntent -> mIntent
@@ -816,6 +877,7 @@ android.support.v4.app.ShareCompat$IntentBuilder -> android.support.v4.app.Share
     android.support.v4.app.ShareCompat$IntentBuilder setChooserTitle(int) -> setChooserTitle
     android.support.v4.app.ShareCompat$IntentBuilder setType(java.lang.String) -> setType
     android.support.v4.app.ShareCompat$IntentBuilder setText(java.lang.CharSequence) -> setText
+    android.support.v4.app.ShareCompat$IntentBuilder setHtmlText(java.lang.String) -> setHtmlText
     android.support.v4.app.ShareCompat$IntentBuilder setStream(android.net.Uri) -> setStream
     android.support.v4.app.ShareCompat$IntentBuilder addStream(android.net.Uri) -> addStream
     android.support.v4.app.ShareCompat$IntentBuilder setEmailTo(java.lang.String[]) -> setEmailTo
@@ -841,6 +903,7 @@ android.support.v4.app.ShareCompat$IntentReader -> android.support.v4.app.ShareC
     boolean isMultipleShare() -> isMultipleShare
     java.lang.String getType() -> getType
     java.lang.CharSequence getText() -> getText
+    java.lang.String getHtmlText() -> getHtmlText
     android.net.Uri getStream() -> getStream
     android.net.Uri getStream(int) -> getStream
     int getStreamCount() -> getStreamCount
@@ -855,36 +918,54 @@ android.support.v4.app.ShareCompat$IntentReader -> android.support.v4.app.ShareC
     java.lang.CharSequence getCallingApplicationLabel() -> getCallingApplicationLabel
 android.support.v4.app.ShareCompat$ShareCompatImpl -> android.support.v4.app.ShareCompat$ShareCompatImpl:
     void configureMenuItem(android.view.MenuItem,android.support.v4.app.ShareCompat$IntentBuilder) -> configureMenuItem
+    java.lang.String escapeHtml(java.lang.CharSequence) -> escapeHtml
 android.support.v4.app.ShareCompat$ShareCompatImplBase -> android.support.v4.app.ShareCompat$ShareCompatImplBase:
     void configureMenuItem(android.view.MenuItem,android.support.v4.app.ShareCompat$IntentBuilder) -> configureMenuItem
+    java.lang.String escapeHtml(java.lang.CharSequence) -> escapeHtml
+    void withinStyle(java.lang.StringBuilder,java.lang.CharSequence,int,int) -> withinStyle
 android.support.v4.app.ShareCompat$ShareCompatImplICS -> android.support.v4.app.ShareCompat$ShareCompatImplICS:
     void configureMenuItem(android.view.MenuItem,android.support.v4.app.ShareCompat$IntentBuilder) -> configureMenuItem
+    boolean shouldAddChooserIntent(android.view.MenuItem) -> shouldAddChooserIntent
+android.support.v4.app.ShareCompat$ShareCompatImplJB -> android.support.v4.app.ShareCompat$ShareCompatImplJB:
+    java.lang.String escapeHtml(java.lang.CharSequence) -> escapeHtml
+    boolean shouldAddChooserIntent(android.view.MenuItem) -> shouldAddChooserIntent
 android.support.v4.app.ShareCompatICS -> android.support.v4.app.ShareCompatICS:
     java.lang.String HISTORY_FILENAME_PREFIX -> HISTORY_FILENAME_PREFIX
     void configureMenuItem(android.view.MenuItem,android.app.Activity,android.content.Intent) -> configureMenuItem
+android.support.v4.app.ShareCompatJB -> android.support.v4.app.ShareCompatJB:
+    java.lang.String escapeHtml(java.lang.CharSequence) -> escapeHtml
 android.support.v4.app.SuperNotCalledException -> android.support.v4.app.SuperNotCalledException:
 android.support.v4.app.TaskStackBuilder -> android.support.v4.app.TaskStackBuilder:
     java.lang.String TAG -> TAG
     android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl IMPL -> IMPL
     java.util.ArrayList mIntents -> mIntents
     android.content.Context mSourceContext -> mSourceContext
+    android.support.v4.app.TaskStackBuilder create(android.content.Context) -> create
     android.support.v4.app.TaskStackBuilder from(android.content.Context) -> from
     android.support.v4.app.TaskStackBuilder addNextIntent(android.content.Intent) -> addNextIntent
     android.support.v4.app.TaskStackBuilder addParentStack(android.app.Activity) -> addParentStack
     android.support.v4.app.TaskStackBuilder addParentStack(java.lang.Class) -> addParentStack
     int getIntentCount() -> getIntentCount
     android.content.Intent getIntent(int) -> getIntent
+    android.content.Intent editIntentAt(int) -> editIntentAt
     java.util.Iterator iterator() -> iterator
     void startActivities() -> startActivities
+    void startActivities(android.os.Bundle) -> startActivities
     android.app.PendingIntent getPendingIntent(int,int) -> getPendingIntent
+    android.app.PendingIntent getPendingIntent(int,int,android.os.Bundle) -> getPendingIntent
+    android.content.Intent[] getIntents() -> getIntents
 android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl:
-    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int) -> getPendingIntent
+    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int,android.os.Bundle) -> getPendingIntent
 android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase:
-    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int) -> getPendingIntent
+    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int,android.os.Bundle) -> getPendingIntent
 android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb:
-    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int) -> getPendingIntent
+    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int,android.os.Bundle) -> getPendingIntent
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplJellybean -> android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplJellybean:
+    android.app.PendingIntent getPendingIntent(android.content.Context,android.content.Intent[],int,int,android.os.Bundle) -> getPendingIntent
 android.support.v4.app.TaskStackBuilderHoneycomb -> android.support.v4.app.TaskStackBuilderHoneycomb:
     android.app.PendingIntent getActivitiesPendingIntent(android.content.Context,int,android.content.Intent[],int) -> getActivitiesPendingIntent
+android.support.v4.app.TaskStackBuilderJellybean -> android.support.v4.app.TaskStackBuilderJellybean:
+    android.app.PendingIntent getActivitiesPendingIntent(android.content.Context,int,android.content.Intent[],int,android.os.Bundle) -> getActivitiesPendingIntent
 android.support.v4.app._ActionBarSherlockTrojanHorse -> android.support.v4.app._ActionBarSherlockTrojanHorse:
     boolean DEBUG -> DEBUG
     java.lang.String TAG -> TAG
@@ -902,7 +983,10 @@ android.support.v4.app._ActionBarSherlockTrojanHorse$OnOptionsItemSelectedListen
     boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
 android.support.v4.app._ActionBarSherlockTrojanHorse$OnPrepareOptionsMenuListener -> android.support.v4.app._ActionBarSherlockTrojanHorse$OnPrepareOptionsMenuListener:
     void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
-android.support.v4.content.Loader -> android.support.v4.a.a:
+android.support.v4.content.ContextCompat -> android.support.v4.a.a:
+    boolean startActivities(android.content.Context,android.content.Intent[]) -> startActivities
+    boolean startActivities(android.content.Context,android.content.Intent[],android.os.Bundle) -> startActivities
+android.support.v4.content.Loader -> android.support.v4.a.b:
     int mId -> a
     android.support.v4.content.Loader$OnLoadCompleteListener mListener -> b
     boolean mStarted -> c
@@ -917,7 +1001,7 @@ android.support.v4.content.Loader -> android.support.v4.a.a:
     void reset() -> d
     java.lang.String toString() -> toString
     void dump$ec96877(java.lang.String,java.io.PrintWriter) -> a
-android.support.v4.content.Loader$OnLoadCompleteListener -> android.support.v4.a.b:
+android.support.v4.content.Loader$OnLoadCompleteListener -> android.support.v4.a.c:
 android.support.v4.os.ParcelableCompat -> android.support.v4.b.a:
     android.os.Parcelable$Creator newCreator(android.support.v4.os.ParcelableCompatCreatorCallbacks) -> a
 android.support.v4.os.ParcelableCompat$CompatCreator -> android.support.v4.b.b:
@@ -941,6 +1025,24 @@ android.support.v4.util.LogWriter -> android.support.v4.c.b:
     void flush() -> flush
     void write(char[],int,int) -> write
     void flushBuilder() -> a
+android.support.v4.util.SparseArrayCompat -> android.support.v4.c.c:
+    java.lang.Object DELETED -> a
+    boolean mGarbage -> b
+    int[] mKeys -> c
+    java.lang.Object[] mValues -> d
+    int mSize -> e
+    java.lang.Object get(int) -> a
+    void remove(int) -> b
+    void removeAt(int) -> c
+    void gc() -> c
+    void put(int,java.lang.Object) -> a
+    int size() -> a
+    int keyAt(int) -> d
+    java.lang.Object valueAt(int) -> e
+    int indexOfKey(int) -> f
+    void clear() -> b
+    int binarySearch$76412d8d(int[],int,int) -> a
+    int idealIntArraySize(int) -> g
 android.support.v4.view.KeyEventCompat -> android.support.v4.view.a:
     android.support.v4.view.KeyEventCompat$KeyEventVersionImpl IMPL -> a
     boolean hasModifiers$79c6ddc0(android.view.KeyEvent) -> a
@@ -1001,6 +1103,7 @@ android.support.v4.view.PagerAdapter -> android.support.v4.view.i:
     void registerDataSetObserver(android.database.DataSetObserver) -> registerDataSetObserver
     void unregisterDataSetObserver(android.database.DataSetObserver) -> unregisterDataSetObserver
     java.lang.CharSequence getPageTitle(int) -> getPageTitle
+    float getPageWidth(int) -> getPageWidth
 android.support.v4.view.VelocityTrackerCompat -> android.support.v4.view.j:
     android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl IMPL -> a
     float getXVelocity(android.view.VelocityTracker,int) -> a
@@ -1014,88 +1117,109 @@ android.support.v4.view.ViewCompat -> android.support.v4.view.n:
     android.support.v4.view.ViewCompat$ViewCompatImpl IMPL -> a
     boolean canScrollHorizontally(android.view.View,int) -> a
     int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
 android.support.v4.view.ViewCompat$BaseViewCompatImpl -> android.support.v4.view.o:
     boolean canScrollHorizontally(android.view.View,int) -> a
     int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
+    long getFrameTime() -> a
 android.support.v4.view.ViewCompat$GBViewCompatImpl -> android.support.v4.view.p:
     int getOverScrollMode(android.view.View) -> a
-android.support.v4.view.ViewCompat$ICSViewCompatImpl -> android.support.v4.view.q:
+android.support.v4.view.ViewCompat$HCViewCompatImpl -> android.support.v4.view.q:
+    long getFrameTime() -> a
+android.support.v4.view.ViewCompat$ICSViewCompatImpl -> android.support.v4.view.r:
     boolean canScrollHorizontally(android.view.View,int) -> a
-android.support.v4.view.ViewCompat$ViewCompatImpl -> android.support.v4.view.r:
+android.support.v4.view.ViewCompat$JBViewCompatImpl -> android.support.v4.view.s:
+    void postInvalidateOnAnimation(android.view.View) -> b
+android.support.v4.view.ViewCompat$ViewCompatImpl -> android.support.v4.view.t:
     boolean canScrollHorizontally(android.view.View,int) -> a
     int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
 android.support.v4.view.ViewPager -> android.support.v4.view.ViewPager:
     int[] LAYOUT_ATTRS -> a
     java.util.Comparator COMPARATOR -> b
     android.view.animation.Interpolator sInterpolator -> c
     java.util.ArrayList mItems -> d
-    android.support.v4.view.PagerAdapter mAdapter -> e
-    int mCurItem -> f
-    int mRestoredCurItem -> g
-    android.os.Parcelable mRestoredAdapterState -> h
-    java.lang.ClassLoader mRestoredClassLoader -> i
-    android.widget.Scroller mScroller -> j
-    int mPageMargin -> k
-    android.graphics.drawable.Drawable mMarginDrawable -> l
-    int mTopPageBounds -> m
-    int mBottomPageBounds -> n
-    int mChildWidthMeasureSpec -> o
-    int mChildHeightMeasureSpec -> p
-    boolean mInLayout -> q
-    boolean mScrollingCacheEnabled -> r
-    boolean mPopulatePending -> s
-    boolean mScrolling -> t
-    int mOffscreenPageLimit -> u
-    boolean mIsBeingDragged -> v
-    boolean mIsUnableToDrag -> w
-    int mTouchSlop -> x
-    float mInitialMotionX -> y
-    float mLastMotionX -> z
-    float mLastMotionY -> A
-    int mActivePointerId -> B
-    android.view.VelocityTracker mVelocityTracker -> C
-    int mMinimumVelocity -> D
-    int mMaximumVelocity -> E
-    int mFlingDistance -> F
-    boolean mFakeDragging -> G
-    android.support.v4.widget.EdgeEffectCompat mLeftEdge -> H
-    android.support.v4.widget.EdgeEffectCompat mRightEdge -> I
-    boolean mFirstLayout -> J
-    boolean mCalledSuper -> K
-    int mDecorChildCount -> L
-    android.support.v4.view.ViewPager$OnPageChangeListener mOnPageChangeListener -> M
-    android.support.v4.view.ViewPager$OnPageChangeListener mInternalPageChangeListener -> N
-    int mScrollState -> O
+    android.support.v4.view.ViewPager$ItemInfo mTempItem -> e
+    android.graphics.Rect mTempRect -> f
+    android.support.v4.view.PagerAdapter mAdapter -> g
+    int mCurItem -> h
+    int mRestoredCurItem -> i
+    android.os.Parcelable mRestoredAdapterState -> j
+    java.lang.ClassLoader mRestoredClassLoader -> k
+    android.widget.Scroller mScroller -> l
+    int mPageMargin -> m
+    android.graphics.drawable.Drawable mMarginDrawable -> n
+    int mTopPageBounds -> o
+    int mBottomPageBounds -> p
+    float mFirstOffset -> q
+    float mLastOffset -> r
+    int mChildWidthMeasureSpec -> s
+    int mChildHeightMeasureSpec -> t
+    boolean mInLayout -> u
+    boolean mScrollingCacheEnabled -> v
+    boolean mPopulatePending -> w
+    int mOffscreenPageLimit -> x
+    boolean mIsBeingDragged -> y
+    boolean mIsUnableToDrag -> z
+    int mDefaultGutterSize -> A
+    int mGutterSize -> B
+    int mTouchSlop -> C
+    float mInitialMotionX -> D
+    float mLastMotionX -> E
+    float mLastMotionY -> F
+    int mActivePointerId -> G
+    android.view.VelocityTracker mVelocityTracker -> H
+    int mMinimumVelocity -> I
+    int mMaximumVelocity -> J
+    int mFlingDistance -> K
+    int mCloseEnough -> L
+    boolean mFakeDragging -> M
+    android.support.v4.widget.EdgeEffectCompat mLeftEdge -> N
+    android.support.v4.widget.EdgeEffectCompat mRightEdge -> O
+    boolean mFirstLayout -> P
+    boolean mNeedCalculatePageOffsets -> Q
+    boolean mCalledSuper -> R
+    int mDecorChildCount -> S
+    android.support.v4.view.ViewPager$OnPageChangeListener mOnPageChangeListener -> T
+    android.support.v4.view.ViewPager$OnPageChangeListener mInternalPageChangeListener -> U
+    int mScrollState -> V
     void setScrollState(int) -> a
     void setCurrentItem$2563266(int) -> b
     void setCurrentItemInternal(int,boolean,boolean) -> a
     void setCurrentItemInternal(int,boolean,boolean,int) -> a
     boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
     void drawableStateChanged() -> drawableStateChanged
-    void addNewItem(int,int) -> a
+    android.support.v4.view.ViewPager$ItemInfo addNewItem(int,int) -> a
     void populate() -> b
+    void populate(int) -> c
     android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
     void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
     void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
     android.support.v4.view.ViewPager$ItemInfo infoForChild(android.view.View) -> a
+    android.support.v4.view.ViewPager$ItemInfo infoForPosition(int) -> d
     void onAttachedToWindow() -> onAttachedToWindow
     void onMeasure(int,int) -> onMeasure
     void onSizeChanged(int,int,int,int) -> onSizeChanged
     void onLayout(boolean,int,int,int,int) -> onLayout
     void computeScroll() -> computeScroll
-    void pageScrolled$13462e() -> c
-    void completeScroll() -> d
+    boolean pageScrolled$134632() -> c
+    void onPageScrolled$486775f1() -> d
+    void completeScroll() -> e
     boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
     boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    boolean performDrag(float) -> a
+    android.support.v4.view.ViewPager$ItemInfo infoForCurrentScrollPosition() -> f
     void draw(android.graphics.Canvas) -> draw
     void onDraw(android.graphics.Canvas) -> onDraw
     void onSecondaryPointerUp(android.view.MotionEvent) -> a
-    void endDrag() -> e
+    void endDrag() -> g
     void setScrollingCacheEnabled(boolean) -> a
     boolean canScroll(android.view.View,boolean,int,int,int) -> a
     boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
-    boolean arrowScroll(int) -> c
-    boolean pageLeft() -> f
+    boolean arrowScroll(int) -> e
+    android.graphics.Rect getChildRectInPagerCoordinates(android.graphics.Rect,android.view.View) -> a
+    boolean pageLeft() -> h
     void addFocusables(java.util.ArrayList,int,int) -> addFocusables
     void addTouchables(java.util.ArrayList) -> addTouchables
     boolean onRequestFocusInDescendants(int,android.graphics.Rect) -> onRequestFocusInDescendants
@@ -1104,20 +1228,24 @@ android.support.v4.view.ViewPager -> android.support.v4.view.ViewPager:
     android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
     boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
     android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
-    int[] access$100() -> a
-android.support.v4.view.ViewPager$1 -> android.support.v4.view.s:
+    int[] access$300() -> a
+android.support.v4.view.ViewPager$1 -> android.support.v4.view.u:
     int compare(java.lang.Object,java.lang.Object) -> compare
-android.support.v4.view.ViewPager$2 -> android.support.v4.view.t:
+android.support.v4.view.ViewPager$2 -> android.support.v4.view.v:
     float getInterpolation(float) -> getInterpolation
-android.support.v4.view.ViewPager$Decor -> android.support.v4.view.u:
-android.support.v4.view.ViewPager$ItemInfo -> android.support.v4.view.v:
+android.support.v4.view.ViewPager$Decor -> android.support.v4.view.w:
+android.support.v4.view.ViewPager$ItemInfo -> android.support.v4.view.x:
     java.lang.Object object -> a
     int position -> b
     boolean scrolling -> c
+    float widthFactor -> d
+    float offset -> e
 android.support.v4.view.ViewPager$LayoutParams -> android.support.v4.view.ViewPager$LayoutParams:
     boolean isDecor -> a
     int gravity -> b
-android.support.v4.view.ViewPager$OnPageChangeListener -> android.support.v4.view.w:
+    float widthFactor -> c
+    boolean needsMeasure -> d
+android.support.v4.view.ViewPager$OnPageChangeListener -> android.support.v4.view.y:
 android.support.v4.view.ViewPager$SavedState -> android.support.v4.view.ViewPager$SavedState:
     int position -> a
     android.os.Parcelable adapterState -> b
@@ -1125,7 +1253,7 @@ android.support.v4.view.ViewPager$SavedState -> android.support.v4.view.ViewPage
     android.os.Parcelable$Creator CREATOR -> CREATOR
     void writeToParcel(android.os.Parcel,int) -> writeToParcel
     java.lang.String toString() -> toString
-android.support.v4.view.ViewPager$SavedState$1 -> android.support.v4.view.x:
+android.support.v4.view.ViewPager$SavedState$1 -> android.support.v4.view.z:
     java.lang.Object[] newArray(int) -> a
     java.lang.Object createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> a
 android.support.v4.widget.EdgeEffectCompat -> android.support.v4.d.a:
@@ -1236,6 +1364,8 @@ com.actionbarsherlock.R$array -> com.actionbarsherlock.R$array:
     int exchangesvalues -> exchangesvalues
     int interval -> interval
     int intervalvalues -> intervalvalues
+    int miningpools -> miningpools
+    int poolvalues -> poolvalues
     int widgetBehaviour -> widgetBehaviour
     int widgetBehaviours -> widgetBehaviours
 com.actionbarsherlock.R$attr -> com.actionbarsherlock.R$attr:
@@ -1481,6 +1611,7 @@ com.actionbarsherlock.R$id -> com.actionbarsherlock.R$id:
     int displaygraph -> displaygraph
     int fragment_lay -> fragment_lay
     int fragment_layout -> fragment_layout
+    int graphlayout -> graphlayout
     int homeAsUp -> homeAsUp
     int label -> label
     int label2 -> label2
@@ -1539,6 +1670,7 @@ com.actionbarsherlock.R$layout -> com.actionbarsherlock.R$layout:
     int abs__screen_action_bar_overlay -> abs__screen_action_bar_overlay
     int abs__screen_simple -> abs__screen_simple
     int abs__screen_simple_overlay_action_mode -> abs__screen_simple_overlay_action_mode
+    int graph -> graph
     int main -> main
     int menu_fragment -> menu_fragment
     int minerstats -> minerstats
@@ -1552,6 +1684,7 @@ com.actionbarsherlock.R$menu -> com.actionbarsherlock.R$menu:
     int menu -> menu
     int orderbook_menu -> orderbook_menu
 com.actionbarsherlock.R$string -> com.actionbarsherlock.R$string:
+    int MtGox -> MtGox
     int abs__action_bar_home_description -> abs__action_bar_home_description
     int abs__action_bar_up_description -> abs__action_bar_up_description
     int abs__action_menu_overflow_description -> abs__action_menu_overflow_description
@@ -6005,13 +6138,20 @@ com.veken0m.cavirtex.BaseWidgetProvider -> com.veken0m.cavirtex.BaseWidgetProvid
 com.veken0m.cavirtex.BaseWidgetProvider$1 -> com.veken0m.cavirtex.a:
     void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
 com.veken0m.cavirtex.Graph -> com.veken0m.cavirtex.Graph:
-    com.veken0m.cavirtex.GraphViewer g_graphView -> f
-    android.app.ProgressDialog graphProgressDialog -> g
+    com.veken0m.cavirtex.GraphViewer g_graphView -> l
+    android.app.ProgressDialog graphProgressDialog -> m
     android.os.Handler mOrderHandler -> a
     java.lang.String exchangeName -> b
     java.lang.String currency -> c
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> n
     java.lang.String exchange -> d
-    java.lang.Runnable mGraphView -> e
+    java.lang.String xchangeExchange -> e
+    com.veken0m.cavirtex.LineGraphView graphView -> f
+    java.lang.Boolean pref_graphMode -> g
+    java.lang.Boolean pref_scaleMode -> h
+    int pref_mtgoxWindowSize -> i
+    int pref_virtexWindowSize -> j
+    java.lang.Runnable mGraphView -> k
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
@@ -6028,11 +6168,97 @@ com.veken0m.cavirtex.Graph$1 -> com.veken0m.cavirtex.b:
     void run() -> run
 com.veken0m.cavirtex.Graph$2 -> com.veken0m.cavirtex.c:
     com.veken0m.cavirtex.Graph this$0 -> a
+    java.text.Format val$formatter -> c
+    java.lang.String formatLabel(double,boolean) -> a
+com.veken0m.cavirtex.Graph$3 -> com.veken0m.cavirtex.d:
+    com.veken0m.cavirtex.Graph this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.Graph$GraphThread -> com.veken0m.cavirtex.d:
+com.veken0m.cavirtex.Graph$4 -> com.veken0m.cavirtex.e:
+    void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+com.veken0m.cavirtex.Graph$GraphThread -> com.veken0m.cavirtex.f:
     com.veken0m.cavirtex.Graph this$0 -> a
     void run() -> run
-com.veken0m.cavirtex.GraphViewer -> com.veken0m.cavirtex.e:
+com.veken0m.cavirtex.GraphView -> com.veken0m.cavirtex.g:
+    android.graphics.Paint paint -> b
+    java.lang.String[] horlabels -> a
+    java.lang.String[] verlabels -> c
+    java.lang.String title -> d
+    boolean scrollable -> e
+    double viewportStart -> f
+    double viewportSize -> g
+    android.view.View viewVerLabels -> h
+    com.veken0m.cavirtex.ScaleGestureDetector scaleDetector -> i
+    boolean scalable -> j
+    java.text.NumberFormat numberformatter -> k
+    java.util.List graphSeries -> l
+    boolean showLegend -> m
+    float legendWidth -> n
+    com.veken0m.cavirtex.GraphView$LegendAlign legendAlign -> o
+    boolean manualYAxis -> p
+    double manualMaxYValue -> q
+    double manualMinYValue -> r
+    int[] $SWITCH_TABLE$com$veken0m$cavirtex$GraphView$LegendAlign -> s
+    com.veken0m.cavirtex.GraphView$GraphViewData[] _values(int) -> a
+    void addSeries(com.veken0m.cavirtex.GraphView$GraphViewSeries) -> a
+    void drawLegend(android.graphics.Canvas,float,float) -> a
+    void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.cavirtex.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
+    java.lang.String formatLabel(double,boolean) -> a
+    java.lang.String[] generateVerlabels(float) -> a
+    double getMaxX(boolean) -> a
+    double getMaxY() -> a
+    double getMinX(boolean) -> b
+    double getMinY() -> b
+    boolean isScrollable() -> c
+    void setManualYAxisBounds(double,double) -> a
+    void setScalable$1385ff() -> d
+    void setScrollable$1385ff() -> e
+    void setViewPort(double,double) -> b
+    java.lang.String[] access$0(com.veken0m.cavirtex.GraphView) -> a
+    java.lang.String[] access$1(com.veken0m.cavirtex.GraphView,float) -> a
+    void access$2(com.veken0m.cavirtex.GraphView,java.lang.String[]) -> a
+    java.lang.String[] access$3(com.veken0m.cavirtex.GraphView) -> b
+    java.lang.String[] access$4(com.veken0m.cavirtex.GraphView,float) -> b
+    void access$5(com.veken0m.cavirtex.GraphView,java.lang.String[]) -> b
+    java.lang.String access$6(com.veken0m.cavirtex.GraphView) -> c
+    java.util.List access$7(com.veken0m.cavirtex.GraphView) -> d
+    com.veken0m.cavirtex.GraphView$GraphViewData[] access$8(com.veken0m.cavirtex.GraphView,int) -> a
+    boolean access$9(com.veken0m.cavirtex.GraphView) -> e
+    double access$10(com.veken0m.cavirtex.GraphView) -> f
+    double access$11(com.veken0m.cavirtex.GraphView) -> g
+    void access$12(com.veken0m.cavirtex.GraphView,double) -> a
+    android.view.View access$13(com.veken0m.cavirtex.GraphView) -> h
+    boolean access$14(com.veken0m.cavirtex.GraphView) -> i
+    com.veken0m.cavirtex.ScaleGestureDetector access$15(com.veken0m.cavirtex.GraphView) -> j
+    int[] $SWITCH_TABLE$com$veken0m$cavirtex$GraphView$LegendAlign() -> f
+com.veken0m.cavirtex.GraphView$1 -> com.veken0m.cavirtex.h:
+    com.veken0m.cavirtex.GraphView this$0 -> a
+com.veken0m.cavirtex.GraphView$GraphViewContentView -> com.veken0m.cavirtex.i:
+    float lastTouchEventX -> b
+    float graphwidth -> c
+    com.veken0m.cavirtex.GraphView this$0 -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+com.veken0m.cavirtex.GraphView$GraphViewData -> com.veken0m.cavirtex.j:
+    double valueX -> a
+    double valueY -> b
+com.veken0m.cavirtex.GraphView$GraphViewSeries -> com.veken0m.cavirtex.k:
+    java.lang.String description -> a
+    com.veken0m.cavirtex.GraphView$GraphViewStyle style -> b
+    com.veken0m.cavirtex.GraphView$GraphViewData[] values -> c
+com.veken0m.cavirtex.GraphView$GraphViewStyle -> com.veken0m.cavirtex.l:
+    int color -> a
+    int thickness -> b
+com.veken0m.cavirtex.GraphView$LegendAlign -> com.veken0m.cavirtex.m:
+    com.veken0m.cavirtex.GraphView$LegendAlign TOP -> a
+    com.veken0m.cavirtex.GraphView$LegendAlign MIDDLE -> b
+    com.veken0m.cavirtex.GraphView$LegendAlign BOTTOM -> c
+    com.veken0m.cavirtex.GraphView$LegendAlign[] ENUM$VALUES -> d
+    com.veken0m.cavirtex.GraphView$LegendAlign[] values() -> values
+    com.veken0m.cavirtex.GraphView$LegendAlign valueOf(java.lang.String) -> valueOf
+com.veken0m.cavirtex.GraphView$VerLabelsView -> com.veken0m.cavirtex.n:
+    com.veken0m.cavirtex.GraphView this$0 -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+com.veken0m.cavirtex.GraphViewer -> com.veken0m.cavirtex.o:
     boolean BAR -> a
     boolean LINE -> b
     android.graphics.Paint paint -> c
@@ -6046,36 +6272,44 @@ com.veken0m.cavirtex.GraphViewer -> com.veken0m.cavirtex.e:
     boolean bBoundsSet -> k
     void onDraw(android.graphics.Canvas) -> onDraw
     java.lang.String[] createLabels$6feda350(float,float,java.lang.String,java.lang.String) -> a
+com.veken0m.cavirtex.LineGraphView -> com.veken0m.cavirtex.p:
+    android.graphics.Paint paintBackground -> a
+    boolean drawBackground -> c
+    void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.cavirtex.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
 com.veken0m.cavirtex.MainActivity -> com.veken0m.cavirtex.MainActivity:
     java.lang.String pref_favExchange -> a
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
     boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-com.veken0m.cavirtex.MainActivity$1 -> com.veken0m.cavirtex.f:
+com.veken0m.cavirtex.MainActivity$1 -> com.veken0m.cavirtex.q:
     void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.MainActivity$MyTabsListener -> com.veken0m.cavirtex.g:
+com.veken0m.cavirtex.MainActivity$MyTabsListener -> com.veken0m.cavirtex.r:
     com.actionbarsherlock.app.SherlockFragment fragment -> a
     com.veken0m.cavirtex.MainActivity this$0 -> b
     void onTabReselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabReselected
     void onTabSelected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabSelected
     void onTabUnselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabUnselected
 com.veken0m.cavirtex.MinerStats -> com.veken0m.cavirtex.MinerStats:
-    java.lang.String APIToken -> a
-    android.app.ProgressDialog minerProgressDialog -> o
-    android.os.Handler mMinerHandler -> b
-    java.lang.String currentDifficulty -> c
-    java.lang.String nextDifficulty -> d
-    java.lang.String jRewards -> e
-    java.lang.String jHashrate -> f
-    java.lang.String jIpa -> g
-    java.lang.String jPayout -> h
-    java.lang.String Alive -> i
-    java.lang.String Shares -> j
-    java.lang.String Stales -> k
-    java.lang.String Worker1 -> l
-    java.lang.Boolean connectionFail -> m
-    java.lang.Runnable mGraphView -> n
+    java.lang.String pref_deepbitKey -> a
+    java.lang.String pref_bitminterKey -> b
+    java.lang.String pref_bitminterUser -> c
+    java.lang.String pref_miningpool -> d
+    java.lang.String currentDifficulty -> e
+    java.lang.String nextDifficulty -> f
+    java.lang.String jRewardsNMC -> g
+    java.lang.String jRewardsBTC -> h
+    java.lang.String jHashrate -> i
+    java.lang.String jPayout -> j
+    java.lang.String Alive -> k
+    java.lang.String Shares -> l
+    java.lang.String Stales -> m
+    java.lang.String Worker1 -> n
+    java.lang.String APIToken -> o
+    android.app.ProgressDialog minerProgressDialog -> s
+    android.os.Handler mMinerHandler -> p
+    java.lang.Boolean connectionFail -> q
+    java.lang.Runnable mGraphView -> r
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
@@ -6085,19 +6319,18 @@ com.veken0m.cavirtex.MinerStats -> com.veken0m.cavirtex.MinerStats:
     void drawMinerUI() -> b
     android.app.ProgressDialog access$0(com.veken0m.cavirtex.MinerStats) -> a
     void access$1(com.veken0m.cavirtex.MinerStats,android.app.ProgressDialog) -> a
-com.veken0m.cavirtex.MinerStats$1 -> com.veken0m.cavirtex.h:
+com.veken0m.cavirtex.MinerStats$1 -> com.veken0m.cavirtex.s:
     com.veken0m.cavirtex.MinerStats this$0 -> a
     void run() -> run
-com.veken0m.cavirtex.MinerStats$2 -> com.veken0m.cavirtex.i:
-    com.veken0m.cavirtex.MinerStats this$0 -> a
-    void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.MinerStats$3 -> com.veken0m.cavirtex.j:
+com.veken0m.cavirtex.MinerStats$2 -> com.veken0m.cavirtex.t:
     com.veken0m.cavirtex.MinerStats this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.MinerStats$OrderbookThread -> com.veken0m.cavirtex.k:
+com.veken0m.cavirtex.MinerStats$3 -> com.veken0m.cavirtex.u:
+    void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+com.veken0m.cavirtex.MinerStats$OrderbookThread -> com.veken0m.cavirtex.v:
     com.veken0m.cavirtex.MinerStats this$0 -> a
     void run() -> run
-com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.l:
+com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.w:
     java.lang.CharSequence cTrades -> a
     java.lang.CharSequence cOrderBook -> b
     java.lang.CharSequence cmtGoxLive -> c
@@ -6110,72 +6343,81 @@ com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.l:
     android.os.Handler mGraphHandler -> j
     android.view.View view -> k
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-com.veken0m.cavirtex.MtGoxFragment$1 -> com.veken0m.cavirtex.m:
+com.veken0m.cavirtex.MtGoxFragment$1 -> com.veken0m.cavirtex.x:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$2 -> com.veken0m.cavirtex.n:
+com.veken0m.cavirtex.MtGoxFragment$2 -> com.veken0m.cavirtex.y:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$3 -> com.veken0m.cavirtex.o:
+com.veken0m.cavirtex.MtGoxFragment$3 -> com.veken0m.cavirtex.z:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$4 -> com.veken0m.cavirtex.p:
+com.veken0m.cavirtex.MtGoxFragment$4 -> com.veken0m.cavirtex.aa:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$5 -> com.veken0m.cavirtex.q:
+com.veken0m.cavirtex.MtGoxFragment$5 -> com.veken0m.cavirtex.ab:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.OrderBook -> com.veken0m.cavirtex.OrderBook:
-    android.app.ProgressDialog orderbookProgressDialog -> r
+com.veken0m.cavirtex.Orderbook -> com.veken0m.cavirtex.Orderbook:
+    android.app.ProgressDialog orderbookProgressDialog -> p
     android.os.Handler mOrderHandler -> a
-    java.lang.String[][] bidData -> b
-    java.lang.String[][] askData -> c
-    int lengthAskArray -> d
-    int lengthBidArray -> e
-    int length -> f
-    java.lang.Boolean connectionFail -> g
-    java.lang.String exchange -> h
-    java.lang.String exchangeName -> i
-    java.lang.String currency -> j
-    int pref_highlightHigh -> k
-    int pref_highlightLow -> l
-    java.lang.Boolean pref_enableHighlight -> m
-    java.lang.String mtGoxOrderbook -> n
-    java.lang.String mtGoxOrderbookAlternative -> o
-    java.lang.String virtExOrderbook -> p
-    java.lang.Runnable mGraphView -> q
+    int lengthAskArray -> b
+    int lengthBidArray -> c
+    int length -> d
+    java.lang.Boolean connectionFail -> e
+    java.lang.String exchange -> f
+    java.lang.String exchangeName -> g
+    java.lang.String currency -> h
+    java.lang.String xchangeExchange -> i
+    java.util.List listAsks -> j
+    java.util.List listBids -> k
+    int pref_highlightHigh -> l
+    int pref_highlightLow -> m
+    java.lang.Boolean pref_enableHighlight -> n
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> q
+    java.lang.Runnable mGraphView -> o
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
     boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
     void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     void readPreferences(android.content.Context) -> a
-    void drawOrderbookUI() -> a
-    void getOrderBook() -> b
-    java.lang.String[][] sortJSON(org.json.JSONArray,java.lang.Boolean) -> a
-    android.app.ProgressDialog access$0(com.veken0m.cavirtex.OrderBook) -> a
-    void access$1(com.veken0m.cavirtex.OrderBook,android.app.ProgressDialog) -> a
-com.veken0m.cavirtex.OrderBook$1 -> com.veken0m.cavirtex.r:
-    com.veken0m.cavirtex.OrderBook this$0 -> a
+    void getOrderBook() -> a
+    void drawOrderbookUI() -> b
+    android.app.ProgressDialog access$0(com.veken0m.cavirtex.Orderbook) -> a
+    void access$1(com.veken0m.cavirtex.Orderbook,android.app.ProgressDialog) -> a
+com.veken0m.cavirtex.Orderbook$1 -> com.veken0m.cavirtex.ac:
+    com.veken0m.cavirtex.Orderbook this$0 -> a
     void run() -> run
-com.veken0m.cavirtex.OrderBook$2 -> com.veken0m.cavirtex.s:
+com.veken0m.cavirtex.Orderbook$2 -> com.veken0m.cavirtex.ad:
     void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.OrderBook$3 -> com.veken0m.cavirtex.t:
-    com.veken0m.cavirtex.OrderBook this$0 -> a
+com.veken0m.cavirtex.Orderbook$3 -> com.veken0m.cavirtex.ae:
+    com.veken0m.cavirtex.Orderbook this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.OrderBook$4 -> com.veken0m.cavirtex.u:
-    com.veken0m.cavirtex.OrderBook this$0 -> a
-    int compare(java.lang.Object,java.lang.Object) -> compare
-com.veken0m.cavirtex.OrderBook$OrderbookThread -> com.veken0m.cavirtex.v:
-    com.veken0m.cavirtex.OrderBook this$0 -> a
+com.veken0m.cavirtex.Orderbook$OrderbookThread -> com.veken0m.cavirtex.af:
+    com.veken0m.cavirtex.Orderbook this$0 -> a
     void run() -> run
 com.veken0m.cavirtex.Preferences -> com.veken0m.cavirtex.Preferences:
     void onCreate(android.os.Bundle) -> onCreate
     void onStop() -> onStop
-com.veken0m.cavirtex.Preferences$1 -> com.veken0m.cavirtex.w:
+com.veken0m.cavirtex.Preferences$1 -> com.veken0m.cavirtex.ag:
     com.veken0m.cavirtex.Preferences this$0 -> a
     boolean onPreferenceClick(android.preference.Preference) -> onPreferenceClick
-com.veken0m.cavirtex.VirtExFragment -> com.veken0m.cavirtex.x:
+com.veken0m.cavirtex.RealScaleGestureDetector -> com.veken0m.cavirtex.ah:
+com.veken0m.cavirtex.ScaleGestureDetector -> com.veken0m.cavirtex.ai:
+    java.lang.Object realScaleGestureDetector -> a
+    java.lang.reflect.Method method_getScaleFactor -> b
+    java.lang.reflect.Method method_isInProgress -> c
+    java.lang.reflect.Method method_onTouchEvent -> d
+    boolean isInProgress() -> a
+    void onTouchEvent(android.view.MotionEvent) -> a
+com.veken0m.cavirtex.ScaleGestureDetector$SimpleOnScaleGestureListener -> com.veken0m.cavirtex.aj:
+com.veken0m.cavirtex.Utils -> com.veken0m.cavirtex.ak:
+    java.lang.String formatTwoDecimals(float) -> a
+    java.lang.String formatFiveDecimals(float) -> b
+    java.lang.String formatNoDecimals(float) -> c
+    java.lang.String formatMoney(java.lang.String,java.lang.String) -> a
+com.veken0m.cavirtex.VirtExFragment -> com.veken0m.cavirtex.al:
     java.lang.CharSequence cTrades -> a
     java.lang.CharSequence cOrderBook -> b
     java.lang.CharSequence cmtGoxLive -> c
@@ -6188,32 +6430,38 @@ com.veken0m.cavirtex.VirtExFragment -> com.veken0m.cavirtex.x:
     android.os.Handler mGraphHandler -> j
     android.view.View view -> k
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-com.veken0m.cavirtex.VirtExFragment$1 -> com.veken0m.cavirtex.y:
+com.veken0m.cavirtex.VirtExFragment$1 -> com.veken0m.cavirtex.am:
     com.veken0m.cavirtex.VirtExFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$2 -> com.veken0m.cavirtex.z:
+com.veken0m.cavirtex.VirtExFragment$2 -> com.veken0m.cavirtex.an:
     com.veken0m.cavirtex.VirtExFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$3 -> com.veken0m.cavirtex.aa:
+com.veken0m.cavirtex.VirtExFragment$3 -> com.veken0m.cavirtex.ao:
     com.veken0m.cavirtex.VirtExFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$4 -> com.veken0m.cavirtex.ab:
+com.veken0m.cavirtex.VirtExFragment$4 -> com.veken0m.cavirtex.ap:
     com.veken0m.cavirtex.VirtExFragment this$0 -> a
     void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$5 -> com.veken0m.cavirtex.ac:
+com.veken0m.cavirtex.VirtExFragment$5 -> com.veken0m.cavirtex.aq:
     com.veken0m.cavirtex.VirtExFragment this$0 -> a
     void onClick(android.view.View) -> onClick
 com.veken0m.cavirtex.WatcherWidgetProvider -> com.veken0m.cavirtex.WatcherWidgetProvider:
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> o
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
+    void access$0(com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService) -> a
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService access$1() -> a
 com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService -> com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService:
     void onCreate() -> onCreate
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     void onHandleIntent(android.content.Intent) -> onHandleIntent
     android.widget.RemoteViews buildUpdate(android.content.Context) -> a
 com.veken0m.cavirtex.WatcherWidgetProvider2 -> com.veken0m.cavirtex.WatcherWidgetProvider2:
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> o
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
+    void access$0(com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService) -> a
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService access$1() -> a
 com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2 -> com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2:
     void onCreate() -> onCreate
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
@@ -6232,7 +6480,1405 @@ com.veken0m.cavirtex.WebViewer -> com.veken0m.cavirtex.WebViewer:
     void displayMenu() -> a
     boolean onPrepareOptionsMenu(android.view.Menu) -> onPrepareOptionsMenu
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-com.veken0m.cavirtex.WebViewer$1 -> com.veken0m.cavirtex.ad:
+com.veken0m.cavirtex.WebViewer$1 -> com.veken0m.cavirtex.ar:
     com.veken0m.cavirtex.WebViewer this$0 -> a
     java.lang.CharSequence[] val$items -> b
     void onClick(android.content.DialogInterface,int) -> onClick
+com.xeiam.xchange.Exchange -> com.a.a.a:
+    com.xeiam.xchange.ExchangeSpecification getDefaultExchangeSpecification() -> a
+    void applySpecification$5af7a558() -> b
+    com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService getPollingMarketDataService() -> c
+com.xeiam.xchange.ExchangeException -> com.a.a.b:
+com.xeiam.xchange.ExchangeFactory -> com.a.a.c:
+    com.xeiam.xchange.ExchangeFactory INSTANCE -> a
+    org.slf4j.Logger log -> b
+    com.xeiam.xchange.ExchangeFactory[] $VALUES -> c
+    com.xeiam.xchange.ExchangeFactory[] values() -> values
+    com.xeiam.xchange.ExchangeFactory valueOf(java.lang.String) -> valueOf
+    com.xeiam.xchange.Exchange createExchange(java.lang.String) -> a
+com.xeiam.xchange.ExchangeSpecification -> com.a.a.d:
+com.xeiam.xchange.dto.Order -> com.a.a.a.a:
+    com.xeiam.xchange.dto.Order$OrderType type -> a
+    java.math.BigDecimal tradableAmount -> b
+    java.lang.String tradableIdentifier -> c
+    java.lang.String transactionCurrency -> d
+    java.lang.String id -> e
+    java.math.BigDecimal getTradableAmount() -> a
+    java.lang.String toString() -> toString
+com.xeiam.xchange.dto.Order$OrderType -> com.a.a.a.b:
+    com.xeiam.xchange.dto.Order$OrderType BID -> a
+    com.xeiam.xchange.dto.Order$OrderType ASK -> b
+    com.xeiam.xchange.dto.Order$OrderType[] $VALUES -> c
+    com.xeiam.xchange.dto.Order$OrderType[] values() -> values
+    com.xeiam.xchange.dto.Order$OrderType valueOf(java.lang.String) -> valueOf
+com.xeiam.xchange.dto.marketdata.OrderBook -> com.a.a.a.a.a:
+    java.util.List asks -> a
+    java.util.List bids -> b
+    java.util.List getAsks() -> a
+    java.util.List getBids() -> b
+    java.lang.String toString() -> toString
+com.xeiam.xchange.dto.marketdata.Ticker -> com.a.a.a.a.b:
+    java.lang.String tradableIdentifier -> a
+    org.joda.money.BigMoney last -> b
+    org.joda.money.BigMoney bid -> c
+    org.joda.money.BigMoney ask -> d
+    org.joda.money.BigMoney high -> e
+    org.joda.money.BigMoney low -> f
+    java.math.BigDecimal volume -> g
+    org.joda.time.DateTime timestamp -> h
+    org.joda.money.BigMoney getLast() -> a
+    org.joda.money.BigMoney getHigh() -> b
+    org.joda.money.BigMoney getLow() -> c
+    java.math.BigDecimal getVolume() -> d
+    java.lang.String toString() -> toString
+com.xeiam.xchange.dto.marketdata.Trade -> com.a.a.a.a.c:
+    com.xeiam.xchange.dto.Order$OrderType type -> a
+    java.math.BigDecimal tradableAmount -> b
+    java.lang.String tradableIdentifier -> c
+    java.lang.String transactionCurrency -> d
+    org.joda.money.BigMoney price -> e
+    org.joda.time.DateTime timestamp -> f
+    org.joda.money.BigMoney getPrice() -> a
+    org.joda.time.DateTime getTimestamp() -> b
+    java.lang.String toString() -> toString
+com.xeiam.xchange.dto.marketdata.Trades -> com.a.a.a.a.d:
+    java.util.List trades -> a
+    java.util.List getTrades() -> a
+    java.lang.String toString() -> toString
+com.xeiam.xchange.dto.trade.LimitOrder -> com.a.a.a.b.a:
+    org.joda.money.BigMoney limitPrice -> a
+    org.joda.money.BigMoney getLimitPrice() -> b
+    java.lang.String toString() -> toString
+com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService -> com.a.a.b.a.a.a:
+    com.xeiam.xchange.dto.marketdata.Ticker getTicker$4250a96d() -> a
+    com.xeiam.xchange.dto.marketdata.OrderBook getFullOrderBook$799bdf9e() -> b
+    com.xeiam.xchange.dto.marketdata.Trades getTrades$33146952() -> c
+org.joda.money.BigMoney -> a.a.a.a:
+    java.util.regex.Pattern PARSE_REGEX -> b
+    org.joda.money.CurrencyUnit currency -> c
+    java.math.BigDecimal amount -> d
+    boolean $assertionsDisabled -> a
+    java.math.BigDecimal getAmount() -> a
+    org.joda.money.BigMoney toBigMoney() -> b
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    int compareTo(java.lang.Object) -> compareTo
+org.joda.money.BigMoneyProvider -> a.a.a.b:
+    org.joda.money.BigMoney toBigMoney() -> b
+org.joda.money.CurrencyMismatchException -> a.a.a.c:
+    org.joda.money.CurrencyUnit firstCurrency -> a
+    org.joda.money.CurrencyUnit secondCurrency -> b
+org.joda.money.CurrencyUnit -> a.a.a.d:
+    java.util.concurrent.ConcurrentMap currenciesByCode -> i
+    java.util.concurrent.ConcurrentMap currenciesByNumericCode -> j
+    java.util.concurrent.ConcurrentMap currenciesByCountry -> k
+    org.joda.money.CurrencyUnit USD -> a
+    org.joda.money.CurrencyUnit EUR -> b
+    org.joda.money.CurrencyUnit JPY -> c
+    org.joda.money.CurrencyUnit GBP -> d
+    org.joda.money.CurrencyUnit CHF -> e
+    org.joda.money.CurrencyUnit AUD -> f
+    org.joda.money.CurrencyUnit CAD -> g
+    java.lang.String code -> l
+    short numericCode -> m
+    short decimalPlaces -> n
+    boolean $assertionsDisabled -> h
+    org.joda.money.CurrencyUnit registerCurrency(java.lang.String,int,int,java.util.List) -> a
+    org.joda.money.CurrencyUnit of(java.lang.String) -> a
+    java.lang.String getCode() -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    int compareTo(java.lang.Object) -> compareTo
+org.joda.money.CurrencyUnitDataProvider -> a.a.a.e:
+    void registerCurrencies() -> a
+org.joda.money.DefaultCurrencyUnitDataProvider -> a.a.a.f:
+    java.util.regex.Pattern REGEX_LINE -> a
+    void registerCurrencies() -> a
+org.joda.money.IllegalCurrencyException -> a.a.a.g:
+org.joda.money.MoneyUtils -> a.a.a.h:
+    void checkNotNull(java.lang.Object,java.lang.String) -> a
+org.joda.time.Chronology -> a.a.b.a:
+    org.joda.time.DateTimeZone getZone() -> a
+    org.joda.time.Chronology withUTC() -> b
+    org.joda.time.Chronology withZone(org.joda.time.DateTimeZone) -> a
+    org.joda.time.DurationField millis() -> c
+    org.joda.time.DateTimeField millisOfSecond() -> d
+    org.joda.time.DateTimeField millisOfDay() -> e
+    org.joda.time.DurationField seconds() -> f
+    org.joda.time.DateTimeField secondOfMinute() -> g
+    org.joda.time.DateTimeField secondOfDay() -> h
+    org.joda.time.DurationField minutes() -> i
+    org.joda.time.DateTimeField minuteOfHour() -> j
+    org.joda.time.DateTimeField minuteOfDay() -> k
+    org.joda.time.DurationField hours() -> l
+    org.joda.time.DateTimeField hourOfDay() -> m
+    org.joda.time.DateTimeField clockhourOfDay() -> n
+    org.joda.time.DurationField halfdays() -> o
+    org.joda.time.DateTimeField hourOfHalfday() -> p
+    org.joda.time.DateTimeField clockhourOfHalfday() -> q
+    org.joda.time.DateTimeField halfdayOfDay() -> r
+    org.joda.time.DurationField days() -> s
+    org.joda.time.DateTimeField dayOfWeek() -> t
+    org.joda.time.DateTimeField dayOfMonth() -> u
+    org.joda.time.DateTimeField dayOfYear() -> v
+    org.joda.time.DurationField weeks() -> w
+    org.joda.time.DateTimeField weekOfWeekyear() -> x
+    org.joda.time.DurationField weekyears() -> y
+    org.joda.time.DateTimeField weekyear() -> z
+    org.joda.time.DateTimeField weekyearOfCentury() -> A
+    org.joda.time.DurationField months() -> B
+    org.joda.time.DateTimeField monthOfYear() -> C
+    org.joda.time.DurationField years() -> D
+    org.joda.time.DateTimeField year() -> E
+    org.joda.time.DateTimeField yearOfEra() -> F
+    org.joda.time.DateTimeField yearOfCentury() -> G
+    org.joda.time.DurationField centuries() -> H
+    org.joda.time.DateTimeField centuryOfEra() -> I
+    org.joda.time.DurationField eras() -> J
+    org.joda.time.DateTimeField era() -> K
+org.joda.time.DateTime -> a.a.b.b:
+org.joda.time.DateTimeField -> a.a.b.c:
+    org.joda.time.DateTimeFieldType getType() -> a
+    java.lang.String getName() -> b
+    boolean isSupported() -> c
+    int get(long) -> a
+    java.lang.String getAsText(long,java.util.Locale) -> a
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(long,java.util.Locale) -> b
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    long set(long,java.lang.String,java.util.Locale) -> a
+    org.joda.time.DurationField getDurationField() -> d
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumTextLength(java.util.Locale) -> a
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+org.joda.time.DateTimeFieldType -> a.a.b.d:
+    org.joda.time.DateTimeFieldType ERA_TYPE -> a
+    org.joda.time.DateTimeFieldType YEAR_OF_ERA_TYPE -> b
+    org.joda.time.DateTimeFieldType CENTURY_OF_ERA_TYPE -> c
+    org.joda.time.DateTimeFieldType YEAR_OF_CENTURY_TYPE -> d
+    org.joda.time.DateTimeFieldType YEAR_TYPE -> e
+    org.joda.time.DateTimeFieldType DAY_OF_YEAR_TYPE -> f
+    org.joda.time.DateTimeFieldType MONTH_OF_YEAR_TYPE -> g
+    org.joda.time.DateTimeFieldType DAY_OF_MONTH_TYPE -> h
+    org.joda.time.DateTimeFieldType WEEKYEAR_OF_CENTURY_TYPE -> i
+    org.joda.time.DateTimeFieldType WEEKYEAR_TYPE -> j
+    org.joda.time.DateTimeFieldType WEEK_OF_WEEKYEAR_TYPE -> k
+    org.joda.time.DateTimeFieldType DAY_OF_WEEK_TYPE -> l
+    org.joda.time.DateTimeFieldType HALFDAY_OF_DAY_TYPE -> m
+    org.joda.time.DateTimeFieldType HOUR_OF_HALFDAY_TYPE -> n
+    org.joda.time.DateTimeFieldType CLOCKHOUR_OF_HALFDAY_TYPE -> o
+    org.joda.time.DateTimeFieldType CLOCKHOUR_OF_DAY_TYPE -> p
+    org.joda.time.DateTimeFieldType HOUR_OF_DAY_TYPE -> q
+    org.joda.time.DateTimeFieldType MINUTE_OF_DAY_TYPE -> r
+    org.joda.time.DateTimeFieldType MINUTE_OF_HOUR_TYPE -> s
+    org.joda.time.DateTimeFieldType SECOND_OF_DAY_TYPE -> t
+    org.joda.time.DateTimeFieldType SECOND_OF_MINUTE_TYPE -> u
+    org.joda.time.DateTimeFieldType MILLIS_OF_DAY_TYPE -> v
+    org.joda.time.DateTimeFieldType MILLIS_OF_SECOND_TYPE -> w
+    java.lang.String iName -> x
+    org.joda.time.DateTimeFieldType millisOfSecond() -> a
+    org.joda.time.DateTimeFieldType millisOfDay() -> b
+    org.joda.time.DateTimeFieldType secondOfMinute() -> c
+    org.joda.time.DateTimeFieldType secondOfDay() -> d
+    org.joda.time.DateTimeFieldType minuteOfHour() -> e
+    org.joda.time.DateTimeFieldType minuteOfDay() -> f
+    org.joda.time.DateTimeFieldType hourOfDay() -> g
+    org.joda.time.DateTimeFieldType clockhourOfDay() -> h
+    org.joda.time.DateTimeFieldType hourOfHalfday() -> i
+    org.joda.time.DateTimeFieldType clockhourOfHalfday() -> j
+    org.joda.time.DateTimeFieldType halfdayOfDay() -> k
+    org.joda.time.DateTimeFieldType dayOfWeek() -> l
+    org.joda.time.DateTimeFieldType dayOfMonth() -> m
+    org.joda.time.DateTimeFieldType dayOfYear() -> n
+    org.joda.time.DateTimeFieldType weekOfWeekyear() -> o
+    org.joda.time.DateTimeFieldType weekyear() -> p
+    org.joda.time.DateTimeFieldType weekyearOfCentury() -> q
+    org.joda.time.DateTimeFieldType monthOfYear() -> r
+    org.joda.time.DateTimeFieldType year() -> s
+    org.joda.time.DateTimeFieldType yearOfEra() -> t
+    org.joda.time.DateTimeFieldType yearOfCentury() -> u
+    org.joda.time.DateTimeFieldType centuryOfEra() -> v
+    org.joda.time.DateTimeFieldType era() -> w
+    java.lang.String getName() -> x
+    org.joda.time.DurationFieldType getDurationType() -> y
+    org.joda.time.DurationFieldType getRangeDurationType() -> z
+    org.joda.time.DateTimeField getField(org.joda.time.Chronology) -> a
+    java.lang.String toString() -> toString
+org.joda.time.DateTimeFieldType$StandardDateTimeFieldType -> a.a.b.e:
+    byte iOrdinal -> a
+    org.joda.time.DurationFieldType iUnitType -> b
+    org.joda.time.DurationFieldType iRangeType -> c
+    org.joda.time.DurationFieldType getDurationType() -> y
+    org.joda.time.DurationFieldType getRangeDurationType() -> z
+    org.joda.time.DateTimeField getField(org.joda.time.Chronology) -> a
+org.joda.time.DateTimeUtils -> a.a.b.f:
+    org.joda.time.DateTimeUtils$SystemMillisProvider SYSTEM_MILLIS_PROVIDER -> a
+    org.joda.time.DateTimeUtils$MillisProvider cMillisProvider -> b
+    long currentTimeMillis() -> a
+    long getInstantMillis(org.joda.time.ReadableInstant) -> a
+    org.joda.time.Chronology getInstantChronology(org.joda.time.ReadableInstant) -> b
+    org.joda.time.Chronology getChronology(org.joda.time.Chronology) -> a
+org.joda.time.DateTimeUtils$MillisProvider -> a.a.b.g:
+    long getMillis() -> a
+org.joda.time.DateTimeUtils$SystemMillisProvider -> a.a.b.h:
+    long getMillis() -> a
+org.joda.time.DateTimeZone -> a.a.b.i:
+    org.joda.time.DateTimeZone UTC -> a
+    org.joda.time.tz.Provider cProvider -> c
+    org.joda.time.tz.NameProvider cNameProvider -> d
+    java.util.Set cAvailableIDs -> e
+    org.joda.time.DateTimeZone cDefault -> f
+    org.joda.time.format.DateTimeFormatter cOffsetFormatter -> g
+    java.util.Map iFixedOffsetCache -> h
+    java.util.Map cZoneIdConversion -> i
+    java.lang.String iID -> j
+    java.lang.Class class$org$joda$time$DateTimeZone -> b
+    org.joda.time.DateTimeZone getDefault() -> a
+    org.joda.time.DateTimeZone fixedOffsetZone(java.lang.String,int) -> a
+    org.joda.time.tz.Provider getDefaultProvider() -> d
+    org.joda.time.tz.NameProvider getDefaultNameProvider() -> e
+    java.lang.String getConvertedId(java.lang.String) -> a
+    int parseOffset(java.lang.String) -> b
+    java.lang.String printOffset(int) -> a
+    org.joda.time.format.DateTimeFormatter offsetFormatter() -> f
+    java.lang.String getID() -> b
+    java.lang.String getNameKey(long) -> a
+    java.lang.String getShortName(long,java.util.Locale) -> a
+    java.lang.String getName(long,java.util.Locale) -> b
+    int getOffset(long) -> b
+    int getOffsetFromLocal(long) -> c
+    long convertUTCToLocal(long) -> d
+    long convertLocalToUTC$256a6b9(long) -> e
+    boolean isFixed() -> c
+    long nextTransition(long) -> f
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    java.lang.Class class$(java.lang.String) -> c
+org.joda.time.DateTimeZone$1 -> a.a.b.j:
+    org.joda.time.DateTimeZone getZone() -> a
+    org.joda.time.Chronology withUTC() -> b
+    org.joda.time.Chronology withZone(org.joda.time.DateTimeZone) -> a
+    java.lang.String toString() -> toString
+org.joda.time.DurationField -> a.a.b.k:
+    org.joda.time.DurationFieldType getType() -> a
+    boolean isSupported() -> b
+    boolean isPrecise() -> c
+    long getUnitMillis() -> d
+    long add(long,int) -> a
+    long add(long,long) -> a
+    int compareTo(java.lang.Object) -> compareTo
+org.joda.time.DurationFieldType -> a.a.b.l:
+    org.joda.time.DurationFieldType ERAS_TYPE -> a
+    org.joda.time.DurationFieldType CENTURIES_TYPE -> b
+    org.joda.time.DurationFieldType WEEKYEARS_TYPE -> c
+    org.joda.time.DurationFieldType YEARS_TYPE -> d
+    org.joda.time.DurationFieldType MONTHS_TYPE -> e
+    org.joda.time.DurationFieldType WEEKS_TYPE -> f
+    org.joda.time.DurationFieldType DAYS_TYPE -> g
+    org.joda.time.DurationFieldType HALFDAYS_TYPE -> h
+    org.joda.time.DurationFieldType HOURS_TYPE -> i
+    org.joda.time.DurationFieldType MINUTES_TYPE -> j
+    org.joda.time.DurationFieldType SECONDS_TYPE -> k
+    org.joda.time.DurationFieldType MILLIS_TYPE -> l
+    java.lang.String iName -> m
+    org.joda.time.DurationFieldType millis() -> a
+    org.joda.time.DurationFieldType seconds() -> b
+    org.joda.time.DurationFieldType minutes() -> c
+    org.joda.time.DurationFieldType hours() -> d
+    org.joda.time.DurationFieldType halfdays() -> e
+    org.joda.time.DurationFieldType days() -> f
+    org.joda.time.DurationFieldType weeks() -> g
+    org.joda.time.DurationFieldType weekyears() -> h
+    org.joda.time.DurationFieldType months() -> i
+    org.joda.time.DurationFieldType years() -> j
+    org.joda.time.DurationFieldType centuries() -> k
+    org.joda.time.DurationFieldType eras() -> l
+    java.lang.String getName() -> m
+    java.lang.String toString() -> toString
+org.joda.time.DurationFieldType$StandardDurationFieldType -> a.a.b.m:
+    byte iOrdinal -> m
+org.joda.time.IllegalFieldValueException -> a.a.b.n:
+    org.joda.time.DateTimeFieldType iDateTimeFieldType -> a
+    org.joda.time.DurationFieldType iDurationFieldType -> b
+    java.lang.String iFieldName -> c
+    java.lang.Number iNumberValue -> d
+    java.lang.String iStringValue -> e
+    java.lang.Number iLowerBound -> f
+    java.lang.Number iUpperBound -> g
+    java.lang.String iMessage -> h
+    java.lang.String createMessage(java.lang.String,java.lang.Number,java.lang.Number,java.lang.Number,java.lang.String) -> a
+    java.lang.String getMessage() -> getMessage
+    void prependMessage(java.lang.String) -> a
+org.joda.time.Instant -> a.a.b.o:
+    long iMillis -> a
+    long getMillis() -> a
+    org.joda.time.Chronology getChronology() -> b
+org.joda.time.MutableDateTime -> a.a.b.p:
+    org.joda.time.DateTimeField iRoundingField -> a
+    int iRoundingMode -> b
+    void setMillis(long) -> a
+    org.joda.time.MutableDateTime$Property property(org.joda.time.DateTimeFieldType) -> a
+    java.lang.Object clone() -> clone
+    java.lang.String toString() -> toString
+org.joda.time.MutableDateTime$Property -> a.a.b.q:
+    org.joda.time.MutableDateTime iInstant -> a
+    org.joda.time.DateTimeField iField -> b
+    org.joda.time.DateTimeField getField() -> a
+    long getMillis() -> b
+    org.joda.time.Chronology getChronology() -> c
+    org.joda.time.MutableDateTime set(int) -> a
+org.joda.time.ReadWritableDateTime -> a.a.b.r:
+org.joda.time.ReadWritableInstant -> a.a.b.s:
+org.joda.time.ReadableDateTime -> a.a.b.t:
+org.joda.time.ReadableInstant -> a.a.b.u:
+    long getMillis() -> a
+    org.joda.time.Chronology getChronology() -> b
+org.joda.time.base.AbstractDateTime -> a.a.b.a.a:
+    int getYear() -> c
+    int getWeekyear() -> d
+org.joda.time.base.AbstractInstant -> a.a.b.a.b:
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    int compareTo(java.lang.Object) -> compareTo
+    java.lang.String toString() -> toString
+org.joda.time.base.BaseDateTime -> a.a.b.a.c:
+    long iMillis -> a
+    org.joda.time.Chronology iChronology -> b
+    long getMillis() -> a
+    org.joda.time.Chronology getChronology() -> b
+    void setMillis(long) -> a
+org.joda.time.chrono.AssembledChronology -> a.a.b.b.a:
+    org.joda.time.Chronology iBase -> a
+    java.lang.Object iParam -> b
+    org.joda.time.DurationField iMillis -> c
+    org.joda.time.DurationField iSeconds -> d
+    org.joda.time.DurationField iMinutes -> e
+    org.joda.time.DurationField iHours -> f
+    org.joda.time.DurationField iHalfdays -> g
+    org.joda.time.DurationField iDays -> h
+    org.joda.time.DurationField iWeeks -> i
+    org.joda.time.DurationField iWeekyears -> j
+    org.joda.time.DurationField iMonths -> k
+    org.joda.time.DurationField iYears -> l
+    org.joda.time.DurationField iCenturies -> m
+    org.joda.time.DurationField iEras -> n
+    org.joda.time.DateTimeField iMillisOfSecond -> o
+    org.joda.time.DateTimeField iMillisOfDay -> p
+    org.joda.time.DateTimeField iSecondOfMinute -> q
+    org.joda.time.DateTimeField iSecondOfDay -> r
+    org.joda.time.DateTimeField iMinuteOfHour -> s
+    org.joda.time.DateTimeField iMinuteOfDay -> t
+    org.joda.time.DateTimeField iHourOfDay -> u
+    org.joda.time.DateTimeField iClockhourOfDay -> v
+    org.joda.time.DateTimeField iHourOfHalfday -> w
+    org.joda.time.DateTimeField iClockhourOfHalfday -> x
+    org.joda.time.DateTimeField iHalfdayOfDay -> y
+    org.joda.time.DateTimeField iDayOfWeek -> z
+    org.joda.time.DateTimeField iDayOfMonth -> A
+    org.joda.time.DateTimeField iDayOfYear -> B
+    org.joda.time.DateTimeField iWeekOfWeekyear -> C
+    org.joda.time.DateTimeField iWeekyear -> D
+    org.joda.time.DateTimeField iWeekyearOfCentury -> E
+    org.joda.time.DateTimeField iMonthOfYear -> F
+    org.joda.time.DateTimeField iYear -> G
+    org.joda.time.DateTimeField iYearOfEra -> H
+    org.joda.time.DateTimeField iYearOfCentury -> I
+    org.joda.time.DateTimeField iCenturyOfEra -> J
+    org.joda.time.DateTimeField iEra -> K
+    int iBaseFlags -> L
+    org.joda.time.DateTimeZone getZone() -> a
+    org.joda.time.DurationField millis() -> c
+    org.joda.time.DateTimeField millisOfSecond() -> d
+    org.joda.time.DateTimeField millisOfDay() -> e
+    org.joda.time.DurationField seconds() -> f
+    org.joda.time.DateTimeField secondOfMinute() -> g
+    org.joda.time.DateTimeField secondOfDay() -> h
+    org.joda.time.DurationField minutes() -> i
+    org.joda.time.DateTimeField minuteOfHour() -> j
+    org.joda.time.DateTimeField minuteOfDay() -> k
+    org.joda.time.DurationField hours() -> l
+    org.joda.time.DateTimeField hourOfDay() -> m
+    org.joda.time.DateTimeField clockhourOfDay() -> n
+    org.joda.time.DurationField halfdays() -> o
+    org.joda.time.DateTimeField hourOfHalfday() -> p
+    org.joda.time.DateTimeField clockhourOfHalfday() -> q
+    org.joda.time.DateTimeField halfdayOfDay() -> r
+    org.joda.time.DurationField days() -> s
+    org.joda.time.DateTimeField dayOfWeek() -> t
+    org.joda.time.DateTimeField dayOfMonth() -> u
+    org.joda.time.DateTimeField dayOfYear() -> v
+    org.joda.time.DurationField weeks() -> w
+    org.joda.time.DateTimeField weekOfWeekyear() -> x
+    org.joda.time.DurationField weekyears() -> y
+    org.joda.time.DateTimeField weekyear() -> z
+    org.joda.time.DateTimeField weekyearOfCentury() -> A
+    org.joda.time.DurationField months() -> B
+    org.joda.time.DateTimeField monthOfYear() -> C
+    org.joda.time.DurationField years() -> D
+    org.joda.time.DateTimeField year() -> E
+    org.joda.time.DateTimeField yearOfEra() -> F
+    org.joda.time.DateTimeField yearOfCentury() -> G
+    org.joda.time.DurationField centuries() -> H
+    org.joda.time.DateTimeField centuryOfEra() -> I
+    org.joda.time.DurationField eras() -> J
+    org.joda.time.DateTimeField era() -> K
+    void assemble(org.joda.time.chrono.AssembledChronology$Fields) -> a
+    org.joda.time.Chronology getBase() -> L
+    java.lang.Object getParam() -> M
+org.joda.time.chrono.AssembledChronology$Fields -> a.a.b.b.b:
+    org.joda.time.DurationField millis -> a
+    org.joda.time.DurationField seconds -> b
+    org.joda.time.DurationField minutes -> c
+    org.joda.time.DurationField hours -> d
+    org.joda.time.DurationField halfdays -> e
+    org.joda.time.DurationField days -> f
+    org.joda.time.DurationField weeks -> g
+    org.joda.time.DurationField weekyears -> h
+    org.joda.time.DurationField months -> i
+    org.joda.time.DurationField years -> j
+    org.joda.time.DurationField centuries -> k
+    org.joda.time.DurationField eras -> l
+    org.joda.time.DateTimeField millisOfSecond -> m
+    org.joda.time.DateTimeField millisOfDay -> n
+    org.joda.time.DateTimeField secondOfMinute -> o
+    org.joda.time.DateTimeField secondOfDay -> p
+    org.joda.time.DateTimeField minuteOfHour -> q
+    org.joda.time.DateTimeField minuteOfDay -> r
+    org.joda.time.DateTimeField hourOfDay -> s
+    org.joda.time.DateTimeField clockhourOfDay -> t
+    org.joda.time.DateTimeField hourOfHalfday -> u
+    org.joda.time.DateTimeField clockhourOfHalfday -> v
+    org.joda.time.DateTimeField halfdayOfDay -> w
+    org.joda.time.DateTimeField dayOfWeek -> x
+    org.joda.time.DateTimeField dayOfMonth -> y
+    org.joda.time.DateTimeField dayOfYear -> z
+    org.joda.time.DateTimeField weekOfWeekyear -> A
+    org.joda.time.DateTimeField weekyear -> B
+    org.joda.time.DateTimeField weekyearOfCentury -> C
+    org.joda.time.DateTimeField monthOfYear -> D
+    org.joda.time.DateTimeField year -> E
+    org.joda.time.DateTimeField yearOfEra -> F
+    org.joda.time.DateTimeField yearOfCentury -> G
+    org.joda.time.DateTimeField centuryOfEra -> H
+    org.joda.time.DateTimeField era -> I
+    void copyFieldsFrom(org.joda.time.Chronology) -> a
+    boolean isSupported(org.joda.time.DurationField) -> a
+    boolean isSupported(org.joda.time.DateTimeField) -> a
+org.joda.time.chrono.BaseChronology -> a.a.b.b.c:
+    org.joda.time.DurationField millis() -> c
+    org.joda.time.DateTimeField millisOfSecond() -> d
+    org.joda.time.DateTimeField millisOfDay() -> e
+    org.joda.time.DurationField seconds() -> f
+    org.joda.time.DateTimeField secondOfMinute() -> g
+    org.joda.time.DateTimeField secondOfDay() -> h
+    org.joda.time.DurationField minutes() -> i
+    org.joda.time.DateTimeField minuteOfHour() -> j
+    org.joda.time.DateTimeField minuteOfDay() -> k
+    org.joda.time.DurationField hours() -> l
+    org.joda.time.DateTimeField hourOfDay() -> m
+    org.joda.time.DateTimeField clockhourOfDay() -> n
+    org.joda.time.DurationField halfdays() -> o
+    org.joda.time.DateTimeField hourOfHalfday() -> p
+    org.joda.time.DateTimeField clockhourOfHalfday() -> q
+    org.joda.time.DateTimeField halfdayOfDay() -> r
+    org.joda.time.DurationField days() -> s
+    org.joda.time.DateTimeField dayOfWeek() -> t
+    org.joda.time.DateTimeField dayOfMonth() -> u
+    org.joda.time.DateTimeField dayOfYear() -> v
+    org.joda.time.DurationField weeks() -> w
+    org.joda.time.DateTimeField weekOfWeekyear() -> x
+    org.joda.time.DurationField weekyears() -> y
+    org.joda.time.DateTimeField weekyear() -> z
+    org.joda.time.DateTimeField weekyearOfCentury() -> A
+    org.joda.time.DurationField months() -> B
+    org.joda.time.DateTimeField monthOfYear() -> C
+    org.joda.time.DurationField years() -> D
+    org.joda.time.DateTimeField year() -> E
+    org.joda.time.DateTimeField yearOfEra() -> F
+    org.joda.time.DateTimeField yearOfCentury() -> G
+    org.joda.time.DurationField centuries() -> H
+    org.joda.time.DateTimeField centuryOfEra() -> I
+    org.joda.time.DurationField eras() -> J
+    org.joda.time.DateTimeField era() -> K
+org.joda.time.chrono.BasicChronology -> a.a.b.b.d:
+    org.joda.time.DurationField cMillisField -> a
+    org.joda.time.DurationField cSecondsField -> b
+    org.joda.time.DurationField cMinutesField -> c
+    org.joda.time.DurationField cHoursField -> d
+    org.joda.time.DurationField cHalfdaysField -> e
+    org.joda.time.DurationField cDaysField -> f
+    org.joda.time.DurationField cWeeksField -> g
+    org.joda.time.DateTimeField cMillisOfSecondField -> h
+    org.joda.time.DateTimeField cMillisOfDayField -> i
+    org.joda.time.DateTimeField cSecondOfMinuteField -> j
+    org.joda.time.DateTimeField cSecondOfDayField -> k
+    org.joda.time.DateTimeField cMinuteOfHourField -> l
+    org.joda.time.DateTimeField cMinuteOfDayField -> m
+    org.joda.time.DateTimeField cHourOfDayField -> n
+    org.joda.time.DateTimeField cHourOfHalfdayField -> o
+    org.joda.time.DateTimeField cClockhourOfDayField -> p
+    org.joda.time.DateTimeField cClockhourOfHalfdayField -> q
+    org.joda.time.DateTimeField cHalfdayOfDayField -> r
+    org.joda.time.chrono.BasicChronology$YearInfo[] iYearInfoCache -> s
+    int iMinDaysInFirstWeek -> t
+    org.joda.time.DateTimeZone getZone() -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    void assemble(org.joda.time.chrono.AssembledChronology$Fields) -> a
+    int getDaysInYearMax() -> N
+    int getDaysInYear(int) -> a
+    int getWeeksInYear(int) -> b
+    long getFirstWeekOfYearMillis(int) -> f
+    long getYearMillis(int) -> c
+    long getYearMonthMillis(int,int) -> a
+    long getYearMonthDayMillis(int,int,int) -> a
+    int getYear(long) -> a
+    int getMonthOfYear(long) -> b
+    int getMonthOfYear(long,int) -> a
+    int getDayOfMonth(long) -> c
+    int getDayOfMonth(long,int) -> b
+    int getDayOfMonth(long,int,int) -> a
+    int getDayOfYear(long) -> d
+    int getDayOfYear(long,int) -> c
+    int getWeekyear(long) -> e
+    int getWeekOfWeekyear(long) -> f
+    int getWeekOfWeekyear(long,int) -> f
+    int getDayOfWeek(long) -> g
+    int getMillisOfDay(long) -> h
+    int getDaysInMonthMax() -> O
+    int getDaysInMonthMax(long) -> i
+    int getDaysInMonthMaxForSet(long,int) -> d
+    boolean isLeapYear(int) -> d
+    int getDaysInYearMonth(int,int) -> b
+    long getTotalMillisByYearMonth(int,int) -> c
+    long calculateFirstDayOfYearMillis(int) -> e
+    int getMinYear() -> P
+    int getMaxYear() -> Q
+    int getMaxMonth() -> R
+    long getAverageMillisPerYear() -> S
+    long getAverageMillisPerMonth() -> T
+    long setYear(long,int) -> e
+    org.joda.time.DurationField access$000() -> U
+    org.joda.time.DurationField access$100() -> V
+org.joda.time.chrono.BasicChronology$HalfdayField -> a.a.b.b.e:
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    long set(long,java.lang.String,java.util.Locale) -> a
+    int getMaximumTextLength(java.util.Locale) -> a
+org.joda.time.chrono.BasicChronology$YearInfo -> a.a.b.b.f:
+    int iYear -> a
+    long iFirstDayMillis -> b
+org.joda.time.chrono.BasicDayOfMonthDateTimeField -> a.a.b.b.g:
+    org.joda.time.chrono.BasicChronology iChronology -> b
+    int get(long) -> a
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumValueForSet(long,int) -> c
+org.joda.time.chrono.BasicDayOfYearDateTimeField -> a.a.b.b.h:
+    org.joda.time.chrono.BasicChronology iChronology -> b
+    int get(long) -> a
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumValueForSet(long,int) -> c
+org.joda.time.chrono.BasicGJChronology -> a.a.b.b.i:
+    int[] MIN_DAYS_PER_MONTH_ARRAY -> a
+    int[] MAX_DAYS_PER_MONTH_ARRAY -> b
+    long[] MIN_TOTAL_MILLIS_BY_MONTH_ARRAY -> c
+    long[] MAX_TOTAL_MILLIS_BY_MONTH_ARRAY -> d
+    int getMonthOfYear(long,int) -> a
+    int getDaysInYearMonth(int,int) -> b
+    int getDaysInMonthMaxForSet(long,int) -> d
+    long getTotalMillisByYearMonth(int,int) -> c
+    long setYear(long,int) -> e
+org.joda.time.chrono.BasicMonthOfYearDateTimeField -> a.a.b.b.j:
+    org.joda.time.chrono.BasicChronology iChronology -> a
+    int iMax -> c
+    int iLeapMonth -> d
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long remainder(long) -> i
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField -> a.a.b.b.k:
+    org.joda.time.chrono.BasicChronology iChronology -> b
+    int get(long) -> a
+    org.joda.time.DurationField getRangeDurationField() -> e
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumValueForSet(long,int) -> c
+org.joda.time.chrono.BasicWeekyearDateTimeField -> a.a.b.b.l:
+    org.joda.time.chrono.BasicChronology iChronology -> a
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long remainder(long) -> i
+org.joda.time.chrono.BasicYearDateTimeField -> a.a.b.b.m:
+    org.joda.time.chrono.BasicChronology iChronology -> a
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+org.joda.time.chrono.GJDayOfWeekDateTimeField -> a.a.b.b.n:
+    org.joda.time.chrono.BasicChronology iChronology -> b
+    int get(long) -> a
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    int convertText(java.lang.String,java.util.Locale) -> a
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumTextLength(java.util.Locale) -> a
+org.joda.time.chrono.GJEraDateTimeField -> a.a.b.b.o:
+    org.joda.time.chrono.BasicChronology iChronology -> a
+    int get(long) -> a
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    long set(long,int) -> b
+    long set(long,java.lang.String,java.util.Locale) -> a
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    org.joda.time.DurationField getDurationField() -> d
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumTextLength(java.util.Locale) -> a
+org.joda.time.chrono.GJLocaleSymbols -> a.a.b.b.p:
+    org.joda.time.chrono.GJLocaleSymbols[] cFastCache -> a
+    java.util.WeakHashMap cCache -> b
+    java.lang.ref.WeakReference iLocale -> c
+    java.lang.String[] iEras -> d
+    java.lang.String[] iDaysOfWeek -> e
+    java.lang.String[] iShortDaysOfWeek -> f
+    java.lang.String[] iMonths -> g
+    java.lang.String[] iShortMonths -> h
+    java.lang.String[] iHalfday -> i
+    java.util.TreeMap iParseEras -> j
+    java.util.TreeMap iParseDaysOfWeek -> k
+    java.util.TreeMap iParseMonths -> l
+    int iMaxEraLength -> m
+    int iMaxDayOfWeekLength -> n
+    int iMaxShortDayOfWeekLength -> o
+    int iMaxMonthLength -> p
+    int iMaxShortMonthLength -> q
+    int iMaxHalfdayLength -> r
+    org.joda.time.chrono.GJLocaleSymbols forLocale(java.util.Locale) -> a
+    java.lang.String[] realignMonths(java.lang.String[]) -> a
+    java.lang.String[] realignDaysOfWeek(java.lang.String[]) -> b
+    void addSymbols(java.util.TreeMap,java.lang.String[],java.lang.Integer[]) -> a
+    void addNumerals$31159a50(java.util.TreeMap,int,java.lang.Integer[]) -> a
+    int maxLength(java.lang.String[]) -> c
+    java.lang.String eraValueToText(int) -> a
+    int eraTextToValue(java.lang.String) -> a
+    int getEraMaxTextLength() -> a
+    java.lang.String monthOfYearValueToText(int) -> b
+    java.lang.String monthOfYearValueToShortText(int) -> c
+    int monthOfYearTextToValue(java.lang.String) -> b
+    int getMonthMaxTextLength() -> b
+    java.lang.String dayOfWeekValueToText(int) -> d
+    java.lang.String dayOfWeekValueToShortText(int) -> e
+    int dayOfWeekTextToValue(java.lang.String) -> c
+    int getDayOfWeekMaxTextLength() -> c
+    java.lang.String halfdayValueToText(int) -> f
+    int halfdayTextToValue(java.lang.String) -> d
+    int getHalfdayMaxTextLength() -> d
+org.joda.time.chrono.GJMonthOfYearDateTimeField -> a.a.b.b.q:
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    int convertText(java.lang.String,java.util.Locale) -> a
+    int getMaximumTextLength(java.util.Locale) -> a
+org.joda.time.chrono.GJYearOfEraDateTimeField -> a.a.b.b.r:
+    org.joda.time.chrono.BasicChronology iChronology -> a
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+org.joda.time.chrono.GregorianChronology -> a.a.b.b.s:
+    org.joda.time.chrono.GregorianChronology INSTANCE_UTC -> a
+    java.util.Map cCache -> b
+    org.joda.time.chrono.GregorianChronology getInstanceUTC() -> W
+    org.joda.time.chrono.GregorianChronology getInstance(org.joda.time.DateTimeZone,int) -> a
+    org.joda.time.Chronology withUTC() -> b
+    org.joda.time.Chronology withZone(org.joda.time.DateTimeZone) -> a
+    void assemble(org.joda.time.chrono.AssembledChronology$Fields) -> a
+    boolean isLeapYear(int) -> d
+    long calculateFirstDayOfYearMillis(int) -> e
+    int getMinYear() -> P
+    int getMaxYear() -> Q
+    long getAverageMillisPerYear() -> S
+    long getAverageMillisPerMonth() -> T
+org.joda.time.chrono.ISOChronology -> a.a.b.b.t:
+    org.joda.time.chrono.ISOChronology INSTANCE_UTC -> a
+    org.joda.time.chrono.ISOChronology[] cFastCache -> b
+    java.util.Map cCache -> c
+    org.joda.time.chrono.ISOChronology getInstanceUTC() -> N
+    org.joda.time.chrono.ISOChronology getInstance() -> O
+    org.joda.time.chrono.ISOChronology getInstance(org.joda.time.DateTimeZone) -> b
+    org.joda.time.Chronology withUTC() -> b
+    org.joda.time.Chronology withZone(org.joda.time.DateTimeZone) -> a
+    java.lang.String toString() -> toString
+    void assemble(org.joda.time.chrono.AssembledChronology$Fields) -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+org.joda.time.chrono.ISOYearOfEraDateTimeField -> a.a.b.b.u:
+    org.joda.time.DateTimeField INSTANCE -> a
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+org.joda.time.chrono.ZonedChronology -> a.a.b.b.v:
+    org.joda.time.chrono.ZonedChronology getInstance(org.joda.time.Chronology,org.joda.time.DateTimeZone) -> a
+    boolean useTimeArithmetic(org.joda.time.DurationField) -> a
+    org.joda.time.DateTimeZone getZone() -> a
+    org.joda.time.Chronology withUTC() -> b
+    org.joda.time.Chronology withZone(org.joda.time.DateTimeZone) -> a
+    void assemble(org.joda.time.chrono.AssembledChronology$Fields) -> a
+    org.joda.time.DurationField convertField(org.joda.time.DurationField,java.util.HashMap) -> a
+    org.joda.time.DateTimeField convertField(org.joda.time.DateTimeField,java.util.HashMap) -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+org.joda.time.chrono.ZonedChronology$ZonedDateTimeField -> a.a.b.b.w:
+    org.joda.time.DateTimeField iField -> a
+    org.joda.time.DateTimeZone iZone -> b
+    org.joda.time.DurationField iDurationField -> c
+    boolean iTimeField -> d
+    org.joda.time.DurationField iRangeDurationField -> e
+    org.joda.time.DurationField iLeapDurationField -> f
+    int get(long) -> a
+    java.lang.String getAsText(long,java.util.Locale) -> a
+    java.lang.String getAsShortText(long,java.util.Locale) -> b
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    long set(long,java.lang.String,java.util.Locale) -> a
+    org.joda.time.DurationField getDurationField() -> d
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumTextLength(java.util.Locale) -> a
+    int getOffsetToAdd(long) -> j
+org.joda.time.chrono.ZonedChronology$ZonedDurationField -> a.a.b.b.x:
+    org.joda.time.DurationField iField -> a
+    boolean iTimeField -> b
+    org.joda.time.DateTimeZone iZone -> c
+    boolean isPrecise() -> c
+    long getUnitMillis() -> d
+    long add(long,int) -> a
+    long add(long,long) -> a
+    int getOffsetToAdd(long) -> a
+    int getOffsetFromLocalToSubtract(long) -> b
+org.joda.time.field.AbstractReadableInstantFieldProperty -> a.a.b.c.a:
+    org.joda.time.DateTimeField getField() -> a
+    long getMillis() -> b
+    org.joda.time.Chronology getChronology() -> c
+    int get() -> f
+    java.lang.String getAsText(java.util.Locale) -> a
+    java.lang.String getAsShortText(java.util.Locale) -> b
+    int getMinimumValueOverall() -> d
+    int getMaximumValueOverall() -> e
+    int getMaximumTextLength(java.util.Locale) -> c
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+org.joda.time.field.BaseDateTimeField -> a.a.b.c.b:
+    org.joda.time.DateTimeFieldType iType -> a
+    org.joda.time.DateTimeFieldType getType() -> a
+    java.lang.String getName() -> b
+    boolean isSupported() -> c
+    int get(long) -> a
+    java.lang.String getAsText(long,java.util.Locale) -> a
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(long,java.util.Locale) -> b
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    long set(long,java.lang.String,java.util.Locale) -> a
+    int convertText(java.lang.String,java.util.Locale) -> a
+    org.joda.time.DurationField getDurationField() -> d
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumTextLength(java.util.Locale) -> a
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+    java.lang.String toString() -> toString
+org.joda.time.field.BaseDurationField -> a.a.b.c.c:
+    org.joda.time.DurationFieldType iType -> a
+    org.joda.time.DurationFieldType getType() -> a
+    boolean isSupported() -> b
+    int compareTo(java.lang.Object) -> compareTo
+    java.lang.String toString() -> toString
+org.joda.time.field.DecoratedDateTimeField -> a.a.b.c.d:
+    org.joda.time.DateTimeField iField -> a
+    org.joda.time.DateTimeField getWrappedField() -> i
+    int get(long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getDurationField() -> d
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+org.joda.time.field.DecoratedDurationField -> a.a.b.c.e:
+    org.joda.time.DurationField iField -> a
+    org.joda.time.DurationField getWrappedField() -> e
+    boolean isPrecise() -> c
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long getUnitMillis() -> d
+org.joda.time.field.DividedDateTimeField -> a.a.b.c.f:
+    int iDivisor -> a
+    org.joda.time.DurationField iDurationField -> b
+    int iMin -> c
+    int iMax -> d
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getDurationField() -> d
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long remainder(long) -> i
+org.joda.time.field.FieldUtils -> a.a.b.c.g:
+    long safeAdd(long,long) -> a
+    int safeToInt(long) -> a
+    void verifyValueBounds(org.joda.time.DateTimeField,int,int,int) -> a
+    boolean equals(java.lang.Object,java.lang.Object) -> a
+org.joda.time.field.ImpreciseDateTimeField -> a.a.b.c.h:
+    long iUnitMillis -> b
+    org.joda.time.DurationField iDurationField -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    org.joda.time.DurationField getDurationField() -> d
+org.joda.time.field.ImpreciseDateTimeField$LinkedDurationField -> a.a.b.c.i:
+    org.joda.time.field.ImpreciseDateTimeField this$0 -> a
+    boolean isPrecise() -> c
+    long getUnitMillis() -> d
+    long add(long,int) -> a
+    long add(long,long) -> a
+org.joda.time.field.MillisDurationField -> a.a.b.c.j:
+    org.joda.time.DurationField INSTANCE -> a
+    org.joda.time.DurationFieldType getType() -> a
+    boolean isSupported() -> b
+    boolean isPrecise() -> c
+    long getUnitMillis() -> d
+    long add(long,int) -> a
+    long add(long,long) -> a
+    int compareTo(java.lang.Object) -> compareTo
+    java.lang.String toString() -> toString
+org.joda.time.field.OffsetDateTimeField -> a.a.b.c.k:
+    int iOffset -> a
+    int iMin -> b
+    int iMax -> c
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+org.joda.time.field.PreciseDateTimeField -> a.a.b.c.l:
+    int iRange -> b
+    org.joda.time.DurationField iRangeField -> c
+    int get(long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMaximumValue() -> h
+org.joda.time.field.PreciseDurationDateTimeField -> a.a.b.c.m:
+    long iUnitMillis -> a
+    org.joda.time.DurationField iUnitField -> b
+    long set(long,int) -> b
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long remainder(long) -> i
+    org.joda.time.DurationField getDurationField() -> d
+    int getMinimumValue() -> g
+    int getMaximumValueForSet(long,int) -> c
+org.joda.time.field.PreciseDurationField -> a.a.b.c.n:
+    long iUnitMillis -> a
+    boolean isPrecise() -> c
+    long getUnitMillis() -> d
+    long add(long,int) -> a
+    long add(long,long) -> a
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+org.joda.time.field.RemainderDateTimeField -> a.a.b.c.o:
+    int iDivisor -> a
+    org.joda.time.DurationField iRangeField -> b
+    int get(long) -> a
+    long set(long,int) -> b
+    org.joda.time.DurationField getRangeDurationField() -> e
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+org.joda.time.field.ScaledDurationField -> a.a.b.c.p:
+    int iScalar -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long getUnitMillis() -> d
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+org.joda.time.field.UnsupportedDateTimeField -> a.a.b.c.q:
+    java.util.HashMap cCache -> a
+    org.joda.time.DateTimeFieldType iType -> b
+    org.joda.time.DurationField iDurationField -> c
+    org.joda.time.field.UnsupportedDateTimeField getInstance(org.joda.time.DateTimeFieldType,org.joda.time.DurationField) -> a
+    org.joda.time.DateTimeFieldType getType() -> a
+    java.lang.String getName() -> b
+    boolean isSupported() -> c
+    int get(long) -> a
+    java.lang.String getAsText(long,java.util.Locale) -> a
+    java.lang.String getAsText(int,java.util.Locale) -> a
+    java.lang.String getAsShortText(long,java.util.Locale) -> b
+    java.lang.String getAsShortText(int,java.util.Locale) -> b
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    long set(long,java.lang.String,java.util.Locale) -> a
+    org.joda.time.DurationField getDurationField() -> d
+    org.joda.time.DurationField getRangeDurationField() -> e
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    int getMaximumTextLength(java.util.Locale) -> a
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+    java.lang.String toString() -> toString
+    java.lang.UnsupportedOperationException unsupported() -> i
+org.joda.time.field.UnsupportedDurationField -> a.a.b.c.r:
+    java.util.HashMap cCache -> a
+    org.joda.time.DurationFieldType iType -> b
+    org.joda.time.field.UnsupportedDurationField getInstance(org.joda.time.DurationFieldType) -> a
+    org.joda.time.DurationFieldType getType() -> a
+    boolean isSupported() -> b
+    boolean isPrecise() -> c
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long getUnitMillis() -> d
+    int compareTo(java.lang.Object) -> compareTo
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    java.lang.UnsupportedOperationException unsupported() -> e
+org.joda.time.field.ZeroIsMaxDateTimeField -> a.a.b.c.s:
+    int get(long) -> a
+    long add(long,int) -> a
+    long add(long,long) -> a
+    long set(long,int) -> b
+    boolean isLeap(long) -> b
+    org.joda.time.DurationField getLeapDurationField() -> f
+    int getMinimumValue() -> g
+    int getMaximumValue() -> h
+    int getMaximumValue(long) -> c
+    long roundFloor(long) -> d
+    long roundCeiling(long) -> e
+    long roundHalfFloor(long) -> f
+    long roundHalfCeiling(long) -> g
+    long roundHalfEven(long) -> h
+    long remainder(long) -> i
+org.joda.time.format.DateTimeFormat -> a.a.b.d.a:
+    java.util.Map cPatternedCache -> a
+    org.joda.time.format.DateTimeFormatter[] cStyleCache -> b
+    org.joda.time.format.DateTimeFormatter forPattern(java.lang.String) -> a
+    void parsePatternTo(org.joda.time.format.DateTimeFormatterBuilder,java.lang.String) -> a
+    java.lang.String parseToken(java.lang.String,int[]) -> a
+    boolean isNumericToken(java.lang.String) -> b
+    org.joda.time.format.DateTimeFormatter createFormatterForPattern(java.lang.String) -> c
+org.joda.time.format.DateTimeFormatter -> a.a.b.d.b:
+    org.joda.time.format.DateTimePrinter iPrinter -> a
+    org.joda.time.format.DateTimeParser iParser -> b
+    java.util.Locale iLocale -> c
+    boolean iOffsetParsed -> d
+    org.joda.time.Chronology iChrono -> e
+    org.joda.time.DateTimeZone iZone -> f
+    java.lang.Integer iPivotYear -> g
+    org.joda.time.format.DateTimePrinter getPrinter() -> a
+    org.joda.time.format.DateTimeParser getParser() -> b
+    org.joda.time.format.DateTimeFormatter withChronology(org.joda.time.Chronology) -> a
+    java.lang.String print(org.joda.time.ReadableInstant) -> a
+    org.joda.time.format.DateTimePrinter requirePrinter() -> c
+    long parseMillis(java.lang.String) -> a
+    org.joda.time.Chronology selectChronology(org.joda.time.Chronology) -> b
+org.joda.time.format.DateTimeFormatterBuilder -> a.a.b.d.c:
+    java.util.ArrayList iElementPairs -> a
+    java.lang.Object iFormatter -> b
+    org.joda.time.format.DateTimeFormatter toFormatter() -> a
+    org.joda.time.format.DateTimeFormatterBuilder append(org.joda.time.format.DateTimeFormatter) -> a
+    org.joda.time.format.DateTimeFormatterBuilder append0(java.lang.Object) -> a
+    org.joda.time.format.DateTimeFormatterBuilder append0(org.joda.time.format.DateTimePrinter,org.joda.time.format.DateTimeParser) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendLiteral(char) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendLiteral(java.lang.String) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendDecimal(org.joda.time.DateTimeFieldType,int,int) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendSignedDecimal(org.joda.time.DateTimeFieldType,int,int) -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendText(org.joda.time.DateTimeFieldType) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendShortText(org.joda.time.DateTimeFieldType) -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendFractionOfSecond(int,int) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendSecondOfMinute(int) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendMinuteOfHour(int) -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendHourOfDay(int) -> c
+    org.joda.time.format.DateTimeFormatterBuilder appendDayOfMonth(int) -> d
+    org.joda.time.format.DateTimeFormatterBuilder appendMonthOfYear(int) -> e
+    org.joda.time.format.DateTimeFormatterBuilder appendYear(int,int) -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendTwoDigitYear(int,boolean) -> a
+    org.joda.time.format.DateTimeFormatterBuilder appendTwoDigitWeekyear(int,boolean) -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendTimeZoneName() -> b
+    org.joda.time.format.DateTimeFormatterBuilder appendTimeZoneShortName() -> c
+    org.joda.time.format.DateTimeFormatterBuilder appendTimeZoneId() -> d
+    org.joda.time.format.DateTimeFormatterBuilder appendTimeZoneOffset$72c45422(java.lang.String,boolean,int) -> a
+    void appendUnknownString(java.lang.StringBuffer,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$CharacterLiteral -> a.a.b.d.d:
+    char iValue -> a
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$Composite -> a.a.b.d.e:
+    org.joda.time.format.DateTimePrinter[] iPrinters -> a
+    org.joda.time.format.DateTimeParser[] iParsers -> b
+    int iPrintedLengthEstimate -> c
+    int iParsedLengthEstimate -> d
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+    boolean isPrinter() -> c
+    boolean isParser() -> d
+    void decompose(java.util.List,java.util.List,java.util.List) -> a
+    void addArrayToList(java.util.List,java.lang.Object[]) -> a
+org.joda.time.format.DateTimeFormatterBuilder$Fraction -> a.a.b.d.f:
+    org.joda.time.DateTimeFieldType iFieldType -> c
+    int iMinDigits -> a
+    int iMaxDigits -> b
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$NumberFormatter -> a.a.b.d.g:
+    org.joda.time.DateTimeFieldType iFieldType -> a
+    int iMaxParsedDigits -> b
+    boolean iSigned -> c
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$PaddedNumber -> a.a.b.d.h:
+    int iMinPrintedDigits -> d
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+org.joda.time.format.DateTimeFormatterBuilder$StringLiteral -> a.a.b.d.i:
+    java.lang.String iValue -> a
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$TextField -> a.a.b.d.j:
+    java.util.Map cParseCache -> a
+    org.joda.time.DateTimeFieldType iFieldType -> b
+    boolean iShort -> c
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneName -> a.a.b.d.k:
+    int iType -> a
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset -> a.a.b.d.l:
+    java.lang.String iZeroOffsetText -> a
+    boolean iShowSeparators -> b
+    int iMinFields -> c
+    int iMaxFields -> d
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+    int digitCount(java.lang.String,int,int) -> a
+org.joda.time.format.DateTimeFormatterBuilder$TwoDigitYear -> a.a.b.d.m:
+    org.joda.time.DateTimeFieldType iType -> a
+    int iPivot -> b
+    boolean iLenientParse -> c
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+    int getTwoDigitYear(long,org.joda.time.Chronology) -> a
+org.joda.time.format.DateTimeFormatterBuilder$UnpaddedNumber -> a.a.b.d.n:
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+org.joda.time.format.DateTimeParser -> a.a.b.d.o:
+    int estimateParsedLength() -> b
+    int parseInto(org.joda.time.format.DateTimeParserBucket,java.lang.String,int) -> a
+org.joda.time.format.DateTimeParserBucket -> a.a.b.d.p:
+    org.joda.time.Chronology iChrono -> a
+    long iMillis -> b
+    org.joda.time.DateTimeZone iZone -> c
+    int iOffset -> d
+    java.util.Locale iLocale -> e
+    java.lang.Integer iPivotYear -> f
+    org.joda.time.format.DateTimeParserBucket$SavedField[] iSavedFields -> g
+    int iSavedFieldsCount -> h
+    boolean iSavedFieldsShared -> i
+    java.lang.Object iSavedState -> j
+    org.joda.time.Chronology getChronology() -> a
+    java.util.Locale getLocale() -> b
+    void setOffset(int) -> a
+    java.lang.Integer getPivotYear() -> c
+    void saveField(org.joda.time.DateTimeField,int) -> a
+    void saveField(org.joda.time.DateTimeFieldType,int) -> a
+    void saveField(org.joda.time.DateTimeFieldType,java.lang.String,java.util.Locale) -> a
+    void saveField(org.joda.time.format.DateTimeParserBucket$SavedField) -> a
+    long computeMillis$2598cdfd(java.lang.String) -> a
+org.joda.time.format.DateTimeParserBucket$SavedField -> a.a.b.d.q:
+    org.joda.time.DateTimeField iField -> a
+    int iValue -> b
+    java.lang.String iText -> c
+    java.util.Locale iLocale -> d
+    long set$256a6b9(long) -> a
+    int compareTo(java.lang.Object) -> compareTo
+    int compareReverse(org.joda.time.DurationField,org.joda.time.DurationField) -> a
+org.joda.time.format.DateTimePrinter -> a.a.b.d.r:
+    int estimatePrintedLength() -> a
+    void printTo(java.lang.StringBuffer,long,org.joda.time.Chronology,int,org.joda.time.DateTimeZone,java.util.Locale) -> a
+org.joda.time.format.FormatUtils -> a.a.b.d.s:
+    double LOG_10 -> a
+    void appendPaddedInteger(java.lang.StringBuffer,int,int) -> a
+    void appendUnpaddedInteger(java.lang.StringBuffer,int) -> a
+    int parseTwoDigits(java.lang.String,int) -> a
+    java.lang.String createErrorMessage(java.lang.String,int) -> b
+org.joda.time.format.ISODateTimeFormat -> a.a.b.d.t:
+    org.joda.time.format.DateTimeFormatter ye -> a
+    org.joda.time.format.DateTimeFormatter mye -> b
+    org.joda.time.format.DateTimeFormatter dme -> c
+    org.joda.time.format.DateTimeFormatter hde -> d
+    org.joda.time.format.DateTimeFormatter mhe -> e
+    org.joda.time.format.DateTimeFormatter sme -> f
+    org.joda.time.format.DateTimeFormatter fse -> g
+    org.joda.time.format.DateTimeFormatter ze -> h
+    org.joda.time.format.DateTimeFormatter lte -> i
+    org.joda.time.format.DateTimeFormatter ymd -> j
+    org.joda.time.format.DateTimeFormatter hmsf -> k
+    org.joda.time.format.DateTimeFormatter t -> l
+    org.joda.time.format.DateTimeFormatter tt -> m
+    org.joda.time.format.DateTimeFormatter dt -> n
+    org.joda.time.format.DateTimeFormatter dateTime() -> a
+org.joda.time.tz.CachedDateTimeZone -> a.a.b.e.a:
+    int cInfoCacheMask -> c
+    org.joda.time.DateTimeZone iZone -> d
+    org.joda.time.tz.CachedDateTimeZone$Info[] iInfoCache -> e
+    org.joda.time.tz.CachedDateTimeZone forZone(org.joda.time.DateTimeZone) -> a
+    java.lang.String getNameKey(long) -> a
+    int getOffset(long) -> b
+    boolean isFixed() -> c
+    long nextTransition(long) -> f
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+    org.joda.time.tz.CachedDateTimeZone$Info getInfo(long) -> g
+org.joda.time.tz.CachedDateTimeZone$Info -> a.a.b.e.b:
+    long iPeriodStart -> a
+    org.joda.time.DateTimeZone iZoneRef -> b
+    org.joda.time.tz.CachedDateTimeZone$Info iNextInfo -> c
+    java.lang.String iNameKey -> d
+    int iOffset -> e
+    int iStandardOffset -> f
+    java.lang.String getNameKey(long) -> a
+    int getOffset(long) -> b
+org.joda.time.tz.DateTimeZoneBuilder -> a.a.b.e.c:
+    org.joda.time.DateTimeZone readFrom(java.io.DataInput,java.lang.String) -> a
+    long readMillis(java.io.DataInput) -> a
+org.joda.time.tz.DateTimeZoneBuilder$DSTZone -> a.a.b.e.d:
+    int iStandardOffset -> c
+    org.joda.time.tz.DateTimeZoneBuilder$Recurrence iStartRecurrence -> d
+    org.joda.time.tz.DateTimeZoneBuilder$Recurrence iEndRecurrence -> e
+    java.lang.String getNameKey(long) -> a
+    int getOffset(long) -> b
+    boolean isFixed() -> c
+    long nextTransition(long) -> f
+    boolean equals(java.lang.Object) -> equals
+    org.joda.time.tz.DateTimeZoneBuilder$Recurrence findMatchingRecurrence(long) -> g
+org.joda.time.tz.DateTimeZoneBuilder$OfYear -> a.a.b.e.e:
+    char iMode -> a
+    int iMonthOfYear -> b
+    int iDayOfMonth -> c
+    int iDayOfWeek -> d
+    boolean iAdvance -> e
+    int iMillisOfDay -> f
+    long next(long,int,int) -> a
+    boolean equals(java.lang.Object) -> equals
+    long setDayOfMonthNext(org.joda.time.Chronology,long) -> a
+    long setDayOfMonth(org.joda.time.Chronology,long) -> b
+    long setDayOfWeek(org.joda.time.Chronology,long) -> c
+org.joda.time.tz.DateTimeZoneBuilder$PrecalculatedZone -> a.a.b.e.f:
+    long[] iTransitions -> c
+    int[] iWallOffsets -> d
+    int[] iStandardOffsets -> e
+    java.lang.String[] iNameKeys -> f
+    org.joda.time.tz.DateTimeZoneBuilder$DSTZone iTailZone -> g
+    org.joda.time.tz.DateTimeZoneBuilder$PrecalculatedZone readFrom(java.io.DataInput,java.lang.String) -> a
+    java.lang.String getNameKey(long) -> a
+    int getOffset(long) -> b
+    boolean isFixed() -> c
+    long nextTransition(long) -> f
+    boolean equals(java.lang.Object) -> equals
+org.joda.time.tz.DateTimeZoneBuilder$Recurrence -> a.a.b.e.g:
+    org.joda.time.tz.DateTimeZoneBuilder$OfYear iOfYear -> a
+    java.lang.String iNameKey -> b
+    int iSaveMillis -> c
+    org.joda.time.tz.DateTimeZoneBuilder$Recurrence readFrom(java.io.DataInput) -> a
+    long next(long,int,int) -> a
+    boolean equals(java.lang.Object) -> equals
+org.joda.time.tz.DefaultNameProvider -> a.a.b.e.h:
+    java.util.HashMap iByLocaleCache -> a
+    java.lang.String getShortName(java.util.Locale,java.lang.String,java.lang.String) -> a
+    java.lang.String getName(java.util.Locale,java.lang.String,java.lang.String) -> b
+    java.lang.String[] getNameSet(java.util.Locale,java.lang.String,java.lang.String) -> c
+    java.util.HashMap createCache() -> a
+org.joda.time.tz.FixedDateTimeZone -> a.a.b.e.i:
+    java.lang.String iNameKey -> c
+    int iWallOffset -> d
+    int iStandardOffset -> e
+    java.lang.String getNameKey(long) -> a
+    int getOffset(long) -> b
+    int getOffsetFromLocal(long) -> c
+    boolean isFixed() -> c
+    long nextTransition(long) -> f
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+org.joda.time.tz.NameProvider -> a.a.b.e.j:
+    java.lang.String getShortName(java.util.Locale,java.lang.String,java.lang.String) -> a
+    java.lang.String getName(java.util.Locale,java.lang.String,java.lang.String) -> b
+org.joda.time.tz.Provider -> a.a.b.e.k:
+    org.joda.time.DateTimeZone getZone(java.lang.String) -> a
+    java.util.Set getAvailableIDs() -> a
+org.joda.time.tz.UTCProvider -> a.a.b.e.l:
+    org.joda.time.DateTimeZone getZone(java.lang.String) -> a
+    java.util.Set getAvailableIDs() -> a
+org.joda.time.tz.ZoneInfoProvider -> a.a.b.e.m:
+    java.io.File iFileDir -> a
+    java.lang.String iResourcePath -> b
+    java.lang.ClassLoader iLoader -> c
+    java.util.Map iZoneInfoMap -> d
+    org.joda.time.DateTimeZone getZone(java.lang.String) -> a
+    java.util.Set getAvailableIDs() -> a
+    java.io.InputStream openResource(java.lang.String) -> b
+    org.joda.time.DateTimeZone loadZoneData(java.lang.String) -> c
+    java.util.Map loadZoneInfoMap(java.io.InputStream) -> a
+    void readZoneInfoMap(java.io.DataInputStream,java.util.Map) -> a
+org.slf4j.ILoggerFactory -> a.b.a:
+    org.slf4j.Logger getLogger(java.lang.String) -> a
+org.slf4j.Logger -> a.b.b:
+org.slf4j.LoggerFactory -> a.b.c:
+    int INITIALIZATION_STATE -> a
+    org.slf4j.helpers.SubstituteLoggerFactory TEMP_FACTORY -> b
+    org.slf4j.helpers.NOPLoggerFactory NOP_FALLBACK_FACTORY -> c
+    java.lang.String[] API_COMPATIBILITY_LIST -> e
+    java.lang.String STATIC_LOGGER_BINDER_PATH -> f
+    java.lang.Class class$org$slf4j$LoggerFactory -> d
+    void failedBinding(java.lang.Throwable) -> a
+    void emitSubstituteLoggerWarning() -> a
+    void versionSanityCheck() -> b
+    org.slf4j.Logger getLogger(java.lang.Class) -> a
+    java.lang.Class class$(java.lang.String) -> a
+org.slf4j.helpers.MarkerIgnoringBase -> a.b.a.a:
+    java.lang.String toString() -> toString
+org.slf4j.helpers.NOPLogger -> a.b.a.b:
+    org.slf4j.helpers.NOPLogger NOP_LOGGER -> a
+    java.lang.String getName() -> a
+org.slf4j.helpers.NOPLoggerFactory -> a.b.a.c:
+    org.slf4j.Logger getLogger(java.lang.String) -> a
+org.slf4j.helpers.NamedLoggerBase -> a.b.a.d:
+    java.lang.String name -> b
+    java.lang.String getName() -> a
+org.slf4j.helpers.SubstituteLoggerFactory -> a.b.a.e:
+    java.util.List loggerNameList -> a
+    org.slf4j.Logger getLogger(java.lang.String) -> a
+    java.util.List getLoggerNameList() -> a
+org.slf4j.helpers.Util -> a.b.a.f:
+    void report(java.lang.String,java.lang.Throwable) -> a
+    void report(java.lang.String) -> a

@@ -156,8 +156,9 @@ public class Graph extends SherlockActivity {
 
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
-
-			for (int i = 0; i < tradesList.size(); i++) {
+			
+			int tradesListSize = tradesList.size();
+			for (int i = 0; i < tradesListSize; i++) {
 				Trade trade = tradesList.get(i);
 				values[i] = trade.getPrice().getAmount().floatValue();
 				dates[i] = Float.valueOf(trade.getTimestamp().getMillis());
@@ -169,20 +170,22 @@ public class Graph extends SherlockActivity {
 					smallest = values[i];
 				}
 			}
-
-			String sOldestDate = formatter.format(dates[0]);
-			String sMidDate = formatter.format(dates[dates.length / 2 - 1]);
-			String sNewestDate = formatter.format(dates[dates.length - 1]);
-
-			// min, max, steps, pre string, post string, number of decimal
-			// places
-			String[] verlabels = GraphViewer.createLabels(smallest, largest,
-					10, "$", "", 4);
-
-			String[] horlabels = new String[] { sOldestDate, "", "", sMidDate,
-					"", "", sNewestDate };
-			
+		
 			if (pref_graphMode) {
+				
+
+				String sOldestDate = formatter.format(dates[0]);
+				String sMidDate = formatter.format(dates[dates.length / 2 - 1]);
+				String sNewestDate = formatter.format(dates[dates.length - 1]);
+
+				// min, max, steps, pre string, post string, number of decimal
+				// places
+				String[] verlabels = GraphViewer.createLabels(smallest, largest,
+						10, "$", "", 4);
+
+				String[] horlabels = new String[] { sOldestDate, "", "", sMidDate,
+						"", "", sNewestDate };
+				
 			g_graphView = new GraphViewer(this, values, currency
 					+ "/BTC since " + sOldestDate, // title
 					horlabels, // horizontal labels
@@ -192,9 +195,10 @@ public class Graph extends SherlockActivity {
 					largest); // max
 			} else {
 				
-				for (int i = 0; i < values.length; i++) {
+				for (int i = 0; i < tradesListSize; i++) {
 					data[i] = new GraphViewData(dates[i], values[i]);
 				}
+				
 				graphView = new LineGraphView(this, exchangeName + ": "
 						+ currency + "/BTC") {
 					@Override
@@ -248,9 +252,13 @@ public class Graph extends SherlockActivity {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		setContentView(R.layout.minerstats);
-		if (g_graphView != null) {
-			setContentView(g_graphView);
+		setContentView(R.layout.graph);
+		if (g_graphView != null || graphView != null) {
+			if(!pref_graphMode){
+				setContentView(graphView);
+			} else {
+				setContentView(g_graphView);	
+			}
 		} else {
 			viewGraph();
 		}
@@ -267,7 +275,7 @@ public class Graph extends SherlockActivity {
 			return;
 		}
 		graphProgressDialog = ProgressDialog.show(this, "Working...",
-				"Retrieving trades", true, true);
+				"Retrieving trades... \n\nNote: May take a while on large exchanges.", true, true);
 		GraphThread gt = new GraphThread();
 		gt.start();
 	}

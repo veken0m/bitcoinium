@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-     <PreferenceCategory android:title="General" >
-                    <ListPreference
-                    android:defaultValue="mtgox"
-                    android:entries="@array/exchanges"
-                    android:entryValues="@array/exchangesvalues"
-                    android:key="favExchangePref"
-                    android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
-                    android:title="Favorite Exchange" />
-                    </PreferenceCategory>
 
+    <PreferenceCategory android:title="General" >
+        <ListPreference
+            android:defaultValue="mtgox"
+            android:entries="@array/exchanges"
+            android:entryValues="@array/exchangesvalues"
+            android:key="favExchangePref"
+            android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
+            android:title="Favorite Exchange" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen
             android:key="SecondPrefScreen"
@@ -30,7 +29,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
                 -->
 
 
@@ -49,7 +48,7 @@
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
 
-        </PreferenceCategory>
+        </PreferenceCategory>
                 -->
 
             </PreferenceCategory>
@@ -124,18 +123,24 @@
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats" >
-                  <ListPreference
-                    android:defaultValue="deepbit"
-                    android:entries="@array/miningpools"
-                    android:entryValues="@array/poolvalues"
-                    android:key="favpoolPref"
-                    android:summary="Select mining pool used for MinerStats"
-                    android:title="Main Mining Pool" />
+        <ListPreference
+            android:defaultValue="deepbit"
+            android:entries="@array/miningpools"
+            android:entryValues="@array/poolvalues"
+            android:key="favpoolPref"
+            android:summary="Select mining pool used for MinerStats"
+            android:title="Main Mining Pool" />
+
         <EditTextPreference
             android:defaultValue=""
             android:key="deepbitKey"
             android:summary="Enter your Deepbit API token to use MinerStats"
             android:title="Deepbit API token" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="bitminterUser"
+            android:summary="Enter your BitMinter Username to use MinerStats"
+            android:title="BitMinter API Username" />
         <EditTextPreference
             android:defaultValue=""
             android:key="bitminterKey"
@@ -229,11 +234,11 @@
             android:title="Email" />
         <Preference
             android:key="customPref"
-            android:summary="1.2.5"
+            android:summary="1.3.0"
             android:title="Version" />
         <Preference
             android:key="customPref"
-            android:summary="Dest Romano - Creator of Bitcoin Alert \nArno Den Hond - GraphView library"
+            android:summary="Tim Molter - XChange Library\nDest Romano - Creator of Bitcoin Alert \nArno Den Hond - GraphView library"
             android:title="Credits" />
 
         <!--
@@ -246,7 +251,7 @@
                         android:summary="This is a preference in the second PreferenceScreen"
                         android:title="Edit text"
                         android:key="SecondEditTextPref" />
-        </PreferenceScreen>
+        </PreferenceScreen>
         -->
 
     </PreferenceCategory>

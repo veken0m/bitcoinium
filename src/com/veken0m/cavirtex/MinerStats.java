@@ -2,8 +2,6 @@ package com.veken0m.cavirtex;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -41,32 +39,34 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class MinerStats extends SherlockActivity {
 	
-	static String pref_deepbitKey = "";
-	static String pref_bitminterKey = "";
-	static String pref_miningpool =  "";
-
+	protected static String pref_deepbitKey = "";
+	protected static String pref_bitminterKey = "";
+	protected static String pref_bitminterUser = "";
+	protected static String pref_miningpool =  "";
+	protected static String currentDifficulty = "";
+	protected static String nextDifficulty = "";
+	protected static String jRewardsNMC = "";
+	protected static String jRewardsBTC = "";
+	protected static String jHashrate = "";
+	protected static String jPayout = "";
+	protected static String Alive = "";
+	protected static String Shares = "";
+	protected static String Stales = "";
+	protected static String Worker1 = "";
+	
+	final protected static String notAvailable = "N/A";
+	
 	public static String APIToken = "";
-	public static String miningPool = "";
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
-	public static String currentDifficulty = "";
-	public static String nextDifficulty = "";
-	public String jRewards = "";
-	public String jHashrate = "";
-	public String jIpa = "";
-	public String jPayout = "";
-	public String Alive = "";
-	public String Shares = "";
-	public String Stales = "";
-	public String Worker1 = "";
-	Boolean connectionFail = false;
+	protected Boolean connectionFail = false;
 	
 
 	public void onCreate(Bundle savedInstanceState) {
 
 		readPreferences(getApplicationContext());
 		
-		if (APIToken.equalsIgnoreCase("") && miningPool.equalsIgnoreCase("")) {
+		if (APIToken.equalsIgnoreCase("") && pref_miningpool.equalsIgnoreCase("")) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.minerstats);
 			
@@ -122,45 +122,19 @@ public class MinerStats extends SherlockActivity {
 
 	public void getMinerStats(Context context) {
 
-		//HttpClient client = new DefaultHttpClient();
-		//HttpGet post;
-		//	post = new HttpGet("http://deepbit.net/api/" + APIToken);
 		try {
 			
 			String poolData[] = new String[8];
 			
-			if(miningPool.equalsIgnoreCase("deepbit")){
+			if(pref_miningpool.equalsIgnoreCase("deepbit")){
 			poolData = fetchDeepbitData(APIToken);
 			} else {
 			poolData = fetchBitMinterData(pref_bitminterKey);
 			}
-			/* Old Code, Moved to fetchDeepBitData method
-			HttpResponse response = client.execute(post);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"));
-			String text = reader.readLine();
-			JSONTokener tokener = new JSONTokener(text);
-			JSONObject jMinerStats = new JSONObject(tokener);
-			reader.close();
 			
-
-			jRewards = jMinerStats.getString("confirmed_reward");
-			jHashrate = jMinerStats.getString("hashrate");
-			jIpa = jMinerStats.getString("ipa");
-			jPayout = jMinerStats.getString("payout_history");
-
-			JSONObject jWorkers = jMinerStats.getJSONObject("workers");
-			JSONArray jWorker1 = jWorkers.names();
-
-			Worker1 = "" + jWorker1.get(0);
-			Alive = jWorkers.getJSONObject(Worker1).getString("alive");
-			Shares = jWorkers.getJSONObject(Worker1).getString("shares");
-			Stales = jWorkers.getJSONObject(Worker1).getString("stales");
-			*/
-			
-			jRewards = poolData[0];
+			jRewardsBTC = poolData[0];
 			jHashrate = poolData[1];
-			jIpa = poolData[2];
+			jRewardsNMC = poolData[2];
 			jPayout = poolData[3];
 			Alive = poolData[4];
 			Shares = poolData[5];
@@ -199,10 +173,8 @@ public class MinerStats extends SherlockActivity {
 		@Override
 		public void run() {
 			getMinerStats(getApplicationContext());
-			mMinerHandler.post(mGraphView); // after retrieveOrders is done, do
-											// this
+			mMinerHandler.post(mGraphView); 
 		}
-
 	}
 
 	final Runnable mGraphView = new Runnable() {
@@ -219,7 +191,7 @@ public class MinerStats extends SherlockActivity {
 		}
 		if (connectionFail) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Could not retrieve data from Deepbit.\n\nPlease make sure that your DeepBit API Token is entered correctly and that 3G or Wifi is working properly.");
+			builder.setMessage("Could not retrieve data from " + pref_miningpool + "\n\nPlease make sure that your API Token and/or Username is entered correctly and that 3G or Wifi is working properly.");
 			builder.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -238,6 +210,7 @@ public class MinerStats extends SherlockActivity {
 
 		try {
 
+			// Initialization of rows for the table layout
 			TableLayout t1 = (TableLayout) findViewById(R.id.minerStatlist);
 			TableRow tr1 = new TableRow(this);
 			TableRow tr2 = new TableRow(this);
@@ -249,11 +222,15 @@ public class MinerStats extends SherlockActivity {
 			TableRow tr8 = new TableRow(this);
 			TableRow tr9 = new TableRow(this);
 			TableRow tr10 = new TableRow(this);
-			TextView tvRewards = new TextView(this);
+			TableRow tr11 = new TableRow(this);
+			TableRow tr12 = new TableRow(this);
+			TextView tvExchangeName = new TextView(this);
+			TextView tvBTCRewards = new TextView(this);
+			TextView tvNMCRewards = new TextView(this);
 			TextView tvHashrate = new TextView(this);
 			TextView tvMinerName = new TextView(this);
 			TextView tvAlive = new TextView(this);
-			TextView tvPayout = new TextView(this);
+			TextView tvBTCPayout = new TextView(this);
 			TextView tvShares = new TextView(this);
 			TextView tvStales = new TextView(this);
 
@@ -264,11 +241,18 @@ public class MinerStats extends SherlockActivity {
 			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-
+			tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			tvExchangeName.setText("Exchange: " + pref_miningpool);
 			tvMinerName.setText("Miner: " + Worker1);
 			tvHashrate.setText("Hashrate: " + jHashrate + " MH/s");
-			tvRewards.setText("Reward: " + jRewards + " BTC");
-			tvPayout.setText("Total Payout: " + jPayout + " BTC");
+			tvBTCRewards.setText("Reward: " + jRewardsBTC + " BTC");
+			tvNMCRewards.setText("Reward: " + jRewardsNMC + " NMC");
+			tvBTCPayout.setText("Total Payout: " + jPayout + " BTC");
 			tvAlive.setText("Alive: " + Alive);
 
 			if (Alive.equalsIgnoreCase("true")) {
@@ -277,30 +261,32 @@ public class MinerStats extends SherlockActivity {
 				tvMinerName.setTextColor(Color.RED);
 			}
 
-			tvShares.setText("Shares: " + Shares);
-			tvStales.setText("Stales: " + Stales);
+			tvShares.setText("Shares: " + Utils.formatNoDecimals(Float.valueOf(Shares)));
+			tvStales.setText("Stales: " + Utils.formatNoDecimals(Float.valueOf(Stales)));
 
-			tr7.addView(tvHashrate);
-			tr2.addView(tvRewards);
-			tr3.addView(tvPayout);
-			tr1.addView(tvMinerName);
-			tr4.addView(tvAlive);
-			tr5.addView(tvShares);
-			tr6.addView(tvStales);
+			tr1.addView(tvExchangeName);
+			tr2.addView(tvMinerName);
+			tr3.addView(tvHashrate);
+			tr4.addView(tvBTCRewards);
+			tr5.addView(tvNMCRewards);
+			tr6.addView(tvBTCPayout);
+			tr7.addView(tvAlive);
+			tr8.addView(tvShares);
+			tr9.addView(tvStales);
+			
 
 			t1.addView(tr1);
-			t1.addView(tr7);
 			t1.addView(tr2);
 			t1.addView(tr3);
 			t1.addView(tr4);
 			t1.addView(tr5);
 			t1.addView(tr6);
+			t1.addView(tr7);
+			t1.addView(tr8);
+			t1.addView(tr9);
 
 			TextView tvCurrentDifficulty = new TextView(this);
 			TextView tvNextDifficulty = new TextView(this);
-
-			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr10.setGravity(Gravity.CENTER_HORIZONTAL);
 
 			tvCurrentDifficulty.setText("\nCurrent Difficulty: "
 					+ Utils.formatNoDecimals(Float.valueOf(currentDifficulty)));
@@ -313,12 +299,12 @@ public class MinerStats extends SherlockActivity {
 			} else {
 				tvNextDifficulty.setTextColor(Color.RED);
 			}
-			tr9.addView(tvCurrentDifficulty);
-			tr10.addView(tvNextDifficulty);
+			tr11.addView(tvCurrentDifficulty);
+			tr12.addView(tvNextDifficulty);
 
-			t1.addView(tr8);
-			t1.addView(tr9);
 			t1.addView(tr10);
+			t1.addView(tr11);
+			t1.addView(tr12);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -334,6 +320,7 @@ public class MinerStats extends SherlockActivity {
 					String key) {
 				pref_deepbitKey = pPrefs.getString("deepbitKey", "null");
 				pref_bitminterKey = pPrefs.getString("bitminterKey", "null");
+				pref_bitminterUser = pPrefs.getString("bitminterUser", "null");
 				pref_miningpool =  pPrefs.getString("favpoolPref", "deepbit");
 
 				APIToken = pref_deepbitKey;
@@ -343,16 +330,16 @@ public class MinerStats extends SherlockActivity {
 
 		pref_deepbitKey = prefs.getString("deepbitKey", "");
 		pref_bitminterKey = prefs.getString("bitminterKey", "null");
+		pref_bitminterUser = prefs.getString("bitminterUser", "null");
 		pref_miningpool =  prefs.getString("favpoolPref", "deepbit");
 
 		APIToken = pref_deepbitKey;
-		//APIToken = "4de7e447816197d782000000_5BA98E3B73"; //Deepbit Test
 	}
 	
-	public static String[] fetchDifficulty()
+	public static void fetchDifficulty()
 			throws ClientProtocolException, IOException, JSONException {
 
-		String[] difficultyData = new String[2];
+		//String[] difficultyData = new String[2];
 
 		HttpClient client = new DefaultHttpClient();
 		HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
@@ -372,8 +359,6 @@ public class MinerStats extends SherlockActivity {
 		nextDifficulty = reader.readLine();
 		
 		reader.close();
-
-		return difficultyData;
 	}
 	
 	public static String[] fetchDeepbitData(String APIToken)
@@ -400,7 +385,7 @@ public class MinerStats extends SherlockActivity {
 
 		deepbitData[0] = jMinerStats.getString("confirmed_reward");
 		deepbitData[1] = jMinerStats.getString("hashrate");
-		deepbitData[2] = jMinerStats.getString("ipa");
+		deepbitData[2] = notAvailable;
 		deepbitData[3] = jMinerStats.getString("payout_history");
 		deepbitData[4] = jWorkers.getJSONObject(Worker1).getString("alive");
 		deepbitData[5] = jWorkers.getJSONObject(Worker1).getString("shares");
@@ -416,9 +401,14 @@ public class MinerStats extends SherlockActivity {
 		String[] bitminterData = new String[8];
 
 		HttpClient client = new DefaultHttpClient();
+		
+		//pref_bitminterUser = "Test";
+		//pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
+		
 		HttpGet post;
 		post = new HttpGet(
-				"https://bitminter.com/api/users/Test?key=M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ");
+				"https://bitminter.com/api/users/" + pref_bitminterUser + "?key=" + pref_bitminterKey);
+
 
 		HttpResponse response = client.execute(post);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -428,23 +418,18 @@ public class MinerStats extends SherlockActivity {
 		JSONObject jMinerStats = new JSONObject(tokener);
 		reader.close();
 
-		// JSONObject jWorkers = jMinerStats.getJSONObject("workers");
-		// JSONArray jWorker1 = jWorkers.names();
 		JSONObject jBalances = jMinerStats.getJSONObject("balances");
 		JSONArray jWorkers = jMinerStats.getJSONArray("workers");
-		// JSONObject jWork = jWorkers.get(0).getObject("work");
+		JSONObject jWork = jWorkers.getJSONObject(0).getJSONObject("work").getJSONObject("BTC");
 
-		// String Worker1 = "" + jWorker1.get(0);
 
 		bitminterData[0] = jBalances.getString("BTC");
-		// bitminterData[0] = jBalances.getString("NMC");
 		bitminterData[1] = jMinerStats.getString("hash_rate");
-		bitminterData[2] = ""; // jMinerStats.getString("ipa");
-		bitminterData[3] = ""; // jMinerStats.getString("payout_history");
-		bitminterData[4] = ""; // jWorkers.getString("alive");
-								// //jWorkers.getJSONObject(Worker1).getString("alive");
-		bitminterData[5] = ""; // jShift.getString("BTC");
-		bitminterData[6] = ""; // jWorkers.getJSONObject(Worker1).getString("stales");
+		bitminterData[2] = jBalances.getString("NMC");
+		bitminterData[3] = notAvailable; // jMinerStats.getString("payout_history");
+		bitminterData[4] = jWorkers.getJSONObject(0).getString("alive");
+		bitminterData[5] = jWork.getString("total_accepted");
+		bitminterData[6] = jWork.getString("total_rejected");
 		bitminterData[7] = jMinerStats.getString("name");
 
 		return bitminterData;

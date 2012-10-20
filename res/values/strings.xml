@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Bitcoinium</string>
     <string name="appwidget_prefix_default">Test</string>
+    <string name="MtGox">MtGox</string>
 </resources>
