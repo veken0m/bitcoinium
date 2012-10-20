@@ -56,7 +56,6 @@ public class MinerStats extends SherlockActivity {
 	
 	final protected static String notAvailable = "N/A";
 	
-	public static String APIToken = "";
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
 	protected Boolean connectionFail = false;
@@ -66,12 +65,12 @@ public class MinerStats extends SherlockActivity {
 
 		readPreferences(getApplicationContext());
 		
-		if (APIToken.equalsIgnoreCase("") && pref_miningpool.equalsIgnoreCase("")) {
+		if (pref_miningpool.equalsIgnoreCase("")) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.minerstats);
 			
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your Deepbit API Token to use MinerStats";
+			CharSequence text = "Please select a Pool and enter your information to use MinerStats";
 
 			Toast toast = Toast.makeText(getApplicationContext(), text,
 					duration);
@@ -127,7 +126,7 @@ public class MinerStats extends SherlockActivity {
 			String poolData[] = new String[8];
 			
 			if(pref_miningpool.equalsIgnoreCase("deepbit")){
-			poolData = fetchDeepbitData(APIToken);
+			poolData = fetchDeepbitData(pref_deepbitKey);
 			} else {
 			poolData = fetchBitMinterData(pref_bitminterKey);
 			}
@@ -154,7 +153,6 @@ public class MinerStats extends SherlockActivity {
 			Log.e("Orderbook error", "exception", e);
 			// connectionFail = true;
 		}
-
 	}
 
 	private void viewMinerStats() {
@@ -318,22 +316,17 @@ public class MinerStats extends SherlockActivity {
 		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
 					String key) {
-				pref_deepbitKey = pPrefs.getString("deepbitKey", "null");
-				pref_bitminterKey = pPrefs.getString("bitminterKey", "null");
-				pref_bitminterUser = pPrefs.getString("bitminterUser", "null");
-				pref_miningpool =  pPrefs.getString("favpoolPref", "deepbit");
-
-				APIToken = pref_deepbitKey;
-
+				pref_deepbitKey = pPrefs.getString("deepbitKey", "");
+				pref_bitminterKey = pPrefs.getString("bitminterKey", "");
+				pref_bitminterUser = pPrefs.getString("bitminterUser", "");
+				pref_miningpool =  pPrefs.getString("favpoolPref", "");
 			}
 		};
 
 		pref_deepbitKey = prefs.getString("deepbitKey", "");
-		pref_bitminterKey = prefs.getString("bitminterKey", "null");
-		pref_bitminterUser = prefs.getString("bitminterUser", "null");
-		pref_miningpool =  prefs.getString("favpoolPref", "deepbit");
-
-		APIToken = pref_deepbitKey;
+		pref_bitminterKey = prefs.getString("bitminterKey", "");
+		pref_bitminterUser = prefs.getString("bitminterUser", "");
+		pref_miningpool =  prefs.getString("favpoolPref", "");
 	}
 	
 	public static void fetchDifficulty()
@@ -426,7 +419,7 @@ public class MinerStats extends SherlockActivity {
 		bitminterData[0] = jBalances.getString("BTC");
 		bitminterData[1] = jMinerStats.getString("hash_rate");
 		bitminterData[2] = jBalances.getString("NMC");
-		bitminterData[3] = notAvailable; // jMinerStats.getString("payout_history");
+		bitminterData[3] = notAvailable;
 		bitminterData[4] = jWorkers.getJSONObject(0).getString("alive");
 		bitminterData[5] = jWork.getString("total_accepted");
 		bitminterData[6] = jWork.getString("total_rejected");

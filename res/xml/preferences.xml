@@ -124,7 +124,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats" >
         <ListPreference
-            android:defaultValue="deepbit"
+            android:defaultValue=""
             android:entries="@array/miningpools"
             android:entryValues="@array/poolvalues"
             android:key="favpoolPref"
