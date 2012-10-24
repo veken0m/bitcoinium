@@ -402,7 +402,7 @@ public class MinerStats extends SherlockActivity {
 
 		HttpClient client = new DefaultHttpClient();
 		
-		pref_bitminterKey = "LDN0XIAJ2PZKS1EX0FR2QM00FPU0ZW0M";//"M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
+		//pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
 		
 		HttpGet post = new HttpGet("https://bitminter.com/api/users" + "?key=" + pref_bitminterKey);
 		HttpResponse response = client.execute(post);
@@ -429,8 +429,6 @@ public class MinerStats extends SherlockActivity {
 			throws ClientProtocolException, IOException, JSONException {
 
 		String[] deepbitData = new String[8];
-		
-		APIToken = "4de7e447816197d782000000_5BA98E3B73";
 
 		HttpClient client = new DefaultHttpClient();
 		HttpGet post = new HttpGet("http://deepbit.net/api/" + APIToken);
