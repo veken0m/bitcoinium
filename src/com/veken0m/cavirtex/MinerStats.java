@@ -2,12 +2,15 @@ package com.veken0m.cavirtex;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,12 +39,17 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.miningpools.bitminter.BitMinterData;
+import com.veken0m.miningpools.bitminter.Work;
+import com.veken0m.miningpools.bitminter.Workers;
+import com.veken0m.miningpools.deepbit.DeepBitData;
+import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
 
+@JsonIgnoreProperties(ignoreUnknown=true) 
 public class MinerStats extends SherlockActivity {
 	
 	protected static String pref_deepbitKey = "";
 	protected static String pref_bitminterKey = "";
-	protected static String pref_bitminterUser = "";
 	protected static String pref_miningpool =  "";
 	protected static String currentDifficulty = "";
 	protected static String nextDifficulty = "";
@@ -126,7 +134,7 @@ public class MinerStats extends SherlockActivity {
 			String poolData[] = new String[8];
 			
 			if(pref_miningpool.equalsIgnoreCase("deepbit")){
-			poolData = fetchDeepbitData(pref_deepbitKey);
+			poolData = fetchDeepbitData2(pref_deepbitKey);
 			} else {
 			poolData = fetchBitMinterData(pref_bitminterKey);
 			}
@@ -166,6 +174,7 @@ public class MinerStats extends SherlockActivity {
 		gt.start();
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown=true) 
 	public class OrderbookThread extends Thread {
 
 		@Override
@@ -245,7 +254,7 @@ public class MinerStats extends SherlockActivity {
 			tr11.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 			
-			tvExchangeName.setText("Exchange: " + pref_miningpool);
+			tvExchangeName.setText("Mining Pool: " + pref_miningpool);
 			tvMinerName.setText("Miner: " + Worker1);
 			tvHashrate.setText("Hashrate: " + jHashrate + " MH/s");
 			tvBTCRewards.setText("Reward: " + jRewardsBTC + " BTC");
@@ -318,14 +327,12 @@ public class MinerStats extends SherlockActivity {
 					String key) {
 				pref_deepbitKey = pPrefs.getString("deepbitKey", "");
 				pref_bitminterKey = pPrefs.getString("bitminterKey", "");
-				pref_bitminterUser = pPrefs.getString("bitminterUser", "");
 				pref_miningpool =  pPrefs.getString("favpoolPref", "");
 			}
 		};
 
 		pref_deepbitKey = prefs.getString("deepbitKey", "");
 		pref_bitminterKey = prefs.getString("bitminterKey", "");
-		pref_bitminterUser = prefs.getString("bitminterUser", "");
 		pref_miningpool =  prefs.getString("favpoolPref", "");
 	}
 	
@@ -395,37 +402,56 @@ public class MinerStats extends SherlockActivity {
 
 		HttpClient client = new DefaultHttpClient();
 		
-		//pref_bitminterUser = "Test";
-		//pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
+		pref_bitminterKey = "LDN0XIAJ2PZKS1EX0FR2QM00FPU0ZW0M";//"M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
 		
-		HttpGet post;
-		post = new HttpGet(
-				"https://bitminter.com/api/users/" + pref_bitminterUser + "?key=" + pref_bitminterKey);
-
-
+		HttpGet post = new HttpGet("https://bitminter.com/api/users" + "?key=" + pref_bitminterKey);
 		HttpResponse response = client.execute(post);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				response.getEntity().getContent(), "UTF-8"));
-		String text = reader.readLine();
-		JSONTokener tokener = new JSONTokener(text);
-		JSONObject jMinerStats = new JSONObject(tokener);
-		reader.close();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		BitMinterData data = mapper.readValue(new InputStreamReader(response
+				.getEntity().getContent(), "UTF-8"), BitMinterData.class);
 
-		JSONObject jBalances = jMinerStats.getJSONObject("balances");
-		JSONArray jWorkers = jMinerStats.getJSONArray("workers");
-		JSONObject jWork = jWorkers.getJSONObject(0).getJSONObject("work").getJSONObject("BTC");
-
-
-		bitminterData[0] = jBalances.getString("BTC");
-		bitminterData[1] = jMinerStats.getString("hash_rate");
-		bitminterData[2] = jBalances.getString("NMC");
+		List<Workers> workers = data.getWorkers();
+		
+		bitminterData[0] = "" + data.getBalances().getBTC();
+		bitminterData[1] = data.getHash_rate().toString();
+		bitminterData[2] = "" + data.getBalances().getNMC();
 		bitminterData[3] = notAvailable;
-		bitminterData[4] = jWorkers.getJSONObject(0).getString("alive");
-		bitminterData[5] = jWork.getString("total_accepted");
-		bitminterData[6] = jWork.getString("total_rejected");
-		bitminterData[7] = jMinerStats.getString("name");
+		bitminterData[4] = "" + workers.get(0).getAlive();
+		bitminterData[5] = workers.get(0).getWork().getBTC().getTotal_accepted().toString();
+		bitminterData[6] = workers.get(0).getWork().getBTC().getTotal_rejected().toString();
+		bitminterData[7] = data.getName();
 
 		return bitminterData;
+	}
+	
+	public static String[] fetchDeepbitData2(String APIToken)
+			throws ClientProtocolException, IOException, JSONException {
+
+		String[] deepbitData = new String[8];
+		
+		APIToken = "4de7e447816197d782000000_5BA98E3B73";
+
+		HttpClient client = new DefaultHttpClient();
+		HttpGet post = new HttpGet("http://deepbit.net/api/" + APIToken);
+
+		HttpResponse response = client.execute(post);
+		
+		ObjectMapper mapper = new ObjectMapper();
+
+		DeepBitData data = mapper.readValue(new InputStreamReader(response
+				.getEntity().getContent(), "UTF-8"), DeepBitData.class);
+
+		deepbitData[0] = "" + data.getConfirmed_reward().floatValue();
+		deepbitData[1] = "" + data.getHashrate().floatValue();
+		deepbitData[2] = notAvailable;
+		deepbitData[3] = "" + data.getPayout_history().floatValue();
+		deepbitData[4] = "" + data.getWorkers().getWorker(0).getAlive();
+		deepbitData[5] = "" + data.getWorkers().getWorker(0).getShares();
+		deepbitData[6] = "" + data.getWorkers().getWorker(0).getStales();
+		deepbitData[7] = "" + data.getWorkers().getName(0);
+
+		return deepbitData;
 	}
 
 }

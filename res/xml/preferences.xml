@@ -138,11 +138,6 @@
             android:title="Deepbit API token" />
         <EditTextPreference
             android:defaultValue=""
-            android:key="bitminterUser"
-            android:summary="Enter your BitMinter Username to use MinerStats"
-            android:title="BitMinter API Username" />
-        <EditTextPreference
-            android:defaultValue=""
             android:key="bitminterKey"
             android:summary="Enter your BitMinter API token to use MinerStats"
             android:title="BitMinter API token" />
