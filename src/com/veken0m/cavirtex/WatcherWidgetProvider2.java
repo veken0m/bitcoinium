@@ -123,14 +123,14 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
   	  
         Exchange mtGox = ExchangeFactory.INSTANCE.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
         marketDataService = mtGox.getPollingMarketDataService();
-        Ticker ticker = marketDataService.getTicker(Currencies.BTC, Currencies.USD);
+        Ticker ticker = marketDataService.getTicker(Currencies.BTC, pref_mtgoxCurrency);
         
 
         float lastValue = ticker.getLast().getAmount().floatValue();
 
-        String lastPrice = Utils.formatMoney(Utils.formatTwoDecimals(lastValue), Currencies.USD);
-        String highPrice = "$" + Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue());
-        String lowPrice = "$" + Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue());
+        String lastPrice = Utils.formatMoney(Utils.formatTwoDecimals(lastValue), pref_mtgoxCurrency);
+        String highPrice = Utils.formatMoney2(Utils.formatTwoDecimals(ticker.getHigh().getAmount().floatValue()),pref_mtgoxCurrency);
+        String lowPrice = Utils.formatMoney2(Utils.formatTwoDecimals(ticker.getLow().getAmount().floatValue()),pref_mtgoxCurrency);
         String volume = Utils.formatTwoDecimals(ticker.getVolume().floatValue());
         
     	  /* Alternative Code used for testing

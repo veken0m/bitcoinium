@@ -51,5 +51,40 @@
         <item>pref</item>
         <item>extOrder</item>
     </string-array>
-
+        <string-array name="mtgoxcurrencies">
+        <item>USD</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>GBP</item>
+        <item>CNY</item>
+        <item>DKK</item>
+        <item>EUR</item>
+        <item>CHF</item>
+        <item>HKD</item>
+        <item>JPY</item>
+        <item>NZD</item>
+        <item>PLN</item>
+        <item>RUB</item>
+        <item>SEK</item>
+        <item>SGD</item>
+        <item>THB</item>
+    </string-array>
+    <string-array name="currencies">
+        <item>USD</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>GBP</item>
+        <item>CNY</item>
+        <item>DKK</item>
+        <item>EUR</item>
+        <item>CHF</item>
+        <item>HKD</item>
+        <item>JPY</item>
+        <item>NZD</item>
+        <item>PLN</item>
+        <item>RUB</item>
+        <item>SEK</item>
+        <item>SGD</item>
+        <item>THB</item>
+    </string-array>
 </resources>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -11,7 +12,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.joda.money.CurrencyUnit;
 
+import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
 import com.xeiam.xchange.virtex.dto.marketdata.VirtExTicker;
 
@@ -52,8 +55,25 @@ public class Utils {
 	}
 
 	public static String formatMoney(String moneyToFormat, String currency) {
+		String symbol = CurrencyUnit.of(currency).getSymbol();
+		symbol = symbol.substring(symbol.length() - 1); 
+		if(currency.equalsIgnoreCase("DKK") || currency.equalsIgnoreCase("PLN") || currency.equalsIgnoreCase("RUB") || currency.equalsIgnoreCase("SEK") || currency.equalsIgnoreCase("SGD") || currency.equalsIgnoreCase("CHF")){
+			symbol = "";
+		}
+		
+		String money = "" + symbol + moneyToFormat + " " + currency;
 
-		String money = "$" + moneyToFormat + " " + currency;
+		return money;
+	}
+	
+	public static String formatMoney2(String moneyToFormat, String currency) {
+		String symbol = CurrencyUnit.of(currency).getSymbol();
+		symbol = symbol.substring(symbol.length() - 1); 
+		if(currency.equalsIgnoreCase("DKK") || currency.equalsIgnoreCase("PLN") || currency.equalsIgnoreCase("RUB") || currency.equalsIgnoreCase("SEK") || currency.equalsIgnoreCase("SGD") || currency.equalsIgnoreCase("CHF")){
+			symbol = "";
+		}
+		
+		String money = "" + symbol + moneyToFormat;
 
 		return money;
 	}

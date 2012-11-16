@@ -44,6 +44,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static String pref_virtexLower;
 	static String pref_mtgoxUpper;
 	static String pref_mtgoxLower;
+	static String pref_mtgoxCurrency;
 	static Boolean pref_wakeupRefresh = false;
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
@@ -97,6 +98,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				pref_virtexTicker = pPrefs
 						.getBoolean("virtexTickerPref", false);
 				pref_mtgoxTicker = pPrefs.getBoolean("mtgoxTickerPref", false);
+				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref", "USD");
+				
 			}
 		};
 
@@ -115,6 +118,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_virtexTicker = prefs.getBoolean("virtexTickerPref", false);
 		pref_mtgoxTicker = prefs.getBoolean("mtgoxTickerPref", false);
+		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
 	}
 
 	public void onDestoy(Context context) {
