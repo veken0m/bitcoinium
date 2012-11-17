@@ -45,25 +45,23 @@ public class BitMinterFragment extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		readPreferences(getActivity().getApplicationContext());
-		
-		 if (pref_bitminterKey.equalsIgnoreCase("")) {
-				 //super.onCreate(savedInstanceState);
-				
-				 int duration = Toast.LENGTH_LONG;
-				 CharSequence text =
-				 "Please select a Pool and enter your information to use MinerStats";
-				
-				 Toast toast = Toast.makeText(getActivity().getApplicationContext(), text,
-				 duration);
-				 toast.setGravity(Gravity.CENTER, 0, 0);
-				 toast.show();
-				
-				 Intent settingsActivity = new Intent(getActivity().getBaseContext(),
-				 Preferences.class);
-				 startActivity(settingsActivity);
-		 }
-		
+		readPreferences(getActivity());
+
+		if (pref_bitminterKey.equalsIgnoreCase("")) {
+			// super.onCreate(savedInstanceState);
+
+			int duration = Toast.LENGTH_LONG;
+			CharSequence text = "Please enter your BitMinter API Token to use MinerStats with BitMinter";
+
+			Toast toast = Toast.makeText(getActivity(), text, duration);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+
+			Intent settingsActivity = new Intent(
+					getActivity().getBaseContext(), Preferences.class);
+			startActivity(settingsActivity);
+		}
+
 		view = inflater.inflate(R.layout.table_fragment, container, false);
 		viewMinerStats(view);
 		return view;
@@ -105,7 +103,7 @@ public class BitMinterFragment extends SherlockFragment {
 
 		@Override
 		public void run() {
-			getMinerStats(getActivity().getApplicationContext());
+			getMinerStats(getActivity());
 			mMinerHandler.post(mGraphView);
 		}
 	}
@@ -123,11 +121,10 @@ public class BitMinterFragment extends SherlockFragment {
 			dialog.dismiss();
 		}
 		if (connectionFail) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()
-					.getApplicationContext());
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Could not retrieve data from "
 					+ "BitMinter"
-					+ "\n\nPlease make sure that your API Token and/or Username is entered correctly and that 3G or Wifi is working properly.");
+					+ "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
 			builder.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -150,25 +147,19 @@ public class BitMinterFragment extends SherlockFragment {
 					R.id.minerStatlist);
 
 			TableRow tr1 = new TableRow(getActivity());
-			TableRow tr2 = new TableRow(getActivity().getApplicationContext());
-			TableRow tr3 = new TableRow(getActivity().getApplicationContext());
-			TableRow tr4 = new TableRow(getActivity().getApplicationContext());
-			TableRow tr5 = new TableRow(getActivity().getApplicationContext());
-			TableRow tr6 = new TableRow(getActivity().getApplicationContext());
-			TableRow tr7 = new TableRow(getActivity().getApplicationContext());
+			TableRow tr2 = new TableRow(getActivity());
+			TableRow tr3 = new TableRow(getActivity());
+			TableRow tr4 = new TableRow(getActivity());
+			TableRow tr5 = new TableRow(getActivity());
+			TableRow tr6 = new TableRow(getActivity());
+			TableRow tr7 = new TableRow(getActivity());
 
-			TextView tvExchangeName = new TextView(getActivity()
-					.getApplicationContext());
-			TextView tvBTCRewards = new TextView(getActivity()
-					.getApplicationContext());
-			TextView tvNMCRewards = new TextView(getActivity()
-					.getApplicationContext());
-			TextView tvBTCPayout = new TextView(getActivity()
-					.getApplicationContext());
-			TextView tvCurrentDifficulty = new TextView(getActivity()
-					.getApplicationContext());
-			TextView tvNextDifficulty = new TextView(getActivity()
-					.getApplicationContext());
+			TextView tvExchangeName = new TextView(getActivity());
+			TextView tvBTCRewards = new TextView(getActivity());
+			TextView tvNMCRewards = new TextView(getActivity());
+			TextView tvCurrentDifficulty = new TextView(getActivity());
+			TextView tvNextDifficulty = new TextView(getActivity());
+			TextView tvTotalHashrate = new TextView(getActivity());
 
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -177,17 +168,17 @@ public class BitMinterFragment extends SherlockFragment {
 			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-			tvBTCRewards.setText("Reward: " + minerdata.getRewardsBTC()
+			tvBTCRewards.setText("BTC Reward: " + minerdata.getRewardsBTC()
 					+ " BTC");
-			tvNMCRewards.setText("Reward: " + minerdata.getRewardsNMC()
+			tvNMCRewards.setText("NMC Reward: " + minerdata.getRewardsNMC()
 					+ " NMC");
-			tvBTCPayout.setText("Total Payout: " + minerdata.getPayout()
-					+ " BTC");
+			tvTotalHashrate.setText("Total Hashrate: " + minerdata.getHashrate()
+					+ " MH/s");
 
 			tr1.addView(tvExchangeName);
 			tr2.addView(tvBTCRewards);
 			tr3.addView(tvNMCRewards);
-			tr4.addView(tvBTCPayout);
+			tr4.addView(tvTotalHashrate);
 
 			t1.addView(tr2);
 			t1.addView(tr3);
@@ -219,27 +210,17 @@ public class BitMinterFragment extends SherlockFragment {
 			List<Workers> worker = minerdata.getWorkers();
 
 			for (int i = 0; i < worker.size(); i++) {
-				TableRow tr8 = new TableRow(getActivity()
-						.getApplicationContext());
-				TableRow tr9 = new TableRow(getActivity()
-						.getApplicationContext());
-				TableRow tr10 = new TableRow(getActivity()
-						.getApplicationContext());
-				TableRow tr11 = new TableRow(getActivity()
-						.getApplicationContext());
-				TableRow tr12 = new TableRow(getActivity()
-						.getApplicationContext());
+				TableRow tr8 = new TableRow(getActivity());
+				TableRow tr9 = new TableRow(getActivity());
+				TableRow tr10 = new TableRow(getActivity());
+				TableRow tr11 = new TableRow(getActivity());
+				TableRow tr12 = new TableRow(getActivity());
 
-				TextView tvMinerName = new TextView(getActivity()
-						.getApplicationContext());
-				TextView tvHashrate = new TextView(getActivity()
-						.getApplicationContext());
-				TextView tvAlive = new TextView(getActivity()
-						.getApplicationContext());
-				TextView tvShares = new TextView(getActivity()
-						.getApplicationContext());
-				TextView tvStales = new TextView(getActivity()
-						.getApplicationContext());
+				TextView tvMinerName = new TextView(getActivity());
+				TextView tvHashrate = new TextView(getActivity());
+				TextView tvAlive = new TextView(getActivity());
+				TextView tvShares = new TextView(getActivity());
+				TextView tvStales = new TextView(getActivity());
 
 				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr9.setGravity(Gravity.CENTER_HORIZONTAL);

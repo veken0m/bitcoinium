@@ -15,8 +15,12 @@ public class Workers{
         return workers.get(i);
     }
    	
-    public String getName(int i) {
-        return names.get(i);
+    public List<String> getNames() {
+        return names;
+    }
+    
+    public List<Worker> getWorkers() {
+        return workers;
     }
     
     public int numberOfWorkers() {

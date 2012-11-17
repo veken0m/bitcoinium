@@ -1,6 +1,7 @@
 package com.veken0m.cavirtex;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -16,10 +17,13 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -34,6 +38,8 @@ import com.veken0m.miningpools.bitminter.Workers;
 import com.veken0m.miningpools.deepbit.DeepBitData;
 
 public class MinerStats extends SherlockFragmentActivity {
+
+	static String pref_favPool;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -54,30 +60,16 @@ public class MinerStats extends SherlockFragmentActivity {
 		// set the Tab listener. Now we can listen for clicks.
 		BitMinterTab.setTabListener(new MyTabsListener(BitMinterFragment));
 		DeepBitTab.setTabListener(new MyTabsListener(DeepBitFragment));
-
+		readPreferences(getApplicationContext());
 		// add the two tabs to the actionbar
+		if (pref_favPool.equalsIgnoreCase("BitMinter")) {
+			actionbar.addTab(BitMinterTab);
+			actionbar.addTab(DeepBitTab);
+		} else {
+			actionbar.addTab(DeepBitTab);
+			actionbar.addTab(BitMinterTab);
+		}
 
-		actionbar.addTab(BitMinterTab);
-		actionbar.addTab(DeepBitTab);
-
-		// if (pref_miningpool.equalsIgnoreCase("")) {
-		// //super.onCreate(savedInstanceState);
-		// setContentView(R.layout.minerstats);
-		//
-		// int duration = Toast.LENGTH_LONG;
-		// CharSequence text =
-		// "Please select a Pool and enter your information to use MinerStats";
-		//
-		// Toast toast = Toast.makeText(getApplicationContext(), text,
-		// duration);
-		// toast.setGravity(Gravity.CENTER, 0, 0);
-		// toast.show();
-		//
-		// Intent settingsActivity = new Intent(getBaseContext(),
-		// Preferences.class);
-		// startActivity(settingsActivity);
-
-		// super.onCreate(savedInstanceState);
 		setContentView(R.layout.minerstats);
 		actionbar.show();
 	}
@@ -106,7 +98,7 @@ public class MinerStats extends SherlockFragmentActivity {
 
 	}
 
-	static MinerData minerdata = new MinerData();;
+	static MinerData minerdata = new MinerData();
 
 	final protected static String notAvailable = "N/A";
 	final Handler mMinerHandler = new Handler();
@@ -150,6 +142,7 @@ public class MinerStats extends SherlockFragmentActivity {
 		private String CurrentDifficulty = "";
 		private String NextDifficulty = "";
 		private List Workers = new ArrayList();
+		private List WorkerNames = new ArrayList();
 
 		public String getHashrate() {
 			return this.Hashrate;
@@ -195,9 +188,12 @@ public class MinerStats extends SherlockFragmentActivity {
 			return this.Workers;
 		}
 
-		public void setDeepbitData(String APIToken) throws JsonParseException,
-				JsonMappingException, UnsupportedEncodingException,
-				IllegalStateException, IOException {
+		public List getWorkersNames() {
+			return this.WorkerNames;
+		}
+
+		public void setDeepbitData(String APIToken)
+				throws ClientProtocolException, IOException, EOFException {
 
 			HttpClient client = new DefaultHttpClient();
 
@@ -214,15 +210,18 @@ public class MinerStats extends SherlockFragmentActivity {
 			this.Alive = "" + data.getWorkers().getWorker(0).getAlive();
 			this.Shares = "" + data.getWorkers().getWorker(0).getShares();
 			this.Stales = "" + data.getWorkers().getWorker(0).getStales();
-			this.Name = "" + data.getWorkers().getName(0);
+			this.Workers = data.getWorkers().getWorkers();
+			this.WorkerNames = data.getWorkers().getNames();
+
 		}
 
 		public void setBitMinterData(String APIToken)
-				throws ClientProtocolException, IOException {
+				throws ClientProtocolException, IOException, EOFException {
 
 			HttpClient client = new DefaultHttpClient();
 
-			// pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
+			// pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"; //Test
+			// Key
 
 			HttpGet post = new HttpGet("https://bitminter.com/api/users"
 					+ "?key=" + APIToken);
@@ -248,7 +247,8 @@ public class MinerStats extends SherlockFragmentActivity {
 			this.Workers = data.getWorkers();
 		}
 
-		public void setDifficulty() throws ClientProtocolException, IOException {
+		public void setDifficulty() throws ClientProtocolException,
+				IOException, EOFException {
 
 			HttpClient client = new DefaultHttpClient();
 			HttpGet post = new HttpGet(
@@ -267,6 +267,24 @@ public class MinerStats extends SherlockFragmentActivity {
 			reader.close();
 		}
 
+	}
+
+	protected static void readPreferences(Context context) {
+		// Get the xml/preferences.xml preferences
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+
+		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
+					String key) {
+
+				pref_favPool = pPrefs.getString("favpoolPref", "bitminter");
+			}
+		};
+
+		prefs.registerOnSharedPreferenceChangeListener(prefListener);
+
+		pref_favPool = prefs.getString("favpoolPref", "bitminter");
 	}
 
 }
