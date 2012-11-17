@@ -29,7 +29,7 @@ import com.veken0m.cavirtex.MinerStats.MinerData;
 public class BitMinterFragment extends SherlockFragment {
 
 	protected static String pref_bitminterKey = "";
-	static MinerData minerdata = new MinerData();;
+	static MinerData minerdata = new MinerData();
 	final protected static String notAvailable = "N/A";
 
 	private ProgressDialog minerProgressDialog;
