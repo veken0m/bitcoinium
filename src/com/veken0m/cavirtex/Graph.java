@@ -57,9 +57,11 @@ public class Graph extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph);
+		readPreferences(getApplicationContext());
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
+		
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -77,7 +79,6 @@ public class Graph extends SherlockActivity {
 			currency = Currencies.CAD;
 		}
 
-		readPreferences(getApplicationContext());
 		viewGraph();
 	}
 

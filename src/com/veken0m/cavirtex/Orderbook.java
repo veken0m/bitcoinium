@@ -44,11 +44,11 @@ public class Orderbook extends SherlockActivity {
 	protected static final String sVirtex = "VirtEx";
 	protected static final String sMtgox = "MtGox";
 	protected static String exchangeName = "";
-	protected static String currency = "";
+	protected String currency;
 	protected String xchangeExchange = null;
 	protected List<LimitOrder> listAsks;
 	protected List<LimitOrder> listBids;
-	static String pref_mtgoxCurrency;
+	protected static String pref_mtgoxCurrency;
 	/**
 	 * List of preference variables
 	 */
@@ -64,6 +64,8 @@ public class Orderbook extends SherlockActivity {
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
+		
+		readPreferences(getApplicationContext());
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -81,7 +83,6 @@ public class Orderbook extends SherlockActivity {
 			currency = Currencies.CAD;
 		}
 
-		readPreferences(getApplicationContext());
 		viewOrderbook();
 	}
 
@@ -165,6 +166,7 @@ public class Orderbook extends SherlockActivity {
 
 		} catch (Exception e) {
 			connectionFail = true;
+			e.printStackTrace();
 		}
 	
 
