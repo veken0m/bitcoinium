@@ -52,22 +52,22 @@
         <item>extOrder</item>
     </string-array>
         <string-array name="mtgoxcurrencies">
-        <item>USD</item>
-        <item>AUD</item>
-        <item>CAD</item>
-        <item>GBP</item>
-        <item>CNY</item>
-        <item>DKK</item>
-        <item>EUR</item>
-        <item>CHF</item>
-        <item>HKD</item>
-        <item>JPY</item>
-        <item>NZD</item>
-        <item>PLN</item>
-        <item>RUB</item>
-        <item>SEK</item>
-        <item>SGD</item>
-        <item>THB</item>
+        <item>USD - United States Dollar</item>
+        <item>AUD - Australian Dollar</item>
+        <item>CAD - Canadian Dollar</item>
+        <item>GBP - British Pound</item>
+        <item>CNY - Chinese Yuan</item>
+        <item>DKK - Danish Krona</item>
+        <item>EUR - Euro</item>
+        <item>CHF - Swiss Francs</item>
+        <item>HKD - Hong Kong Dollar</item>
+        <item>JPY - Japanese Yen</item>
+        <item>NZD - New Zealand Dollar</item>
+        <item>PLN - Polish Zloty</item>
+        <item>RUB - Russian Rubles</item>
+        <item>SEK - Swedish Krona</item>
+        <item>SGD - Singapore Dollar</item>
+        <item>THB - Thai Baht</item>
     </string-array>
     <string-array name="currencies">
         <item>USD</item>
