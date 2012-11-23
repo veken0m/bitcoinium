@@ -113,118 +113,127 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 			final int N = widgetIds.length;
 			for (int i = 0; i < N; i++) {
 				int appWidgetId = widgetIds[i];
-				
+
 				pref_mtgoxCurrency = MtGoxWidgetConfigure.loadCurrencyPref(
 						context, appWidgetId);
-				
-				if(pref_mtgoxCurrency.length() == 3){
 
-				RemoteViews views = new RemoteViews(context.getPackageName(),
-						R.layout.watcher_appwidget2);
+				if (pref_mtgoxCurrency.length() == 3) {
 
-				Intent intent = new Intent(context, MainActivity.class);
-				PendingIntent pendingIntent = PendingIntent.getActivity(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton2, pendingIntent);
+					RemoteViews views = new RemoteViews(
+							context.getPackageName(),
+							R.layout.watcher_appwidget2);
 
-				try {
-
-					Exchange mtGox = ExchangeFactory.INSTANCE
-							.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
-					marketDataService = mtGox.getPollingMarketDataService();
-					Ticker ticker = marketDataService.getTicker(Currencies.BTC,
-							pref_mtgoxCurrency);
-
-					float lastValue = ticker.getLast().getAmount().floatValue();
-
-					String lastPrice = Utils.formatMoney(
-							Utils.formatTwoDecimals(lastValue),
-							pref_mtgoxCurrency);
-					String highPrice = Utils.formatMoney2(
-							Utils.formatTwoDecimals(ticker.getHigh()
-									.getAmount().floatValue()),
-							pref_mtgoxCurrency);
-					String lowPrice = Utils.formatMoney2(
-							Utils.formatTwoDecimals(ticker.getLow().getAmount()
-									.floatValue()), pref_mtgoxCurrency);
-					String volume = Utils.formatTwoDecimals(ticker.getVolume()
-							.floatValue());
-
-					views.setTextViewText(R.id.widgetLowText2, lowPrice);
-					views.setTextViewText(R.id.widgetHighText2, highPrice);
-					views.setTextViewText(R.id.widgetLastText2, lastPrice);
-					views.setTextViewText(R.id.widgetVolText2, "Volume: "
-							+ volume);
-
-					// Date for widget "Refreshed" label
-					SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
-							Locale.US);
-					String currentTime = sdf.format(new Date());
-					views.setTextViewText(R.id.label2, "Refreshed @ "
-							+ currentTime);
-					views.setTextColor(R.id.label2, Color.GREEN);
-
-					if (pref_DisplayUpdates == true) {
-						createTicker(context, R.drawable.bitcoin,
-								"MtGox Updated!");
-					}
-
-					if (pref_mtgoxTicker) {
-						createPermanentNotification(context,
-								R.drawable.bitcoin, "Bitcoin at " + lastPrice,
-								"Bitcoin value: " + lastPrice + " on MtGox",
-								NOTIFY_ID_MTGOX);
-					}
+					Intent intent = new Intent(context, MainActivity.class);
+					PendingIntent pendingIntent = PendingIntent.getActivity(
+							context, 0, intent, 0);
+					views.setOnClickPendingIntent(R.id.widgetButton2,
+							pendingIntent);
 
 					try {
-						if (pref_PriceAlarm) {
-							if (!pref_mtgoxLower.equalsIgnoreCase("")) {
 
-								if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
-									createNotification(context,
-											R.drawable.bitcoin,
-											"Bitcoin alarm value has been reached! \n"
-													+ "Bitcoin valued at "
-													+ lastPrice + " on MtGox",
-											"BTC @ " + lastPrice,
-											"Bitcoin value: " + lastPrice
-													+ " on MtGox",
-											NOTIFY_ID_MTGOX);
+						Exchange mtGox = ExchangeFactory.INSTANCE
+								.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+						marketDataService = mtGox.getPollingMarketDataService();
+						Ticker ticker = marketDataService.getTicker(
+								Currencies.BTC, pref_mtgoxCurrency);
+
+						float lastValue = ticker.getLast().getAmount()
+								.floatValue();
+
+						String lastPrice = Utils.formatMoney(
+								Utils.formatTwoDecimals(lastValue),
+								pref_mtgoxCurrency);
+						String highPrice = Utils.formatMoney2(
+								Utils.formatTwoDecimals(ticker.getHigh()
+										.getAmount().floatValue()),
+								pref_mtgoxCurrency);
+						String lowPrice = Utils.formatMoney2(
+								Utils.formatTwoDecimals(ticker.getLow()
+										.getAmount().floatValue()),
+								pref_mtgoxCurrency);
+						String volume = Utils.formatTwoDecimals(ticker
+								.getVolume().floatValue());
+
+						views.setTextViewText(R.id.widgetLowText2, lowPrice);
+						views.setTextViewText(R.id.widgetHighText2, highPrice);
+						views.setTextViewText(R.id.widgetLastText2, lastPrice);
+						views.setTextViewText(R.id.widgetVolText2, "Volume: "
+								+ volume);
+
+						// Date for widget "Refreshed" label
+						SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
+								Locale.US);
+						String currentTime = sdf.format(new Date());
+						views.setTextViewText(R.id.label2, "Refreshed @ "
+								+ currentTime);
+						views.setTextColor(R.id.label2, Color.GREEN);
+
+						if (pref_DisplayUpdates == true) {
+							createTicker(context, R.drawable.bitcoin,
+									"MtGox Updated!");
+						}
+
+						if (pref_mtgoxTicker) {
+							createPermanentNotification(context,
+									R.drawable.bitcoin, "Bitcoin at "
+											+ lastPrice, "Bitcoin value: "
+											+ lastPrice + " on MtGox",
+									NOTIFY_ID_MTGOX);
+						}
+
+						try {
+							if (pref_PriceAlarm) {
+								if (!pref_mtgoxLower.equalsIgnoreCase("")) {
+
+									if (lastValue <= Float
+											.valueOf(pref_mtgoxLower)) {
+										createNotification(context,
+												R.drawable.bitcoin,
+												"Bitcoin alarm value has been reached! \n"
+														+ "Bitcoin valued at "
+														+ lastPrice
+														+ " on MtGox", "BTC @ "
+														+ lastPrice,
+												"Bitcoin value: " + lastPrice
+														+ " on MtGox",
+												NOTIFY_ID_MTGOX);
+									}
+								}
+
+								if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
+									if (lastValue >= Float
+											.valueOf(pref_mtgoxUpper)) {
+										createNotification(context,
+												R.drawable.bitcoin,
+												"Bitcoin alarm value has been reached! \n"
+														+ "Bitcoin valued at "
+														+ lastPrice
+														+ " on MtGox", "BTC @ "
+														+ lastPrice,
+												"Bitcoin value: " + lastPrice
+														+ " on MtGox",
+												NOTIFY_ID_MTGOX);
+									}
+
 								}
 							}
 
-							if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
-								if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
-									createNotification(context,
-											R.drawable.bitcoin,
-											"Bitcoin alarm value has been reached! \n"
-													+ "Bitcoin valued at "
-													+ lastPrice + " on MtGox",
-											"BTC @ " + lastPrice,
-											"Bitcoin value: " + lastPrice
-													+ " on MtGox",
-											NOTIFY_ID_MTGOX);
-								}
-
-							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							views.setTextColor(R.id.label2, Color.CYAN);
 						}
 
 					} catch (Exception e) {
 						e.printStackTrace();
-						views.setTextColor(R.id.label2, Color.CYAN);
-					}
+						if (pref_DisplayUpdates == true) {
+							createTicker(context, R.drawable.bitcoin,
+									"MtGox Update failed!");
+						}
+						views.setTextColor(R.id.label2, Color.RED);
 
-				} catch (Exception e) {
-					e.printStackTrace();
-					if (pref_DisplayUpdates == true) {
-						createTicker(context, R.drawable.bitcoin,
-								"MtGox Update failed!");
 					}
-					views.setTextColor(R.id.label2, Color.RED);
-
-				}
-				// return views;
-				widgetManager.updateAppWidget(appWidgetId, views);
+					// return views;
+					widgetManager.updateAppWidget(appWidgetId, views);
 				}
 			}
 		}
