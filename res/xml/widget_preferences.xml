@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="General" >
+        
+        
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/mtgoxcurrencies"
+            android:entryValues="@array/currencies"
+            android:key="mtgoxWidgetCurrencyPref"
+            android:summary="MtGox Widget price will be displayed in selected currency"
+            android:title="MtGox Widget Currency" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Widget Settings" >
+        <PreferenceScreen
+            android:key="SecondPrefScreen"
+            android:summary="Configure the Widget(s) \n Changes will be applied to all widgets."
+            android:title="Widget Settings" >
+            <PreferenceCategory android:title="Display" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="checkboxPref"
+                    android:summary="Display update notification in taskbar"
+                    android:title="Display Updates" />
+
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Power Saving" >
+                <Preference
+                    android:key="customPref"
+                    android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
+
+                <ListPreference
+                    android:defaultValue="30"
+                    android:entries="@array/interval"
+                    android:entryValues="@array/intervalvalues"
+                    android:key="listPref"
+                    android:summary="Time interval between widget refresh \n *WARNING* \nLow values will increase battery drain \n "
+                    android:title="Widget Refresh Interval" />
+
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="wakeupPref"
+                    android:summary="Will not wake up the phone from sleep to update widget"
+                    android:title="Battery Saving Mode" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <Preference
+            android:key="OKpref"
+            android:title="OK" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

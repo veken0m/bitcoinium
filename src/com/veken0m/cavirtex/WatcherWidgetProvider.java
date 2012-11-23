@@ -69,7 +69,7 @@ public class WatcherWidgetProvider extends BaseWidgetProvider {
 		 */
 		@Override
 		public void onCreate() {
-			readPreferences(getApplicationContext());
+			readPreferences(this);
 			// getApplicationContext().startService(new
 			// Intent(getApplicationContext(), UpdateService.class)); //Disabled
 			// because caused widget to be updated twice (sound, vibrate)
