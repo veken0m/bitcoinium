@@ -9,33 +9,27 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.widget.EditText;
 
 public class MtGoxWidgetConfigure extends PreferenceActivity {
 
-	static final String TAG = "ExampleAppWidgetConfigure";
-
-	private static final String PREFS_NAME = "com.veken0m.cavirtex.WAtcherWidgetProvider2";
-	private static final String PREF_PREFIX_KEY = "prefix_";
+	private static final String PREFS_NAME = "com.veken0m.cavirtex.WatcherWidgetProvider2";
+	private static final String PREF_EXCHANGE_KEY = "exchange_";
+	private static final String PREF_CURRENCY_KEY = "currency_";
 
 	int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-	String mAppWidgetPrefix;
-
-	static String pref_widgetCurrency = null;
 
 	public MtGoxWidgetConfigure() {
 		super();
 	}
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(R.xml.widget_preferences);
 
 		// Set the result to CANCELED. This will cause the widget host to cancel
 		// out of the widget placement if they press the back button.
 		setResult(RESULT_CANCELED);
-
-		// setContentView(R.layout.main);
-		addPreferencesFromResource(R.xml.widget_preferences);
 
 		// Find the widget id from the intent.
 		Intent intent = getIntent();
@@ -50,32 +44,30 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 			finish();
 		}
 
-		mAppWidgetPrefix = loadCurrencyPref(MtGoxWidgetConfigure.this,
-				mAppWidgetId);
-
-		Context context = getBaseContext();
-
-		// Do configuration stuff HERE
 		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
+				.getDefaultSharedPreferences(getBaseContext());
 
 		Preference OKpref = (Preference) findPreference("OKpref");
+
 		OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 			public boolean onPreferenceClick(Preference preference) {
 				final Context context = MtGoxWidgetConfigure.this;
 
-				pref_widgetCurrency = prefs.getString(
+				String pref_widgetCurrency = prefs.getString(
 						"mtgoxWidgetCurrencyPref", "USD");
-				// Get instance of AppWidgetManaget
+
+				String pref_widgetExchange = prefs.getString(
+						"widgetExchangesPref", "mtgox");
 
 				// When the button is clicked, save the string in our prefs and
-				// return that they
-				// clicked OK.
+				// return that they clicked OK.
 				saveCurrencyPref(context, mAppWidgetId, pref_widgetCurrency);
+				saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
 
+				// Set alarm to refresh widget at specified interval
 				BaseWidgetProvider.setAlarm2(context);
-				
+
 				// Make sure we pass back the original appWidgetId
 				Intent resultValue = new Intent();
 				resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -94,7 +86,7 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 			String currency) {
 		SharedPreferences.Editor prefs = context.getSharedPreferences(
 				PREFS_NAME, 0).edit();
-		prefs.putString(PREF_PREFIX_KEY + appWidgetId, currency);
+		prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
 		prefs.commit();
 	}
 
@@ -102,7 +94,7 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 	// If there is no preference saved, get the default from a resource
 	static String loadCurrencyPref(Context context, int appWidgetId) {
 		SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-		String prefix = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
+		String prefix = prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
 		if (prefix != null) {
 			return prefix;
 		} else {
@@ -110,12 +102,26 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 		}
 	}
 
-	// static void deleteTitlePref(Context context, int appWidgetId) {
-	// }
-	//
-	// static void loadAllTitlePrefs(Context context, ArrayList<Integer>
-	// appWidgetIds,
-	// ArrayList<String> texts) {
-	// }
+	// Write the prefix to the SharedPreferences object for this widget
+	static void saveExchangePref(Context context, int appWidgetId,
+			String currency) {
+		SharedPreferences.Editor prefs = context.getSharedPreferences(
+				PREFS_NAME, 0).edit();
+		prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, currency);
+		prefs.commit();
+	}
+
+	// Read the prefix from the SharedPreferences object for this widget.
+	// If there is no preference saved, get the default from a resource
+	static String loadExchangePref(Context context, int appWidgetId) {
+		SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+		String prefix = prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
+		if (prefix != null) {
+			return prefix;
+		} else {
+			return context.getString(R.string.appwidget_prefix_default);
+		}
+
+	}
 
 }

@@ -6,7 +6,7 @@
                 android:id="@+id/changeColorHere"
                 android:background="#90000000">
          
-         <TextView android:text="MtGox" 
+         <TextView android:text="Exchange" 
               android:id="@+id/widgetExchange2"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"

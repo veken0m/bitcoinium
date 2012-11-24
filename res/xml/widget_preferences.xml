@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="General" >
-        
-        
+    <PreferenceCategory android:title="Widget Configuration" >
+        <ListPreference
+            android:defaultValue="mtgox"
+            android:entries="@array/exchanges"
+            android:entryValues="@array/widgetexchangesvalues"
+            android:key="widgetExchangesPref"
+            android:summary="Select the exchange used for the widget"
+            android:title="Wigdet Exchange" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
@@ -12,10 +17,11 @@
             android:summary="MtGox Widget price will be displayed in selected currency"
             android:title="MtGox Widget Currency" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Widget Settings" >
+    <PreferenceCategory android:title="General Widget Settings" 
+        				android:summary="Changes will be applied to all widgets.">
         <PreferenceScreen
             android:key="SecondPrefScreen"
-            android:summary="Configure the Widget(s) \n Changes will be applied to all widgets."
+            android:summary="Configure the Widget(s)"
             android:title="Widget Settings" >
             <PreferenceCategory android:title="Display" >
                 <CheckBoxPreference

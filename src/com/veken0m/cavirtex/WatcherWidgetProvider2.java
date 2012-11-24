@@ -25,6 +25,8 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 	private static PollingMarketDataService marketDataService;
 	private static String currency;
+	private static String exchange;
+	private static String pref_widgetExchange;
 	String widgetID;
 
 	@Override
@@ -32,15 +34,13 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 		if (REFRESH.equals(intent.getAction())) {
 			readPreferences(ctxt);
-			ctxt.startService(new Intent(ctxt, UpdateService.class));
+			ctxt.startService(new Intent(ctxt, UpdateService2.class));
 
 		} else if (PREFERENCES.equals(intent.getAction())) {
 
 			readPreferences(ctxt);
 
 		} else {
-			readPreferences(ctxt);
-			ctxt.startService(new Intent(ctxt, UpdateService.class));
 			super.onReceive(ctxt, intent);
 		}
 	}
@@ -114,10 +114,21 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 			for (int i = 0; i < N; i++) {
 				int appWidgetId = widgetIds[i];
 
-				pref_mtgoxCurrency = MtGoxWidgetConfigure.loadCurrencyPref(
+				pref_widgetExchange = MtGoxWidgetConfigure.loadExchangePref(
 						context, appWidgetId);
+				String pref_currency;
 
-				if (pref_mtgoxCurrency.length() == 3) {
+				if (pref_widgetExchange
+						.equalsIgnoreCase("com.xeiam.xchange.virtex.VirtExExchange")) {
+					pref_currency = "CAD";
+					exchange = "VirtEx";
+				} else {
+					pref_currency = MtGoxWidgetConfigure.loadCurrencyPref(
+							context, appWidgetId);
+					exchange = "MtGox";
+				}
+
+				if (pref_currency.length() == 3) {
 
 					RemoteViews views = new RemoteViews(
 							context.getPackageName(),
@@ -132,28 +143,29 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 					try {
 
 						Exchange mtGox = ExchangeFactory.INSTANCE
-								.createExchange("com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+								.createExchange(pref_widgetExchange);
 						marketDataService = mtGox.getPollingMarketDataService();
 						Ticker ticker = marketDataService.getTicker(
-								Currencies.BTC, pref_mtgoxCurrency);
+								Currencies.BTC, pref_currency);
 
 						float lastValue = ticker.getLast().getAmount()
 								.floatValue();
 
 						String lastPrice = Utils.formatMoney(
 								Utils.formatTwoDecimals(lastValue),
-								pref_mtgoxCurrency);
+								pref_currency);
 						String highPrice = Utils.formatMoney2(
 								Utils.formatTwoDecimals(ticker.getHigh()
 										.getAmount().floatValue()),
-								pref_mtgoxCurrency);
+								pref_currency);
 						String lowPrice = Utils.formatMoney2(
 								Utils.formatTwoDecimals(ticker.getLow()
 										.getAmount().floatValue()),
-								pref_mtgoxCurrency);
+								pref_currency);
 						String volume = Utils.formatTwoDecimals(ticker
 								.getVolume().floatValue());
 
+						views.setTextViewText(R.id.widgetExchange2, exchange);
 						views.setTextViewText(R.id.widgetLowText2, lowPrice);
 						views.setTextViewText(R.id.widgetHighText2, highPrice);
 						views.setTextViewText(R.id.widgetLastText2, lastPrice);
@@ -170,14 +182,14 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 						if (pref_DisplayUpdates == true) {
 							createTicker(context, R.drawable.bitcoin,
-									"MtGox Updated!");
+									"" + exchange + " Updated!");
 						}
 
 						if (pref_mtgoxTicker) {
 							createPermanentNotification(context,
 									R.drawable.bitcoin, "Bitcoin at "
 											+ lastPrice, "Bitcoin value: "
-											+ lastPrice + " on MtGox",
+											+ lastPrice + " on " + exchange,
 									NOTIFY_ID_MTGOX);
 						}
 
@@ -192,10 +204,10 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 												"Bitcoin alarm value has been reached! \n"
 														+ "Bitcoin valued at "
 														+ lastPrice
-														+ " on MtGox", "BTC @ "
+														+ " on " + exchange, "BTC @ "
 														+ lastPrice,
 												"Bitcoin value: " + lastPrice
-														+ " on MtGox",
+														+ " on " + exchange,
 												NOTIFY_ID_MTGOX);
 									}
 								}
@@ -208,10 +220,10 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 												"Bitcoin alarm value has been reached! \n"
 														+ "Bitcoin valued at "
 														+ lastPrice
-														+ " on MtGox", "BTC @ "
+														+ " on " + exchange, "BTC @ "
 														+ lastPrice,
 												"Bitcoin value: " + lastPrice
-														+ " on MtGox",
+														+ " on " + exchange,
 												NOTIFY_ID_MTGOX);
 									}
 
@@ -227,7 +239,7 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 						e.printStackTrace();
 						if (pref_DisplayUpdates == true) {
 							createTicker(context, R.drawable.bitcoin,
-									"MtGox Update failed!");
+									exchange + " Update failed!");
 						}
 						views.setTextColor(R.id.label2, Color.RED);
 
