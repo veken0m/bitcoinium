@@ -11,6 +11,23 @@ Features
       - Highest price last 24 hours
       - Volume of last 24 hours
       - Time of last data refresh (Green for successful, Red for unsuccessful)
+      
+- MtGox can be displayed in any of the following currencies:
+	- EUR - Euro
+	- CAD - Canadian Dollar
+	- GBP - British Pound
+	- CHF - Swiss Francs
+	- RUB - Russian Rubles
+	- AUD - Australian Dollars
+	- SEK - Swedish Krona
+	- DKK - Danish Krona
+	- HKD - Hong Kong Dollars
+	- PLN - Polish Zloty
+	- CNY - Chinese Yuan
+	- SGD - Singapore Dollars
+	- THB - Thai Baht
+	- NZD - New Zealand Dollars
+	- JPY - Japanese Yen
 
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
@@ -31,14 +48,12 @@ Android SDK: http://developer.android.com/sdk/index.html
 
 Android Development Tools (ADT) plugin: http://developer.android.com/sdk/installing/installing-adt.html
 
-Sherlock ActionBar: http://actionbarsherlock.com/
-
-Modified GraphView library: https://github.com/veken0m/GraphView
+Sherlock ActionBar library: http://actionbarsherlock.com/
 
 
 Google Play
 ===============
-Bitcoinium (Ad-Supported): https://play.google.com/store/apps/details?id=com.veken0m.cavirtex
+Bitcoinium (Ad-Supported/Free): https://play.google.com/store/apps/details?id=com.veken0m.cavirtex
 
 Bitcoinium Prime (Ad-Free/Paid): https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
 

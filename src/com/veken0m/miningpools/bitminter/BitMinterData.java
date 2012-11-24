@@ -1,9 +1,6 @@
-
 package com.veken0m.miningpools.bitminter;
 
 import java.util.List;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class BitMinterData{
    	private Number active_workers;

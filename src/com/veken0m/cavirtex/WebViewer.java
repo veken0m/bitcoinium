@@ -21,7 +21,6 @@ public class WebViewer extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webview);
-		// displayMenu();
 
 		if (savedInstanceState != null) {
 			((WebView) findViewById(R.id.webviewer))
@@ -29,9 +28,6 @@ public class WebViewer extends Activity {
 		} else {
 			mWebView = (WebView) findViewById(R.id.webviewer);
 		}
-		// mWebView.getSettings().setSupportZoom(true);
-		// mWebView.getSettings().setBuiltInZoomControls(true);
-		// mWebView.loadUrl("https://www.cavirtex.com/orderbook");
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
@@ -39,7 +35,8 @@ public class WebViewer extends Activity {
 	}
 
 	private void displayMenu() {
-		final CharSequence[] items = { cBTCChartsMtGox, cmtGoxLive, cOrderBook, cBTCChartsVirtex, cClose };
+		final CharSequence[] items = { cBTCChartsMtGox, cmtGoxLive, cOrderBook,
+				cBTCChartsVirtex, cClose };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Select an option");
@@ -51,7 +48,6 @@ public class WebViewer extends Activity {
 				mWebView.getSettings().setJavaScriptEnabled(true);
 				mWebView.getSettings().setSupportZoom(true);
 				mWebView.getSettings().setBuiltInZoomControls(true);
-				// mWebView.loadUrl("https://www.cavirtex.com/orderbook");
 
 				if (items[item] == cOrderBook) {
 					dialog.cancel();
@@ -80,22 +76,18 @@ public class WebViewer extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		displayMenu();
-
 		return false;
 	}
 
 	/**
 	 * in onCreateOptionsMenu, we display our own custom menu and return false
 	 * as to void the default android menu
-	 * 
-	 * @param menu
-	 *            we ignore this (for now)
-	 * @return boolean false to ignore the defualt menu, true to display it
+	 * @param menu we ignore this (for now)
+	 * @return boolean false to ignore the default menu, true to display it
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		displayMenu();
-
 		return false;
 	}
 }

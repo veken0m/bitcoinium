@@ -30,9 +30,9 @@ public class Preferences extends PreferenceActivity {
 
 	@Override
 	protected void onStop() {
-		// Tell the widgets to update preferences
 		super.onStop();
 
+		// Tell the widgets to update preferences
 		Intent intent = new Intent(getApplicationContext(),
 				WidgetProvider.class);
 		intent.setAction(PREFERENCES);
