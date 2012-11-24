@@ -1,4 +1,6 @@
-package com.veken0m.cavirtex;
+package com.veken0m.graphing;
+
+import com.veken0m.graphing.GraphView.GraphViewData;
 
 import android.content.Context;
 import android.graphics.Canvas;

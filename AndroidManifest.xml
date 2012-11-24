@@ -20,7 +20,7 @@
         
         <receiver
             android:name="com.veken0m.cavirtex.WidgetProvider"
-            android:label="Bitcoinium" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -44,7 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MtGoxWidgetConfigure" >
+        <activity android:name="com.veken0m.cavirtex.WidgetConfigureActivity" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

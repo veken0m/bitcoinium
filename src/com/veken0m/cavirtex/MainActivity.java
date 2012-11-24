@@ -33,6 +33,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 			// ActionBar gets initiated
 			ActionBar actionbar = getSupportActionBar();
+			
 			// Tell the ActionBar we want to use Tabs.
 			actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
@@ -101,6 +102,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		//item.setIcon(android.R.drawable.ic_menu_preferences);
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, Preferences.class));
 		}

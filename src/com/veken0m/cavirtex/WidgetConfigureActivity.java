@@ -10,7 +10,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
 
-public class MtGoxWidgetConfigure extends PreferenceActivity {
+public class WidgetConfigureActivity extends PreferenceActivity {
 
 	private static final String PREFS_NAME = "com.veken0m.cavirtex.WidgetProvider";
 	private static final String PREF_EXCHANGE_KEY = "exchange_";
@@ -18,7 +18,7 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 
 	int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
-	public MtGoxWidgetConfigure() {
+	public WidgetConfigureActivity() {
 		super();
 	}
 
@@ -52,7 +52,7 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 		OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 			public boolean onPreferenceClick(Preference preference) {
-				final Context context = MtGoxWidgetConfigure.this;
+				final Context context = WidgetConfigureActivity.this;
 
 				String pref_widgetCurrency = prefs.getString(
 						"mtgoxWidgetCurrencyPref", "USD");

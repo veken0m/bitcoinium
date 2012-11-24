@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.graphing;
 
 
 
@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.veken0m.cavirtex.ScaleGestureDetector;
+import com.veken0m.graphing.ScaleGestureDetector;
 
 
 /**

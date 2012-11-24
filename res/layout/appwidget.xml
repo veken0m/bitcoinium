@@ -6,7 +6,7 @@
                 android:id="@+id/changeColorHere"
                 android:background="#90000000">
          
-         <TextView android:text="Exchange" 
+         <TextView android:text="@string/exchange" 
               android:id="@+id/widgetExchange"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
               android:textColor="#FDD017"
               ></TextView>
          
-         <TextView android:text="Low" 
+         <TextView android:text="@string/low" 
               android:id="@+id/widgetLowText"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
               android:layout_alignParentLeft="true"
               ></TextView>
               
-        <TextView android:text="High" 
+        <TextView android:text="@string/high" 
               android:id="@+id/widgetHighText"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
               android:layout_alignParentRight="true"
               ></TextView>
         
-        <TextView android:text="Last" 
+        <TextView android:text="@string/last" 
               android:id="@+id/widgetLastText" 
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content" 
@@ -40,7 +40,7 @@
               android:layout_centerHorizontal="true"
               android:textColor="#FDD017"/>  
         
-        	<TextView android:text="Vol" 
+        	<TextView android:text="@string/vol" 
         	  android:id="@+id/widgetVolText" 
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content" 
@@ -55,7 +55,7 @@
               android:layout_below="@id/widgetVolText"
               android:textSize="10sp"
               android:layout_centerHorizontal="true"
-              android:text="Time" /> 
+              android:text="@string/time" /> 
               
         	  <Button android:id="@+id/widgetButton" 
         	  android:background="#00000000"

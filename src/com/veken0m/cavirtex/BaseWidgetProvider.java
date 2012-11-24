@@ -31,6 +31,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	public static final int BITCOIN_NOTIFY_ID = 0;
 	public static final int NOTIFY_ID_VIRTEX = 1;
 	public static final int NOTIFY_ID_MTGOX = 2;
+	public static int NOTIFY_ID;
 
 	/**
 	 * List of preference variables
@@ -50,8 +51,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_virtexTicker;
 	static Boolean pref_mtgoxTicker;
 
-	static PendingIntent service = null; // used for AlarmManager
-	static PendingIntent service2 = null; // used for AlarmManager
+	static PendingIntent widgetRefreshService = null; // used for AlarmManager
 
 	/**
 	 * When we receive an Intent, we will either force a refresh if it matches
@@ -75,6 +75,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	 */
 
 	protected static void readPreferences(Context context) {
+
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -125,8 +126,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		final AlarmManager m = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 
-		m.cancel(service);
-		m.cancel(service2);
+		m.cancel(widgetRefreshService);
 	}
 
 	// Might be needed to stop the AlarmManager
@@ -147,24 +147,31 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		TIME.set(Calendar.SECOND, 0);
 		TIME.set(Calendar.MILLISECOND, 0);
 
-		if (service2 == null) {
-			service2 = PendingIntent.getService(context, 0, i,
+		if (widgetRefreshService == null) {
+			widgetRefreshService = PendingIntent.getService(context, 0, i,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		}
 
 		if (pref_wakeupRefresh) {
 			m1.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, service2);
+					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
 		} else {
 			m1.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, service2);
+					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
 		}
 	}
 
-	static void createNotification(Context ctxt, int icon,
-			CharSequence tickerText, CharSequence contentTitle,
-			CharSequence contentText, int BITCOIN_NOTIFY_ID) {
+	static void createNotification(Context ctxt, String lastPrice, String exchange, int BITCOIN_NOTIFY_ID) {
 		String ns = Context.NOTIFICATION_SERVICE;
+		
+		String tickerText = "Bitcoin alarm value has been reached! \n"
+					+ "Bitcoin valued at "
+					+ lastPrice
+					+ " on " + exchange;				
+		String contentTitle = "BTC @ " + lastPrice;		
+		String contentText = "Bitcoin value: " + lastPrice + " on " + exchange;		
+		
+		int icon = R.drawable.bitcoin;
 		NotificationManager mNotificationManager = (NotificationManager) ctxt
 				.getSystemService(ns);
 		long when = System.currentTimeMillis();
@@ -213,12 +220,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	 * createTicker creates a notification which only briefly appears in the
 	 * ticker bar
 	 * 
-	 * @param Context
-	 *            ctxt
-	 * @param icon
-	 *            (such as R.drawable.bitcoin)
-	 * @param tickerText
-	 *            (notification ticker)
+	 * @param Context	  ctxt
+	 * @param icon		 (such as R.drawable.bitcoin)
+	 * @param tickerText (notification ticker)
 	 */
 	static void createTicker(Context ctxt, int icon, CharSequence tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;

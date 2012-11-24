@@ -2,5 +2,12 @@
 <resources>
     <string name="app_name">Bitcoinium</string>
     <string name="appwidget_prefix_default">Test</string>
-    <string name="MtGox">MtGox</string>
+    <string name="mtGox">MtGox</string>
+    <string name="exchange">Exchange</string>
+    <string name="low">Low</string>
+    <string name="high">High</string>
+    <string name="last">Last</string>
+    <string name="vol">Volume</string>
+    <string name="time">Time</string>
+    <string name="widget_button">widgetButton</string>
 </resources>

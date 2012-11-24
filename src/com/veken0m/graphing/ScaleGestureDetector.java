@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.graphing;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

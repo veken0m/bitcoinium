@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.cavirtex.MinerStats.MinerData;
 import com.veken0m.miningpools.deepbit.Worker;
-import com.veken0m.miningpools.deepbit.Workers;
 
 public class DeepBitFragment extends SherlockFragment {
 
@@ -250,7 +249,6 @@ public class DeepBitFragment extends SherlockFragment {
 			t1.addView(tr11);
 			t1.addView(tr12);
 		}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -260,13 +258,6 @@ public class DeepBitFragment extends SherlockFragment {
 	protected static void readPreferences(Context context) {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-				pref_deepbitKey = pPrefs.getString("deepbitKey", "");
-			}
-		};
 
 		pref_deepbitKey = prefs.getString("deepbitKey", "");
 	}

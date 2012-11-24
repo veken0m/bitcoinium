@@ -259,9 +259,6 @@ public class BitMinterFragment extends SherlockFragment {
 				t1.addView(tr11);
 				t1.addView(tr12);
 			}
-
-			// sv.addView(t1);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -271,13 +268,7 @@ public class BitMinterFragment extends SherlockFragment {
 	protected static void readPreferences(Context context) {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-				pref_bitminterKey = pPrefs.getString("bitminterKey", "");
-			}
-		};
+		
 		pref_bitminterKey = prefs.getString("bitminterKey", "");
 	}
 

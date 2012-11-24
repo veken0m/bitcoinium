@@ -14,10 +14,8 @@ import android.graphics.Color;
 import android.widget.RemoteViews;
 
 import com.xeiam.xchange.Currencies;
-import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
 public class WidgetProvider extends BaseWidgetProvider {
 
@@ -95,7 +93,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 		}
 
 		public void buildUpdate(Context context) {
-			
 
 			AppWidgetManager widgetManager = AppWidgetManager
 					.getInstance(context);
@@ -107,8 +104,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 			for (int i = 0; i < N; i++) {
 				int appWidgetId = widgetIds[i];
 
-				String pref_widgetExchange = MtGoxWidgetConfigure.loadExchangePref(
-						context, appWidgetId);
+				String pref_widgetExchange = WidgetConfigureActivity
+						.loadExchangePref(context, appWidgetId);
 				String pref_currency;
 				String exchange;
 
@@ -116,17 +113,20 @@ public class WidgetProvider extends BaseWidgetProvider {
 						.equalsIgnoreCase("com.xeiam.xchange.virtex.VirtExExchange")) {
 					pref_currency = "CAD";
 					exchange = "VirtEx";
+					pref_mtgoxLower = pref_virtexLower;
+					pref_mtgoxUpper = pref_virtexUpper;
+					NOTIFY_ID = NOTIFY_ID_VIRTEX;
 				} else {
-					pref_currency = MtGoxWidgetConfigure.loadCurrencyPref(
+					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
 							context, appWidgetId);
 					exchange = "MtGox";
+					NOTIFY_ID = NOTIFY_ID_MTGOX;
 				}
 
 				if (pref_currency.length() == 3) {
 
 					RemoteViews views = new RemoteViews(
-							context.getPackageName(),
-							R.layout.appwidget);
+							context.getPackageName(), R.layout.appwidget);
 
 					Intent intent = new Intent(context, MainActivity.class);
 					PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -136,11 +136,11 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 					try {
 
-						Exchange mtGox = ExchangeFactory.INSTANCE
-								.createExchange(pref_widgetExchange);
-						PollingMarketDataService marketDataService = mtGox.getPollingMarketDataService();
-						Ticker ticker = marketDataService.getTicker(
-								Currencies.BTC, pref_currency);
+						// Get ticker using XChange
+						Ticker ticker = ExchangeFactory.INSTANCE
+								.createExchange(pref_widgetExchange)
+								.getPollingMarketDataService()
+								.getTicker(Currencies.BTC, pref_currency);
 
 						float lastValue = ticker.getLast().getAmount()
 								.floatValue();
@@ -175,8 +175,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 						views.setTextColor(R.id.label, Color.GREEN);
 
 						if (pref_DisplayUpdates == true) {
-							createTicker(context, R.drawable.bitcoin,
-									"" + exchange + " Updated!");
+							createTicker(context, R.drawable.bitcoin, ""
+									+ exchange + " Updated!");
 						}
 
 						if (pref_mtgoxTicker) {
@@ -184,61 +184,36 @@ public class WidgetProvider extends BaseWidgetProvider {
 									R.drawable.bitcoin, "Bitcoin at "
 											+ lastPrice, "Bitcoin value: "
 											+ lastPrice + " on " + exchange,
-									NOTIFY_ID_MTGOX);
+									NOTIFY_ID);
 						}
 
-						try {
-							if (pref_PriceAlarm) {
-								if (!pref_mtgoxLower.equalsIgnoreCase("")) {
+						if (pref_PriceAlarm) {
+							if (!pref_mtgoxLower.equalsIgnoreCase("")) {
 
-									if (lastValue <= Float
-											.valueOf(pref_mtgoxLower)) {
-										createNotification(context,
-												R.drawable.bitcoin,
-												"Bitcoin alarm value has been reached! \n"
-														+ "Bitcoin valued at "
-														+ lastPrice
-														+ " on " + exchange, "BTC @ "
-														+ lastPrice,
-												"Bitcoin value: " + lastPrice
-														+ " on " + exchange,
-												NOTIFY_ID_MTGOX);
-									}
-								}
-
-								if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
-									if (lastValue >= Float
-											.valueOf(pref_mtgoxUpper)) {
-										createNotification(context,
-												R.drawable.bitcoin,
-												"Bitcoin alarm value has been reached! \n"
-														+ "Bitcoin valued at "
-														+ lastPrice
-														+ " on " + exchange, "BTC @ "
-														+ lastPrice,
-												"Bitcoin value: " + lastPrice
-														+ " on " + exchange,
-												NOTIFY_ID_MTGOX);
-									}
-
+								if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
+									createNotification(context, lastPrice,
+											exchange, NOTIFY_ID);
 								}
 							}
 
-						} catch (Exception e) {
-							e.printStackTrace();
-							views.setTextColor(R.id.label, Color.CYAN);
+							if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
+								if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
+									createNotification(context, lastPrice,
+											exchange, NOTIFY_ID);
+								}
+
+							}
 						}
 
 					} catch (Exception e) {
 						e.printStackTrace();
 						if (pref_DisplayUpdates == true) {
-							createTicker(context, R.drawable.bitcoin,
-									exchange + " Update failed!");
+							createTicker(context, R.drawable.bitcoin, exchange
+									+ " Update failed!");
 						}
 						views.setTextColor(R.id.label, Color.RED);
 
 					}
-					// return views;
 					widgetManager.updateAppWidget(appWidgetId, views);
 				}
 			}

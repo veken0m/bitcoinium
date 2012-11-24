@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.graphing;
 
 import java.text.NumberFormat;
 

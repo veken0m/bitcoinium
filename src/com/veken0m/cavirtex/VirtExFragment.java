@@ -14,19 +14,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class VirtExFragment extends SherlockFragment {
 
 	public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
-	public static final String PREFERENCES = "com.veken0m.cavirtex.PREFERENCES";
-	public static final String GRAPH = "com.veken0m.cavirtex.GRAPH";
 	public static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
-	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
-	
-	/**
-	 * Menu options we display when launching
-	 */
-	final CharSequence cTrades = "VirtEx Trades";
-	final CharSequence cOrderBook = "VirtEx OrderBook";
-	final CharSequence cmtGoxLive = "mtGoxLive";
-	final CharSequence cBTCCharts = "BTCCharts";
-	final CharSequence cClose = "Close";
 
 	/**
 	 * Other constants
