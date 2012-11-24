@@ -12,8 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.veken0m.cavirtex.WatcherWidgetProvider.UpdateService;
-import com.veken0m.cavirtex.WatcherWidgetProvider2.UpdateService2;
+import com.veken0m.cavirtex.WidgetProvider.UpdateService;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
@@ -98,8 +97,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				pref_virtexTicker = pPrefs
 						.getBoolean("virtexTickerPref", false);
 				pref_mtgoxTicker = pPrefs.getBoolean("mtgoxTickerPref", false);
-				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref", "USD");
-				
+				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref",
+						"USD");
+
 			}
 		};
 
@@ -139,33 +139,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 	static void setAlarm(Context context) {
 		readPreferences(context);
-		final AlarmManager m = (AlarmManager) context
-				.getSystemService(Context.ALARM_SERVICE);
-		final Intent i = new Intent(context, UpdateService.class);
-		final Calendar TIME = Calendar.getInstance();
-		TIME.set(Calendar.MINUTE, 0);
-		TIME.set(Calendar.SECOND, 0);
-		TIME.set(Calendar.MILLISECOND, 0);
-
-		if (service == null) {
-			service = PendingIntent.getService(context, 0, i,
-					PendingIntent.FLAG_CANCEL_CURRENT);
-		}
-
-		if (pref_wakeupRefresh) {
-			m.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, service);
-		} else {
-			m.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, service);
-		}
-	}
-
-	static void setAlarm2(Context context) {
-		readPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		final Intent i = new Intent(context, UpdateService2.class);
+		final Intent i = new Intent(context, UpdateService.class);
 		final Calendar TIME = Calendar.getInstance();
 		TIME.set(Calendar.MINUTE, 0);
 		TIME.set(Calendar.SECOND, 0);
@@ -184,8 +160,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 					1000 * 60 * pref_widgetRefreshFreq, service2);
 		}
 	}
-
-
 
 	static void createNotification(Context ctxt, int icon,
 			CharSequence tickerText, CharSequence contentTitle,

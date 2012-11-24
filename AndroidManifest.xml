@@ -17,9 +17,10 @@
         android:icon="@drawable/bitcoiniumlogo"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
+        
         <receiver
-            android:name="com.veken0m.cavirtex.WatcherWidgetProvider"
-            android:label="Bitcoinium (VirtEx)" >
+            android:name="com.veken0m.cavirtex.WidgetProvider"
+            android:label="Bitcoinium" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -28,26 +29,10 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/watcher_appwidget_info" />
+                android:resource="@xml/appwidget_info" />
         </receiver>
 
-        <service android:name="com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService" />
-
-        <receiver
-            android:name="com.veken0m.cavirtex.WatcherWidgetProvider2"
-            android:label="Bitcoinium (MtGox)" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/watcher_appwidget_info2" />
-        </receiver>
-
-        <service android:name="com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2" />
+        <service android:name="com.veken0m.cavirtex.WidgetProvider$UpdateService" />
 
         <activity
             android:name=".MainActivity"

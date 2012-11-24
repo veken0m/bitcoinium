@@ -56,13 +56,9 @@ public class MtGoxFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity()
-						.getApplicationContext(), WatcherWidgetProvider.class);
+						.getApplicationContext(), WidgetProvider.class);
 				intent.setAction(REFRESH);
 				getActivity().sendBroadcast(intent);
-				Intent intent2 = new Intent(getActivity()
-						.getApplicationContext(), WatcherWidgetProvider2.class);
-				intent2.setAction(REFRESH);
-				getActivity().sendBroadcast(intent2);
 				getActivity().moveTaskToBack(true);
 			}
 		});

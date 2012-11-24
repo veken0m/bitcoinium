@@ -32,15 +32,10 @@ public class Preferences extends PreferenceActivity {
 	protected void onStop() {
 		// Tell the widgets to update preferences
 		super.onStop();
+
 		Intent intent = new Intent(getApplicationContext(),
-				WatcherWidgetProvider.class);
+				WidgetProvider.class);
 		intent.setAction(PREFERENCES);
 		sendBroadcast(intent);
-		super.onStop();
-
-		Intent intent2 = new Intent(getApplicationContext(),
-				WatcherWidgetProvider2.class);
-		intent2.setAction(PREFERENCES);
-		sendBroadcast(intent2);
 	}
 }

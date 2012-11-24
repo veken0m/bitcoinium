@@ -5304,8 +5304,8 @@ com.veken0m.cavirtex.WatcherWidgetProvider
 com.veken0m.cavirtex.WatcherWidgetProvider: WatcherWidgetProvider()
 com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService
 com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService: WatcherWidgetProvider$UpdateService()
-com.veken0m.cavirtex.WatcherWidgetProvider2
-com.veken0m.cavirtex.WatcherWidgetProvider2: WatcherWidgetProvider2()
+com.veken0m.cavirtex.WidgetProvider
+com.veken0m.cavirtex.WidgetProvider: WatcherWidgetProvider2()
 com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2
 com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2: WatcherWidgetProvider2$UpdateService2()
 com.veken0m.cavirtex.WebViewer

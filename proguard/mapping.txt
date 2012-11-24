@@ -6417,7 +6417,7 @@ com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService -> com.veken0m.cavirtex
     83:84:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     91:96:void onHandleIntent(android.content.Intent) -> onHandleIntent
     107:210:android.widget.RemoteViews buildUpdate(android.content.Context) -> a
-com.veken0m.cavirtex.WatcherWidgetProvider2 -> com.veken0m.cavirtex.WatcherWidgetProvider2:
+com.veken0m.cavirtex.WidgetProvider -> com.veken0m.cavirtex.WidgetProvider:
     com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> o
     29:42:void onReceive(android.content.Context,android.content.Intent) -> onReceive
     47:51:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate

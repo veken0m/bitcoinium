@@ -12,7 +12,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 
 public class MtGoxWidgetConfigure extends PreferenceActivity {
 
-	private static final String PREFS_NAME = "com.veken0m.cavirtex.WatcherWidgetProvider2";
+	private static final String PREFS_NAME = "com.veken0m.cavirtex.WidgetProvider";
 	private static final String PREF_EXCHANGE_KEY = "exchange_";
 	private static final String PREF_CURRENCY_KEY = "currency_";
 
@@ -66,7 +66,7 @@ public class MtGoxWidgetConfigure extends PreferenceActivity {
 				saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
 
 				// Set alarm to refresh widget at specified interval
-				BaseWidgetProvider.setAlarm2(context);
+				BaseWidgetProvider.setAlarm(context);
 
 				// Make sure we pass back the original appWidgetId
 				Intent resultValue = new Intent();

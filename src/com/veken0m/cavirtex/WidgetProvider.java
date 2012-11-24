@@ -11,30 +11,22 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.StrictMode;
 import android.widget.RemoteViews;
 
-import com.veken0m.cavirtex.WatcherWidgetProvider.UpdateService;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
-public class WatcherWidgetProvider2 extends BaseWidgetProvider {
-
-	private static PollingMarketDataService marketDataService;
-	private static String currency;
-	private static String exchange;
-	private static String pref_widgetExchange;
-	String widgetID;
+public class WidgetProvider extends BaseWidgetProvider {
 
 	@Override
 	public void onReceive(Context ctxt, Intent intent) {
 
 		if (REFRESH.equals(intent.getAction())) {
 			readPreferences(ctxt);
-			ctxt.startService(new Intent(ctxt, UpdateService2.class));
+			ctxt.startService(new Intent(ctxt, UpdateService.class));
 
 		} else if (PREFERENCES.equals(intent.getAction())) {
 
@@ -49,25 +41,25 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 
-		setAlarm2(context);
+		setAlarm(context);
 	}
 
 	static void updateAppWidget(Context context,
 			AppWidgetManager appWidgetManager, int appWidgetId,
 			String titlePrefix) {
 
-		setAlarm2(context);
+		setAlarm(context);
 	}
 
 	/**
 	 * This class lets us refresh the widget whenever we want to
 	 */
 
-	public static class UpdateService2 extends IntentService {
+	public static class UpdateService extends IntentService {
 
-		public UpdateService2() {
+		public UpdateService() {
 
-			super("WatcherWidgetProvider2$UpdateService2");
+			super("WidgetProvider$UpdateService");
 		}
 
 		/*
@@ -103,20 +95,22 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 		}
 
 		public void buildUpdate(Context context) {
+			
 
 			AppWidgetManager widgetManager = AppWidgetManager
 					.getInstance(context);
 			ComponentName widgetComponent = new ComponentName(context,
-					WatcherWidgetProvider2.class);
+					WidgetProvider.class);
 			int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
 			final int N = widgetIds.length;
 			for (int i = 0; i < N; i++) {
 				int appWidgetId = widgetIds[i];
 
-				pref_widgetExchange = MtGoxWidgetConfigure.loadExchangePref(
+				String pref_widgetExchange = MtGoxWidgetConfigure.loadExchangePref(
 						context, appWidgetId);
 				String pref_currency;
+				String exchange;
 
 				if (pref_widgetExchange
 						.equalsIgnoreCase("com.xeiam.xchange.virtex.VirtExExchange")) {
@@ -132,19 +126,19 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 					RemoteViews views = new RemoteViews(
 							context.getPackageName(),
-							R.layout.watcher_appwidget2);
+							R.layout.appwidget);
 
 					Intent intent = new Intent(context, MainActivity.class);
 					PendingIntent pendingIntent = PendingIntent.getActivity(
 							context, 0, intent, 0);
-					views.setOnClickPendingIntent(R.id.widgetButton2,
+					views.setOnClickPendingIntent(R.id.widgetButton,
 							pendingIntent);
 
 					try {
 
 						Exchange mtGox = ExchangeFactory.INSTANCE
 								.createExchange(pref_widgetExchange);
-						marketDataService = mtGox.getPollingMarketDataService();
+						PollingMarketDataService marketDataService = mtGox.getPollingMarketDataService();
 						Ticker ticker = marketDataService.getTicker(
 								Currencies.BTC, pref_currency);
 
@@ -165,20 +159,20 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 						String volume = Utils.formatTwoDecimals(ticker
 								.getVolume().floatValue());
 
-						views.setTextViewText(R.id.widgetExchange2, exchange);
-						views.setTextViewText(R.id.widgetLowText2, lowPrice);
-						views.setTextViewText(R.id.widgetHighText2, highPrice);
-						views.setTextViewText(R.id.widgetLastText2, lastPrice);
-						views.setTextViewText(R.id.widgetVolText2, "Volume: "
+						views.setTextViewText(R.id.widgetExchange, exchange);
+						views.setTextViewText(R.id.widgetLowText, lowPrice);
+						views.setTextViewText(R.id.widgetHighText, highPrice);
+						views.setTextViewText(R.id.widgetLastText, lastPrice);
+						views.setTextViewText(R.id.widgetVolText, "Volume: "
 								+ volume);
 
 						// Date for widget "Refreshed" label
 						SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
 								Locale.US);
 						String currentTime = sdf.format(new Date());
-						views.setTextViewText(R.id.label2, "Refreshed @ "
+						views.setTextViewText(R.id.label, "Refreshed @ "
 								+ currentTime);
-						views.setTextColor(R.id.label2, Color.GREEN);
+						views.setTextColor(R.id.label, Color.GREEN);
 
 						if (pref_DisplayUpdates == true) {
 							createTicker(context, R.drawable.bitcoin,
@@ -232,7 +226,7 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 
 						} catch (Exception e) {
 							e.printStackTrace();
-							views.setTextColor(R.id.label2, Color.CYAN);
+							views.setTextColor(R.id.label, Color.CYAN);
 						}
 
 					} catch (Exception e) {
@@ -241,7 +235,7 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 							createTicker(context, R.drawable.bitcoin,
 									exchange + " Update failed!");
 						}
-						views.setTextColor(R.id.label2, Color.RED);
+						views.setTextColor(R.id.label, Color.RED);
 
 					}
 					// return views;
@@ -253,7 +247,7 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 		public void widgetButtonAction(Context context) {
 
 			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.watcher_appwidget);
+					R.layout.appwidget);
 
 			if (pref_widgetBehaviour.equalsIgnoreCase("mainMenu")) {
 				Intent intent = new Intent(this, MainActivity.class);
@@ -264,7 +258,7 @@ public class WatcherWidgetProvider2 extends BaseWidgetProvider {
 			}
 
 			else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {
-				Intent intent = new Intent(this, WatcherWidgetProvider.class);
+				Intent intent = new Intent(this, WidgetProvider.class);
 				intent.setAction(REFRESH);
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						context, 0, intent, 0);
