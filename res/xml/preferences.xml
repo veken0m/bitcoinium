@@ -36,7 +36,10 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
+                -->
+
+
                 <!--
         <PreferenceCategory
                 android:title="Notification Menu Ticker">
@@ -45,14 +48,12 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent VirtEx ticker notification in the notification menu"
                         android:key="virtexTickerPref" />
-        
         <CheckBoxPreference
                         android:title="Enable MtGox Notification Menu Ticker (widget needs to be active)"
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-
-        </PreferenceCategory>
+        </PreferenceCategory>
                 -->
 
             </PreferenceCategory>
