@@ -89,11 +89,6 @@ public class Graph extends SherlockActivity {
 		return true;
 	}
 
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// preparation code here
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.preferences) {
@@ -175,7 +170,6 @@ public class Graph extends SherlockActivity {
 		
 			if (pref_graphMode) {
 				
-
 				String sOldestDate = formatter.format(dates[0]);
 				String sMidDate = formatter.format(dates[dates.length / 2 - 1]);
 				String sNewestDate = formatter.format(dates[dates.length - 1]);
@@ -286,22 +280,6 @@ public class Graph extends SherlockActivity {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-
-				pref_graphMode = pPrefs.getBoolean("graphmodePref", false);
-				pref_scaleMode = pPrefs.getBoolean("graphscalePref", false);
-				pref_mtgoxWindowSize = Integer.parseInt(pPrefs.getString(
-						"mtgoxWindowSize", "4"));
-				pref_virtexWindowSize = Integer.parseInt(pPrefs.getString(
-						"virtexWindowSize", "36"));
-				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref", "USD");
-			}
-		};
-
-		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
 		pref_graphMode = prefs.getBoolean("graphmodePref", false);
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);

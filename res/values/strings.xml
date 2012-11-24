@@ -10,4 +10,12 @@
     <string name="vol">Volume</string>
     <string name="time">Time</string>
     <string name="widget_button">widgetButton</string>
+
+    <!-- Main Menu Button Strings -->
+    <string name="refreshButton">Refresh Widget</string>
+    <string name="orderbookButton">OrderBook</string>
+    <string name="minerstatsButton">Miner Stats</string>
+    <string name="graphButton">Display Price Graph</string>
+    <string name="exgraphButton">External Orderbook and Graphs</string>
+    
 </resources>

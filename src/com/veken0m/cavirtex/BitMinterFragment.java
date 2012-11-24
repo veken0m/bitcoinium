@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +28,10 @@ import com.veken0m.cavirtex.MinerStats.MinerData;
 public class BitMinterFragment extends SherlockFragment {
 
 	protected static String pref_bitminterKey = "";
-	static MinerData minerdata = new MinerData();
-	final protected static String notAvailable = "N/A";
-
+	protected static MinerData minerdata = new MinerData();
+	protected Boolean connectionFail = false;
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
-	protected Boolean connectionFail = false;
-
-	View view = null;
 
 	public BitMinterFragment() {
 	}
@@ -48,7 +43,6 @@ public class BitMinterFragment extends SherlockFragment {
 		readPreferences(getActivity());
 
 		if (pref_bitminterKey.equalsIgnoreCase("")) {
-			// super.onCreate(savedInstanceState);
 
 			int duration = Toast.LENGTH_LONG;
 			CharSequence text = "Please enter your BitMinter API Token to use MinerStats with BitMinter";
@@ -62,7 +56,7 @@ public class BitMinterFragment extends SherlockFragment {
 			startActivity(settingsActivity);
 		}
 
-		view = inflater.inflate(R.layout.table_fragment, container, false);
+		View view = inflater.inflate(R.layout.table_fragment, container, false);
 		viewMinerStats(view);
 		return view;
 	}
@@ -73,7 +67,7 @@ public class BitMinterFragment extends SherlockFragment {
 			minerdata.setBitMinterData(pref_bitminterKey);
 
 		} catch (Exception e) {
-			Log.e("Orderbook error", "exception", e);
+			e.printStackTrace();
 			connectionFail = true;
 		}
 
@@ -82,8 +76,7 @@ public class BitMinterFragment extends SherlockFragment {
 			minerdata.setDifficulty();
 
 		} catch (Exception e) {
-			Log.e("Orderbook error", "exception", e);
-			// connectionFail = true;
+			e.printStackTrace();
 		}
 
 	}
@@ -172,8 +165,8 @@ public class BitMinterFragment extends SherlockFragment {
 					+ " BTC");
 			tvNMCRewards.setText("NMC Reward: " + minerdata.getRewardsNMC()
 					+ " NMC");
-			tvTotalHashrate.setText("Total Hashrate: " + minerdata.getHashrate()
-					+ " MH/s");
+			tvTotalHashrate.setText("Total Hashrate: "
+					+ minerdata.getHashrate() + " MH/s");
 
 			tr1.addView(tvExchangeName);
 			tr2.addView(tvBTCRewards);
@@ -268,7 +261,7 @@ public class BitMinterFragment extends SherlockFragment {
 	protected static void readPreferences(Context context) {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		
+
 		pref_bitminterKey = prefs.getString("bitminterKey", "");
 	}
 

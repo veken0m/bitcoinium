@@ -9,7 +9,6 @@
             android:key="favExchangePref"
             android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
-        
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
@@ -37,10 +36,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
-                -->
-
-
+			           android:entryValues="@array/widgetBehaviours" />
                 <!--
         <PreferenceCategory
                 android:title="Notification Menu Ticker">
@@ -243,20 +239,6 @@
             android:key="customPref"
             android:summary="Tim Molter - XChange Library\nDest Romano - Creator of Bitcoin Alert \nArno Den Hond - GraphView library"
             android:title="Credits" />
-
-        <!--
-        <PreferenceScreen
-                android:key="SecondPrefScreen"
-                android:title="Second PreferenceScreen"
-                android:summary="This is a second PreferenceScreen">
-                <EditTextPreference
-                        android:name="An other EditText Preference"
-                        android:summary="This is a preference in the second PreferenceScreen"
-                        android:title="Edit text"
-                        android:key="SecondEditTextPref" />
-        </PreferenceScreen>
-        -->
-
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -25,11 +25,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 		if (REFRESH.equals(intent.getAction())) {
 			readPreferences(ctxt);
 			ctxt.startService(new Intent(ctxt, UpdateService.class));
-
 		} else if (PREFERENCES.equals(intent.getAction())) {
-
 			readPreferences(ctxt);
-
 		} else {
 			super.onReceive(ctxt, intent);
 		}
@@ -38,13 +35,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-
-		setAlarm(context);
-	}
-
-	static void updateAppWidget(Context context,
-			AppWidgetManager appWidgetManager, int appWidgetId,
-			String titlePrefix) {
 
 		setAlarm(context);
 	}
@@ -59,13 +49,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 			super("WidgetProvider$UpdateService");
 		}
-
-		/*
-		 * Depreciated in Android Developper website; Use onStartCommand.
-		 * 
-		 * @Override public void onStart(Intent intent, int i) {
-		 * super.onStart(intent, i); }
-		 */
 
 		@Override
 		public void onCreate() {
@@ -88,7 +71,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 		@Override
 		public void onHandleIntent(Intent intent) {
-
 			buildUpdate(this);
 		}
 
@@ -108,6 +90,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 						.loadExchangePref(context, appWidgetId);
 				String pref_currency;
 				String exchange;
+				int NOTIFY_ID;
 
 				if (pref_widgetExchange
 						.equalsIgnoreCase("com.xeiam.xchange.virtex.VirtExExchange")) {
@@ -187,23 +170,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 									NOTIFY_ID);
 						}
 
-						if (pref_PriceAlarm) {
-							if (!pref_mtgoxLower.equalsIgnoreCase("")) {
-
-								if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
-									createNotification(context, lastPrice,
-											exchange, NOTIFY_ID);
-								}
-							}
-
-							if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
-								if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
-									createNotification(context, lastPrice,
-											exchange, NOTIFY_ID);
-								}
-
-							}
-						}
+						createAlarmNotification(context, lastValue, lastPrice,
+								exchange, NOTIFY_ID);
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -216,52 +184,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 					}
 					widgetManager.updateAppWidget(appWidgetId, views);
 				}
-			}
-		}
-
-		public void widgetButtonAction(Context context) {
-
-			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.appwidget);
-
-			if (pref_widgetBehaviour.equalsIgnoreCase("mainMenu")) {
-				Intent intent = new Intent(this, MainActivity.class);
-				PendingIntent pendingIntent = PendingIntent.getActivity(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-
-			}
-
-			else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {
-				Intent intent = new Intent(this, WidgetProvider.class);
-				intent.setAction(REFRESH);
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-			}
-
-			else if (pref_widgetBehaviour.equalsIgnoreCase("openGraph")) {
-
-				Intent intent = new Intent(this, MainActivity.class);
-				intent.setAction(GRAPH);
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-			}
-
-			else if (pref_widgetBehaviour.equalsIgnoreCase("pref")) {
-
-				Intent intent = new Intent(this, Preferences.class);
-				PendingIntent pendingIntent = PendingIntent.getActivity(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-			}
-
-			else if (pref_widgetBehaviour.equalsIgnoreCase("extOrder")) {
-				Intent intent = new Intent(getBaseContext(), WebViewer.class);
-				PendingIntent pendingIntent = PendingIntent.getActivity(
-						context, 0, intent, 0);
-				views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 			}
 		}
 

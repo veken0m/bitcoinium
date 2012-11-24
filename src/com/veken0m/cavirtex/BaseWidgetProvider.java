@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.RemoteViews;
 
 import com.veken0m.cavirtex.WidgetProvider.UpdateService;
 
@@ -23,7 +24,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	public static final String PREFERENCES = "com.veken0m.cavirtex.PREFERENCES";
 	public static final String OPENMENU = "com.veken0m.cavirtex.OPENMENU";
 	public static final String GRAPH = "com.veken0m.cavirtex.GRAPH";
-	public static final String NOTHING = "com.veken0m.cavirtex.NOTHING";
 
 	/**
 	 * List of IDs for notifications
@@ -31,7 +31,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	public static final int BITCOIN_NOTIFY_ID = 0;
 	public static final int NOTIFY_ID_VIRTEX = 1;
 	public static final int NOTIFY_ID_MTGOX = 2;
-	public static int NOTIFY_ID;
 
 	/**
 	 * List of preference variables
@@ -51,32 +50,16 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_virtexTicker;
 	static Boolean pref_mtgoxTicker;
 
-	static PendingIntent widgetRefreshService = null; // used for AlarmManager
+	// Service used to refresh widget
+	static PendingIntent widgetRefreshService = null;
 
 	/**
 	 * When we receive an Intent, we will either force a refresh if it matches
 	 * REFRESH, or pass it on to our superclass
 	 */
 
-	/**
-	 * createNotification creates a notification which stays in the notification
-	 * bar till removed
-	 * 
-	 * @param Context
-	 *            ctxt
-	 * @param icon
-	 *            (such as R.drawable.bitcoin)
-	 * @param tickerText
-	 *            (notification ticker)
-	 * @param contentTitle
-	 *            (title of notification)
-	 * @param contentText
-	 *            (details of notification)
-	 */
-
 	protected static void readPreferences(Context context) {
 
-		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
@@ -129,14 +112,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		m.cancel(widgetRefreshService);
 	}
 
-	// Might be needed to stop the AlarmManager
-	public void onDisabled(Context context) {
-		// final AlarmManager m = (AlarmManager)
-		// context.getSystemService(Context.ALARM_SERVICE);
-
-		// m.cancel(service);
-	}
-
 	static void setAlarm(Context context) {
 		readPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
@@ -161,16 +136,15 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	static void createNotification(Context ctxt, String lastPrice, String exchange, int BITCOIN_NOTIFY_ID) {
+	static void createNotification(Context ctxt, String lastPrice,
+			String exchange, int BITCOIN_NOTIFY_ID) {
 		String ns = Context.NOTIFICATION_SERVICE;
-		
+
 		String tickerText = "Bitcoin alarm value has been reached! \n"
-					+ "Bitcoin valued at "
-					+ lastPrice
-					+ " on " + exchange;				
-		String contentTitle = "BTC @ " + lastPrice;		
-		String contentText = "Bitcoin value: " + lastPrice + " on " + exchange;		
-		
+				+ "Bitcoin valued at " + lastPrice + " on " + exchange;
+		String contentTitle = "BTC @ " + lastPrice;
+		String contentText = "Bitcoin value: " + lastPrice + " on " + exchange;
+
 		int icon = R.drawable.bitcoin;
 		NotificationManager mNotificationManager = (NotificationManager) ctxt
 				.getSystemService(ns);
@@ -220,9 +194,12 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	 * createTicker creates a notification which only briefly appears in the
 	 * ticker bar
 	 * 
-	 * @param Context	  ctxt
-	 * @param icon		 (such as R.drawable.bitcoin)
-	 * @param tickerText (notification ticker)
+	 * @param Context
+	 *            ctxt
+	 * @param icon
+	 *            (such as R.drawable.bitcoin)
+	 * @param tickerText
+	 *            (notification ticker)
 	 */
 	static void createTicker(Context ctxt, int icon, CharSequence tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;
@@ -238,6 +215,80 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		notification.setLatestEventInfo(ctxt, null, null, contentIntent);
 		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
 		mNotificationManager.cancel(BITCOIN_NOTIFY_ID);
+	}
+
+	/**
+	 * widgetButtonAction latches different actions to the widget button
+	 * 
+	 * @param Context
+	 *            context
+	 */
+
+	public void widgetButtonAction(Context context) {
+
+		RemoteViews views = new RemoteViews(context.getPackageName(),
+				R.layout.appwidget);
+
+		if (pref_widgetBehaviour.equalsIgnoreCase("mainMenu")) {
+			Intent intent = new Intent(context, MainActivity.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+					intent, 0);
+			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+
+		}
+
+		else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {
+			Intent intent = new Intent(context, WidgetProvider.class);
+			intent.setAction(REFRESH);
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+					0, intent, 0);
+			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+		}
+
+		else if (pref_widgetBehaviour.equalsIgnoreCase("openGraph")) {
+
+			Intent intent = new Intent(context, MainActivity.class);
+			intent.setAction(GRAPH);
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+					0, intent, 0);
+			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+		}
+
+		else if (pref_widgetBehaviour.equalsIgnoreCase("pref")) {
+
+			Intent intent = new Intent(context, Preferences.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+					intent, 0);
+			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+		}
+
+		else if (pref_widgetBehaviour.equalsIgnoreCase("extOrder")) {
+			Intent intent = new Intent(context, WebViewer.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+					intent, 0);
+			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
+		}
+	}
+
+	public static void createAlarmNotification(Context context,
+			float lastValue, String lastPrice, String exchange, int NOTIFY_ID) {
+
+		if (pref_PriceAlarm) {
+			if (!pref_mtgoxLower.equalsIgnoreCase("")) {
+
+				if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
+					createNotification(context, lastPrice, exchange, NOTIFY_ID);
+				}
+			}
+
+			if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
+				if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
+					createNotification(context, lastPrice, exchange, NOTIFY_ID);
+				}
+
+			}
+		}
+
 	}
 
 }

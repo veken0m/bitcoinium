@@ -17,8 +17,9 @@
             android:summary="MtGox Widget price will be displayed in selected currency"
             android:title="MtGox Widget Currency" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="General Widget Settings" 
-        				android:summary="Changes will be applied to all widgets.">
+    <PreferenceCategory
+        android:summary="Changes will be applied to all widgets."
+        android:title="General Widget Settings" >
         <PreferenceScreen
             android:key="SecondPrefScreen"
             android:summary="Configure the Widget(s)"
@@ -29,7 +30,6 @@
                     android:key="checkboxPref"
                     android:summary="Display update notification in taskbar"
                     android:title="Display Updates" />
-
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference
@@ -51,6 +51,7 @@
                     android:title="Battery Saving Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
+
         <Preference
             android:key="OKpref"
             android:title="OK" />

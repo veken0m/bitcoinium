@@ -5,8 +5,4 @@
     android:stretchColumns="1"
     android:id="@+id/graphlayout"
     >
-
-   
-
-
 </LinearLayout>

@@ -48,13 +48,13 @@ public class Orderbook extends SherlockActivity {
 	protected String xchangeExchange = null;
 	protected List<LimitOrder> listAsks;
 	protected List<LimitOrder> listBids;
-	protected static String pref_mtgoxCurrency;
 	/**
 	 * List of preference variables
 	 */
 	static int pref_highlightHigh;
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
+	static String pref_mtgoxCurrency;
 
 	private static PollingMarketDataService marketDataService;
 
@@ -93,11 +93,6 @@ public class Orderbook extends SherlockActivity {
 		return true;
 	}
 
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// preparation code here
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.preferences) {
@@ -118,21 +113,6 @@ public class Orderbook extends SherlockActivity {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-
-				pref_enableHighlight = pPrefs.getBoolean("highlightPref", true);
-				pref_highlightHigh = Integer.parseInt(pPrefs.getString(
-						"highlightUpper", "50"));
-				pref_highlightLow = Integer.parseInt(pPrefs.getString(
-						"highlightLower", "10"));
-				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref", "USD");
-			}
-		};
-
-		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
 		pref_enableHighlight = prefs.getBoolean("highlightPref", true);
 		pref_highlightHigh = Integer.parseInt(prefs.getString("highlightUpper",
