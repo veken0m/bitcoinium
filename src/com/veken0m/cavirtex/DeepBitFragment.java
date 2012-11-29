@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.cavirtex.MinerStats.MinerData;
+import com.veken0m.cavirtex.MinerStatsActivity.MinerData;
 import com.veken0m.miningpools.deepbit.Worker;
 
 public class DeepBitFragment extends SherlockFragment {
@@ -39,20 +39,20 @@ public class DeepBitFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		super.onCreate(savedInstanceState);
 		readPreferences(getActivity());
 
 		if (pref_deepbitKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your DeepBit API Token to use MinerStats with DeepBit";
+			CharSequence text = "Please enter your DeepBit API Token to use MinerStatsActivity with DeepBit";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 
 			Intent settingsActivity = new Intent(
-					getActivity().getBaseContext(), Preferences.class);
+					getActivity().getBaseContext(), PreferencesActivity.class);
 			startActivity(settingsActivity);
 		}
 

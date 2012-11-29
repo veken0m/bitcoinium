@@ -81,7 +81,7 @@
     <PreferenceCategory android:title="Price Alarm" >
         <PreferenceScreen
             android:key="SecondPrefScreen"
-            android:summary="Adjust settings of the price alarm notification"
+            android:summary="Adjust settings of the price alarm notification \nIf multiple widgets of the same widget is used, it's main currency will be used to trigger alarm"
             android:title="Price Alarm Notification" >
             <PreferenceCategory android:title="Price Alarm" >
                 <CheckBoxPreference
@@ -104,26 +104,26 @@
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
                     android:key="virtexUpper"
-                    android:summary="Notification will occur if VirtEx price goes over this limit"
-                    android:title="VirtEx Upper Limit" />
+                    android:summary="Notification will occur if VirtEx price goes over this threshold"
+                    android:title="VirtEx Upper Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
                     android:key="virtexLower"
-                    android:summary="Notification will occur if VirtEx price goes under this limit"
-                    android:title="VirtEx Lower Limit" />
+                    android:summary="Notification will occur if VirtEx price goes under this threshold"
+                    android:title="VirtEx Lower Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
                     android:key="mtgoxUpper"
-                    android:summary="Notification will occur if MtGox price goes over this limit"
-                    android:title="MtGox Upper Limit" />
+                    android:summary="Notification will occur if MtGox price goes over this threshold"
+                    android:title="MtGox Upper Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
                     android:key="mtgoxLower"
-                    android:summary="Notification will occur if MtGox price goes under this limit"
-                    android:title="MtGox Lower Limit" />
+                    android:summary="Notification will occur if MtGox price goes under this threshold"
+                    android:title="MtGox Lower Threshold" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -234,7 +234,7 @@
             android:title="Email" />
         <Preference
             android:key="customPref"
-            android:summary="1.3.1"
+            android:summary="1.3.2"
             android:title="Version" />
         <Preference
             android:key="customPref"

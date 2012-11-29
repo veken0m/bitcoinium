@@ -95,16 +95,11 @@ public class MainActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// preparation code here
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//item.setIcon(android.R.drawable.ic_menu_preferences);
 		if (item.getItemId() == R.id.preferences) {
-			startActivity(new Intent(this, Preferences.class));
+			startActivity(new Intent(this, PreferencesActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}

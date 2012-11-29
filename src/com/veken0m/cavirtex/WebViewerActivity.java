@@ -8,14 +8,14 @@ import android.view.Menu;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-public class WebViewer extends Activity {
-	WebView mWebView;
-	final CharSequence cTrades = "VirtEx Trades";
-	final CharSequence cOrderBook = "VirtEx OrderBook";
-	final CharSequence cmtGoxLive = "MtGoxLive";
-	final CharSequence cBTCChartsVirtex = "BTCCharts - VirtEx";
-	final CharSequence cBTCChartsMtGox = "BTCCharts - MtGox";
-	final CharSequence cClose = "Close";
+public class WebViewerActivity extends Activity {
+	static WebView mWebView;
+	final static CharSequence cTrades = "VirtEx Trades";
+	final static CharSequence cOrderBook = "VirtEx OrderBook";
+	final static CharSequence cmtGoxLive = "MtGoxLive";
+	final static CharSequence cBTCChartsVirtex = "BTCCharts - VirtEx";
+	final static CharSequence cBTCChartsMtGox = "BTCCharts - MtGox";
+	final static CharSequence cClose = "Close";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

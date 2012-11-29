@@ -23,10 +23,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 	public void onReceive(Context ctxt, Intent intent) {
 
 		if (REFRESH.equals(intent.getAction())) {
-			readPreferences(ctxt);
-			ctxt.startService(new Intent(ctxt, UpdateService.class));
-		} else if (PREFERENCES.equals(intent.getAction())) {
-			readPreferences(ctxt);
+			setAlarm(ctxt);
 		} else {
 			super.onReceive(ctxt, intent);
 		}
@@ -35,7 +32,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-
 		setAlarm(context);
 	}
 
@@ -52,8 +48,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 		@Override
 		public void onCreate() {
-
-			readPreferences(this);
 			super.onCreate();
 		}
 
@@ -62,12 +56,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 			super.onStartCommand(intent, flags, startId);
 			return START_STICKY;
 		}
-
-		/*
-		 * Returns null by default, no need to declare it
-		 * 
-		 * @Override public IBinder onBind(Intent intent) { return null; }
-		 */
 
 		@Override
 		public void onHandleIntent(Intent intent) {
@@ -82,9 +70,19 @@ public class WidgetProvider extends BaseWidgetProvider {
 					WidgetProvider.class);
 			int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-			final int N = widgetIds.length;
-			for (int i = 0; i < N; i++) {
-				int appWidgetId = widgetIds[i];
+			// Date for widget "Refreshed" label
+			final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
+					Locale.US);
+			final String currentTime = sdf.format(new Date());
+
+			final RemoteViews views = new RemoteViews(context.getPackageName(),
+					R.layout.appwidget);
+
+			final Intent intent = new Intent(context, MainActivity.class);
+			final PendingIntent pendingIntent = PendingIntent.getActivity(
+					context, 0, intent, 0);
+
+			for (int appWidgetId : widgetIds) {
 
 				String pref_widgetExchange = WidgetConfigureActivity
 						.loadExchangePref(context, appWidgetId);
@@ -108,38 +106,30 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 				if (pref_currency.length() == 3) {
 
-					RemoteViews views = new RemoteViews(
-							context.getPackageName(), R.layout.appwidget);
-
-					Intent intent = new Intent(context, MainActivity.class);
-					PendingIntent pendingIntent = PendingIntent.getActivity(
-							context, 0, intent, 0);
 					views.setOnClickPendingIntent(R.id.widgetButton,
 							pendingIntent);
 
 					try {
 
 						// Get ticker using XChange
-						Ticker ticker = ExchangeFactory.INSTANCE
+						final Ticker ticker = ExchangeFactory.INSTANCE
 								.createExchange(pref_widgetExchange)
 								.getPollingMarketDataService()
 								.getTicker(Currencies.BTC, pref_currency);
 
+						// Retrieve values from ticker
 						float lastValue = ticker.getLast().getAmount()
 								.floatValue();
 
-						String lastPrice = Utils.formatMoney(
-								Utils.formatTwoDecimals(lastValue),
-								pref_currency);
-						String highPrice = Utils.formatMoney2(
-								Utils.formatTwoDecimals(ticker.getHigh()
-										.getAmount().floatValue()),
-								pref_currency);
-						String lowPrice = Utils.formatMoney2(
-								Utils.formatTwoDecimals(ticker.getLow()
-										.getAmount().floatValue()),
-								pref_currency);
-						String volume = Utils.formatTwoDecimals(ticker
+						final String lastPrice = Utils.formatWidgetMoney(
+								lastValue, pref_currency, true);
+						final String highPrice = Utils.formatWidgetMoney(ticker
+								.getHigh().getAmount().floatValue(),
+								pref_currency, false);
+						final String lowPrice = Utils.formatWidgetMoney(ticker
+								.getLow().getAmount().floatValue(),
+								pref_currency, false);
+						final String volume = Utils.formatTwoDecimals(ticker
 								.getVolume().floatValue());
 
 						views.setTextViewText(R.id.widgetExchange, exchange);
@@ -149,10 +139,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 						views.setTextViewText(R.id.widgetVolText, "Volume: "
 								+ volume);
 
-						// Date for widget "Refreshed" label
-						SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
-								Locale.US);
-						String currentTime = sdf.format(new Date());
 						views.setTextViewText(R.id.label, "Refreshed @ "
 								+ currentTime);
 						views.setTextColor(R.id.label, Color.GREEN);
@@ -170,8 +156,14 @@ public class WidgetProvider extends BaseWidgetProvider {
 									NOTIFY_ID);
 						}
 
-						createAlarmNotification(context, lastValue, lastPrice,
-								exchange, NOTIFY_ID);
+						
+						if ((exchange.equalsIgnoreCase("VirtEx") && pref_currency
+								.equalsIgnoreCase("CAD"))
+								|| (exchange.equalsIgnoreCase("MtGox") && pref_currency
+										.equalsIgnoreCase(pref_mtgoxCurrency))){
+							createAlarmNotification(context, lastValue,
+									lastPrice, exchange, NOTIFY_ID);
+						}
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -186,7 +178,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 				}
 			}
 		}
-
 	}
 
 }

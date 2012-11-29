@@ -52,6 +52,33 @@ public class Utils {
 		return numberFormat0.format(valueToFormat);
 	}
 
+	public static String formatWidgetMoney(float amount, String currencyCode,
+			boolean includeCurrencyCode) {
+		final NumberFormat numberFormat = DecimalFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(2);
+		numberFormat.setMinimumFractionDigits(2);
+		numberFormat.setGroupingUsed(false);
+
+		String symbol = CurrencyUnit.of(currencyCode).getSymbol();
+		symbol = symbol.substring(symbol.length() - 1);
+		if (currencyCode.equalsIgnoreCase("DKK")
+				|| currencyCode.equalsIgnoreCase("PLN")
+				|| currencyCode.equalsIgnoreCase("RUB")
+				|| currencyCode.equalsIgnoreCase("SEK")
+				|| currencyCode.equalsIgnoreCase("SGD")
+				|| currencyCode.equalsIgnoreCase("CHF")) {
+			symbol = "";
+		}
+
+		if (includeCurrencyCode) {
+			currencyCode = " " + currencyCode;
+		} else {
+			currencyCode = "";
+		}
+
+		return symbol + numberFormat.format(amount) + currencyCode;
+	}
+
 	public static String formatMoney(String moneyToFormat, String currency) {
 		String symbol = CurrencyUnit.of(currency).getSymbol();
 		symbol = symbol.substring(symbol.length() - 1);

@@ -33,7 +33,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 			@Override
 			public void onClick(View v) {
 				Intent graphActivity = new Intent(getActivity()
-						.getBaseContext(), Graph.class);
+						.getBaseContext(), GraphActivity.class);
 				graphActivity.putExtra("exchange", exchange);
 				startActivity(graphActivity);
 			}
@@ -45,7 +45,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 			@Override
 			public void onClick(View v) {
 				Intent orderbookActivity = new Intent(getActivity()
-						.getBaseContext(), Orderbook.class);
+						.getBaseContext(), OrderbookActivity.class);
 				orderbookActivity.putExtra("exchange", exchange);
 				startActivity(orderbookActivity);
 			}
@@ -57,7 +57,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 			@Override
 			public void onClick(View v) {
 				Intent minerstatsActivity = new Intent(getActivity()
-						.getBaseContext(), MinerStats.class);
+						.getBaseContext(), MinerStatsActivity.class);
 				startActivity(minerstatsActivity);
 			}
 		});
@@ -67,7 +67,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity().getBaseContext(),
-						WebViewer.class);
+						WebViewerActivity.class);
 				startActivity(intent);
 			}
 		});

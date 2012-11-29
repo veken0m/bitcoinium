@@ -3,7 +3,7 @@
 
     <PreferenceCategory android:title="Widget Configuration" >
         <ListPreference
-            android:defaultValue="mtgox"
+            android:defaultValue="com.xeiam.xchange.mtgox.v1.MtGoxExchange"
             android:entries="@array/exchanges"
             android:entryValues="@array/widgetexchangesvalues"
             android:key="widgetExchangesPref"

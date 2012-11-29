@@ -34,7 +34,7 @@ import com.veken0m.miningpools.bitminter.BitMinterData;
 import com.veken0m.miningpools.bitminter.Workers;
 import com.veken0m.miningpools.deepbit.DeepBitData;
 
-public class MinerStats extends SherlockFragmentActivity {
+public class MinerStatsActivity extends SherlockFragmentActivity {
 
 	static String pref_favPool;
 
@@ -69,6 +69,14 @@ public class MinerStats extends SherlockFragmentActivity {
 
 		setContentView(R.layout.minerstats);
 		actionbar.show();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+				setContentView(R.layout.minerstats);
+
+		
 	}
 
 	class MyTabsListener implements ActionBar.TabListener {
@@ -116,15 +124,9 @@ public class MinerStats extends SherlockFragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.preferences) {
-			startActivity(new Intent(this, Preferences.class));
+			startActivity(new Intent(this, PreferencesActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		setContentView(R.layout.minerstats);
 	}
 
 	public static class MinerData {

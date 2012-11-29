@@ -21,7 +21,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	 * This constant is what we send to ourself to force a refresh
 	 */
 	public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
-	public static final String PREFERENCES = "com.veken0m.cavirtex.PREFERENCES";
 	public static final String OPENMENU = "com.veken0m.cavirtex.OPENMENU";
 	public static final String GRAPH = "com.veken0m.cavirtex.GRAPH";
 
@@ -116,14 +115,14 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		readPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		final Intent i = new Intent(context, UpdateService.class);
+		final Intent intent = new Intent(context, UpdateService.class);
 		final Calendar TIME = Calendar.getInstance();
 		TIME.set(Calendar.MINUTE, 0);
 		TIME.set(Calendar.SECOND, 0);
 		TIME.set(Calendar.MILLISECOND, 0);
 
 		if (widgetRefreshService == null) {
-			widgetRefreshService = PendingIntent.getService(context, 0, i,
+			widgetRefreshService = PendingIntent.getService(context, 0, intent,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		}
 
@@ -226,46 +225,46 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 	public void widgetButtonAction(Context context) {
 
-		RemoteViews views = new RemoteViews(context.getPackageName(),
+		final RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.appwidget);
 
 		if (pref_widgetBehaviour.equalsIgnoreCase("mainMenu")) {
-			Intent intent = new Intent(context, MainActivity.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-					intent, 0);
+			final Intent intent = new Intent(context, MainActivity.class);
+			final PendingIntent pendingIntent = PendingIntent.getActivity(
+					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 
 		}
 
 		else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {
-			Intent intent = new Intent(context, WidgetProvider.class);
+			final Intent intent = new Intent(context, WidgetProvider.class);
 			intent.setAction(REFRESH);
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-					0, intent, 0);
+			final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 		}
 
 		else if (pref_widgetBehaviour.equalsIgnoreCase("openGraph")) {
 
-			Intent intent = new Intent(context, MainActivity.class);
+			final Intent intent = new Intent(context, MainActivity.class);
 			intent.setAction(GRAPH);
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-					0, intent, 0);
+			final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 		}
 
 		else if (pref_widgetBehaviour.equalsIgnoreCase("pref")) {
 
-			Intent intent = new Intent(context, Preferences.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-					intent, 0);
+			final Intent intent = new Intent(context, PreferencesActivity.class);
+			final PendingIntent pendingIntent = PendingIntent.getActivity(
+					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 		}
 
 		else if (pref_widgetBehaviour.equalsIgnoreCase("extOrder")) {
-			Intent intent = new Intent(context, WebViewer.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-					intent, 0);
+			final Intent intent = new Intent(context, WebViewerActivity.class);
+			final PendingIntent pendingIntent = PendingIntent.getActivity(
+					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
 		}
 	}
@@ -273,7 +272,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	public static void createAlarmNotification(Context context,
 			float lastValue, String lastPrice, String exchange, int NOTIFY_ID) {
 
-		if (pref_PriceAlarm) {
+		if (pref_PriceAlarm && exchange.equalsIgnoreCase("MtGox")) {
 			if (!pref_mtgoxLower.equalsIgnoreCase("")) {
 
 				if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
@@ -287,8 +286,22 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				}
 
 			}
+		} else if (pref_PriceAlarm && exchange.equalsIgnoreCase("VirtEx")) {
+			if (!pref_virtexLower.equalsIgnoreCase("")) {
+
+				if (lastValue <= Float.valueOf(pref_virtexLower)) {
+					createNotification(context, lastPrice, exchange, NOTIFY_ID);
+				}
+			}
+
+			if (!pref_virtexUpper.equalsIgnoreCase("")) {
+				if (lastValue >= Float.valueOf(pref_virtexUpper)) {
+					createNotification(context, lastPrice, exchange, NOTIFY_ID);
+				}
+
+			}
+
 		}
 
 	}
-
 }

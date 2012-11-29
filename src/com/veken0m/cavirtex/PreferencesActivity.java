@@ -7,8 +7,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
-public class Preferences extends PreferenceActivity {
-	public static final String PREFERENCES = "com.veken0m.cavirtex.PREFERENCES";
+public class PreferencesActivity extends PreferenceActivity {
+	public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class Preferences extends PreferenceActivity {
 		// Tell the widgets to update preferences
 		Intent intent = new Intent(getApplicationContext(),
 				WidgetProvider.class);
-		intent.setAction(PREFERENCES);
+		intent.setAction(REFRESH);
 		sendBroadcast(intent);
 	}
 }

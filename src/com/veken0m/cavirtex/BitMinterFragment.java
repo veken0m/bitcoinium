@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.miningpools.bitminter.Workers;
-import com.veken0m.cavirtex.MinerStats.MinerData;
+import com.veken0m.cavirtex.MinerStatsActivity.MinerData;
 
 public class BitMinterFragment extends SherlockFragment {
 
@@ -39,20 +39,20 @@ public class BitMinterFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		super.onCreate(savedInstanceState);
 		readPreferences(getActivity());
 
 		if (pref_bitminterKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your BitMinter API Token to use MinerStats with BitMinter";
+			CharSequence text = "Please enter your BitMinter API Token to use MinerStatsActivity with BitMinter";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 
 			Intent settingsActivity = new Intent(
-					getActivity().getBaseContext(), Preferences.class);
+					getActivity().getBaseContext(), PreferencesActivity.class);
 			startActivity(settingsActivity);
 		}
 

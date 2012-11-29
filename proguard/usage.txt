@@ -561,7 +561,7 @@ com.veken0m.cavirtex.BaseWidgetProvider:
     static java.lang.String pref_widgetBehaviour
     121:126:public void onDestoy(android.content.Context)
 com.veken0m.cavirtex.BuildConfig
-com.veken0m.cavirtex.Graph:
+com.veken0m.cavirtex.GraphActivity:
     public static final java.lang.String VIRTEX
     public static final java.lang.String MTGOX
 com.veken0m.cavirtex.GraphView:
@@ -590,7 +590,7 @@ com.veken0m.cavirtex.GraphViewer:
 com.veken0m.cavirtex.LineGraphView:
     94:94:public boolean getDrawBackground()
     101:102:public void setDrawBackground(boolean)
-com.veken0m.cavirtex.MinerStats:
+com.veken0m.cavirtex.MinerStatsActivity:
     protected static final java.lang.String notAvailable
 com.veken0m.cavirtex.MtGoxFragment:
     public static final java.lang.String REFRESH
@@ -598,12 +598,12 @@ com.veken0m.cavirtex.MtGoxFragment:
     public static final java.lang.String GRAPH
     public static final java.lang.String VIRTEX
     public static final java.lang.String MTGOX
-com.veken0m.cavirtex.Orderbook:
+com.veken0m.cavirtex.OrderbookActivity:
     protected static final java.lang.String VIRTEX
     protected static final java.lang.String MTGOX
     protected static final java.lang.String sVirtex
     protected static final java.lang.String sMtgox
-com.veken0m.cavirtex.Preferences:
+com.veken0m.cavirtex.PreferencesActivity:
     public static final java.lang.String PREFERENCES
 com.veken0m.cavirtex.R
 com.veken0m.cavirtex.R$array

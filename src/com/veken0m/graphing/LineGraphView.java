@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * Line Graph View. This draws a line chart.
+ * Line GraphActivity View. This draws a line chart.
  * @author jjoe64 - jonas gehring - http://www.jjoe64.com
  *
  * Copyright (C) 2011 Jonas Gehring

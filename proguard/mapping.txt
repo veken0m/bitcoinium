@@ -6099,7 +6099,7 @@ com.veken0m.cavirtex.BaseWidgetProvider -> com.veken0m.cavirtex.BaseWidgetProvid
     246:259:void createTicker$2a3a87ec(android.content.Context,java.lang.CharSequence) -> a
 com.veken0m.cavirtex.BaseWidgetProvider$1 -> com.veken0m.cavirtex.a:
     85:100:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.Graph -> com.veken0m.cavirtex.Graph:
+com.veken0m.cavirtex.GraphActivity -> com.veken0m.cavirtex.GraphActivity:
     com.veken0m.cavirtex.GraphViewer g_graphView -> l
     android.app.ProgressDialog graphProgressDialog -> m
     android.os.Handler mOrderHandler -> a
@@ -6120,25 +6120,25 @@ com.veken0m.cavirtex.Graph -> com.veken0m.cavirtex.Graph:
     97:100:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
     254:265:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     274:281:void viewGraph() -> a
-    37:37:android.app.ProgressDialog access$0(com.veken0m.cavirtex.Graph) -> a
+    37:37:android.app.ProgressDialog access$0(com.veken0m.cavirtex.GraphActivity) -> a
     267:267:void access$1$58230f0(android.app.ProgressDialog) -> a
-    36:36:com.veken0m.cavirtex.GraphViewer access$2(com.veken0m.cavirtex.Graph) -> b
-    238:238:void access$3(com.veken0m.cavirtex.Graph,java.lang.String) -> a
-    137:137:void access$4(com.veken0m.cavirtex.Graph) -> c
+    36:36:com.veken0m.cavirtex.GraphViewer access$2(com.veken0m.cavirtex.GraphActivity) -> b
+    238:238:void access$3(com.veken0m.cavirtex.GraphActivity,java.lang.String) -> a
+    137:137:void access$4(com.veken0m.cavirtex.GraphActivity) -> c
 com.veken0m.cavirtex.Graph$1 -> com.veken0m.cavirtex.b:
-    com.veken0m.cavirtex.Graph this$0 -> a
+    com.veken0m.cavirtex.GraphActivity this$0 -> a
     119:130:void run() -> run
 com.veken0m.cavirtex.Graph$2 -> com.veken0m.cavirtex.c:
-    com.veken0m.cavirtex.Graph this$0 -> a
+    com.veken0m.cavirtex.GraphActivity this$0 -> a
     java.text.Format val$formatter -> c
     206:209:java.lang.String formatLabel(double,boolean) -> a
 com.veken0m.cavirtex.Graph$3 -> com.veken0m.cavirtex.d:
-    com.veken0m.cavirtex.Graph this$0 -> a
+    com.veken0m.cavirtex.GraphActivity this$0 -> a
     244:245:void onClick(android.content.DialogInterface,int) -> onClick
 com.veken0m.cavirtex.Graph$4 -> com.veken0m.cavirtex.e:
     292:298:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
 com.veken0m.cavirtex.Graph$GraphThread -> com.veken0m.cavirtex.f:
-    com.veken0m.cavirtex.Graph this$0 -> a
+    com.veken0m.cavirtex.GraphActivity this$0 -> a
     107:109:void run() -> run
 com.veken0m.cavirtex.GraphView -> com.veken0m.cavirtex.g:
     android.graphics.Paint paint -> b
@@ -6252,7 +6252,7 @@ com.veken0m.cavirtex.MainActivity$MyTabsListener -> com.veken0m.cavirtex.r:
     75:76:void onTabReselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabReselected
     80:81:void onTabSelected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabSelected
     85:86:void onTabUnselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabUnselected
-com.veken0m.cavirtex.MinerStats -> com.veken0m.cavirtex.MinerStats:
+com.veken0m.cavirtex.MinerStatsActivity -> com.veken0m.cavirtex.MinerStatsActivity:
     java.lang.String pref_deepbitKey -> a
     java.lang.String pref_bitminterKey -> b
     java.lang.String pref_bitminterUser -> c
@@ -6279,18 +6279,18 @@ com.veken0m.cavirtex.MinerStats -> com.veken0m.cavirtex.MinerStats:
     118:121:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     127:158:void getMinerStats$faab20d() -> a
     214:312:void drawMinerUI() -> b
-    60:60:android.app.ProgressDialog access$0(com.veken0m.cavirtex.MinerStats) -> a
-    188:188:void access$1(com.veken0m.cavirtex.MinerStats,android.app.ProgressDialog) -> a
+    60:60:android.app.ProgressDialog access$0(com.veken0m.cavirtex.MinerStatsActivity) -> a
+    188:188:void access$1(com.veken0m.cavirtex.MinerStatsActivity,android.app.ProgressDialog) -> a
 com.veken0m.cavirtex.MinerStats$1 -> com.veken0m.cavirtex.s:
-    com.veken0m.cavirtex.MinerStats this$0 -> a
+    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
     183:185:void run() -> run
 com.veken0m.cavirtex.MinerStats$2 -> com.veken0m.cavirtex.t:
-    com.veken0m.cavirtex.MinerStats this$0 -> a
+    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
     199:200:void onClick(android.content.DialogInterface,int) -> onClick
 com.veken0m.cavirtex.MinerStats$3 -> com.veken0m.cavirtex.u:
     321:328:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
 com.veken0m.cavirtex.MinerStats$OrderbookThread -> com.veken0m.cavirtex.v:
-    com.veken0m.cavirtex.MinerStats this$0 -> a
+    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
     175:177:void run() -> run
 com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.w:
     java.lang.CharSequence cTrades -> a
@@ -6320,7 +6320,7 @@ com.veken0m.cavirtex.MtGoxFragment$4 -> com.veken0m.cavirtex.A:
 com.veken0m.cavirtex.MtGoxFragment$5 -> com.veken0m.cavirtex.B:
     com.veken0m.cavirtex.MtGoxFragment this$0 -> a
     109:112:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.Orderbook -> com.veken0m.cavirtex.Orderbook:
+com.veken0m.cavirtex.OrderbookActivity -> com.veken0m.cavirtex.OrderbookActivity:
     android.app.ProgressDialog orderbookProgressDialog -> p
     android.os.Handler mOrderHandler -> a
     int lengthAskArray -> b
@@ -6346,24 +6346,24 @@ com.veken0m.cavirtex.Orderbook -> com.veken0m.cavirtex.Orderbook:
     118:139:void readPreferences(android.content.Context) -> a
     146:168:void getOrderBook() -> a
     176:245:void drawOrderbookUI() -> b
-    35:35:android.app.ProgressDialog access$0(com.veken0m.cavirtex.Orderbook) -> a
-    277:277:void access$1(com.veken0m.cavirtex.Orderbook,android.app.ProgressDialog) -> a
+    35:35:android.app.ProgressDialog access$0(com.veken0m.cavirtex.OrderbookActivity) -> a
+    277:277:void access$1(com.veken0m.cavirtex.OrderbookActivity,android.app.ProgressDialog) -> a
 com.veken0m.cavirtex.Orderbook$1 -> com.veken0m.cavirtex.C:
-    com.veken0m.cavirtex.Orderbook this$0 -> a
+    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
     271:273:void run() -> run
 com.veken0m.cavirtex.Orderbook$2 -> com.veken0m.cavirtex.D:
     124:129:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
 com.veken0m.cavirtex.Orderbook$3 -> com.veken0m.cavirtex.E:
-    com.veken0m.cavirtex.Orderbook this$0 -> a
+    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
     290:291:void onClick(android.content.DialogInterface,int) -> onClick
 com.veken0m.cavirtex.Orderbook$OrderbookThread -> com.veken0m.cavirtex.F:
-    com.veken0m.cavirtex.Orderbook this$0 -> a
+    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
     262:264:void run() -> run
-com.veken0m.cavirtex.Preferences -> com.veken0m.cavirtex.Preferences:
+com.veken0m.cavirtex.PreferencesActivity -> com.veken0m.cavirtex.PreferencesActivity:
     14:27:void onCreate(android.os.Bundle) -> onCreate
     32:46:void onStop() -> onStop
 com.veken0m.cavirtex.Preferences$1 -> com.veken0m.cavirtex.G:
-    com.veken0m.cavirtex.Preferences this$0 -> a
+    com.veken0m.cavirtex.PreferencesActivity this$0 -> a
     21:24:boolean onPreferenceClick(android.preference.Preference) -> onPreferenceClick
 com.veken0m.cavirtex.RealScaleGestureDetector -> com.veken0m.cavirtex.H:
 com.veken0m.cavirtex.ScaleGestureDetector -> com.veken0m.cavirtex.I:
@@ -6428,7 +6428,7 @@ com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2 -> com.veken0m.cavirt
     84:85:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     104:108:void onHandleIntent(android.content.Intent) -> onHandleIntent
     116:198:android.widget.RemoteViews buildUpdate(android.content.Context) -> a
-com.veken0m.cavirtex.WebViewer -> com.veken0m.cavirtex.WebViewer:
+com.veken0m.cavirtex.WebViewerActivity -> com.veken0m.cavirtex.WebViewerActivity:
     android.webkit.WebView mWebView -> a
     java.lang.CharSequence cTrades -> b
     java.lang.CharSequence cOrderBook -> c
@@ -6442,7 +6442,7 @@ com.veken0m.cavirtex.WebViewer -> com.veken0m.cavirtex.WebViewer:
     82:84:boolean onPrepareOptionsMenu(android.view.Menu) -> onPrepareOptionsMenu
     97:99:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
 com.veken0m.cavirtex.WebViewer$1 -> com.veken0m.cavirtex.R:
-    com.veken0m.cavirtex.WebViewer this$0 -> a
+    com.veken0m.cavirtex.WebViewerActivity this$0 -> a
     java.lang.CharSequence[] val$items -> b
     49:74:void onClick(android.content.DialogInterface,int) -> onClick
 com.xeiam.xchange.Exchange -> com.a.a.a:

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.cavirtex"
     android:versionCode="19"
-    android:versionName="1.3.1" >
+    android:versionName="1.3.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -50,26 +50,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Orderbook"
+            android:name="com.veken0m.cavirtex.OrderbookActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Orderbook" >
         </activity>
         <activity
-            android:name=".Graph"
+            android:name="com.veken0m.cavirtex.GraphActivity"
             android:configChanges="orientation|screenSize"
             android:label="Graph" >
         </activity>
+        
+         <!--TODO: Uncomment following line and fix orientation change
+            android:configChanges="orientation|screenSize"-->
         <activity
-            android:name=".MinerStats"
-            android:configChanges="orientation|screenSize"
+            android:name="com.veken0m.cavirtex.MinerStatsActivity"
             android:label="Miner Stats" >
         </activity>
         <activity
-            android:name=".Preferences"
+            android:name="com.veken0m.cavirtex.PreferencesActivity"
             android:label="Preferences" >
         </activity>
         <activity
-            android:name="com.veken0m.cavirtex.WebViewer"
+            android:name="com.veken0m.cavirtex.WebViewerActivityActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="OrderBook" >
         </activity>

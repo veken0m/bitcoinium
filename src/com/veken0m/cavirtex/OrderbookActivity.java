@@ -24,16 +24,14 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import com.xeiam.xchange.Currencies;
-import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
-public class Orderbook extends SherlockActivity {
+public class OrderbookActivity extends SherlockActivity {
 
-	private ProgressDialog orderbookProgressDialog;
-	final Handler mOrderHandler = new Handler();
+	protected static ProgressDialog orderbookProgressDialog;
+	final static Handler mOrderHandler = new Handler();
 	int lengthAskArray = 0;
 	int lengthBidArray = 0;
 	int length = 0;
@@ -56,15 +54,13 @@ public class Orderbook extends SherlockActivity {
 	static Boolean pref_enableHighlight;
 	static String pref_mtgoxCurrency;
 
-	private static PollingMarketDataService marketDataService;
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orderbook);
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
-		
+
 		readPreferences(getApplicationContext());
 
 		Bundle extras = getIntent().getExtras();
@@ -74,12 +70,12 @@ public class Orderbook extends SherlockActivity {
 
 		if (exchange.equalsIgnoreCase(MTGOX)) {
 			exchangeName = sMtgox;
-			xchangeExchange =  "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
+			xchangeExchange = "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
 			currency = pref_mtgoxCurrency;
 		}
 		if (exchange.equalsIgnoreCase(VIRTEX)) {
 			exchangeName = sVirtex;
-			xchangeExchange =  "com.xeiam.xchange.virtex.VirtExExchange";
+			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
 			currency = Currencies.CAD;
 		}
 
@@ -96,7 +92,7 @@ public class Orderbook extends SherlockActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.preferences) {
-			startActivity(new Intent(this, Preferences.class));
+			startActivity(new Intent(this, PreferencesActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -108,7 +104,7 @@ public class Orderbook extends SherlockActivity {
 		readPreferences(getApplicationContext());
 		drawOrderbookUI();
 	}
-	
+
 	protected static void readPreferences(Context context) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
@@ -121,22 +117,21 @@ public class Orderbook extends SherlockActivity {
 				"10"));
 		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
 	}
-	
+
 	/**
-	 * Fetch the Orderbook and split into Ask/Bids lists
+	 * Fetch the OrderbookActivity and split into Ask/Bids lists
 	 */
 	public void getOrderBook() {
 		try {
-				Exchange exchange = ExchangeFactory.INSTANCE
-						.createExchange(xchangeExchange);
-				marketDataService = exchange.getPollingMarketDataService();
-				OrderBook orderbook = marketDataService
-						.getFullOrderBook(Currencies.BTC, currency);
-				listAsks = orderbook.getAsks();
-				listBids = orderbook.getBids();
-				lengthAskArray = listAsks.size();
-				lengthBidArray = listBids.size();
-			
+			final OrderBook orderbook = ExchangeFactory.INSTANCE
+					.createExchange(xchangeExchange)
+					.getPollingMarketDataService()
+					.getFullOrderBook(Currencies.BTC, currency);
+
+			listAsks = orderbook.getAsks();
+			listBids = orderbook.getBids();
+			lengthAskArray = listAsks.size();
+			lengthBidArray = listBids.size();
 
 			if (lengthAskArray < lengthBidArray) {
 				length = lengthAskArray;
@@ -148,46 +143,47 @@ public class Orderbook extends SherlockActivity {
 			connectionFail = true;
 			e.printStackTrace();
 		}
-	
 
 	}
-	
+
 	/**
 	 * Draw the Orders to the screen in a table
 	 */
 	public void drawOrderbookUI() {
 
-		//Limit Orderbook orders drawn to speed up performance
+		// Limit OrderbookActivity orders drawn to speed up performance
 		int limiter = 100;
-		 if(limiter != 0 && limiter < length){
-		 length = limiter;
-		 }
+		if (limiter != 0 && limiter < length) {
+			length = limiter;
+		}
 
-		TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
+		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
 
 		for (int i = 0; i < length; i++) {
 
-			int reverse = lengthBidArray - 1 - i; //To read Bid array backwards
-			
-			TableRow tr1 = new TableRow(this);
-			TextView tvAskAmount = new TextView(this);
-			TextView tvAskPrice = new TextView(this);
-			TextView tvBidPrice = new TextView(this);
-			TextView tvBidAmount = new TextView(this);
+			final int reverse = lengthBidArray - 1 - i; // To read Bid array backwards
+
+			final TableRow tr1 = new TableRow(this);
+			final TextView tvAskAmount = new TextView(this);
+			final TextView tvAskPrice = new TextView(this);
+			final TextView tvBidPrice = new TextView(this);
+			final TextView tvBidAmount = new TextView(this);
 			tr1.setId(100 + i);
 
-			LimitOrder limitorderBid = (LimitOrder) listBids.get(reverse);
-			LimitOrder limitorderAsk = (LimitOrder) listAsks.get(i);
-			
-			float bidPrice = limitorderBid.getLimitPrice().getAmount().floatValue();
+			final LimitOrder limitorderBid = (LimitOrder) listBids.get(reverse);
+			final LimitOrder limitorderAsk = (LimitOrder) listAsks.get(i);
+
+			float bidPrice = limitorderBid.getLimitPrice().getAmount()
+					.floatValue();
 			float bidAmount = limitorderBid.getTradableAmount().floatValue();
-			float askPrice = limitorderAsk.getLimitPrice().getAmount().floatValue();
+			float askPrice = limitorderAsk.getLimitPrice().getAmount()
+					.floatValue();
 			float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-			String sBidPrice = Utils.formatFiveDecimals(bidPrice);
-			String sBidAmount = Utils.formatTwoDecimals(bidAmount);
-			String sAskPrice = Utils.formatFiveDecimals(askPrice);
-			String sAskAmount = Utils.formatTwoDecimals(askAmount);
+			final String sBidPrice = Utils.formatFiveDecimals(bidPrice);
+			final String sBidAmount = Utils.formatTwoDecimals(bidAmount);
+			final String sAskPrice = Utils.formatFiveDecimals(askPrice);
+			final String sAskAmount = Utils.formatTwoDecimals(askAmount);
 
 			tvBidAmount.setText("" + sBidPrice + "          " + sBidAmount);
 			tvAskAmount.setText("" + sAskPrice + "          " + sAskAmount);
@@ -247,7 +243,6 @@ public class Orderbook extends SherlockActivity {
 			getOrderBook();
 			mOrderHandler.post(mGraphView);
 		}
-
 	}
 
 	final Runnable mGraphView = new Runnable() {
@@ -256,7 +251,6 @@ public class Orderbook extends SherlockActivity {
 			safelyDismiss(orderbookProgressDialog);
 			drawOrderbookUI();
 		}
-
 	};
 
 	private void safelyDismiss(ProgressDialog dialog) {
