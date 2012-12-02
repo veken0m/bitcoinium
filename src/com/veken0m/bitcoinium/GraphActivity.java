@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.R;
 import com.veken0m.graphing.GraphViewer;
 import com.veken0m.graphing.LineGraphView;
 import com.veken0m.graphing.GraphView.GraphViewData;
@@ -34,8 +35,8 @@ public class GraphActivity extends SherlockActivity {
 	private GraphViewer g_graphView = null;
 	private ProgressDialog graphProgressDialog;
 	private static final Handler mOrderHandler = new Handler();
-	public static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
-	public static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
+	public static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
+	public static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
 	public static String exchangeName = "";
 	public static String currency = "";
 	public String exchange = VIRTEX;

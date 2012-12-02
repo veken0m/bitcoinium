@@ -5286,30 +5286,30 @@ com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a[] values()
 com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a valueOf(java.lang.String)
 com.google.ads.util.b$a: com.google.ads.util.b$a[] values()
 com.google.ads.util.b$a: com.google.ads.util.b$a valueOf(java.lang.String)
-com.veken0m.cavirtex.BaseWidgetProvider
-com.veken0m.cavirtex.BaseWidgetProvider: BaseWidgetProvider()
-com.veken0m.cavirtex.GraphActivity
-com.veken0m.cavirtex.GraphActivity: Graph()
-com.veken0m.cavirtex.GraphView$LegendAlign: com.veken0m.cavirtex.GraphView$LegendAlign[] values()
-com.veken0m.cavirtex.GraphView$LegendAlign: com.veken0m.cavirtex.GraphView$LegendAlign valueOf(java.lang.String)
-com.veken0m.cavirtex.MainActivity
-com.veken0m.cavirtex.MainActivity: MainActivity()
-com.veken0m.cavirtex.MinerStatsActivity
-com.veken0m.cavirtex.MinerStatsActivity: MinerStats()
-com.veken0m.cavirtex.OrderbookActivity
-com.veken0m.cavirtex.OrderbookActivity: Orderbook()
-com.veken0m.cavirtex.PreferencesActivity
-com.veken0m.cavirtex.PreferencesActivity: Preferences()
-com.veken0m.cavirtex.WatcherWidgetProvider
-com.veken0m.cavirtex.WatcherWidgetProvider: WatcherWidgetProvider()
-com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService
-com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService: WatcherWidgetProvider$UpdateService()
-com.veken0m.cavirtex.WidgetProvider
-com.veken0m.cavirtex.WidgetProvider: WatcherWidgetProvider2()
-com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2
-com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2: WatcherWidgetProvider2$UpdateService2()
-com.veken0m.cavirtex.WebViewerActivity
-com.veken0m.cavirtex.WebViewerActivity: WebViewer()
+com.veken0m.bitcoinium.BaseWidgetProvider
+com.veken0m.bitcoinium.BaseWidgetProvider: BaseWidgetProvider()
+com.veken0m.bitcoinium.GraphActivity
+com.veken0m.bitcoinium.GraphActivity: Graph()
+com.veken0m.bitcoinium.GraphView$LegendAlign: com.veken0m.bitcoinium.GraphView$LegendAlign[] values()
+com.veken0m.bitcoinium.GraphView$LegendAlign: com.veken0m.bitcoinium.GraphView$LegendAlign valueOf(java.lang.String)
+com.veken0m.bitcoinium.MainActivity
+com.veken0m.bitcoinium.MainActivity: MainActivity()
+com.veken0m.bitcoinium.MinerStatsActivity
+com.veken0m.bitcoinium.MinerStatsActivity: MinerStats()
+com.veken0m.bitcoinium.OrderbookActivity
+com.veken0m.bitcoinium.OrderbookActivity: Orderbook()
+com.veken0m.bitcoinium.PreferencesActivity
+com.veken0m.bitcoinium.PreferencesActivity: Preferences()
+com.veken0m.bitcoinium.WatcherWidgetProvider
+com.veken0m.bitcoinium.WatcherWidgetProvider: WatcherWidgetProvider()
+com.veken0m.bitcoinium.WatcherWidgetProvider$UpdateService
+com.veken0m.bitcoinium.WatcherWidgetProvider$UpdateService: WatcherWidgetProvider$UpdateService()
+com.veken0m.bitcoinium.WidgetProvider
+com.veken0m.bitcoinium.WidgetProvider: WatcherWidgetProvider2()
+com.veken0m.bitcoinium.WatcherWidgetProvider2$UpdateService2
+com.veken0m.bitcoinium.WatcherWidgetProvider2$UpdateService2: WatcherWidgetProvider2$UpdateService2()
+com.veken0m.bitcoinium.WebViewerActivity
+com.veken0m.bitcoinium.WebViewerActivity: WebViewer()
 com.xeiam.xchange.ExchangeFactory: com.xeiam.xchange.ExchangeFactory[] values()
 com.xeiam.xchange.ExchangeFactory: com.xeiam.xchange.ExchangeFactory valueOf(java.lang.String)
 com.xeiam.xchange.dto.Order$OrderType: com.xeiam.xchange.dto.Order$OrderType[] values()

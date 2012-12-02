@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

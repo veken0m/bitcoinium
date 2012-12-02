@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
@@ -37,8 +38,8 @@ public class OrderbookActivity extends SherlockActivity {
 	int length = 0;
 	Boolean connectionFail = false;
 	protected String exchange = VIRTEX;
-	protected static final String VIRTEX = "com.veken0m.cavirtex.VIRTEX";
-	protected static final String MTGOX = "com.veken0m.cavirtex.MTGOX";
+	protected static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
+	protected static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
 	protected static final String sVirtex = "VirtEx";
 	protected static final String sMtgox = "MtGox";
 	protected static String exchangeName = "";

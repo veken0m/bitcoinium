@@ -53,7 +53,7 @@ Sherlock ActionBar library: http://actionbarsherlock.com/
 
 Google Play
 ===============
-Bitcoinium (Ad-Supported/Free): https://play.google.com/store/apps/details?id=com.veken0m.cavirtex
+Bitcoinium (Ad-Supported/Free): https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
 
 Bitcoinium Prime (Ad-Free/Paid): https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
 

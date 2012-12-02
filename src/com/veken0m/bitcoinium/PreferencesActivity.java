@@ -1,4 +1,6 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
+
+import com.veken0m.bitcoinium.R;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,24 +12,13 @@ import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 public class PreferencesActivity extends PreferenceActivity {
-	public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
+	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-		Preference primepref = (Preference) findPreference("primepref");
-		primepref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-			public boolean onPreferenceClick(Preference preference) {
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setData(Uri
-						.parse("market://details?id=com.veken0m.bitcoinium"));
-				startActivity(intent);
-				return true;
-			}
-		});
 		Preference devEmailPref = (Preference) findPreference("devEmailPref");
 		devEmailPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -35,7 +26,7 @@ public class PreferencesActivity extends PreferenceActivity {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
 				i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "veken0m.apps@gmail.com" });
-				i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Bitcoinium Feedback");
+				i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Bitcoinium Prime Feedback");
 				//i.putExtra(android.content.Intent.EXTRA_TEXT, "");
 				startActivity(Intent.createChooser(i, "Send email"));
 				

@@ -6075,7 +6075,7 @@ com.google.ads.y -> com.google.ads.ab:
     48:67:void a(com.google.ads.internal.d,java.util.HashMap,android.webkit.WebView) -> a
 com.google.ads.z -> com.google.ads.ac:
     30:30:void a(com.google.ads.internal.d,java.util.HashMap,android.webkit.WebView) -> a
-com.veken0m.cavirtex.BaseWidgetProvider -> com.veken0m.cavirtex.BaseWidgetProvider:
+com.veken0m.bitcoinium.BaseWidgetProvider -> com.veken0m.bitcoinium.BaseWidgetProvider:
     java.lang.Boolean pref_DisplayUpdates -> a
     int pref_widgetRefreshFreq -> b
     java.lang.Boolean pref_PriceAlarm -> c
@@ -6097,10 +6097,10 @@ com.veken0m.cavirtex.BaseWidgetProvider -> com.veken0m.cavirtex.BaseWidgetProvid
     189:210:void createNotification$ff67ed9(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int) -> a
     215:232:void createPermanentNotification$473ed6b5(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,int) -> a
     246:259:void createTicker$2a3a87ec(android.content.Context,java.lang.CharSequence) -> a
-com.veken0m.cavirtex.BaseWidgetProvider$1 -> com.veken0m.cavirtex.a:
+com.veken0m.bitcoinium.BaseWidgetProvider$1 -> com.veken0m.bitcoinium.a:
     85:100:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.GraphActivity -> com.veken0m.cavirtex.GraphActivity:
-    com.veken0m.cavirtex.GraphViewer g_graphView -> l
+com.veken0m.bitcoinium.GraphActivity -> com.veken0m.bitcoinium.GraphActivity:
+    com.veken0m.bitcoinium.GraphViewer g_graphView -> l
     android.app.ProgressDialog graphProgressDialog -> m
     android.os.Handler mOrderHandler -> a
     java.lang.String exchangeName -> b
@@ -6108,7 +6108,7 @@ com.veken0m.cavirtex.GraphActivity -> com.veken0m.cavirtex.GraphActivity:
     com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> n
     java.lang.String exchange -> d
     java.lang.String xchangeExchange -> e
-    com.veken0m.cavirtex.LineGraphView graphView -> f
+    com.veken0m.bitcoinium.LineGraphView graphView -> f
     java.lang.Boolean pref_graphMode -> g
     java.lang.Boolean pref_scaleMode -> h
     int pref_mtgoxWindowSize -> i
@@ -6120,27 +6120,27 @@ com.veken0m.cavirtex.GraphActivity -> com.veken0m.cavirtex.GraphActivity:
     97:100:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
     254:265:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     274:281:void viewGraph() -> a
-    37:37:android.app.ProgressDialog access$0(com.veken0m.cavirtex.GraphActivity) -> a
+    37:37:android.app.ProgressDialog access$0(com.veken0m.bitcoinium.GraphActivity) -> a
     267:267:void access$1$58230f0(android.app.ProgressDialog) -> a
-    36:36:com.veken0m.cavirtex.GraphViewer access$2(com.veken0m.cavirtex.GraphActivity) -> b
-    238:238:void access$3(com.veken0m.cavirtex.GraphActivity,java.lang.String) -> a
-    137:137:void access$4(com.veken0m.cavirtex.GraphActivity) -> c
-com.veken0m.cavirtex.Graph$1 -> com.veken0m.cavirtex.b:
-    com.veken0m.cavirtex.GraphActivity this$0 -> a
+    36:36:com.veken0m.bitcoinium.GraphViewer access$2(com.veken0m.bitcoinium.GraphActivity) -> b
+    238:238:void access$3(com.veken0m.bitcoinium.GraphActivity,java.lang.String) -> a
+    137:137:void access$4(com.veken0m.bitcoinium.GraphActivity) -> c
+com.veken0m.bitcoinium.Graph$1 -> com.veken0m.bitcoinium.b:
+    com.veken0m.bitcoinium.GraphActivity this$0 -> a
     119:130:void run() -> run
-com.veken0m.cavirtex.Graph$2 -> com.veken0m.cavirtex.c:
-    com.veken0m.cavirtex.GraphActivity this$0 -> a
+com.veken0m.bitcoinium.Graph$2 -> com.veken0m.bitcoinium.c:
+    com.veken0m.bitcoinium.GraphActivity this$0 -> a
     java.text.Format val$formatter -> c
     206:209:java.lang.String formatLabel(double,boolean) -> a
-com.veken0m.cavirtex.Graph$3 -> com.veken0m.cavirtex.d:
-    com.veken0m.cavirtex.GraphActivity this$0 -> a
+com.veken0m.bitcoinium.Graph$3 -> com.veken0m.bitcoinium.d:
+    com.veken0m.bitcoinium.GraphActivity this$0 -> a
     244:245:void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.Graph$4 -> com.veken0m.cavirtex.e:
+com.veken0m.bitcoinium.Graph$4 -> com.veken0m.bitcoinium.e:
     292:298:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.Graph$GraphThread -> com.veken0m.cavirtex.f:
-    com.veken0m.cavirtex.GraphActivity this$0 -> a
+com.veken0m.bitcoinium.Graph$GraphThread -> com.veken0m.bitcoinium.f:
+    com.veken0m.bitcoinium.GraphActivity this$0 -> a
     107:109:void run() -> run
-com.veken0m.cavirtex.GraphView -> com.veken0m.cavirtex.g:
+com.veken0m.bitcoinium.GraphView -> com.veken0m.bitcoinium.g:
     android.graphics.Paint paint -> b
     java.lang.String[] horlabels -> a
     java.lang.String[] verlabels -> c
@@ -6149,21 +6149,21 @@ com.veken0m.cavirtex.GraphView -> com.veken0m.cavirtex.g:
     double viewportStart -> f
     double viewportSize -> g
     android.view.View viewVerLabels -> h
-    com.veken0m.cavirtex.ScaleGestureDetector scaleDetector -> i
+    com.veken0m.bitcoinium.ScaleGestureDetector scaleDetector -> i
     boolean scalable -> j
     java.text.NumberFormat numberformatter -> k
     java.util.List graphSeries -> l
     boolean showLegend -> m
     float legendWidth -> n
-    com.veken0m.cavirtex.GraphView$LegendAlign legendAlign -> o
+    com.veken0m.bitcoinium.GraphView$LegendAlign legendAlign -> o
     boolean manualYAxis -> p
     double manualMaxYValue -> q
     double manualMinYValue -> r
     int[] $SWITCH_TABLE$com$veken0m$cavirtex$GraphView$LegendAlign -> s
-    319:341:com.veken0m.cavirtex.GraphView$GraphViewData[] _values(int) -> a
-    346:347:void addSeries(com.veken0m.cavirtex.GraphView$GraphViewSeries) -> a
+    319:341:com.veken0m.bitcoinium.GraphView$GraphViewData[] _values(int) -> a
+    346:347:void addSeries(com.veken0m.bitcoinium.GraphView$GraphViewSeries) -> a
     365:395:void drawLegend(android.graphics.Canvas,float,float) -> a
-    void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.cavirtex.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
+    void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.bitcoinium.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
     407:423:java.lang.String formatLabel(double,boolean) -> a
     438:445:java.lang.String[] generateVerlabels(float) -> a
     465:480:double getMaxX(boolean) -> a
@@ -6175,52 +6175,52 @@ com.veken0m.cavirtex.GraphView -> com.veken0m.cavirtex.g:
     603:642:void setScalable$1385ff() -> d
     649:650:void setScrollable$1385ff() -> e
     670:672:void setViewPort(double,double) -> b
-    278:278:java.lang.String[] access$0(com.veken0m.cavirtex.GraphView) -> a
-    426:426:java.lang.String[] access$1(com.veken0m.cavirtex.GraphView,float) -> a
-    278:278:void access$2(com.veken0m.cavirtex.GraphView,java.lang.String[]) -> a
-    279:279:java.lang.String[] access$3(com.veken0m.cavirtex.GraphView) -> b
-    437:437:java.lang.String[] access$4(com.veken0m.cavirtex.GraphView,float) -> b
-    279:279:void access$5(com.veken0m.cavirtex.GraphView,java.lang.String[]) -> b
-    280:280:java.lang.String access$6(com.veken0m.cavirtex.GraphView) -> c
-    288:288:java.util.List access$7(com.veken0m.cavirtex.GraphView) -> d
-    318:318:com.veken0m.cavirtex.GraphView$GraphViewData[] access$8(com.veken0m.cavirtex.GraphView,int) -> a
-    289:289:boolean access$9(com.veken0m.cavirtex.GraphView) -> e
-    283:283:double access$10(com.veken0m.cavirtex.GraphView) -> f
-    282:282:double access$11(com.veken0m.cavirtex.GraphView) -> g
-    282:282:void access$12(com.veken0m.cavirtex.GraphView,double) -> a
-    284:284:android.view.View access$13(com.veken0m.cavirtex.GraphView) -> h
-    286:286:boolean access$14(com.veken0m.cavirtex.GraphView) -> i
-    285:285:com.veken0m.cavirtex.ScaleGestureDetector access$15(com.veken0m.cavirtex.GraphView) -> j
+    278:278:java.lang.String[] access$0(com.veken0m.bitcoinium.GraphView) -> a
+    426:426:java.lang.String[] access$1(com.veken0m.bitcoinium.GraphView,float) -> a
+    278:278:void access$2(com.veken0m.bitcoinium.GraphView,java.lang.String[]) -> a
+    279:279:java.lang.String[] access$3(com.veken0m.bitcoinium.GraphView) -> b
+    437:437:java.lang.String[] access$4(com.veken0m.bitcoinium.GraphView,float) -> b
+    279:279:void access$5(com.veken0m.bitcoinium.GraphView,java.lang.String[]) -> b
+    280:280:java.lang.String access$6(com.veken0m.bitcoinium.GraphView) -> c
+    288:288:java.util.List access$7(com.veken0m.bitcoinium.GraphView) -> d
+    318:318:com.veken0m.bitcoinium.GraphView$GraphViewData[] access$8(com.veken0m.bitcoinium.GraphView,int) -> a
+    289:289:boolean access$9(com.veken0m.bitcoinium.GraphView) -> e
+    283:283:double access$10(com.veken0m.bitcoinium.GraphView) -> f
+    282:282:double access$11(com.veken0m.bitcoinium.GraphView) -> g
+    282:282:void access$12(com.veken0m.bitcoinium.GraphView,double) -> a
+    284:284:android.view.View access$13(com.veken0m.bitcoinium.GraphView) -> h
+    286:286:boolean access$14(com.veken0m.bitcoinium.GraphView) -> i
+    285:285:com.veken0m.bitcoinium.ScaleGestureDetector access$15(com.veken0m.bitcoinium.GraphView) -> j
     33:33:int[] $SWITCH_TABLE$com$veken0m$cavirtex$GraphView$LegendAlign() -> f
-com.veken0m.cavirtex.GraphView$1 -> com.veken0m.cavirtex.h:
-    com.veken0m.cavirtex.GraphView this$0 -> a
-com.veken0m.cavirtex.GraphView$GraphViewContentView -> com.veken0m.cavirtex.i:
+com.veken0m.bitcoinium.GraphView$1 -> com.veken0m.bitcoinium.h:
+    com.veken0m.bitcoinium.GraphView this$0 -> a
+com.veken0m.bitcoinium.GraphView$GraphViewContentView -> com.veken0m.bitcoinium.i:
     float lastTouchEventX -> b
     float graphwidth -> c
-    com.veken0m.cavirtex.GraphView this$0 -> a
+    com.veken0m.bitcoinium.GraphView this$0 -> a
     58:121:void onDraw(android.graphics.Canvas) -> onDraw
     150:179:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-com.veken0m.cavirtex.GraphView$GraphViewData -> com.veken0m.cavirtex.j:
+com.veken0m.bitcoinium.GraphView$GraphViewData -> com.veken0m.bitcoinium.j:
     double valueX -> a
     double valueY -> b
-com.veken0m.cavirtex.GraphView$GraphViewSeries -> com.veken0m.cavirtex.k:
+com.veken0m.bitcoinium.GraphView$GraphViewSeries -> com.veken0m.bitcoinium.k:
     java.lang.String description -> a
-    com.veken0m.cavirtex.GraphView$GraphViewStyle style -> b
-    com.veken0m.cavirtex.GraphView$GraphViewData[] values -> c
-com.veken0m.cavirtex.GraphView$GraphViewStyle -> com.veken0m.cavirtex.l:
+    com.veken0m.bitcoinium.GraphView$GraphViewStyle style -> b
+    com.veken0m.bitcoinium.GraphView$GraphViewData[] values -> c
+com.veken0m.bitcoinium.GraphView$GraphViewStyle -> com.veken0m.bitcoinium.l:
     int color -> a
     int thickness -> b
-com.veken0m.cavirtex.GraphView$LegendAlign -> com.veken0m.cavirtex.m:
-    com.veken0m.cavirtex.GraphView$LegendAlign TOP -> a
-    com.veken0m.cavirtex.GraphView$LegendAlign MIDDLE -> b
-    com.veken0m.cavirtex.GraphView$LegendAlign BOTTOM -> c
-    com.veken0m.cavirtex.GraphView$LegendAlign[] ENUM$VALUES -> d
-    1:1:com.veken0m.cavirtex.GraphView$LegendAlign[] values() -> values
-    1:1:com.veken0m.cavirtex.GraphView$LegendAlign valueOf(java.lang.String) -> valueOf
-com.veken0m.cavirtex.GraphView$VerLabelsView -> com.veken0m.cavirtex.n:
-    com.veken0m.cavirtex.GraphView this$0 -> a
+com.veken0m.bitcoinium.GraphView$LegendAlign -> com.veken0m.bitcoinium.m:
+    com.veken0m.bitcoinium.GraphView$LegendAlign TOP -> a
+    com.veken0m.bitcoinium.GraphView$LegendAlign MIDDLE -> b
+    com.veken0m.bitcoinium.GraphView$LegendAlign BOTTOM -> c
+    com.veken0m.bitcoinium.GraphView$LegendAlign[] ENUM$VALUES -> d
+    1:1:com.veken0m.bitcoinium.GraphView$LegendAlign[] values() -> values
+    1:1:com.veken0m.bitcoinium.GraphView$LegendAlign valueOf(java.lang.String) -> valueOf
+com.veken0m.bitcoinium.GraphView$VerLabelsView -> com.veken0m.bitcoinium.n:
+    com.veken0m.bitcoinium.GraphView this$0 -> a
     254:274:void onDraw(android.graphics.Canvas) -> onDraw
-com.veken0m.cavirtex.GraphViewer -> com.veken0m.cavirtex.o:
+com.veken0m.bitcoinium.GraphViewer -> com.veken0m.bitcoinium.o:
     boolean BAR -> a
     boolean LINE -> b
     android.graphics.Paint paint -> c
@@ -6234,25 +6234,25 @@ com.veken0m.cavirtex.GraphViewer -> com.veken0m.cavirtex.o:
     boolean bBoundsSet -> k
     104:183:void onDraw(android.graphics.Canvas) -> onDraw
     220:258:java.lang.String[] createLabels$6feda350(float,float,java.lang.String,java.lang.String) -> a
-com.veken0m.cavirtex.LineGraphView -> com.veken0m.cavirtex.p:
+com.veken0m.bitcoinium.LineGraphView -> com.veken0m.bitcoinium.p:
     android.graphics.Paint paintBackground -> a
     boolean drawBackground -> c
-    30:91:void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.cavirtex.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
-com.veken0m.cavirtex.MainActivity -> com.veken0m.cavirtex.MainActivity:
+    30:91:void drawSeries$50dac9b6(android.graphics.Canvas,com.veken0m.bitcoinium.GraphView$GraphViewData[],float,float,double,double,double,double) -> a
+com.veken0m.bitcoinium.MainActivity -> com.veken0m.bitcoinium.MainActivity:
     java.lang.String pref_favExchange -> a
     29:64:void onCreate(android.os.Bundle) -> onCreate
     92:94:boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     99:99:boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
     104:107:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-com.veken0m.cavirtex.MainActivity$1 -> com.veken0m.cavirtex.q:
+com.veken0m.bitcoinium.MainActivity$1 -> com.veken0m.bitcoinium.q:
     120:121:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.MainActivity$MyTabsListener -> com.veken0m.cavirtex.r:
+com.veken0m.bitcoinium.MainActivity$MyTabsListener -> com.veken0m.bitcoinium.r:
     com.actionbarsherlock.app.SherlockFragment fragment -> a
-    com.veken0m.cavirtex.MainActivity this$0 -> b
+    com.veken0m.bitcoinium.MainActivity this$0 -> b
     75:76:void onTabReselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabReselected
     80:81:void onTabSelected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabSelected
     85:86:void onTabUnselected(com.actionbarsherlock.app.ActionBar$Tab,android.support.v4.app.FragmentTransaction) -> onTabUnselected
-com.veken0m.cavirtex.MinerStatsActivity -> com.veken0m.cavirtex.MinerStatsActivity:
+com.veken0m.bitcoinium.MinerStatsActivity -> com.veken0m.bitcoinium.MinerStatsActivity:
     java.lang.String pref_deepbitKey -> a
     java.lang.String pref_bitminterKey -> b
     java.lang.String pref_bitminterUser -> c
@@ -6279,20 +6279,20 @@ com.veken0m.cavirtex.MinerStatsActivity -> com.veken0m.cavirtex.MinerStatsActivi
     118:121:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     127:158:void getMinerStats$faab20d() -> a
     214:312:void drawMinerUI() -> b
-    60:60:android.app.ProgressDialog access$0(com.veken0m.cavirtex.MinerStatsActivity) -> a
-    188:188:void access$1(com.veken0m.cavirtex.MinerStatsActivity,android.app.ProgressDialog) -> a
-com.veken0m.cavirtex.MinerStats$1 -> com.veken0m.cavirtex.s:
-    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
+    60:60:android.app.ProgressDialog access$0(com.veken0m.bitcoinium.MinerStatsActivity) -> a
+    188:188:void access$1(com.veken0m.bitcoinium.MinerStatsActivity,android.app.ProgressDialog) -> a
+com.veken0m.bitcoinium.MinerStats$1 -> com.veken0m.bitcoinium.s:
+    com.veken0m.bitcoinium.MinerStatsActivity this$0 -> a
     183:185:void run() -> run
-com.veken0m.cavirtex.MinerStats$2 -> com.veken0m.cavirtex.t:
-    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
+com.veken0m.bitcoinium.MinerStats$2 -> com.veken0m.bitcoinium.t:
+    com.veken0m.bitcoinium.MinerStatsActivity this$0 -> a
     199:200:void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.MinerStats$3 -> com.veken0m.cavirtex.u:
+com.veken0m.bitcoinium.MinerStats$3 -> com.veken0m.bitcoinium.u:
     321:328:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.MinerStats$OrderbookThread -> com.veken0m.cavirtex.v:
-    com.veken0m.cavirtex.MinerStatsActivity this$0 -> a
+com.veken0m.bitcoinium.MinerStats$OrderbookThread -> com.veken0m.bitcoinium.v:
+    com.veken0m.bitcoinium.MinerStatsActivity this$0 -> a
     175:177:void run() -> run
-com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.w:
+com.veken0m.bitcoinium.MtGoxFragment -> com.veken0m.bitcoinium.w:
     java.lang.CharSequence cTrades -> a
     java.lang.CharSequence cOrderBook -> b
     java.lang.CharSequence cmtGoxLive -> c
@@ -6305,22 +6305,22 @@ com.veken0m.cavirtex.MtGoxFragment -> com.veken0m.cavirtex.w:
     android.os.Handler mGraphHandler -> j
     android.view.View view -> k
     47:49:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-com.veken0m.cavirtex.MtGoxFragment$1 -> com.veken0m.cavirtex.x:
-    com.veken0m.cavirtex.MtGoxFragment this$0 -> a
+com.veken0m.bitcoinium.MtGoxFragment$1 -> com.veken0m.bitcoinium.x:
+    com.veken0m.bitcoinium.MtGoxFragment this$0 -> a
     58:67:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$2 -> com.veken0m.cavirtex.y:
-    com.veken0m.cavirtex.MtGoxFragment this$0 -> a
+com.veken0m.bitcoinium.MtGoxFragment$2 -> com.veken0m.bitcoinium.y:
+    com.veken0m.bitcoinium.MtGoxFragment this$0 -> a
     75:79:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$3 -> com.veken0m.cavirtex.z:
-    com.veken0m.cavirtex.MtGoxFragment this$0 -> a
+com.veken0m.bitcoinium.MtGoxFragment$3 -> com.veken0m.bitcoinium.z:
+    com.veken0m.bitcoinium.MtGoxFragment this$0 -> a
     87:91:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$4 -> com.veken0m.cavirtex.A:
-    com.veken0m.cavirtex.MtGoxFragment this$0 -> a
+com.veken0m.bitcoinium.MtGoxFragment$4 -> com.veken0m.bitcoinium.A:
+    com.veken0m.bitcoinium.MtGoxFragment this$0 -> a
     99:102:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.MtGoxFragment$5 -> com.veken0m.cavirtex.B:
-    com.veken0m.cavirtex.MtGoxFragment this$0 -> a
+com.veken0m.bitcoinium.MtGoxFragment$5 -> com.veken0m.bitcoinium.B:
+    com.veken0m.bitcoinium.MtGoxFragment this$0 -> a
     109:112:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.OrderbookActivity -> com.veken0m.cavirtex.OrderbookActivity:
+com.veken0m.bitcoinium.OrderbookActivity -> com.veken0m.bitcoinium.OrderbookActivity:
     android.app.ProgressDialog orderbookProgressDialog -> p
     android.os.Handler mOrderHandler -> a
     int lengthAskArray -> b
@@ -6346,39 +6346,39 @@ com.veken0m.cavirtex.OrderbookActivity -> com.veken0m.cavirtex.OrderbookActivity
     118:139:void readPreferences(android.content.Context) -> a
     146:168:void getOrderBook() -> a
     176:245:void drawOrderbookUI() -> b
-    35:35:android.app.ProgressDialog access$0(com.veken0m.cavirtex.OrderbookActivity) -> a
-    277:277:void access$1(com.veken0m.cavirtex.OrderbookActivity,android.app.ProgressDialog) -> a
-com.veken0m.cavirtex.Orderbook$1 -> com.veken0m.cavirtex.C:
-    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
+    35:35:android.app.ProgressDialog access$0(com.veken0m.bitcoinium.OrderbookActivity) -> a
+    277:277:void access$1(com.veken0m.bitcoinium.OrderbookActivity,android.app.ProgressDialog) -> a
+com.veken0m.bitcoinium.Orderbook$1 -> com.veken0m.bitcoinium.C:
+    com.veken0m.bitcoinium.OrderbookActivity this$0 -> a
     271:273:void run() -> run
-com.veken0m.cavirtex.Orderbook$2 -> com.veken0m.cavirtex.D:
+com.veken0m.bitcoinium.Orderbook$2 -> com.veken0m.bitcoinium.D:
     124:129:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.veken0m.cavirtex.Orderbook$3 -> com.veken0m.cavirtex.E:
-    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
+com.veken0m.bitcoinium.Orderbook$3 -> com.veken0m.bitcoinium.E:
+    com.veken0m.bitcoinium.OrderbookActivity this$0 -> a
     290:291:void onClick(android.content.DialogInterface,int) -> onClick
-com.veken0m.cavirtex.Orderbook$OrderbookThread -> com.veken0m.cavirtex.F:
-    com.veken0m.cavirtex.OrderbookActivity this$0 -> a
+com.veken0m.bitcoinium.Orderbook$OrderbookThread -> com.veken0m.bitcoinium.F:
+    com.veken0m.bitcoinium.OrderbookActivity this$0 -> a
     262:264:void run() -> run
-com.veken0m.cavirtex.PreferencesActivity -> com.veken0m.cavirtex.PreferencesActivity:
+com.veken0m.bitcoinium.PreferencesActivity -> com.veken0m.bitcoinium.PreferencesActivity:
     14:27:void onCreate(android.os.Bundle) -> onCreate
     32:46:void onStop() -> onStop
-com.veken0m.cavirtex.Preferences$1 -> com.veken0m.cavirtex.G:
-    com.veken0m.cavirtex.PreferencesActivity this$0 -> a
+com.veken0m.bitcoinium.Preferences$1 -> com.veken0m.bitcoinium.G:
+    com.veken0m.bitcoinium.PreferencesActivity this$0 -> a
     21:24:boolean onPreferenceClick(android.preference.Preference) -> onPreferenceClick
-com.veken0m.cavirtex.RealScaleGestureDetector -> com.veken0m.cavirtex.H:
-com.veken0m.cavirtex.ScaleGestureDetector -> com.veken0m.cavirtex.I:
+com.veken0m.bitcoinium.RealScaleGestureDetector -> com.veken0m.bitcoinium.H:
+com.veken0m.bitcoinium.ScaleGestureDetector -> com.veken0m.bitcoinium.I:
     java.lang.Object realScaleGestureDetector -> a
     java.lang.reflect.Method method_getScaleFactor -> c
     java.lang.reflect.Method method_isInProgress -> d
     java.lang.reflect.Method method_onTouchEvent -> b
     63:71:boolean isInProgress() -> a
-com.veken0m.cavirtex.ScaleGestureDetector$SimpleOnScaleGestureListener -> com.veken0m.cavirtex.J:
-com.veken0m.cavirtex.Utils -> com.veken0m.cavirtex.K:
+com.veken0m.bitcoinium.ScaleGestureDetector$SimpleOnScaleGestureListener -> com.veken0m.bitcoinium.J:
+com.veken0m.bitcoinium.Utils -> com.veken0m.bitcoinium.K:
     22:29:java.lang.String formatTwoDecimals(float) -> a
     34:41:java.lang.String formatFiveDecimals(float) -> b
     46:51:java.lang.String formatNoDecimals(float) -> c
     56:58:java.lang.String formatMoney(java.lang.String,java.lang.String) -> a
-com.veken0m.cavirtex.VirtExFragment -> com.veken0m.cavirtex.L:
+com.veken0m.bitcoinium.VirtExFragment -> com.veken0m.bitcoinium.L:
     java.lang.CharSequence cTrades -> a
     java.lang.CharSequence cOrderBook -> b
     java.lang.CharSequence cmtGoxLive -> c
@@ -6391,44 +6391,44 @@ com.veken0m.cavirtex.VirtExFragment -> com.veken0m.cavirtex.L:
     android.os.Handler mGraphHandler -> j
     android.view.View view -> k
     49:51:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-com.veken0m.cavirtex.VirtExFragment$1 -> com.veken0m.cavirtex.M:
-    com.veken0m.cavirtex.VirtExFragment this$0 -> a
+com.veken0m.bitcoinium.VirtExFragment$1 -> com.veken0m.bitcoinium.M:
+    com.veken0m.bitcoinium.VirtExFragment this$0 -> a
     60:69:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$2 -> com.veken0m.cavirtex.N:
-    com.veken0m.cavirtex.VirtExFragment this$0 -> a
+com.veken0m.bitcoinium.VirtExFragment$2 -> com.veken0m.bitcoinium.N:
+    com.veken0m.bitcoinium.VirtExFragment this$0 -> a
     77:81:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$3 -> com.veken0m.cavirtex.O:
-    com.veken0m.cavirtex.VirtExFragment this$0 -> a
+com.veken0m.bitcoinium.VirtExFragment$3 -> com.veken0m.bitcoinium.O:
+    com.veken0m.bitcoinium.VirtExFragment this$0 -> a
     89:93:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$4 -> com.veken0m.cavirtex.P:
-    com.veken0m.cavirtex.VirtExFragment this$0 -> a
+com.veken0m.bitcoinium.VirtExFragment$4 -> com.veken0m.bitcoinium.P:
+    com.veken0m.bitcoinium.VirtExFragment this$0 -> a
     101:104:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.VirtExFragment$5 -> com.veken0m.cavirtex.Q:
-    com.veken0m.cavirtex.VirtExFragment this$0 -> a
+com.veken0m.bitcoinium.VirtExFragment$5 -> com.veken0m.bitcoinium.Q:
+    com.veken0m.bitcoinium.VirtExFragment this$0 -> a
     111:114:void onClick(android.view.View) -> onClick
-com.veken0m.cavirtex.WatcherWidgetProvider -> com.veken0m.cavirtex.WatcherWidgetProvider:
+com.veken0m.bitcoinium.WatcherWidgetProvider -> com.veken0m.bitcoinium.WatcherWidgetProvider:
     com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> o
     30:43:void onReceive(android.content.Context,android.content.Intent) -> onReceive
     49:53:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
     24:24:void access$0(com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService) -> a
     24:24:com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService access$1() -> a
-com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService -> com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService:
+com.veken0m.bitcoinium.WatcherWidgetProvider$UpdateService -> com.veken0m.bitcoinium.WatcherWidgetProvider$UpdateService:
     72:77:void onCreate() -> onCreate
     83:84:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     91:96:void onHandleIntent(android.content.Intent) -> onHandleIntent
     107:210:android.widget.RemoteViews buildUpdate(android.content.Context) -> a
-com.veken0m.cavirtex.WidgetProvider -> com.veken0m.cavirtex.WidgetProvider:
+com.veken0m.bitcoinium.WidgetProvider -> com.veken0m.bitcoinium.WidgetProvider:
     com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService marketDataService -> o
     29:42:void onReceive(android.content.Context,android.content.Intent) -> onReceive
     47:51:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
     24:24:void access$0(com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService) -> a
     24:24:com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService access$1() -> a
-com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2 -> com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2:
+com.veken0m.bitcoinium.WatcherWidgetProvider2$UpdateService2 -> com.veken0m.bitcoinium.WatcherWidgetProvider2$UpdateService2:
     72:78:void onCreate() -> onCreate
     84:85:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     104:108:void onHandleIntent(android.content.Intent) -> onHandleIntent
     116:198:android.widget.RemoteViews buildUpdate(android.content.Context) -> a
-com.veken0m.cavirtex.WebViewerActivity -> com.veken0m.cavirtex.WebViewerActivity:
+com.veken0m.bitcoinium.WebViewerActivity -> com.veken0m.bitcoinium.WebViewerActivity:
     android.webkit.WebView mWebView -> a
     java.lang.CharSequence cTrades -> b
     java.lang.CharSequence cOrderBook -> c
@@ -6441,8 +6441,8 @@ com.veken0m.cavirtex.WebViewerActivity -> com.veken0m.cavirtex.WebViewerActivity
     42:78:void displayMenu() -> a
     82:84:boolean onPrepareOptionsMenu(android.view.Menu) -> onPrepareOptionsMenu
     97:99:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-com.veken0m.cavirtex.WebViewer$1 -> com.veken0m.cavirtex.R:
-    com.veken0m.cavirtex.WebViewerActivity this$0 -> a
+com.veken0m.bitcoinium.WebViewer$1 -> com.veken0m.bitcoinium.R:
+    com.veken0m.bitcoinium.WebViewerActivity this$0 -> a
     java.lang.CharSequence[] val$items -> b
     49:74:void onClick(android.content.DialogInterface,int) -> onClick
 com.xeiam.xchange.Exchange -> com.a.a.a:

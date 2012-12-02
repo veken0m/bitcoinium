@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.cavirtex.MinerStatsActivity.MinerData;
+import com.veken0m.bitcoinium.MinerStatsActivity.MinerData;
+import com.veken0m.bitcoinium.R;
 import com.veken0m.miningpools.deepbit.Worker;
 
 public class DeepBitFragment extends SherlockFragment {

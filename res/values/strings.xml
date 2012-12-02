@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bitcoinium</string>
+    <string name="app_name">Bitcoinium Prime</string>
     <string name="appwidget_prefix_default">Test</string>
     <string name="mtGox">MtGox</string>
     <string name="exchange">Exchange</string>

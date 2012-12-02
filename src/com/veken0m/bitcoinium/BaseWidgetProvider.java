@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.util.Calendar;
 
@@ -13,16 +13,17 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
-import com.veken0m.cavirtex.WidgetProvider.UpdateService;
+import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
+import com.veken0m.bitcoinium.R;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
 	/**
 	 * This constant is what we send to ourself to force a refresh
 	 */
-	public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
-	public static final String OPENMENU = "com.veken0m.cavirtex.OPENMENU";
-	public static final String GRAPH = "com.veken0m.cavirtex.GRAPH";
+	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+	public static final String OPENMENU = "com.veken0m.bitcoinium.OPENMENU";
+	public static final String GRAPH = "com.veken0m.bitcoinium.GRAPH";
 
 	/**
 	 * List of IDs for notifications

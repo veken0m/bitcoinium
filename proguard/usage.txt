@@ -548,8 +548,8 @@ com.google.ads.searchads.SearchAdRequest:
 com.google.ads.util.a:
     37:38:public static void a(boolean)
     53:55:public static void a(java.lang.Object)
-com.veken0m.cavirtex.BarGraphView
-com.veken0m.cavirtex.BaseWidgetProvider:
+com.veken0m.bitcoinium.BarGraphView
+com.veken0m.bitcoinium.BaseWidgetProvider:
     public static final java.lang.String REFRESH
     public static final java.lang.String PREFERENCES
     public static final java.lang.String OPENMENU
@@ -560,86 +560,86 @@ com.veken0m.cavirtex.BaseWidgetProvider:
     public static final int NOTIFY_ID_MTGOX
     static java.lang.String pref_widgetBehaviour
     121:126:public void onDestoy(android.content.Context)
-com.veken0m.cavirtex.BuildConfig
-com.veken0m.cavirtex.GraphActivity:
+com.veken0m.bitcoinium.BuildConfig
+com.veken0m.bitcoinium.GraphActivity:
     public static final java.lang.String VIRTEX
     public static final java.lang.String MTGOX
-com.veken0m.cavirtex.GraphView:
+com.veken0m.bitcoinium.GraphView:
     351:357:public void removeSeries(int)
-    361:362:public void removeSeries(com.veken0m.cavirtex.GraphView$GraphViewSeries)
-    449:449:public com.veken0m.cavirtex.GraphView$LegendAlign getLegendAlign()
+    361:362:public void removeSeries(com.veken0m.bitcoinium.GraphView$GraphViewSeries)
+    449:449:public com.veken0m.bitcoinium.GraphView$LegendAlign getLegendAlign()
     453:453:public float getLegendWidth()
     559:559:public boolean isShowLegend()
     567:568:public void setHorizontalLabels(java.lang.String[])
-    571:572:public void setLegendAlign(com.veken0m.cavirtex.GraphView$LegendAlign)
+    571:572:public void setLegendAlign(com.veken0m.bitcoinium.GraphView$LegendAlign)
     575:576:public void setLegendWidth(float)
     584:585:public void setManualYAxis(boolean)
     653:654:public void setShowLegend(boolean)
     661:662:public void setVerticalLabels(java.lang.String[])
-    283:283:static synthetic void access$17(com.veken0m.cavirtex.GraphView,double)
-    287:287:static synthetic void access$18(com.veken0m.cavirtex.GraphView,java.text.NumberFormat)
-com.veken0m.cavirtex.GraphView$1:
-    609:638:public boolean onScale(com.veken0m.cavirtex.ScaleGestureDetector)
-com.veken0m.cavirtex.GraphView$GraphViewConfig
-com.veken0m.cavirtex.GraphView$GraphViewSeries:
-    225:232:public GraphView$GraphViewSeries(java.lang.String,com.veken0m.cavirtex.GraphView$GraphViewStyle,com.veken0m.cavirtex.GraphView$GraphViewData[])
-com.veken0m.cavirtex.GraphView$GraphViewStyle:
+    283:283:static synthetic void access$17(com.veken0m.bitcoinium.GraphView,double)
+    287:287:static synthetic void access$18(com.veken0m.bitcoinium.GraphView,java.text.NumberFormat)
+com.veken0m.bitcoinium.GraphView$1:
+    609:638:public boolean onScale(com.veken0m.bitcoinium.ScaleGestureDetector)
+com.veken0m.bitcoinium.GraphView$GraphViewConfig
+com.veken0m.bitcoinium.GraphView$GraphViewSeries:
+    225:232:public GraphView$GraphViewSeries(java.lang.String,com.veken0m.bitcoinium.GraphView$GraphViewStyle,com.veken0m.bitcoinium.GraphView$GraphViewData[])
+com.veken0m.bitcoinium.GraphView$GraphViewStyle:
     193:196:public GraphView$GraphViewStyle(int,int)
-com.veken0m.cavirtex.GraphViewer:
+com.veken0m.bitcoinium.GraphViewer:
     47:66:public GraphViewer(android.content.Context,float[],java.lang.String,java.lang.String[],java.lang.String[],boolean)
-com.veken0m.cavirtex.LineGraphView:
+com.veken0m.bitcoinium.LineGraphView:
     94:94:public boolean getDrawBackground()
     101:102:public void setDrawBackground(boolean)
-com.veken0m.cavirtex.MinerStatsActivity:
+com.veken0m.bitcoinium.MinerStatsActivity:
     protected static final java.lang.String notAvailable
-com.veken0m.cavirtex.MtGoxFragment:
+com.veken0m.bitcoinium.MtGoxFragment:
     public static final java.lang.String REFRESH
     public static final java.lang.String PREFERENCES
     public static final java.lang.String GRAPH
     public static final java.lang.String VIRTEX
     public static final java.lang.String MTGOX
-com.veken0m.cavirtex.OrderbookActivity:
+com.veken0m.bitcoinium.OrderbookActivity:
     protected static final java.lang.String VIRTEX
     protected static final java.lang.String MTGOX
     protected static final java.lang.String sVirtex
     protected static final java.lang.String sMtgox
-com.veken0m.cavirtex.PreferencesActivity:
+com.veken0m.bitcoinium.PreferencesActivity:
     public static final java.lang.String PREFERENCES
-com.veken0m.cavirtex.R
-com.veken0m.cavirtex.R$array
-com.veken0m.cavirtex.R$attr
-com.veken0m.cavirtex.R$bool
-com.veken0m.cavirtex.R$color
-com.veken0m.cavirtex.R$dimen
-com.veken0m.cavirtex.R$drawable
-com.veken0m.cavirtex.R$id
-com.veken0m.cavirtex.R$integer
-com.veken0m.cavirtex.R$layout
-com.veken0m.cavirtex.R$menu
-com.veken0m.cavirtex.R$string
-com.veken0m.cavirtex.R$style
-com.veken0m.cavirtex.R$styleable
-com.veken0m.cavirtex.R$xml
-com.veken0m.cavirtex.RealScaleGestureDetector:
-    13:19:public RealScaleGestureDetector(android.content.Context,com.veken0m.cavirtex.ScaleGestureDetector,com.veken0m.cavirtex.ScaleGestureDetector$SimpleOnScaleGestureListener)
-com.veken0m.cavirtex.RealScaleGestureDetector$1
-com.veken0m.cavirtex.ScaleGestureDetector:
+com.veken0m.bitcoinium.R
+com.veken0m.bitcoinium.R$array
+com.veken0m.bitcoinium.R$attr
+com.veken0m.bitcoinium.R$bool
+com.veken0m.bitcoinium.R$color
+com.veken0m.bitcoinium.R$dimen
+com.veken0m.bitcoinium.R$drawable
+com.veken0m.bitcoinium.R$id
+com.veken0m.bitcoinium.R$integer
+com.veken0m.bitcoinium.R$layout
+com.veken0m.bitcoinium.R$menu
+com.veken0m.bitcoinium.R$string
+com.veken0m.bitcoinium.R$style
+com.veken0m.bitcoinium.R$styleable
+com.veken0m.bitcoinium.R$xml
+com.veken0m.bitcoinium.RealScaleGestureDetector:
+    13:19:public RealScaleGestureDetector(android.content.Context,com.veken0m.bitcoinium.ScaleGestureDetector,com.veken0m.bitcoinium.ScaleGestureDetector$SimpleOnScaleGestureListener)
+com.veken0m.bitcoinium.RealScaleGestureDetector$1
+com.veken0m.bitcoinium.ScaleGestureDetector:
     51:59:public double getScaleFactor()
-com.veken0m.cavirtex.ScaleGestureDetector$SimpleOnScaleGestureListener:
-    public abstract boolean onScale(com.veken0m.cavirtex.ScaleGestureDetector)
-com.veken0m.cavirtex.Utils:
+com.veken0m.bitcoinium.ScaleGestureDetector$SimpleOnScaleGestureListener:
+    public abstract boolean onScale(com.veken0m.bitcoinium.ScaleGestureDetector)
+com.veken0m.bitcoinium.Utils:
     18:18:public Utils()
     64:81:public static double[] fetchVirtexTickerAlt()
     87:103:public static double[] fetchMtgoxTickerAlt()
-com.veken0m.cavirtex.VirtExFragment:
+com.veken0m.bitcoinium.VirtExFragment:
     public static final java.lang.String REFRESH
     public static final java.lang.String PREFERENCES
     public static final java.lang.String GRAPH
     public static final java.lang.String VIRTEX
     public static final java.lang.String MTGOX
-com.veken0m.cavirtex.WatcherWidgetProvider$UpdateService:
+com.veken0m.bitcoinium.WatcherWidgetProvider$UpdateService:
     214:269:public void widgetButtonAction(android.content.Context)
-com.veken0m.cavirtex.WatcherWidgetProvider2$UpdateService2:
+com.veken0m.bitcoinium.WatcherWidgetProvider2$UpdateService2:
     203:239:public void widgetButtonAction(android.content.Context)
 com.xeiam.xchange.BaseExchange
 com.xeiam.xchange.CachedDataSession

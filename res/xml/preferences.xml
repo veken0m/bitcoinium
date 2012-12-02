@@ -228,10 +228,6 @@
             android:summary="Veken0m"
             android:title="Author" />
         <Preference
-            android:key="primepref"
-            android:summary="Support Bitcoinium \nby purchasing Ad-Free version"
-            android:title="Bitcoinium Prime" />
-        <Preference
             android:key="donationAddressPref"
             android:summary="1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54"
             android:title="Bitcoin Donation Address" />

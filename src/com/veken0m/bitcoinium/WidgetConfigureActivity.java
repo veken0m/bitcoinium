@@ -1,4 +1,6 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
+
+import com.veken0m.bitcoinium.R;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -12,7 +14,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
-	private static final String PREFS_NAME = "com.veken0m.cavirtex.WidgetProvider";
+	private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
 	private static final String PREF_EXCHANGE_KEY = "exchange_";
 	private static final String PREF_CURRENCY_KEY = "currency_";
 	int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;

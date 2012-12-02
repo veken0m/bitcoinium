@@ -1,4 +1,4 @@
-package com.veken0m.cavirtex;
+package com.veken0m.bitcoinium;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -30,6 +30,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.R;
 import com.veken0m.miningpools.bitminter.BitMinterData;
 import com.veken0m.miningpools.bitminter.Workers;
 import com.veken0m.miningpools.deepbit.DeepBitData;
