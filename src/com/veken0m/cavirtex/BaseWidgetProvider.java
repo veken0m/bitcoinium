@@ -70,10 +70,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 						"listPref", "30"));
 				pref_wakeupRefresh = pPrefs.getBoolean("wakeupPref", true);
 				pref_PriceAlarm = pPrefs.getBoolean("alarmPref", false);
-				pref_virtexUpper = pPrefs.getString("virtexUpper", "");
-				pref_virtexLower = pPrefs.getString("virtexLower", "");
-				pref_mtgoxUpper = pPrefs.getString("mtgoxUpper", "");
-				pref_mtgoxLower = pPrefs.getString("mtgoxLower", "");
+				pref_virtexUpper = pPrefs.getString("virtexUpper", "999");
+				pref_virtexLower = pPrefs.getString("virtexLower", "0");
+				pref_mtgoxUpper = pPrefs.getString("mtgoxUpper", "999");
+				pref_mtgoxLower = pPrefs.getString("mtgoxLower", "0");
 				pref_alarmSound = pPrefs.getBoolean("alarmSoundPref", false);
 				pref_alarmVibrate = pPrefs
 						.getBoolean("alarmVibratePref", false);
@@ -93,10 +93,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				"30"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
 		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
-		pref_virtexUpper = prefs.getString("virtexUpper", "");
-		pref_virtexLower = prefs.getString("virtexLower", "");
-		pref_mtgoxUpper = prefs.getString("mtgoxUpper", "");
-		pref_mtgoxLower = prefs.getString("mtgoxLower", "");
+		pref_virtexUpper = prefs.getString("virtexUpper", "999");
+		pref_virtexLower = prefs.getString("virtexLower", "0");
+		pref_mtgoxUpper = prefs.getString("mtgoxUpper", "999");
+		pref_mtgoxLower = prefs.getString("mtgoxLower", "0");
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_virtexTicker = prefs.getBoolean("virtexTickerPref", false);
@@ -269,39 +269,4 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	public static void createAlarmNotification(Context context,
-			float lastValue, String lastPrice, String exchange, int NOTIFY_ID) {
-
-		if (pref_PriceAlarm && exchange.equalsIgnoreCase("MtGox")) {
-			if (!pref_mtgoxLower.equalsIgnoreCase("")) {
-
-				if (lastValue <= Float.valueOf(pref_mtgoxLower)) {
-					createNotification(context, lastPrice, exchange, NOTIFY_ID);
-				}
-			}
-
-			if (!pref_mtgoxUpper.equalsIgnoreCase("")) {
-				if (lastValue >= Float.valueOf(pref_mtgoxUpper)) {
-					createNotification(context, lastPrice, exchange, NOTIFY_ID);
-				}
-
-			}
-		} else if (pref_PriceAlarm && exchange.equalsIgnoreCase("VirtEx")) {
-			if (!pref_virtexLower.equalsIgnoreCase("")) {
-
-				if (lastValue <= Float.valueOf(pref_virtexLower)) {
-					createNotification(context, lastPrice, exchange, NOTIFY_ID);
-				}
-			}
-
-			if (!pref_virtexUpper.equalsIgnoreCase("")) {
-				if (lastValue >= Float.valueOf(pref_virtexUpper)) {
-					createNotification(context, lastPrice, exchange, NOTIFY_ID);
-				}
-
-			}
-
-		}
-
-	}
 }

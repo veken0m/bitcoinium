@@ -157,5 +157,10 @@ public class Utils {
 
 		return ticker;
 	}
+	
+	public static boolean isBetween(float value, float min, float max)
+	{
+	  return((value >= min) && (value <= max));
+	}
 
 }

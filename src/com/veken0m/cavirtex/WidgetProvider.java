@@ -64,6 +64,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 		public void buildUpdate(Context context) {
 
+			readPreferences(context);
+
 			AppWidgetManager widgetManager = AppWidgetManager
 					.getInstance(context);
 			ComponentName widgetComponent = new ComponentName(context,
@@ -86,25 +88,27 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 				String pref_widgetExchange = WidgetConfigureActivity
 						.loadExchangePref(context, appWidgetId);
-				String pref_currency;
-				String exchange;
-				int NOTIFY_ID;
+				String pref_currency = "NA";
+				String exchange = "NA";
+				int NOTIFY_ID = -1;
 
 				if (pref_widgetExchange
-						.equalsIgnoreCase("com.xeiam.xchange.virtex.VirtExExchange")) {
+						.equals("com.xeiam.xchange.virtex.VirtExExchange")) {
 					pref_currency = "CAD";
 					exchange = "VirtEx";
 					pref_mtgoxLower = pref_virtexLower;
 					pref_mtgoxUpper = pref_virtexUpper;
 					NOTIFY_ID = NOTIFY_ID_VIRTEX;
-				} else {
+				} else if (pref_widgetExchange.equals("com.xeiam.xchange.mtgox.v1.MtGoxExchange")) 
+					{
 					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
 							context, appWidgetId);
 					exchange = "MtGox";
 					NOTIFY_ID = NOTIFY_ID_MTGOX;
 				}
 
-				if (pref_currency.length() == 3) {
+				if ((pref_currency.length() == 3) && !(exchange.equals("NA"))
+						) {
 
 					views.setOnClickPendingIntent(R.id.widgetButton,
 							pendingIntent);
@@ -118,7 +122,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 								.getTicker(Currencies.BTC, pref_currency);
 
 						// Retrieve values from ticker
-						float lastValue = ticker.getLast().getAmount()
+						Float lastValue = ticker.getLast().getAmount()
 								.floatValue();
 
 						final String lastPrice = Utils.formatWidgetMoney(
@@ -148,21 +152,39 @@ public class WidgetProvider extends BaseWidgetProvider {
 									+ exchange + " Updated!");
 						}
 
-						if (pref_mtgoxTicker) {
-							createPermanentNotification(context,
-									R.drawable.bitcoin, "Bitcoin at "
-											+ lastPrice, "Bitcoin value: "
-											+ lastPrice + " on " + exchange,
-									NOTIFY_ID);
-						}
+						// if (pref_mtgoxTicker) {
+						// createPermanentNotification(context,
+						// R.drawable.bitcoin, "Bitcoin at "
+						// + lastPrice, "Bitcoin value: "
+						// + lastPrice + " on " + exchange,
+						// NOTIFY_ID);
+						// }
 
-						
-						if ((exchange.equalsIgnoreCase("VirtEx") && pref_currency
-								.equalsIgnoreCase("CAD"))
-								|| (exchange.equalsIgnoreCase("MtGox") && pref_currency
-										.equalsIgnoreCase(pref_mtgoxCurrency))){
-							createAlarmNotification(context, lastValue,
-									lastPrice, exchange, NOTIFY_ID);
+						if (pref_PriceAlarm) {
+
+							if (exchange.equals("MtGox")
+									&& pref_currency.equals(pref_mtgoxCurrency)
+									&& !pref_mtgoxUpper.equals("")
+									&& !pref_mtgoxLower.equals("")
+									&& !Utils.isBetween(lastValue,
+											Float.valueOf(pref_mtgoxLower),
+											Float.valueOf(pref_mtgoxUpper))
+									) {
+								createNotification(context, lastPrice,
+										exchange, NOTIFY_ID);
+							}
+
+							else if (exchange.equals("VirtEx")
+									&& pref_currency.equals("CAD")
+									&& !pref_virtexLower.equals("")
+									&& !pref_virtexUpper.equals("")
+									&& !Utils.isBetween(lastValue,
+											Float.valueOf(pref_virtexLower),
+											Float.valueOf(pref_virtexUpper))
+								) {
+								createNotification(context, lastPrice,
+										exchange, NOTIFY_ID);
+							}
 						}
 
 					} catch (Exception e) {

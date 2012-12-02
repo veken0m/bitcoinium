@@ -103,24 +103,28 @@
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
+                    android:defaultValue="999"
                     android:key="virtexUpper"
                     android:summary="Notification will occur if VirtEx price goes over this threshold"
                     android:title="VirtEx Upper Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
+                    android:defaultValue="0"
                     android:key="virtexLower"
                     android:summary="Notification will occur if VirtEx price goes under this threshold"
                     android:title="VirtEx Lower Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
+                    android:defaultValue="999"
                     android:key="mtgoxUpper"
                     android:summary="Notification will occur if MtGox price goes over this threshold"
                     android:title="MtGox Upper Threshold" />
                 <EditTextPreference
                     android:digits="01234567890."
                     android:inputType="numberDecimal"
+                    android:defaultValue="0"
                     android:key="mtgoxLower"
                     android:summary="Notification will occur if MtGox price goes under this threshold"
                     android:title="MtGox Lower Threshold" />

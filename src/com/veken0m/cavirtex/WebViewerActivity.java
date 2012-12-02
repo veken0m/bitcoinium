@@ -35,8 +35,7 @@ public class WebViewerActivity extends Activity {
 	}
 
 	private void displayMenu() {
-		final CharSequence[] items = { cBTCChartsMtGox, cmtGoxLive, cOrderBook,
-				cBTCChartsVirtex, cClose };
+		final CharSequence[] items = { cmtGoxLive, cOrderBook, cBTCChartsMtGox, cBTCChartsVirtex, cClose };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Select an option");
