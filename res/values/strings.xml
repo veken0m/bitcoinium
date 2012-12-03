@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Bitcoinium Prime</string>
     <string name="appwidget_prefix_default">Test</string>
     <string name="mtGox">MtGox</string>
@@ -17,5 +18,5 @@
     <string name="minerstatsButton">Miner Stats</string>
     <string name="graphButton">Display Price Graph</string>
     <string name="exgraphButton">External Orderbook and Graphs</string>
-    
+
 </resources>

@@ -75,7 +75,7 @@
               android:layout_height="wrap_content" 
               android:layout_below="@id/label"
               android:layout_toRightOf="@id/bitcoinButton"
-              android:text="Click coin to refresh from Mt. Gox" />
+              android:text="Click coin to refresh from Mt. Gox" />
     -->
 
 </RelativeLayout>

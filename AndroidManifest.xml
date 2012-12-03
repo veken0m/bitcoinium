@@ -60,7 +60,7 @@
 
         <!--
             TODO: Uncomment following line and fix orientation change
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize"
         -->
         <activity
             android:name="com.veken0m.bitcoinium.MinerStatsActivity"

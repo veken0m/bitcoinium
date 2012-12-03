@@ -36,7 +36,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
                 -->
 
 
@@ -53,7 +53,7 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
+        </PreferenceCategory>
                 -->
 
             </PreferenceCategory>
