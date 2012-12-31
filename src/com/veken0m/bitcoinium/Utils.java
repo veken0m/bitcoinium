@@ -58,16 +58,18 @@ public class Utils {
 		numberFormat.setMaximumFractionDigits(2);
 		numberFormat.setMinimumFractionDigits(2);
 		numberFormat.setGroupingUsed(false);
-
-		String symbol = CurrencyUnit.of(currencyCode).getSymbol();
-		symbol = symbol.substring(symbol.length() - 1);
-		if (currencyCode.equalsIgnoreCase("DKK")
+		
+		String symbol = "";
+		
+		if (!(currencyCode.equalsIgnoreCase("DKK")
 				|| currencyCode.equalsIgnoreCase("PLN")
 				|| currencyCode.equalsIgnoreCase("RUB")
 				|| currencyCode.equalsIgnoreCase("SEK")
 				|| currencyCode.equalsIgnoreCase("SGD")
-				|| currencyCode.equalsIgnoreCase("CHF")) {
-			symbol = "";
+				|| currencyCode.equalsIgnoreCase("CHF")
+				|| currencyCode.equalsIgnoreCase("RUR"))) {
+			symbol = CurrencyUnit.of(currencyCode).getSymbol();
+			symbol = symbol.substring(symbol.length() - 1);
 		}
 
 		if (includeCurrencyCode) {

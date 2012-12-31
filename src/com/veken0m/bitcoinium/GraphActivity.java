@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -37,11 +38,13 @@ public class GraphActivity extends SherlockActivity {
 	private static final Handler mOrderHandler = new Handler();
 	public static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
 	public static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
+	public static final String BTCE = "com.veken0m.bitcoinium.BTCE";
 	public static String exchangeName = "";
 	public static String currency = "";
 	public String exchange = VIRTEX;
 	public String xchangeExchange = null;
 	static String pref_mtgoxCurrency;
+	static String pref_btceCurrency;
 
 	/**
 	 * Variables required for LineGraphView
@@ -74,6 +77,11 @@ public class GraphActivity extends SherlockActivity {
 			exchangeName = "VirtEx";
 			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
 			currency = Currencies.CAD;
+		}
+		if (exchange.equalsIgnoreCase(BTCE)) {
+			exchangeName = "BTC-E";
+			xchangeExchange = "com.xeiam.xchange.btce.BTCEExchange";
+			currency = pref_btceCurrency;
 		}
 
 		viewGraph();
@@ -155,7 +163,6 @@ public class GraphActivity extends SherlockActivity {
 				final Trade trade = tradesList.get(i);
 				values[i] = trade.getPrice().getAmount().floatValue();
 				dates[i] = Float.valueOf(trade.getTimestamp().getMillis());
-
 				if (values[i] > largest) {
 					largest = values[i];
 				}
@@ -205,6 +212,8 @@ public class GraphActivity extends SherlockActivity {
 				double windowSize;
 				if (exchangeName.equalsIgnoreCase("mtgox")) {
 					windowSize = pref_mtgoxWindowSize * 3600000;
+				} else if (exchangeName.equalsIgnoreCase("virtex")){
+					windowSize = pref_virtexWindowSize * 3600000;	
 				} else {
 					windowSize = pref_virtexWindowSize * 3600000;
 				}
@@ -287,6 +296,7 @@ public class GraphActivity extends SherlockActivity {
 		pref_virtexWindowSize = Integer.parseInt(prefs.getString(
 				"virtexWindowSize", "36"));
 		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
+		pref_btceCurrency = prefs.getString("btceCurrencyPref", "USD");
 	}
 
 }

@@ -41,24 +41,35 @@ public class MainActivity extends SherlockFragmentActivity {
 					R.drawable.mtgoxlogo);
 			ActionBar.Tab VirtexTab = actionbar.newTab().setIcon(
 					R.drawable.virtexlogo);
+			ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
+					R.drawable.btcelogo);
 
 			// create the two fragments we want to use for display content
 			SherlockFragment MtGoxFragment = new MtGoxFragment();
 			SherlockFragment VirtexFragment = new VirtExFragment();
+			SherlockFragment BTCEFragment = new BTCEFragment();
 
 			// set the Tab listener. Now we can listen for clicks.
 			MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
 			VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
+			BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
 
 			// add the two tabs to the actionbar
 			
 			if(pref_favExchange.equalsIgnoreCase("mtgox")){
 				actionbar.addTab(MtGoxTab);
 				actionbar.addTab(VirtexTab);
+				actionbar.addTab(BTCETab);
 			}
 			if(pref_favExchange.equalsIgnoreCase("virtex")){
 				actionbar.addTab(VirtexTab);
 				actionbar.addTab(MtGoxTab);
+				actionbar.addTab(BTCETab);
+			}
+			if(pref_favExchange.equalsIgnoreCase("btce")){
+				actionbar.addTab(BTCETab);
+				actionbar.addTab(MtGoxTab);
+				actionbar.addTab(VirtexTab);
 			}
 			
 			actionbar.show();

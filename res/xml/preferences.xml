@@ -16,6 +16,13 @@
             android:key="mtgoxCurrencyPref"
             android:summary="MtGox prices will be displayed in selected currency"
             android:title="MtGox Currency" />
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/btcecurrencies"
+            android:entryValues="@array/bcurrencies"
+            android:key="btceCurrencyPref"
+            android:summary="BTC-E prices will be displayed in selected currency"
+            android:title="BTC-E Currency" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen
@@ -219,6 +226,13 @@
                     android:key="virtexWindowSize"
                     android:summary="# of hours viewable in graph window"
                     android:title="VirtEx Window Size" />
+                <EditTextPreference
+                    android:defaultValue="36"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="btceWindowSize"
+                    android:summary="# of hours viewable in graph window"
+                    android:title="BTC-E Window Size" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

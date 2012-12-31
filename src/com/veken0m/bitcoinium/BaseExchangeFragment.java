@@ -11,6 +11,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 	public static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
 	public static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
+	public static final String BTCE = "com.veken0m.bitcoinium.BTCE";
 	
 	
 	// Attaches OnClickListeners to menu buttons

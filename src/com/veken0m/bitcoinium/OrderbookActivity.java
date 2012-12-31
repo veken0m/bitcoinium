@@ -40,7 +40,9 @@ public class OrderbookActivity extends SherlockActivity {
 	protected String exchange = VIRTEX;
 	protected static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
 	protected static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
+	protected static final String BTCE = "com.veken0m.bitcoinium.BTCE";
 	protected static final String sVirtex = "VirtEx";
+	protected static final String sBTCE = "BTCE";
 	protected static final String sMtgox = "MtGox";
 	protected static String exchangeName = "";
 	protected String currency;
@@ -54,6 +56,7 @@ public class OrderbookActivity extends SherlockActivity {
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
 	static String pref_mtgoxCurrency;
+	static String pref_btceCurrency;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +81,11 @@ public class OrderbookActivity extends SherlockActivity {
 			exchangeName = sVirtex;
 			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
 			currency = Currencies.CAD;
+		}
+		if (exchange.equalsIgnoreCase(BTCE)) {
+			exchangeName = sBTCE;
+			xchangeExchange = "com.xeiam.xchange.btce.BTCEExchange";
+			currency = pref_btceCurrency;
 		}
 
 		viewOrderbook();
@@ -117,6 +125,7 @@ public class OrderbookActivity extends SherlockActivity {
 		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
 				"10"));
 		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
+		pref_btceCurrency = prefs.getString("btceCurrencyPref", "USD");
 	}
 
 	/**

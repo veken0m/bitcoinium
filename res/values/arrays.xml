@@ -29,16 +29,19 @@
     <string-array name="exchanges">
         <item>MtGox</item>
         <item>VirtEx</item>
+        <item>BTC-E</item>
     </string-array>
     <string-array name="exchangesvalues">
         <item>MtGox</item>
         <item>VirtEx</item>
+        <item>BTC-E</item>
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
     <string-array name="widgetexchangesvalues">
         <item>com.xeiam.xchange.mtgox.v1.MtGoxExchange</item>
         <item>com.xeiam.xchange.virtex.VirtExExchange</item>
+        <item>com.xeiam.xchange.btce.BTCEExchange</item>
     </string-array>
 
     <!-- Arrays for Prefered Mining Pool preferences -->
@@ -101,6 +104,18 @@
         <item>SEK</item>
         <item>SGD</item>
         <item>THB</item>
+    </string-array>
+    
+    <!-- Arrays for BTC-E Currencies -->
+    <string-array name="btcecurrencies">
+        <item>USD - United States Dollar</item>
+        <item>EUR - Euro</item>
+        <item>RUR - Old Russian Ruble</item>
+    </string-array>
+    <string-array name="bcurrencies">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>RUR</item>
     </string-array>
 
 </resources>

@@ -100,16 +100,21 @@ public class WidgetProvider extends BaseWidgetProvider {
 					pref_mtgoxLower = pref_virtexLower;
 					pref_mtgoxUpper = pref_virtexUpper;
 					NOTIFY_ID = NOTIFY_ID_VIRTEX;
-				} else if (pref_widgetExchange.equals("com.xeiam.xchange.mtgox.v1.MtGoxExchange")) 
-					{
+				} else if (pref_widgetExchange
+						.equals("com.xeiam.xchange.mtgox.v1.MtGoxExchange")) {
 					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
 							context, appWidgetId);
 					exchange = "MtGox";
 					NOTIFY_ID = NOTIFY_ID_MTGOX;
+				} else if (pref_widgetExchange
+						.equals("com.xeiam.xchange.btce.BTCEExchange")) {
+					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
+							context, appWidgetId);
+					exchange = "BTC-E";
+					NOTIFY_ID = NOTIFY_ID_MTGOX;
 				}
 
-				if ((pref_currency.length() == 3) && !(exchange.equals("NA"))
-						) {
+				if ((pref_currency.length() == 3) && !(exchange.equals("NA"))) {
 
 					views.setOnClickPendingIntent(R.id.widgetButton,
 							pendingIntent);
@@ -169,8 +174,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 									&& !pref_mtgoxLower.equals("")
 									&& !Utils.isBetween(lastValue,
 											Float.valueOf(pref_mtgoxLower),
-											Float.valueOf(pref_mtgoxUpper))
-									) {
+											Float.valueOf(pref_mtgoxUpper))) {
 								createNotification(context, lastPrice,
 										exchange, NOTIFY_ID);
 							}
@@ -181,8 +185,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 									&& !pref_virtexUpper.equals("")
 									&& !Utils.isBetween(lastValue,
 											Float.valueOf(pref_virtexLower),
-											Float.valueOf(pref_virtexUpper))
-								) {
+											Float.valueOf(pref_virtexUpper))) {
 								createNotification(context, lastPrice,
 										exchange, NOTIFY_ID);
 							}
