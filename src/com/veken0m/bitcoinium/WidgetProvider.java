@@ -114,14 +114,32 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 						final String lastPrice = Utils.formatWidgetMoney(
 								lastValue, pref_currency, true);
-						final String highPrice = Utils.formatWidgetMoney(ticker
-								.getHigh().getAmount().floatValue(),
-								pref_currency, false);
-						final String lowPrice = Utils.formatWidgetMoney(ticker
-								.getLow().getAmount().floatValue(),
-								pref_currency, false);
-						final String volume = Utils.formatDecimal(ticker
-								.getVolume().floatValue(), 2, false);
+						String volume = "N/A";
+								
+						if(!(ticker.getVolume() == null)){		
+							volume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, false);
+						}
+					
+						
+						final String highPrice;
+						final String lowPrice;
+						
+						if(!(ticker.getHigh() == null)){
+							highPrice = Utils.formatWidgetMoney(ticker
+									.getHigh().getAmount().floatValue(),
+									pref_currency, false);
+							lowPrice = Utils.formatWidgetMoney(ticker
+									.getLow().getAmount().floatValue(),
+									pref_currency, false);
+						} else {
+							highPrice = Utils.formatWidgetMoney(ticker
+									.getAsk().getAmount().floatValue(),
+									pref_currency, false);
+							lowPrice = Utils.formatWidgetMoney(ticker
+									.getBid().getAmount().floatValue(),
+									pref_currency, false);
+							
+						}
 
 						views.setTextViewText(R.id.widgetExchange, exchangeName);
 						views.setTextViewText(R.id.widgetLowText, lowPrice);

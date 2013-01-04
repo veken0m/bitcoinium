@@ -59,7 +59,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
 			VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
 			BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
-			BitstampTab.setTabListener(new MyTabsListener(BTCEFragment));
+			BitstampTab.setTabListener(new MyTabsListener(BitstampFragment));
 			CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
 			
 

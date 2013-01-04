@@ -12,7 +12,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 	public static final String VIRTEX = "VirtExExchange";
 	public static final String MTGOX = "MtGoxExchange";
 	public static final String BTCE = "BTCEExchange";
-	public static final String BITSTAMP = "BitStampExchange";
+	public static final String BITSTAMP = "BitstampExchange";
 	public static final String CAMPBX = "CampBXExchange";
 	
 	

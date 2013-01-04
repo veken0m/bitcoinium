@@ -61,7 +61,7 @@
         <item>bitstamp</item>
     </string-array>
     <string-array name="CampBXExchange">
-        <item>CampBXExchange</item>
+        <item>CampBX</item>
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
         <item>USD</item>
         <item>campbxlogo</item>
