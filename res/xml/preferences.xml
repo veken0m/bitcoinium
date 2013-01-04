@@ -5,24 +5,45 @@
         <ListPreference
             android:defaultValue="mtgox"
             android:entries="@array/exchanges"
-            android:entryValues="@array/exchangesvalues"
+            android:entryValues="@array/exchanges"
             android:key="favExchangePref"
             android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
-            android:entryValues="@array/currencies"
+            android:entryValues="@array/mtgoxcurrenciesvalues"
             android:key="mtgoxCurrencyPref"
             android:summary="MtGox prices will be displayed in selected currency"
             android:title="MtGox Currency" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/btcecurrencies"
-            android:entryValues="@array/bcurrencies"
+            android:entryValues="@array/btcecurrenciesvalues"
             android:key="btceCurrencyPref"
             android:summary="BTC-E prices will be displayed in selected currency"
             android:title="BTC-E Currency" />
+        <ListPreference
+            android:defaultValue="CAD"
+            android:entries="@array/virtexcurrencies"
+            android:entryValues="@array/virtexcurrenciesvalues"
+            android:key="virtexWidgetCurrencyPref"
+            android:summary="VirtEx price will be displayed in selected currency"
+            android:title="VirtEx Currency" />
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/bitstampcurrencies"
+            android:entryValues="@array/bitstampcurrenciesvalues"
+            android:key="bitcampWidgetCurrencyPref"
+            android:summary="Bitcamp price will be displayed in selected currency"
+            android:title="Bitcamp Currency" />
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/campbxcurrencies"
+            android:entryValues="@array/campbxcurrenciesvalues"
+            android:key="campbxWidgetCurrencyPref"
+            android:summary="CampBX price will be displayed in selected currency"
+            android:title="CampBX Currency" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen
@@ -43,7 +64,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
                 -->
 
 
@@ -60,7 +81,7 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
+        </PreferenceCategory>
                 -->
 
             </PreferenceCategory>
@@ -145,7 +166,7 @@
         <ListPreference
             android:defaultValue=""
             android:entries="@array/miningpools"
-            android:entryValues="@array/poolvalues"
+            android:entryValues="@array/miningpools"
             android:key="favpoolPref"
             android:summary="Select mining pool used for MinerStats"
             android:title="Main Mining Pool" />

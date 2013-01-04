@@ -25,31 +25,8 @@
         <item>720</item>
     </string-array>
 
-    <!-- Arrays for Prefered Exchange preferences -->
-    <string-array name="exchanges">
-        <item>MtGox</item>
-        <item>VirtEx</item>
-        <item>BTC-E</item>
-    </string-array>
-    <string-array name="exchangesvalues">
-        <item>MtGox</item>
-        <item>VirtEx</item>
-        <item>BTC-E</item>
-    </string-array>
-
-    <!-- Array for Widget Exchange preferences -->
-    <string-array name="widgetexchangesvalues">
-        <item>com.xeiam.xchange.mtgox.v1.MtGoxExchange</item>
-        <item>com.xeiam.xchange.virtex.VirtExExchange</item>
-        <item>com.xeiam.xchange.btce.BTCEExchange</item>
-    </string-array>
-
     <!-- Arrays for Prefered Mining Pool preferences -->
     <string-array name="miningpools">
-        <item>DeepBit</item>
-        <item>BitMinter</item>
-    </string-array>
-    <string-array name="poolvalues">
         <item>DeepBit</item>
         <item>BitMinter</item>
     </string-array>
@@ -66,56 +43,6 @@
         <item>refreshWidget</item>
         <item>pref</item>
         <item>extOrder</item>
-    </string-array>
-
-    <!-- Arrays for MtGox Currencies -->
-    <string-array name="mtgoxcurrencies">
-        <item>USD - United States Dollar</item>
-        <item>AUD - Australian Dollar</item>
-        <item>CAD - Canadian Dollar</item>
-        <item>GBP - British Pound</item>
-        <item>CNY - Chinese Yuan</item>
-        <item>DKK - Danish Krona</item>
-        <item>EUR - Euro</item>
-        <item>CHF - Swiss Francs</item>
-        <item>HKD - Hong Kong Dollar</item>
-        <item>JPY - Japanese Yen</item>
-        <item>NZD - New Zealand Dollar</item>
-        <item>PLN - Polish Zloty</item>
-        <item>RUB - Russian Rubles</item>
-        <item>SEK - Swedish Krona</item>
-        <item>SGD - Singapore Dollar</item>
-        <item>THB - Thai Baht</item>
-    </string-array>
-    <string-array name="currencies">
-        <item>USD</item>
-        <item>AUD</item>
-        <item>CAD</item>
-        <item>GBP</item>
-        <item>CNY</item>
-        <item>DKK</item>
-        <item>EUR</item>
-        <item>CHF</item>
-        <item>HKD</item>
-        <item>JPY</item>
-        <item>NZD</item>
-        <item>PLN</item>
-        <item>RUB</item>
-        <item>SEK</item>
-        <item>SGD</item>
-        <item>THB</item>
-    </string-array>
-    
-    <!-- Arrays for BTC-E Currencies -->
-    <string-array name="btcecurrencies">
-        <item>USD - United States Dollar</item>
-        <item>EUR - Euro</item>
-        <item>RUR - Old Russian Ruble</item>
-    </string-array>
-    <string-array name="bcurrencies">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>RUR</item>
     </string-array>
 
 </resources>

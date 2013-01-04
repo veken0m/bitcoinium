@@ -1,9 +1,5 @@
 package com.veken0m.bitcoinium;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -65,18 +61,11 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 		public void buildUpdate(Context context) {
 
-			readPreferences(context);
-
 			AppWidgetManager widgetManager = AppWidgetManager
 					.getInstance(context);
 			ComponentName widgetComponent = new ComponentName(context,
 					WidgetProvider.class);
 			int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
-
-			// Date for widget "Refreshed" label
-			final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
-					Locale.US);
-			final String currentTime = sdf.format(new Date());
 
 			final RemoteViews views = new RemoteViews(context.getPackageName(),
 					R.layout.appwidget);
@@ -87,34 +76,26 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 			for (int appWidgetId : widgetIds) {
 
-				String pref_widgetExchange = WidgetConfigureActivity
-						.loadExchangePref(context, appWidgetId);
-				String pref_currency = "NA";
-				String exchange = "NA";
-				int NOTIFY_ID = -1;
+				String pref_widget = WidgetConfigureActivity.loadExchangePref(
+						context, appWidgetId);
+				String pref_currency = WidgetConfigureActivity
+						.loadCurrencyPref(context, appWidgetId);
 
-				if (pref_widgetExchange
-						.equals("com.xeiam.xchange.virtex.VirtExExchange")) {
-					pref_currency = "CAD";
-					exchange = "VirtEx";
-					pref_mtgoxLower = pref_virtexLower;
-					pref_mtgoxUpper = pref_virtexUpper;
-					NOTIFY_ID = NOTIFY_ID_VIRTEX;
-				} else if (pref_widgetExchange
-						.equals("com.xeiam.xchange.mtgox.v1.MtGoxExchange")) {
-					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
-							context, appWidgetId);
-					exchange = "MtGox";
-					NOTIFY_ID = NOTIFY_ID_MTGOX;
-				} else if (pref_widgetExchange
-						.equals("com.xeiam.xchange.btce.BTCEExchange")) {
-					pref_currency = WidgetConfigureActivity.loadCurrencyPref(
-							context, appWidgetId);
-					exchange = "BTC-E";
-					NOTIFY_ID = NOTIFY_ID_MTGOX;
-				}
+				Exchange exchange = new Exchange(getResources().getStringArray(
+						getResources().getIdentifier(pref_widget, "array",
+								this.getPackageName())));
 
-				if ((pref_currency.length() == 3) && !(exchange.equals("NA"))) {
+				int NOTIFY_ID = exchange.getNotificationID();
+				String exchangeName = exchange.getExchangeName();
+				String pref_widgetExchange = exchange.getClassName();
+				String defaultCurrency = exchange.getMainCurrency();
+				String prefix = exchange.getPrefix();
+				
+				
+				readPreferences(context, prefix, defaultCurrency);
+
+				if ((pref_currency.length() == 3)
+						&& !(exchangeName.equals("NA"))) {
 
 					views.setOnClickPendingIntent(R.id.widgetButton,
 							pendingIntent);
@@ -128,7 +109,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 								.getTicker(Currencies.BTC, pref_currency);
 
 						// Retrieve values from ticker
-						Float lastValue = ticker.getLast().getAmount()
+						float lastValue = ticker.getLast().getAmount()
 								.floatValue();
 
 						final String lastPrice = Utils.formatWidgetMoney(
@@ -139,10 +120,10 @@ public class WidgetProvider extends BaseWidgetProvider {
 						final String lowPrice = Utils.formatWidgetMoney(ticker
 								.getLow().getAmount().floatValue(),
 								pref_currency, false);
-						final String volume = Utils.formatTwoDecimals(ticker
-								.getVolume().floatValue());
+						final String volume = Utils.formatDecimal(ticker
+								.getVolume().floatValue(), 2, false);
 
-						views.setTextViewText(R.id.widgetExchange, exchange);
+						views.setTextViewText(R.id.widgetExchange, exchangeName);
 						views.setTextViewText(R.id.widgetLowText, lowPrice);
 						views.setTextViewText(R.id.widgetHighText, highPrice);
 						views.setTextViewText(R.id.widgetLastText, lastPrice);
@@ -150,12 +131,12 @@ public class WidgetProvider extends BaseWidgetProvider {
 								+ volume);
 
 						views.setTextViewText(R.id.label, "Refreshed @ "
-								+ currentTime);
+								+ Utils.getCurrentTime());
 						views.setTextColor(R.id.label, Color.GREEN);
 
 						if (pref_DisplayUpdates == true) {
 							createTicker(context, R.drawable.bitcoin, ""
-									+ exchange + " Updated!");
+									+ exchangeName + " Updated!");
 						}
 
 						// if (pref_mtgoxTicker) {
@@ -168,34 +149,23 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 						if (pref_PriceAlarm) {
 
-							if (exchange.equals("MtGox")
-									&& pref_currency.equals(pref_mtgoxCurrency)
-									&& !pref_mtgoxUpper.equals("")
-									&& !pref_mtgoxLower.equals("")
+							if (exchangeName.equals("MtGox")
+									&& pref_currency.equals(pref_currency)
+									&& !pref_notifLimitUpper.equals("")
+									&& !pref_notifLimitLower.equals("")
 									&& !Utils.isBetween(lastValue,
-											Float.valueOf(pref_mtgoxLower),
-											Float.valueOf(pref_mtgoxUpper))) {
+											Float.valueOf(pref_notifLimitLower),
+											Float.valueOf(pref_notifLimitUpper))) {
 								createNotification(context, lastPrice,
-										exchange, NOTIFY_ID);
-							}
-
-							else if (exchange.equals("VirtEx")
-									&& pref_currency.equals("CAD")
-									&& !pref_virtexLower.equals("")
-									&& !pref_virtexUpper.equals("")
-									&& !Utils.isBetween(lastValue,
-											Float.valueOf(pref_virtexLower),
-											Float.valueOf(pref_virtexUpper))) {
-								createNotification(context, lastPrice,
-										exchange, NOTIFY_ID);
+										exchangeName, NOTIFY_ID);
 							}
 						}
 
 					} catch (Exception e) {
 						e.printStackTrace();
 						if (pref_DisplayUpdates == true) {
-							createTicker(context, R.drawable.bitcoin, exchange
-									+ " Update failed!");
+							createTicker(context, R.drawable.bitcoin,
+									exchangeName + " Update failed!");
 						}
 						views.setTextColor(R.id.label, Color.RED);
 

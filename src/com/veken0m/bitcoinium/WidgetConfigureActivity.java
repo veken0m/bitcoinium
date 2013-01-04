@@ -54,25 +54,26 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
 			public boolean onPreferenceClick(Preference preference) {
 				final Context context = WidgetConfigureActivity.this;
-
-				String pref_mtgoxwidgetCurrency = prefs.getString(
-						"mtgoxWidgetCurrencyPref", "USD");
 				
-				String pref_btcewidgetCurrency = prefs.getString(
-						"btceWidgetCurrencyPref", "USD");
-
 				String pref_widgetExchange = prefs.getString(
-						"widgetExchangesPref", "com.xeiam.xchange.mtgox.v1.MtGoxExchange");
+						"widgetExchangesPref", "MtGoxExchange");
+				
+				Exchange exchange = new Exchange(getResources().getStringArray(
+						getResources().getIdentifier(pref_widgetExchange, "array",
+								getBaseContext().getPackageName())));
+
+				String defaultCurrency = exchange.getMainCurrency();
+				String prefix = exchange.getPrefix();
+
+				String pref_widgetCurrency = prefs.getString(
+						prefix + "WidgetCurrencyPref", defaultCurrency);
 
 				// When the button is clicked, save the string in our prefs and
 				// return that they clicked OK.
-				if(pref_widgetExchange.equalsIgnoreCase("mtgox")){
-					saveCurrencyPref(context, mAppWidgetId, pref_mtgoxwidgetCurrency);
-				} else {
-					saveCurrencyPref(context, mAppWidgetId, pref_btcewidgetCurrency);	
-				}
-				saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
+				saveCurrencyPref(context, mAppWidgetId, pref_widgetCurrency);
 
+				saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
+				
 				// Set alarm to refresh widget at specified interval
 				BaseWidgetProvider.setAlarm(context);
 

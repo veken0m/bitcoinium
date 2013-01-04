@@ -180,11 +180,11 @@ public class BitMinterFragment extends SherlockFragment {
 			t1.addView(tr1);
 
 			tvCurrentDifficulty.setText("Current Difficulty: "
-					+ Utils.formatNoDecimals(Float.valueOf(minerdata
-							.getCurrentDifficulty())));
+					+ Utils.formatDecimal(Float.valueOf(minerdata
+							.getCurrentDifficulty()), 0, false));
 			tvNextDifficulty.setText("Estimated Next Difficulty: "
-					+ Utils.formatNoDecimals(Float.valueOf(minerdata
-							.getNextDifficulty())) + "\n");
+					+ Utils.formatDecimal(Float.valueOf(minerdata
+							.getNextDifficulty()), 0, false) + "\n");
 
 			if (Float.valueOf(minerdata.getNextDifficulty()) < Float
 					.valueOf(minerdata.getCurrentDifficulty())) {
@@ -224,15 +224,15 @@ public class BitMinterFragment extends SherlockFragment {
 
 				tvMinerName.setText("Miner: " + worker.get(i).getName());
 				tvHashrate.setText("Hashrate: "
-						+ Utils.formatTwoDecimals(worker.get(i).getHash_rate()
-								.floatValue()) + " MH/s");
+						+ Utils.formatDecimal(worker.get(i).getHash_rate()
+								.floatValue(), 2, false) + " MH/s");
 				tvAlive.setText("Alive: " + worker.get(i).getAlive());
 				tvShares.setText("Shares: "
-						+ Utils.formatNoDecimals(worker.get(i).getWork()
-								.getBTC().getTotal_accepted().floatValue()));
+						+ Utils.formatDecimal(worker.get(i).getWork()
+								.getBTC().getTotal_accepted().floatValue(), 0, true));
 				tvStales.setText("Stales: "
-						+ Utils.formatNoDecimals(worker.get(i).getWork()
-								.getBTC().getTotal_rejected().floatValue())
+						+ Utils.formatDecimal(worker.get(i).getWork()
+								.getBTC().getTotal_rejected().floatValue(), 0 , true)
 						+ "\n");
 
 				if (worker.get(i).getAlive()) {

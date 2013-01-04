@@ -14,7 +14,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -33,57 +32,43 @@ import com.xeiam.xchange.dto.marketdata.Trades;
 
 public class GraphActivity extends SherlockActivity {
 
-	private GraphViewer g_graphView = null;
+	private GraphViewer g_graphView;
 	private ProgressDialog graphProgressDialog;
 	private static final Handler mOrderHandler = new Handler();
-	public static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
-	public static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
-	public static final String BTCE = "com.veken0m.bitcoinium.BTCE";
-	public static String exchangeName = "";
-	public static String currency = "";
-	public String exchange = VIRTEX;
-	public String xchangeExchange = null;
-	static String pref_mtgoxCurrency;
-	static String pref_btceCurrency;
+	public static String exchangeName;
+	public String xchangeExchange;
+	static String pref_currency;
 
 	/**
 	 * Variables required for LineGraphView
 	 */
-	LineGraphView graphView = null;
+	LineGraphView graphView;
 	static Boolean pref_graphMode;
 	static Boolean pref_scaleMode;
-	static int pref_mtgoxWindowSize;
-	static int pref_virtexWindowSize;
+	static int pref_windowSize;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph);
-		readPreferences(getApplicationContext());
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			exchange = extras.getString("exchange");
+			exchangeName = extras.getString("exchange");
 		}
+		
+		Exchange exchange = new Exchange(getResources().getStringArray(
+				getResources().getIdentifier(exchangeName, "array",
+						this.getPackageName())));
 
-		if (exchange.equalsIgnoreCase(MTGOX)) {
-			exchangeName = "MtGox";
-			xchangeExchange = "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
-			currency = pref_mtgoxCurrency;
-		}
-		if (exchange.equalsIgnoreCase(VIRTEX)) {
-			exchangeName = "VirtEx";
-			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
-			currency = Currencies.CAD;
-		}
-		if (exchange.equalsIgnoreCase(BTCE)) {
-			exchangeName = "BTC-E";
-			xchangeExchange = "com.xeiam.xchange.btce.BTCEExchange";
-			currency = pref_btceCurrency;
-		}
-
+		exchangeName = exchange.getExchangeName();
+		xchangeExchange = exchange.getClassName();
+		String defaultCurrency = exchange.getMainCurrency();
+		String prefix = exchange.getPrefix();
+				
+		readPreferences(getApplicationContext(), prefix, defaultCurrency);
 		viewGraph();
 	}
 
@@ -145,7 +130,7 @@ public class GraphActivity extends SherlockActivity {
 			final Trades trades = ExchangeFactory.INSTANCE
 					.createExchange(xchangeExchange)
 					.getPollingMarketDataService()
-					.getTrades(Currencies.BTC, currency);
+					.getTrades(Currencies.BTC, pref_currency);
 
 			List<Trade> tradesList = trades.getTrades();
 
@@ -185,7 +170,7 @@ public class GraphActivity extends SherlockActivity {
 				final String[] horlabels = new String[] { sOldestDate, "", "",
 						sMidDate, "", "", sNewestDate };
 
-				g_graphView = new GraphViewer(this, values, currency
+				g_graphView = new GraphViewer(this, values, pref_currency
 						+ "/BTC since " + sOldestDate, // title
 						horlabels, // horizontal labels
 						verlabels, // vertical labels
@@ -199,7 +184,7 @@ public class GraphActivity extends SherlockActivity {
 				}
 
 				graphView = new LineGraphView(this, exchangeName + ": "
-						+ currency + "/BTC") {
+						+ pref_currency + "/BTC") {
 					@Override
 					protected String formatLabel(double value, boolean isValueX) {
 						if (isValueX) {
@@ -210,13 +195,7 @@ public class GraphActivity extends SherlockActivity {
 				};
 
 				double windowSize;
-				if (exchangeName.equalsIgnoreCase("mtgox")) {
-					windowSize = pref_mtgoxWindowSize * 3600000;
-				} else if (exchangeName.equalsIgnoreCase("virtex")){
-					windowSize = pref_virtexWindowSize * 3600000;	
-				} else {
-					windowSize = pref_virtexWindowSize * 3600000;
-				}
+				windowSize = pref_windowSize * 3600000;
 				// startValue enables graph window to be aligned with latest
 				// trades
 				final double startValue = dates[dates.length - 1] - windowSize;
@@ -284,19 +263,16 @@ public class GraphActivity extends SherlockActivity {
 		gt.start();
 	}
 
-	protected static void readPreferences(Context context) {
+	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
 		pref_graphMode = prefs.getBoolean("graphmodePref", false);
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
-		pref_mtgoxWindowSize = Integer.parseInt(prefs.getString(
-				"mtgoxWindowSize", "4"));
-		pref_virtexWindowSize = Integer.parseInt(prefs.getString(
-				"virtexWindowSize", "36"));
-		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
-		pref_btceCurrency = prefs.getString("btceCurrencyPref", "USD");
+		pref_windowSize = Integer.parseInt(prefs.getString(
+				prefix + "WindowSize", "36"));
+		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 	}
 
 }

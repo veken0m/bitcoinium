@@ -37,15 +37,7 @@ public class OrderbookActivity extends SherlockActivity {
 	int lengthBidArray = 0;
 	int length = 0;
 	Boolean connectionFail = false;
-	protected String exchange = VIRTEX;
-	protected static final String VIRTEX = "com.veken0m.bitcoinium.VIRTEX";
-	protected static final String MTGOX = "com.veken0m.bitcoinium.MTGOX";
-	protected static final String BTCE = "com.veken0m.bitcoinium.BTCE";
-	protected static final String sVirtex = "VirtEx";
-	protected static final String sBTCE = "BTCE";
-	protected static final String sMtgox = "MtGox";
 	protected static String exchangeName = "";
-	protected String currency;
 	protected String xchangeExchange = null;
 	protected List<LimitOrder> listAsks;
 	protected List<LimitOrder> listBids;
@@ -55,8 +47,7 @@ public class OrderbookActivity extends SherlockActivity {
 	static int pref_highlightHigh;
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
-	static String pref_mtgoxCurrency;
-	static String pref_btceCurrency;
+	static String pref_currency;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,28 +56,21 @@ public class OrderbookActivity extends SherlockActivity {
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
 
-		readPreferences(getApplicationContext());
-
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			exchange = extras.getString("exchange");
+			exchangeName = extras.getString("exchange");
 		}
+		
+		Exchange exchange = new Exchange(getResources().getStringArray(
+				getResources().getIdentifier(exchangeName, "array",
+						this.getPackageName())));
 
-		if (exchange.equalsIgnoreCase(MTGOX)) {
-			exchangeName = sMtgox;
-			xchangeExchange = "com.xeiam.xchange.mtgox.v1.MtGoxExchange";
-			currency = pref_mtgoxCurrency;
-		}
-		if (exchange.equalsIgnoreCase(VIRTEX)) {
-			exchangeName = sVirtex;
-			xchangeExchange = "com.xeiam.xchange.virtex.VirtExExchange";
-			currency = Currencies.CAD;
-		}
-		if (exchange.equalsIgnoreCase(BTCE)) {
-			exchangeName = sBTCE;
-			xchangeExchange = "com.xeiam.xchange.btce.BTCEExchange";
-			currency = pref_btceCurrency;
-		}
+		exchangeName = exchange.getExchangeName();
+		xchangeExchange = exchange.getClassName();
+		String defaultCurrency = exchange.getMainCurrency();
+		String prefix = exchange.getPrefix();
+		
+		readPreferences(getApplicationContext(), prefix, defaultCurrency);
 
 		viewOrderbook();
 	}
@@ -110,11 +94,11 @@ public class OrderbookActivity extends SherlockActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.orderbook);
-		readPreferences(getApplicationContext());
+		//readPreferences(getApplicationContext());
 		drawOrderbookUI();
 	}
 
-	protected static void readPreferences(Context context) {
+	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -124,8 +108,7 @@ public class OrderbookActivity extends SherlockActivity {
 				"50"));
 		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
 				"10"));
-		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
-		pref_btceCurrency = prefs.getString("btceCurrencyPref", "USD");
+		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 	}
 
 	/**
@@ -136,7 +119,7 @@ public class OrderbookActivity extends SherlockActivity {
 			final OrderBook orderbook = ExchangeFactory.INSTANCE
 					.createExchange(xchangeExchange)
 					.getPollingMarketDataService()
-					.getFullOrderBook(Currencies.BTC, currency);
+					.getFullOrderBook(Currencies.BTC, pref_currency);
 
 			listAsks = orderbook.getAsks();
 			listBids = orderbook.getBids();
@@ -190,10 +173,10 @@ public class OrderbookActivity extends SherlockActivity {
 					.floatValue();
 			float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-			final String sBidPrice = Utils.formatFiveDecimals(bidPrice);
-			final String sBidAmount = Utils.formatTwoDecimals(bidAmount);
-			final String sAskPrice = Utils.formatFiveDecimals(askPrice);
-			final String sAskAmount = Utils.formatTwoDecimals(askAmount);
+			final String sBidPrice = Utils.formatDecimal(bidPrice, 5, false);
+			final String sBidAmount = Utils.formatDecimal(bidAmount, 2, false);
+			final String sAskPrice = Utils.formatDecimal(askPrice, 5, false);
+			final String sAskAmount = Utils.formatDecimal(askAmount, 2, false);
 
 			tvBidAmount.setText("" + sBidPrice + "          " + sBidAmount);
 			tvAskAmount.setText("" + sAskPrice + "          " + sAskAmount);

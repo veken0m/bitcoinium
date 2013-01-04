@@ -3,7 +3,7 @@
 
     <PreferenceCategory android:title="Widget Configuration" >
         <ListPreference
-            android:defaultValue="com.xeiam.xchange.mtgox.v1.MtGoxExchange"
+            android:defaultValue="MtGoxExchange"
             android:entries="@array/exchanges"
             android:entryValues="@array/widgetexchangesvalues"
             android:key="widgetExchangesPref"
@@ -12,17 +12,38 @@
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
-            android:entryValues="@array/currencies"
+            android:entryValues="@array/mtgoxcurrenciesvalues"
             android:key="mtgoxWidgetCurrencyPref"
             android:summary="MtGox Widget price will be displayed in selected currency"
             android:title="MtGox Widget Currency" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/btcecurrencies"
-            android:entryValues="@array/bcurrencies"
+            android:entryValues="@array/btcecurrenciesvalues"
             android:key="btceWidgetCurrencyPref"
             android:summary="BTC-E Widget price will be displayed in selected currency"
             android:title="BTC-E Widget Currency" />
+        <ListPreference
+            android:defaultValue="CAD"
+            android:entries="@array/virtexcurrencies"
+            android:entryValues="@array/virtexcurrenciesvalues"
+            android:key="virtexWidgetCurrencyPref"
+            android:summary="VirtEx Widget price will be displayed in selected currency"
+            android:title="VirtEx Widget Currency" />
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/bitstampcurrencies"
+            android:entryValues="@array/bitstampcurrenciesvalues"
+            android:key="bitcampWidgetCurrencyPref"
+            android:summary="Bitcamp Widget price will be displayed in selected currency"
+            android:title="Bitcamp Widget Currency" />
+        <ListPreference
+            android:defaultValue="USD"
+            android:entries="@array/campbxcurrencies"
+            android:entryValues="@array/campbxcurrenciesvalues"
+            android:key="campbxWidgetCurrencyPref"
+            android:summary="CampBX Widget price will be displayed in selected currency"
+            android:title="CampBX Widget Currency" />
     </PreferenceCategory>
     <PreferenceCategory
         android:summary="Changes will be applied to all widgets."

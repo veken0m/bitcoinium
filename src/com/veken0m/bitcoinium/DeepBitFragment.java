@@ -178,11 +178,11 @@ public class DeepBitFragment extends SherlockFragment {
 			t1.addView(tr1);
 
 			tvCurrentDifficulty.setText("Current Difficulty: "
-					+ Utils.formatNoDecimals(Float.valueOf(minerdata
-							.getCurrentDifficulty())));
+					+ Utils.formatDecimal(Float.valueOf(minerdata
+							.getCurrentDifficulty()), 0, true));
 			tvNextDifficulty.setText("Estimated Next Difficulty: "
-					+ Utils.formatNoDecimals(Float.valueOf(minerdata
-							.getNextDifficulty())) + "\n");
+					+ Utils.formatDecimal(Float.valueOf(minerdata
+							.getNextDifficulty()), 0, true) + "\n");
 
 			if (Float.valueOf(minerdata.getNextDifficulty()) < Float
 					.valueOf(minerdata.getCurrentDifficulty())) {

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,50 +21,40 @@ import com.xeiam.xchange.virtex.dto.marketdata.VirtExTicker;
 
 public class Utils {
 
-	public static String formatTwoDecimals(float valueToFormat) {
+	public static String formatDecimal(float valueToFormat, int numberOfDecimalPlaces, boolean useGroupings) {
 
-		NumberFormat numberFormat = DecimalFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(2);
-		numberFormat.setMinimumFractionDigits(2);
-		// Remove grouping because the commas cause errors when parsing to
+		final NumberFormat numberFormat = DecimalFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
+		numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
+		// Remove grouping if commas cause errors when parsing to
 		// double/float
-		numberFormat.setGroupingUsed(false);
+		numberFormat.setGroupingUsed(useGroupings);
 
 		return numberFormat.format(valueToFormat);
-	}
-
-	public static String formatFiveDecimals(float valueToFormat) {
-
-		NumberFormat numberFormat = DecimalFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(5);
-		numberFormat.setMinimumFractionDigits(5);
-		// Remove grouping because the commas cause errors when parsing to
-		// double/float
-		numberFormat.setGroupingUsed(false);
-
-		return numberFormat.format(valueToFormat);
-	}
-
-	public static String formatNoDecimals(float valueToFormat) {
-
-		NumberFormat numberFormat0 = DecimalFormat.getInstance();
-		numberFormat0.setMaximumFractionDigits(0);
-		numberFormat0.setMinimumFractionDigits(0);
-		numberFormat0.setGroupingUsed(true);
-
-		return numberFormat0.format(valueToFormat);
 	}
 
 	public static String formatWidgetMoney(float amount, String currencyCode,
 			boolean includeCurrencyCode) {
-		final NumberFormat numberFormat = DecimalFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(2);
-		numberFormat.setMinimumFractionDigits(2);
-		numberFormat.setGroupingUsed(false);
+		
+		String symbol = getCurrencySymbol(currencyCode);
+
+		if (includeCurrencyCode) {
+			currencyCode = " " + currencyCode;
+		} else {
+			currencyCode = "";
+		}
+
+		return symbol + formatDecimal(amount, 2, false) + currencyCode;
+	}
+	
+	public static String getCurrencySymbol(String currencyCode){
 		
 		String symbol = "";
 		
 		if (!(currencyCode.equalsIgnoreCase("DKK")
+				|| currencyCode.equalsIgnoreCase("BTC")
+				|| currencyCode.equalsIgnoreCase("LTC")
+				|| currencyCode.equalsIgnoreCase("NMC")
 				|| currencyCode.equalsIgnoreCase("PLN")
 				|| currencyCode.equalsIgnoreCase("RUB")
 				|| currencyCode.equalsIgnoreCase("SEK")
@@ -71,48 +64,8 @@ public class Utils {
 			symbol = CurrencyUnit.of(currencyCode).getSymbol();
 			symbol = symbol.substring(symbol.length() - 1);
 		}
-
-		if (includeCurrencyCode) {
-			currencyCode = " " + currencyCode;
-		} else {
-			currencyCode = "";
-		}
-
-		return symbol + numberFormat.format(amount) + currencyCode;
-	}
-
-	public static String formatMoney(String moneyToFormat, String currency) {
-		String symbol = CurrencyUnit.of(currency).getSymbol();
-		symbol = symbol.substring(symbol.length() - 1);
-		if (currency.equalsIgnoreCase("DKK")
-				|| currency.equalsIgnoreCase("PLN")
-				|| currency.equalsIgnoreCase("RUB")
-				|| currency.equalsIgnoreCase("SEK")
-				|| currency.equalsIgnoreCase("SGD")
-				|| currency.equalsIgnoreCase("CHF")) {
-			symbol = "";
-		}
-
-		String money = "" + symbol + moneyToFormat + " " + currency;
-
-		return money;
-	}
-
-	public static String formatMoney2(String moneyToFormat, String currency) {
-		String symbol = CurrencyUnit.of(currency).getSymbol();
-		symbol = symbol.substring(symbol.length() - 1);
-		if (currency.equalsIgnoreCase("DKK")
-				|| currency.equalsIgnoreCase("PLN")
-				|| currency.equalsIgnoreCase("RUB")
-				|| currency.equalsIgnoreCase("SEK")
-				|| currency.equalsIgnoreCase("SGD")
-				|| currency.equalsIgnoreCase("CHF")) {
-			symbol = "";
-		}
-
-		String money = "" + symbol + moneyToFormat;
-
-		return money;
+		
+		return symbol;
 	}
 
 	public static double[] fetchVirtexTickerAlt()
@@ -163,6 +116,15 @@ public class Utils {
 	public static boolean isBetween(float value, float min, float max)
 	{
 	  return((value >= min) && (value <= max));
+	}
+	
+	public static String getCurrentTime()
+	{
+		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
+				Locale.US);
+		final String currentTime = sdf.format(new Date());
+		
+		return currentTime;
 	}
 
 }

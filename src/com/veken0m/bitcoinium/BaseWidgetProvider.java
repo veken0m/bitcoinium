@@ -26,29 +26,19 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	public static final String GRAPH = "com.veken0m.bitcoinium.GRAPH";
 
 	/**
-	 * List of IDs for notifications
-	 */
-	public static final int BITCOIN_NOTIFY_ID = 0;
-	public static final int NOTIFY_ID_VIRTEX = 1;
-	public static final int NOTIFY_ID_MTGOX = 2;
-
-	/**
 	 * List of preference variables
 	 */
 	static Boolean pref_DisplayUpdates = false;
 	static int pref_widgetRefreshFreq = 30;
 	static String pref_widgetBehaviour;
 	static Boolean pref_PriceAlarm = false;
-	static String pref_virtexUpper;
-	static String pref_virtexLower;
-	static String pref_mtgoxUpper;
-	static String pref_mtgoxLower;
-	static String pref_mtgoxCurrency;
+	static String pref_notifLimitLower;
+	static String pref_notifLimitUpper;
+	static String pref_currency;
 	static Boolean pref_wakeupRefresh = false;
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
-	static Boolean pref_virtexTicker;
-	static Boolean pref_mtgoxTicker;
+	static Boolean pref_ticker;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -58,51 +48,22 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	 * REFRESH, or pass it on to our superclass
 	 */
 
-	protected static void readPreferences(Context context) {
+	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
 
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-				pref_DisplayUpdates = pPrefs.getBoolean("checkboxPref", false);
-				pref_widgetRefreshFreq = Integer.parseInt(pPrefs.getString(
-						"listPref", "30"));
-				pref_wakeupRefresh = pPrefs.getBoolean("wakeupPref", true);
-				pref_PriceAlarm = pPrefs.getBoolean("alarmPref", false);
-				pref_virtexUpper = pPrefs.getString("virtexUpper", "999");
-				pref_virtexLower = pPrefs.getString("virtexLower", "0");
-				pref_mtgoxUpper = pPrefs.getString("mtgoxUpper", "999");
-				pref_mtgoxLower = pPrefs.getString("mtgoxLower", "0");
-				pref_alarmSound = pPrefs.getBoolean("alarmSoundPref", false);
-				pref_alarmVibrate = pPrefs
-						.getBoolean("alarmVibratePref", false);
-				pref_virtexTicker = pPrefs
-						.getBoolean("virtexTickerPref", false);
-				pref_mtgoxTicker = pPrefs.getBoolean("mtgoxTickerPref", false);
-				pref_mtgoxCurrency = pPrefs.getString("mtgoxCurrencyPref",
-						"USD");
-
-			}
-		};
-
-		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
 		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
 		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
 				"30"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
 		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
-		pref_virtexUpper = prefs.getString("virtexUpper", "999");
-		pref_virtexLower = prefs.getString("virtexLower", "0");
-		pref_mtgoxUpper = prefs.getString("mtgoxUpper", "999");
-		pref_mtgoxLower = prefs.getString("mtgoxLower", "0");
+		pref_notifLimitUpper = prefs.getString(prefix + "Upper", "999");
+		pref_notifLimitLower = prefs.getString(prefix + "Lower", "0");
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
-		pref_virtexTicker = prefs.getBoolean("virtexTickerPref", false);
-		pref_mtgoxTicker = prefs.getBoolean("mtgoxTickerPref", false);
-		pref_mtgoxCurrency = prefs.getString("mtgoxCurrencyPref", "USD");
+		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
+		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 	}
 
 	public void onDestoy(Context context) {
@@ -113,7 +74,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	}
 
 	static void setAlarm(Context context) {
-		readPreferences(context);
+		//readPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		final Intent intent = new Intent(context, UpdateService.class);
@@ -213,8 +174,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
 				notificationIntent, 0);
 		notification.setLatestEventInfo(ctxt, null, null, contentIntent);
-		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
-		mNotificationManager.cancel(BITCOIN_NOTIFY_ID);
+		mNotificationManager.notify(0, notification);
+		mNotificationManager.cancel(0);
 	}
 
 	/**
@@ -234,7 +195,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 			final PendingIntent pendingIntent = PendingIntent.getActivity(
 					context, 0, intent, 0);
 			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-
 		}
 
 		else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {

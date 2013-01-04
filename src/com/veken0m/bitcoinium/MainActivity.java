@@ -43,16 +43,25 @@ public class MainActivity extends SherlockFragmentActivity {
 					R.drawable.virtexlogo);
 			ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
 					R.drawable.btcelogo);
+			ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
+					R.drawable.bitstamplogo);
+			ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
+					R.drawable.campbxlogo);
 
 			// create the two fragments we want to use for display content
 			SherlockFragment MtGoxFragment = new MtGoxFragment();
 			SherlockFragment VirtexFragment = new VirtExFragment();
 			SherlockFragment BTCEFragment = new BTCEFragment();
-
+			SherlockFragment BitstampFragment = new BitstampFragment();
+			SherlockFragment CampBXFragment = new CampBXFragment();
+			
 			// set the Tab listener. Now we can listen for clicks.
 			MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
 			VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
 			BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
+			BitstampTab.setTabListener(new MyTabsListener(BTCEFragment));
+			CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
+			
 
 			// add the two tabs to the actionbar
 			
@@ -60,16 +69,29 @@ public class MainActivity extends SherlockFragmentActivity {
 				actionbar.addTab(MtGoxTab);
 				actionbar.addTab(VirtexTab);
 				actionbar.addTab(BTCETab);
+				actionbar.addTab(BitstampTab);
+				actionbar.addTab(CampBXTab);
 			}
 			if(pref_favExchange.equalsIgnoreCase("virtex")){
 				actionbar.addTab(VirtexTab);
 				actionbar.addTab(MtGoxTab);
 				actionbar.addTab(BTCETab);
+				actionbar.addTab(BitstampTab);
+				actionbar.addTab(CampBXTab);
 			}
 			if(pref_favExchange.equalsIgnoreCase("btce")){
 				actionbar.addTab(BTCETab);
 				actionbar.addTab(MtGoxTab);
 				actionbar.addTab(VirtexTab);
+				actionbar.addTab(BitstampTab);
+				actionbar.addTab(CampBXTab);
+			}
+			if(pref_favExchange.equalsIgnoreCase("bitstamp")){
+				actionbar.addTab(BitstampTab);
+				actionbar.addTab(BTCETab);
+				actionbar.addTab(MtGoxTab);
+				actionbar.addTab(VirtexTab);
+				actionbar.addTab(CampBXTab);
 			}
 			
 			actionbar.show();
