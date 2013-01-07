@@ -9,6 +9,10 @@
             android:key="favExchangePref"
             android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
+        <PreferenceScreen
+            android:key="SecondPrefScreen"
+            android:summary="Configure the preferred currency for each exchange"
+            android:title="Widget Settings" >
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
@@ -44,6 +48,7 @@
             android:key="campbxWidgetCurrencyPref"
             android:summary="CampBX price will be displayed in selected currency"
             android:title="CampBX Currency" />
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen

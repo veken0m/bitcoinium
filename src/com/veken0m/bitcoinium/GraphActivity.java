@@ -132,7 +132,7 @@ public class GraphActivity extends SherlockActivity {
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 
-			List<Trade> tradesList = trades.getTrades();
+			List<Trade> tradesList = trades.getSortedTrades();
 
 			float[] values = new float[tradesList.size()];
 			float[] dates = new float[tradesList.size()];

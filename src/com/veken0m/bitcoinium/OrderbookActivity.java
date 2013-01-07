@@ -119,10 +119,10 @@ public class OrderbookActivity extends SherlockActivity {
 			final OrderBook orderbook = ExchangeFactory.INSTANCE
 					.createExchange(xchangeExchange)
 					.getPollingMarketDataService()
-					.getFullOrderBook(Currencies.BTC, pref_currency);
+					.getFullOrderBook(Currencies.BTC, pref_currency);		
 
-			listAsks = orderbook.getAsks();
-			listBids = orderbook.getBids();
+			listAsks = orderbook.getSortedAsks();
+			listBids = orderbook.getSortedBids();
 			lengthAskArray = listAsks.size();
 			lengthBidArray = listBids.size();
 
@@ -153,9 +153,7 @@ public class OrderbookActivity extends SherlockActivity {
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
 
 		for (int i = 0; i < length; i++) {
-
-			final int reverse = lengthBidArray - 1 - i; // To read Bid array backwards
-
+			
 			final TableRow tr1 = new TableRow(this);
 			final TextView tvAskAmount = new TextView(this);
 			final TextView tvAskPrice = new TextView(this);
@@ -163,8 +161,8 @@ public class OrderbookActivity extends SherlockActivity {
 			final TextView tvBidAmount = new TextView(this);
 			tr1.setId(100 + i);
 
-			final LimitOrder limitorderBid = (LimitOrder) listBids.get(reverse);
-			final LimitOrder limitorderAsk = (LimitOrder) listAsks.get(i);
+			final LimitOrder limitorderBid = listBids.get(i);
+			final LimitOrder limitorderAsk = listAsks.get(i);
 
 			float bidPrice = limitorderBid.getLimitPrice().getAmount()
 					.floatValue();
