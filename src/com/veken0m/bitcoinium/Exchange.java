@@ -9,6 +9,7 @@ public class Exchange{
 	private final String logo_path;
 	private final int notification_id;
 	private final String prefix;
+	private final boolean supportsPriceGraph;
 	
 	public Exchange(String[] exchangeProperties) {
 		exchange_name = exchangeProperties[0];
@@ -17,6 +18,7 @@ public class Exchange{
 		logo_path = exchangeProperties[3];
 		notification_id = Integer.parseInt(exchangeProperties[4]);
 		prefix = exchangeProperties[5];
+		supportsPriceGraph = Boolean.parseBoolean(exchangeProperties[6]);
 	}
 	
 	public String getExchangeName() {
@@ -47,6 +49,11 @@ public class Exchange{
 	public String getPrefix() {
 
 		return prefix;
+	}
+	
+	public Boolean supportsPriceGraph() {
+
+		return supportsPriceGraph;
 	}
 
 }

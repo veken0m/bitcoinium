@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -49,7 +50,6 @@ public class GraphActivity extends SherlockActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.graph);
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.show();
@@ -58,7 +58,7 @@ public class GraphActivity extends SherlockActivity {
 		if (extras != null) {
 			exchangeName = extras.getString("exchange");
 		}
-		
+
 		Exchange exchange = new Exchange(getResources().getStringArray(
 				getResources().getIdentifier(exchangeName, "array",
 						this.getPackageName())));
@@ -67,9 +67,16 @@ public class GraphActivity extends SherlockActivity {
 		xchangeExchange = exchange.getClassName();
 		String defaultCurrency = exchange.getMainCurrency();
 		String prefix = exchange.getPrefix();
-				
+
 		readPreferences(getApplicationContext(), prefix, defaultCurrency);
-		viewGraph();
+		if (exchange.supportsPriceGraph()) {
+			setContentView(R.layout.graph);
+			viewGraph();
+		} else {
+			Toast.makeText(getApplicationContext(),
+					exchangeName + "does not currently support Price Graph",
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
@@ -159,8 +166,10 @@ public class GraphActivity extends SherlockActivity {
 			if (pref_graphMode) {
 
 				final String sOldestDate = formatter.format(dates[0]);
-				final String sMidDate = formatter.format(dates[dates.length / 2 - 1]);
-				final String sNewestDate = formatter.format(dates[dates.length - 1]);
+				final String sMidDate = formatter
+						.format(dates[dates.length / 2 - 1]);
+				final String sNewestDate = formatter
+						.format(dates[dates.length - 1]);
 
 				// min, max, steps, pre string, post string, number of decimal
 				// places
@@ -263,16 +272,18 @@ public class GraphActivity extends SherlockActivity {
 		gt.start();
 	}
 
-	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
+	protected static void readPreferences(Context context, String prefix,
+			String defaultCurrency) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
 		pref_graphMode = prefs.getBoolean("graphmodePref", false);
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
-		pref_windowSize = Integer.parseInt(prefs.getString(
-				prefix + "WindowSize", "36"));
-		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
+		pref_windowSize = Integer.parseInt(prefs.getString(prefix
+				+ "WindowSize", "12"));
+		pref_currency = prefs.getString(prefix + "CurrencyPref",
+				defaultCurrency);
 	}
 
 }

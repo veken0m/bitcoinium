@@ -35,6 +35,7 @@
         <item>mainCurrency</item>
         <item>logo</item>
         <item>notificationID</item>
+        <item>supports latest trades</item>
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
@@ -43,6 +44,7 @@
         <item>mtgoxlogo</item>
         <item>0</item>
         <item>mtgox</item>
+        <item>true</item>
     </string-array>
     <string-array name="VirtExExchange">
         <item>VirtEx</item>
@@ -51,6 +53,7 @@
         <item>virtexlogo</item>
         <item>1</item>
         <item>virtex</item>
+        <item>true</item>
     </string-array>
     <string-array name="BTCEExchange">
         <item>BTC-E</item>
@@ -59,6 +62,7 @@
         <item>btcelogo</item>
         <item>2</item>
         <item>btce</item>
+        <item>true</item>
     </string-array>
     <string-array name="BitstampExchange">
         <item>Bitstamp</item>
@@ -67,6 +71,7 @@
         <item>bitstamplogo</item>
         <item>3</item>
         <item>bitstamp</item>
+        <item>true</item>
     </string-array>
     <string-array name="CampBXExchange">
         <item>CampBX</item>
@@ -75,6 +80,7 @@
         <item>campbxlogo</item>
         <item>4</item>
         <item>campbx</item>
+        <item>false</item>
     </string-array>
     
     <!-- Arrays for MtGox Currencies -->

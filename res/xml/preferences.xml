@@ -253,12 +253,19 @@
                     android:summary="# of hours viewable in graph window"
                     android:title="VirtEx Window Size" />
                 <EditTextPreference
-                    android:defaultValue="36"
+                    android:defaultValue="3"
                     android:digits="01234567890"
                     android:inputType="numberDecimal"
                     android:key="btceWindowSize"
                     android:summary="# of hours viewable in graph window"
                     android:title="BTC-E Window Size" />
+                <EditTextPreference
+                    android:defaultValue="12"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="bitstampWindowSize"
+                    android:summary="# of hours viewable in graph window"
+                    android:title="Bitstamp Window Size" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -281,7 +288,7 @@
             android:title="Version" />
         <Preference
             android:key="customPref"
-            android:summary="Tim Molter - XChange Library\nDest Romano - Creator of Bitcoin Alert \nArno Den Hond - GraphView library"
+            android:summary="Tim Molter - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library"
             android:title="Credits" />
     </PreferenceCategory>
 
