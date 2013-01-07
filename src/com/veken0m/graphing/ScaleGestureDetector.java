@@ -32,7 +32,7 @@ public class ScaleGestureDetector {
 			Class.forName("android.view.ScaleGestureDetector");
 
 			// load class and methods
-			Class<?> classRealScaleGestureDetector = Class.forName("com.veken0m.bitcoinium.RealScaleGestureDetector");
+			Class<?> classRealScaleGestureDetector = Class.forName("com.veken0m.graphing.RealScaleGestureDetector");
 			method_getScaleFactor = classRealScaleGestureDetector.getMethod("getScaleFactor");
 			method_isInProgress = classRealScaleGestureDetector.getMethod("isInProgress");
 			method_onTouchEvent = classRealScaleGestureDetector.getMethod("onTouchEvent", MotionEvent.class);
