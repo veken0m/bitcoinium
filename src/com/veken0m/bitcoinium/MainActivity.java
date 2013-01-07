@@ -17,7 +17,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.veken0m.bitcoinium.R;
 
 // -------------------------------------------------------------------------
-/** 
+/**
  * @author Veken0m Based on Bitcoin-Alert Source by Dest
  * @version 1.3.0 Oct 20 2012
  */
@@ -29,72 +29,48 @@ public class MainActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-			readPreferences(getApplicationContext());
 
-			// ActionBar gets initiated
-			ActionBar actionbar = getSupportActionBar();
-			
-			// Tell the ActionBar we want to use Tabs.
-			actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
-					R.drawable.mtgoxlogo);
-			ActionBar.Tab VirtexTab = actionbar.newTab().setIcon(
-					R.drawable.virtexlogo);
-			ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
-					R.drawable.btcelogo);
-			ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
-					R.drawable.bitstamplogo);
-			ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
-					R.drawable.campbxlogo);
+		readPreferences(getApplicationContext());
 
-			// create the two fragments we want to use for display content
-			SherlockFragment MtGoxFragment = new MtGoxFragment();
-			SherlockFragment VirtexFragment = new VirtExFragment();
-			SherlockFragment BTCEFragment = new BTCEFragment();
-			SherlockFragment BitstampFragment = new BitstampFragment();
-			SherlockFragment CampBXFragment = new CampBXFragment();
-			
-			// set the Tab listener. Now we can listen for clicks.
-			MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
-			VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
-			BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
-			BitstampTab.setTabListener(new MyTabsListener(BitstampFragment));
-			CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
-			
+		// ActionBar gets initiated
+		ActionBar actionbar = getSupportActionBar();
 
-			// add the two tabs to the actionbar
-			
-			if(pref_favExchange.equalsIgnoreCase("mtgox")){
-				actionbar.addTab(MtGoxTab);
-				actionbar.addTab(VirtexTab);
-				actionbar.addTab(BTCETab);
-				actionbar.addTab(BitstampTab);
-				actionbar.addTab(CampBXTab);
-			}
-			if(pref_favExchange.equalsIgnoreCase("virtex")){
-				actionbar.addTab(VirtexTab);
-				actionbar.addTab(MtGoxTab);
-				actionbar.addTab(BTCETab);
-				actionbar.addTab(BitstampTab);
-				actionbar.addTab(CampBXTab);
-			}
-			if(pref_favExchange.equalsIgnoreCase("btce")){
-				actionbar.addTab(BTCETab);
-				actionbar.addTab(MtGoxTab);
-				actionbar.addTab(VirtexTab);
-				actionbar.addTab(BitstampTab);
-				actionbar.addTab(CampBXTab);
-			}
-			if(pref_favExchange.equalsIgnoreCase("bitstamp")){
-				actionbar.addTab(BitstampTab);
-				actionbar.addTab(BTCETab);
-				actionbar.addTab(MtGoxTab);
-				actionbar.addTab(VirtexTab);
-				actionbar.addTab(CampBXTab);
-			}
-			
-			actionbar.show();
+		// Tell the ActionBar we want to use Tabs.
+		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
+				R.drawable.mtgoxlogo);
+		ActionBar.Tab VirtexTab = actionbar.newTab().setIcon(
+				R.drawable.virtexlogo);
+		ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
+		ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
+				R.drawable.bitstamplogo);
+		ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
+				R.drawable.campbxlogo);
+
+		// create the fragments we want to use for display content
+		SherlockFragment MtGoxFragment = new MtGoxFragment();
+		SherlockFragment VirtexFragment = new VirtExFragment();
+		SherlockFragment BTCEFragment = new BTCEFragment();
+		SherlockFragment BitstampFragment = new BitstampFragment();
+		SherlockFragment CampBXFragment = new CampBXFragment();
+
+		// set the Tab listener. Now we can listen for clicks.
+		MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
+		VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
+		BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
+		BitstampTab.setTabListener(new MyTabsListener(BitstampFragment));
+		CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
+
+		// add the tabs to the actionbar
+		actionbar.addTab(MtGoxTab);
+		actionbar.addTab(VirtexTab);
+		actionbar.addTab(BTCETab);
+		actionbar.addTab(BitstampTab);
+		actionbar.addTab(CampBXTab);
+
+		actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
+
+		actionbar.show();
 
 	}
 
@@ -107,12 +83,12 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			ft.replace(R.id.fragment_lay, fragment);
+			//ft.replace(R.id.fragment_lay, fragment);
 		}
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			ft.replace(R.id.fragment_lay, fragment);
+			ft.add(R.id.fragment_lay, fragment);
 		}
 
 		@Override
@@ -131,13 +107,13 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//item.setIcon(android.R.drawable.ic_menu_preferences);
+		// item.setIcon(android.R.drawable.ic_menu_preferences);
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, PreferencesActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	protected static void readPreferences(Context context) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
@@ -146,20 +122,14 @@ public class MainActivity extends SherlockFragmentActivity {
 		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
 					String key) {
-			
-				
-				pref_favExchange = pPrefs.getString("favExchangePref", "mtgox");
+
+				pref_favExchange = pPrefs.getString("favExchangePref", "0");
 			}
 		};
 
 		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
-		pref_favExchange = prefs.getString("favExchangePref", "mtgox");
+		pref_favExchange = prefs.getString("favExchangePref", "0");
 	}
 
 }
-    
-    
-
-    
-

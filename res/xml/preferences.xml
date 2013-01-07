@@ -3,16 +3,16 @@
 
     <PreferenceCategory android:title="General" >
         <ListPreference
-            android:defaultValue="mtgox"
+            android:defaultValue="0"
             android:entries="@array/exchanges"
-            android:entryValues="@array/exchanges"
+            android:entryValues="@array/exchangeID"
             android:key="favExchangePref"
             android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
         <PreferenceScreen
             android:key="SecondPrefScreen"
             android:summary="Configure the preferred currency for each exchange"
-            android:title="Widget Settings" >
+            android:title="Exchange Currency Settings" >
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"

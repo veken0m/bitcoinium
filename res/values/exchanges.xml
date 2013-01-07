@@ -9,6 +9,14 @@
         <item>Bitstamp</item>
         <item>CampBX</item>
     </string-array>
+    
+    <string-array name="exchangeID">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
     <!-- Array for Widget Exchange preferences -->
     <string-array name="widgetexchangesvalues">
