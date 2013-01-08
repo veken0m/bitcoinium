@@ -54,6 +54,18 @@ public class BaseExchangeFragment extends SherlockFragment{
 				startActivity(orderbookActivity);
 			}
 		});
+		
+		final Button bitcoinChartsButton = (Button) view
+				.findViewById(R.id.bitcoincharts);
+		bitcoinChartsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent bitcoinChartsActivity = new Intent(getActivity()
+						.getBaseContext(), BitcoinChartsActivity.class);
+				startActivity(bitcoinChartsActivity);
+			}
+		});
+
 
 		final Button minerStatsButton = (Button) view
 				.findViewById(R.id.minerstats);

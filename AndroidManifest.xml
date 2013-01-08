@@ -52,6 +52,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Orderbook" >
         </activity>
+                <activity
+            android:name="com.veken0m.bitcoinium.BitcoinChartsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Bitcoin Charts" >
+        </activity>
         <activity
             android:name="com.veken0m.bitcoinium.GraphActivity"
             android:configChanges="orientation|screenSize"

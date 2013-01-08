@@ -2,6 +2,7 @@ package com.veken0m.bitcoinium;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,8 @@ import com.xeiam.xchange.virtex.dto.marketdata.VirtExTicker;
 
 public class Utils {
 
-	public static String formatDecimal(float valueToFormat, int numberOfDecimalPlaces, boolean useGroupings) {
+	public static String formatDecimal(float valueToFormat,
+			int numberOfDecimalPlaces, boolean useGroupings) {
 
 		final NumberFormat numberFormat = DecimalFormat.getInstance();
 		numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
@@ -33,9 +35,30 @@ public class Utils {
 		return numberFormat.format(valueToFormat);
 	}
 
+	public static String formatDecimal(BigDecimal valueToFormat,
+			int numberOfDecimalPlaces, boolean useGroupings) {
+
+		double formattedValue;
+
+		try {
+			formattedValue = valueToFormat.doubleValue();
+		} catch (Exception e) {
+			formattedValue = 0;
+		}
+
+		final NumberFormat numberFormat = DecimalFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
+		numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
+		// Remove grouping if commas cause errors when parsing to
+		// double/float
+		numberFormat.setGroupingUsed(useGroupings);
+
+		return numberFormat.format(formattedValue);
+	}
+
 	public static String formatWidgetMoney(float amount, String currencyCode,
 			boolean includeCurrencyCode) {
-		
+
 		String symbol = getCurrencySymbol(currencyCode);
 
 		if (includeCurrencyCode) {
@@ -46,11 +69,11 @@ public class Utils {
 
 		return symbol + formatDecimal(amount, 2, false) + currencyCode;
 	}
-	
-	public static String getCurrencySymbol(String currencyCode){
-		
+
+	public static String getCurrencySymbol(String currencyCode) {
+
 		String symbol = "";
-		
+
 		if (!(currencyCode.equalsIgnoreCase("DKK")
 				|| currencyCode.equalsIgnoreCase("BTC")
 				|| currencyCode.equalsIgnoreCase("LTC")
@@ -59,12 +82,12 @@ public class Utils {
 				|| currencyCode.equalsIgnoreCase("RUB")
 				|| currencyCode.equalsIgnoreCase("SEK")
 				|| currencyCode.equalsIgnoreCase("SGD")
-				|| currencyCode.equalsIgnoreCase("CHF")
-				|| currencyCode.equalsIgnoreCase("RUR"))) {
+				|| currencyCode.equalsIgnoreCase("CHF") || currencyCode
+					.equalsIgnoreCase("RUR"))) {
 			symbol = CurrencyUnit.of(currencyCode).getSymbol();
 			symbol = symbol.substring(symbol.length() - 1);
 		}
-		
+
 		return symbol;
 	}
 
@@ -112,18 +135,15 @@ public class Utils {
 
 		return ticker;
 	}
-	
-	public static boolean isBetween(float value, float min, float max)
-	{
-	  return((value >= min) && (value <= max));
+
+	public static boolean isBetween(float value, float min, float max) {
+		return ((value >= min) && (value <= max));
 	}
-	
-	public static String getCurrentTime()
-	{
-		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a",
-				Locale.US);
+
+	public static String getCurrentTime() {
+		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 		final String currentTime = sdf.format(new Date());
-		
+
 		return currentTime;
 	}
 

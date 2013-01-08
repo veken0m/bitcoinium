@@ -121,8 +121,8 @@ public class OrderbookActivity extends SherlockActivity {
 					.getPollingMarketDataService()
 					.getFullOrderBook(Currencies.BTC, pref_currency);		
 
-			listAsks = orderbook.getSortedAsks();
-			listBids = orderbook.getSortedBids();
+			listAsks = orderbook.getAsks();
+			listBids = orderbook.getBids();
 			lengthAskArray = listAsks.size();
 			lengthBidArray = listBids.size();
 
