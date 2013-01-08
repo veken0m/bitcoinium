@@ -93,7 +93,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
 
 		for (MarketData data : marketData) {
-			System.out.println(data.getSymbol() + ": " + data);
 
 			final TableRow tr1 = new TableRow(this);
 			final TextView tvBidAmount = new TextView(this);
