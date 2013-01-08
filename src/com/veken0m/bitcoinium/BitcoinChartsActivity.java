@@ -105,8 +105,8 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			String vol = ", Vol: "
 					+ Utils.formatDecimal(data.getVolume(), 2, true);
 			;
-
-			tvBidAmount.setText(data.getSymbol() + ": " + high + low + vol);
+			//TODO: Organize data to fit nicely in layout
+			tvBidAmount.setText(data.getSymbol() + ": " + vol + low + high);
 			// tvBidAmount.setText(data.getSymbol() + ": " + data);
 
 			// if (pref_enableHighlight) {
