@@ -68,7 +68,11 @@ public class MainActivity extends SherlockFragmentActivity {
 		actionbar.addTab(BitstampTab);
 		actionbar.addTab(CampBXTab);
 
+		try{
 		actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
+		} catch (Exception e){
+			
+		}
 
 		actionbar.show();
 
