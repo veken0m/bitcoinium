@@ -21,10 +21,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
-import com.xeiam.xchange.bitcoincharts.dto.MarketData;
+import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 public class BitcoinChartsActivity extends SherlockActivity {
-	MarketData[] marketData;
+	BitcoinChartsTicker[] marketData;
+	
 
 	protected static ProgressDialog bitcoinchartsProgressDialog;
 	final static Handler mOrderHandler = new Handler();
@@ -92,7 +93,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
 
-		for (MarketData data : marketData) {
+		for (BitcoinChartsTicker data : marketData) {
 
 			final TableRow tr1 = new TableRow(this);
 			final TextView tvBidAmount = new TextView(this);

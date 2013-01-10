@@ -91,51 +91,6 @@ public class Utils {
 		return symbol;
 	}
 
-	public static double[] fetchVirtexTickerAlt()
-			throws ClientProtocolException, IOException {
-
-		double[] ticker = new double[4];
-
-		HttpClient client = new DefaultHttpClient();
-		HttpGet post = new HttpGet(
-				"https://www.cavirtex.com/api/CAD/ticker.json");
-
-		HttpResponse response = client.execute(post);
-
-		ObjectMapper mapper = new ObjectMapper();
-		VirtExTicker virtExTicker = mapper
-				.readValue(new InputStreamReader(response.getEntity()
-						.getContent(), "UTF-8"), VirtExTicker.class);
-		ticker[0] = virtExTicker.getLast();
-		ticker[1] = virtExTicker.getLow();
-		ticker[2] = virtExTicker.getHigh();
-		ticker[3] = virtExTicker.getVolume();
-
-		return ticker;
-	}
-
-	public static double[] fetchMtgoxTickerAlt()
-			throws ClientProtocolException, IOException {
-
-		double[] ticker = new double[4];
-
-		HttpClient client = new DefaultHttpClient();
-		HttpGet post = new HttpGet(
-				"https://mtgox.com/api/1/BTCUSD/public/ticker?raw");
-
-		HttpResponse response = client.execute(post);
-
-		ObjectMapper mapper = new ObjectMapper();
-		MtGoxTicker Ticker = mapper.readValue(new InputStreamReader(response
-				.getEntity().getContent(), "UTF-8"), MtGoxTicker.class);
-		ticker[0] = Ticker.getLast().getValue();
-		ticker[1] = Ticker.getLow().getValue();
-		ticker[2] = Ticker.getHigh().getValue();
-		ticker[3] = Ticker.getVol().getValue();
-
-		return ticker;
-	}
-
 	public static boolean isBetween(float value, float min, float max) {
 		return ((value >= min) && (value <= max));
 	}

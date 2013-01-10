@@ -71,7 +71,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		try{
 		actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
 		} catch (Exception e){
-			
+
 		}
 
 		actionbar.show();
