@@ -9,16 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.money.CurrencyUnit;
-
-import com.xeiam.xchange.mtgox.v1.dto.marketdata.MtGoxTicker;
-import com.xeiam.xchange.virtex.dto.marketdata.VirtExTicker;
 
 public class Utils {
 
