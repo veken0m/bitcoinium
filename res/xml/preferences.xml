@@ -333,6 +333,13 @@
             android:summary="1.3.2"
             android:title="Version" />
         <Preference
+            android:key="bitcoiniumGithubPref"
+            android:summary="Please submit issues and feature requests here"
+            android:title="Bitcoinium Github" />
+        <Preference
+            android:key="xchangeGithubPref"
+            android:title="XChange Github" />
+        <Preference
             android:summary="Tim Molter - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library"
             android:title="Credits" />
     </PreferenceCategory>

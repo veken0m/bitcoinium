@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -25,7 +24,6 @@ import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 public class BitcoinChartsActivity extends SherlockActivity {
 	BitcoinChartsTicker[] marketData;
-	
 
 	protected static ProgressDialog bitcoinchartsProgressDialog;
 	final static Handler mOrderHandler = new Handler();
@@ -72,7 +70,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Fetch the BitcoinChartsActivity and split into Ask/Bids lists
+	 * Fetch the BitcoinChartsActivity
 	 */
 	public void getBitcoinCharts() {
 		try {
@@ -106,21 +104,9 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			String vol = ", Vol: "
 					+ Utils.formatDecimal(data.getVolume(), 2, true);
 			;
-			//TODO: Organize data to fit nicely in layout
+			// TODO: Organize data to fit nicely in layout
 			tvBidAmount.setText(data.getSymbol() + ": " + vol + low + high);
 			// tvBidAmount.setText(data.getSymbol() + ": " + data);
-
-			// if (pref_enableHighlight) {
-			// if ((int) bidAmount < pref_highlightLow) {
-			// tvBidAmount.setTextColor(Color.RED);
-			// }
-			// if ((int) bidAmount >= pref_highlightLow) {
-			// tvBidAmount.setTextColor(Color.YELLOW);
-			// }
-			// if ((int) bidAmount >= pref_highlightHigh) {
-			// tvBidAmount.setTextColor(Color.GREEN);
-			// }
-			// }
 
 			try {
 				tr1.addView(tvBidAmount);
