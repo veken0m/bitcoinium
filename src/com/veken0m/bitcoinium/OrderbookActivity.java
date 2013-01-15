@@ -94,7 +94,6 @@ public class OrderbookActivity extends SherlockActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.orderbook);
-		//readPreferences(getApplicationContext());
 		drawOrderbookUI();
 	}
 

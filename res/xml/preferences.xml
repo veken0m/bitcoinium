@@ -9,50 +9,49 @@
             android:key="favExchangePref"
             android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
+
         <PreferenceScreen
-            android:key="SecondPrefScreen"
             android:summary="Configure the preferred currency for each exchange"
             android:title="Exchange Currency Settings" >
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/mtgoxcurrencies"
-            android:entryValues="@array/mtgoxcurrenciesvalues"
-            android:key="mtgoxCurrencyPref"
-            android:summary="MtGox prices will be displayed in selected currency"
-            android:title="MtGox Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/btcecurrencies"
-            android:entryValues="@array/btcecurrenciesvalues"
-            android:key="btceCurrencyPref"
-            android:summary="BTC-E prices will be displayed in selected currency"
-            android:title="BTC-E Currency" />
-        <ListPreference
-            android:defaultValue="CAD"
-            android:entries="@array/virtexcurrencies"
-            android:entryValues="@array/virtexcurrenciesvalues"
-            android:key="virtexWidgetCurrencyPref"
-            android:summary="VirtEx price will be displayed in selected currency"
-            android:title="VirtEx Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/bitstampcurrencies"
-            android:entryValues="@array/bitstampcurrenciesvalues"
-            android:key="bitstampWidgetCurrencyPref"
-            android:summary="Bitstamp price will be displayed in selected currency"
-            android:title="Bitstamp Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/campbxcurrencies"
-            android:entryValues="@array/campbxcurrenciesvalues"
-            android:key="campbxWidgetCurrencyPref"
-            android:summary="CampBX price will be displayed in selected currency"
-            android:title="CampBX Currency" />
+            <ListPreference
+                android:defaultValue="USD"
+                android:entries="@array/mtgoxcurrencies"
+                android:entryValues="@array/mtgoxcurrenciesvalues"
+                android:key="mtgoxCurrencyPref"
+                android:summary="MtGox prices will be displayed in selected currency"
+                android:title="MtGox Currency" />
+            <ListPreference
+                android:defaultValue="USD"
+                android:entries="@array/btcecurrencies"
+                android:entryValues="@array/btcecurrenciesvalues"
+                android:key="btceCurrencyPref"
+                android:summary="BTC-E prices will be displayed in selected currency"
+                android:title="BTC-E Currency" />
+            <ListPreference
+                android:defaultValue="CAD"
+                android:entries="@array/virtexcurrencies"
+                android:entryValues="@array/virtexcurrenciesvalues"
+                android:key="virtexWidgetCurrencyPref"
+                android:summary="VirtEx price will be displayed in selected currency"
+                android:title="VirtEx Currency" />
+            <ListPreference
+                android:defaultValue="USD"
+                android:entries="@array/bitstampcurrencies"
+                android:entryValues="@array/bitstampcurrenciesvalues"
+                android:key="bitstampWidgetCurrencyPref"
+                android:summary="Bitstamp price will be displayed in selected currency"
+                android:title="Bitstamp Currency" />
+            <ListPreference
+                android:defaultValue="USD"
+                android:entries="@array/campbxcurrencies"
+                android:entryValues="@array/campbxcurrenciesvalues"
+                android:key="campbxWidgetCurrencyPref"
+                android:summary="CampBX price will be displayed in selected currency"
+                android:title="CampBX Currency" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
         <PreferenceScreen
-            android:key="SecondPrefScreen"
             android:summary="Configure the Widget(s)"
             android:title="Widget Settings" >
             <PreferenceCategory android:title="Display" >
@@ -69,9 +68,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
-
-
+			           android:entryValues="@array/widgetBehaviours" />
                 -->
 
 
@@ -88,8 +85,7 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
-
+        </PreferenceCategory>
                 -->
 
             </PreferenceCategory>
@@ -116,8 +112,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Alarm" >
         <PreferenceScreen
-            android:key="SecondPrefScreen"
-            android:summary="Adjust settings of the price alarm notification \nIf multiple widgets of the MtGox is used, it&apos;s selected main currency will be used to trigger alarm"
+            android:summary="Adjust settings of the price alarm notification. \nIf multiple widgets of the same exchange is used, it&apos;s selected main currency will be used to trigger alarm"
             android:title="Price Alarm Notification" >
             <PreferenceCategory android:title="Price Alarm" >
                 <CheckBoxPreference
@@ -138,35 +133,87 @@
             </PreferenceCategory>
             <PreferenceCategory
                 android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"
-                android:title="Alarm Thresholds" >
-                <EditTextPreference
-                    android:defaultValue="999"
-                    android:digits="01234567890."
-                    android:inputType="numberDecimal"
-                    android:key="virtexUpper"
-                    android:summary="Notification will occur if VirtEx price goes over this threshold"
-                    android:title="VirtEx Upper Threshold" />
-                <EditTextPreference
-                    android:defaultValue="0"
-                    android:digits="01234567890."
-                    android:inputType="numberDecimal"
-                    android:key="virtexLower"
-                    android:summary="Notification will occur if VirtEx price goes under this threshold"
-                    android:title="VirtEx Lower Threshold" />
-                <EditTextPreference
-                    android:defaultValue="999"
-                    android:digits="01234567890."
-                    android:inputType="numberDecimal"
-                    android:key="mtgoxUpper"
-                    android:summary="Notification will occur if MtGox price goes over this threshold"
-                    android:title="MtGox Upper Threshold" />
-                <EditTextPreference
-                    android:defaultValue="0"
-                    android:digits="01234567890."
-                    android:inputType="numberDecimal"
-                    android:key="mtgoxLower"
-                    android:summary="Notification will occur if MtGox price goes under this threshold"
-                    android:title="MtGox Lower Threshold" />
+                android:title="Alarm Settings" >
+                <PreferenceScreen android:title="MtGox Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="mtgoxUpper"
+                        android:summary="Notification will occur if MtGox price goes over this threshold"
+                        android:title="MtGox Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="mtgoxLower"
+                        android:summary="Notification will occur if MtGox price goes under this threshold"
+                        android:title="MtGox Lower Threshold" />
+                </PreferenceScreen>
+                <PreferenceScreen android:title="VirtEx Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="virtexUpper"
+                        android:summary="Notification will occur if VirtEx price goes over this threshold"
+                        android:title="VirtEx Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="virtexLower"
+                        android:summary="Notification will occur if VirtEx price goes under this threshold"
+                        android:title="VirtEx Lower Threshold" />
+                </PreferenceScreen>
+                <PreferenceScreen android:title="BTC-E Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="btceUpper"
+                        android:summary="Notification will occur if BTC-E price goes over this threshold"
+                        android:title="BTC-E Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="btceLower"
+                        android:summary="Notification will occur if BTC-E price goes under this threshold"
+                        android:title="BTC-E Lower Threshold" />
+                </PreferenceScreen>
+                <PreferenceScreen android:title="Bitstamp Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="bitstampUpper"
+                        android:summary="Notification will occur if Bitstamp price goes over this threshold"
+                        android:title="Bitstamp Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="bitstampLower"
+                        android:summary="Notification will occur if Bitstamp price goes under this threshold"
+                        android:title="Bitstamp Lower Threshold" />
+                </PreferenceScreen>
+                <PreferenceScreen android:title="CampBX Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="campbxUpper"
+                        android:summary="Notification will occur if CampBX price goes over this threshold"
+                        android:title="CampBX Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="campbxLower"
+                        android:summary="Notification will occur if CampBX price goes under this threshold"
+                        android:title="CampBX Lower Threshold" />
+                </PreferenceScreen>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -192,7 +239,6 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen
-            android:key="SecondPrefScreen"
             android:summary="Configure the OrderBook"
             android:title="OrderBook Settings" >
             <PreferenceCategory android:title="OrderBook Settings" >
@@ -224,7 +270,6 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Graph Settings" >
         <PreferenceScreen
-            android:key="SecondPrefScreen"
             android:summary="Configure the Price Graph"
             android:title="Price Graph Settings" >
             <PreferenceCategory android:title="Price Graph Mode" >
@@ -274,7 +319,6 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="About" >
         <Preference
-            android:key="customPref"
             android:summary="Veken0m"
             android:title="Author" />
         <Preference
@@ -286,11 +330,9 @@
             android:summary="veken0m.apps@gmail.com"
             android:title="Email" />
         <Preference
-            android:key="customPref"
             android:summary="1.3.2"
             android:title="Version" />
         <Preference
-            android:key="customPref"
             android:summary="Tim Molter - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library"
             android:title="Credits" />
     </PreferenceCategory>

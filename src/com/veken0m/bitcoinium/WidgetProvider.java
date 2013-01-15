@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.Currencies;
@@ -90,8 +91,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 				String pref_widgetExchange = exchange.getClassName();
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();
-				
-				
+
 				readPreferences(context, prefix, defaultCurrency);
 
 				if ((pref_currency.length() == 3)
@@ -115,30 +115,30 @@ public class WidgetProvider extends BaseWidgetProvider {
 						final String lastPrice = Utils.formatWidgetMoney(
 								lastValue, pref_currency, true);
 						String volume = "N/A";
-								
-						if(!(ticker.getVolume() == null)){		
-							volume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, false);
+
+						if (!(ticker.getVolume() == null)) {
+							volume = Utils.formatDecimal(ticker.getVolume()
+									.floatValue(), 2, false);
 						}
-					
-						
+
 						final String highPrice;
 						final String lowPrice;
-						
-						if(!(ticker.getHigh() == null)){
+
+						if (!(ticker.getHigh() == null)) {
 							highPrice = Utils.formatWidgetMoney(ticker
 									.getHigh().getAmount().floatValue(),
 									pref_currency, false);
-							lowPrice = Utils.formatWidgetMoney(ticker
-									.getLow().getAmount().floatValue(),
-									pref_currency, false);
+							lowPrice = Utils.formatWidgetMoney(ticker.getLow()
+									.getAmount().floatValue(), pref_currency,
+									false);
 						} else {
-							highPrice = Utils.formatWidgetMoney(ticker
-									.getAsk().getAmount().floatValue(),
-									pref_currency, false);
-							lowPrice = Utils.formatWidgetMoney(ticker
-									.getBid().getAmount().floatValue(),
-									pref_currency, false);
-							
+							highPrice = Utils.formatWidgetMoney(ticker.getAsk()
+									.getAmount().floatValue(), pref_currency,
+									false);
+							lowPrice = Utils.formatWidgetMoney(ticker.getBid()
+									.getAmount().floatValue(), pref_currency,
+									false);
+
 						}
 
 						views.setTextViewText(R.id.widgetExchange, exchangeName);
@@ -166,16 +166,23 @@ public class WidgetProvider extends BaseWidgetProvider {
 						// }
 
 						if (pref_PriceAlarm) {
+							try {
+								if (pref_currency.equals(pref_main_currency)
+										&& !Utils
+												.isBetween(
+														lastValue,
+														Float.valueOf(pref_notifLimitLower),
+														Float.valueOf(pref_notifLimitUpper))) {
+									createNotification(context, lastPrice,
+											exchangeName, NOTIFY_ID);
 
-							if (exchangeName.equals("MtGox")
-									&& pref_currency.equals(pref_currency)
-									&& !pref_notifLimitUpper.equals("")
-									&& !pref_notifLimitLower.equals("")
-									&& !Utils.isBetween(lastValue,
-											Float.valueOf(pref_notifLimitLower),
-											Float.valueOf(pref_notifLimitUpper))) {
-								createNotification(context, lastPrice,
-										exchangeName, NOTIFY_ID);
+								}
+							} catch (Exception e) {
+								Toast.makeText(
+										getApplicationContext(),
+										exchangeName
+												+ "notification alarm thresholds are invalid.",
+										Toast.LENGTH_LONG).show();
 							}
 						}
 

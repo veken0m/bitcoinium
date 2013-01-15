@@ -35,6 +35,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static String pref_notifLimitLower;
 	static String pref_notifLimitUpper;
 	static String pref_currency;
+	static String pref_main_currency;
 	static Boolean pref_wakeupRefresh = false;
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
@@ -63,7 +64,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
-		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
+		pref_main_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 	}
 
 	public void onDestoy(Context context) {
