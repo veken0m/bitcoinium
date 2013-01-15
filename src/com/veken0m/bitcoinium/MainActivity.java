@@ -87,12 +87,11 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			//ft.replace(R.id.fragment_lay, fragment);
 		}
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			ft.add(R.id.fragment_lay, fragment);
+			ft.replace(R.id.fragment_lay, fragment);
 		}
 
 		@Override
