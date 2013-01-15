@@ -69,6 +69,7 @@
         -->
         <activity
             android:name="com.veken0m.bitcoinium.MinerStatsActivity"
+            android:screenOrientation="portrait"
             android:label="Miner Stats" >
         </activity>
         <activity

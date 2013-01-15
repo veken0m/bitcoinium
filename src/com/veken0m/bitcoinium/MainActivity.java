@@ -3,6 +3,7 @@ package com.veken0m.bitcoinium;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -69,9 +70,15 @@ public class MainActivity extends SherlockFragmentActivity {
 		actionbar.addTab(CampBXTab);
 
 		try{
-		actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
+		    actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
 		} catch (Exception e){
+			// If preference is not set a valid integer set to "0"
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(getBaseContext());
 
+					Editor editor = prefs.edit();
+					editor.putString("favExchangePref", "0");
+					editor.commit();
 		}
 
 		actionbar.show();
