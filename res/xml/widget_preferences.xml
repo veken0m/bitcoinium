@@ -34,9 +34,9 @@
             android:defaultValue="USD"
             android:entries="@array/bitstampcurrencies"
             android:entryValues="@array/bitstampcurrenciesvalues"
-            android:key="bitcampWidgetCurrencyPref"
-            android:summary="Bitcamp Widget price will be displayed in selected currency"
-            android:title="Bitcamp Widget Currency" />
+            android:key="bitstampWidgetCurrencyPref"
+            android:summary="Bitstamp Widget price will be displayed in selected currency"
+            android:title="Bitstamp Widget Currency" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/campbxcurrencies"
