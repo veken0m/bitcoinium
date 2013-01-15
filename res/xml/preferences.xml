@@ -38,9 +38,9 @@
             android:defaultValue="USD"
             android:entries="@array/bitstampcurrencies"
             android:entryValues="@array/bitstampcurrenciesvalues"
-            android:key="bitcampWidgetCurrencyPref"
-            android:summary="Bitcamp price will be displayed in selected currency"
-            android:title="Bitcamp Currency" />
+            android:key="bitstampWidgetCurrencyPref"
+            android:summary="Bitstamp price will be displayed in selected currency"
+            android:title="Bitstamp Currency" />
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/campbxcurrencies"
@@ -69,7 +69,9 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
+
+
                 -->
 
 
@@ -86,7 +88,8 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
+        </PreferenceCategory>
+
                 -->
 
             </PreferenceCategory>
