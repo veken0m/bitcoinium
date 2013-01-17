@@ -142,7 +142,7 @@ public class GraphActivity extends SherlockActivity {
 			List<Trade> tradesList = trades.getTrades();
 
 			float[] values = new float[tradesList.size()];
-			float[] dates = new float[tradesList.size()];
+			long[] dates = new long[tradesList.size()];
 			final GraphViewData[] data = new GraphViewData[values.length];
 
 			final Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
@@ -154,7 +154,7 @@ public class GraphActivity extends SherlockActivity {
 			for (int i = 0; i < tradesListSize; i++) {
 				final Trade trade = tradesList.get(i);
 				values[i] = trade.getPrice().getAmount().floatValue();
-				dates[i] = Float.valueOf(trade.getTimestamp().getMillis());
+				dates[i] = trade.getTimestamp().getTime();
 				if (values[i] > largest) {
 					largest = values[i];
 				}
