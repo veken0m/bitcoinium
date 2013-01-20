@@ -22,9 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.miningpools.bitminter.Workers;
 import com.veken0m.bitcoinium.MinerStatsActivity.MinerData;
-import com.veken0m.bitcoinium.R;
+import com.veken0m.miningpools.bitminter.Workers;
 
 public class BitMinterFragment extends SherlockFragment {
 

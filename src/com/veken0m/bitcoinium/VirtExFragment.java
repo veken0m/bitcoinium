@@ -1,7 +1,5 @@
 package com.veken0m.bitcoinium;
 
-import com.veken0m.bitcoinium.R;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

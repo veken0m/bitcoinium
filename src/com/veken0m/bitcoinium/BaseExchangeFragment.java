@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.bitcoinium.R;
 
 public class BaseExchangeFragment extends SherlockFragment{
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";

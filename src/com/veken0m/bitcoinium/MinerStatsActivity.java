@@ -24,13 +24,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.R;
 import com.veken0m.miningpools.bitminter.BitMinterData;
 import com.veken0m.miningpools.bitminter.Workers;
 import com.veken0m.miningpools.deepbit.DeepBitData;

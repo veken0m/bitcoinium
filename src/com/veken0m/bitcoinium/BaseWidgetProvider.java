@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
-import com.veken0m.bitcoinium.R;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 

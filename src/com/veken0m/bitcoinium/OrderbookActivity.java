@@ -17,16 +17,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
-import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.OrderBook;

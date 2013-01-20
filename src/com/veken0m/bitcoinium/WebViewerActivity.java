@@ -1,7 +1,5 @@
 package com.veken0m.bitcoinium;
 
-import com.veken0m.bitcoinium.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

@@ -1,10 +1,8 @@
 package com.jjoe64.graphview;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
 
 import com.jjoe64.graphview.GraphView.GraphViewData;

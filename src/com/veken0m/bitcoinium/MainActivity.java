@@ -16,7 +16,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.R;
 
 // -------------------------------------------------------------------------
 /**

@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;

@@ -1,7 +1,5 @@
 package com.veken0m.bitcoinium;
 
-import com.veken0m.bitcoinium.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
