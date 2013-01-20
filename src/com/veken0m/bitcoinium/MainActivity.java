@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -24,13 +25,14 @@ import com.veken0m.bitcoinium.R;
  */
 public class MainActivity extends SherlockFragmentActivity {
 	static String pref_favExchange;
+	ViewPager mViewPager;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+        
 		readPreferences(getApplicationContext());
 
 		// ActionBar gets initiated

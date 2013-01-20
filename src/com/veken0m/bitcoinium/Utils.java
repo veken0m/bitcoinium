@@ -27,22 +27,16 @@ public class Utils {
 	public static String formatDecimal(BigDecimal valueToFormat,
 			int numberOfDecimalPlaces, boolean useGroupings) {
 
-		double formattedValue;
-
-		try {
-			formattedValue = valueToFormat.doubleValue();
-		} catch (Exception e) {
-			formattedValue = 0;
-		}
-
 		final NumberFormat numberFormat = DecimalFormat.getInstance();
 		numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
 		numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
-		// Remove grouping if commas cause errors when parsing to
-		// double/float
 		numberFormat.setGroupingUsed(useGroupings);
 
-		return numberFormat.format(formattedValue);
+		try {
+			return numberFormat.format(valueToFormat.doubleValue());
+		} catch (Exception e) {
+			return "N/A";
+		}
 	}
 
 	public static String formatWidgetMoney(float amount, String currencyCode,

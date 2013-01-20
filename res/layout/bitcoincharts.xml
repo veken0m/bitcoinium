@@ -1,70 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bitcoincharts_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="1" >
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:background="@android:color/black" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#101010"
-        android:gravity="left"
-        android:padding="3dp"
-        android:text="Symbol"
-        android:textColor="#33B5E5"
-        android:id="@+id/bitcoincharts_symbol"
-        android:textSize="18sp" />
+    <TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bitcoincharts_last"
-        android:background="#101010"
-        android:padding="3dp"
-        android:text="Last"
-        android:textColor="#33B5E5"
-        android:layout_toRightOf="@+id/bitcoincharts_symbol"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/bitcoincharts_symbol"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:text="Symbol"
+            android:textColor="#33B5E5"
+            android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bitcoincharts_vol"
-        android:background="#101010"
-        android:padding="3dp"
-        android:text="@string/vol"
-        android:textColor="#33B5E5"
-        android:layout_toRightOf="@+id/bitcoincharts_last"
-        android:textSize="18sp" />
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="@string/last"
+            android:textColor="#33B5E5"
+            android:textSize="18sp" />
+        <!--
+        <TextView
+            android:layout_weight="1"
+            android:background="#101010"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_height="fill_parent"
+            android:text="Avg"
+            android:textColor="#33B5E5" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bitcoincharts_low"
-        android:background="#101010"
-        android:padding="3dp"
-        android:text="@string/low"
-        android:textColor="#33B5E5"
-        android:layout_toRightOf="@+id/bitcoincharts_vol"
-        android:textSize="18sp" />
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="Vol"
+            android:textColor="#33B5E5"
+            android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/bitcoincharts_high"
-        android:layout_height="wrap_content"
-        android:background="#101010"
-        android:padding="3dp"
-        android:text="@string/high"
-        android:textColor="#33B5E5"
-        android:layout_toRightOf="@+id/bitcoincharts_low"
-        android:textSize="18sp" />
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="@string/low"
+            android:textColor="#33B5E5"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="@string/high"
+            android:textColor="#33B5E5"
+            android:textSize="18sp" />
+
+        <!--
+        <TextView
+            android:layout_weight="1"
+            android:background="#101010"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_height="fill_parent"
+            android:text="Bid"
+            android:textColor="#33B5E5" />
+
+        <TextView
+            android:layout_weight="1"
+            android:background="#101010"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_height="fill_parent"
+            android:text="Ask"
+            android:textColor="#33B5E5" />
+        -->
+    </TableRow>
 
     <ScrollView
         android:id="@+id/bitcoincharts_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bitcoincharts_symbol"
+        android:layout_below="@+id/header"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp" >
 
@@ -73,8 +97,9 @@
             android:id="@+id/bitcoincharts_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:showDividers="beginning"
             android:stretchColumns="5" >
         </TableLayout>
     </ScrollView>
 
-</RelativeLayout>
+</TableLayout>

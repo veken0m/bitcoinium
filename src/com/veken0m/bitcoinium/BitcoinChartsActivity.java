@@ -7,11 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -58,7 +61,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.bitcoincharts);
-		// readPreferences(getApplicationContext());
 		drawBitcoinChartsUI();
 	}
 
@@ -70,13 +72,11 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Fetch the BitcoinChartsActivity
+	 * Fetch the Bitcoin Charts data
 	 */
 	public void getBitcoinCharts() {
 		try {
-
 			marketData = BitcoinChartsFactory.createInstance().getMarketData();
-
 		} catch (Exception e) {
 			connectionFail = true;
 			e.printStackTrace();
@@ -85,36 +85,92 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Draw the Orders to the screen in a table
+	 * Draw the Tickers to the screen in a table
 	 */
 	public void drawBitcoinChartsUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
 
+		String previousCurrency = "";
+		int backGroundColor = Color.rgb(31, 31, 31);
+
 		for (BitcoinChartsTicker data : marketData) {
 
 			final TableRow tr1 = new TableRow(this);
-			final TextView tvBidAmount = new TextView(this);
-			// String last = "Last: " + data.getLatestTrade();
-			String high = ", High: "
-					+ Utils.formatDecimal(data.getHigh(), 2, true);
-			String low = ", Low: "
-					+ Utils.formatDecimal(data.getLow(), 2, true);
-			;
-			String vol = ", Vol: "
-					+ Utils.formatDecimal(data.getVolume(), 2, true);
-			;
-			// TODO: Organize data to fit nicely in layout
-			tvBidAmount.setText(data.getSymbol() + ": " + vol + low + high);
-			// tvBidAmount.setText(data.getSymbol() + ": " + data);
 
-			try {
-				tr1.addView(tvBidAmount);
-				t1.addView(tr1);
+			final TextView tvSymbol = new TextView(this);
+			final TextView tvLast = new TextView(this);
+			// final TextView tvAvg = new TextView(this);
+			final TextView tvVolume = new TextView(this);
+			final TextView tvHigh = new TextView(this);
+			final TextView tvLow = new TextView(this);
+			// final TextView tvBid = new TextView(this);
+			// final TextView tvAsk = new TextView(this);
+			String last = Utils.formatDecimal(data.getClose(), 2, true);
+			String high = Utils.formatDecimal(data.getHigh(), 2, true);
+			String low = Utils.formatDecimal(data.getLow(), 2, true);
+			String vol = Utils.formatDecimal(data.getVolume(), 2, true);
+			// String avg = Utils.formatDecimal(data.getAvg(), 2, true);
+			// String bid = Utils.formatDecimal(data.getBid(), 2, true);
+			// String ask = Utils.formatDecimal(data.getAsk(), 2, true);
 
-			} catch (Exception e) {
-				e.printStackTrace();
+			LayoutParams params = new TableRow.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+			tvSymbol.setText(data.getSymbol());
+			tvSymbol.setLayoutParams(params);
+			tvLast.setText(last);
+			tvLast.setLayoutParams(params);
+			tvLast.setGravity(1);
+			tvVolume.setText(vol);
+			tvVolume.setGravity(1);
+			tvVolume.setLayoutParams(params);
+			// tvAvg.setText(avg);
+			// tvAvg.setGravity(1);
+			// tvAvg.setLayoutParams(params);
+			tvLow.setText(low);
+			tvLow.setGravity(1);
+			tvLow.setLayoutParams(params);
+			tvHigh.setText(high);
+			tvHigh.setLayoutParams(params);
+			tvHigh.setGravity(1);
+			// tvBid.setText(bid);
+			// tvBid.setGravity(1);
+			// tvBid.setLayoutParams(params);
+			// tvAsk.setText(ask);
+			// tvAsk.setGravity(1);
+			// tvAsk.setLayoutParams(params);
+
+			// If currencies are different
+			if (!previousCurrency.equalsIgnoreCase(data.getCurrency())) {
+				// Change the background color
+				if (backGroundColor == Color.BLACK) {
+					backGroundColor = Color.rgb(31, 31, 31);
+				} else {
+					backGroundColor = Color.BLACK;
+				}
 			}
+
+			tr1.setBackgroundColor(backGroundColor);
+
+			tr1.addView(tvSymbol);
+			tr1.addView(tvLast);
+			// tr1.addView(tvAvg);
+			tr1.addView(tvVolume);
+			tr1.addView(tvLow);
+			tr1.addView(tvHigh);
+			// tr1.addView(tvBid);
+			// tr1.addView(tvAsk);
+			tr1.setPadding(0, 3, 0, 3);
+			t1.addView(tr1);
+
+			// Insert a divider between rows
+			View divider = new View(this);
+			divider.setLayoutParams(new TableRow.LayoutParams(
+					TableRow.LayoutParams.MATCH_PARENT, 1));
+			divider.setBackgroundColor(Color.rgb(51, 51, 51));
+			t1.addView(divider);
+
+			previousCurrency = data.getCurrency();
 		}
 
 	}
