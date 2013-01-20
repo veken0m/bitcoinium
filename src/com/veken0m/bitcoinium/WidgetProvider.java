@@ -191,6 +191,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 							createTicker(context, R.drawable.bitcoin,
 									exchangeName + " Update failed!");
 						}
+						
+						
 						views.setTextColor(R.id.label, Color.RED);
 
 					}

@@ -27,16 +27,15 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.NotAvailableFromExchangeException;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
+import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
 public class OrderbookActivity extends SherlockActivity {
 
 	protected static ProgressDialog orderbookProgressDialog;
 	final static Handler mOrderHandler = new Handler();
-	int lengthAskArray = 0;
-	int lengthBidArray = 0;
-	int length = 0;
 	Boolean connectionFail = false;
 	protected static String exchangeName = "";
 	protected String xchangeExchange = null;
@@ -47,6 +46,7 @@ public class OrderbookActivity extends SherlockActivity {
 	 */
 	static int pref_highlightHigh;
 	static int pref_highlightLow;
+	static int pref_orderbookLimiter;
 	static Boolean pref_enableHighlight;
 	static String pref_currency;
 	static Boolean pref_showCurrencySymbol;
@@ -111,6 +111,8 @@ public class OrderbookActivity extends SherlockActivity {
 				"10"));
 		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 		pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref", true);
+		pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref",
+				"100"));
 	}
 
 	/**
@@ -118,21 +120,32 @@ public class OrderbookActivity extends SherlockActivity {
 	 */
 	public void getOrderBook() {
 		try {
-			final OrderBook orderbook = ExchangeFactory.INSTANCE
-					.createExchange(xchangeExchange)
-					.getPollingMarketDataService()
-					.getFullOrderBook(Currencies.BTC, pref_currency);		
-
-			listAsks = orderbook.getAsks();
-			listBids = orderbook.getBids();
-			lengthAskArray = listAsks.size();
-			lengthBidArray = listBids.size();
-
-			if (lengthAskArray < lengthBidArray) {
-				length = lengthAskArray;
-			} else {
-				length = lengthBidArray;
+			
+			final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
+					.createExchange(xchangeExchange).getPollingMarketDataService();
+			
+			OrderBook orderbook = null;
+			
+			try{
+				orderbook = marketData.getPartialOrderBook(Currencies.BTC, pref_currency);
+			} catch (NotAvailableFromExchangeException e){
+				orderbook = marketData.getFullOrderBook(Currencies.BTC, pref_currency);
 			}
+			
+			// Limit OrderbookActivity orders drawn to speed up performance
+			int length = 0;
+			if (orderbook.getAsks().size() < orderbook.getBids().size()) {
+				length = orderbook.getAsks().size();
+			} else {
+				length = orderbook.getBids().size();
+			}
+			
+			if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length) {
+				length = pref_orderbookLimiter;
+			}
+
+			listAsks = orderbook.getAsks().subList(0, length);
+			listBids = orderbook.getBids().subList(0, length);
 
 		} catch (Exception e) {
 			connectionFail = true;
@@ -145,12 +158,6 @@ public class OrderbookActivity extends SherlockActivity {
 	 * Draw the Orders to the screen in a table
 	 */
 	public void drawOrderbookUI() {
-
-		// Limit OrderbookActivity orders drawn to speed up performance
-		int limiter = 100;
-		if (limiter != 0 && limiter < length) {
-			length = limiter;
-		}
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
 		LayoutParams params = new TableRow.LayoutParams(
@@ -169,7 +176,7 @@ public class OrderbookActivity extends SherlockActivity {
         	currencySymbolBTC = "";
         }
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < listBids.size(); i++) {
 			
 			final TableRow tr1 = new TableRow(this);
 			final TextView tvAskAmount = new TextView(this);
