@@ -1,4 +1,4 @@
-package com.veken0m.graphing;
+package com.jjoe64.graphview.compatible;
 
 import android.content.Context;
 import android.view.ScaleGestureDetector;
@@ -9,7 +9,7 @@ import android.view.ScaleGestureDetector;
  * http://www.gnu.org/licenses/lgpl.html
  */
 public class RealScaleGestureDetector extends ScaleGestureDetector {
-	public RealScaleGestureDetector(Context context, final com.veken0m.graphing.ScaleGestureDetector fakeScaleGestureDetector, final com.veken0m.graphing.ScaleGestureDetector.SimpleOnScaleGestureListener fakeListener) {
+	public RealScaleGestureDetector(Context context, final com.jjoe64.graphview.compatible.ScaleGestureDetector fakeScaleGestureDetector, final com.jjoe64.graphview.compatible.ScaleGestureDetector.SimpleOnScaleGestureListener fakeListener) {
 		super(context, new android.view.ScaleGestureDetector.SimpleOnScaleGestureListener() {
 			@Override
 			public boolean onScale(ScaleGestureDetector detector) {

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -21,11 +22,11 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.R;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewStyle;
+import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.graphing.GraphViewer;
-import com.veken0m.graphing.LineGraphView;
-import com.veken0m.graphing.GraphView.GraphViewData;
-import com.veken0m.graphing.GraphView.GraphViewSeries;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Trade;
@@ -212,6 +213,7 @@ public class GraphActivity extends SherlockActivity {
 				graphView.setViewPort(startValue, windowSize);
 				graphView.setScrollable(true);
 				graphView.setScalable(true);
+				
 				if (!pref_scaleMode) {
 					graphView.setManualYAxisBounds(largest, smallest);
 				}

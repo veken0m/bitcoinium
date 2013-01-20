@@ -1,4 +1,4 @@
-package com.veken0m.graphing;
+package com.jjoe64.graphview.compatible;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -32,7 +32,7 @@ public class ScaleGestureDetector {
 			Class.forName("android.view.ScaleGestureDetector");
 
 			// load class and methods
-			Class<?> classRealScaleGestureDetector = Class.forName("com.veken0m.graphing.RealScaleGestureDetector");
+			Class<?> classRealScaleGestureDetector = Class.forName("com.jjoe64.graphview.compatible.RealScaleGestureDetector");
 			method_getScaleFactor = classRealScaleGestureDetector.getMethod("getScaleFactor");
 			method_isInProgress = classRealScaleGestureDetector.getMethod("isInProgress");
 			method_onTouchEvent = classRealScaleGestureDetector.getMethod("onTouchEvent", MotionEvent.class);
@@ -42,7 +42,7 @@ public class ScaleGestureDetector {
 			realScaleGestureDetector = constructor.newInstance(context, this, simpleOnScaleGestureListener);
 		} catch (Exception e) {
 			// not available
-			Log.w("com.veken0m.bitcoinium.graphview", "*** WARNING *** No scaling available for graphs. Exception:");
+			Log.w("com.jjoe64.graphview", "*** WARNING *** No scaling available for graphs. Exception:");
 			e.printStackTrace();
 		}
 	}
