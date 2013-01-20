@@ -2,43 +2,67 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/orderbooklayout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="1" >
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:background="@android:color/black" >
 
     <TableRow>
 
         <TextView
             android:background="#101010"
-            android:gravity="left"
+            android:gravity="center_horizontal"
             android:padding="3dip"
-            android:text="   Buying BTC"
+            android:layout_weight="1"
+            android:text="Bids"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:background="#101010"
-            android:gravity="right"
+            android:gravity="center_horizontal"
             android:padding="3dip"
-            android:text="Selling BTC   "
+            android:layout_weight="1"
+            android:text="Asks"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
     </TableRow>
 
     <TableRow>
 
         <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
             android:background="#101010"
-            android:gravity="left"
-            android:padding="3dip"
-            android:text="Price         Amount"
+            android:gravity="center_horizontal"
+            android:text="Price"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
 
         <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
             android:background="#101010"
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="Price    Amount  "
+            android:gravity="center_horizontal"
+            android:text="Amount"
+            android:textColor="#33B5E5"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="Price"
+            android:textColor="#33B5E5"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#101010"
+            android:gravity="center_horizontal"
+            android:text="Amount"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
     </TableRow>
@@ -55,7 +79,7 @@
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:stretchColumns="1" >
+            android:stretchColumns="4" >
         </TableLayout>
     </ScrollView>
 

@@ -13,9 +13,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TableRow.LayoutParams;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -48,6 +51,7 @@ public class OrderbookActivity extends SherlockActivity {
 	static int pref_highlightLow;
 	static Boolean pref_enableHighlight;
 	static String pref_currency;
+	static Boolean pref_showCurrencySymbol;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -108,6 +112,7 @@ public class OrderbookActivity extends SherlockActivity {
 		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
 				"10"));
 		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
+		pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref", true);
 	}
 
 	/**
@@ -150,6 +155,21 @@ public class OrderbookActivity extends SherlockActivity {
 		}
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
+		LayoutParams params = new TableRow.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+		int bidTextColor = Color.GRAY;
+		int askTextColor = Color.GRAY;
+		
+		String currencySymbolBTC = "";
+		String currencySymbol = "";
+		
+        if(pref_showCurrencySymbol){
+        	currencySymbolBTC = " BTC";
+        	currencySymbol = Utils.getCurrencySymbol(pref_currency);
+        } else {
+        	currencySymbol = "";
+        	currencySymbolBTC = "";
+        }
 
 		for (int i = 0; i < length; i++) {
 			
@@ -174,39 +194,64 @@ public class OrderbookActivity extends SherlockActivity {
 			final String sBidAmount = Utils.formatDecimal(bidAmount, 2, false);
 			final String sAskPrice = Utils.formatDecimal(askPrice, 5, false);
 			final String sAskAmount = Utils.formatDecimal(askAmount, 2, false);
-
-			tvBidAmount.setText("" + sBidPrice + "          " + sBidAmount);
-			tvAskAmount.setText("" + sAskPrice + "          " + sAskAmount);
+			
+		
+			tvBidAmount.setText(sBidAmount + currencySymbolBTC);
+			tvBidAmount.setLayoutParams(params);
+			tvBidAmount.setGravity(Gravity.CENTER);
+			tvAskAmount.setText(sAskAmount + currencySymbolBTC);
+			tvAskAmount.setLayoutParams(params);
+			tvAskAmount.setGravity(Gravity.CENTER);
+			
+			
+			tvBidPrice.setText(currencySymbol + sBidPrice);
+			tvBidPrice.setLayoutParams(params);
+			tvBidPrice.setGravity(Gravity.CENTER);
+			tvAskPrice.setText(currencySymbol + sAskPrice);
+			tvAskPrice.setLayoutParams(params);
+			tvAskPrice.setGravity(Gravity.CENTER);
 
 			if (pref_enableHighlight) {
 				if ((int) bidAmount < pref_highlightLow) {
-					tvBidAmount.setTextColor(Color.RED);
+					bidTextColor = Color.RED;
 				}
 				if ((int) bidAmount >= pref_highlightLow) {
-					tvBidAmount.setTextColor(Color.YELLOW);
+					bidTextColor = Color.YELLOW;
 				}
 				if ((int) bidAmount >= pref_highlightHigh) {
-					tvBidAmount.setTextColor(Color.GREEN);
+					bidTextColor = Color.GREEN;
 				}
-
+				
 				if ((int) askAmount < pref_highlightLow) {
-					tvAskAmount.setTextColor(Color.RED);
+					askTextColor = Color.RED;
 				}
 				if ((int) askAmount >= pref_highlightLow) {
-					tvAskAmount.setTextColor(Color.YELLOW);
+					askTextColor = Color.YELLOW;
 				}
 				if ((int) askAmount >= pref_highlightHigh) {
-					tvAskAmount.setTextColor(Color.GREEN);
+					askTextColor = Color.GREEN;
 				}
+				
+				tvBidAmount.setTextColor(bidTextColor);
+				tvBidPrice.setTextColor(bidTextColor);
+				tvAskAmount.setTextColor(askTextColor);
+				tvAskPrice.setTextColor(askTextColor);
 			}
 
 			try {
-				tr1.addView(tvBidAmount);
 				tr1.addView(tvBidPrice);
-				tr1.addView(tvAskAmount);
+				tr1.addView(tvBidAmount);
 				tr1.addView(tvAskPrice);
+				tr1.addView(tvAskAmount);
 
 				t1.addView(tr1);
+				
+				// Insert a divider between rows
+				View divider = new View(this);
+				divider.setLayoutParams(new TableRow.LayoutParams(
+						TableRow.LayoutParams.MATCH_PARENT, 1));
+				divider.setBackgroundColor(Color.rgb(51, 51, 51));
+				t1.addView(divider);
 
 			} catch (Exception e) {
 				e.printStackTrace();

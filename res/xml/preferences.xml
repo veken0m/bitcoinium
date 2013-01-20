@@ -99,7 +99,7 @@
                     android:entries="@array/interval"
                     android:entryValues="@array/intervalvalues"
                     android:key="listPref"
-                    android:summary="Time interval between widget refresh \n *WARNING* \nLow values will increase battery drain \n "
+                    android:summary="Time interval between widget refresh \n *WARNING* \nRefreshing the widget more often will increase battery drain \n "
                     android:title="Widget Refresh Interval" />
 
                 <CheckBoxPreference
@@ -247,6 +247,12 @@
                     android:key="highlightPref"
                     android:summary="Changes the color of text in orderbook depending on depth"
                     android:title="Enable Liquidity Highlighting" />
+                
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="showCurrencySymbolPref"
+                    android:summary="Show currency symbols in the orderbook"
+                    android:title="Show Currency Symbols" />
 
                 <EditTextPreference
                     android:defaultValue="10"

@@ -90,6 +90,8 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	public void drawBitcoinChartsUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
+		LayoutParams params = new TableRow.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
 		String previousCurrency = "";
 		int backGroundColor = Color.rgb(31, 31, 31);
@@ -113,9 +115,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			// String avg = Utils.formatDecimal(data.getAvg(), 2, true);
 			// String bid = Utils.formatDecimal(data.getBid(), 2, true);
 			// String ask = Utils.formatDecimal(data.getAsk(), 2, true);
-
-			LayoutParams params = new TableRow.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+			
 			tvSymbol.setText(data.getSymbol());
 			tvSymbol.setLayoutParams(params);
 			tvLast.setText(last);
