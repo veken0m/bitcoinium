@@ -42,7 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.veken0m.bitcoinium.WidgetConfigureActivity" >
+        <activity android:name="com.veken0m.bitcoinium.WidgetConfigureActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

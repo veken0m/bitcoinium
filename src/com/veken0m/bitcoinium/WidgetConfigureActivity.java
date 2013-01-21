@@ -5,10 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.util.Log;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
@@ -24,7 +29,17 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.widget_preferences);
+		addPreferencesFromResource(R.xml.widget_preferences);	
+		
+		// Disable all the currency pickers until exchange is chosen
+		ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
+		PreferenceGroup widgetPref = (PreferenceGroup) findPreference("widget_currency");
+		((ListPreference) findPreference("mtgoxWidgetCurrencyPref")).setEnabled(false);
+		((ListPreference) findPreference("btceWidgetCurrencyPref")).setEnabled(false);
+		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
+		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
+		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
+		//((ListPreference) findPreference(widgetExchangePref.getEntry().toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);
 
 		// Set the result to CANCELED. This will cause the widget host to cancel
 		// out of the widget placement if they press the back button.
@@ -45,8 +60,25 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
-
-		Preference OKpref = (Preference) findPreference("OKpref");
+			
+	    Preference OKpref = (Preference) findPreference("OKpref");
+	    
+	    widgetExchangePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            	// Only enable the currency preference of the selected exchange
+        		((ListPreference) findPreference("mtgoxWidgetCurrencyPref")).setEnabled(false);
+        		((ListPreference) findPreference("btceWidgetCurrencyPref")).setEnabled(false);
+        		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
+        		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
+        		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
+            	
+        		((ListPreference) findPreference(newValue.toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);		
+            	
+                return true;
+            }
+	    }
+	    		);
 
 		OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 

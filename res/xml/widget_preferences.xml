@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Widget Configuration" >
+    <PreferenceCategory android:title="Widget Exchange">
         <ListPreference
             android:defaultValue="MtGoxExchange"
             android:entries="@array/exchanges"
             android:entryValues="@array/widgetexchangesvalues"
             android:key="widgetExchangesPref"
             android:summary="Select the exchange used for the widget"
-            android:title="Wigdet Exchange" />
+            android:title="Widget Exchange" />
+        </PreferenceCategory>
+        <PreferenceCategory android:title="Widget Currency"
+        android:key="widget_currency" >
         <ListPreference
             android:defaultValue="USD"
             android:entries="@array/mtgoxcurrencies"
