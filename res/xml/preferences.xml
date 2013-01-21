@@ -31,23 +31,30 @@
                 android:defaultValue="CAD"
                 android:entries="@array/virtexcurrencies"
                 android:entryValues="@array/virtexcurrenciesvalues"
-                android:key="virtexWidgetCurrencyPref"
+                android:key="virtexCurrencyPref"
                 android:summary="VirtEx price will be displayed in selected currency"
                 android:title="VirtEx Currency" />
             <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitstampcurrencies"
                 android:entryValues="@array/bitstampcurrenciesvalues"
-                android:key="bitstampWidgetCurrencyPref"
+                android:key="bitstampCurrencyPref"
                 android:summary="Bitstamp price will be displayed in selected currency"
                 android:title="Bitstamp Currency" />
             <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/campbxcurrencies"
                 android:entryValues="@array/campbxcurrenciesvalues"
-                android:key="campbxWidgetCurrencyPref"
+                android:key="campbxCurrencyPref"
                 android:summary="CampBX price will be displayed in selected currency"
                 android:title="CampBX Currency" />
+            <ListPreference
+                android:defaultValue="EUR"
+                android:entries="@array/bitcoincentralcurrencies"
+                android:entryValues="@array/bitcoincentralcurrenciesvalues"
+                android:key="bitcoincentralCurrencyPref"
+                android:summary="BitcoinCentral price will be displayed in selected currency"
+                android:title="BitcoinCentral Currency" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >

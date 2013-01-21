@@ -48,6 +48,8 @@ public class MainActivity extends SherlockFragmentActivity {
 				R.drawable.bitstamplogo);
 		ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
 				R.drawable.campbxlogo);
+		ActionBar.Tab BitcoinCentralTab = actionbar.newTab().setIcon(
+				R.drawable.bitcoinicon).setText("Bitcoin Central");
 
 		// create the fragments we want to use for display content
 		SherlockFragment MtGoxFragment = new MtGoxFragment();
@@ -55,6 +57,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		SherlockFragment BTCEFragment = new BTCEFragment();
 		SherlockFragment BitstampFragment = new BitstampFragment();
 		SherlockFragment CampBXFragment = new CampBXFragment();
+		SherlockFragment BitcoinCentralFragment = new BitcoinCentralFragment();
 
 		// set the Tab listener. Now we can listen for clicks.
 		MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
@@ -62,6 +65,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
 		BitstampTab.setTabListener(new MyTabsListener(BitstampFragment));
 		CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
+		BitcoinCentralTab.setTabListener(new MyTabsListener(BitcoinCentralFragment));
 
 		// add the tabs to the actionbar
 		actionbar.addTab(MtGoxTab);
@@ -69,6 +73,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		actionbar.addTab(BTCETab);
 		actionbar.addTab(BitstampTab);
 		actionbar.addTab(CampBXTab);
+		actionbar.addTab(BitcoinCentralTab);
 
 		try{
 		    actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));

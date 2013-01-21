@@ -39,6 +39,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
+		((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
 		//((ListPreference) findPreference(widgetExchangePref.getEntry().toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);
 
 		// Set the result to CANCELED. This will cause the widget host to cancel
@@ -72,7 +73,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
-            	
+        		((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference(newValue.toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);		
             	
                 return true;

@@ -73,7 +73,7 @@ public class GraphActivity extends SherlockActivity {
 			viewGraph();
 		} else {
 			Toast.makeText(getApplicationContext(),
-					exchangeName + "does not currently support Price Graph",
+					exchangeName + " does not currently support Price Graph",
 					Toast.LENGTH_LONG).show();
 		}
 	}

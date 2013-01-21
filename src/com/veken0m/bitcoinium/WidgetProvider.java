@@ -87,6 +87,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 				int NOTIFY_ID = exchange.getNotificationID();
 				String exchangeName = exchange.getExchangeName();
+				if(exchangeName.equalsIgnoreCase("BitcoinCentral")){
+					exchangeName = "B.Central";
+				}
 				String pref_widgetExchange = exchange.getClassName();
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();

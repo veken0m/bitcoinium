@@ -8,14 +8,15 @@
         <item>BTC-E</item>
         <item>Bitstamp</item>
         <item>CampBX</item>
+        <item>BitcoinCentral</item>
     </string-array>
-    
     <string-array name="exchangeID">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -25,6 +26,7 @@
         <item>BTCEExchange</item>
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
+        <item>BitcoinCentralExchange</item>
     </string-array>
 
     <!-- Arrays that define properties of Exchanges -->
@@ -35,7 +37,7 @@
         <item>mainCurrency</item>
         <item>logo</item>
         <item>notificationID</item>
-        <item>supports latest trades</item>
+        <item>supports latest trades</item>
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
@@ -82,7 +84,16 @@
         <item>campbx</item>
         <item>false</item>
     </string-array>
-    
+    <string-array name="BitcoinCentralExchange">
+        <item>BitcoinCentral</item>
+        <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
+        <item>EUR</item>
+        <item>bitcoinicon</item>
+        <item>4</item>
+        <item>bitcoincentral</item>
+        <item>false</item>
+    </string-array>
+
     <!-- Arrays for MtGox Currencies -->
     <string-array name="mtgoxcurrencies">
         <item>USD - United States Dollar</item>
@@ -120,7 +131,7 @@
         <item>SGD</item>
         <item>THB</item>
     </string-array>
-    
+
     <!-- Arrays for BTC-E Currencies -->
     <string-array name="btcecurrencies">
         <item>USD - United States Dollar</item>
@@ -132,29 +143,45 @@
         <item>EUR</item>
         <item>RUR</item>
     </string-array>
-    
-        <!-- Arrays for VirtEx Currencies -->
+
+    <!-- Arrays for VirtEx Currencies -->
     <string-array name="virtexcurrencies">
         <item>CAD - Canadian Dollar</item>
     </string-array>
     <string-array name="virtexcurrenciesvalues">
         <item>CAD</item>
     </string-array>
-    
-        <!-- Arrays for Bitstamp Currencies -->
+
+    <!-- Arrays for Bitstamp Currencies -->
     <string-array name="bitstampcurrencies">
         <item>USD - United States Dollar</item>
     </string-array>
     <string-array name="bitstampcurrenciesvalues">
         <item>USD</item>
     </string-array>
-    
-        <!-- Arrays for CampBx Currencies -->
+
+    <!-- Arrays for CampBX Currencies -->
     <string-array name="campbxcurrencies">
         <item>USD - United States Dollar</item>
     </string-array>
     <string-array name="campbxcurrenciesvalues">
         <item>USD</item>
+    </string-array>
+
+    <!-- Arrays for BitcoinCentral Currencies -->
+    <string-array name="bitcoincentralcurrencies">
+        <item>EUR - Euro</item>
+        <!--  Currently Disabled in XChange
+        <item>GBP - British Pound</item>
+        <item>USD - United States Dollar</item>
+        -->
+    </string-array>
+    <string-array name="bitcoincentralcurrenciesvalues">
+        <item>EUR</item>
+        <!--  Currently Disabled in XChange
+        <item>GBP - British Pound</item>
+        <item>USD - United States Dollar</item>
+        -->
     </string-array>
 
 </resources>
