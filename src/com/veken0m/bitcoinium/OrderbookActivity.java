@@ -27,7 +27,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.NotAvailableFromExchangeException;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
@@ -62,7 +61,7 @@ public class OrderbookActivity extends SherlockActivity {
 		if (extras != null) {
 			exchangeName = extras.getString("exchange");
 		}
-		
+
 		Exchange exchange = new Exchange(getResources().getStringArray(
 				getResources().getIdentifier(exchangeName, "array",
 						this.getPackageName())));
@@ -71,7 +70,7 @@ public class OrderbookActivity extends SherlockActivity {
 		xchangeExchange = exchange.getClassName();
 		String defaultCurrency = exchange.getMainCurrency();
 		String prefix = exchange.getPrefix();
-		
+
 		readPreferences(getApplicationContext(), prefix, defaultCurrency);
 
 		viewOrderbook();
@@ -96,10 +95,15 @@ public class OrderbookActivity extends SherlockActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.orderbook);
-		drawOrderbookUI();
+		try {
+			drawOrderbookUI();
+		} catch (Exception e) {
+			viewOrderbook();
+		}
 	}
 
-	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
+	protected static void readPreferences(Context context, String prefix,
+			String defaultCurrency) {
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -109,10 +113,12 @@ public class OrderbookActivity extends SherlockActivity {
 				"50"));
 		pref_highlightLow = Integer.parseInt(prefs.getString("highlightLower",
 				"10"));
-		pref_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
-		pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref", true);
-		pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref",
-				"100"));
+		pref_currency = prefs.getString(prefix + "CurrencyPref",
+				defaultCurrency);
+		pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
+				true);
+		pref_orderbookLimiter = Integer.parseInt(prefs.getString(
+				"orderbookLimiterPref", "100"));
 	}
 
 	/**
@@ -120,18 +126,21 @@ public class OrderbookActivity extends SherlockActivity {
 	 */
 	public void getOrderBook() {
 		try {
-			
+
 			final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
-					.createExchange(xchangeExchange).getPollingMarketDataService();
-			
+					.createExchange(xchangeExchange)
+					.getPollingMarketDataService();
+
 			OrderBook orderbook = null;
-			
-			try{
-				orderbook = marketData.getPartialOrderBook(Currencies.BTC, pref_currency);
-			} catch (NotAvailableFromExchangeException e){
-				orderbook = marketData.getFullOrderBook(Currencies.BTC, pref_currency);
+
+			if (exchangeName.equalsIgnoreCase("MtGox")) {
+				orderbook = marketData.getPartialOrderBook(Currencies.BTC,
+						pref_currency);
+			} else {
+				orderbook = marketData.getFullOrderBook(Currencies.BTC,
+						pref_currency);
 			}
-			
+
 			// Limit OrderbookActivity orders drawn to speed up performance
 			int length = 0;
 			if (orderbook.getAsks().size() < orderbook.getBids().size()) {
@@ -139,7 +148,7 @@ public class OrderbookActivity extends SherlockActivity {
 			} else {
 				length = orderbook.getBids().size();
 			}
-			
+
 			if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length) {
 				length = pref_orderbookLimiter;
 			}
@@ -151,7 +160,6 @@ public class OrderbookActivity extends SherlockActivity {
 			connectionFail = true;
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -164,20 +172,20 @@ public class OrderbookActivity extends SherlockActivity {
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 		int bidTextColor = Color.GRAY;
 		int askTextColor = Color.GRAY;
-		
+
 		String currencySymbolBTC = "";
 		String currencySymbol = "";
-		
-        if(pref_showCurrencySymbol){
-        	currencySymbolBTC = " BTC";
-        	currencySymbol = Utils.getCurrencySymbol(pref_currency);
-        } else {
-        	currencySymbol = "";
-        	currencySymbolBTC = "";
-        }
+
+		if (pref_showCurrencySymbol) {
+			currencySymbolBTC = " BTC";
+			currencySymbol = Utils.getCurrencySymbol(pref_currency);
+		} else {
+			currencySymbol = "";
+			currencySymbolBTC = "";
+		}
 
 		for (int i = 0; i < listBids.size(); i++) {
-			
+
 			final TableRow tr1 = new TableRow(this);
 			final TextView tvAskAmount = new TextView(this);
 			final TextView tvAskPrice = new TextView(this);
@@ -199,16 +207,14 @@ public class OrderbookActivity extends SherlockActivity {
 			final String sBidAmount = Utils.formatDecimal(bidAmount, 2, false);
 			final String sAskPrice = Utils.formatDecimal(askPrice, 5, false);
 			final String sAskAmount = Utils.formatDecimal(askAmount, 2, false);
-			
-		
+
 			tvBidAmount.setText(sBidAmount + currencySymbolBTC);
 			tvBidAmount.setLayoutParams(params);
 			tvBidAmount.setGravity(Gravity.CENTER);
 			tvAskAmount.setText(sAskAmount + currencySymbolBTC);
 			tvAskAmount.setLayoutParams(params);
 			tvAskAmount.setGravity(Gravity.CENTER);
-			
-			
+
 			tvBidPrice.setText(currencySymbol + sBidPrice);
 			tvBidPrice.setLayoutParams(params);
 			tvBidPrice.setGravity(Gravity.CENTER);
@@ -226,7 +232,7 @@ public class OrderbookActivity extends SherlockActivity {
 				if ((int) bidAmount >= pref_highlightHigh) {
 					bidTextColor = Color.GREEN;
 				}
-				
+
 				if ((int) askAmount < pref_highlightLow) {
 					askTextColor = Color.RED;
 				}
@@ -236,7 +242,7 @@ public class OrderbookActivity extends SherlockActivity {
 				if ((int) askAmount >= pref_highlightHigh) {
 					askTextColor = Color.GREEN;
 				}
-				
+
 				tvBidAmount.setTextColor(bidTextColor);
 				tvBidPrice.setTextColor(bidTextColor);
 				tvAskAmount.setTextColor(askTextColor);
@@ -250,7 +256,7 @@ public class OrderbookActivity extends SherlockActivity {
 				tr1.addView(tvAskAmount);
 
 				t1.addView(tr1);
-				
+
 				// Insert a divider between rows
 				View divider = new View(this);
 				divider.setLayoutParams(new TableRow.LayoutParams(
@@ -289,7 +295,10 @@ public class OrderbookActivity extends SherlockActivity {
 		@Override
 		public void run() {
 			safelyDismiss(orderbookProgressDialog);
+			try{
 			drawOrderbookUI();
+			} catch (Exception e){
+			}
 		}
 	};
 
