@@ -132,7 +132,8 @@ public class GraphActivity extends SherlockActivity {
 		g_graphView = null;
 
 		try {
-
+			
+			xchangeExchange = xchangeExchange.replace("0", "1"); // Use API V0 for MtGox Trades
 			final Trades trades = ExchangeFactory.INSTANCE
 					.createExchange(xchangeExchange)
 					.getPollingMarketDataService()

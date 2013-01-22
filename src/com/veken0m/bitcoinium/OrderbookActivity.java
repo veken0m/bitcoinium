@@ -131,15 +131,8 @@ public class OrderbookActivity extends SherlockActivity {
 					.createExchange(xchangeExchange)
 					.getPollingMarketDataService();
 
-			OrderBook orderbook = null;
-
-			if (exchangeName.equalsIgnoreCase("MtGox")) {
-				orderbook = marketData.getPartialOrderBook(Currencies.BTC,
-						pref_currency);
-			} else {
-				orderbook = marketData.getFullOrderBook(Currencies.BTC,
-						pref_currency);
-			}
+			OrderBook orderbook = marketData.getFullOrderBook(Currencies.BTC,
+					pref_currency);
 
 			// Limit OrderbookActivity orders drawn to speed up performance
 			int length = 0;
@@ -295,9 +288,9 @@ public class OrderbookActivity extends SherlockActivity {
 		@Override
 		public void run() {
 			safelyDismiss(orderbookProgressDialog);
-			try{
-			drawOrderbookUI();
-			} catch (Exception e){
+			try {
+				drawOrderbookUI();
+			} catch (Exception e) {
 			}
 		}
 	};
