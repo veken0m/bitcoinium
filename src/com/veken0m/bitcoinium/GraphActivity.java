@@ -68,6 +68,7 @@ public class GraphActivity extends SherlockActivity {
 		String prefix = exchange.getPrefix();
 
 		readPreferences(getApplicationContext(), prefix, defaultCurrency);
+		
 		if (exchange.supportsPriceGraph()) {
 			setContentView(R.layout.graph);
 			viewGraph();
@@ -132,10 +133,8 @@ public class GraphActivity extends SherlockActivity {
 		g_graphView = null;
 
 		try {
-			
-			xchangeExchange = xchangeExchange.replace("0", "1"); // Use API V0 for MtGox Trades
 			final Trades trades = ExchangeFactory.INSTANCE
-					.createExchange(xchangeExchange)
+					.createExchange(xchangeExchange.replace("0", "1")) // Use API V1 instead of V0 for MtGox Trades
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 

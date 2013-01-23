@@ -5,7 +5,6 @@ public class Exchange{
 	private final String exchange_name;
 	private final String class_name;
 	private final String main_currency;
-	//private final String supported_currencies;
 	private final String logo_path;
 	private final int notification_id;
 	private final String prefix;

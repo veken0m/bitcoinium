@@ -13,56 +13,59 @@
     <PreferenceCategory
         android:key="widget_currency"
         android:title="Widget Currency" >
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/mtgoxcurrencies"
-            android:entryValues="@array/mtgoxcurrenciesvalues"
-            android:key="mtgoxWidgetCurrencyPref"
-            android:summary="MtGox Widget price will be displayed in selected currency"
-            android:title="MtGox Widget Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/btcecurrencies"
-            android:entryValues="@array/btcecurrenciesvalues"
-            android:key="btceWidgetCurrencyPref"
-            android:summary="BTC-E Widget price will be displayed in selected currency"
-            android:title="BTC-E Widget Currency" />
-        <ListPreference
-            android:defaultValue="CAD"
-            android:entries="@array/virtexcurrencies"
-            android:entryValues="@array/virtexcurrenciesvalues"
-            android:key="virtexWidgetCurrencyPref"
-            android:summary="VirtEx Widget price will be displayed in selected currency"
-            android:title="VirtEx Widget Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/bitstampcurrencies"
-            android:entryValues="@array/bitstampcurrenciesvalues"
-            android:key="bitstampWidgetCurrencyPref"
-            android:summary="Bitstamp Widget price will be displayed in selected currency"
-            android:title="Bitstamp Widget Currency" />
-        <ListPreference
-            android:defaultValue="USD"
-            android:entries="@array/campbxcurrencies"
-            android:entryValues="@array/campbxcurrenciesvalues"
-            android:key="campbxWidgetCurrencyPref"
-            android:summary="CampBX Widget price will be displayed in selected currency"
-            android:title="CampBX Widget Currency" />
-        <ListPreference
-            android:defaultValue="EUR"
-            android:entries="@array/bitcoincentralcurrencies"
-            android:entryValues="@array/bitcoincentralcurrenciesvalues"
-            android:key="bitcoincentralWidgetCurrencyPref"
-            android:summary="BitcoinCentral Widget price will be displayed in selected currency"
-            android:title="BitcoinCentral Widget Currency" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:summary="Changes will be applied to all widgets."
-        android:title="General Widget Settings" >
         <PreferenceScreen
-            android:key="SecondPrefScreen"
-            android:summary="Configure the Widget(s)"
-            android:title="Widget Settings" >
+            android:summary="Select the currency used for the widget"
+            android:title="Widget Currency" >
+            <PreferenceCategory android:title="Widget Currency" >
+                <ListPreference
+                    android:defaultValue="USD"
+                    android:entries="@array/mtgoxcurrencies"
+                    android:entryValues="@array/mtgoxcurrenciesvalues"
+                    android:key="mtgoxWidgetCurrencyPref"
+                    android:summary="MtGox Widget price will be displayed in selected currency"
+                    android:title="MtGox Widget Currency" />
+                <ListPreference
+                    android:defaultValue="USD"
+                    android:entries="@array/btcecurrencies"
+                    android:entryValues="@array/btcecurrenciesvalues"
+                    android:key="btceWidgetCurrencyPref"
+                    android:summary="BTC-E Widget price will be displayed in selected currency"
+                    android:title="BTC-E Widget Currency" />
+                <ListPreference
+                    android:defaultValue="CAD"
+                    android:entries="@array/virtexcurrencies"
+                    android:entryValues="@array/virtexcurrenciesvalues"
+                    android:key="virtexWidgetCurrencyPref"
+                    android:summary="VirtEx Widget price will be displayed in selected currency"
+                    android:title="VirtEx Widget Currency" />
+                <ListPreference
+                    android:defaultValue="USD"
+                    android:entries="@array/bitstampcurrencies"
+                    android:entryValues="@array/bitstampcurrenciesvalues"
+                    android:key="bitstampWidgetCurrencyPref"
+                    android:summary="Bitstamp Widget price will be displayed in selected currency"
+                    android:title="Bitstamp Widget Currency" />
+                <ListPreference
+                    android:defaultValue="USD"
+                    android:entries="@array/campbxcurrencies"
+                    android:entryValues="@array/campbxcurrenciesvalues"
+                    android:key="campbxWidgetCurrencyPref"
+                    android:summary="CampBX Widget price will be displayed in selected currency"
+                    android:title="CampBX Widget Currency" />
+                <ListPreference
+                    android:defaultValue="EUR"
+                    android:entries="@array/bitcoincentralcurrencies"
+                    android:entryValues="@array/bitcoincentralcurrenciesvalues"
+                    android:key="bitcoincentralWidgetCurrencyPref"
+                    android:summary="BitcoinCentral Widget price will be displayed in selected currency"
+                    android:title="BitcoinCentral Widget Currency" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="General Widget Settings" >
+        <PreferenceScreen
+            android:summary="General settings that apply to all active widgets"
+            android:title="General Widget Settings" >
             <PreferenceCategory android:title="Display" >
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -71,9 +74,7 @@
                     android:title="Display Updates" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
-                <Preference
-                    android:key="customPref"
-                    android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
+                <Preference android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
 
                 <ListPreference
                     android:defaultValue="30"
@@ -90,10 +91,11 @@
                     android:title="Battery Saving Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
-
+    </PreferenceCategory>
+    <PreferenceCategory android:title=" " >
         <Preference
             android:key="OKpref"
-            android:title="OK" />
+            android:title="Create Widget" />
     </PreferenceCategory>
 
 </PreferenceScreen>

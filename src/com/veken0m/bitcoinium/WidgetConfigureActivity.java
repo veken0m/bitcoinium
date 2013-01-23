@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.util.Log;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
@@ -31,6 +28,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.widget_preferences);	
 		
+		// Set the result to CANCELED. This will cause the widget host to cancel
+		// out of the widget placement if they press the back button.
+		setResult(RESULT_CANCELED);
+		
 		// Disable all the currency pickers until exchange is chosen
 		ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
 		PreferenceGroup widgetPref = (PreferenceGroup) findPreference("widget_currency");
@@ -40,11 +41,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
-		//((ListPreference) findPreference(widgetExchangePref.getEntry().toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);
-
-		// Set the result to CANCELED. This will cause the widget host to cancel
-		// out of the widget placement if they press the back button.
-		setResult(RESULT_CANCELED);
+		try{
+		((ListPreference) findPreference(widgetExchangePref.getEntry().toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);
+		} catch (Exception e){
+		}
 
 		// Find the widget id from the intent.
 		Intent intent = getIntent();

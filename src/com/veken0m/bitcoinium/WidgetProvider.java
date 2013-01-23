@@ -67,14 +67,13 @@ public class WidgetProvider extends BaseWidgetProvider {
 					WidgetProvider.class);
 			int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-			final RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.appwidget);
-
 			final Intent intent = new Intent(context, MainActivity.class);
 			final PendingIntent pendingIntent = PendingIntent.getActivity(
 					context, 0, intent, 0);
 
 			for (int appWidgetId : widgetIds) {
+				RemoteViews views = new RemoteViews(context.getPackageName(),
+						R.layout.appwidget);
 
 				String pref_widget = WidgetConfigureActivity.loadExchangePref(
 						context, appWidgetId);
@@ -87,12 +86,14 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 				int NOTIFY_ID = exchange.getNotificationID();
 				String exchangeName = exchange.getExchangeName();
-				if(exchangeName.equalsIgnoreCase("BitcoinCentral")){
-					exchangeName = "B.Central";
-				}
 				String pref_widgetExchange = exchange.getClassName();
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();
+				
+				// BitcoinCentral is too long for widget, change to B.Central
+				if(exchangeName.equalsIgnoreCase("BitcoinCentral")){
+					exchangeName = "B.Central";
+				}
 
 				readPreferences(context, prefix, defaultCurrency);
 
