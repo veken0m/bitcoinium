@@ -79,14 +79,18 @@ public class OrderbookActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
+		//menu.findItem(R.id.action_refresh).setIcon(R.drawable.ic_menu_refresh);
+		inflater.inflate(R.menu.action_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.preferences) {
+		if (item.getItemId() == R.id.action_preferences) {
 			startActivity(new Intent(this, PreferencesActivity.class));
+		}
+		if (item.getItemId() == R.id.action_refresh) {
+			viewOrderbook();
 		}
 		return super.onOptionsItemSelected(item);
 	}

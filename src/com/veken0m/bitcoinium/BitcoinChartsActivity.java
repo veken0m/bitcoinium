@@ -45,14 +45,17 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
+		inflater.inflate(R.menu.action_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.preferences) {
+		if (item.getItemId() == R.id.action_preferences) {
 			startActivity(new Intent(this, PreferencesActivity.class));
+		}
+		if (item.getItemId() == R.id.action_refresh) {
+			viewBitcoinCharts();
 		}
 		return super.onOptionsItemSelected(item);
 	}

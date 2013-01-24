@@ -13,7 +13,7 @@
     <string name="widget_button">widgetButton</string>
 
     <!-- Main Menu Button Strings -->
-    <string name="refreshButton">Refresh Widget</string>
+    <string name="refreshButton">Refresh Widget(s)</string>
     <string name="orderbookButton">OrderBook</string>
     <string name="bitcoinChartsButton">Bitcoin Charts</string>
     <string name="minerstatsButton">Miner Stats</string>
