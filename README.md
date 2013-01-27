@@ -1,6 +1,18 @@
 Description
 ===============
-Bitcoinium is an Android application used to monitor Bitcoin price on various exchanges. Currently supported exchanges include MtGox (www.mtgox.com) and Canadian Virtual Exchange (www.cavirtex.com)
+Bitcoinium is an Android application used to monitor Bitcoin price on various exchanges. 
+
+Currently supported exchanges include:
+	- MtGox 					: http://mtgox.com
+	- Canadian Virtual Exchange : http://cavirtex.com
+	- BTC-E 					: http://btc-e.com
+	- Bitstamp 					: http://bitstamp.net
+	- CampBX					: http://campbx.com
+	- BitcoinCentral			: http://bitcoin-central.net
+	
+	
+Additional Information from:	
+	- Bitcoin Charts			: http://bitcoincharts.com/markets/
 
 Features
 ===============
@@ -32,7 +44,7 @@ Features
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
 - Customizable widget refresh intervals and power saving mode to reduce battery usage
-- Mining statistics from DeepBit mining pool on a Bitcoin miner
+- Miner statistics from DeepBit or BitMinter mining pool
 - In-app Orderbook with with liquidity highlighting
 - Charts from multiple sources and current orderbook view-able within the application
 
@@ -42,20 +54,20 @@ To build Bitcoinium, prefered environment is Eclipse with ADT (Android Developme
 
 What you will need to build Bitcoinium:
 
-Elipse: http://www.eclipse.org/downloads/
+Elipse									: http://www.eclipse.org/downloads/
 
-Android SDK: http://developer.android.com/sdk/index.html
+Android SDK								: http://developer.android.com/sdk/index.html
 
-Android Development Tools (ADT) plugin: http://developer.android.com/sdk/installing/installing-adt.html
+Android Development Tools (ADT) plugin	: http://developer.android.com/sdk/installing/installing-adt.html
 
-Sherlock ActionBar library: http://actionbarsherlock.com/
+Sherlock ActionBar library				: http://actionbarsherlock.com/
 
 
 Google Play
 ===============
-Bitcoinium (Ad-Supported/Free): https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
+Bitcoinium (Ad-Supported/Free)	: https://play.google.com/store/apps/details?id=com.veken0m.cavirtex
 
-Bitcoinium Prime (Ad-Free/Paid): https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
+Bitcoinium Prime (Ad-Free/Paid)	: https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
 
 
 Donations

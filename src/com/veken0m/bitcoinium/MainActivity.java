@@ -19,8 +19,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 // -------------------------------------------------------------------------
 /**
- * @author Veken0m Based on Bitcoin-Alert Source by Dest
- * @version 1.3.0 Oct 20 2012
+ * @author Michael Lagacé a.k.a veken0m
+ * @version 1.4.0 Jan 27 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
 	static String pref_favExchange;
