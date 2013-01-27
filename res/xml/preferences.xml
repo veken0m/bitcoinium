@@ -75,7 +75,7 @@
 			           android:key="listPref2"
 			           android:defaultValue="mainMenu"
 			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
+			           android:entryValues="@array/widgetBehaviours" />
                 -->
 
 
@@ -92,9 +92,8 @@
                         android:defaultValue="false"
                         android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
                         android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
+        </PreferenceCategory>
                 -->
-
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference
@@ -221,6 +220,22 @@
                         android:summary="Notification will occur if CampBX price goes under this threshold"
                         android:title="CampBX Lower Threshold" />
                 </PreferenceScreen>
+                <PreferenceScreen android:title="BitcoinCentral Alarm" >
+                    <EditTextPreference
+                        android:defaultValue="999"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="bitcoincentralUpper"
+                        android:summary="Notification will occur if BitcoinCentral price goes over this threshold"
+                        android:title="BitcoinCentral Upper Threshold" />
+                    <EditTextPreference
+                        android:defaultValue="0"
+                        android:digits="01234567890."
+                        android:inputType="numberDecimal"
+                        android:key="bitcoincentralLower"
+                        android:summary="Notification will occur if BitcoinCentral price goes under this threshold"
+                        android:title="BitcoinCentral Lower Threshold" />
+                </PreferenceScreen>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -262,33 +277,31 @@
                     android:key="orderbookLimiterPref"
                     android:summary="Limits the values printed on screen to improve performance"
                     android:title="Orderbook Value limit" />
-                 </PreferenceCategory>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Liquidity Highlighting" >
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="highlightPref"
+                    android:summary="Changes the color of text in orderbook depending on depth"
+                    android:title="Enable Liquidity Highlighting" />
 
-                <PreferenceCategory android:title="Liquidity Highlighting" >
-                    <CheckBoxPreference
-                        android:defaultValue="true"
-                        android:key="highlightPref"
-                        android:summary="Changes the color of text in orderbook depending on depth"
-                        android:title="Enable Liquidity Highlighting" />
-
-                    <EditTextPreference
-                        android:defaultValue="10"
-                        android:digits="01234567890"
-                        android:inputType="numberDecimal"
-                        android:key="highlightLower"
-                        android:summary="Text will be colored RED if depth under this value"
-                        android:title="Low Depth" />
-                    <EditTextPreference
-                        android:summary="Text will be colored YELLOW if depth is between high and low"
-                        android:title="Medium Depth" />
-                    <EditTextPreference
-                        android:defaultValue="50"
-                        android:digits="01234567890"
-                        android:inputType="numberDecimal"
-                        android:key="highlightUpper"
-                        android:summary="Text will be colored GREEN if depth over this value"
-                        android:title="High Depth" />
-         
+                <EditTextPreference
+                    android:defaultValue="10"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="highlightLower"
+                    android:summary="Text will be colored RED if depth under this value"
+                    android:title="Low Depth" />
+                <EditTextPreference
+                    android:summary="Text will be colored YELLOW if depth is between high and low"
+                    android:title="Medium Depth" />
+                <EditTextPreference
+                    android:defaultValue="50"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="highlightUpper"
+                    android:summary="Text will be colored GREEN if depth over this value"
+                    android:title="High Depth" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -366,7 +379,7 @@
                     android:title="Bitcoinium Github" />
                 <Preference
                     android:key="xchangeGithubPref"
-                    android:summary="XChange is a library providing a simple and consistent API for interacting with financial security exchanges, including support for Bitcoin"
+                    android:summary="A Financial Exchange Library for Java, with support for Bitcoin"
                     android:title="XChange Github" />
                 <Preference
                     android:summary="Tim Molter - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library"
