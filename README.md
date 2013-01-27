@@ -3,12 +3,13 @@ Description
 Bitcoinium is an Android application used to monitor Bitcoin price on various exchanges. 
 
 Currently supported exchanges include:
-	- MtGox 					: http://mtgox.com
+
+	- MtGox : http://mtgox.com
 	- Canadian Virtual Exchange : http://cavirtex.com
-	- BTC-E 					: http://btc-e.com
-	- Bitstamp 					: http://bitstamp.net
-	- CampBX					: http://campbx.com
-	- BitcoinCentral			: http://bitcoin-central.net
+	- BTC-E	: http://btc-e.com
+	- Bitstamp : http://bitstamp.net
+	- CampBX: http://campbx.com
+	- BitcoinCentral: http://bitcoin-central.net
 	
 	
 Additional Information from:	
