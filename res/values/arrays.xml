@@ -31,18 +31,4 @@
         <item>BitMinter</item>
     </string-array>
 
-    <!-- Arrays for Wigdet Behaviour preferences (NOT USED YET) -->
-    <string-array name="widgetBehaviour">
-        <item>Open Main Menu (Default)</item>
-        <item>Refresh Widget</item>
-        <item>Preferences</item>
-        <item>External Orderbook and Graphs</item>
-    </string-array>
-    <string-array name="widgetBehaviours">
-        <item>mainMenu</item>
-        <item>refreshWidget</item>
-        <item>pref</item>
-        <item>extOrder</item>
-    </string-array>
-
 </resources>

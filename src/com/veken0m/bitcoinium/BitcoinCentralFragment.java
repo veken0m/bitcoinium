@@ -15,7 +15,7 @@ public class BitcoinCentralFragment extends BaseExchangeFragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, BITCOINCENTRAL);
+		buildMenu(view, BITCOINCENTRAL, false);
 		return view;
 	}
 

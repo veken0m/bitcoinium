@@ -15,7 +15,7 @@ public class BitstampFragment extends BaseExchangeFragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, BITSTAMP);
+		buildMenu(view, BITSTAMP, true);
 		return view;
 	}
 

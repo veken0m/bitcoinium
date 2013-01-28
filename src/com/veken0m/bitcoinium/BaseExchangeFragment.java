@@ -3,6 +3,7 @@ package com.veken0m.bitcoinium;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -16,7 +17,7 @@ public class BaseExchangeFragment extends SherlockFragment {
 	public static final String BITCOINCENTRAL = "BitcoinCentralExchange";
 
 	// Attaches OnClickListeners to menu buttons
-	public void buildMenu(View view, final String exchange) {
+	public void buildMenu(View view, final String exchange, final Boolean graph) {
 		final Button widgetRefreshButton = (Button) view
 				.findViewById(R.id.widgetrefresh);
 		widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
@@ -35,10 +36,15 @@ public class BaseExchangeFragment extends SherlockFragment {
 		displayGraphButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(!graph){
+				Toast.makeText(getActivity(),"This exchange does not currently support Price Graph",
+						Toast.LENGTH_LONG).show();
+				} else {
 				Intent graphActivity = new Intent(getActivity()
 						.getBaseContext(), GraphActivity.class);
 				graphActivity.putExtra("exchange", exchange);
 				startActivity(graphActivity);
+				}
 			}
 		});
 

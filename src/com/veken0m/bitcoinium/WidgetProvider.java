@@ -74,6 +74,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 			for (int appWidgetId : widgetIds) {
 				RemoteViews views = new RemoteViews(context.getPackageName(),
 						R.layout.appwidget);
+				//views.setInt(R.id.widget_layout, "setBackgroundColor", android.R.color.white); //sets the widget background color
 
 				String pref_widget = WidgetConfigureActivity.loadExchangePref(
 						context, appWidgetId);
@@ -143,7 +144,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 									false);
 
 						}
-
+						
 						views.setTextViewText(R.id.widgetExchange, exchangeName);
 						views.setTextViewText(R.id.widgetLowText, lowPrice);
 						views.setTextViewText(R.id.widgetHighText, highPrice);

@@ -15,7 +15,7 @@ public class MtGoxFragment extends BaseExchangeFragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, MTGOX);
+		buildMenu(view, MTGOX, true);
 		return view;
 	}
 

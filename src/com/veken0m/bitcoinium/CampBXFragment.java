@@ -15,7 +15,7 @@ public class CampBXFragment extends BaseExchangeFragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, CAMPBX);
+		buildMenu(view, CAMPBX, false);
 		return view;
 	}
 
