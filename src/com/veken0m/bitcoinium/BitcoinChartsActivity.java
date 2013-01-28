@@ -67,13 +67,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 		drawBitcoinChartsUI();
 	}
 
-	protected static void readPreferences(Context context, String prefix,
-			String defaultCurrency) {
-		// Get the xml/preferences.xml preferences
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
-	}
-
 	/**
 	 * Fetch the Bitcoin Charts data
 	 */
@@ -93,11 +86,11 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	public void drawBitcoinChartsUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
-		LayoutParams params = new TableRow.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
 		String previousCurrency = "";
 		int backGroundColor = Color.rgb(31, 31, 31);
+		LayoutParams params = new TableRow.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
 		for (BitcoinChartsTicker data : marketData) {
 
@@ -121,27 +114,13 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			
 			tvSymbol.setText(data.getSymbol());
 			tvSymbol.setLayoutParams(params);
-			tvLast.setText(last);
-			tvLast.setLayoutParams(params);
-			tvLast.setGravity(1);
-			tvVolume.setText(vol);
-			tvVolume.setGravity(1);
-			tvVolume.setLayoutParams(params);
-			// tvAvg.setText(avg);
-			// tvAvg.setGravity(1);
-			// tvAvg.setLayoutParams(params);
-			tvLow.setText(low);
-			tvLow.setGravity(1);
-			tvLow.setLayoutParams(params);
-			tvHigh.setText(high);
-			tvHigh.setLayoutParams(params);
-			tvHigh.setGravity(1);
-			// tvBid.setText(bid);
-			// tvBid.setGravity(1);
-			// tvBid.setLayoutParams(params);
-			// tvAsk.setText(ask);
-			// tvAsk.setGravity(1);
-			// tvAsk.setLayoutParams(params);
+			Utils.setTextViewParams(tvLast, last);
+			Utils.setTextViewParams(tvVolume, vol);
+			Utils.setTextViewParams(tvLow, low);
+			Utils.setTextViewParams(tvHigh, high);
+			// Utils.setTextViewParams(tvAvg, avg);
+			// Utils.setTextViewParams(tvBid, bid);
+			// Utils.setTextViewParams(tvAsk, ask);
 
 			// If currencies are different
 			if (!previousCurrency.equalsIgnoreCase(data.getCurrency())) {

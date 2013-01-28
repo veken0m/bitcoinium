@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class BaseExchangeFragment extends SherlockFragment{
+public class BaseExchangeFragment extends SherlockFragment {
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 	public static final String VIRTEX = "VirtExExchange";
 	public static final String MTGOX = "MtGoxExchange";
@@ -14,8 +14,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 	public static final String BITSTAMP = "BitstampExchange";
 	public static final String CAMPBX = "CampBXExchange";
 	public static final String BITCOINCENTRAL = "BitcoinCentralExchange";
-	
-	
+
 	// Attaches OnClickListeners to menu buttons
 	public void buildMenu(View view, final String exchange) {
 		final Button widgetRefreshButton = (Button) view
@@ -54,7 +53,7 @@ public class BaseExchangeFragment extends SherlockFragment{
 				startActivity(orderbookActivity);
 			}
 		});
-		
+
 		final Button bitcoinChartsButton = (Button) view
 				.findViewById(R.id.bitcoincharts);
 		bitcoinChartsButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,6 @@ public class BaseExchangeFragment extends SherlockFragment{
 				startActivity(bitcoinChartsActivity);
 			}
 		});
-
 
 		final Button minerStatsButton = (Button) view
 				.findViewById(R.id.minerstats);

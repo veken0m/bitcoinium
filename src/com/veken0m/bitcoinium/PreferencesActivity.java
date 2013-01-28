@@ -28,7 +28,6 @@ public class PreferencesActivity extends PreferenceActivity {
 								new String[] { "veken0m.apps@gmail.com" });
 						i.putExtra(android.content.Intent.EXTRA_SUBJECT,
 								"Bitcoinium Prime Feedback");
-						// i.putExtra(android.content.Intent.EXTRA_TEXT, "");
 						startActivity(Intent.createChooser(i, "Send email"));
 
 						return true;

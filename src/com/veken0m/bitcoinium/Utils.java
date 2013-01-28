@@ -9,6 +9,10 @@ import java.util.Locale;
 
 import org.joda.money.CurrencyUnit;
 
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
+import android.widget.TextView;
+
 public class Utils {
 
 	public static String formatDecimal(float valueToFormat,
@@ -84,6 +88,16 @@ public class Utils {
 		final String currentTime = sdf.format(new Date());
 
 		return currentTime;
+	}
+	
+	public static void setTextViewParams(TextView tv, String text) {
+		
+		LayoutParams params = new TableRow.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+		
+		tv.setText(text);
+		tv.setLayoutParams(params);
+		tv.setGravity(1);
 	}
 
 }
