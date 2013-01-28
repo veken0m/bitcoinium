@@ -11,42 +11,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
-	/**
-	 * This constant is what we send to ourself to force a refresh
-	 */
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
-	public static final String OPENMENU = "com.veken0m.bitcoinium.OPENMENU";
 	public static final String GRAPH = "com.veken0m.bitcoinium.GRAPH";
 
 	/**
 	 * List of preference variables
 	 */
-	static Boolean pref_DisplayUpdates = false;
-	static int pref_widgetRefreshFreq = 30;
+	static Boolean pref_DisplayUpdates;
+	static int pref_widgetRefreshFreq;
 	static String pref_widgetBehaviour;
-	static Boolean pref_PriceAlarm = false;
+	static Boolean pref_PriceAlarm;
 	static String pref_notifLimitLower;
 	static String pref_notifLimitUpper;
 	static String pref_currency;
 	static String pref_main_currency;
-	static Boolean pref_wakeupRefresh = false;
+	static Boolean pref_wakeupRefresh;
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
 	static Boolean pref_ticker;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
-
-	/**
-	 * When we receive an Intent, we will either force a refresh if it matches
-	 * REFRESH, or pass it on to our superclass
-	 */
 
 	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
 
@@ -65,6 +55,20 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
 		pref_main_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
 	}
+	
+	protected static void readAlarmPreferences(Context context) {
+
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+
+		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
+		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
+				"30"));
+		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
+		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
+		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
+		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
+	}
 
 	public void onDestoy(Context context) {
 		final AlarmManager m = (AlarmManager) context
@@ -74,7 +78,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	}
 
 	static void setAlarm(Context context) {
-		//readPreferences(context);
+		readAlarmPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		final Intent intent = new Intent(context, UpdateService.class);
@@ -150,6 +154,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
 	}
+	
+	static void removePermanentNotification(Context ctxt, int BITCOIN_NOTIFY_ID) {
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) ctxt
+				.getSystemService(ns);
+		mNotificationManager.cancel(BITCOIN_NOTIFY_ID);
+	}
 
 	/**
 	 * createTicker creates a notification which only briefly appears in the
@@ -176,58 +187,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		notification.setLatestEventInfo(ctxt, null, null, contentIntent);
 		mNotificationManager.notify(0, notification);
 		mNotificationManager.cancel(0);
-	}
-
-	/**
-	 * widgetButtonAction latches different actions to the widget button
-	 * 
-	 * @param Context
-	 *            context
-	 */
-
-	public void widgetButtonAction(Context context) {
-
-		final RemoteViews views = new RemoteViews(context.getPackageName(),
-				R.layout.appwidget);
-
-		if (pref_widgetBehaviour.equalsIgnoreCase("mainMenu")) {
-			final Intent intent = new Intent(context, MainActivity.class);
-			final PendingIntent pendingIntent = PendingIntent.getActivity(
-					context, 0, intent, 0);
-			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-		}
-
-		else if (pref_widgetBehaviour.equalsIgnoreCase("refreshWidget")) {
-			final Intent intent = new Intent(context, WidgetProvider.class);
-			intent.setAction(REFRESH);
-			final PendingIntent pendingIntent = PendingIntent.getBroadcast(
-					context, 0, intent, 0);
-			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-		}
-
-		else if (pref_widgetBehaviour.equalsIgnoreCase("openGraph")) {
-
-			final Intent intent = new Intent(context, MainActivity.class);
-			intent.setAction(GRAPH);
-			final PendingIntent pendingIntent = PendingIntent.getBroadcast(
-					context, 0, intent, 0);
-			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-		}
-
-		else if (pref_widgetBehaviour.equalsIgnoreCase("pref")) {
-
-			final Intent intent = new Intent(context, PreferencesActivity.class);
-			final PendingIntent pendingIntent = PendingIntent.getActivity(
-					context, 0, intent, 0);
-			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-		}
-
-		else if (pref_widgetBehaviour.equalsIgnoreCase("extOrder")) {
-			final Intent intent = new Intent(context, WebViewerActivity.class);
-			final PendingIntent pendingIntent = PendingIntent.getActivity(
-					context, 0, intent, 0);
-			views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
-		}
 	}
 
 }

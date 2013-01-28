@@ -67,33 +67,6 @@
                     android:key="checkboxPref"
                     android:summary="Display update notification in taskbar"
                     android:title="Display Updates" />
-
-                <!--
-                     <ListPreference
-			           android:title="Tapping Widget Behaviour"
-			           android:summary="Choose the action performed when widget is pressed \n *WARNING* \nTapping widget more than once on Widget Refresh mode will cause mutiple refresh requests. May lead to sluggish performance"
-			           android:key="listPref2"
-			           android:defaultValue="mainMenu"
-			           android:entries="@array/widgetBehaviour"
-			           android:entryValues="@array/widgetBehaviours" />
-                -->
-
-
-                <!--
-        <PreferenceCategory
-                android:title="Notification Menu Ticker">
-        <CheckBoxPreference
-                        android:title="Enable VirtEx Notification Menu Ticker (widget needs to be active)"
-                        android:defaultValue="false"
-                        android:summary="Will enable a permanent VirtEx ticker notification in the notification menu"
-                        android:key="virtexTickerPref" />
-        <CheckBoxPreference
-                        android:title="Enable MtGox Notification Menu Ticker (widget needs to be active)"
-                        android:defaultValue="false"
-                        android:summary="Will enable a permanent MtGox ticker notification in the notification menu"
-                        android:key="mtgoxTickerPref" />
-        </PreferenceCategory>
-                -->
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference
@@ -236,6 +209,42 @@
                         android:summary="Notification will occur if BitcoinCentral price goes under this threshold"
                         android:title="BitcoinCentral Lower Threshold" />
                 </PreferenceScreen>
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="Enable permanent tickers in the notification drawer \n Note: Currently only supports the main currency selected for exchange"
+            android:title="Permanent Notification Ticker" >
+            <PreferenceCategory android:title="Notification Drawer Ticker" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxTickerPref"
+                    android:summary="Will enable a permanent MtGox ticker notification in the notification drawer"
+                    android:title="MtGox Notification Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="virtexTickerPref"
+                    android:summary="Will enable a permanent VirtEx ticker notification in the notification drawer"
+                    android:title="VirtEx Notification Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceTickerPref"
+                    android:summary="Will enable a permanent BTC-E ticker notification in the notification drawer"
+                    android:title="BTC-E Notification Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitstampTickerPref"
+                    android:summary="Will enable a permanent Bitstamp ticker notification in the notification drawer"
+                    android:title="Bitstamp Notification Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="campBXTickerPref"
+                    android:summary="Will enable a permanent CampBX ticker notification in the notification drawer"
+                    android:title="CampBX Notification Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoincentralTickerPref"
+                    android:summary="Will enable a permanent BitcoinCentral ticker notification in the notification drawer"
+                    android:title="BitcoinCentral Notification Ticker" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

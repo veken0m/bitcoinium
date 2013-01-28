@@ -89,9 +89,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 				String pref_widgetExchange = exchange.getClassName();
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();
-				
+
 				// BitcoinCentral is too long for widget, change to B.Central
-				if(exchangeName.equalsIgnoreCase("BitcoinCentral")){
+				if (exchangeName.equalsIgnoreCase("BitcoinCentral")) {
 					exchangeName = "B.Central";
 				}
 
@@ -160,13 +160,19 @@ public class WidgetProvider extends BaseWidgetProvider {
 									+ exchangeName + " Updated!");
 						}
 
-						// if (pref_mtgoxTicker) {
-						// createPermanentNotification(context,
-						// R.drawable.bitcoin, "Bitcoin at "
-						// + lastPrice, "Bitcoin value: "
-						// + lastPrice + " on " + exchange,
-						// NOTIFY_ID);
-						// }
+						if (pref_ticker
+								|| pref_currency.equals(pref_main_currency)) {
+							createPermanentNotification(context,
+									R.drawable.bitcoin,
+									"Bitcoin  " + lastPrice,
+									"Bitcoin value: " + lastPrice + " on "
+											+ exchangeName, NOTIFY_ID + 100);
+						}
+
+						if (!pref_ticker) {
+							removePermanentNotification(context,
+									NOTIFY_ID + 100);
+						}
 
 						if (pref_PriceAlarm) {
 							try {
@@ -195,10 +201,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 							createTicker(context, R.drawable.bitcoin,
 									exchangeName + " Update failed!");
 						}
-						
-						
 						views.setTextColor(R.id.label, Color.RED);
-
 					}
 					widgetManager.updateAppWidget(appWidgetId, views);
 				}
