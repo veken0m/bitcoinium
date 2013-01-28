@@ -1,25 +1,27 @@
 package com.veken0m.bitcoinium;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-// -------------------------------------------------------------------------
 /**
- * @author Michael Lagacé a.k.a veken0m
+ * @author Michael Lagacé a.k.a. veken0m
  * @version 1.4.0 Jan 27 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
@@ -31,17 +33,19 @@ public class MainActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-        
 		readPreferences(getApplicationContext());
+		mViewPager = (ViewPager) findViewById(R.id.pager);
 
 		// ActionBar gets initiated
 		ActionBar actionbar = getSupportActionBar();
-
+		
 		// Tell the ActionBar we want to use Tabs.
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
+		// Create the actionbar tabs
 		ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
 				R.drawable.mtgoxlogo);
-		ActionBar.Tab VirtexTab = actionbar.newTab().setIcon(
+		ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
 				R.drawable.virtexlogo);
 		ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
 		ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
@@ -50,30 +54,15 @@ public class MainActivity extends SherlockFragmentActivity {
 				R.drawable.campbxlogo);
 		ActionBar.Tab BitcoinCentralTab = actionbar.newTab().setIcon(
 				R.drawable.bitcoinicon).setText("Bitcoin Central");
-
-		// create the fragments we want to use for display content
-		SherlockFragment MtGoxFragment = new MtGoxFragment();
-		SherlockFragment VirtexFragment = new VirtExFragment();
-		SherlockFragment BTCEFragment = new BTCEFragment();
-		SherlockFragment BitstampFragment = new BitstampFragment();
-		SherlockFragment CampBXFragment = new CampBXFragment();
-		SherlockFragment BitcoinCentralFragment = new BitcoinCentralFragment();
-
-		// set the Tab listener. Now we can listen for clicks.
-		MtGoxTab.setTabListener(new MyTabsListener(MtGoxFragment));
-		VirtexTab.setTabListener(new MyTabsListener(VirtexFragment));
-		BTCETab.setTabListener(new MyTabsListener(BTCEFragment));
-		BitstampTab.setTabListener(new MyTabsListener(BitstampFragment));
-		CampBXTab.setTabListener(new MyTabsListener(CampBXFragment));
-		BitcoinCentralTab.setTabListener(new MyTabsListener(BitcoinCentralFragment));
-
-		// add the tabs to the actionbar
-		actionbar.addTab(MtGoxTab);
-		actionbar.addTab(VirtexTab);
-		actionbar.addTab(BTCETab);
-		actionbar.addTab(BitstampTab);
-		actionbar.addTab(CampBXTab);
-		actionbar.addTab(BitcoinCentralTab);
+		
+		TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+		tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
+		tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
+		tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
+		tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
+		tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
+		tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class, null);
+		
 
 		try{
 		    actionbar.setSelectedNavigationItem(Integer.parseInt(pref_favExchange));
@@ -90,29 +79,100 @@ public class MainActivity extends SherlockFragmentActivity {
 		actionbar.show();
 
 	}
-
-	class MyTabsListener implements ActionBar.TabListener {
-		public SherlockFragment fragment;
-
-		public MyTabsListener(SherlockFragment fragment) {
-			this.fragment = fragment;
-		}
-
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		}
-
+	
+    /**
+     * 
+     * Obtained from: https://gist.github.com/2424383
+     * 
+     * This is a helper class that implements the management of tabs and all
+     * details of connecting a ViewPager with associated TabHost.  It relies on a
+     * trick.  Normally a tab host has a simple API for supplying a View or
+     * Intent that each tab will show.  This is not sufficient for switching
+     * between pages.  So instead we make the content part of the tab host
+     * 0dp high (it is not shown) and the TabsAdapter supplies its own dummy
+     * view to show as the tab content.  It listens to changes in tabs, and takes
+     * care of switch to the correct paged in the ViewPager whenever the selected
+     * tab changes.
+     */
+    public static class TabsAdapter extends FragmentPagerAdapter
+            implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
+        private final Context mContext;
+        private final ActionBar mBar;
+        private final ViewPager mViewPager;
+        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+ 
+        static final class TabInfo {
+            private final Class<?> clss;
+            private final Bundle args;
+ 
+            TabInfo(Class<?> _class, Bundle _args) {
+                clss = _class;
+                args = _args;
+            }
+        }
+ 
+        public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar, ViewPager pager) {
+            super(activity.getSupportFragmentManager());
+            mContext = activity;
+            mBar = bar;
+            mViewPager = pager;
+            mViewPager.setAdapter(this);
+            mViewPager.setOnPageChangeListener(this);
+        }
+ 
+        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss, Bundle args) {
+        	TabInfo info = new TabInfo(clss, args);
+            tab.setTag(info);
+            tab.setTabListener(this);
+            mTabs.add(info);
+            mBar.addTab(tab);
+            notifyDataSetChanged();
+        }
+ 
+        @Override
+        public int getCount() {
+            return mTabs.size();
+        }
+ 
+        @Override
+        public Fragment getItem(int position) {
+        	TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+        }
+ 
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+ 
+        @Override
+        public void onPageSelected(int position) {
+            mBar.setSelectedNavigationItem(position);
+        }
+ 
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+ 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			ft.replace(R.id.fragment_lay, fragment);
+			Object tag = tab.getTag();
+            for (int i=0; i<mTabs.size(); i++) {
+                if (mTabs.get(i) == tag) {
+                    mViewPager.setCurrentItem(i);
+                }
+            }
 		}
-
+ 
 		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-			ft.remove(fragment);
+			
 		}
-
-	}
+ 
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			
+		}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,7 +183,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// item.setIcon(android.R.drawable.ic_menu_preferences);
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, PreferencesActivity.class));
 		}
