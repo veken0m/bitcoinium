@@ -40,7 +40,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
 		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
-		((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
+		//((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
 		try{
 		((ListPreference) findPreference(widgetExchangePref.getEntry().toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);
 		} catch (Exception e){
@@ -73,7 +73,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         		((ListPreference) findPreference("virtexWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference("bitstampWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference("campbxWidgetCurrencyPref")).setEnabled(false);
-        		((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
+        		//((ListPreference) findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
         		((ListPreference) findPreference(newValue.toString().toLowerCase().replace("exchange", "") + "WidgetCurrencyPref")).setEnabled(true);		
             	
                 return true;
