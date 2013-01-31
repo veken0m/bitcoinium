@@ -52,8 +52,8 @@ public class MainActivity extends SherlockFragmentActivity {
 				R.drawable.bitstamplogo);
 		ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
 				R.drawable.campbxlogo);
-		ActionBar.Tab BitcoinCentralTab = actionbar.newTab().setIcon(
-				R.drawable.bitcoinicon).setText("Bitcoin Central");
+		//ActionBar.Tab BitcoinCentralTab = actionbar.newTab().setIcon(
+		//		R.drawable.bitcoinicon).setText("Bitcoin Central");
 		
 		TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
 		tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
@@ -61,7 +61,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
 		tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
 		tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
-		tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class, null);
+		//tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class, null);
 		
 
 		try{

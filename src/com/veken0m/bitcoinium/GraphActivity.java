@@ -25,8 +25,8 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.graphing.GraphViewer;
-import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 

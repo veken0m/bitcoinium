@@ -48,13 +48,13 @@
                 android:key="campbxCurrencyPref"
                 android:summary="CampBX price will be displayed in selected currency"
                 android:title="CampBX Currency" />
-            <ListPreference
+            <!--  <ListPreference
                 android:defaultValue="EUR"
                 android:entries="@array/bitcoincentralcurrencies"
                 android:entryValues="@array/bitcoincentralcurrenciesvalues"
                 android:key="bitcoincentralCurrencyPref"
                 android:summary="BitcoinCentral price will be displayed in selected currency"
-                android:title="BitcoinCentral Currency" />
+                android:title="BitcoinCentral Currency" /> -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
@@ -193,7 +193,7 @@
                         android:summary="Notification will occur if CampBX price goes under this threshold"
                         android:title="CampBX Lower Threshold" />
                 </PreferenceScreen>
-                <PreferenceScreen android:title="BitcoinCentral Alarm" >
+               <!--  <PreferenceScreen android:title="BitcoinCentral Alarm" >
                     <EditTextPreference
                         android:defaultValue="999"
                         android:digits="01234567890."
@@ -207,8 +207,8 @@
                         android:inputType="numberDecimal"
                         android:key="bitcoincentralLower"
                         android:summary="Notification will occur if BitcoinCentral price goes under this threshold"
-                        android:title="BitcoinCentral Lower Threshold" />
-                </PreferenceScreen>
+                        android:title="BitcoinCentral Lower Threshold" /> 
+                </PreferenceScreen> -->
             </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen
@@ -240,11 +240,11 @@
                     android:key="campBXTickerPref"
                     android:summary="Will enable a permanent CampBX ticker notification in the notification drawer"
                     android:title="CampBX Notification Ticker" />
-                <CheckBoxPreference
+                <!-- <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoincentralTickerPref"
                     android:summary="Will enable a permanent BitcoinCentral ticker notification in the notification drawer"
-                    android:title="BitcoinCentral Notification Ticker" />
+                    android:title="BitcoinCentral Notification Ticker" /> -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

@@ -8,7 +8,7 @@
         <item>BTC-E</item>
         <item>Bitstamp</item>
         <item>CampBX</item>
-        <item>BitcoinCentral</item>
+       <!--  <item>BitcoinCentral</item> -->
     </string-array>
     <string-array name="exchangeID">
         <item>0</item>
@@ -16,7 +16,7 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-        <item>5</item>
+       <!--  <item>5</item> -->
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -26,9 +26,10 @@
         <item>BTCEExchange</item>
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
-        <item>BitcoinCentralExchange</item>
+      <!--   <item>BitcoinCentralExchange</item> -->
     </string-array>
 
+    
     <!-- Arrays that define properties of Exchanges -->
     <!--
         <string-array name="ExampleExchange">

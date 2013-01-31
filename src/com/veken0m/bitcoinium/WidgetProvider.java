@@ -10,8 +10,8 @@ import android.graphics.Color;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.xeiam.xchange.Currencies;
 import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 
 public class WidgetProvider extends BaseWidgetProvider {

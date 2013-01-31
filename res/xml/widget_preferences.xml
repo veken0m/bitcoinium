@@ -52,13 +52,13 @@
                     android:key="campbxWidgetCurrencyPref"
                     android:summary="CampBX Widget price will be displayed in selected currency"
                     android:title="CampBX Widget Currency" />
-                <ListPreference
+                <!--  <ListPreference
                     android:defaultValue="EUR"
                     android:entries="@array/bitcoincentralcurrencies"
                     android:entryValues="@array/bitcoincentralcurrenciesvalues"
                     android:key="bitcoincentralWidgetCurrencyPref"
                     android:summary="BitcoinCentral Widget price will be displayed in selected currency"
-                    android:title="BitcoinCentral Widget Currency" />
+                    android:title="BitcoinCentral Widget Currency" /> -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
