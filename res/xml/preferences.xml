@@ -380,7 +380,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.4.0"
+                    android:summary="1.4.0a"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"

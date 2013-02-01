@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -89,9 +90,23 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 				String pref_widgetExchange = prefs.getString(
 						"widgetExchangesPref", "MtGoxExchange");
 				
-				Exchange exchange = new Exchange(getResources().getStringArray(
+				Exchange exchange;
+				try{
+				exchange = new Exchange(getResources().getStringArray(
 						getResources().getIdentifier(pref_widgetExchange, "array",
 								getBaseContext().getPackageName())));
+				} catch (Exception e){
+					// If preference is not set a valid integer set to "MtGoxExchange"
+					SharedPreferences prefs = PreferenceManager
+							.getDefaultSharedPreferences(getBaseContext());
+
+							Editor editor = prefs.edit();
+							editor.putString("widgetExchangesPref", "MtGoxExchange");
+							editor.commit();
+					exchange = new Exchange(getResources().getStringArray(
+							getResources().getIdentifier(pref_widgetExchange, "array",
+									getBaseContext().getPackageName())));
+				}
 
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();
