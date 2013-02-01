@@ -138,7 +138,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		if (prefix != null) {
 			return prefix;
 		} else {
-			return context.getString(R.string.appwidget_prefix_default);
+			return context.getString(R.string.default_exchange);
 		}
 	}
 
@@ -159,7 +159,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 		if (prefix != null) {
 			return prefix;
 		} else {
-			return context.getString(R.string.appwidget_prefix_default);
+			return context.getString(R.string.default_exchange);
 		}
 
 	}
