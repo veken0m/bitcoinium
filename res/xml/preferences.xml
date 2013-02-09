@@ -267,6 +267,21 @@
             android:key="bitminterKey"
             android:summary="Enter your BitMinter API token to use MinerStats"
             android:title="BitMinter API token" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="EMCKey"
+            android:summary="Enter your EclipseMC API token to use MinerStats"
+            android:title="BitMinter API token" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="SlushKey"
+            android:summary="Enter your Slush API token to use MinerStats"
+            android:title="Slush API token" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="50BTCKey"
+            android:summary="Enter your 50BTC API token to use MinerStats"
+            android:title="50BTC API token" />
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen

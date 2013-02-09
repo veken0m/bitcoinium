@@ -1,13 +1,6 @@
 package com.veken0m.bitcoinium;
 
-import java.io.InputStreamReader;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -29,18 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.miningpools.bitminter.BitMinterData;
-import com.veken0m.miningpools.bitminter.Workers;
+import com.veken0m.miningpools.slush.Slush;
+import com.veken0m.miningpools.slush.Workers;
 
-public class BitMinterFragment extends SherlockFragment {
+public class SlushFragment extends SherlockFragment {
 
-	protected static String pref_bitminterKey = "";
-	protected static BitMinterData data;
+	protected static String pref_slushKey = "";
+	protected static Slush data;
 	protected Boolean connectionFail = false;
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
 
-	public BitMinterFragment() {
+	public SlushFragment() {
 	}
 
 	@Override
@@ -49,10 +41,10 @@ public class BitMinterFragment extends SherlockFragment {
 		super.onCreate(savedInstanceState);
 		readPreferences(getActivity());
 
-		if (pref_bitminterKey.equalsIgnoreCase("")) {
+		if (pref_slushKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your BitMinter API Token to use MinerStatsActivity with BitMinter";
+			CharSequence text = "Please enter your Slush API Token to use MinerStatsActivity with Slush";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
@@ -71,19 +63,7 @@ public class BitMinterFragment extends SherlockFragment {
 	public void getMinerStats(Context context) {
 
 		try {
-			HttpClient client = new DefaultHttpClient();
-
-			// pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"; //Test
-			// Key
-
-			HttpGet post = new HttpGet("https://bitminter.com/api/users"
-					+ "?key=" + pref_bitminterKey);
-			HttpResponse response = client.execute(post);
-
-			ObjectMapper mapper = new ObjectMapper();
-			data = mapper.readValue(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"),
-					BitMinterData.class);
+			//minerdata.setSlushData(pref_slushKey);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,7 +107,7 @@ public class BitMinterFragment extends SherlockFragment {
 		if (connectionFail) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Could not retrieve data from "
-					+ "BitMinter"
+					+ "Slush"
 					+ "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
 			builder.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
@@ -170,27 +150,12 @@ public class BitMinterFragment extends SherlockFragment {
 			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-			
-			List<Workers> workers = data.getWorkers();
-
-			String RewardsBTC = "" + data.getBalances().getBTC();
-			String Hashrate = "" + data.getHash_rate().toString();
-			String RewardsNMC = "" + data.getBalances().getNMC();
-			String Payout = "N/A";
-			String Alive = "" + workers.get(0).getAlive();
-			String Shares = workers.get(0).getWork().getBTC().getTotal_accepted()
-					.toString();
-			String Stales = workers.get(0).getWork().getBTC().getTotal_rejected()
-					.toString();
-			String Name = data.getName();
-			List<Workers> Workers = data.getWorkers();
-			
-			tvBTCRewards.setText("BTC Reward: " + RewardsBTC
-					+ " BTC");
-			tvNMCRewards.setText("NMC Reward: " + RewardsNMC
-					+ " NMC");
-			tvTotalHashrate.setText("Total Hashrate: "
-					+ Hashrate + " MH/s");
+//			tvBTCRewards.setText("BTC Reward: " + minerdata.getRewardsBTC()
+//					+ " BTC");
+//			tvNMCRewards.setText("NMC Reward: " + minerdata.getRewardsNMC()
+//					+ " NMC");
+//			tvTotalHashrate.setText("Total Hashrate: "
+//					+ minerdata.getHashrate() + " MH/s");
 
 			tr1.addView(tvExchangeName);
 			tr2.addView(tvBTCRewards);
@@ -203,8 +168,9 @@ public class BitMinterFragment extends SherlockFragment {
 			t1.addView(tr1);
 
 			// End of Non-worker data
+			List<Workers> worker = null;// = minerdata.getWorkers();
 
-			for (int i = 0; i < workers.size(); i++) {
+			for (int i = 0; i < worker.size(); i++) {
 				TableRow tr8 = new TableRow(getActivity());
 				TableRow tr9 = new TableRow(getActivity());
 				TableRow tr10 = new TableRow(getActivity());
@@ -222,25 +188,25 @@ public class BitMinterFragment extends SherlockFragment {
 				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
-
-				tvMinerName.setText("Miner: " + workers.get(i).getName());
-				tvHashrate.setText("Hashrate: "
-						+ Utils.formatDecimal(workers.get(i).getHash_rate()
-								.floatValue(), 2, false) + " MH/s");
-				tvAlive.setText("Alive: " + workers.get(i).getAlive());
-				tvShares.setText("Shares: "
-						+ Utils.formatDecimal(workers.get(i).getWork()
-								.getBTC().getTotal_accepted().floatValue(), 0, true));
-				tvStales.setText("Stales: "
-						+ Utils.formatDecimal(workers.get(i).getWork()
-								.getBTC().getTotal_rejected().floatValue(), 0 , true)
-						+ "\n");
-
-				if (workers.get(i).getAlive()) {
-					tvMinerName.setTextColor(Color.GREEN);
-				} else {
-					tvMinerName.setTextColor(Color.RED);
-				}
+//
+//				tvMinerName.setText("Miner: " + worker.get(i).getName());
+//				tvHashrate.setText("Hashrate: "
+//						+ Utils.formatDecimal(worker.get(i).getHash_rate()
+//								.floatValue(), 2, false) + " MH/s");
+//				tvAlive.setText("Alive: " + worker.get(i).getAlive());
+//				tvShares.setText("Shares: "
+//						+ Utils.formatDecimal(worker.get(i).getWork()
+//								.getBTC().getTotal_accepted().floatValue(), 0, true));
+//				tvStales.setText("Stales: "
+//						+ Utils.formatDecimal(worker.get(i).getWork()
+//								.getBTC().getTotal_rejected().floatValue(), 0 , true)
+//						+ "\n");
+//
+//				if (worker.get(i).getAlive()) {
+//					tvMinerName.setTextColor(Color.GREEN);
+//				} else {
+//					tvMinerName.setTextColor(Color.RED);
+//				}
 
 				tr8.addView(tvMinerName);
 				tr9.addView(tvHashrate);
@@ -264,7 +230,7 @@ public class BitMinterFragment extends SherlockFragment {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		pref_bitminterKey = prefs.getString("bitminterKey", "");
+		pref_slushKey = prefs.getString("slushKey", "");
 	}
 
 }

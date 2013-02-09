@@ -1,6 +1,13 @@
 package com.veken0m.bitcoinium;
 
+import java.io.InputStreamReader;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,13 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.bitcoinium.MinerStatsActivity.MinerData;
+import com.veken0m.miningpools.deepbit.DeepBitData;
 import com.veken0m.miningpools.deepbit.Worker;
 
 public class DeepBitFragment extends SherlockFragment {
 
 	protected static String pref_deepbitKey = "";
-	protected static MinerData minerdata = new MinerData();
+	protected static DeepBitData data;
 	protected Boolean connectionFail = false;
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
@@ -64,15 +71,18 @@ public class DeepBitFragment extends SherlockFragment {
 	public void getMinerStats(Context context) {
 
 		try {
-			minerdata.setDeepbitData(pref_deepbitKey);
+			HttpClient client = new DefaultHttpClient();
+
+			HttpGet post = new HttpGet("http://deepbit.net/api/" + pref_deepbitKey);
+			HttpResponse response = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			data = mapper.readValue(new InputStreamReader(response
+					.getEntity().getContent(), "UTF-8"), DeepBitData.class);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			connectionFail = true;
-		}
-		try {
-			minerdata.setDifficulty();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -147,8 +157,6 @@ public class DeepBitFragment extends SherlockFragment {
 			TextView tvExchangeName = new TextView(getActivity());
 			TextView tvBTCRewards = new TextView(getActivity());
 			TextView tvBTCPayout = new TextView(getActivity());
-			TextView tvCurrentDifficulty = new TextView(getActivity());
-			TextView tvNextDifficulty = new TextView(getActivity());
 			TextView tvHashrate = new TextView(getActivity());
 
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -158,11 +166,22 @@ public class DeepBitFragment extends SherlockFragment {
 			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-			tvBTCRewards.setText("Reward: " + minerdata.getRewardsBTC()
+			
+			String RewardsBTC = "" + data.getConfirmed_reward().floatValue();
+			String Hashrate = "" + data.getHashrate().floatValue();
+			String RewardsNMC = "N/A";
+			String Payout = "" + data.getPayout_history().floatValue();
+			String Alive = "" + data.getWorkers().getWorker(0).getAlive();
+			String Shares = "" + data.getWorkers().getWorker(0).getShares();
+			String Stales = "" + data.getWorkers().getWorker(0).getStales();
+			List<Worker> Workers = data.getWorkers().getWorkers();
+			List<String> WorkerNames = data.getWorkers().getNames();
+			
+			tvBTCRewards.setText("Reward: " + RewardsBTC
 					+ " BTC");
-			tvBTCPayout.setText("Total Payout: " + minerdata.getPayout()
+			tvBTCPayout.setText("Total Payout: " + Payout
 					+ " BTC");
-			tvHashrate.setText("Total Hashrate: " + minerdata.getHashrate()
+			tvHashrate.setText("Total Hashrate: " + Hashrate
 					+ " MH/s");
 
 			tr1.addView(tvExchangeName);
@@ -176,31 +195,9 @@ public class DeepBitFragment extends SherlockFragment {
 			t1.addView(tr9);
 			t1.addView(tr1);
 
-			tvCurrentDifficulty.setText("Current Difficulty: "
-					+ Utils.formatDecimal(Float.valueOf(minerdata
-							.getCurrentDifficulty()), 0, true));
-			tvNextDifficulty.setText("Estimated Next Difficulty: "
-					+ Utils.formatDecimal(Float.valueOf(minerdata
-							.getNextDifficulty()), 0, true) + "\n");
-
-			if (Float.valueOf(minerdata.getNextDifficulty()) < Float
-					.valueOf(minerdata.getCurrentDifficulty())) {
-				tvNextDifficulty.setTextColor(Color.GREEN);
-			} else {
-				tvNextDifficulty.setTextColor(Color.RED);
-			}
-
-			tr5.addView(tvCurrentDifficulty);
-			tr6.addView(tvNextDifficulty);
-
-			t1.addView(tr5);
-			t1.addView(tr6);
-
 			// End of Non-worker data
 
-			List<Worker> worker = minerdata.getWorkers();
-
-			for (int i = 0; i < worker.size(); i++) {
+			for (int i = 0; i < Workers.size(); i++) {
 				TableRow tr8 = new TableRow(getActivity());
 				TableRow tr10 = new TableRow(getActivity());
 				TableRow tr11 = new TableRow(getActivity());
@@ -217,12 +214,12 @@ public class DeepBitFragment extends SherlockFragment {
 				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
 				tvMinerName.setText("Miner: "
-						+ minerdata.getWorkersNames().get(i));
-				tvAlive.setText("Alive: " + worker.get(i).getAlive());
-				tvShares.setText("Shares: " + worker.get(i).getShares());
-				tvStales.setText("Stales: " + worker.get(i).getStales() + "\n");
+						+ WorkerNames.get(i));
+				tvAlive.setText("Alive: " + Workers.get(i).getAlive());
+				tvShares.setText("Shares: " + Workers.get(i).getShares());
+				tvStales.setText("Stales: " + Workers.get(i).getStales() + "\n");
 
-				if (minerdata.getAlive().equalsIgnoreCase("true")) {
+				if (Alive.equalsIgnoreCase("true")) {
 					tvMinerName.setTextColor(Color.GREEN);
 				} else {
 					tvMinerName.setTextColor(Color.RED);

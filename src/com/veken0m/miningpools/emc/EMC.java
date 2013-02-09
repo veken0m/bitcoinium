@@ -1,28 +1,29 @@
 package com.veken0m.miningpools.emc;
 
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class EMC{
    	private String apikey;
    	private Data data;
-   	private List workers;
+   	private List<Workers> workers;
+   	
+	public EMC(
+			@JsonProperty("apikey") String apikey,
+			@JsonProperty("data") Data data,
+			@JsonProperty("workers") List<Workers> workers){
+	   	this.apikey = apikey;
+	   	this.data = data;
+	   	this.workers = workers;
+	}
 
  	public String getApikey(){
 		return this.apikey;
 	}
-	public void setApikey(String apikey){
-		this.apikey = apikey;
-	}
  	public Data getData(){
 		return this.data;
 	}
-	public void setData(Data data){
-		this.data = data;
-	}
- 	public List getWorkers(){
+ 	public List<Workers> getWorkers(){
 		return this.workers;
-	}
-	public void setWorkers(List workers){
-		this.workers = workers;
 	}
 }
