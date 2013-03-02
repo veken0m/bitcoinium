@@ -271,7 +271,7 @@
             android:defaultValue=""
             android:key="EMCKey"
             android:summary="Enter your EclipseMC API token to use MinerStats"
-            android:title="BitMinter API token" />
+            android:title="EclipseMC API token" />
         <EditTextPreference
             android:defaultValue=""
             android:key="SlushKey"

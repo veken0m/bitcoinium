@@ -200,40 +200,40 @@ public class EMCFragment extends SherlockFragment {
 			// End of Non-worker data
 
 			//for (int i = 0; i < workers.size(); i++) {
-				TableRow tr8 = new TableRow(getActivity());
-				TableRow tr9 = new TableRow(getActivity());
-				TableRow tr10 = new TableRow(getActivity());
-				TableRow tr11 = new TableRow(getActivity());
-				TableRow tr12 = new TableRow(getActivity());
-				TableRow tr13 = new TableRow(getActivity());
-
-				TextView tvMinerName = new TextView(getActivity());
-				TextView tvHashrate = new TextView(getActivity());
-				TextView tvAlive = new TextView(getActivity());
-				TextView tvShares = new TextView(getActivity());
-				TextView tvStales = new TextView(getActivity());
-
-				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr13.setGravity(Gravity.CENTER_HORIZONTAL);
-
-				tr8.addView(tvMinerName);
-				tr9.addView(tvHashrate);
-				tr10.addView(tvAlive);
-				tr11.addView(tvShares);
-				tr12.addView(tvStales);
-				tr13.addView(tvBlocksFound);
-
-				t1.addView(tr8);
-				t1.addView(tr9);
-				t1.addView(tr10);
-				t1.addView(tr11);
-				t1.addView(tr12);
-				t1.addView(tr13);
-			//}
+//				TableRow tr8 = new TableRow(getActivity());
+//				TableRow tr9 = new TableRow(getActivity());
+//				TableRow tr10 = new TableRow(getActivity());
+//				TableRow tr11 = new TableRow(getActivity());
+//				TableRow tr12 = new TableRow(getActivity());
+//				TableRow tr13 = new TableRow(getActivity());
+//
+//				TextView tvMinerName = new TextView(getActivity());
+//				TextView tvHashrate = new TextView(getActivity());
+//				TextView tvAlive = new TextView(getActivity());
+//				TextView tvShares = new TextView(getActivity());
+//				TextView tvStales = new TextView(getActivity());
+//
+//				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+//				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+//				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+//				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+//				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+//				tr13.setGravity(Gravity.CENTER_HORIZONTAL);
+//
+//				tr8.addView(tvMinerName);
+//				tr9.addView(tvHashrate);
+//				tr10.addView(tvAlive);
+//				tr11.addView(tvShares);
+//				tr12.addView(tvStales);
+//				tr13.addView(tvBlocksFound);
+//
+//				t1.addView(tr8);
+//				t1.addView(tr9);
+//				t1.addView(tr10);
+//				t1.addView(tr11);
+//				t1.addView(tr12);
+//				t1.addView(tr13);
+//              }
 		} catch (Exception e) {
 			e.printStackTrace();
 

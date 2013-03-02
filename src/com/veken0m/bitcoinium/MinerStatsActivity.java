@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,18 +50,22 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		ActionBar.Tab DeepBitTab = actionbar.newTab().setText("DeepBit");
 		ActionBar.Tab EMCTab = actionbar.newTab().setText("EMC");
 		ActionBar.Tab SlushTab = actionbar.newTab().setText("Slush");
+		ActionBar.Tab FiftyBTCTab = actionbar.newTab().setText("50BTC");
 
 		// create the two fragments we want to use for display content
 		SherlockFragment BitMinterFragment = new BitMinterFragment();
 		SherlockFragment DeepBitFragment = new DeepBitFragment();
 		SherlockFragment EMCFragment = new EMCFragment();
 		SherlockFragment SlushFragment = new SlushFragment();
+		SherlockFragment FiftyBTCFragment = new FiftyBTCFragment();
 
 		// set the Tab listener. Now we can listen for clicks.
 		BitMinterTab.setTabListener(new MyTabsListener(BitMinterFragment));
 		DeepBitTab.setTabListener(new MyTabsListener(DeepBitFragment));
 		EMCTab.setTabListener(new MyTabsListener(EMCFragment));
 		SlushTab.setTabListener(new MyTabsListener(SlushFragment));
+		FiftyBTCTab.setTabListener(new MyTabsListener(FiftyBTCFragment));
+		
 		readPreferences(getApplicationContext());
 		// add the two tabs to the actionbar
 		if (pref_favPool.equalsIgnoreCase("BitMinter")) {
@@ -72,6 +77,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		}
 		actionbar.addTab(EMCTab);
 		actionbar.addTab(SlushTab);
+		actionbar.addTab(FiftyBTCTab);
 		setContentView(R.layout.minerstats);
 		try {
 			setDifficulty(this);
@@ -122,11 +128,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// preparation code here
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.preferences) {
@@ -164,13 +165,14 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		TextView tvNextDifficulty = new TextView(context);
 
 		tvCurrentDifficulty
-				.setText("Current Difficulty: "
+				.setText("\nCurrent Difficulty: "
 						+ Utils.formatDecimal(Float.valueOf(CurrentDifficulty),
 								0, true));
+		tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 		tvNextDifficulty.setText("Estimated Next Difficulty: "
 				+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0, true)
 				+ "\n");
-
+        tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 		if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty)) {
 			tvNextDifficulty.setTextColor(Color.GREEN);
 		} else {
@@ -183,7 +185,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 	}
 
 	protected static void readPreferences(Context context) {
-		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 

@@ -1,7 +1,6 @@
 package com.veken0m.bitcoinium;
 
 import java.io.InputStreamReader;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,7 +14,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -29,13 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.veken0m.miningpools.deepbit.DeepBitData;
-import com.veken0m.miningpools.deepbit.Worker;
+import com.veken0m.miningpools.fiftybtc.FiftyBTC;
 
 public class FiftyBTCFragment extends SherlockFragment {
 
 	protected static String pref_50BTCKey = "";
-	protected static DeepBitData data;
+	protected static FiftyBTC data;
 	protected Boolean connectionFail = false;
 	private ProgressDialog minerProgressDialog;
 	final Handler mMinerHandler = new Handler();
@@ -52,7 +49,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 		if (pref_50BTCKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your DeepBit API Token to use MinerStatsActivity with DeepBit";
+			CharSequence text = "Please enter your 50BTC API Token to use MinerStatsActivity with 50BTC";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
@@ -71,27 +68,19 @@ public class FiftyBTCFragment extends SherlockFragment {
 	public void getMinerStats(Context context) {
 
 		try {
-			//minerdata.setDeepbitData(pref_50BTCKey);
 			HttpClient client = new DefaultHttpClient();
-			//9a0c3b1d2b9d0040676bb2082628587b
 
 			HttpGet post = new HttpGet("https://50btc.com/en/api/" + pref_50BTCKey + "?text=1");
 			HttpResponse response = client.execute(post);
 			ObjectMapper mapper = new ObjectMapper();
 			data = mapper.readValue(new InputStreamReader(response
-					.getEntity().getContent(), "UTF-8"), DeepBitData.class);
+					.getEntity().getContent(), "UTF-8"), FiftyBTC.class);
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			connectionFail = true;
 		}
-		try {
-			//minerdata.setDifficulty();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	private void viewMinerStats(View view) {
@@ -129,7 +118,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 		if (connectionFail) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Could not retrieve data from "
-					+ "DeepBit"
+					+ "50BTC"
 					+ "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
 			builder.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
@@ -174,16 +163,10 @@ public class FiftyBTCFragment extends SherlockFragment {
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 			
-			String RewardsBTC = "" + data.getConfirmed_reward().floatValue();
-			String Hashrate = "" + data.getHashrate().floatValue();
-			String RewardsNMC = "N/A";
-			String Payout = "" + data.getPayout_history().floatValue();
-			String Alive = "" + data.getWorkers().getWorker(0).getAlive();
-			String Shares = "" + data.getWorkers().getWorker(0).getShares();
-			String Stales = "" + data.getWorkers().getWorker(0).getStales();
-			List<Worker> Workers = data.getWorkers().getWorkers();
-			List<String> WorkerNames = data.getWorkers().getNames();
-			
+			String RewardsBTC = "" + data.getUser().getConfirmed_rewards();
+			String Hashrate = "" + data.getUser().getHash_rate();
+			String Payout = "" + data.getUser().getPayouts();
+
 			tvBTCRewards.setText("Reward: " + RewardsBTC
 					+ " BTC");
 			tvBTCPayout.setText("Total Payout: " + Payout
@@ -201,47 +184,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 			t1.addView(tr4);
 			t1.addView(tr9);
 			t1.addView(tr1);
-
-			// End of Non-worker data
-
-			for (int i = 0; i < Workers.size(); i++) {
-				TableRow tr8 = new TableRow(getActivity());
-				TableRow tr10 = new TableRow(getActivity());
-				TableRow tr11 = new TableRow(getActivity());
-				TableRow tr12 = new TableRow(getActivity());
-
-				TextView tvMinerName = new TextView(getActivity());
-				TextView tvAlive = new TextView(getActivity());
-				TextView tvShares = new TextView(getActivity());
-				TextView tvStales = new TextView(getActivity());
-
-				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
-
-				tvMinerName.setText("Miner: "
-						+ WorkerNames.get(i));
-				tvAlive.setText("Alive: " + Workers.get(i).getAlive());
-				tvShares.setText("Shares: " + Workers.get(i).getShares());
-				tvStales.setText("Stales: " + Workers.get(i).getStales() + "\n");
-
-				if (Alive.equalsIgnoreCase("true")) {
-					tvMinerName.setTextColor(Color.GREEN);
-				} else {
-					tvMinerName.setTextColor(Color.RED);
-				}
-
-				tr8.addView(tvMinerName);
-				tr10.addView(tvAlive);
-				tr11.addView(tvShares);
-				tr12.addView(tvStales);
-
-				t1.addView(tr8);
-				t1.addView(tr10);
-				t1.addView(tr11);
-				t1.addView(tr12);
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 

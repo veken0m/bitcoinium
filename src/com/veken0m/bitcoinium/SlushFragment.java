@@ -1,6 +1,12 @@
 package com.veken0m.bitcoinium;
 
-import java.util.List;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,7 +28,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.miningpools.slush.Slush;
-import com.veken0m.miningpools.slush.Workers;
 
 public class SlushFragment extends SherlockFragment {
 
@@ -63,7 +68,13 @@ public class SlushFragment extends SherlockFragment {
 	public void getMinerStats(Context context) {
 
 		try {
-			//minerdata.setSlushData(pref_slushKey);
+			HttpClient client = new DefaultHttpClient();
+
+			HttpGet post = new HttpGet("https://mining.bitcoin.cz/accounts/profile/json/" + pref_slushKey);
+			HttpResponse response = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			data = mapper.readValue(new InputStreamReader(response
+					.getEntity().getContent(), "UTF-8"), Slush.class);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,11 +148,24 @@ public class SlushFragment extends SherlockFragment {
 			TableRow tr5 = new TableRow(getActivity());
 			TableRow tr6 = new TableRow(getActivity());
 			TableRow tr7 = new TableRow(getActivity());
-
-			TextView tvExchangeName = new TextView(getActivity());
-			TextView tvBTCRewards = new TextView(getActivity());
-			TextView tvNMCRewards = new TextView(getActivity());
-			TextView tvTotalHashrate = new TextView(getActivity());
+			TableRow tr8 = new TableRow(getActivity());
+			TableRow tr9 = new TableRow(getActivity());
+			TableRow tr10 = new TableRow(getActivity());
+			TableRow tr11 = new TableRow(getActivity());
+			TableRow tr12 = new TableRow(getActivity());
+			
+			TextView tvConfirmed_nmc_reward = new TextView(getActivity());
+			TextView tvConfirmed_reward = new TextView(getActivity());
+			TextView tvEstimated_reward = new TextView(getActivity());
+			TextView tvHashrate = new TextView(getActivity());
+			TextView tvNmc_send_threshold = new TextView(getActivity());
+			TextView tvRating = new TextView(getActivity());
+			TextView tvSend_threshold = new TextView(getActivity());
+			TextView tvUnconfirmed_nmc_reward = new TextView(getActivity());
+			TextView tvUnconfirmed_reward = new TextView(getActivity());
+			TextView tvUsername = new TextView(getActivity());
+			TextView tvWallet = new TextView(getActivity());
+			//TextView tvWorkers = new TextView(getActivity());
 
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -150,76 +174,59 @@ public class SlushFragment extends SherlockFragment {
 			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-//			tvBTCRewards.setText("BTC Reward: " + minerdata.getRewardsBTC()
-//					+ " BTC");
-//			tvNMCRewards.setText("NMC Reward: " + minerdata.getRewardsNMC()
-//					+ " NMC");
-//			tvTotalHashrate.setText("Total Hashrate: "
-//					+ minerdata.getHashrate() + " MH/s");
+			tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			String hashrate = "Hashrate: " + data.getHashrate() + " MH/s";
+			String confirmed_reward = "Confirmed: " + data.getConfirmed_reward() + " BTC";
+			String estimated_reward = "Estimated: " + data.getEstimated_reward() + " BTC";
+			String confirmed_nmc_reward = "Confirmed: " + data.getConfirmed_nmc_reward() + " NMC";
+			String rating = "Rating: " + data.getRating();
+			String unconfirmed_reward = "Unconfirmed: " + data.getUnconfirmed_reward() + " BTC";
+			//String send_threshold = "Send Threshold: " + data.getSend_threshold() + " BTC";
+			String unconfirmed_nmc_reward = "Unconfirmed: " + data.getUnconfirmed_nmc_reward() + " NMC";
+			//String nmc_send_threshold = "Send Threshold: " + data.getNmc_send_threshold() + " NMC";
+			String username = "Username: " + data.getUsername();
+			String wallet = "Wallet: " + data.getWallet();
+			//String workers = data.getWorkers();
+			
+			tvHashrate.setText(hashrate);
+			tvConfirmed_nmc_reward.setText(confirmed_nmc_reward);
+			tvConfirmed_reward.setText(confirmed_reward);
+			tvEstimated_reward.setText(estimated_reward);
+			//tvNmc_send_threshold.setText(nmc_send_threshold);
+			tvRating.setText(rating);
+			//tvSend_threshold.setText(send_threshold);
+			tvUnconfirmed_nmc_reward.setText(unconfirmed_nmc_reward);
+			tvUnconfirmed_reward.setText(unconfirmed_reward);
+			tvUsername.setText(username);
+			tvWallet.setText(wallet);
 
-			tr1.addView(tvExchangeName);
-			tr2.addView(tvBTCRewards);
-			tr3.addView(tvNMCRewards);
-			tr4.addView(tvTotalHashrate);
+			tr8.addView(tvConfirmed_nmc_reward);
+			tr4.addView(tvConfirmed_reward);
+			tr3.addView(tvEstimated_reward);
+			tr2.addView(tvHashrate);
+			tr5.addView(tvWallet);
+			tr1.addView(tvUsername);
+			tr9.addView(tvRating);
+			//tr10.addView(tvSend_threshold);
+			tr11.addView(tvUnconfirmed_nmc_reward);
+			tr12.addView(tvUnconfirmed_reward);
 
+			t1.addView(tr1);
 			t1.addView(tr2);
 			t1.addView(tr3);
 			t1.addView(tr4);
-			t1.addView(tr1);
+			t1.addView(tr5);
+			t1.addView(tr8);
+			t1.addView(tr9);
+			t1.addView(tr10);
+			t1.addView(tr11);
+			t1.addView(tr12);
 
-			// End of Non-worker data
-			List<Workers> worker = null;// = minerdata.getWorkers();
-
-			for (int i = 0; i < worker.size(); i++) {
-				TableRow tr8 = new TableRow(getActivity());
-				TableRow tr9 = new TableRow(getActivity());
-				TableRow tr10 = new TableRow(getActivity());
-				TableRow tr11 = new TableRow(getActivity());
-				TableRow tr12 = new TableRow(getActivity());
-
-				TextView tvMinerName = new TextView(getActivity());
-				TextView tvHashrate = new TextView(getActivity());
-				TextView tvAlive = new TextView(getActivity());
-				TextView tvShares = new TextView(getActivity());
-				TextView tvStales = new TextView(getActivity());
-
-				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//				tvMinerName.setText("Miner: " + worker.get(i).getName());
-//				tvHashrate.setText("Hashrate: "
-//						+ Utils.formatDecimal(worker.get(i).getHash_rate()
-//								.floatValue(), 2, false) + " MH/s");
-//				tvAlive.setText("Alive: " + worker.get(i).getAlive());
-//				tvShares.setText("Shares: "
-//						+ Utils.formatDecimal(worker.get(i).getWork()
-//								.getBTC().getTotal_accepted().floatValue(), 0, true));
-//				tvStales.setText("Stales: "
-//						+ Utils.formatDecimal(worker.get(i).getWork()
-//								.getBTC().getTotal_rejected().floatValue(), 0 , true)
-//						+ "\n");
-//
-//				if (worker.get(i).getAlive()) {
-//					tvMinerName.setTextColor(Color.GREEN);
-//				} else {
-//					tvMinerName.setTextColor(Color.RED);
-//				}
-
-				tr8.addView(tvMinerName);
-				tr9.addView(tvHashrate);
-				tr10.addView(tvAlive);
-				tr11.addView(tvShares);
-				tr12.addView(tvStales);
-
-				t1.addView(tr8);
-				t1.addView(tr9);
-				t1.addView(tr10);
-				t1.addView(tr11);
-				t1.addView(tr12);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 

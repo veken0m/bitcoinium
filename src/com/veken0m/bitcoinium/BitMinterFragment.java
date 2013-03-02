@@ -158,7 +158,6 @@ public class BitMinterFragment extends SherlockFragment {
 			TableRow tr6 = new TableRow(getActivity());
 			TableRow tr7 = new TableRow(getActivity());
 
-			TextView tvExchangeName = new TextView(getActivity());
 			TextView tvBTCRewards = new TextView(getActivity());
 			TextView tvNMCRewards = new TextView(getActivity());
 			TextView tvTotalHashrate = new TextView(getActivity());
@@ -176,23 +175,14 @@ public class BitMinterFragment extends SherlockFragment {
 			String RewardsBTC = "" + data.getBalances().getBTC();
 			String Hashrate = "" + data.getHash_rate().toString();
 			String RewardsNMC = "" + data.getBalances().getNMC();
-			String Payout = "N/A";
-			String Alive = "" + workers.get(0).getAlive();
-			String Shares = workers.get(0).getWork().getBTC().getTotal_accepted()
-					.toString();
-			String Stales = workers.get(0).getWork().getBTC().getTotal_rejected()
-					.toString();
-			String Name = data.getName();
-			List<Workers> Workers = data.getWorkers();
 			
 			tvBTCRewards.setText("BTC Reward: " + RewardsBTC
 					+ " BTC");
 			tvNMCRewards.setText("NMC Reward: " + RewardsNMC
 					+ " NMC");
 			tvTotalHashrate.setText("Total Hashrate: "
-					+ Hashrate + " MH/s");
+					+ Hashrate + " MH/s\n");
 
-			tr1.addView(tvExchangeName);
 			tr2.addView(tvBTCRewards);
 			tr3.addView(tvNMCRewards);
 			tr4.addView(tvTotalHashrate);

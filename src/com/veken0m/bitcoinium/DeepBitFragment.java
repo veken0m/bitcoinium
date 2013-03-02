@@ -154,11 +154,9 @@ public class DeepBitFragment extends SherlockFragment {
 			TableRow tr7 = new TableRow(getActivity());
 			TableRow tr9 = new TableRow(getActivity());
 
-			TextView tvExchangeName = new TextView(getActivity());
 			TextView tvBTCRewards = new TextView(getActivity());
 			TextView tvBTCPayout = new TextView(getActivity());
 			TextView tvHashrate = new TextView(getActivity());
-
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr4.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -167,24 +165,16 @@ public class DeepBitFragment extends SherlockFragment {
 			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 			
-			String RewardsBTC = "" + data.getConfirmed_reward().floatValue();
-			String Hashrate = "" + data.getHashrate().floatValue();
-			String RewardsNMC = "N/A";
-			String Payout = "" + data.getPayout_history().floatValue();
-			String Alive = "" + data.getWorkers().getWorker(0).getAlive();
-			String Shares = "" + data.getWorkers().getWorker(0).getShares();
-			String Stales = "" + data.getWorkers().getWorker(0).getStales();
+			String RewardsBTC = "Reward: "  + data.getConfirmed_reward().floatValue() + "BTC";
+			String TotalHashrate = "Total Hashrate: " + data.getHashrate().floatValue() + " MH/s";
+			String TotalPayout = "Total Payout: " + data.getPayout_history().floatValue() + "BTC\n";
 			List<Worker> Workers = data.getWorkers().getWorkers();
 			List<String> WorkerNames = data.getWorkers().getNames();
 			
-			tvBTCRewards.setText("Reward: " + RewardsBTC
-					+ " BTC");
-			tvBTCPayout.setText("Total Payout: " + Payout
-					+ " BTC");
-			tvHashrate.setText("Total Hashrate: " + Hashrate
-					+ " MH/s");
+			tvBTCRewards.setText(RewardsBTC);
+			tvBTCPayout.setText(TotalPayout);
+			tvHashrate.setText(TotalHashrate);
 
-			tr1.addView(tvExchangeName);
 			tr2.addView(tvBTCRewards);
 			tr4.addView(tvBTCPayout);
 			tr9.addView(tvHashrate);
@@ -219,7 +209,7 @@ public class DeepBitFragment extends SherlockFragment {
 				tvShares.setText("Shares: " + Workers.get(i).getShares());
 				tvStales.setText("Stales: " + Workers.get(i).getStales() + "\n");
 
-				if (Alive.equalsIgnoreCase("true")) {
+				if (Workers.get(i).getAlive()) {
 					tvMinerName.setTextColor(Color.GREEN);
 				} else {
 					tvMinerName.setTextColor(Color.RED);

@@ -79,7 +79,7 @@ public class Utils {
 	}
 
 	public static boolean isBetween(float value, float min, float max) {
-		
+
 		return ((value >= min) && (value <= max));
 	}
 
@@ -89,12 +89,12 @@ public class Utils {
 
 		return currentTime;
 	}
-	
+
 	public static void setTextViewParams(TextView tv, String text) {
-		
+
 		LayoutParams params = new TableRow.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
-		
+
 		tv.setText(text);
 		tv.setLayoutParams(params);
 		tv.setGravity(1);
