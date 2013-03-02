@@ -8,12 +8,16 @@ public class Slush{
    	private String confirmed_reward;
    	private String estimated_reward;
    	private String hashrate;
+   	@JsonIgnore
    	private String nmc_send_threshold;
+   	@JsonIgnore
    	private String rating;
+   	@JsonIgnore
    	private String send_threshold;
    	private String unconfirmed_nmc_reward;
    	private String unconfirmed_reward;
    	private String username;
+   	@JsonIgnore
    	private String wallet;
    	@JsonIgnore
    	private Workers workers;

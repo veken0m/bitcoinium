@@ -184,13 +184,13 @@ public class SlushFragment extends SherlockFragment {
 			String confirmed_reward = "Confirmed: " + data.getConfirmed_reward() + " BTC";
 			String estimated_reward = "Estimated: " + data.getEstimated_reward() + " BTC";
 			String confirmed_nmc_reward = "Confirmed: " + data.getConfirmed_nmc_reward() + " NMC";
-			String rating = "Rating: " + data.getRating();
+			//String rating = "Rating: " + data.getRating();
 			String unconfirmed_reward = "Unconfirmed: " + data.getUnconfirmed_reward() + " BTC";
 			//String send_threshold = "Send Threshold: " + data.getSend_threshold() + " BTC";
 			String unconfirmed_nmc_reward = "Unconfirmed: " + data.getUnconfirmed_nmc_reward() + " NMC";
 			//String nmc_send_threshold = "Send Threshold: " + data.getNmc_send_threshold() + " NMC";
 			String username = "Username: " + data.getUsername();
-			String wallet = "Wallet: " + data.getWallet();
+			//String wallet = "Wallet: " + data.getWallet();
 			//String workers = data.getWorkers();
 			
 			tvHashrate.setText(hashrate);
@@ -198,18 +198,18 @@ public class SlushFragment extends SherlockFragment {
 			tvConfirmed_reward.setText(confirmed_reward);
 			tvEstimated_reward.setText(estimated_reward);
 			//tvNmc_send_threshold.setText(nmc_send_threshold);
-			tvRating.setText(rating);
+			//tvRating.setText(rating);
 			//tvSend_threshold.setText(send_threshold);
 			tvUnconfirmed_nmc_reward.setText(unconfirmed_nmc_reward);
 			tvUnconfirmed_reward.setText(unconfirmed_reward);
 			tvUsername.setText(username);
-			tvWallet.setText(wallet);
+			//tvWallet.setText(wallet);
 
 			tr8.addView(tvConfirmed_nmc_reward);
 			tr4.addView(tvConfirmed_reward);
 			tr3.addView(tvEstimated_reward);
 			tr2.addView(tvHashrate);
-			tr5.addView(tvWallet);
+			//tr5.addView(tvWallet);
 			tr1.addView(tvUsername);
 			tr9.addView(tvRating);
 			//tr10.addView(tvSend_threshold);
@@ -223,7 +223,7 @@ public class SlushFragment extends SherlockFragment {
 			t1.addView(tr5);
 			t1.addView(tr8);
 			t1.addView(tr9);
-			t1.addView(tr10);
+			//t1.addView(tr10);
 			t1.addView(tr11);
 			t1.addView(tr12);
 
