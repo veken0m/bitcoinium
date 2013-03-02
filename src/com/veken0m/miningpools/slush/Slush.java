@@ -2,7 +2,9 @@ package com.veken0m.miningpools.slush;
 
 import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Slush{
    	private String confirmed_nmc_reward;
    	private String confirmed_reward;
@@ -19,7 +21,6 @@ public class Slush{
    	private String username;
    	@JsonIgnore
    	private String wallet;
-   	@JsonIgnore
    	private Workers workers;
 
  	public String getConfirmed_nmc_reward(){
@@ -91,7 +92,6 @@ public class Slush{
  	public Workers getWorkers(){
 		return this.workers;
 	}
- 	@JsonAnySetter
 	public void setWorkers(Workers workers){
 		this.workers = workers;
 	}

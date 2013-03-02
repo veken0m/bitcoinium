@@ -1,6 +1,7 @@
 package com.veken0m.bitcoinium;
 
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.miningpools.emc.EMC;
+import com.veken0m.miningpools.emc.Workers;
 
 public class EMCFragment extends SherlockFragment {
 
@@ -178,7 +180,7 @@ public class EMCFragment extends SherlockFragment {
 			tvBlocksFound.setText(BlocksFound);
 
 			// TODO: Fix Miner data JSON mapping from EMC
-//			// Miner Data
+			// Miner Data
 //			List<Workers> workers = data.getWorkers();
 //			String WorkerName = workers.get(0).getWorker_name();
 //			String HashRate = workers.get(0).getHash_rate();
