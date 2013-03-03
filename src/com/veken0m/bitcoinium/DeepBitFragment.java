@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.miningpools.deepbit.DeepBitData;
@@ -59,13 +57,13 @@ public class DeepBitFragment extends SherlockFragment {
 		try {
 			HttpClient client = new DefaultHttpClient();
 
-			HttpGet post = new HttpGet("http://deepbit.net/api/" + pref_deepbitKey);
+			HttpGet post = new HttpGet("http://deepbit.net/api/"
+					+ pref_deepbitKey);
 			HttpResponse response = client.execute(post);
 			ObjectMapper mapper = new ObjectMapper();
-			data = mapper.readValue(new InputStreamReader(response
-					.getEntity().getContent(), "UTF-8"), DeepBitData.class);
-			
-			
+			data = mapper.readValue(new InputStreamReader(response.getEntity()
+					.getContent(), "UTF-8"), DeepBitData.class);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			connectionFail = true;
@@ -140,12 +138,14 @@ public class DeepBitFragment extends SherlockFragment {
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr3.setGravity(Gravity.CENTER_HORIZONTAL);
-			
-			String RewardsBTC = "Reward: "  + data.getConfirmed_reward().floatValue() + "BTC";
-			String TotalHashrate = "Total Hashrate: " + data.getHashrate().floatValue() + " MH/s";
-			String TotalPayout = "Total Payout: " + data.getPayout_history().floatValue() + "BTC";
-			
-			
+
+			String RewardsBTC = "Reward: "
+					+ data.getConfirmed_reward().floatValue() + "BTC";
+			String TotalHashrate = "Total Hashrate: "
+					+ data.getHashrate().floatValue() + " MH/s";
+			String TotalPayout = "Total Payout: "
+					+ data.getPayout_history().floatValue() + "BTC";
+
 			tvBTCRewards.setText(RewardsBTC);
 			tvBTCPayout.setText(TotalPayout);
 			tvHashrate.setText(TotalHashrate);

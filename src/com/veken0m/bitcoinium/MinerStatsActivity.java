@@ -1,11 +1,9 @@
 package com.veken0m.bitcoinium;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -188,30 +186,30 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		}
 
 		protected void onPostExecute(Boolean result) {
-			if(result){
-			LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
+			if (result) {
+				LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
 
-			TextView tvCurrentDifficulty = new TextView(getBaseContext());
-			TextView tvNextDifficulty = new TextView(getBaseContext());
+				TextView tvCurrentDifficulty = new TextView(getBaseContext());
+				TextView tvNextDifficulty = new TextView(getBaseContext());
 
-			tvCurrentDifficulty.setText("\nCurrent Difficulty: "
-					+ Utils.formatDecimal(Float.valueOf(CurrentDifficulty), 0,
-							true));
-			tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-			tvNextDifficulty.setText("Estimated Next Difficulty: "
-					+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0,
-							true) + "\n");
-			tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-			
-			if (Float.valueOf(NextDifficulty) < Float
-					.valueOf(CurrentDifficulty)) {
-				tvNextDifficulty.setTextColor(Color.GREEN);
-			} else {
-				tvNextDifficulty.setTextColor(Color.RED);
-			}
+				tvCurrentDifficulty.setText("\nCurrent Difficulty: "
+						+ Utils.formatDecimal(Float.valueOf(CurrentDifficulty),
+								0, true));
+				tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+				tvNextDifficulty.setText("Estimated Next Difficulty: "
+						+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0,
+								true) + "\n");
+				tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 
-			view.addView(tvCurrentDifficulty);
-			view.addView(tvNextDifficulty);
+				if (Float.valueOf(NextDifficulty) < Float
+						.valueOf(CurrentDifficulty)) {
+					tvNextDifficulty.setTextColor(Color.GREEN);
+				} else {
+					tvNextDifficulty.setTextColor(Color.RED);
+				}
+
+				view.addView(tvCurrentDifficulty);
+				view.addView(tvNextDifficulty);
 			}
 		}
 
