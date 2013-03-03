@@ -1,35 +1,36 @@
 package com.veken0m.miningpools.fiftybtc;
 
-import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-public class User{
-   	private Number active_workers;
-   	private Number confirmed_rewards;
-   	private String hash_rate;
-   	private Number payouts;
+public class User {
+	private Number active_workers;
+	private Number confirmed_rewards;
+	private String hash_rate;
+	private Number payouts;
 
- 	public Number getActive_workers(){
+	public User(@JsonProperty("active_workers") Number active_workers,
+			@JsonProperty("confirmed_rewards") Number confirmed_rewards,
+			@JsonProperty("hash_rate") String hash_rate,
+			@JsonProperty("payouts") Number payouts) {
+		this.active_workers = active_workers;
+		this.confirmed_rewards = confirmed_rewards;
+		this.hash_rate = hash_rate;
+		this.payouts = payouts;
+	}
+
+	public Number getActive_workers() {
 		return this.active_workers;
 	}
-	public void setActive_workers(Number active_workers){
-		this.active_workers = active_workers;
-	}
- 	public Number getConfirmed_rewards(){
+
+	public Number getConfirmed_rewards() {
 		return this.confirmed_rewards;
 	}
-	public void setConfirmed_rewards(Number confirmed_rewards){
-		this.confirmed_rewards = confirmed_rewards;
-	}
- 	public String getHash_rate(){
+
+	public String getHash_rate() {
 		return this.hash_rate;
 	}
-	public void setHash_rate(String hash_rate){
-		this.hash_rate = hash_rate;
-	}
- 	public Number getPayouts(){
+
+	public Number getPayouts() {
 		return this.payouts;
-	}
-	public void setPayouts(Number payouts){
-		this.payouts = payouts;
 	}
 }

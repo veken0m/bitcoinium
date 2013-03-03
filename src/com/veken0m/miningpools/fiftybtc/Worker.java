@@ -1,12 +1,16 @@
 package com.veken0m.miningpools.fiftybtc;
 
-import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Worker{
    	private boolean alive;
    	private Number blocks_found;
+   	@JsonIgnore
    	private Number checkpoint_invalid;
+   	@JsonIgnore
    	private Number checkpoint_shares;
+   	@JsonIgnore
    	private Number checkpoint_stales;
    	private String hash_rate;
    	private Number invalid;
@@ -17,89 +21,73 @@ public class Worker{
    	private Number total_shares;
    	private Number total_stales;
    	private String worker_name;
+   	
+	public Worker(
+			@JsonProperty("alive") Boolean alive,
+			@JsonProperty("blocks_found") Number blocks_found,
+			@JsonProperty("hash_rate") String hash_rate,
+			@JsonProperty("invalid") Number invalid, 
+	        @JsonProperty("last_share") Number last_share,
+	        @JsonProperty("shares") Number shares,
+	        @JsonProperty("stales") Number stales,
+	        @JsonProperty("total_invalid") Number total_invalid,
+	        @JsonProperty("total_shares") Number total_shares,
+	        @JsonProperty("total_stales") Number total_stales,
+	        @JsonProperty("worker_name") String worker_name){
+	   	this.alive = alive;
+	   	this.blocks_found = blocks_found;
+	   	this.hash_rate = hash_rate;
+	   	this.invalid = invalid;
+	   	this.last_share = last_share;
+	   	this.shares = shares;
+	   	this.stales = stales;
+	   	this.total_invalid = total_invalid;
+	   	this.total_shares = total_shares;
+	   	this.invalid = invalid;
+	   	this.total_stales = total_stales;
+	   	this.worker_name = worker_name;
+	}
 
  	public boolean getAlive(){
 		return this.alive;
 	}
-	public void setAlive(boolean alive){
-		this.alive = alive;
-	}
  	public Number getBlocks_found(){
 		return this.blocks_found;
-	}
-	public void setBlocks_found(Number blocks_found){
-		this.blocks_found = blocks_found;
 	}
  	public Number getCheckpoint_invalid(){
 		return this.checkpoint_invalid;
 	}
-	public void setCheckpoint_invalid(Number checkpoint_invalid){
-		this.checkpoint_invalid = checkpoint_invalid;
-	}
  	public Number getCheckpoint_shares(){
 		return this.checkpoint_shares;
-	}
-	public void setCheckpoint_shares(Number checkpoint_shares){
-		this.checkpoint_shares = checkpoint_shares;
 	}
  	public Number getCheckpoint_stales(){
 		return this.checkpoint_stales;
 	}
-	public void setCheckpoint_stales(Number checkpoint_stales){
-		this.checkpoint_stales = checkpoint_stales;
-	}
  	public String getHash_rate(){
 		return this.hash_rate;
-	}
-	public void setHash_rate(String hash_rate){
-		this.hash_rate = hash_rate;
 	}
  	public Number getInvalid(){
 		return this.invalid;
 	}
-	public void setInvalid(Number invalid){
-		this.invalid = invalid;
-	}
  	public Number getLast_share(){
 		return this.last_share;
-	}
-	public void setLast_share(Number last_share){
-		this.last_share = last_share;
 	}
  	public Number getShares(){
 		return this.shares;
 	}
-	public void setShares(Number shares){
-		this.shares = shares;
-	}
  	public Number getStales(){
 		return this.stales;
-	}
-	public void setStales(Number stales){
-		this.stales = stales;
 	}
  	public Number getTotal_invalid(){
 		return this.total_invalid;
 	}
-	public void setTotal_invalid(Number total_invalid){
-		this.total_invalid = total_invalid;
-	}
  	public Number getTotal_shares(){
 		return this.total_shares;
-	}
-	public void setTotal_shares(Number total_shares){
-		this.total_shares = total_shares;
 	}
  	public Number getTotal_stales(){
 		return this.total_stales;
 	}
-	public void setTotal_stales(Number total_stales){
-		this.total_stales = total_stales;
-	}
  	public String getWorker_name(){
 		return this.worker_name;
-	}
-	public void setWorker_name(String worker_name){
-		this.worker_name = worker_name;
 	}
 }

@@ -52,7 +52,7 @@ public class BitMinterFragment extends SherlockFragment {
 		if (pref_bitminterKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your BitMinter API Token to use MinerStatsActivity with BitMinter";
+			CharSequence text = "Please enter your BitMinter API Token to use Miner Stats with BitMinter";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
@@ -147,16 +147,11 @@ public class BitMinterFragment extends SherlockFragment {
 
 		try {
 
-			TableLayout t1 = (TableLayout) getView().findViewById(
-					R.id.minerStatlist);
+			TableLayout t1 = (TableLayout) getView().findViewById(R.id.minerStatlist);
 
 			TableRow tr1 = new TableRow(getActivity());
 			TableRow tr2 = new TableRow(getActivity());
 			TableRow tr3 = new TableRow(getActivity());
-			TableRow tr4 = new TableRow(getActivity());
-			TableRow tr5 = new TableRow(getActivity());
-			TableRow tr6 = new TableRow(getActivity());
-			TableRow tr7 = new TableRow(getActivity());
 
 			TextView tvBTCRewards = new TextView(getActivity());
 			TextView tvNMCRewards = new TextView(getActivity());
@@ -165,35 +160,25 @@ public class BitMinterFragment extends SherlockFragment {
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr3.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr4.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
+
+			String RewardsBTC = "BTC Reward: " + data.getBalances().getBTC() + " BTC";
+			String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC() + " NMC";
+			String Hashrate = "Total Hashrate: " + data.getHash_rate().toString() + " MH/s\n";
 			
-			List<Workers> workers = data.getWorkers();
+			tvBTCRewards.setText(RewardsBTC);
+			tvNMCRewards.setText(RewardsNMC);
+			tvTotalHashrate.setText(Hashrate);
 
-			String RewardsBTC = "" + data.getBalances().getBTC();
-			String Hashrate = "" + data.getHash_rate().toString();
-			String RewardsNMC = "" + data.getBalances().getNMC();
-			
-			tvBTCRewards.setText("BTC Reward: " + RewardsBTC
-					+ " BTC");
-			tvNMCRewards.setText("NMC Reward: " + RewardsNMC
-					+ " NMC");
-			tvTotalHashrate.setText("Total Hashrate: "
-					+ Hashrate + " MH/s\n");
+			tr1.addView(tvBTCRewards);
+			tr2.addView(tvNMCRewards);
+			tr3.addView(tvTotalHashrate);
 
-			tr2.addView(tvBTCRewards);
-			tr3.addView(tvNMCRewards);
-			tr4.addView(tvTotalHashrate);
-
+			t1.addView(tr1);
 			t1.addView(tr2);
 			t1.addView(tr3);
-			t1.addView(tr4);
-			t1.addView(tr1);
 
 			// End of Non-worker data
-
+			List<Workers> workers = data.getWorkers();
 			for (int i = 0; i < workers.size(); i++) {
 				TableRow tr8 = new TableRow(getActivity());
 				TableRow tr9 = new TableRow(getActivity());
@@ -223,8 +208,7 @@ public class BitMinterFragment extends SherlockFragment {
 								.getBTC().getTotal_accepted().floatValue(), 0, true));
 				tvStales.setText("Stales: "
 						+ Utils.formatDecimal(workers.get(i).getWork()
-								.getBTC().getTotal_rejected().floatValue(), 0 , true)
-						+ "\n");
+								.getBTC().getTotal_rejected().floatValue(), 0 , true));
 
 				if (workers.get(i).getAlive()) {
 					tvMinerName.setTextColor(Color.GREEN);
@@ -246,7 +230,6 @@ public class BitMinterFragment extends SherlockFragment {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 

@@ -1,12 +1,15 @@
 package com.veken0m.miningpools.emc;
 
-public class Data{
-   	private User user;
+import org.codehaus.jackson.annotate.JsonProperty;
 
- 	public User getUser(){
-		return this.user;
-	}
-	public void setUser(User user){
+public class Data {
+	private User user;
+
+	public Data(@JsonProperty("user") User user) {
 		this.user = user;
+	}
+
+	public User getUser() {
+		return this.user;
 	}
 }

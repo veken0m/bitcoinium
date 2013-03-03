@@ -14,6 +14,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,48 +37,55 @@ import com.actionbarsherlock.view.MenuItem;
 public class MinerStatsActivity extends SherlockFragmentActivity {
 
 	static String pref_favPool;
+	private static String pref_emcKey;
+	private static String pref_slushKey;
+	private static String pref_bitminterKey;
+	private static String pref_deepbitKey;
+	private static String pref_50BTCKey;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// ActionBar gets initiated
+		// ActionBar gets initiated and set to tabbed mode
 		ActionBar actionbar = getSupportActionBar();
-		// Tell the ActionBar we want to use Tabs.
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		ActionBar.Tab BitMinterTab = actionbar.newTab().setText("BitMinter");
-		ActionBar.Tab DeepBitTab = actionbar.newTab().setText("DeepBit");
-		ActionBar.Tab EMCTab = actionbar.newTab().setText("EMC");
-		ActionBar.Tab SlushTab = actionbar.newTab().setText("Slush");
-		ActionBar.Tab FiftyBTCTab = actionbar.newTab().setText("50BTC");
-
-		// create the two fragments we want to use for display content
-		SherlockFragment BitMinterFragment = new BitMinterFragment();
-		SherlockFragment DeepBitFragment = new DeepBitFragment();
-		SherlockFragment EMCFragment = new EMCFragment();
-		SherlockFragment SlushFragment = new SlushFragment();
-		SherlockFragment FiftyBTCFragment = new FiftyBTCFragment();
-
-		// set the Tab listener. Now we can listen for clicks.
-		BitMinterTab.setTabListener(new MyTabsListener(BitMinterFragment));
-		DeepBitTab.setTabListener(new MyTabsListener(DeepBitFragment));
-		EMCTab.setTabListener(new MyTabsListener(EMCFragment));
-		SlushTab.setTabListener(new MyTabsListener(SlushFragment));
-		FiftyBTCTab.setTabListener(new MyTabsListener(FiftyBTCFragment));
 		
+		// Add the pools that have API keys
 		readPreferences(getApplicationContext());
-		// add the two tabs to the actionbar
-		if (pref_favPool.equalsIgnoreCase("BitMinter")) {
-			actionbar.addTab(BitMinterTab);
-			actionbar.addTab(DeepBitTab);
-		} else {
-			actionbar.addTab(DeepBitTab);
+		if (pref_bitminterKey.length() > 6) {
+			SherlockFragment BitMinterFragment = new BitMinterFragment();
+			ActionBar.Tab BitMinterTab = actionbar.newTab()
+					.setText("BitMinter");
+			BitMinterTab.setTabListener(new MyTabsListener(BitMinterFragment));
 			actionbar.addTab(BitMinterTab);
 		}
-		actionbar.addTab(EMCTab);
-		actionbar.addTab(SlushTab);
-		actionbar.addTab(FiftyBTCTab);
+		if (pref_deepbitKey.length() > 6) {
+			SherlockFragment DeepBitFragment = new DeepBitFragment();
+			ActionBar.Tab DeepBitTab = actionbar.newTab().setText("DeepBit");
+			DeepBitTab.setTabListener(new MyTabsListener(DeepBitFragment));
+			actionbar.addTab(DeepBitTab);
+		}
+		if (pref_slushKey.length() > 6) {
+			SherlockFragment SlushFragment = new SlushFragment();
+			ActionBar.Tab SlushTab = actionbar.newTab().setText("Slush");
+			SlushTab.setTabListener(new MyTabsListener(SlushFragment));
+			actionbar.addTab(SlushTab);
+		}
+		if (pref_emcKey.length() > 6) {
+			SherlockFragment EMCFragment = new EMCFragment();
+			ActionBar.Tab EMCTab = actionbar.newTab().setText("EclipseMC");
+			EMCTab.setTabListener(new MyTabsListener(EMCFragment));
+			actionbar.addTab(EMCTab);
+		}
+		if (pref_50BTCKey.length() > 6) {
+			SherlockFragment FiftyBTCFragment = new FiftyBTCFragment();
+			ActionBar.Tab FiftyBTCTab = actionbar.newTab().setText("50BTC");
+			FiftyBTCTab.setTabListener(new MyTabsListener(FiftyBTCFragment));
+			actionbar.addTab(FiftyBTCTab);
+		}
+
 		setContentView(R.layout.minerstats);
 		try {
 			setDifficulty(this);
@@ -103,7 +111,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			ft.replace(R.id.table_fragment, fragment);
+			// ft.replace(R.id.table_fragment, fragment);
 		}
 
 		@Override
@@ -172,7 +180,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		tvNextDifficulty.setText("Estimated Next Difficulty: "
 				+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0, true)
 				+ "\n");
-        tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+		tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 		if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty)) {
 			tvNextDifficulty.setTextColor(Color.GREEN);
 		} else {
@@ -199,6 +207,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
 		pref_favPool = prefs.getString("favpoolPref", "bitminter");
+		pref_emcKey = prefs.getString("emcKey", "");
+		pref_slushKey = prefs.getString("slushKey", "");
+		pref_bitminterKey = prefs.getString("bitminterKey", "");
+		pref_deepbitKey = prefs.getString("deepbitKey", "");
+		pref_50BTCKey = prefs.getString("50BTCKey", "");
 	}
 
 }

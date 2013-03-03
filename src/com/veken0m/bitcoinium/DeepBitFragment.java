@@ -148,47 +148,36 @@ public class DeepBitFragment extends SherlockFragment {
 			TableRow tr1 = new TableRow(getActivity());
 			TableRow tr2 = new TableRow(getActivity());
 			TableRow tr3 = new TableRow(getActivity());
-			TableRow tr4 = new TableRow(getActivity());
-			TableRow tr5 = new TableRow(getActivity());
-			TableRow tr6 = new TableRow(getActivity());
-			TableRow tr7 = new TableRow(getActivity());
-			TableRow tr9 = new TableRow(getActivity());
 
 			TextView tvBTCRewards = new TextView(getActivity());
 			TextView tvBTCPayout = new TextView(getActivity());
 			TextView tvHashrate = new TextView(getActivity());
 			tr1.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr2.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr4.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+			tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 			
 			String RewardsBTC = "Reward: "  + data.getConfirmed_reward().floatValue() + "BTC";
 			String TotalHashrate = "Total Hashrate: " + data.getHashrate().floatValue() + " MH/s";
-			String TotalPayout = "Total Payout: " + data.getPayout_history().floatValue() + "BTC\n";
-			List<Worker> Workers = data.getWorkers().getWorkers();
-			List<String> WorkerNames = data.getWorkers().getNames();
+			String TotalPayout = "Total Payout: " + data.getPayout_history().floatValue() + "BTC";
+			
 			
 			tvBTCRewards.setText(RewardsBTC);
 			tvBTCPayout.setText(TotalPayout);
 			tvHashrate.setText(TotalHashrate);
 
-			tr2.addView(tvBTCRewards);
-			tr4.addView(tvBTCPayout);
-			tr9.addView(tvHashrate);
+			tr1.addView(tvBTCRewards);
+			tr2.addView(tvBTCPayout);
+			tr3.addView(tvHashrate);
 
+			t1.addView(tr1);
 			t1.addView(tr2);
 			t1.addView(tr3);
-			t1.addView(tr4);
-			t1.addView(tr9);
-			t1.addView(tr1);
 
 			// End of Non-worker data
-
+			List<Worker> Workers = data.getWorkers().getWorkers();
+			List<String> WorkerNames = data.getWorkers().getNames();
 			for (int i = 0; i < Workers.size(); i++) {
-				TableRow tr8 = new TableRow(getActivity());
+				TableRow tr9 = new TableRow(getActivity());
 				TableRow tr10 = new TableRow(getActivity());
 				TableRow tr11 = new TableRow(getActivity());
 				TableRow tr12 = new TableRow(getActivity());
@@ -198,16 +187,15 @@ public class DeepBitFragment extends SherlockFragment {
 				TextView tvShares = new TextView(getActivity());
 				TextView tvStales = new TextView(getActivity());
 
-				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
 				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
-				tvMinerName.setText("Miner: "
-						+ WorkerNames.get(i));
+				tvMinerName.setText("\nMiner: " + WorkerNames.get(i));
 				tvAlive.setText("Alive: " + Workers.get(i).getAlive());
 				tvShares.setText("Shares: " + Workers.get(i).getShares());
-				tvStales.setText("Stales: " + Workers.get(i).getStales() + "\n");
+				tvStales.setText("Stales: " + Workers.get(i).getStales());
 
 				if (Workers.get(i).getAlive()) {
 					tvMinerName.setTextColor(Color.GREEN);
@@ -215,12 +203,12 @@ public class DeepBitFragment extends SherlockFragment {
 					tvMinerName.setTextColor(Color.RED);
 				}
 
-				tr8.addView(tvMinerName);
+				tr9.addView(tvMinerName);
 				tr10.addView(tvAlive);
 				tr11.addView(tvShares);
 				tr12.addView(tvStales);
 
-				t1.addView(tr8);
+				t1.addView(tr9);
 				t1.addView(tr10);
 				t1.addView(tr11);
 				t1.addView(tr12);

@@ -248,15 +248,18 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
+    <PreferenceCategory android:title="Miner Stats Settings" >
+    <PreferenceScreen
+            android:title="Miner Stats API tokens"
+             android:summary="Enter your mining pool API tokens here to use Miner Stats" >
     <PreferenceCategory android:title="Miner Stats" >
-        <ListPreference
+        <!--<ListPreference
             android:defaultValue=""
             android:entries="@array/miningpools"
             android:entryValues="@array/miningpools"
             android:key="favpoolPref"
             android:summary="Select mining pool used for MinerStats"
-            android:title="Main Mining Pool" />
-
+            android:title="Main Mining Pool" />-->
         <EditTextPreference
             android:defaultValue=""
             android:key="deepbitKey"
@@ -282,6 +285,8 @@
             android:key="50BTCKey"
             android:summary="Enter your 50BTC API token to use MinerStats"
             android:title="50BTC API token" />
+    </PreferenceCategory>
+    </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen

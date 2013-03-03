@@ -51,7 +51,7 @@ public class EMCFragment extends SherlockFragment {
 		if (pref_emcKey.equalsIgnoreCase("")) {
 
 			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your EMC API Token to use MinerStatsActivity with EMC";
+			CharSequence text = "Please enter your EMC API Token to use Miner Stats with EMC";
 
 			Toast toast = Toast.makeText(getActivity(), text, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
@@ -149,8 +149,6 @@ public class EMCFragment extends SherlockFragment {
 			TableRow tr3 = new TableRow(getActivity());
 			TableRow tr4 = new TableRow(getActivity());
 			TableRow tr5 = new TableRow(getActivity());
-			TableRow tr6 = new TableRow(getActivity());
-			TableRow tr7 = new TableRow(getActivity());
 
 			TextView tvConfirmedRewards = new TextView(getActivity());
 			TextView tvUnconfirmedRewards = new TextView(getActivity());
@@ -163,79 +161,87 @@ public class EMCFragment extends SherlockFragment {
 			tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr4.setGravity(Gravity.CENTER_HORIZONTAL);
 			tr5.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr6.setGravity(Gravity.CENTER_HORIZONTAL);
-			tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-
+			
 			// User Data
 			String ConfirmedRewardsBTC = "Confirmed Rewards: " + data.getData().getUser().getConfirmed_rewards()  + " BTC";
 			String UnconfirmedRewardsBTC = "Unconfirmed Rewards: " + data.getData().getUser().getUnconfirmed_rewards()  + " BTC";
 			String EstimatedRewardsBTC = "Estimated Rewards: " + data.getData().getUser().getEstimated_rewards()  + " BTC";
 			String TotalRewardsBTC = "Total Rewards: " + data.getData().getUser().getTotal_payout()  + " BTC";
-			String BlocksFound = "Blocks Found " + data.getData().getUser().getBlocks_found()  + " BTC";
+			String BlocksFound = "Blocks Found: " + data.getData().getUser().getBlocks_found();
 			
 			tvConfirmedRewards.setText(ConfirmedRewardsBTC);
 			tvUnconfirmedRewards.setText(UnconfirmedRewardsBTC);
 			tvEstimatedRewards.setText(EstimatedRewardsBTC);
 			tvTotalRewards.setText(TotalRewardsBTC);
 			tvBlocksFound.setText(BlocksFound);
-
-			// TODO: Fix Miner data JSON mapping from EMC
-			// Miner Data
-//			List<Workers> workers = data.getWorkers();
-//			String WorkerName = workers.get(0).getWorker_name();
-//			String HashRate = workers.get(0).getHash_rate();
-//			String RoundShares = workers.get(0).getRound_shares();
-//			String ResetShares = workers.get(0).getReset_shares();
-//			String TotalShares = workers.get(0).getTotal_shares();
-//			String LastActivity = workers.get(0).getLast_activity();
-
-			tr1.addView(tvConfirmedRewards);
-			tr2.addView(tvUnconfirmedRewards);
-			tr3.addView(tvEstimatedRewards);
+			
+			tr1.addView(tvEstimatedRewards);
+			tr2.addView(tvConfirmedRewards);
+			tr3.addView(tvUnconfirmedRewards);
 			tr4.addView(tvTotalRewards);
+			tr5.addView(tvBlocksFound);
 
+			t1.addView(tr1);
 			t1.addView(tr2);
 			t1.addView(tr3);
 			t1.addView(tr4);
-			t1.addView(tr1);
+			t1.addView(tr5);
 
-			// End of Non-worker data
+			// TODO: Fix Miner data JSON mapping from EMC
+			// Miner Data
+			List<Workers> workers = data.getWorkers();
+			
+			for(int i = 0; i < workers.size(); i++){
+				String WorkerName = "\nWorker: " + workers.get(i).getWorker_name();
+				String HashRate = "Hashrate: " + workers.get(i).getHash_rate();
+				String RoundShares = "Round Shares: " + workers.get(i).getRound_shares();
+				String ResetShares = "Reset Shares: " + workers.get(i).getReset_shares();
+				String TotalShares = "Total Shares: " + workers.get(i).getTotal_shares();
+				String LastActivity = "Latest Activity: " + workers.get(i).getLast_activity();
+				
+				TableRow tr8 = new TableRow(getActivity());
+				TableRow tr9 = new TableRow(getActivity());
+				TableRow tr10 = new TableRow(getActivity());
+				TableRow tr11 = new TableRow(getActivity());
+				TableRow tr12 = new TableRow(getActivity());
+				TableRow tr13 = new TableRow(getActivity());
+				
+				TextView tvWorkerName = new TextView(getActivity());
+				TextView tvMinerHashrate = new TextView(getActivity());
+				TextView tvRoundShares = new TextView(getActivity());
+				TextView tvResetShares = new TextView(getActivity());
+				TextView tvTotalShares = new TextView(getActivity());
+				TextView tvLastActivity = new TextView(getActivity());
+				
+				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr13.setGravity(Gravity.CENTER_HORIZONTAL);
+				
+				tvWorkerName.setText(WorkerName);
+				tvMinerHashrate.setText(HashRate);
+				tvRoundShares.setText(RoundShares);
+				tvResetShares.setText(ResetShares);
+				tvTotalShares.setText(TotalShares);
+				tvLastActivity.setText(LastActivity);
+				
+				tr8.addView(tvWorkerName);
+				tr9.addView(tvMinerHashrate);
+				tr10.addView(tvRoundShares);
+				tr11.addView(tvResetShares);
+				tr12.addView(tvTotalShares);
+				tr13.addView(tvLastActivity);
 
-			//for (int i = 0; i < workers.size(); i++) {
-//				TableRow tr8 = new TableRow(getActivity());
-//				TableRow tr9 = new TableRow(getActivity());
-//				TableRow tr10 = new TableRow(getActivity());
-//				TableRow tr11 = new TableRow(getActivity());
-//				TableRow tr12 = new TableRow(getActivity());
-//				TableRow tr13 = new TableRow(getActivity());
-//
-//				TextView tvMinerName = new TextView(getActivity());
-//				TextView tvHashrate = new TextView(getActivity());
-//				TextView tvAlive = new TextView(getActivity());
-//				TextView tvShares = new TextView(getActivity());
-//				TextView tvStales = new TextView(getActivity());
-//
-//				tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-//				tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-//				tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-//				tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-//				tr12.setGravity(Gravity.CENTER_HORIZONTAL);
-//				tr13.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//				tr8.addView(tvMinerName);
-//				tr9.addView(tvHashrate);
-//				tr10.addView(tvAlive);
-//				tr11.addView(tvShares);
-//				tr12.addView(tvStales);
-//				tr13.addView(tvBlocksFound);
-//
-//				t1.addView(tr8);
-//				t1.addView(tr9);
-//				t1.addView(tr10);
-//				t1.addView(tr11);
-//				t1.addView(tr12);
-//				t1.addView(tr13);
-//              }
+				t1.addView(tr8);
+				t1.addView(tr9);
+				t1.addView(tr10);
+				t1.addView(tr11);
+				t1.addView(tr12);
+				t1.addView(tr13);		
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
