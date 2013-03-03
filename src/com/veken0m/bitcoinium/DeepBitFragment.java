@@ -49,20 +49,6 @@ public class DeepBitFragment extends SherlockFragment {
 		super.onCreate(savedInstanceState);
 		readPreferences(getActivity());
 
-		if (pref_deepbitKey.equalsIgnoreCase("")) {
-
-			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your DeepBit API Token to use MinerStatsActivity with DeepBit";
-
-			Toast toast = Toast.makeText(getActivity(), text, duration);
-			toast.setGravity(Gravity.CENTER, 0, 0);
-			toast.show();
-
-			Intent settingsActivity = new Intent(
-					getActivity().getBaseContext(), PreferencesActivity.class);
-			startActivity(settingsActivity);
-		}
-
 		View view = inflater.inflate(R.layout.table_fragment, container, false);
 		viewMinerStats(view);
 		return view;
@@ -92,7 +78,7 @@ public class DeepBitFragment extends SherlockFragment {
 			return;
 		}
 		minerProgressDialog = ProgressDialog.show(view.getContext(),
-				"Working...", "Retrieving Miner Stats", true, true);
+				"Working...", "Retrieving Miner Stats", true, false);
 
 		MinerStatsThread gt = new MinerStatsThread();
 		gt.start();
@@ -134,7 +120,6 @@ public class DeepBitFragment extends SherlockFragment {
 
 			AlertDialog alert = builder.create();
 			alert.show();
-		} else {
 		}
 	}
 
@@ -215,7 +200,6 @@ public class DeepBitFragment extends SherlockFragment {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 

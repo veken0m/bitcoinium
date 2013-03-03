@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.miningpools.emc.EMC;
@@ -47,20 +45,6 @@ public class EMCFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		readPreferences(getActivity());
-
-		if (pref_emcKey.equalsIgnoreCase("")) {
-
-			int duration = Toast.LENGTH_LONG;
-			CharSequence text = "Please enter your EMC API Token to use Miner Stats with EMC";
-
-			Toast toast = Toast.makeText(getActivity(), text, duration);
-			toast.setGravity(Gravity.CENTER, 0, 0);
-			toast.show();
-
-			Intent settingsActivity = new Intent(
-					getActivity().getBaseContext(), PreferencesActivity.class);
-			startActivity(settingsActivity);
-		}
 
 		View view = inflater.inflate(R.layout.table_fragment, container, false);
 		viewMinerStats(view);
@@ -91,7 +75,7 @@ public class EMCFragment extends SherlockFragment {
 			return;
 		}
 		minerProgressDialog = ProgressDialog.show(view.getContext(),
-				"Working...", "Retrieving Miner Stats", true, true);
+				"Working...", "Retrieving Miner Stats", true, false);
 
 		OrderbookThread gt = new OrderbookThread();
 		gt.start();
@@ -133,7 +117,6 @@ public class EMCFragment extends SherlockFragment {
 
 			AlertDialog alert = builder.create();
 			alert.show();
-		} else {
 		}
 	}
 

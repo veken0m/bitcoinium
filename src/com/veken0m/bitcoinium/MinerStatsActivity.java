@@ -14,7 +14,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -51,9 +51,27 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		// ActionBar gets initiated and set to tabbed mode
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+
 		// Add the pools that have API keys
 		readPreferences(getApplicationContext());
+
+		if (pref_bitminterKey.length() <= 6 && pref_emcKey.length() <= 6
+				&& pref_deepbitKey.length() <= 6 && pref_50BTCKey.length() <= 6
+				&& pref_slushKey.length() <= 6) {
+
+			int duration = Toast.LENGTH_LONG;
+			CharSequence text = "Please enter at least one API Token to use Miner Stats";
+
+			Toast toast = Toast.makeText(getApplicationContext(), text,
+					duration);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+
+			Intent settingsActivity = new Intent(getApplicationContext(),
+					PreferencesActivity.class);
+			startActivity(settingsActivity);
+		}
+
 		if (pref_bitminterKey.length() > 6) {
 			SherlockFragment BitMinterFragment = new BitMinterFragment();
 			ActionBar.Tab BitMinterTab = actionbar.newTab()
@@ -99,7 +117,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.minerstats);
-
 	}
 
 	class MyTabsListener implements ActionBar.TabListener {
@@ -196,17 +213,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
-
-				pref_favPool = pPrefs.getString("favpoolPref", "bitminter");
-			}
-		};
-
-		prefs.registerOnSharedPreferenceChangeListener(prefListener);
-
-		pref_favPool = prefs.getString("favpoolPref", "bitminter");
 		pref_emcKey = prefs.getString("emcKey", "");
 		pref_slushKey = prefs.getString("slushKey", "");
 		pref_bitminterKey = prefs.getString("bitminterKey", "");
