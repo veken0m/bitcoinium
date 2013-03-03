@@ -1,7 +1,6 @@
 package com.veken0m.bitcoinium;
 
 import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -16,9 +15,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -105,11 +104,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		}
 
 		setContentView(R.layout.minerstats);
-		try {
-			setDifficulty(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		new getDifficultyAsync().execute();
 		actionbar.show();
 	}
 
@@ -161,51 +156,64 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void setDifficulty(Context context) throws ClientProtocolException,
-			IOException, EOFException {
+	private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean> {
 
-		// TODO: Move networking to separate thread
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-				.permitAll().build();
-		StrictMode.setThreadPolicy(policy);
+		String CurrentDifficulty = "";
+		String NextDifficulty = "";
 
-		HttpClient client = new DefaultHttpClient();
-		HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
-		HttpResponse response = client.execute(post);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				response.getEntity().getContent(), "UTF-8"));
-		String CurrentDifficulty = reader.readLine();
-		reader.close();
+		protected Boolean doInBackground(Boolean... params) {
 
-		post = new HttpGet("http://blockexplorer.com/q/estimate");
-		response = client.execute(post);
-		reader = new BufferedReader(new InputStreamReader(response.getEntity()
-				.getContent(), "UTF-8"));
-		String NextDifficulty = reader.readLine();
-		reader.close();
-
-		LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
-
-		TextView tvCurrentDifficulty = new TextView(context);
-		TextView tvNextDifficulty = new TextView(context);
-
-		tvCurrentDifficulty
-				.setText("\nCurrent Difficulty: "
-						+ Utils.formatDecimal(Float.valueOf(CurrentDifficulty),
-								0, true));
-		tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-		tvNextDifficulty.setText("Estimated Next Difficulty: "
-				+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0, true)
-				+ "\n");
-		tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-		if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty)) {
-			tvNextDifficulty.setTextColor(Color.GREEN);
-		} else {
-			tvNextDifficulty.setTextColor(Color.RED);
+			try {
+				HttpClient client = new DefaultHttpClient();
+				HttpGet post = new HttpGet(
+						"http://blockexplorer.com/q/getdifficulty");
+				HttpResponse response;
+				response = client.execute(post);
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(
+								response.getEntity().getContent(), "UTF-8"));
+				CurrentDifficulty = reader.readLine();
+				reader.close();
+				post = new HttpGet("http://blockexplorer.com/q/estimate");
+				response = client.execute(post);
+				reader = new BufferedReader(new InputStreamReader(response
+						.getEntity().getContent(), "UTF-8"));
+				NextDifficulty = reader.readLine();
+				reader.close();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
 
-		view.addView(tvCurrentDifficulty);
-		view.addView(tvNextDifficulty);
+		protected void onPostExecute(Boolean result) {
+			if(result){
+			LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
+
+			TextView tvCurrentDifficulty = new TextView(getBaseContext());
+			TextView tvNextDifficulty = new TextView(getBaseContext());
+
+			tvCurrentDifficulty.setText("\nCurrent Difficulty: "
+					+ Utils.formatDecimal(Float.valueOf(CurrentDifficulty), 0,
+							true));
+			tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+			tvNextDifficulty.setText("Estimated Next Difficulty: "
+					+ Utils.formatDecimal(Float.valueOf(NextDifficulty), 0,
+							true) + "\n");
+			tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			if (Float.valueOf(NextDifficulty) < Float
+					.valueOf(CurrentDifficulty)) {
+				tvNextDifficulty.setTextColor(Color.GREEN);
+			} else {
+				tvNextDifficulty.setTextColor(Color.RED);
+			}
+
+			view.addView(tvCurrentDifficulty);
+			view.addView(tvNextDifficulty);
+			}
+		}
 
 	}
 
