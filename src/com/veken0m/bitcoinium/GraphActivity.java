@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -192,6 +193,7 @@ public class GraphActivity extends SherlockActivity {
 
 				for (int i = 0; i < tradesListSize; i++) {
 					data[i] = new GraphViewData(dates[i], values[i]);
+					//Log.d("Date index: " + i, "" + dates[i]);
 				}
 
 				graphView = new LineGraphView(this, exchangeName + ": "

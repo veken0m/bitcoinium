@@ -8,7 +8,9 @@
         <item>BTC-E</item>
         <item>Bitstamp</item>
         <item>CampBX</item>
-       <!--  <item>BitcoinCentral</item> -->
+        <item>BitcoinCentral</item> 
+       	<item>Bitfloor</item> 
+        <item>Bitcoin24</item>
     </string-array>
     <string-array name="exchangeID">
         <item>0</item>
@@ -16,7 +18,10 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-       <!--  <item>5</item> -->
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -26,7 +31,9 @@
         <item>BTCEExchange</item>
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
-      <!--   <item>BitcoinCentralExchange</item> -->
+        <item>BitcoinCentralExchange</item> 
+        <item>BitfloorExchange</item>
+        <item>Bitcoin24Exchange</item>
     </string-array>
 
     
@@ -90,8 +97,26 @@
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>4</item>
+        <item>5</item>
         <item>bitcoincentral</item>
+        <item>false</item>
+    </string-array>
+        <string-array name="BitfloorExchange">
+        <item>Bitfloor</item>
+        <item>com.xeiam.xchange.bitfloor.BitfloorExchange</item>
+        <item>USD</item>
+        <item>bitcoinicon</item>
+        <item>6</item>
+        <item>bitfloor</item>
+        <item>false</item>
+    </string-array>
+        <string-array name="Bitcoin24Exchange">
+        <item>Bitcoin24</item>
+        <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
+        <item>EUR</item>
+        <item>bitcoinicon</item>
+        <item>7</item>
+        <item>bitcoin24</item>
         <item>false</item>
     </string-array>
 
@@ -177,12 +202,29 @@
         <item>USD - United States Dollar</item>
         -->
     </string-array>
-    <string-array name="bitcoincentralcurrenciesvalues">
+    <string-array name="bitcoincentralcurrencies">
+        <item>EUR - Euro</item>
+    </string-array>
+        <string-array name="bitcoincentralcurrenciesvalues">
         <item>EUR</item>
-        <!--  Currently Disabled in XChange
-        <item>GBP - British Pound</item>
+    </string-array>
+    
+    <!-- Arrays for Bitfloor Currencies -->
+    <string-array name="bitfloorcurrencies">
         <item>USD - United States Dollar</item>
-        -->
+    </string-array>
+        <string-array name="bitfloorcurrenciesvalues">
+        <item>USD</item>
+    </string-array>
+    
+    <!-- Arrays for Bitcoin24 Currencies -->
+    <string-array name="bitcoin24currencies">
+        <item>USD - United States Dollar</item>
+        <item>EUR - Euro</item>
+    </string-array>
+        <string-array name="bitcoin24currenciesvalues">
+        <item>USD</item>
+        <item>EUR</item>
     </string-array>
 
 </resources>

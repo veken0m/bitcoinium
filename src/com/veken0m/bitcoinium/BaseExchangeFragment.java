@@ -15,6 +15,8 @@ public class BaseExchangeFragment extends SherlockFragment {
 	public static final String BITSTAMP = "BitstampExchange";
 	public static final String CAMPBX = "CampBXExchange";
 	public static final String BITCOINCENTRAL = "BitcoinCentralExchange";
+	public static final String BITFLOOR = "BitfloorExchange";
+	public static final String BITCOIN24 = "Bitcoin24Exchange";
 
 	// Attaches OnClickListeners to menu buttons
 	public void buildMenu(View view, final String exchange, final Boolean graph) {
