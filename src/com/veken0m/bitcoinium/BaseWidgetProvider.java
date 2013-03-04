@@ -34,6 +34,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
 	static Boolean pref_ticker;
+	static Boolean pref_widgetbidask;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -68,6 +69,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
+		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
+		
 	}
 
 	public void onDestoy(Context context) {

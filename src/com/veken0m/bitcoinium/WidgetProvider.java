@@ -6,10 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -100,6 +97,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 				String pref_widgetExchange = exchange.getClassName();
 				String defaultCurrency = exchange.getMainCurrency();
 				String prefix = exchange.getPrefix();
+				Boolean tickerBidAsk = exchange.supportsTickerBidAsk();
 
 				// BitcoinCentral is too long for widget, change to B.Central
 				if (exchangeName.equalsIgnoreCase("BitcoinCentral")) {
@@ -138,21 +136,20 @@ public class WidgetProvider extends BaseWidgetProvider {
 						final String highPrice;
 						final String lowPrice;
 
-						if (!(ticker.getHigh() == null)) {
-							highPrice = Utils.formatWidgetMoney(ticker
-									.getHigh().getAmount().floatValue(),
-									pref_currency, false);
-							lowPrice = Utils.formatWidgetMoney(ticker.getLow()
-									.getAmount().floatValue(), pref_currency,
-									false);
-						} else {
+						if (((ticker.getHigh() == null) || pref_widgetbidask) && tickerBidAsk) {
 							highPrice = Utils.formatWidgetMoney(ticker.getAsk()
 									.getAmount().floatValue(), pref_currency,
 									false);
 							lowPrice = Utils.formatWidgetMoney(ticker.getBid()
 									.getAmount().floatValue(), pref_currency,
 									false);
-
+						} else {
+							highPrice = Utils.formatWidgetMoney(ticker
+									.getHigh().getAmount().floatValue(),
+									pref_currency, false);
+							lowPrice = Utils.formatWidgetMoney(ticker.getLow()
+									.getAmount().floatValue(), pref_currency,
+									false);
 						}
 						
 						views.setTextViewText(R.id.widgetExchange, exchangeName);

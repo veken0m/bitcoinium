@@ -81,6 +81,11 @@
                     android:key="checkboxPref"
                     android:summary="Display update notification in taskbar"
                     android:title="Display Updates" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bidasktogglePref"
+                    android:summary="Replace High/Low with Bid/Ask on widget if supported by exchange"
+                    android:title="Bid/Ask on Widget" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference

@@ -45,7 +45,9 @@
         <item>mainCurrency</item>
         <item>logo</item>
         <item>notificationID</item>
-        <item>supports latest trades</item>
+        <item>codename</item>
+        <item>supports latest trades</item>
+        <item>ticker supports bid/ask</item>
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
@@ -54,6 +56,7 @@
         <item>mtgoxlogo</item>
         <item>0</item>
         <item>mtgox</item>
+        <item>true</item>
         <item>true</item>
     </string-array>
     <string-array name="VirtExExchange">
@@ -64,6 +67,7 @@
         <item>1</item>
         <item>virtex</item>
         <item>true</item>
+        <item>false</item>
     </string-array>
     <string-array name="BTCEExchange">
         <item>BTC-E</item>
@@ -72,6 +76,7 @@
         <item>btcelogo</item>
         <item>2</item>
         <item>btce</item>
+        <item>true</item>
         <item>true</item>
     </string-array>
     <string-array name="BitstampExchange">
@@ -82,6 +87,7 @@
         <item>3</item>
         <item>bitstamp</item>
         <item>true</item>
+        <item>true</item>
     </string-array>
     <string-array name="CampBXExchange">
         <item>CampBX</item>
@@ -91,6 +97,7 @@
         <item>4</item>
         <item>campbx</item>
         <item>false</item>
+        <item>true</item>
     </string-array>
     <string-array name="BitcoinCentralExchange">
         <item>BitcoinCentral</item>
@@ -100,6 +107,7 @@
         <item>5</item>
         <item>bitcoincentral</item>
         <item>false</item>
+        <item>true</item>
     </string-array>
         <string-array name="BitfloorExchange">
         <item>Bitfloor</item>
@@ -108,6 +116,7 @@
         <item>bitcoinicon</item>
         <item>6</item>
         <item>bitfloor</item>
+        <item>false</item>
         <item>false</item>
     </string-array>
         <string-array name="Bitcoin24Exchange">
@@ -118,6 +127,7 @@
         <item>7</item>
         <item>bitcoin24</item>
         <item>false</item>
+        <item>true</item>
     </string-array>
 
     <!-- Arrays for MtGox Currencies -->

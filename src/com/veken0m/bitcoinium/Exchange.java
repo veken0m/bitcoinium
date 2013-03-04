@@ -9,6 +9,7 @@ public class Exchange{
 	private final int notification_id;
 	private final String prefix;
 	private final boolean supportsPriceGraph;
+	private final boolean tickerSupportsBidAsk;
 	
 	public Exchange(String[] exchangeProperties) {
 		exchange_name = exchangeProperties[0];
@@ -18,6 +19,7 @@ public class Exchange{
 		notification_id = Integer.parseInt(exchangeProperties[4]);
 		prefix = exchangeProperties[5];
 		supportsPriceGraph = Boolean.parseBoolean(exchangeProperties[6]);
+		tickerSupportsBidAsk = Boolean.parseBoolean(exchangeProperties[7]);
 	}
 	
 	public String getExchangeName() {
@@ -53,6 +55,11 @@ public class Exchange{
 	public Boolean supportsPriceGraph() {
 
 		return supportsPriceGraph;
+	}
+	
+	public Boolean supportsTickerBidAsk() {
+
+		return tickerSupportsBidAsk;
 	}
 
 }
