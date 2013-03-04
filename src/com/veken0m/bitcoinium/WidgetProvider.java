@@ -143,6 +143,10 @@ public class WidgetProvider extends BaseWidgetProvider {
 							lowPrice = Utils.formatWidgetMoney(ticker.getBid()
 									.getAmount().floatValue(), pref_currency,
 									false);
+							// Color.rgb(150,220,220) => very light blue
+							views.setTextColor(R.id.widgetLowText,  Color.WHITE);
+							views.setTextColor(R.id.widgetHighText, Color.WHITE);
+							views.setTextColor(R.id.widgetVolText, Color.WHITE);
 						} else {
 							highPrice = Utils.formatWidgetMoney(ticker
 									.getHigh().getAmount().floatValue(),
