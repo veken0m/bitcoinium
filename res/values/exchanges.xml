@@ -96,7 +96,7 @@
         <item>campbxlogo</item>
         <item>4</item>
         <item>campbx</item>
-        <item>false</item>
+        <item>false</item> <!-- Not implemented -->
         <item>true</item>
     </string-array>
     <string-array name="BitcoinCentralExchange">
@@ -105,9 +105,9 @@
         <item>EUR</item>
         <item>bitcoinicon</item>
         <item>5</item>
-        <item>bitcoincentral</item>
+        <item>bitcoincentral</item> 
+        <item>true</item>			<!-- Error 404 -->
         <item>false</item>
-        <item>true</item>
     </string-array>
         <string-array name="BitfloorExchange">
         <item>Bitfloor</item>
@@ -116,7 +116,7 @@
         <item>bitcoinicon</item>
         <item>6</item>
         <item>bitfloor</item>
-        <item>false</item>
+        <item>true</item>
         <item>false</item>
     </string-array>
         <string-array name="Bitcoin24Exchange">
@@ -126,7 +126,7 @@
         <item>bitcoinicon</item>
         <item>7</item>
         <item>bitcoin24</item>
-        <item>false</item>
+        <item>false</item>  <!-- Too large (contains all trades...) -->
         <item>true</item>
     </string-array>
 

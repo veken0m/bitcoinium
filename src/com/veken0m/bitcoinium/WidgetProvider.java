@@ -154,6 +154,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 							lowPrice = Utils.formatWidgetMoney(ticker.getLow()
 									.getAmount().floatValue(), pref_currency,
 									false);
+							views.setTextColor(R.id.widgetLowText,  Color.LTGRAY);
+							views.setTextColor(R.id.widgetHighText, Color.LTGRAY);
+							views.setTextColor(R.id.widgetVolText, Color.LTGRAY);
 						}
 						
 						views.setTextViewText(R.id.widgetExchange, exchangeName);

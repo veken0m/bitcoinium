@@ -15,7 +15,7 @@ public class BitFloorFragment extends BaseExchangeFragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, BITFLOOR, false);
+		buildMenu(view, BITFLOOR, true);
 		return view;
 	}
 

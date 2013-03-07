@@ -14,7 +14,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -69,7 +68,7 @@ public class GraphActivity extends SherlockActivity {
 		String prefix = exchange.getPrefix();
 
 		readPreferences(getApplicationContext(), prefix, defaultCurrency);
-		
+
 		if (exchange.supportsPriceGraph()) {
 			setContentView(R.layout.graph);
 			viewGraph();
@@ -138,7 +137,8 @@ public class GraphActivity extends SherlockActivity {
 
 		try {
 			final Trades trades = ExchangeFactory.INSTANCE
-					.createExchange(xchangeExchange.replace("0", "1")) // Use API V1 instead of V0 for MtGox Trades
+					.createExchange(xchangeExchange.replace("0", "1"))
+					// Use API V1 instead of V0 for MtGox Trades
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 
@@ -193,7 +193,6 @@ public class GraphActivity extends SherlockActivity {
 
 				for (int i = 0; i < tradesListSize; i++) {
 					data[i] = new GraphViewData(dates[i], values[i]);
-					//Log.d("Date index: " + i, "" + dates[i]);
 				}
 
 				graphView = new LineGraphView(this, exchangeName + ": "
@@ -216,7 +215,7 @@ public class GraphActivity extends SherlockActivity {
 				graphView.setViewPort(startValue, windowSize);
 				graphView.setScrollable(true);
 				graphView.setScalable(true);
-				
+
 				if (!pref_scaleMode) {
 					graphView.setManualYAxisBounds(largest, smallest);
 				}
