@@ -83,7 +83,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	public void drawBitcoinChartsUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
-
+		t1.removeAllViewsInLayout();
 		String previousCurrency = "";
 		int backGroundColor = Color.rgb(31, 31, 31);
 		LayoutParams params = new TableRow.LayoutParams(
