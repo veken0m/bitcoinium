@@ -165,6 +165,7 @@ public class OrderbookActivity extends SherlockActivity {
 	public void drawOrderbookUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
+		t1.removeAllViewsInLayout();
 		LayoutParams params = new TableRow.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 		int bidTextColor = Color.GRAY;
