@@ -58,6 +58,7 @@
         </activity>
         <activity
             android:name="com.veken0m.bitcoinium.BitcoinChartsActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Bitcoin Charts" >
         </activity>
