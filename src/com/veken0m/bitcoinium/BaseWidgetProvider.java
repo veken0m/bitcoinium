@@ -35,11 +35,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_alarmVibrate;
 	static Boolean pref_ticker;
 	static Boolean pref_widgetbidask;
+	static Boolean pref_wifionly;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
 
-	protected static void readPreferences(Context context, String prefix, String defaultCurrency) {
+	protected static void readPreferences(Context context, String prefix,
+			String defaultCurrency) {
 
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -54,9 +56,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
-		pref_main_currency = prefs.getString(prefix + "CurrencyPref", defaultCurrency);
+		pref_main_currency = prefs.getString(prefix + "CurrencyPref",
+				defaultCurrency);
 	}
-	
+
 	protected static void readAlarmPreferences(Context context) {
 
 		SharedPreferences prefs = PreferenceManager
@@ -70,7 +73,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
-		
+		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+
 	}
 
 	public void onDestoy(Context context) {
@@ -157,7 +161,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
 	}
-	
+
 	static void removePermanentNotification(Context ctxt, int BITCOIN_NOTIFY_ID) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) ctxt
