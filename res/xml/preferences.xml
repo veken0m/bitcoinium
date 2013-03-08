@@ -133,6 +133,11 @@
                     android:key="alarmVibratePref"
                     android:summary="Notification will cause phone to vibrate when when specified price is attained"
                     android:title="Notification Vibration" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="alarmClockPref"
+                    android:summary="Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing loudly until shut off."
+                    android:title="*Hardcore Mode* (BETA)" />
             </PreferenceCategory>
             <PreferenceCategory
                 android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"

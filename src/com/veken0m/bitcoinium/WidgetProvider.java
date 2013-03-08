@@ -228,8 +228,11 @@ public class WidgetProvider extends BaseWidgetProvider {
 															Float.valueOf(pref_notifLimitUpper))) {
 										createNotification(context, lastPrice,
 												exchangeName, NOTIFY_ID);
-
+										if(pref_alarmClock){
+											setAlarmClock(context);
+										}
 									}
+
 								} catch (Exception e) {
 									Toast.makeText(
 											getApplicationContext(),

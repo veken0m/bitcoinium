@@ -10,7 +10,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.provider.AlarmClock;
+import android.text.format.Time;
 
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 
@@ -36,6 +39,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_ticker;
 	static Boolean pref_widgetbidask;
 	static Boolean pref_wifionly;
+	static Boolean pref_alarmClock;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -74,6 +78,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
 	}
 
@@ -107,6 +112,28 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
 		}
 	}
+	
+	static void setAlarmClock(Context context) {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+        
+		Editor editor = prefs.edit();
+		editor.putBoolean("alarmClockPref", false);
+		editor.commit();
+		Time dtNow = new Time();
+		dtNow.setToNow();
+		int hours = dtNow.hour;
+		int minutes = dtNow.minute + 1;
+		Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+		i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (please delete)");
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+	    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+	    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+        context.startActivity(i);
+	}
+	
+	
 
 	static void createNotification(Context ctxt, String lastPrice,
 			String exchange, int BITCOIN_NOTIFY_ID) {
