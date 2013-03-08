@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
@@ -40,6 +41,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_widgetbidask;
 	static Boolean pref_wifionly;
 	static Boolean pref_alarmClock;
+	static String pref_notificationSound;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -62,6 +64,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
 		pref_main_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
+		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 	}
 
 	protected static void readAlarmPreferences(Context context) {
@@ -78,6 +82,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
 	}
@@ -153,13 +158,15 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		Intent notificationIntent = new Intent(ctxt, BaseWidgetProvider.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
 				notificationIntent, 0);
+	
 
 		notification.setLatestEventInfo(ctxt, contentTitle, contentText,
 				contentIntent);
-
+	
 		if (pref_alarmSound) {
-			notification.defaults |= Notification.DEFAULT_SOUND;
+			notification.sound = Uri.parse(pref_notificationSound);
 		}
+		
 		if (pref_alarmVibrate) {
 			notification.defaults |= Notification.DEFAULT_VIBRATE;
 		}

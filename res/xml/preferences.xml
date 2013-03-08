@@ -54,7 +54,7 @@
                 android:entryValues="@array/bitcoincentralcurrenciesvalues"
                 android:key="bitcoincentralCurrencyPref"
                 android:summary="BitcoinCentral price will be displayed in selected currency"
-                android:title="BitcoinCentral Currency" /> 
+                android:title="BitcoinCentral Currency" />
             <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitfloorcurrencies"
@@ -125,14 +125,23 @@
                     android:title="Enable Price Alarm" />
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="alarmSoundPref"
-                    android:summary="Notification sound will play when specified price is attained"
-                    android:title="Notification Sound" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
                     android:key="alarmVibratePref"
                     android:summary="Notification will cause phone to vibrate when when specified price is attained"
                     android:title="Notification Vibration" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="alarmSoundPref"
+                    android:summary="Notification sound will play when specified price is attained"
+                    android:title="Notification Sound" />
+
+                <RingtonePreference
+                    android:key="notificationSoundPref"
+                    android:ringtoneType="ringtone|alarm"
+                    android:showDefault="true"
+                    android:summary="Pick the sound to be played when specified price is attained"
+                    android:title="Select Sound" >
+                </RingtonePreference>
+
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="alarmClockPref"
@@ -236,7 +245,7 @@
                         android:inputType="numberDecimal"
                         android:key="bitcoincentralLower"
                         android:summary="Notification will occur if BitcoinCentral price goes under this threshold"
-                        android:title="BitcoinCentral Lower Threshold" /> 
+                        android:title="BitcoinCentral Lower Threshold" />
                 </PreferenceScreen>
                 <PreferenceScreen android:title="Bitfloor Alarm" >
                     <EditTextPreference
@@ -320,44 +329,47 @@
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
-    <PreferenceScreen
-            android:title="Miner Stats API tokens"
-             android:summary="Enter your mining pool API tokens here to use Miner Stats" >
-    <PreferenceCategory android:title="Miner Stats" >
-        <!--<ListPreference
+        <PreferenceScreen
+            android:summary="Enter your mining pool API tokens here to use Miner Stats"
+            android:title="Miner Stats API tokens" >
+            <PreferenceCategory android:title="Miner Stats" >
+
+                <!--
+            <ListPreference
             android:defaultValue=""
             android:entries="@array/miningpools"
             android:entryValues="@array/miningpools"
             android:key="favpoolPref"
             android:summary="Select mining pool used for MinerStats"
-            android:title="Main Mining Pool" />-->
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="deepbitKey"
-            android:summary="Enter your Deepbit API token to use MinerStats"
-            android:title="Deepbit API token" />
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="bitminterKey"
-            android:summary="Enter your BitMinter API token to use MinerStats"
-            android:title="BitMinter API token" />
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="emcKey"
-            android:summary="Enter your EclipseMC API token to use MinerStats"
-            android:title="EclipseMC API token" />
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="slushKey"
-            android:summary="Enter your Slush API token to use MinerStats"
-            android:title="Slush API token" />
-        <EditTextPreference
-            android:defaultValue=""
-            android:key="50BTCKey"
-            android:summary="Enter your 50BTC API token to use MinerStats"
-            android:title="50BTC API token" />
-    </PreferenceCategory>
-    </PreferenceScreen>
+            android:title="Main Mining Pool" />
+                -->
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="deepbitKey"
+                    android:summary="Enter your Deepbit API token to use MinerStats"
+                    android:title="Deepbit API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="bitminterKey"
+                    android:summary="Enter your BitMinter API token to use MinerStats"
+                    android:title="BitMinter API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="emcKey"
+                    android:summary="Enter your EclipseMC API token to use MinerStats"
+                    android:title="EclipseMC API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="slushKey"
+                    android:summary="Enter your Slush API token to use MinerStats"
+                    android:title="Slush API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="50BTCKey"
+                    android:summary="Enter your 50BTC API token to use MinerStats"
+                    android:title="50BTC API token" />
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen
