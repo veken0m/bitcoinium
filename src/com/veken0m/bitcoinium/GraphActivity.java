@@ -135,13 +135,21 @@ public class GraphActivity extends SherlockActivity {
 
 		g_graphView = null;
 
+		Trades trades;
 		try {
-			final Trades trades = ExchangeFactory.INSTANCE
+			trades = ExchangeFactory.INSTANCE
 					.createExchange(xchangeExchange.replace("0", "1"))
 					// Use API V1 instead of V0 for MtGox Trades
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
+		} catch (OutOfMemoryError E) {
+			// If trades too large fetch API V0 trades (much more compact)
+			trades = ExchangeFactory.INSTANCE.createExchange(xchangeExchange)
+					.getPollingMarketDataService()
+					.getTrades(Currencies.BTC, pref_currency);
+		}
 
+		try {
 			List<Trade> tradesList = trades.getTrades();
 
 			float[] values = new float[tradesList.size()];
