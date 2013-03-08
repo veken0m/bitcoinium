@@ -422,35 +422,6 @@
                     android:key="graphscalePref"
                     android:summary="When the price graph is scrolled, max and min values will be reajusted to maximize viewing"
                     android:title="View Window Scaling" />
-
-                <EditTextPreference
-                    android:defaultValue="4"
-                    android:digits="01234567890"
-                    android:inputType="numberDecimal"
-                    android:key="mtgoxWindowSize"
-                    android:summary="# of hours viewable in graph window"
-                    android:title="MtGox Window Size" />
-                <EditTextPreference
-                    android:defaultValue="36"
-                    android:digits="01234567890"
-                    android:inputType="numberDecimal"
-                    android:key="virtexWindowSize"
-                    android:summary="# of hours viewable in graph window"
-                    android:title="VirtEx Window Size" />
-                <EditTextPreference
-                    android:defaultValue="3"
-                    android:digits="01234567890"
-                    android:inputType="numberDecimal"
-                    android:key="btceWindowSize"
-                    android:summary="# of hours viewable in graph window"
-                    android:title="BTC-E Window Size" />
-                <EditTextPreference
-                    android:defaultValue="12"
-                    android:digits="01234567890"
-                    android:inputType="numberDecimal"
-                    android:key="bitstampWindowSize"
-                    android:summary="# of hours viewable in graph window"
-                    android:title="Bitstamp Window Size" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

@@ -45,7 +45,6 @@ public class GraphActivity extends SherlockActivity {
 	LineGraphView graphView;
 	static Boolean pref_graphMode;
 	static Boolean pref_scaleMode;
-	static int pref_windowSize;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -214,8 +213,7 @@ public class GraphActivity extends SherlockActivity {
 					}
 				};
 
-				double windowSize;
-				windowSize = pref_windowSize * 3600000;
+				double windowSize = (dates[dates.length - 1] - dates[0])/2;
 				// startValue enables graph window to be aligned with latest
 				// trades
 				final double startValue = dates[dates.length - 1] - windowSize;
@@ -292,8 +290,6 @@ public class GraphActivity extends SherlockActivity {
 
 		pref_graphMode = prefs.getBoolean("graphmodePref", false);
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
-		pref_windowSize = Integer.parseInt(prefs.getString(prefix
-				+ "WindowSize", "12"));
 		pref_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
 	}
