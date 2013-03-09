@@ -2,6 +2,7 @@ package com.veken0m.bitcoinium;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -16,10 +17,12 @@ public class PreferencesActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
-
+		
 		Preference devEmailPref = (Preference) findPreference("devEmailPref");
 		devEmailPref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+					
+					Resources res = getResources();
 
 					public boolean onPreferenceClick(Preference preference) {
 						Intent i = new Intent(Intent.ACTION_SEND);
@@ -27,7 +30,7 @@ public class PreferencesActivity extends PreferenceActivity {
 						i.putExtra(android.content.Intent.EXTRA_EMAIL,
 								new String[] { "veken0m.apps@gmail.com" });
 						i.putExtra(android.content.Intent.EXTRA_SUBJECT,
-								"Bitcoinium Prime Feedback");
+								res.getString(R.string.app_name) +  " Feedback");
 						startActivity(Intent.createChooser(i, "Send email"));
 
 						return true;

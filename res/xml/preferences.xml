@@ -84,7 +84,7 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bidasktogglePref"
-                    android:summary="Replace High/Low with Bid/Ask on widget if supported by exchange"
+                    android:summary="Replace High/Low with Bid/Ask on widget if supported by exchange \n Note: Text will appear white instead of grey"
                     android:title="Bid/Ask on Widget" />
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -115,7 +115,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Alarm" >
         <PreferenceScreen
-            android:summary="Adjust settings of the price alarm notification. \nIf multiple widgets of the same exchange is used, it&apos;s selected main currency will be used to trigger alarm"
+            android:summary="Adjust settings of the price alarm notification. \n Note: The main currency of an exchange will be used to trigger alarm"
             android:title="Price Alarm Notification" >
             <PreferenceCategory android:title="Price Alarm" >
                 <CheckBoxPreference
@@ -454,7 +454,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.4.0a"
+                    android:summary="1.5.0"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"
