@@ -1,6 +1,6 @@
 package com.veken0m.miningpools.deepbit;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties
 public class Worker {

@@ -1,7 +1,8 @@
 package com.veken0m.miningpools.emc;
 
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EMC{
    	private String apikey;

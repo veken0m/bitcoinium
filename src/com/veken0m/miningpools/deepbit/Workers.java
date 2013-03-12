@@ -3,7 +3,7 @@ package com.veken0m.miningpools.deepbit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 public class Workers {
 	private List<Worker> workers = new ArrayList<Worker>();

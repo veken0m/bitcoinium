@@ -1,6 +1,6 @@
 package com.veken0m.miningpools.bitminter;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Balances{
    	private float BTC;

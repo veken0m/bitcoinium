@@ -7,7 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,6 +25,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.miningpools.emc.EMC;
 import com.veken0m.miningpools.emc.Workers;
 
