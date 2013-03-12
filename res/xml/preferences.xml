@@ -434,6 +434,11 @@
                     android:key="graphscalePref"
                     android:summary="When the price graph is scrolled, max and min values will be reajusted to maximize viewing"
                     android:title="View Window Scaling" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxapiv0Pref"
+                    android:summary="MtGox fast mode greatly reduces loading times by using API V0. This will only show trades in the past hour."
+                    android:title="MtGox Fast Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

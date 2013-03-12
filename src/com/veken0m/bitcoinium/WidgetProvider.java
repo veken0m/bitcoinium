@@ -78,8 +78,15 @@ public class WidgetProvider extends BaseWidgetProvider {
 			final android.net.NetworkInfo wifi = connMgr
 					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-			if (!pref_wifionly
-					|| (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED)) {
+			Boolean wifiConnected = false;
+
+			try {
+				wifiConnected = (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			if (!pref_wifionly || wifiConnected) {
 
 				for (int appWidgetId : widgetIds) {
 					RemoteViews views = new RemoteViews(
@@ -222,7 +229,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 															Float.valueOf(pref_notifLimitUpper))) {
 										createNotification(context, lastPrice,
 												exchangeName, NOTIFY_ID);
-										if(pref_alarmClock){
+										if (pref_alarmClock) {
 											setAlarmClock(context);
 										}
 									}

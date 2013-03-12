@@ -45,6 +45,7 @@ public class GraphActivity extends SherlockActivity {
 	LineGraphView graphView;
 	static Boolean pref_graphMode;
 	static Boolean pref_scaleMode;
+	static Boolean pref_fastMode;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,12 +134,16 @@ public class GraphActivity extends SherlockActivity {
 	private void generatePreviousPriceGraph() {
 
 		g_graphView = null;
-
+		String graphExchange = xchangeExchange;
 		Trades trades;
+		
+		if(pref_fastMode == false){
+			// Use API V1 instead of V0 for MtGox Trades
+			graphExchange = xchangeExchange.replace("0", "1");
+		}
 		try {
 			trades = ExchangeFactory.INSTANCE
-					.createExchange(xchangeExchange.replace("0", "1"))
-					// Use API V1 instead of V0 for MtGox Trades
+					.createExchange(graphExchange)
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 		} catch (OutOfMemoryError E) {
@@ -292,6 +297,8 @@ public class GraphActivity extends SherlockActivity {
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
 		pref_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
+		pref_fastMode = prefs.getBoolean("mtgoxapiv0Pref",
+				false);
 	}
 
 }
