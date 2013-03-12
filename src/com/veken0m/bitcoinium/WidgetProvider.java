@@ -78,18 +78,12 @@ public class WidgetProvider extends BaseWidgetProvider {
 			final android.net.NetworkInfo wifi = connMgr
 					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-			//final android.net.NetworkInfo mobile = connMgr
-			//		.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
 			if (!pref_wifionly
 					|| (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED)) {
 
 				for (int appWidgetId : widgetIds) {
 					RemoteViews views = new RemoteViews(
 							context.getPackageName(), R.layout.appwidget);
-					// views.setInt(R.id.widget_layout, "setBackgroundColor",
-					// android.R.color.white); //sets the widget background
-					// color
 
 					String pref_widget = WidgetConfigureActivity
 							.loadExchangePref(context, appWidgetId);
@@ -204,7 +198,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 							}
 
 							if (pref_ticker
-									|| pref_currency.equals(pref_main_currency)) {
+									&& pref_currency.equals(pref_main_currency)) {
 								createPermanentNotification(context,
 										R.drawable.bitcoin, "Bitcoin  "
 												+ lastPrice, "Bitcoin value: "

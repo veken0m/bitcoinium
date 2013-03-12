@@ -322,7 +322,7 @@
                     android:title="Bitfloor Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="bitcoin24ickerPref"
+                    android:key="bitcoin24TickerPref"
                     android:summary="Will enable a permanent Bitcoin-24 ticker notification in the notification drawer"
                     android:title="Bitcoin-24 Notification Ticker" />
             </PreferenceCategory>
