@@ -84,7 +84,7 @@ public class Utils {
 	}
 
 	public static String getCurrentTime() {
-		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
+		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.getDefault());
 		final String currentTime = sdf.format(new Date());
 
 		return currentTime;

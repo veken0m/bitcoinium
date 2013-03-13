@@ -39,7 +39,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_alarmVibrate;
 	static Boolean pref_ticker;
 	static Boolean pref_widgetbidask;
-	static Boolean pref_wifionly;
+	static Boolean pref_wifionly = false;
 	static Boolean pref_alarmClock;
 	static String pref_notificationSound;
 
@@ -64,6 +64,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
 		pref_main_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
+		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
 		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 	}
@@ -81,7 +82,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
-		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
 		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
