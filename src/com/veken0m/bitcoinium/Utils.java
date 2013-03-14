@@ -9,6 +9,8 @@ import java.util.Locale;
 
 import org.joda.money.CurrencyUnit;
 
+import android.content.Context;
+import android.text.format.DateFormat;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -83,11 +85,25 @@ public class Utils {
 		return ((value >= min) && (value <= max));
 	}
 
-	public static String getCurrentTime() {
-		final SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.getDefault());
-		final String currentTime = sdf.format(new Date());
+	public static String getCurrentTime(Context ctxt) {
+		Date time = new Date();
+        DateFormat.getTimeFormat(ctxt).format(time);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(DateFormat.format("E", time));
+        sb.append(" ");
+        sb.append(DateFormat.getTimeFormat(ctxt).format(time));
 
-		return currentTime;
+		return sb.toString();
+	}
+	
+	public static String dateFormat(Context ctxt, long date) {
+		Date dateFormatted = new Date(date);
+        StringBuilder sb = new StringBuilder();
+        sb.append(DateFormat.format("MMM dd", dateFormatted));
+        sb.append(" @ ");
+        sb.append(DateFormat.getTimeFormat(ctxt).format(dateFormatted));
+		return sb.toString();
 	}
 
 	public static void setTextViewParams(TextView tv, String text) {

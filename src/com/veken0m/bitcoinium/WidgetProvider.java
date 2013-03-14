@@ -77,12 +77,14 @@ public class WidgetProvider extends BaseWidgetProvider {
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			final android.net.NetworkInfo wifi = connMgr
 					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
+			
+			readGeneralPreferences(context);
 			Boolean wifiConnected = false;
 
 			try {
 				wifiConnected = (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
 			} catch (Exception e) {
+				wifiConnected = false;
 				e.printStackTrace();
 			}
 
@@ -196,7 +198,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 									"Volume: " + volume);
 
 							views.setTextViewText(R.id.label, "Refreshed @ "
-									+ Utils.getCurrentTime());
+									+ Utils.getCurrentTime(context));
 							views.setTextColor(R.id.label, Color.GREEN);
 
 							if (pref_DisplayUpdates == true) {

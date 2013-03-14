@@ -39,9 +39,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_alarmVibrate;
 	static Boolean pref_ticker;
 	static Boolean pref_widgetbidask;
-	static Boolean pref_wifionly = false;
+	static Boolean pref_wifionly;
 	static Boolean pref_alarmClock;
 	static String pref_notificationSound;
+	
+	
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -66,6 +68,25 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				defaultCurrency);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
 		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
+		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
+	}
+	
+	protected static void readGeneralPreferences(Context context) {
+
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+
+		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
+		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
+				"30"));
+		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
+		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
+		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
+		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
+		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 	}
 
@@ -81,7 +102,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
-		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 

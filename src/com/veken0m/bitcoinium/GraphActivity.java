@@ -135,7 +135,7 @@ public class GraphActivity extends SherlockActivity {
 
 		g_graphView = null;
 		String graphExchange = xchangeExchange;
-		Trades trades;
+		Trades trades = null;
 		
 		if(pref_fastMode == false){
 			// Use API V1 instead of V0 for MtGox Trades
@@ -151,6 +151,8 @@ public class GraphActivity extends SherlockActivity {
 			trades = ExchangeFactory.INSTANCE.createExchange(xchangeExchange)
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
+		} catch (Exception e) {
+				e.printStackTrace();
 		}
 
 		try {
@@ -179,7 +181,7 @@ public class GraphActivity extends SherlockActivity {
 			}
 
 			if (pref_graphMode) {
-
+				
 				final String sOldestDate = formatter.format(dates[0]);
 				final String sMidDate = formatter
 						.format(dates[dates.length / 2 - 1]);
@@ -212,7 +214,7 @@ public class GraphActivity extends SherlockActivity {
 					@Override
 					protected String formatLabel(double value, boolean isValueX) {
 						if (isValueX) {
-							return formatter.format(value);
+							return Utils.dateFormat(getBaseContext(),(long)value);
 						} else
 							return super.formatLabel(value, isValueX);
 					}
