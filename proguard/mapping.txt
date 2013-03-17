@@ -5899,57 +5899,57 @@ com.veken0m.graphing.GraphViewer -> com.veken0m.a.a:
     186:190:float getMax() -> a
     194:198:float getMin() -> b
     220:258:java.lang.String[] createLabels(float,float,int,java.lang.String,java.lang.String,int) -> a
-com.veken0m.miningpools.bitminter.BTC -> com.veken0m.b.a.a:
+com.veken0m.bitcoinium.mining.bitminter.BTC -> com.veken0m.b.a.a:
     java.lang.Number total_accepted -> a
     java.lang.Number total_rejected -> b
     44:44:java.lang.Number getTotal_accepted() -> a
     52:52:java.lang.Number getTotal_rejected() -> b
-com.veken0m.miningpools.bitminter.Balances -> com.veken0m.b.a.b:
+com.veken0m.bitcoinium.mining.bitminter.Balances -> com.veken0m.b.a.b:
     float BTC -> a
     float NMC -> b
     16:16:float getBTC() -> a
     19:19:float getNMC() -> b
-com.veken0m.miningpools.bitminter.BitMinterData -> com.veken0m.b.a.c:
-    com.veken0m.miningpools.bitminter.Balances balances -> a
+com.veken0m.bitcoinium.mining.bitminter.BitMinterData -> com.veken0m.b.a.c:
+    com.veken0m.bitcoinium.mining.bitminter.Balances balances -> a
     java.lang.Number hash_rate -> b
     java.lang.String name -> c
     java.util.List workers -> d
-    22:22:com.veken0m.miningpools.bitminter.Balances getBalances() -> a
+    22:22:com.veken0m.bitcoinium.mining.bitminter.Balances getBalances() -> a
     28:28:java.lang.Number getHash_rate() -> b
     34:34:java.lang.String getName() -> c
     59:59:java.util.List getWorkers() -> d
-com.veken0m.miningpools.bitminter.Work -> com.veken0m.b.a.d:
-    com.veken0m.miningpools.bitminter.BTC bTC -> a
-    16:16:com.veken0m.miningpools.bitminter.BTC getBTC() -> a
-com.veken0m.miningpools.bitminter.Workers -> com.veken0m.b.a.e:
+com.veken0m.bitcoinium.mining.bitminter.Work -> com.veken0m.b.a.d:
+    com.veken0m.bitcoinium.mining.bitminter.BTC bTC -> a
+    16:16:com.veken0m.bitcoinium.mining.bitminter.BTC getBTC() -> a
+com.veken0m.bitcoinium.mining.bitminter.Workers -> com.veken0m.b.a.e:
     boolean alive -> a
     java.lang.Number hash_rate -> b
     java.lang.String name -> c
-    com.veken0m.miningpools.bitminter.Work work -> d
+    com.veken0m.bitcoinium.mining.bitminter.Work work -> d
     11:11:boolean getAlive() -> a
     19:19:java.lang.Number getHash_rate() -> b
     35:35:java.lang.String getName() -> c
-    43:43:com.veken0m.miningpools.bitminter.Work getWork() -> d
-com.veken0m.miningpools.deepbit.DeepBitData -> com.veken0m.b.b.a:
+    43:43:com.veken0m.bitcoinium.mining.bitminter.Work getWork() -> d
+com.veken0m.bitcoinium.mining.deepbit.DeepBitData -> com.veken0m.b.b.a:
     java.lang.Number confirmed_reward -> a
     java.lang.Number hashrate -> b
     java.lang.Number payout_history -> c
-    com.veken0m.miningpools.deepbit.Workers workers -> d
+    com.veken0m.bitcoinium.mining.deepbit.Workers workers -> d
     29:29:java.lang.Number getConfirmed_reward() -> a
     33:33:java.lang.Number getHashrate() -> b
     41:41:java.lang.Number getPayout_history() -> c
-    45:45:com.veken0m.miningpools.deepbit.Workers getWorkers() -> d
-com.veken0m.miningpools.deepbit.Worker -> com.veken0m.b.b.b:
+    45:45:com.veken0m.bitcoinium.mining.deepbit.Workers getWorkers() -> d
+com.veken0m.bitcoinium.mining.deepbit.Worker -> com.veken0m.b.b.b:
     boolean alive -> a
     java.lang.Number shares -> b
     java.lang.Number stales -> c
     12:12:boolean getAlive() -> a
     20:20:java.lang.Number getShares() -> b
     28:28:java.lang.Number getStales() -> c
-com.veken0m.miningpools.deepbit.Workers -> com.veken0m.b.b.c:
+com.veken0m.bitcoinium.mining.deepbit.Workers -> com.veken0m.b.b.c:
     java.util.List workers -> a
     java.util.List names -> b
-    13:13:com.veken0m.miningpools.deepbit.Worker getWorker(int) -> a
+    13:13:com.veken0m.bitcoinium.mining.deepbit.Worker getWorker(int) -> a
     17:17:java.util.List getNames() -> a
     21:21:java.util.List getWorkers() -> b
 com.xeiam.xchange.BaseExchange -> com.xeiam.xchange.BaseExchange:

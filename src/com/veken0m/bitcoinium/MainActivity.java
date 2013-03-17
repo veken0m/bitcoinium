@@ -19,6 +19,14 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.exchanges.BTCEFragment;
+import com.veken0m.bitcoinium.exchanges.BitFloorFragment;
+import com.veken0m.bitcoinium.exchanges.Bitcoin24Fragment;
+import com.veken0m.bitcoinium.exchanges.BitcoinCentralFragment;
+import com.veken0m.bitcoinium.exchanges.BitstampFragment;
+import com.veken0m.bitcoinium.exchanges.CampBXFragment;
+import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
+import com.veken0m.bitcoinium.exchanges.VirtExFragment;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m

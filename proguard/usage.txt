@@ -351,7 +351,7 @@ com.veken0m.bitcoinium.WidgetConfigureActivity:
     private static final java.lang.String PREF_CURRENCY_KEY
 com.veken0m.graphing.GraphViewer:
     47:66:public GraphViewer(android.content.Context,float[],java.lang.String,java.lang.String[],java.lang.String[],boolean)
-com.veken0m.miningpools.bitminter.BTC:
+com.veken0m.bitcoinium.mining.bitminter.BTC:
     private java.lang.Number checkpoint_accepted
     private java.lang.Number checkpoint_rejected
     private java.lang.Number round_accepted
@@ -367,49 +367,49 @@ com.veken0m.miningpools.bitminter.BTC:
     40:41:public void setRound_rejected(java.lang.Number)
     48:49:public void setTotal_accepted(java.lang.Number)
     56:57:public void setTotal_rejected(java.lang.Number)
-com.veken0m.miningpools.bitminter.Balances:
+com.veken0m.bitcoinium.mining.bitminter.Balances:
     9:13:public Balances(float,float)
-com.veken0m.miningpools.bitminter.BitMinterData:
+com.veken0m.bitcoinium.mining.bitminter.BitMinterData:
     private java.lang.Number active_workers
     private java.lang.Number now
-    private com.veken0m.miningpools.bitminter.Round_start round_start
-    private com.veken0m.miningpools.bitminter.Shift shift
+    private com.veken0m.bitcoinium.mining.bitminter.Round_start round_start
+    private com.veken0m.bitcoinium.mining.bitminter.Shift shift
     16:16:public java.lang.Number getActive_workers()
     19:20:public void setActive_workers(java.lang.Number)
-    25:26:public void setBalances(com.veken0m.miningpools.bitminter.Balances)
+    25:26:public void setBalances(com.veken0m.bitcoinium.mining.bitminter.Balances)
     31:32:public void setHash_rate(java.lang.Number)
     37:38:public void setName(java.lang.String)
     40:40:public java.lang.Number getNow()
     43:44:public void setNow(java.lang.Number)
-    46:46:public com.veken0m.miningpools.bitminter.Round_start getRound_start()
-    49:50:public void setRound_start(com.veken0m.miningpools.bitminter.Round_start)
-    53:53:public com.veken0m.miningpools.bitminter.Shift getShift()
-    56:57:public void setShift(com.veken0m.miningpools.bitminter.Shift)
+    46:46:public com.veken0m.bitcoinium.mining.bitminter.Round_start getRound_start()
+    49:50:public void setRound_start(com.veken0m.bitcoinium.mining.bitminter.Round_start)
+    53:53:public com.veken0m.bitcoinium.mining.bitminter.Shift getShift()
+    56:57:public void setShift(com.veken0m.bitcoinium.mining.bitminter.Shift)
     62:63:public void setWorkers(java.util.List)
-com.veken0m.miningpools.bitminter.NMC
-com.veken0m.miningpools.bitminter.Round_start
-com.veken0m.miningpools.bitminter.Shift
-com.veken0m.miningpools.bitminter.Work:
-    private com.veken0m.miningpools.bitminter.NMC nMC
-    9:13:public Work(com.veken0m.miningpools.bitminter.BTC,com.veken0m.miningpools.bitminter.NMC)
-    20:20:public com.veken0m.miningpools.bitminter.NMC getNMC()
-com.veken0m.miningpools.bitminter.Workers:
+com.veken0m.bitcoinium.mining.bitminter.NMC
+com.veken0m.bitcoinium.mining.bitminter.Round_start
+com.veken0m.bitcoinium.mining.bitminter.Shift
+com.veken0m.bitcoinium.mining.bitminter.Work:
+    private com.veken0m.bitcoinium.mining.bitminter.NMC nMC
+    9:13:public Work(com.veken0m.bitcoinium.mining.bitminter.BTC,com.veken0m.bitcoinium.mining.bitminter.NMC)
+    20:20:public com.veken0m.bitcoinium.mining.bitminter.NMC getNMC()
+com.veken0m.bitcoinium.mining.bitminter.Workers:
     private java.lang.Number last_work
     15:16:public void setAlive(boolean)
     23:24:public void setHash_rate(java.lang.Number)
     27:27:public java.lang.Number getLast_work()
     31:32:public void setLast_work(java.lang.Number)
     39:40:public void setName(java.lang.String)
-    47:48:public void setWork(com.veken0m.miningpools.bitminter.Work)
-com.veken0m.miningpools.deepbit.DeepBitData:
+    47:48:public void setWork(com.veken0m.bitcoinium.mining.bitminter.Work)
+com.veken0m.bitcoinium.mining.deepbit.DeepBitData:
     private boolean ipa
-    17:26:public DeepBitData(java.lang.Number,java.lang.Number,java.lang.Number,com.veken0m.miningpools.deepbit.Workers)
+    17:26:public DeepBitData(java.lang.Number,java.lang.Number,java.lang.Number,com.veken0m.bitcoinium.mining.deepbit.Workers)
     37:37:public boolean getIpa()
-com.veken0m.miningpools.deepbit.Worker:
+com.veken0m.bitcoinium.mining.deepbit.Worker:
     16:17:public void setAlive(boolean)
     24:25:public void setShares(java.lang.Number)
     32:33:public void setStales(java.lang.Number)
-com.veken0m.miningpools.deepbit.Workers:
+com.veken0m.bitcoinium.mining.deepbit.Workers:
     8:8:public Workers()
     25:25:public int numberOfWorkers()
-    30:32:public void setWorker(java.lang.String,com.veken0m.miningpools.deepbit.Worker)
+    30:32:public void setWorker(java.lang.String,com.veken0m.bitcoinium.mining.deepbit.Worker)

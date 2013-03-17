@@ -12,6 +12,8 @@ import android.net.NetworkInfo.DetailedState;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.dto.marketdata.Ticker;
