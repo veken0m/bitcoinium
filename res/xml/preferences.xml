@@ -421,13 +421,13 @@
         <PreferenceScreen
             android:summary="Configure the Price Graph"
             android:title="Price Graph Settings" >
-            <PreferenceCategory android:title="Price Graph Mode" >
+            <!-- <PreferenceCategory android:title="Price Graph Mode" >
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="graphmodePref"
                     android:summary="Price graph will be displayed using original GraphView library. Classic mode displays past 2-3 days in one viewing without scrolling"
                     android:title="Classic Mode" />
-            </PreferenceCategory>
+            </PreferenceCategory> --> 
             <PreferenceCategory android:title="Price Graph Settings" >
                 <CheckBoxPreference
                     android:defaultValue="false"

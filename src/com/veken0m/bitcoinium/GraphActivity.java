@@ -1,7 +1,5 @@
 package com.veken0m.bitcoinium;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -26,7 +24,6 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.Utils;
-import com.veken0m.graphing.GraphViewer;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.dto.marketdata.Trade;
@@ -34,7 +31,6 @@ import com.xeiam.xchange.dto.marketdata.Trades;
 
 public class GraphActivity extends SherlockActivity {
 
-	private GraphViewer g_graphView;
 	private ProgressDialog graphProgressDialog;
 	private static final Handler mOrderHandler = new Handler();
 	public static String exchangeName;
@@ -115,12 +111,8 @@ public class GraphActivity extends SherlockActivity {
 		@Override
 		public void run() {
 			safelyDismiss(graphProgressDialog);
-			if (g_graphView != null || graphView != null) {
-				if (!pref_graphMode) {
+			if (graphView != null) {
 					setContentView(graphView);
-				} else {
-					setContentView(g_graphView);
-				}
 			} else {
 				createPopup("Unable to retrieve transactions from "
 						+ exchangeName + ", check your 3G or WiFi connection");
@@ -135,7 +127,6 @@ public class GraphActivity extends SherlockActivity {
 	 */
 	private void generatePreviousPriceGraph() {
 
-		g_graphView = null;
 		String graphExchange = xchangeExchange;
 		Trades trades = null;
 		
@@ -164,8 +155,6 @@ public class GraphActivity extends SherlockActivity {
 			long[] dates = new long[tradesList.size()];
 			final GraphViewData[] data = new GraphViewData[values.length];
 
-			final Format formatter = new SimpleDateFormat("MMM dd @ HH:mm");
-
 			float largest = Integer.MIN_VALUE;
 			float smallest = Integer.MAX_VALUE;
 
@@ -181,31 +170,6 @@ public class GraphActivity extends SherlockActivity {
 					smallest = values[i];
 				}
 			}
-
-			if (pref_graphMode) {
-				
-				final String sOldestDate = formatter.format(dates[0]);
-				final String sMidDate = formatter
-						.format(dates[dates.length / 2 - 1]);
-				final String sNewestDate = formatter
-						.format(dates[dates.length - 1]);
-
-				// min, max, steps, pre string, post string, number of decimal
-				// places
-				final String[] verlabels = GraphViewer.createLabels(smallest,
-						largest, 10, "$", "", 4);
-
-				final String[] horlabels = new String[] { sOldestDate, "", "",
-						sMidDate, "", "", sNewestDate };
-
-				g_graphView = new GraphViewer(this, values, pref_currency
-						+ "/BTC since " + sOldestDate, // title
-						horlabels, // horizontal labels
-						verlabels, // vertical labels
-						GraphViewer.LINE, // type of graph
-						smallest, // min
-						largest); // max
-			} else {
 
 				for (int i = 0; i < tradesListSize; i++) {
 					data[i] = new GraphViewData(dates[i], values[i]);
@@ -235,8 +199,6 @@ public class GraphActivity extends SherlockActivity {
 					graphView.setManualYAxisBounds(largest, smallest);
 				}
 
-			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -261,12 +223,8 @@ public class GraphActivity extends SherlockActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.graph);
-		if (g_graphView != null || graphView != null) {
-			if (!pref_graphMode) {
+		if (graphView != null) {
 				setContentView(graphView);
-			} else {
-				setContentView(g_graphView);
-			}
 		} else {
 			viewGraph();
 		}
