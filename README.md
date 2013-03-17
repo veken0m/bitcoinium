@@ -10,6 +10,8 @@ Currently supported exchanges include:
 	- Bitstamp : http://bitstamp.net
 	- CampBX: http://campbx.com
 	- BitcoinCentral: http://bitcoin-central.net
+	- Bitfloor: https://bitfloor.com/
+	- Bitcoin-24: https://bitcoin-24.com/
 	
 	
 Additional Information from:	
