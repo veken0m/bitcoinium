@@ -199,6 +199,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (item.getItemId() == R.id.preferences) {
 			startActivity(new Intent(this, PreferencesActivity.class));
 		}
+		if (item.getItemId() == R.id.price_alarm_preferences) {
+			startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
+		}
 		return super.onOptionsItemSelected(item);
 	}
 

@@ -175,7 +175,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
 
-		Intent notificationIntent = new Intent(ctxt, BaseWidgetProvider.class);
+		Intent notificationIntent = new Intent(ctxt, PriceAlarmPreferencesActivity.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
 				notificationIntent, 0);
 	
@@ -203,7 +203,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(icon, null, when);
 
-		Intent notificationIntent = new Intent(ctxt, BaseWidgetProvider.class);
+		Intent notificationIntent = new Intent(ctxt, PreferencesActivity.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
 				notificationIntent, 0);
 

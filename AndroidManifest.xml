@@ -76,6 +76,10 @@
             android:name="com.veken0m.bitcoinium.PreferencesActivity"
             android:label="Preferences" >
         </activity>
+                <activity
+            android:name="com.veken0m.bitcoinium.PriceAlarmPreferencesActivity"
+            android:label="Price Alarm Settings" >
+        </activity>
         <activity
             android:name="com.veken0m.bitcoinium.WebViewerActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
