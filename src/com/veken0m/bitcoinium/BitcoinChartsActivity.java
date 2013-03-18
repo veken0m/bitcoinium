@@ -24,11 +24,11 @@ import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
 import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 public class BitcoinChartsActivity extends SherlockActivity {
-	BitcoinChartsTicker[] marketData;
 
 	protected static ProgressDialog bitcoinchartsProgressDialog;
 	final static Handler mOrderHandler = new Handler();
 	Boolean connectionFail = false;
+	BitcoinChartsTicker[] marketData;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +75,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			connectionFail = true;
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 			// String avg = Utils.formatDecimal(data.getAvg(), 2, true);
 			// String bid = Utils.formatDecimal(data.getBid(), 2, true);
 			// String ask = Utils.formatDecimal(data.getAsk(), 2, true);
-			
+
 			tvSymbol.setText(data.getSymbol());
 			tvSymbol.setLayoutParams(params);
 			Utils.setTextViewParams(tvLast, last);
@@ -152,7 +151,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
 			previousCurrency = data.getCurrency();
 		}
-
 	}
 
 	private void viewBitcoinCharts() {

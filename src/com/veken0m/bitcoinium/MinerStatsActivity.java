@@ -127,7 +127,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			// ft.replace(R.id.table_fragment, fragment);
 		}
 
 		@Override
@@ -193,6 +192,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				
 				LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
 
 				TextView tvCurrentDifficulty = new TextView(getBaseContext());

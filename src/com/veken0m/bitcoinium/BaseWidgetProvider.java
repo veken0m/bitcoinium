@@ -42,8 +42,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_wifionly;
 	static Boolean pref_alarmClock;
 	static String pref_notificationSound;
-	
-	
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -67,11 +65,12 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_main_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
-		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_notificationSound = prefs.getString("notificationSoundPref",
+				"DEFAULT_RINGTONE_URI");
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 	}
-	
+
 	protected static void readGeneralPreferences(Context context) {
 
 		SharedPreferences prefs = PreferenceManager
@@ -85,7 +84,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
-		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_notificationSound = prefs.getString("notificationSoundPref",
+				"DEFAULT_RINGTONE_URI");
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 	}
@@ -102,7 +102,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
-		pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
+		pref_notificationSound = prefs.getString("notificationSoundPref",
+				"DEFAULT_RINGTONE_URI");
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
 	}
@@ -137,11 +138,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
 		}
 	}
-	
+
 	static void setAlarmClock(Context context) {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-        
+
 		Editor editor = prefs.edit();
 		editor.putBoolean("alarmClockPref", false);
 		editor.commit();
@@ -152,13 +153,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
 		i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (please delete)");
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-	    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-	    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-        context.startActivity(i);
+		i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+		i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+		i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+		context.startActivity(i);
 	}
-	
-	
 
 	static void createNotification(Context ctxt, String lastPrice,
 			String exchange, int BITCOIN_NOTIFY_ID) {
@@ -175,18 +174,18 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
 
-		Intent notificationIntent = new Intent(ctxt, PriceAlarmPreferencesActivity.class);
+		Intent notificationIntent = new Intent(ctxt,
+				PriceAlarmPreferencesActivity.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
 				notificationIntent, 0);
-	
 
 		notification.setLatestEventInfo(ctxt, contentTitle, contentText,
 				contentIntent);
-	
+
 		if (pref_alarmSound) {
 			notification.sound = Uri.parse(pref_notificationSound);
 		}
-		
+
 		if (pref_alarmVibrate) {
 			notification.defaults |= Notification.DEFAULT_VIBRATE;
 		}
@@ -223,17 +222,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		mNotificationManager.cancel(BITCOIN_NOTIFY_ID);
 	}
 
-	/**
-	 * createTicker creates a notification which only briefly appears in the
-	 * ticker bar
-	 * 
-	 * @param Context
-	 *            ctxt
-	 * @param icon
-	 *            (such as R.drawable.bitcoin)
-	 * @param tickerText
-	 *            (notification ticker)
-	 */
 	static void createTicker(Context ctxt, int icon, CharSequence tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) ctxt

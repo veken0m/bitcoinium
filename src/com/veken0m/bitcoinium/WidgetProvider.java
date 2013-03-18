@@ -42,27 +42,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 	public static class UpdateService extends IntentService {
 
-		public UpdateService() {
-
-			super("WidgetProvider$UpdateService");
-		}
-
-		@Override
-		public void onCreate() {
-			super.onCreate();
-		}
-
-		@Override
-		public int onStartCommand(Intent intent, int flags, int startId) {
-			super.onStartCommand(intent, flags, startId);
-			return START_STICKY;
-		}
-
-		@Override
-		public void onHandleIntent(Intent intent) {
-			buildUpdate(this);
-		}
-
 		public void buildUpdate(Context context) {
 
 			AppWidgetManager widgetManager = AppWidgetManager
@@ -79,7 +58,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			final android.net.NetworkInfo wifi = connMgr
 					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-			
+
 			readGeneralPreferences(context);
 			Boolean wifiConnected = false;
 
@@ -259,6 +238,27 @@ public class WidgetProvider extends BaseWidgetProvider {
 					}
 				}
 			}
+		}
+
+		public UpdateService() {
+
+			super("WidgetProvider$UpdateService");
+		}
+
+		@Override
+		public void onCreate() {
+			super.onCreate();
+		}
+
+		@Override
+		public int onStartCommand(Intent intent, int flags, int startId) {
+			super.onStartCommand(intent, flags, startId);
+			return START_STICKY;
+		}
+
+		@Override
+		public void onHandleIntent(Intent intent) {
+			buildUpdate(this);
 		}
 	}
 

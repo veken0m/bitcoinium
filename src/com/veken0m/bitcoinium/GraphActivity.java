@@ -202,7 +202,6 @@ public class GraphActivity extends SherlockActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private void createPopup(String pMessage) {

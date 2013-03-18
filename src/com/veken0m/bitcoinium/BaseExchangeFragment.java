@@ -38,14 +38,16 @@ public class BaseExchangeFragment extends SherlockFragment {
 		displayGraphButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(!graph){
-				Toast.makeText(getActivity(),"This exchange does not currently support Price Graph",
-						Toast.LENGTH_LONG).show();
+				if (!graph) {
+					Toast.makeText(
+							getActivity(),
+							"This exchange does not currently support Price Graph",
+							Toast.LENGTH_LONG).show();
 				} else {
-				Intent graphActivity = new Intent(getActivity()
-						.getBaseContext(), GraphActivity.class);
-				graphActivity.putExtra("exchange", exchange);
-				startActivity(graphActivity);
+					Intent graphActivity = new Intent(getActivity()
+							.getBaseContext(), GraphActivity.class);
+					graphActivity.putExtra("exchange", exchange);
+					startActivity(graphActivity);
 				}
 			}
 		});

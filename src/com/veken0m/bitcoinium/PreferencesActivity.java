@@ -16,6 +16,8 @@ public class PreferencesActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//TODO: Change Preferences to use Fragments, current method is deprecated.
 		addPreferencesFromResource(R.xml.preferences);
 		
 		Preference devEmailPref = (Preference) findPreference("devEmailPref");

@@ -42,6 +42,7 @@ public class OrderbookActivity extends SherlockActivity {
 	protected String xchangeExchange = null;
 	protected List<LimitOrder> listAsks;
 	protected List<LimitOrder> listBids;
+
 	/**
 	 * List of preference variables
 	 */
@@ -81,7 +82,6 @@ public class OrderbookActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
-		//menu.findItem(R.id.action_refresh).setIcon(R.drawable.ic_menu_refresh);
 		inflater.inflate(R.menu.action_menu, menu);
 		return true;
 	}
@@ -110,7 +110,7 @@ public class OrderbookActivity extends SherlockActivity {
 
 	protected static void readPreferences(Context context, String prefix,
 			String defaultCurrency) {
-		// Get the xml/preferences.xml preferences
+
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 

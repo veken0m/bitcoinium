@@ -96,12 +96,6 @@ public class WebViewerActivity extends Activity {
 		return false;
 	}
 
-	/**
-	 * in onCreateOptionsMenu, we display our own custom menu and return false
-	 * as to void the default android menu
-	 * @param menu we ignore this (for now)
-	 * @return boolean false to ignore the default menu, true to display it
-	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		displayMenu();

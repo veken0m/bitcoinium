@@ -1,14 +1,8 @@
 package com.veken0m.bitcoinium;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.widget.Toast;
 
 public class PriceAlarmPreferencesActivity extends PreferenceActivity {
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
