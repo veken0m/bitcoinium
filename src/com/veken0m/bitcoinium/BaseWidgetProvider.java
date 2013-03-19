@@ -21,19 +21,13 @@ import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 public class BaseWidgetProvider extends AppWidgetProvider {
 
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
-	public static final String GRAPH = "com.veken0m.bitcoinium.GRAPH";
 
 	/**
 	 * List of preference variables
 	 */
-	static Boolean pref_DisplayUpdates;
 	static int pref_widgetRefreshFreq;
-	static String pref_widgetBehaviour;
-	static Boolean pref_PriceAlarm;
-	static String pref_notifLimitLower;
-	static String pref_notifLimitUpper;
-	static String pref_currency;
-	static String pref_main_currency;
+	static Boolean pref_priceAlarm;
+	static Boolean pref_displayUpdates;
 	static Boolean pref_wakeupRefresh;
 	static Boolean pref_alarmSound;
 	static Boolean pref_alarmVibrate;
@@ -41,7 +35,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static Boolean pref_widgetbidask;
 	static Boolean pref_wifionly;
 	static Boolean pref_alarmClock;
+	static String pref_main_currency;
 	static String pref_notificationSound;
+	static String pref_notifLimitLower;
+	static String pref_notifLimitUpper;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -52,11 +49,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
+		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
 		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
 				"30"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
-		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
+		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_notifLimitUpper = prefs.getString(prefix + "Upper", "999");
 		pref_notifLimitLower = prefs.getString(prefix + "Lower", "0");
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
@@ -76,11 +73,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
+		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
 		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
 				"30"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
-		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
+		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
@@ -95,11 +92,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		pref_DisplayUpdates = prefs.getBoolean("checkboxPref", false);
+		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
 		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
 				"30"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
-		pref_PriceAlarm = prefs.getBoolean("alarmPref", false);
+		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
 		pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
 		pref_notificationSound = prefs.getString("notificationSoundPref",
@@ -150,13 +147,16 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		dtNow.setToNow();
 		int hours = dtNow.hour;
 		int minutes = dtNow.minute + 1;
-		Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
-		i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (please delete)");
-		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-		i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-		i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-		context.startActivity(i);
+		int sdk = android.os.Build.VERSION.SDK_INT;
+		if (sdk > android.os.Build.VERSION_CODES.GINGERBREAD) {
+			Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+			i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (delete)");
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+			i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+			i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+			context.startActivity(i);
+		}
 	}
 
 	static void createNotification(Context ctxt, String lastPrice,
@@ -212,14 +212,14 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		notification.flags |= Notification.FLAG_NO_CLEAR;
 
-		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
+		mNotificationManager.notify(100 + BITCOIN_NOTIFY_ID, notification);
 	}
 
 	static void removePermanentNotification(Context ctxt, int BITCOIN_NOTIFY_ID) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) ctxt
 				.getSystemService(ns);
-		mNotificationManager.cancel(BITCOIN_NOTIFY_ID);
+		mNotificationManager.cancel(100 + BITCOIN_NOTIFY_ID);
 	}
 
 	static void createTicker(Context ctxt, int icon, CharSequence tickerText) {

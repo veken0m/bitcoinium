@@ -20,5 +20,7 @@
     <string name="minerstatsButton">Miner Stats</string>
     <string name="graphButton">Display Price Graph</string>
     <string name="exgraphButton">External Orderbook and Graphs</string>
+    
+    <string name="donationAddress">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
 
 </resources>
