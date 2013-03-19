@@ -2,7 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/orderbooklayout"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:background="@android:color/black" >
@@ -10,19 +10,19 @@
     <TableRow>
 
         <TextView
+            android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
             android:padding="3dip"
-            android:layout_weight="1"
             android:text="Bids"
             android:textColor="#33B5E5"
             android:textSize="22sp" />
 
         <TextView
+            android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
             android:padding="3dip"
-            android:layout_weight="1"
             android:text="Asks"
             android:textColor="#33B5E5"
             android:textSize="22sp" />
@@ -75,12 +75,27 @@
         android:layout_marginRight="2dp" >
 
         <TableLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:stretchColumns="4" >
+
         </TableLayout>
     </ScrollView>
+    
+                <LinearLayout
+                android:id="@+id/linlaHeaderProgress"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity = "center_vertical|center_horizontal"
+                android:visibility="gone" >
+
+                <ProgressBar
+                    android:id="@+id/pbHeaderProgress"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </ProgressBar>
+            </LinearLayout>
 
 </TableLayout>

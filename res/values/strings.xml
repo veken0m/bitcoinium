@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!--  General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_currency">USD</string>
-    <string name="mtGox">MtGox</string>
+    
+    <!--  Widget Strings -->
     <string name="exchange">Exchange</string>
     <string name="low">Low</string>
     <string name="high">High</string>
@@ -21,6 +22,8 @@
     <string name="graphButton">Display Price Graph</string>
     <string name="exgraphButton">External Orderbook and Graphs</string>
     
+    <!--  About Links -->
     <string name="donationAddress">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
-
+    <string name="bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
+    <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
 </resources>

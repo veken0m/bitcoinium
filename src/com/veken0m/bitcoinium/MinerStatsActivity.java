@@ -39,7 +39,6 @@ import com.veken0m.bitcoinium.utils.Utils;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 
-	static String pref_favPool;
 	private static String pref_emcKey;
 	private static String pref_slushKey;
 	private static String pref_bitminterKey;
@@ -58,8 +57,10 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 		// Add the pools that have API keys
 		readPreferences(getApplicationContext());
 
-		if (pref_bitminterKey.length() <= 6 && pref_emcKey.length() <= 6
-				&& pref_deepbitKey.length() <= 6 && pref_50BTCKey.length() <= 6
+		if (pref_bitminterKey.length() <= 6 
+				&& pref_emcKey.length() <= 6
+				&& pref_deepbitKey.length() <= 6 
+				&& pref_50BTCKey.length() <= 6
 				&& pref_slushKey.length() <= 6) {
 
 			int duration = Toast.LENGTH_LONG;
