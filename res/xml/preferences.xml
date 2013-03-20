@@ -459,7 +459,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.5.1"
+                    android:summary="1.5.2"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"
