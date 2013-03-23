@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +11,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -31,9 +32,9 @@ import com.xeiam.xchange.dto.marketdata.Trades;
 
 public class GraphActivity extends SherlockActivity {
 
-	private ProgressDialog graphProgressDialog;
 	private static final Handler mOrderHandler = new Handler();
 	public static String exchangeName;
+	public static Boolean connectionFail;
 	public String xchangeExchange;
 	static String pref_currency;
 
@@ -100,6 +101,13 @@ public class GraphActivity extends SherlockActivity {
 		@Override
 		public void run() {
 			generatePreviousPriceGraph();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					setContentView(R.layout.graph);
+					LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+					linlaHeaderProgress.setVisibility(View.INVISIBLE);
+				}
+			});
 			mOrderHandler.post(mGraphView);
 		}
 	}
@@ -110,9 +118,8 @@ public class GraphActivity extends SherlockActivity {
 	final Runnable mGraphView = new Runnable() {
 		@Override
 		public void run() {
-			safelyDismiss(graphProgressDialog);
-			if (graphView != null) {
-					setContentView(graphView);
+			if (graphView != null && !connectionFail) {
+				setContentView(graphView);
 			} else {
 				createPopup("Unable to retrieve transactions from "
 						+ exchangeName + ", check your 3G or WiFi connection");
@@ -129,14 +136,13 @@ public class GraphActivity extends SherlockActivity {
 
 		String graphExchange = xchangeExchange;
 		Trades trades = null;
-		
-		if(pref_fastMode == false){
+
+		if (pref_fastMode == false) {
 			// Use API V1 instead of V0 for MtGox Trades
 			graphExchange = xchangeExchange.replace("0", "1");
 		}
 		try {
-			trades = ExchangeFactory.INSTANCE
-					.createExchange(graphExchange)
+			trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 		} catch (OutOfMemoryError E) {
@@ -145,7 +151,7 @@ public class GraphActivity extends SherlockActivity {
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 		} catch (Exception e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		try {
@@ -171,35 +177,37 @@ public class GraphActivity extends SherlockActivity {
 				}
 			}
 
-				for (int i = 0; i < tradesListSize; i++) {
-					data[i] = new GraphViewData(dates[i], values[i]);
+			for (int i = 0; i < tradesListSize; i++) {
+				data[i] = new GraphViewData(dates[i], values[i]);
+			}
+
+			graphView = new LineGraphView(this, exchangeName + ": "
+					+ pref_currency + "/BTC") {
+				@Override
+				protected String formatLabel(double value, boolean isValueX) {
+					if (isValueX) {
+						return Utils.dateFormat(getBaseContext(), (long) value);
+					} else
+						return super.formatLabel(value, isValueX);
 				}
+			};
 
-				graphView = new LineGraphView(this, exchangeName + ": "
-						+ pref_currency + "/BTC") {
-					@Override
-					protected String formatLabel(double value, boolean isValueX) {
-						if (isValueX) {
-							return Utils.dateFormat(getBaseContext(),(long)value);
-						} else
-							return super.formatLabel(value, isValueX);
-					}
-				};
+			double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
+			// startValue enables graph window to be aligned with latest
+			// trades
+			final double startValue = dates[dates.length - 1] - windowSize;
+			graphView.addSeries(new GraphViewSeries(data));
+			graphView.setViewPort(startValue, windowSize);
+			graphView.setScrollable(true);
+			graphView.setScalable(true);
 
-				double windowSize = (dates[dates.length - 1] - dates[0])/2;
-				// startValue enables graph window to be aligned with latest
-				// trades
-				final double startValue = dates[dates.length - 1] - windowSize;
-				graphView.addSeries(new GraphViewSeries(data));
-				graphView.setViewPort(startValue, windowSize);
-				graphView.setScrollable(true);
-				graphView.setScalable(true);
-
-				if (!pref_scaleMode) {
-					graphView.setManualYAxisBounds(largest, smallest);
-				}
+			if (!pref_scaleMode) {
+				graphView.setManualYAxisBounds(largest, smallest);
+			}
+			connectionFail = false;
 
 		} catch (Exception e) {
+			connectionFail = true;
 			e.printStackTrace();
 		}
 	}
@@ -223,27 +231,21 @@ public class GraphActivity extends SherlockActivity {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.graph);
 		if (graphView != null) {
-				setContentView(graphView);
+			setContentView(graphView);
 		} else {
 			viewGraph();
 		}
 	}
 
-	private void safelyDismiss(ProgressDialog dialog) {
-		if (dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
-	}
-
 	private void viewGraph() {
-		if (graphProgressDialog != null && graphProgressDialog.isShowing()) {
-			return;
-		}
-		graphProgressDialog = ProgressDialog
-				.show(this,
-						"Working...",
-						"Retrieving trades... \n\nNote: May take a while on large exchanges.",
-						true, true);
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setContentView(R.layout.graph);
+				LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+				linlaHeaderProgress.setVisibility(View.VISIBLE);
+			}
+		});
+
 		GraphThread gt = new GraphThread();
 		gt.start();
 	}
@@ -258,8 +260,7 @@ public class GraphActivity extends SherlockActivity {
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
 		pref_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
-		pref_fastMode = prefs.getBoolean("mtgoxapiv0Pref",
-				false);
+		pref_fastMode = prefs.getBoolean("mtgoxapiv0Pref", false);
 	}
 
 }

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -25,9 +26,7 @@ import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 public class BitcoinChartsActivity extends SherlockActivity {
 
-	protected static ProgressDialog bitcoinchartsProgressDialog;
 	final static Handler mOrderHandler = new Handler();
-	Boolean connectionFail = false;
 	BitcoinChartsTicker[] marketData;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 		try {
 			marketData = BitcoinChartsFactory.createInstance().getMarketData();
 		} catch (Exception e) {
-			connectionFail = true;
+			connectionFailed();
 			e.printStackTrace();
 		}
 	}
@@ -83,7 +82,9 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	public void drawBitcoinChartsUI() {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
-		t1.removeAllViewsInLayout();
+		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
+		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+
 		String previousCurrency = "";
 		int backGroundColor = Color.rgb(31, 31, 31);
 		LayoutParams params = new TableRow.LayoutParams(
@@ -154,12 +155,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	}
 
 	private void viewBitcoinCharts() {
-		if (bitcoinchartsProgressDialog != null
-				&& bitcoinchartsProgressDialog.isShowing()) {
-			return;
-		}
-		bitcoinchartsProgressDialog = ProgressDialog.show(this, "Working...",
-				"Retrieving data", true, true);
 		bitcoinchartsThread gt = new bitcoinchartsThread();
 		gt.start();
 	}
@@ -168,6 +163,14 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
 		@Override
 		public void run() {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
+					t1.removeAllViews();
+					LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
+					linlaHeaderProgress.setVisibility(View.VISIBLE);
+				}
+			});
 			getBitcoinCharts();
 			mOrderHandler.post(mGraphView);
 		}
@@ -176,31 +179,25 @@ public class BitcoinChartsActivity extends SherlockActivity {
 	final Runnable mGraphView = new Runnable() {
 		@Override
 		public void run() {
-			safelyDismiss(bitcoinchartsProgressDialog);
 			drawBitcoinChartsUI();
 		}
 	};
 
-	private void safelyDismiss(ProgressDialog dialog) {
-		if (dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
-		if (connectionFail) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Could not retrieve data from "
-					+ "Bitcoin Charts"
-					+ ".\n\nCheck 3G or Wifi connection and try again.");
-			builder.setPositiveButton("OK",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-						}
-					});
+	private void connectionFailed() {
+		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
+		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Could not retrieve data from " + "Bitcoin Charts"
+				+ ".\n\nCheck 3G or Wifi connection and try again.");
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 
-			AlertDialog alert = builder.create();
-			alert.show();
-		}
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 }

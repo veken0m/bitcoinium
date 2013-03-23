@@ -59,8 +59,8 @@ public class BitMinterFragment extends SherlockFragment {
 		try {
 			HttpClient client = new DefaultHttpClient();
 
-			// pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"; //Test
-			// Key
+			// Test Key
+			// pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
 
 			HttpGet post = new HttpGet("https://bitminter.com/api/users"
 					+ "?key=" + pref_bitminterKey);

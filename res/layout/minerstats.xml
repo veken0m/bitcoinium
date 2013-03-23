@@ -13,7 +13,6 @@
         android:layout_marginRight="2dp" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/table_fragment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,7 +20,6 @@
         </LinearLayout>
     </ScrollView>
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/miner_difficulty"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
