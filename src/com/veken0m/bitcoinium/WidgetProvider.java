@@ -197,8 +197,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 					false);
 
 			setTextColors(views, Color.WHITE);
-			views.setTextViewText(R.id.widgetLowText, askString);
-			views.setTextViewText(R.id.widgetHighText, bidString);
+			views.setTextViewText(R.id.widgetLowText, bidString);
+			views.setTextViewText(R.id.widgetHighText, askString);
 		}
 
 		public void setHighLow(Ticker ticker, RemoteViews views,
