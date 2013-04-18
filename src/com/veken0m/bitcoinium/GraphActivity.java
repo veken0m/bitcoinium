@@ -44,7 +44,7 @@ public class GraphActivity extends SherlockActivity {
 	LineGraphView graphView;
 	static Boolean pref_graphMode;
 	static Boolean pref_scaleMode;
-	static Boolean pref_fastMode;
+	static Boolean pref_APIv1Mode;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,7 +100,7 @@ public class GraphActivity extends SherlockActivity {
 
 		@Override
 		public void run() {
-			generatePreviousPriceGraph();
+			generatePriceGraph();
 			runOnUiThread(new Runnable() {
 				public void run() {
 					setContentView(R.layout.graph);
@@ -128,26 +128,22 @@ public class GraphActivity extends SherlockActivity {
 	};
 
 	/**
-	 * generatePreviousPriceGraph prepares price graph of all the values
+	 * generatePriceGraph prepares price graph of all the values
 	 * available from the API It connects to exchange, reads the JSON, and plots
 	 * a GraphView of it
 	 */
-	private void generatePreviousPriceGraph() {
+	private void generatePriceGraph() {
 
 		String graphExchange = xchangeExchange;
 		Trades trades = null;
 
-		if (pref_fastMode == false) {
+		if (pref_APIv1Mode == true) {
 			// Use API V1 instead of V0 for MtGox Trades
 			graphExchange = xchangeExchange.replace("0", "1");
-		}
+		} 
+		
 		try {
 			trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
-					.getPollingMarketDataService()
-					.getTrades(Currencies.BTC, pref_currency);
-		} catch (OutOfMemoryError E) {
-			// If trades too large fetch API V0 trades (much more compact)
-			trades = ExchangeFactory.INSTANCE.createExchange(xchangeExchange)
 					.getPollingMarketDataService()
 					.getTrades(Currencies.BTC, pref_currency);
 		} catch (Exception e) {
@@ -260,7 +256,7 @@ public class GraphActivity extends SherlockActivity {
 		pref_scaleMode = prefs.getBoolean("graphscalePref", false);
 		pref_currency = prefs.getString(prefix + "CurrencyPref",
 				defaultCurrency);
-		pref_fastMode = prefs.getBoolean("mtgoxapiv0Pref", false);
+		pref_APIv1Mode = prefs.getBoolean("mtgoxapiv1Pref", false);
 	}
 
 }

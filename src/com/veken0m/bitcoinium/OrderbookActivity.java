@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -121,8 +122,16 @@ public class OrderbookActivity extends SherlockActivity {
 				defaultCurrency);
 		pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
 				true);
+		try{
 		pref_orderbookLimiter = Integer.parseInt(prefs.getString(
 				"orderbookLimiterPref", "100"));
+		} catch (Exception e){
+			pref_orderbookLimiter = 100;
+			// If preference is not set a valid integer set to "100"
+			Editor editor = prefs.edit();
+			editor.putString("orderbookLimiterPref", "100");
+			editor.commit();
+		}
 	}
 
 	/**

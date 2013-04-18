@@ -92,6 +92,25 @@
                     android:summary="Widgets will only refresh when WiFi is connected"
                     android:title="Only refresh on WiFi" />
             </PreferenceCategory>
+            <PreferenceCategory android:title="Customize" >
+                <EditTextPreference
+                    android:key="widgetMainTextColorPref"
+                    android:summary="Color for Exchange name and Last Price on widget"
+                    android:title="Main Widget Color" />
+                <EditTextPreference
+                    android:key="widgetSecondaryTextColorPref"
+                    android:summary="Color for High, Low and Volume on widget"
+                    android:title="Secondary Widget Color" />
+                <EditTextPreference
+                    android:key="widgetTransparencyPref"
+                    android:summary="Set the transparency of the widget"
+                    android:title="Widget Transparency" />
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="showRefreshTimePref"
+                    android:summary="Toggle displaying last Refresh Time on widget"
+                    android:title="Show Display Time" />
+            </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference
                     android:key="customPref"
@@ -436,9 +455,9 @@
                     android:title="View Window Scaling" />
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="mtgoxapiv0Pref"
-                    android:summary="MtGox fast mode greatly reduces loading times by using API V0. This will only show trades in the past hour."
-                    android:title="MtGox Fast Mode" />
+                    android:key="mtgoxapiv1Pref"
+                    android:summary="Use MtGox API v1 for Price Graph. Allows to see a larger timeframe but uses a lot more bandwidth and very slow to load. \n*Caution*: May cause out of memory error on some devices"
+                    android:title="MtGox API v1 Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
