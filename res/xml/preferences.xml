@@ -117,10 +117,10 @@
                     android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
 
                 <ListPreference
-                    android:defaultValue="30"
+                    android:defaultValue="1800"
                     android:entries="@array/interval"
                     android:entryValues="@array/intervalvalues"
-                    android:key="listPref"
+                    android:key="refreshPref"
                     android:summary="Time interval between widget refresh \n *WARNING* \nRefreshing the widget more often will increase battery drain \n "
                     android:title="Widget Refresh Interval" />
 

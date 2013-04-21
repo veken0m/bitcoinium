@@ -3,10 +3,12 @@
 
     <!-- Arrays for Wigdet Refresh Interval preferences -->
     <string-array name="interval">
+        <item>10 Secs</item>
+        <item>15 Secs</item>
+        <item>30 Secs</item>
+        <item>1 Min</item>
         <item>5 Min</item>
-        <item>10 Min</item>
         <item>15 Min</item>
-        <item>20 Min</item>
         <item>30 Min (Recommended)</item>
         <item>1 Hour</item>
         <item>2 Hours</item>
@@ -14,15 +16,17 @@
         <item>12 Hours</item>
     </string-array>
     <string-array name="intervalvalues">
-        <item>5</item>
         <item>10</item>
         <item>15</item>
-        <item>20</item>
         <item>30</item>
-        <item>60</item>
-        <item>120</item>
-        <item>360</item>
-        <item>720</item>
+        <item>300</item>
+        <item>900</item>
+        <item>1200</item>
+        <item>1800</item>
+        <item>3600</item>
+        <item>7200</item>
+        <item>21600</item>
+        <item>43200</item>
     </string-array>
 
     <!-- Arrays for Prefered Mining Pool preferences -->

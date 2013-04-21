@@ -93,8 +93,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				.getDefaultSharedPreferences(context);
 
 		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
-		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
-				"30"));
+		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref",
+				"1800"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
 		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
@@ -129,10 +129,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 		if (pref_wakeupRefresh) {
 			m1.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
+					1000 * pref_widgetRefreshFreq, widgetRefreshService);
 		} else {
 			m1.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
-					1000 * 60 * pref_widgetRefreshFreq, widgetRefreshService);
+					1000 * pref_widgetRefreshFreq, widgetRefreshService);
 		}
 	}
 
