@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
@@ -39,6 +40,14 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 	static String pref_notificationSound;
 	static String pref_notifLimitLower;
 	static String pref_notifLimitUpper;
+	
+	static int pref_mainWidgetTextColor;
+	static int pref_secondaryWidgetTextColor;
+	static int pref_backgroundWidgetColor;
+	static Boolean pref_showWidgetRefreshTime;
+	static int pref_widgetRefreshSuccessColor;
+	static int pref_widgetRefreshFailedColor;
+	static Boolean pref_enableWidgetCustomization;
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
@@ -66,6 +75,16 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				"DEFAULT_RINGTONE_URI");
 		pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
 		pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
+		
+		pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref", R.color.widgetMainTextColor);
+		pref_secondaryWidgetTextColor = prefs.getInt("widgetSecondaryTextColorPref", R.color.widgetSecondaryTextColor);
+		pref_backgroundWidgetColor = prefs.getInt("widgetBackgroundColorPref", R.color.widgetBackgroundColor);
+		//pref_showWidgetRefreshTime = prefs.getBoolean("showRefreshTimePref", true);
+		
+		pref_widgetRefreshSuccessColor = prefs.getInt("widgetRefreshSuccessColorPref", R.color.widgetRefreshSuccessColor);
+		pref_widgetRefreshFailedColor = prefs.getInt("widgetRefreshFailedColorPref", R.color.widgetRefreshFailedColor);
+		pref_enableWidgetCustomization = prefs.getBoolean("enableWidgetCustomizationPref", false);
+		
 	}
 
 	protected static void readGeneralPreferences(Context context) {

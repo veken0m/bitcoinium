@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
+import android.text.Layout;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -57,6 +58,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 			if (!pref_wifionly || checkWiFiConnected()) {
 
 				for (int appWidgetId : widgetIds) {
+
 					RemoteViews views = new RemoteViews(
 							context.getPackageName(), R.layout.appwidget);
 					views.setOnClickPendingIntent(R.id.widgetButton,
@@ -116,6 +118,30 @@ public class WidgetProvider extends BaseWidgetProvider {
 								setHighLow(ticker, views, pref_currency);
 							}
 
+							// set the color
+							if (pref_enableWidgetCustomization) {
+								views.setInt(R.id.widget_layout,
+										"setBackgroundColor",
+										pref_backgroundWidgetColor);
+								views.setTextColor(R.id.widgetLastText,
+										pref_mainWidgetTextColor);
+								views.setTextColor(R.id.widgetExchange,
+										pref_mainWidgetTextColor);
+							} else {
+								views.setInt(
+										R.id.widget_layout,
+										"setBackgroundColor",
+										getResources().getColor(
+												R.color.widgetBackgroundColor));
+								views.setTextColor(
+										R.id.widgetLastText,
+										getResources().getColor(
+												R.color.widgetMainTextColor));
+								views.setTextColor(
+										R.id.widgetExchange,
+										getResources().getColor(
+												R.color.widgetMainTextColor));
+							}
 							views.setTextViewText(R.id.widgetExchange,
 									exchangeName);
 							views.setTextViewText(R.id.widgetLastText,
@@ -126,7 +152,12 @@ public class WidgetProvider extends BaseWidgetProvider {
 							String refreshedTime = "Refreshed @ "
 									+ Utils.getCurrentTime(context);
 							views.setTextViewText(R.id.label, refreshedTime);
-							views.setTextColor(R.id.label, Color.GREEN);
+							if (pref_enableWidgetCustomization) {
+								views.setTextColor(R.id.label,
+										pref_widgetRefreshSuccessColor);
+							} else {
+								views.setTextColor(R.id.label, Color.GREEN);
+							}
 
 							if (pref_displayUpdates) {
 								String text = exchangeName + " Updated!";
@@ -154,7 +185,12 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 						} catch (Exception e) {
 							e.printStackTrace();
-							views.setTextColor(R.id.label, Color.RED);
+							if (pref_enableWidgetCustomization) {
+								views.setTextColor(R.id.label,
+										pref_widgetRefreshFailedColor);
+							} else {
+								views.setTextColor(R.id.label, Color.RED);
+							}
 
 							if (pref_displayUpdates) {
 								String txt = exchangeName + " Update failed!";
@@ -196,7 +232,12 @@ public class WidgetProvider extends BaseWidgetProvider {
 			String askString = Utils.formatWidgetMoney(askFloat, pref_currency,
 					false);
 
-			setTextColors(views, Color.WHITE);
+			if (pref_enableWidgetCustomization) {
+				setTextColors(views, pref_secondaryWidgetTextColor);
+			} else {
+				setTextColors(views, Color.WHITE);
+			}
+			
 			views.setTextViewText(R.id.widgetLowText, bidString);
 			views.setTextViewText(R.id.widgetHighText, askString);
 		}
@@ -211,8 +252,11 @@ public class WidgetProvider extends BaseWidgetProvider {
 					pref_currency, false);
 			String lowString = Utils.formatWidgetMoney(lowFloat, pref_currency,
 					false);
-
-			setTextColors(views, Color.LTGRAY);
+			if (pref_enableWidgetCustomization) {
+				setTextColors(views, pref_secondaryWidgetTextColor);
+			} else {
+				setTextColors(views, Color.LTGRAY);
+			}
 			views.setTextViewText(R.id.widgetLowText, lowString);
 			views.setTextViewText(R.id.widgetHighText, highString);
 		}

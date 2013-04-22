@@ -20,7 +20,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.veken0m.bitcoinium.exchanges.BTCEFragment;
-import com.veken0m.bitcoinium.exchanges.BitFloorFragment;
 import com.veken0m.bitcoinium.exchanges.Bitcoin24Fragment;
 import com.veken0m.bitcoinium.exchanges.BitcoinCentralFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
@@ -62,8 +61,8 @@ public class MainActivity extends SherlockFragmentActivity {
 				R.drawable.campbxlogo);
 		ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
 				.setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
-		ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
-				R.drawable.bitfloorlogo);
+		//ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
+		//		R.drawable.bitfloorlogo);
 		ActionBar.Tab Bitcoin24Tab = actionbar.newTab().setIcon(
 				R.drawable.bitcoin24logo);
 
@@ -75,7 +74,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
 		tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
 				null);
-		tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
+		//tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
 		tabsAdapter.addTab(Bitcoin24Tab, Bitcoin24Fragment.class, null);
 
 		try {

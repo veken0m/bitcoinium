@@ -9,7 +9,7 @@
         <item>Bitstamp</item>
         <item>CampBX</item>
         <item>BitcoinCentral</item> 
-       	<item>Bitfloor</item> 
+       	<!-- <item>Bitfloor</item> --> 
         <item>Bitcoin24</item>
     </string-array>
     <string-array name="exchangeID">
@@ -19,7 +19,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
-        <item>6</item>
+        <!-- <item>6</item> -->
         <item>7</item>
     </string-array>
 
@@ -31,7 +31,7 @@
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
         <item>BitcoinCentralExchange</item> 
-        <item>BitfloorExchange</item>
+        <!--  <item>BitfloorExchange</item> -->
         <item>Bitcoin24Exchange</item>
     </string-array>
 

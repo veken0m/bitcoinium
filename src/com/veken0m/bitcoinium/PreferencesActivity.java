@@ -1,14 +1,18 @@
 package com.veken0m.bitcoinium;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
+
+import net.margaritov.preference.colorpicker.*;
 
 public class PreferencesActivity extends PreferenceActivity {
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
@@ -16,14 +20,15 @@ public class PreferencesActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//TODO: Change Preferences to use Fragments, current method is deprecated.
+
+		// TODO: Change Preferences to use Fragments, current method is
+		// deprecated.
 		addPreferencesFromResource(R.xml.preferences);
-		
+
 		Preference devEmailPref = (Preference) findPreference("devEmailPref");
 		devEmailPref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-					
+
 					Resources res = getResources();
 
 					public boolean onPreferenceClick(Preference preference) {
@@ -32,7 +37,7 @@ public class PreferencesActivity extends PreferenceActivity {
 						i.putExtra(android.content.Intent.EXTRA_EMAIL,
 								new String[] { "veken0m.apps@gmail.com" });
 						i.putExtra(android.content.Intent.EXTRA_SUBJECT,
-								res.getString(R.string.app_name) +  " Feedback");
+								res.getString(R.string.app_name) + " Feedback");
 						startActivity(Intent.createChooser(i, "Send email"));
 
 						return true;
@@ -44,8 +49,8 @@ public class PreferencesActivity extends PreferenceActivity {
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 					public boolean onPreferenceClick(Preference preference) {
-						startActivity(new Intent(Intent.ACTION_VIEW, 
-							    Uri.parse("https://github.com/timmolter/xchange")));
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri
+								.parse("https://github.com/timmolter/xchange")));
 						return true;
 					}
 				});
@@ -54,12 +59,55 @@ public class PreferencesActivity extends PreferenceActivity {
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 					public boolean onPreferenceClick(Preference preference) {
-						startActivity(new Intent(Intent.ACTION_VIEW, 
-							    Uri.parse("https://github.com/veken0m/bitcoinium")));
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri
+								.parse("https://github.com/veken0m/bitcoinium")));
 						return true;
 					}
 				});
 
+		// Widget Customization
+		((ColorPickerPreference) findPreference("widgetBackgroundColorPref"))
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					@Override
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						preference.setSummary(ColorPickerPreference
+								.convertToARGB(Integer.valueOf(String
+										.valueOf(newValue))));
+						return true;
+					}
+
+				});
+
+		((ColorPickerPreference) findPreference("widgetMainTextColorPref"))
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					@Override
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						preference.setSummary(ColorPickerPreference
+								.convertToARGB(Integer.valueOf(String
+										.valueOf(newValue))));
+						return true;
+					}
+
+				});
+
+		((ColorPickerPreference) findPreference("widgetSecondaryTextColorPref"))
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					@Override
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						preference.setSummary(ColorPickerPreference
+								.convertToARGB(Integer.valueOf(String
+										.valueOf(newValue))));
+						return true;
+					}
+
+				});
+		
 		Preference donationAddressPref = (Preference) findPreference("donationAddressPref");
 		donationAddressPref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
