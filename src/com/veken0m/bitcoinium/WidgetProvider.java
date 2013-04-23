@@ -174,7 +174,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 								String msg = "Bitcoin value: " + lastString
 										+ " on " + exchangeName;
-								String title = "Bitcoin  " + lastString;
+								String title = "BTC @ " + lastString;
 
 								createPermanentNotification(context,
 										R.drawable.bitcoin, title, msg,

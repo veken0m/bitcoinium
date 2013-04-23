@@ -59,13 +59,15 @@
                     android:key="bitcoincentralWidgetCurrencyPref"
                     android:summary="BitcoinCentral Widget price will be displayed in selected currency"
                     android:title="BitcoinCentral Widget Currency" />
-                <ListPreference
+                <!--
+                      <ListPreference
                     android:defaultValue="USD"
                     android:entries="@array/bitfloorcurrencies"
                     android:entryValues="@array/bitfloorcurrenciesvalues"
                     android:key="bitfloorWidgetCurrencyPref"
                     android:summary="Bitfloor Widget price will be displayed in selected currency"
                     android:title="Bitfloor Widget Currency" />
+                -->
                 <ListPreference
                     android:defaultValue="EUR"
                     android:entries="@array/bitcoin24currencies"
@@ -113,6 +115,49 @@
                     android:key="wakeupPref"
                     android:summary="Will not wake up the phone from sleep to update widget"
                     android:title="Battery Saving Mode" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Customize Widget" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="enableWidgetCustomizationPref"
+                    android:summary="If enabled default settings will be overriden"
+                    android:title="Enable Customization" />
+
+                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                    android:defaultValue="@color/widgetMainTextColor"
+                    android:key="widgetMainTextColorPref"
+                    android:summary="Color for Exchange name and Last Price text"
+                    android:title="Main Text Color" />
+                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                    android:defaultValue="@color/widgetSecondaryTextColor"
+                    android:key="widgetSecondaryTextColorPref"
+                    android:summary="Color for High, Low and Volume text"
+                    android:title="Secondary Text Color" />
+                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                    alphaSlider="true"
+                    android:defaultValue="@color/widgetBackgroundColor"
+                    android:key="widgetBackgroundColorPref"
+                    android:summary="Color and Transparency for widget background"
+                    android:title="Background Color" />
+                <!--
+                  <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="showRefreshTimePref"
+                android:summary="Toggle displaying last Refresh Time on widget"
+                android:title="Show Refresh Time" />
+                -->
+                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                    alphaSlider="true"
+                    android:defaultValue="@color/widgetRefreshSuccessColor"
+                    android:key="widgetRefreshSuccessColorPref"
+                    android:summary="Color of the refresh time if successful"
+                    android:title="Refresh Time Color (Success)" />
+                <net.margaritov.preference.colorpicker.ColorPickerPreference
+                    alphaSlider="true"
+                    android:defaultValue="@color/widgetRefreshFailedColor"
+                    android:key="widgetRefreshFailedColorPref"
+                    android:summary="Color of the refresh time if failed"
+                    android:title="Refresh Time Color (Failed)" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

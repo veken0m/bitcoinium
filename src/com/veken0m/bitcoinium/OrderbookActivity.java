@@ -179,6 +179,11 @@ public class OrderbookActivity extends SherlockActivity {
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
 		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
 		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		
+		
+		TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
+		orderBookHeader.setText(exchangeName + " " + pref_currency);
+		
 
 		LayoutParams params = new TableRow.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);

@@ -55,13 +55,13 @@
                 android:key="bitcoincentralCurrencyPref"
                 android:summary="BitcoinCentral price will be displayed in selected currency"
                 android:title="BitcoinCentral Currency" />
-            <ListPreference
+           <!-- <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitfloorcurrencies"
                 android:entryValues="@array/bitfloorcurrenciesvalues"
                 android:key="bitfloorCurrencyPref"
                 android:summary="Bitfloor price will be displayed in selected currency"
-                android:title="Bitfloor Currency" />
+                android:title="Bitfloor Currency" />  --> 
             <ListPreference
                 android:defaultValue="EUR"
                 android:entries="@array/bitcoin24currencies"
@@ -140,11 +140,13 @@
                 android:key="widgetBackgroundColorPref"
                 android:summary="Color and Transparency for widget background"
                 android:title="Background Color" />
-            <!--  <CheckBoxPreference
+            <!--
+                  <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="showRefreshTimePref"
                 android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />  -->
+                android:title="Show Refresh Time" />
+            -->
             <net.margaritov.preference.colorpicker.ColorPickerPreference
                 alphaSlider="true"
                 android:defaultValue="@color/widgetRefreshSuccessColor"
@@ -161,216 +163,50 @@
     </PreferenceScreen>
 
     <PreferenceCategory android:title="Price Alarm" >
-        <PreferenceScreen
-            android:summary="Adjust settings of the price alarm notification. \n Note: The main currency of an exchange will be used to trigger alarm"
+        <Preference
+            android:key="alarmSettingsPref"
+            android:summary="Adjust settings of the price alarm notification. \n *Note*: The main currency of an exchange will be used to trigger alarm"
             android:title="Price Alarm Notification" >
-            <PreferenceCategory android:title="Price Alarm" >
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="alarmPref"
-                    android:summary="Enable price alert when specified price is attained (widget needs to be active)"
-                    android:title="Enable Price Alarm" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="alarmVibratePref"
-                    android:summary="Notification will cause phone to vibrate when when specified price is attained"
-                    android:title="Notification Vibration" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="alarmSoundPref"
-                    android:summary="Notification sound will play when specified price is attained"
-                    android:title="Notification Sound" />
-
-                <RingtonePreference
-                    android:key="notificationSoundPref"
-                    android:ringtoneType="ringtone|alarm"
-                    android:showDefault="true"
-                    android:summary="Pick the sound to be played when specified price is attained"
-                    android:title="Select Sound" >
-                </RingtonePreference>
-
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="alarmClockPref"
-                    android:summary="Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing loudly until shut off."
-                    android:title="*Hardcore Mode* (BETA)" />
-            </PreferenceCategory>
-            <PreferenceCategory
-                android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"
-                android:title="Alarm Settings" >
-                <PreferenceScreen android:title="MtGox Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="mtgoxUpper"
-                        android:summary="Notification will occur if MtGox price goes over this threshold"
-                        android:title="MtGox Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="mtgoxLower"
-                        android:summary="Notification will occur if MtGox price goes under this threshold"
-                        android:title="MtGox Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="VirtEx Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="virtexUpper"
-                        android:summary="Notification will occur if VirtEx price goes over this threshold"
-                        android:title="VirtEx Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="virtexLower"
-                        android:summary="Notification will occur if VirtEx price goes under this threshold"
-                        android:title="VirtEx Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="BTC-E Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="btceUpper"
-                        android:summary="Notification will occur if BTC-E price goes over this threshold"
-                        android:title="BTC-E Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="btceLower"
-                        android:summary="Notification will occur if BTC-E price goes under this threshold"
-                        android:title="BTC-E Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="Bitstamp Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitstampUpper"
-                        android:summary="Notification will occur if Bitstamp price goes over this threshold"
-                        android:title="Bitstamp Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitstampLower"
-                        android:summary="Notification will occur if Bitstamp price goes under this threshold"
-                        android:title="Bitstamp Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="CampBX Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="campbxUpper"
-                        android:summary="Notification will occur if CampBX price goes over this threshold"
-                        android:title="CampBX Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="campbxLower"
-                        android:summary="Notification will occur if CampBX price goes under this threshold"
-                        android:title="CampBX Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="BitcoinCentral Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitcoincentralUpper"
-                        android:summary="Notification will occur if BitcoinCentral price goes over this threshold"
-                        android:title="BitcoinCentral Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitcoincentralLower"
-                        android:summary="Notification will occur if BitcoinCentral price goes under this threshold"
-                        android:title="BitcoinCentral Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="Bitfloor Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitfloorUpper"
-                        android:summary="Notification will occur if Bitfloor price goes over this threshold"
-                        android:title="Bitfloor Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitfloorLower"
-                        android:summary="Notification will occur if Bitfloor price goes under this threshold"
-                        android:title="Bitfloor Lower Threshold" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="Bitcoin-24 Alarm" >
-                    <EditTextPreference
-                        android:defaultValue="999"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitcoin24Upper"
-                        android:summary="Notification will occur if Bitcoin-24 price goes over this threshold"
-                        android:title="Bitcoin-24 Upper Threshold" />
-                    <EditTextPreference
-                        android:defaultValue="0"
-                        android:digits="01234567890."
-                        android:inputType="numberDecimal"
-                        android:key="bitcoin24Lower"
-                        android:summary="Notification will occur if Bitcoin-24 price goes under this threshold"
-                        android:title="Bitcoin-24 Lower Threshold" />
-                </PreferenceScreen>
-            </PreferenceCategory>
-        </PreferenceScreen>
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notification Area Tickers" >
         <PreferenceScreen
-            android:summary="Enable permanent tickers in the notification drawer \n Note: Currently only supports the main currency selected for exchange"
-            android:title="Permanent Notification Ticker" >
+            android:summary="Places tickers in the notification drawer \n *Note*: Only supports the general currency selected for the exchange and respective widget needs to be active"
+            android:title="Notification Ticker" >
             <PreferenceCategory android:title="Notification Drawer Ticker" >
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="mtgoxTickerPref"
-                    android:summary="Will enable a permanent MtGox ticker notification in the notification drawer"
                     android:title="MtGox Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="virtexTickerPref"
-                    android:summary="Will enable a permanent VirtEx ticker notification in the notification drawer"
                     android:title="VirtEx Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="btceTickerPref"
-                    android:summary="Will enable a permanent BTC-E ticker notification in the notification drawer"
                     android:title="BTC-E Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitstampTickerPref"
-                    android:summary="Will enable a permanent Bitstamp ticker notification in the notification drawer"
                     android:title="Bitstamp Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="campBXTickerPref"
-                    android:summary="Will enable a permanent CampBX ticker notification in the notification drawer"
                     android:title="CampBX Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoincentralTickerPref"
-                    android:summary="Will enable a permanent BitcoinCentral ticker notification in the notification drawer"
                     android:title="BitcoinCentral Notification Ticker" />
-                <CheckBoxPreference
+                <!--
+                     <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitfloorTickerPref"
-                    android:summary="Will enable a permanent Bitfloor ticker notification in the notification drawer"
                     android:title="Bitfloor Notification Ticker" />
+                -->
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoin24TickerPref"
-                    android:summary="Will enable a permanent Bitcoin-24 ticker notification in the notification drawer"
                     android:title="Bitcoin-24 Notification Ticker" />
             </PreferenceCategory>
         </PreferenceScreen>
@@ -380,16 +216,6 @@
             android:summary="Enter your mining pool API tokens here to use Miner Stats"
             android:title="Miner Stats API tokens" >
             <PreferenceCategory android:title="Miner Stats" >
-
-                <!--
-            <ListPreference
-            android:defaultValue=""
-            android:entries="@array/miningpools"
-            android:entryValues="@array/miningpools"
-            android:key="favpoolPref"
-            android:summary="Select mining pool used for MinerStats"
-            android:title="Main Mining Pool" />
-                -->
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="deepbitKey"
@@ -468,16 +294,6 @@
         <PreferenceScreen
             android:summary="Configure the Price Graph"
             android:title="Price Graph Settings" >
-
-            <!--
-            <PreferenceCategory android:title="Price Graph Mode" >
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="graphmodePref"
-                    android:summary="Price graph will be displayed using original GraphView library. Classic mode displays past 2-3 days in one viewing without scrolling"
-                    android:title="Classic Mode" />
-            </PreferenceCategory>
-            -->
             <PreferenceCategory android:title="Price Graph Settings" >
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -509,7 +325,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.5.2"
+                    android:summary="1.5.3"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"
@@ -520,7 +336,7 @@
                     android:summary="A Financial Exchange Library for Java, with support for Bitcoin"
                     android:title="XChange Github" />
                 <Preference
-                    android:summary="Tim Molter - XChange Library\nMatija Mazi - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library \nJonas Gehring - GraphView library"
+                    android:summary="Tim Molter - XChange Library\nMatija Mazi - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library \nJonas Gehring - GraphView library \nSergey Margaritov - ColorPickerPreference library \nDaniel Nilsson - ColorPickerPreference library"
                     android:title="Credits" />
             </PreferenceCategory>
         </PreferenceScreen>

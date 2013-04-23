@@ -108,6 +108,17 @@ public class PreferencesActivity extends PreferenceActivity {
 
 				});
 		
+		Preference alarmSettings = (Preference) findPreference("alarmSettingsPref");
+		alarmSettings
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						startActivity(new Intent(getApplicationContext(), PriceAlarmPreferencesActivity.class));
+						return true;
+					}
+				});
+
+		
 		Preference donationAddressPref = (Preference) findPreference("donationAddressPref");
 		donationAddressPref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
