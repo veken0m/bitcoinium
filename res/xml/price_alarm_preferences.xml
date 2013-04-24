@@ -20,7 +20,7 @@
 
         <RingtonePreference
             android:key="notificationSoundPref"
-            android:ringtoneType="ringtone|alarm"
+            android:ringtoneType="ringtone|alarm|notification"
             android:showDefault="true"
             android:summary="Pick the sound to be played when specified price is attained"
             android:title="Select Sound" >

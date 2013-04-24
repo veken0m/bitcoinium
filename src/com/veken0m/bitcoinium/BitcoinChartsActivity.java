@@ -1,5 +1,9 @@
 package com.veken0m.bitcoinium;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -90,67 +94,80 @@ public class BitcoinChartsActivity extends SherlockActivity {
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
 		try {
-			for (BitcoinChartsTicker data : marketData) {
-
-				final TableRow tr1 = new TableRow(this);
-
-				final TextView tvSymbol = new TextView(this);
-				final TextView tvLast = new TextView(this);
-				// final TextView tvAvg = new TextView(this);
-				final TextView tvVolume = new TextView(this);
-				final TextView tvHigh = new TextView(this);
-				final TextView tvLow = new TextView(this);
-				// final TextView tvBid = new TextView(this);
-				// final TextView tvAsk = new TextView(this);
-				String last = Utils.formatDecimal(data.getClose(), 2, true);
-				String high = Utils.formatDecimal(data.getHigh(), 2, true);
-				String low = Utils.formatDecimal(data.getLow(), 2, true);
-				String vol = Utils.formatDecimal(data.getVolume(), 2, true);
-				// String avg = Utils.formatDecimal(data.getAvg(), 2, true);
-				// String bid = Utils.formatDecimal(data.getBid(), 2, true);
-				// String ask = Utils.formatDecimal(data.getAsk(), 2, true);
-
-				tvSymbol.setText(data.getSymbol());
-				tvSymbol.setLayoutParams(params);
-				Utils.setTextViewParams(tvLast, last);
-				Utils.setTextViewParams(tvVolume, vol);
-				Utils.setTextViewParams(tvLow, low);
-				Utils.setTextViewParams(tvHigh, high);
-				// Utils.setTextViewParams(tvAvg, avg);
-				// Utils.setTextViewParams(tvBid, bid);
-				// Utils.setTextViewParams(tvAsk, ask);
-
-				// If currencies are different
-				if (!previousCurrency.equalsIgnoreCase(data.getCurrency())) {
-					// Change the background color
-					if (backGroundColor == Color.BLACK) {
-						backGroundColor = Color.rgb(31, 31, 31);
-					} else {
-						backGroundColor = Color.BLACK;
-					}
+			// Sort Tickers by volume
+			Arrays.sort(marketData, new Comparator<BitcoinChartsTicker>() {
+				@Override
+				public int compare(BitcoinChartsTicker entry1,
+						BitcoinChartsTicker entry2) {
+					return entry2.getVolume().compareTo(entry1.getVolume());
 				}
+			});
 
-				tr1.setBackgroundColor(backGroundColor);
+			for (BitcoinChartsTicker data : marketData) {
+				
+				// Only print active exchanges... vol > 0
+				if (data.getVolume().intValue() != 0) {
 
-				tr1.addView(tvSymbol);
-				tr1.addView(tvLast);
-				// tr1.addView(tvAvg);
-				tr1.addView(tvVolume);
-				tr1.addView(tvLow);
-				tr1.addView(tvHigh);
-				// tr1.addView(tvBid);
-				// tr1.addView(tvAsk);
-				tr1.setPadding(0, 3, 0, 3);
-				t1.addView(tr1);
+					final TableRow tr1 = new TableRow(this);
 
-				// Insert a divider between rows
-				View divider = new View(this);
-				divider.setLayoutParams(new TableRow.LayoutParams(
-						TableRow.LayoutParams.MATCH_PARENT, 1));
-				divider.setBackgroundColor(Color.rgb(51, 51, 51));
-				t1.addView(divider);
+					final TextView tvSymbol = new TextView(this);
+					final TextView tvLast = new TextView(this);
+					// final TextView tvAvg = new TextView(this);
+					final TextView tvVolume = new TextView(this);
+					final TextView tvHigh = new TextView(this);
+					final TextView tvLow = new TextView(this);
+					// final TextView tvBid = new TextView(this);
+					// final TextView tvAsk = new TextView(this);
+					String last = Utils.formatDecimal(data.getClose(), 2, true);
+					String high = Utils.formatDecimal(data.getHigh(), 2, true);
+					String low = Utils.formatDecimal(data.getLow(), 2, true);
+					String vol = Utils.formatDecimal(data.getVolume(), 2, true);
+					// String avg = Utils.formatDecimal(data.getAvg(), 2, true);
+					// String bid = Utils.formatDecimal(data.getBid(), 2, true);
+					// String ask = Utils.formatDecimal(data.getAsk(), 2, true);
 
-				previousCurrency = data.getCurrency();
+					tvSymbol.setText(data.getSymbol());
+					tvSymbol.setLayoutParams(params);
+					Utils.setTextViewParams(tvLast, last);
+					Utils.setTextViewParams(tvVolume, vol);
+					Utils.setTextViewParams(tvLow, low);
+					Utils.setTextViewParams(tvHigh, high);
+					// Utils.setTextViewParams(tvAvg, avg);
+					// Utils.setTextViewParams(tvBid, bid);
+					// Utils.setTextViewParams(tvAsk, ask);
+
+					// If currencies are different
+					if (!previousCurrency.equalsIgnoreCase(data.getCurrency())) {
+						// Change the background color
+						if (backGroundColor == Color.BLACK) {
+							backGroundColor = Color.rgb(31, 31, 31);
+						} else {
+							backGroundColor = Color.BLACK;
+						}
+					}
+
+					tr1.setBackgroundColor(backGroundColor);
+
+					tr1.addView(tvSymbol);
+					tr1.addView(tvLast);
+					// tr1.addView(tvAvg);
+					tr1.addView(tvVolume);
+					tr1.addView(tvLow);
+					tr1.addView(tvHigh);
+					// tr1.addView(tvBid);
+					// tr1.addView(tvAsk);
+					tr1.setPadding(0, 3, 0, 3);
+					t1.addView(tr1);
+
+					// Insert a divider between rows
+					View divider = new View(this);
+					divider.setLayoutParams(new TableRow.LayoutParams(
+							TableRow.LayoutParams.MATCH_PARENT, 1));
+					divider.setBackgroundColor(Color.rgb(51, 51, 51));
+					t1.addView(divider);
+
+					previousCurrency = data.getCurrency();
+				}
 			}
 		} catch (Exception e) {
 			connectionFailed();
