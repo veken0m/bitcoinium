@@ -16,7 +16,7 @@
         android:paddingTop="1dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
-        android:textSize="11sp" >
+        android:textSize="11dp" >
     </TextView>
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="@string/low"
-        android:textSize="11sp" >
+        android:textSize="11dp" >
     </TextView>
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="@string/high"
-        android:textSize="11sp" >
+        android:textSize="11dp" >
     </TextView>
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/last"
         android:textColor="#FDD017"
-        android:textSize="18sp" />
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/widgetVolText"
@@ -54,7 +54,7 @@
         android:layout_below="@id/widgetLastText"
         android:layout_centerHorizontal="true"
         android:text="@string/vol"
-        android:textSize="12sp" >
+        android:textSize="12dp" >
     </TextView>
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_below="@id/widgetVolText"
         android:layout_centerHorizontal="true"
         android:text="@string/time"
-        android:textSize="10sp" />
+        android:textSize="10dp" />
 
     <Button
         android:id="@+id/widgetButton"
