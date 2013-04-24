@@ -12,8 +12,7 @@ Currently supported exchanges include:
 	- BitcoinCentral: http://bitcoin-central.net
 	- Bitfloor: https://bitfloor.com/
 	- Bitcoin-24: https://bitcoin-24.com/
-	
-	
+		
 Additional Information from:	
 	- Bitcoin Charts			: http://bitcoincharts.com/markets/
 
@@ -55,7 +54,7 @@ Features
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
 - Customizable widget refresh intervals and power saving mode to reduce battery usage
-- Miner statistics from DeepBit or BitMinter mining pool
+- Widget Theme customization
 - In-app Orderbook with with liquidity highlighting
 - Charts from multiple sources and current orderbook view-able within the application
 
@@ -72,6 +71,8 @@ Android SDK								: http://developer.android.com/sdk/index.html
 Android Development Tools (ADT) plugin	: http://developer.android.com/sdk/installing/installing-adt.html
 
 Sherlock ActionBar library				: http://actionbarsherlock.com/
+
+ColorPickerPreference library				: https://github.com/attenzione/android-ColorPickerPreference
 
 
 Google Play
