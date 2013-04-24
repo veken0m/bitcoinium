@@ -178,7 +178,7 @@ public class OrderbookActivity extends SherlockActivity {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
 		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
-		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		linlaHeaderProgress.setVisibility(View.GONE);
 		
 		
 		TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
@@ -324,7 +324,7 @@ public class OrderbookActivity extends SherlockActivity {
 
 	private void connectionFailed() {
 		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
-		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		linlaHeaderProgress.setVisibility(View.GONE);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Could not retrieve orderbook from " + exchangeName
 				+ ".\n\nCheck 3G or Wifi connection and try again.");

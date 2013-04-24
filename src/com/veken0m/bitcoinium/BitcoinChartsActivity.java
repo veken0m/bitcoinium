@@ -82,7 +82,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
 		final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
 		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
-		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		linlaHeaderProgress.setVisibility(View.GONE);
 
 		String previousCurrency = "";
 		int backGroundColor = Color.rgb(31, 31, 31);
@@ -188,7 +188,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
 	private void connectionFailed() {
 		LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
-		linlaHeaderProgress.setVisibility(View.INVISIBLE);
+		linlaHeaderProgress.setVisibility(View.GONE);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Could not retrieve data from " + "Bitcoin Charts"
 				+ ".\n\nCheck 3G or Wifi connection and try again.");
