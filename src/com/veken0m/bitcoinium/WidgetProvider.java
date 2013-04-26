@@ -7,10 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.DetailedState;
-import android.text.Layout;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -55,7 +51,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
 			readGeneralPreferences(context);
 
-			if (!pref_wifionly || checkWiFiConnected()) {
+			if (!pref_wifionly || checkWiFiConnected(context)) {
 
 				for (int appWidgetId : widgetIds) {
 
@@ -286,20 +282,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 				if (pref_alarmClock) {
 					setAlarmClock(context);
 				}
-			}
-		}
-
-		public Boolean checkWiFiConnected() {
-			try {
-				ConnectivityManager connMgr = (ConnectivityManager) this
-						.getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo wifi = connMgr
-						.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-				return (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
 			}
 		}
 

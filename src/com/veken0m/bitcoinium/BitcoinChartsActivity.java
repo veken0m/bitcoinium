@@ -1,7 +1,6 @@
 package com.veken0m.bitcoinium;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
 import android.app.AlertDialog;

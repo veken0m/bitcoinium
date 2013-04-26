@@ -28,6 +28,9 @@ public class BaseExchangeFragment extends SherlockFragment {
 				Intent intent = new Intent(getActivity()
 						.getApplicationContext(), WidgetProvider.class);
 				intent.setAction(REFRESH);
+				Intent intent2 = new Intent(getActivity()
+						.getApplicationContext(), MinerWidgetProvider.class);
+				intent2.setAction(REFRESH);
 				getActivity().sendBroadcast(intent);
 				getActivity().moveTaskToBack(true);
 			}

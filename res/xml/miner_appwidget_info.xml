@@ -1,0 +1,8 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.veken0m.bitcoinium.MinerWidgetConfigureActivity"
+    android:initialLayout="@layout/minerappwidget"
+    android:minHeight="50dp"
+    android:minWidth="110dp"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="keyguard|home_screen" >
+</appwidget-provider>

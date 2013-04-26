@@ -33,6 +33,22 @@
         </receiver>
 
         <service android:name="com.veken0m.bitcoinium.WidgetProvider$UpdateService" />
+        
+                <receiver
+            android:name="com.veken0m.bitcoinium.MinerWidgetProvider"
+            android:label="Bitcoinium Miner (BETA)" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/miner_appwidget_info" />
+        </receiver>
+
+        <service android:name="com.veken0m.bitcoinium.MinerWidgetProvider$MinerUpdateService" />
 
         <activity
             android:name=".MainActivity"
@@ -46,6 +62,13 @@
         </activity>
         <activity
             android:name="com.veken0m.bitcoinium.WidgetConfigureActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+                <activity
+            android:name="com.veken0m.bitcoinium.MinerWidgetConfigureActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

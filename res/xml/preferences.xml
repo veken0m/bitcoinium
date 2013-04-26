@@ -55,13 +55,15 @@
                 android:key="bitcoincentralCurrencyPref"
                 android:summary="BitcoinCentral price will be displayed in selected currency"
                 android:title="BitcoinCentral Currency" />
-           <!-- <ListPreference
+            <!--
+                <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitfloorcurrencies"
                 android:entryValues="@array/bitfloorcurrenciesvalues"
                 android:key="bitfloorCurrencyPref"
                 android:summary="Bitfloor price will be displayed in selected currency"
-                android:title="Bitfloor Currency" />  --> 
+                android:title="Bitfloor Currency" />
+            -->
             <ListPreference
                 android:defaultValue="EUR"
                 android:entries="@array/bitcoin24currencies"
@@ -145,7 +147,7 @@
                 android:defaultValue="true"
                 android:key="showRefreshTimePref"
                 android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />
+                android:title="Show Refresh Time" />
             -->
             <net.margaritov.preference.colorpicker.ColorPickerPreference
                 alphaSlider="true"
@@ -159,6 +161,32 @@
                 android:key="widgetRefreshFailedColorPref"
                 android:summary="Color of the refresh time if failed"
                 android:title="Refresh Time Color (Failed)" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:summary="Enable notfications when main miner is down"
+        android:title="Bitcoin Miner Alert" >
+        <PreferenceCategory android:title="Miner Widget Settings" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="bitminterAlertPref"
+                android:title="BitMinter miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="deepbitAlertPref"
+                android:title="DeepBit miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="slushAlertPref"
+                android:title="Slush miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="50btcAlertPref"
+                android:title="50BTC miner down alert" />
+            <Preference
+                android:defaultValue="false"
+                android:key="eclipsemcAlertPref"
+                android:title="EclipseMC alert not yet supported" />
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -202,7 +230,7 @@
                      <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitfloorTickerPref"
-                    android:title="Bitfloor Notification Ticker" />
+                    android:title="Bitfloor Notification Ticker" />
                 -->
                 <CheckBoxPreference
                     android:defaultValue="false"

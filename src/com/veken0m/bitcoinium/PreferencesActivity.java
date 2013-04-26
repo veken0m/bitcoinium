@@ -1,6 +1,6 @@
 package com.veken0m.bitcoinium;
 
-import android.app.PendingIntent;
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,8 +11,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
-
-import net.margaritov.preference.colorpicker.*;
 
 public class PreferencesActivity extends PreferenceActivity {
 	public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";

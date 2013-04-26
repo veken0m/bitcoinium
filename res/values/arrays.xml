@@ -33,6 +33,9 @@
     <string-array name="miningpools">
         <item>DeepBit</item>
         <item>BitMinter</item>
+        <item>EclipseMC</item>
+        <item>Slush</item>
+        <item>50BTC</item>
     </string-array>
 
 </resources>

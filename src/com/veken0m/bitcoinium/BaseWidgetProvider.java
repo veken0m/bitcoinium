@@ -11,11 +11,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
 
+import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
@@ -50,6 +54,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
 	// Service used to refresh widget
 	static PendingIntent widgetRefreshService = null;
+	static PendingIntent widgetMinerRefreshService = null;
 
 	protected static void readPreferences(Context context, String prefix,
 			String defaultCurrency) {
@@ -58,8 +63,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				.getDefaultSharedPreferences(context);
 
 		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
-		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
-				"30"));
+		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref",
+				"1800"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
 		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_notifLimitUpper = prefs.getString(prefix + "Upper", "999");
@@ -92,8 +97,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 				.getDefaultSharedPreferences(context);
 
 		pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
-		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("listPref",
-				"30"));
+		pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref",
+				"1800"));
 		pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
 		pref_priceAlarm = prefs.getBoolean("alarmPref", false);
 		pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
@@ -134,7 +139,10 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		readAlarmPreferences(context);
 		final AlarmManager m1 = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
+		final AlarmManager m2 = (AlarmManager) context
+				.getSystemService(Context.ALARM_SERVICE);
 		final Intent intent = new Intent(context, UpdateService.class);
+		final Intent intentMiner = new Intent(context, MinerUpdateService.class);
 		final Calendar TIME = Calendar.getInstance();
 		TIME.set(Calendar.MINUTE, 0);
 		TIME.set(Calendar.SECOND, 0);
@@ -144,13 +152,21 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 			widgetRefreshService = PendingIntent.getService(context, 0, intent,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		}
+		if (widgetMinerRefreshService == null) {
+			widgetMinerRefreshService = PendingIntent.getService(context, 0, intentMiner,
+					PendingIntent.FLAG_CANCEL_CURRENT);
+		}
 
 		if (pref_wakeupRefresh) {
 			m1.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
 					1000 * pref_widgetRefreshFreq, widgetRefreshService);
+			m2.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
+					1000 * pref_widgetRefreshFreq, widgetMinerRefreshService);
 		} else {
 			m1.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
 					1000 * pref_widgetRefreshFreq, widgetRefreshService);
+			m2.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
+					1000 * pref_widgetRefreshFreq, widgetMinerRefreshService);
 		}
 	}
 
@@ -177,6 +193,21 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
+	public static Boolean checkWiFiConnected(Context ctxt) {
+		try {
+			ConnectivityManager connMgr = (ConnectivityManager) ctxt
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo wifi = connMgr
+					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+			return (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	
 	static void createNotification(Context ctxt, String lastPrice,
 			String exchange, int BITCOIN_NOTIFY_ID) {
 		String ns = Context.NOTIFICATION_SERVICE;
@@ -209,6 +240,41 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 		}
 
 		mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
+	}
+	
+	
+	static void createMinerDownNotification(Context ctxt,
+			String miningpool, int BITCOIN_NOTIFY_ID) {
+		String ns = Context.NOTIFICATION_SERVICE;
+
+		String tickerText = "Bitcoin Miner down!";
+		String contentTitle = "Bitcoin miner down";
+		String contentText = "Miner on " + miningpool + " is down";
+
+		int icon = R.drawable.bitcoin;
+		NotificationManager mNotificationManager = (NotificationManager) ctxt
+				.getSystemService(ns);
+		long when = System.currentTimeMillis();
+		Notification notification = new Notification(icon, tickerText, when);
+
+		Intent notificationIntent = new Intent(ctxt,
+				PreferencesActivity.class);
+		
+		PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
+				notificationIntent, 0);
+
+		notification.setLatestEventInfo(ctxt, contentTitle, contentText,
+				contentIntent);
+
+		if (pref_alarmSound) {
+			notification.sound = Uri.parse(pref_notificationSound);
+		}
+
+		if (pref_alarmVibrate) {
+			notification.defaults |= Notification.DEFAULT_VIBRATE;
+		}
+
+		mNotificationManager.notify(BITCOIN_NOTIFY_ID*100, notification);
 	}
 
 	static void createPermanentNotification(Context ctxt, int icon,

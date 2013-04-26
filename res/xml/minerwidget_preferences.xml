@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Mining Pool" >
+        <ListPreference
+            android:defaultValue="BitMinter"
+            android:entries="@array/miningpools"
+            android:entryValues="@array/miningpools"
+            android:key="widgetMiningPoolPref"
+            android:summary="Select the mining pool used for the widget"
+            android:title="Mining Widget" />
+    </PreferenceCategory>
+        <PreferenceScreen
+        android:summary="Enable notfications when main miner is down"
+        android:title="Bitcoin Miner Alert" >
+        <PreferenceCategory android:title="Miner Widget Settings" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="bitminterAlertPref"
+                android:title="BitMinter miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="deepbitAlertPref"
+                android:title="DeepBit miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="slushAlertPref"
+                android:title="Slush miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="50btcAlertPref"
+                android:title="50BTC miner down alert" />
+            <Preference
+                android:defaultValue="false"
+                android:key="eclipsemcAlertPref"
+                android:title="EclipseMC alert not yet supported" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <PreferenceCategory android:title=" " >
+        <Preference
+            android:key="OKpref"
+            android:title="Create Widget" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
