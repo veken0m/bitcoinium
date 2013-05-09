@@ -353,7 +353,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.5.3"
+                    android:summary="1.5.4"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"
