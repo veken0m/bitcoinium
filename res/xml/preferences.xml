@@ -21,7 +21,7 @@
                 android:summary="MtGox prices will be displayed in selected currency"
                 android:title="MtGox Currency" />
             <ListPreference
-                android:defaultValue="USD"
+                android:defaultValue="CAD"
                 android:entries="@array/virtexcurrencies"
                 android:entryValues="@array/virtexcurrenciesvalues"
                 android:key="virtexCurrencyPref"
