@@ -22,18 +22,18 @@
                 android:title="MtGox Currency" />
             <ListPreference
                 android:defaultValue="USD"
+                android:entries="@array/virtexcurrencies"
+                android:entryValues="@array/virtexcurrenciesvalues"
+                android:key="virtexCurrencyPref"
+                android:summary="VirtEx prices will be displayed in selected currency"
+                android:title="VirtEx Currency" />
+            <ListPreference
+                android:defaultValue="USD"
                 android:entries="@array/btcecurrencies"
                 android:entryValues="@array/btcecurrenciesvalues"
                 android:key="btceCurrencyPref"
                 android:summary="BTC-E prices will be displayed in selected currency"
                 android:title="BTC-E Currency" />
-            <ListPreference
-                android:defaultValue="CAD"
-                android:entries="@array/virtexcurrencies"
-                android:entryValues="@array/virtexcurrenciesvalues"
-                android:key="virtexCurrencyPref"
-                android:summary="VirtEx price will be displayed in selected currency"
-                android:title="VirtEx Currency" />
             <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitstampcurrencies"
@@ -48,6 +48,7 @@
                 android:key="campbxCurrencyPref"
                 android:summary="CampBX price will be displayed in selected currency"
                 android:title="CampBX Currency" />
+            <!--
             <ListPreference
                 android:defaultValue="EUR"
                 android:entries="@array/bitcoincentralcurrencies"
@@ -55,7 +56,6 @@
                 android:key="bitcoincentralCurrencyPref"
                 android:summary="BitcoinCentral price will be displayed in selected currency"
                 android:title="BitcoinCentral Currency" />
-            <!--
                 <ListPreference
                 android:defaultValue="USD"
                 android:entries="@array/bitfloorcurrencies"
@@ -63,7 +63,6 @@
                 android:key="bitfloorCurrencyPref"
                 android:summary="Bitfloor price will be displayed in selected currency"
                 android:title="Bitfloor Currency" />
-            -->
             <ListPreference
                 android:defaultValue="EUR"
                 android:entries="@array/bitcoin24currencies"
@@ -71,6 +70,7 @@
                 android:key="bitcoin24CurrencyPref"
                 android:summary="Bitcoin24 price will be displayed in selected currency"
                 android:title="Bitcoin24 Currency" />
+                -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Settings" >
@@ -222,20 +222,19 @@
                     android:defaultValue="false"
                     android:key="campBXTickerPref"
                     android:title="CampBX Notification Ticker" />
-                <CheckBoxPreference
+                <!--<CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoincentralTickerPref"
                     android:title="BitcoinCentral Notification Ticker" />
-                <!--
                      <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitfloorTickerPref"
-                    android:title="Bitfloor Notification Ticker" />
-                -->
+                    android:title="Bitfloor Notification Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoin24TickerPref"
                     android:title="Bitcoin-24 Notification Ticker" />
+                    -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -353,7 +352,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.5.4"
+                    android:summary="1.5.5"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"

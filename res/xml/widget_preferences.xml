@@ -24,6 +24,13 @@
                     android:key="mtgoxWidgetCurrencyPref"
                     android:summary="MtGox Widget price will be displayed in selected currency"
                     android:title="MtGox Widget Currency" />
+                 <ListPreference
+                    android:defaultValue="CAD"
+                    android:entries="@array/virtexcurrencies"
+                    android:entryValues="@array/virtexcurrenciesvalues"
+                    android:key="virtexWidgetCurrencyPref"
+                    android:summary="VirtEx Widget price will be displayed in selected currency"
+                    android:title="VirtEx Widget Currency" />
                 <ListPreference
                     android:defaultValue="USD"
                     android:entries="@array/btcecurrencies"
@@ -31,13 +38,6 @@
                     android:key="btceWidgetCurrencyPref"
                     android:summary="BTC-E Widget price will be displayed in selected currency"
                     android:title="BTC-E Widget Currency" />
-                <ListPreference
-                    android:defaultValue="CAD"
-                    android:entries="@array/virtexcurrencies"
-                    android:entryValues="@array/virtexcurrenciesvalues"
-                    android:key="virtexWidgetCurrencyPref"
-                    android:summary="VirtEx Widget price will be displayed in selected currency"
-                    android:title="VirtEx Widget Currency" />
                 <ListPreference
                     android:defaultValue="USD"
                     android:entries="@array/bitstampcurrencies"
@@ -52,6 +52,7 @@
                     android:key="campbxWidgetCurrencyPref"
                     android:summary="CampBX Widget price will be displayed in selected currency"
                     android:title="CampBX Widget Currency" />
+                   <!--
                 <ListPreference
                     android:defaultValue="EUR"
                     android:entries="@array/bitcoincentralcurrencies"
@@ -59,7 +60,6 @@
                     android:key="bitcoincentralWidgetCurrencyPref"
                     android:summary="BitcoinCentral Widget price will be displayed in selected currency"
                     android:title="BitcoinCentral Widget Currency" />
-                <!--
                       <ListPreference
                     android:defaultValue="USD"
                     android:entries="@array/bitfloorcurrencies"
@@ -67,7 +67,7 @@
                     android:key="bitfloorWidgetCurrencyPref"
                     android:summary="Bitfloor Widget price will be displayed in selected currency"
                     android:title="Bitfloor Widget Currency" />
-                -->
+                
                 <ListPreference
                     android:defaultValue="EUR"
                     android:entries="@array/bitcoin24currencies"
@@ -75,6 +75,7 @@
                     android:key="bitcoin24WidgetCurrencyPref"
                     android:summary="Bitcoin-24 Widget price will be displayed in selected currency"
                     android:title="Bitcoin-24 Widget Currency" />
+                    -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

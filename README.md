@@ -9,6 +9,8 @@ Currently supported exchanges include:
 	- BTC-E	: http://btc-e.com
 	- Bitstamp : http://bitstamp.net
 	- CampBX: http://campbx.com
+	
+Removed Exchanges (closed down):
 	- BitcoinCentral: http://bitcoin-central.net
 	- Bitfloor: https://bitfloor.com/
 	- Bitcoin-24: https://bitcoin-24.com/

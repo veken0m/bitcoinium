@@ -115,7 +115,7 @@
                 android:summary="Notification will occur if CampBX price goes under this threshold"
                 android:title="CampBX Lower Threshold" />
         </PreferenceScreen>
-        <PreferenceScreen android:title="BitcoinCentral Alarm" >
+        <!-- <PreferenceScreen android:title="BitcoinCentral Alarm" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
@@ -162,7 +162,7 @@
                 android:key="bitcoin24Lower"
                 android:summary="Notification will occur if Bitcoin-24 price goes under this threshold"
                 android:title="Bitcoin-24 Lower Threshold" />
-        </PreferenceScreen>
+        </PreferenceScreen> -->
     </PreferenceCategory>
 
 </PreferenceScreen>
