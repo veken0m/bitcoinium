@@ -57,7 +57,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         // findPreference("bitcoin24WidgetCurrencyPref")).setEnabled(false);
         try {
             ((ListPreference) findPreference(widgetExchangePref.getEntry()
-                    .toString().toLowerCase().replace("exchange", "")
+                    .toString().toLowerCase().replace("exchange", "").replace("-", "")
                     + "WidgetCurrencyPref")).setEnabled(true);
         } catch (Exception e) {
         }
