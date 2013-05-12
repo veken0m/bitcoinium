@@ -10,7 +10,6 @@ import android.widget.TextView;
 import org.joda.money.CurrencyUnit;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 

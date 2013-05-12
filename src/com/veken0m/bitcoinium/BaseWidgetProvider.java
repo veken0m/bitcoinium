@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -181,7 +182,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    static void setAlarmClock(Context context) {
+	static void setAlarmClock(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
@@ -192,16 +193,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         dtNow.setToNow();
         int hours = dtNow.hour;
         int minutes = dtNow.minute + 1;
-        int sdk = android.os.Build.VERSION.SDK_INT;
-        if (sdk > android.os.Build.VERSION_CODES.GINGERBREAD) {
-            Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
-            i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (delete)");
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-            i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-            i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-            context.startActivity(i);
-        }
+        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+        i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (delete)");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+        i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+        i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+        context.startActivity(i);
     }
 
     public static Boolean checkWiFiConnected(Context ctxt) {
