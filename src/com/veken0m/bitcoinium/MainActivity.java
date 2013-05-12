@@ -1,6 +1,5 @@
-package com.veken0m.bitcoinium;
 
-import java.util.ArrayList;
+package com.veken0m.bitcoinium;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,203 +24,203 @@ import com.veken0m.bitcoinium.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
 
+import java.util.ArrayList;
+
 /**
  * @author Michael Lagacé a.k.a. veken0m
  * @version 1.5.5 May 11 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
-	static String pref_favExchange;
-	ViewPager mViewPager;
+    static String pref_favExchange;
+    ViewPager mViewPager;
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		readPreferences(getApplicationContext());
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        readPreferences(getApplicationContext());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
 
-		// ActionBar gets initiated
-		ActionBar actionbar = getSupportActionBar();
+        // ActionBar gets initiated
+        ActionBar actionbar = getSupportActionBar();
 
-		// Tell the ActionBar we want to use Tabs.
-		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        // Tell the ActionBar we want to use Tabs.
+        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Create the actionbar tabs
-		ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
-				R.drawable.mtgoxlogo);
-		ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
-				R.drawable.virtexlogo);
-		ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
-		ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
-				R.drawable.bitstamplogo);
-		ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
-				R.drawable.campbxlogo);
-		// ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
-		// .setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
-		// ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
-		// R.drawable.bitfloorlogo);
-		// ActionBar.Tab Bitcoin24Tab = actionbar.newTab().setIcon(
-		// R.drawable.bitcoin24logo);
+        // Create the actionbar tabs
+        ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
+                R.drawable.mtgoxlogo);
+        ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
+                R.drawable.virtexlogo);
+        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
+        ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
+                R.drawable.bitstamplogo);
+        ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
+                R.drawable.campbxlogo);
+        // ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
+        // .setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
+        // ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
+        // R.drawable.bitfloorlogo);
+        // ActionBar.Tab Bitcoin24Tab = actionbar.newTab().setIcon(
+        // R.drawable.bitcoin24logo);
 
-		TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-		tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
-		tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
-		tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
-		tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
-		tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
-		// tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
-		// null);
-		// tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
-		// tabsAdapter.addTab(Bitcoin24Tab, Bitcoin24Fragment.class, null);
+        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
+        tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
+        tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
+        tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
+        tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
+        // tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
+        // null);
+        // tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
+        // tabsAdapter.addTab(Bitcoin24Tab, Bitcoin24Fragment.class, null);
 
-		try {
-			actionbar.setSelectedNavigationItem(Integer
-					.parseInt(pref_favExchange));
-		} catch (Exception e) {
-			// If preference is not set a valid integer set to "0"
-			SharedPreferences prefs = PreferenceManager
-					.getDefaultSharedPreferences(getBaseContext());
+        try {
+            actionbar.setSelectedNavigationItem(Integer
+                    .parseInt(pref_favExchange));
+        } catch (Exception e) {
+            // If preference is not set a valid integer set to "0"
+            SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext());
 
-			Editor editor = prefs.edit();
-			editor.putString("favExchangePref", "0");
-			editor.commit();
-		}
-		actionbar.show();
-	}
+            Editor editor = prefs.edit();
+            editor.putString("favExchangePref", "0");
+            editor.commit();
+        }
+        actionbar.show();
+    }
 
-	/**
-	 * 
-	 * Obtained from: https://gist.github.com/2424383
-	 * 
-	 * This is a helper class that implements the management of tabs and all
-	 * details of connecting a ViewPager with associated TabHost. It relies on a
-	 * trick. Normally a tab host has a simple API for supplying a View or
-	 * Intent that each tab will show. This is not sufficient for switching
-	 * between pages. So instead we make the content part of the tab host 0dp
-	 * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-	 * show as the tab content. It listens to changes in tabs, and takes care of
-	 * switch to the correct paged in the ViewPager whenever the selected tab
-	 * changes.
-	 */
-	public static class TabsAdapter extends FragmentPagerAdapter implements
-			ViewPager.OnPageChangeListener, ActionBar.TabListener {
-		private final Context mContext;
-		private final ActionBar mBar;
-		private final ViewPager mViewPager;
-		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+    /**
+     * Obtained from: https://gist.github.com/2424383 This is a helper class
+     * that implements the management of tabs and all details of connecting a
+     * ViewPager with associated TabHost. It relies on a trick. Normally a tab
+     * host has a simple API for supplying a View or Intent that each tab will
+     * show. This is not sufficient for switching between pages. So instead we
+     * make the content part of the tab host 0dp high (it is not shown) and the
+     * TabsAdapter supplies its own dummy view to show as the tab content. It
+     * listens to changes in tabs, and takes care of switch to the correct paged
+     * in the ViewPager whenever the selected tab changes.
+     */
+    public static class TabsAdapter extends FragmentPagerAdapter implements
+            ViewPager.OnPageChangeListener, ActionBar.TabListener {
+        private final Context mContext;
+        private final ActionBar mBar;
+        private final ViewPager mViewPager;
+        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-		static final class TabInfo {
-			private final Class<?> clss;
-			private final Bundle args;
+        static final class TabInfo {
+            private final Class<?> clss;
+            private final Bundle args;
 
-			TabInfo(Class<?> _class, Bundle _args) {
-				clss = _class;
-				args = _args;
-			}
-		}
+            TabInfo(Class<?> _class, Bundle _args) {
+                clss = _class;
+                args = _args;
+            }
+        }
 
-		public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar,
-				ViewPager pager) {
-			super(activity.getSupportFragmentManager());
-			mContext = activity;
-			mBar = bar;
-			mViewPager = pager;
-			mViewPager.setAdapter(this);
-			mViewPager.setOnPageChangeListener(this);
-		}
+        public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar,
+                ViewPager pager) {
+            super(activity.getSupportFragmentManager());
+            mContext = activity;
+            mBar = bar;
+            mViewPager = pager;
+            mViewPager.setAdapter(this);
+            mViewPager.setOnPageChangeListener(this);
+        }
 
-		public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,
-				Bundle args) {
-			TabInfo info = new TabInfo(clss, args);
-			tab.setTag(info);
-			tab.setTabListener(this);
-			mTabs.add(info);
-			mBar.addTab(tab);
-			notifyDataSetChanged();
-		}
+        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,
+                Bundle args) {
+            TabInfo info = new TabInfo(clss, args);
+            tab.setTag(info);
+            tab.setTabListener(this);
+            mTabs.add(info);
+            mBar.addTab(tab);
+            notifyDataSetChanged();
+        }
 
-		@Override
-		public int getCount() {
-			return mTabs.size();
-		}
+        @Override
+        public int getCount() {
+            return mTabs.size();
+        }
 
-		@Override
-		public Fragment getItem(int position) {
-			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(),
-					info.args);
-		}
+        @Override
+        public Fragment getItem(int position) {
+            TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(mContext, info.clss.getName(),
+                    info.args);
+        }
 
-		@Override
-		public void onPageScrolled(int position, float positionOffset,
-				int positionOffsetPixels) {
-		}
+        @Override
+        public void onPageScrolled(int position, float positionOffset,
+                int positionOffsetPixels) {
+        }
 
-		@Override
-		public void onPageSelected(int position) {
-			mBar.setSelectedNavigationItem(position);
-		}
+        @Override
+        public void onPageSelected(int position) {
+            mBar.setSelectedNavigationItem(position);
+        }
 
-		@Override
-		public void onPageScrollStateChanged(int state) {
-		}
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
 
-		@Override
-		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			Object tag = tab.getTag();
-			for (int i = 0; i < mTabs.size(); i++) {
-				if (mTabs.get(i) == tag) {
-					mViewPager.setCurrentItem(i);
-				}
-			}
-		}
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            Object tag = tab.getTag();
+            for (int i = 0; i < mTabs.size(); i++) {
+                if (mTabs.get(i) == tag) {
+                    mViewPager.setCurrentItem(i);
+                }
+            }
+        }
 
-		@Override
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
-		}
+        }
 
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
 
-		}
-	}
+        }
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.preferences) {
-			startActivity(new Intent(this, PreferencesActivity.class));
-		}
-		if (item.getItemId() == R.id.price_alarm_preferences) {
-			startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.preferences) {
+            startActivity(new Intent(this, PreferencesActivity.class));
+        }
+        if (item.getItemId() == R.id.price_alarm_preferences) {
+            startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-	protected static void readPreferences(Context context) {
-		// Get the xml/preferences.xml preferences
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
+    protected static void readPreferences(Context context) {
+        // Get the xml/preferences.xml preferences
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
 
-		SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-					String key) {
+        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences pPrefs,
+                    String key) {
 
-				pref_favExchange = pPrefs.getString("favExchangePref", "0");
-			}
-		};
+                pref_favExchange = pPrefs.getString("favExchangePref", "0");
+            }
+        };
 
-		prefs.registerOnSharedPreferenceChangeListener(prefListener);
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
-		pref_favExchange = prefs.getString("favExchangePref", "0");
-	}
+        pref_favExchange = prefs.getString("favExchangePref", "0");
+    }
 
 }

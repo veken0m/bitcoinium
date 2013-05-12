@@ -1,94 +1,102 @@
-package com.jjoe64.graphview;
 
-import java.util.ArrayList;
-import java.util.List;
+package com.jjoe64.graphview;
 
 import android.graphics.Color;
 
 import com.jjoe64.graphview.GraphView.GraphViewData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GraphViewSeries {
-	/**
-	 * graph series style: color and thickness
-	 */
-	static public class GraphViewSeriesStyle {
-		public int color = Color.GREEN;
-		public int thickness = 3;
-		private ValueDependentColor valueDependentColor;
+    /**
+     * graph series style: color and thickness
+     */
+    static public class GraphViewSeriesStyle {
+        public int color = Color.GREEN;
+        public int thickness = 3;
+        private ValueDependentColor valueDependentColor;
 
-		public GraphViewSeriesStyle() {
-			super();
-		}
-		public GraphViewSeriesStyle(int color, int thickness) {
-			super();
-			this.color = color;
-			this.thickness = thickness;
-		}
-		public void setValueDependentColor(ValueDependentColor valueDependentColor) {
-			this.valueDependentColor = valueDependentColor;
-		}
-		public ValueDependentColor getValueDependentColor() {
-			return valueDependentColor;
-		}
-	}
+        public GraphViewSeriesStyle() {
+            super();
+        }
 
-	final String description;
-	final GraphViewSeriesStyle style;
-	GraphViewData[] values;
-	private final List<GraphView> graphViews = new ArrayList<GraphView>();
+        public GraphViewSeriesStyle(int color, int thickness) {
+            super();
+            this.color = color;
+            this.thickness = thickness;
+        }
 
-	public GraphViewSeries(GraphViewData[] values) {
-		description = null;
-		style = new GraphViewSeriesStyle();
-		this.values = values;
-	}
+        public void setValueDependentColor(
+                ValueDependentColor valueDependentColor) {
+            this.valueDependentColor = valueDependentColor;
+        }
 
-	public GraphViewSeries(String description, GraphViewSeriesStyle style, GraphViewData[] values) {
-		super();
-		this.description = description;
-		if (style == null) {
-			style = new GraphViewSeriesStyle();
-		}
-		this.style = style;
-		this.values = values;
-	}
+        public ValueDependentColor getValueDependentColor() {
+            return valueDependentColor;
+        }
+    }
 
-	/**
-	 * this graphview will be redrawn if data changes
-	 * @param graphView
-	 */
-	public void addGraphView(GraphView graphView) {
-		this.graphViews.add(graphView);
-	}
+    final String description;
+    final GraphViewSeriesStyle style;
+    GraphViewData[] values;
+    private final List<GraphView> graphViews = new ArrayList<GraphView>();
 
-	/**
-	 * add one data to current data
-	 * @param value the new data to append
-	 * @param scrollToEnd true => graphview will scroll to the end (maxX)
-	 */
-	public void appendData(GraphViewData value, boolean scrollToEnd) {
-		GraphViewData[] newValues = new GraphViewData[values.length + 1];
-		int offset = values.length;
-		System.arraycopy(values, 0, newValues, 0, offset);
+    public GraphViewSeries(GraphViewData[] values) {
+        description = null;
+        style = new GraphViewSeriesStyle();
+        this.values = values;
+    }
 
-		newValues[values.length] = value;
-		values = newValues;
-		for (GraphView g : graphViews) {
-			if (scrollToEnd) {
-				g.scrollToEnd();
-			}
-		}
-	}
+    public GraphViewSeries(String description, GraphViewSeriesStyle style,
+            GraphViewData[] values) {
+        super();
+        this.description = description;
+        if (style == null) {
+            style = new GraphViewSeriesStyle();
+        }
+        this.style = style;
+        this.values = values;
+    }
 
-	/**
-	 * clears the current data and set the new.
-	 * redraws the graphview(s)
-	 * @param values new data
-	 */
-	public void resetData(GraphViewData[] values) {
-		this.values = values;
-		for (GraphView g : graphViews) {
-			g.redrawAll();
-		}
-	}
+    /**
+     * this graphview will be redrawn if data changes
+     * 
+     * @param graphView
+     */
+    public void addGraphView(GraphView graphView) {
+        this.graphViews.add(graphView);
+    }
+
+    /**
+     * add one data to current data
+     * 
+     * @param value the new data to append
+     * @param scrollToEnd true => graphview will scroll to the end (maxX)
+     */
+    public void appendData(GraphViewData value, boolean scrollToEnd) {
+        GraphViewData[] newValues = new GraphViewData[values.length + 1];
+        int offset = values.length;
+        System.arraycopy(values, 0, newValues, 0, offset);
+
+        newValues[values.length] = value;
+        values = newValues;
+        for (GraphView g : graphViews) {
+            if (scrollToEnd) {
+                g.scrollToEnd();
+            }
+        }
+    }
+
+    /**
+     * clears the current data and set the new. redraws the graphview(s)
+     * 
+     * @param values new data
+     */
+    public void resetData(GraphViewData[] values) {
+        this.values = values;
+        for (GraphView g : graphViews) {
+            g.redrawAll();
+        }
+    }
 }

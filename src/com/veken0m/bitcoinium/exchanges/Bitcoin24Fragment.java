@@ -1,3 +1,4 @@
+
 package com.veken0m.bitcoinium.exchanges;
 
 import android.os.Bundle;
@@ -10,16 +11,16 @@ import com.veken0m.bitcoinium.R;
 
 public class Bitcoin24Fragment extends BaseExchangeFragment {
 
-	public Bitcoin24Fragment() {
-	}
+    public Bitcoin24Fragment() {
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.menu_fragment, container, false);
-		buildMenu(view, BITCOIN24, false);
-		return view;
-	}
+        View view = inflater.inflate(R.layout.menu_fragment, container, false);
+        buildMenu(view, BITCOIN24, false);
+        return view;
+    }
 
 }
