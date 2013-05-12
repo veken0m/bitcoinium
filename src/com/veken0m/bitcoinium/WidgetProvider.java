@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -78,20 +79,30 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                     readPreferences(context, prefix, defaultCurrency);
 
-                    if (pref_currency.length() == 3) {
+                    if (pref_currency.length() == 3 || pref_currency.length() == 7) {
 
                         try {
+
+                            String baseCurrency = Currencies.BTC;
+                            String counterCurrency = pref_currency;
+                            
+                            if (pref_currency.contains("/")) {
+                                baseCurrency = pref_currency.substring(0, 3);
+                                counterCurrency = pref_currency.substring(4, 7);
+                                exchangeName = exchangeName + " (" + baseCurrency + ")";
+                            }
+
                             // Get ticker using XChange
                             final Ticker ticker = ExchangeFactory.INSTANCE
                                     .createExchange(pref_widgetExchange)
                                     .getPollingMarketDataService()
-                                    .getTicker(Currencies.BTC, pref_currency);
+                                    .getTicker(baseCurrency, counterCurrency);
 
                             // Retrieve values from ticker
                             final float lastFloat = ticker.getLast()
                                     .getAmount().floatValue();
                             final String lastString = Utils.formatWidgetMoney(
-                                    lastFloat, pref_currency, true);
+                                    lastFloat, counterCurrency, true);
 
                             String volumeString = "N/A";
                             if (!(ticker.getVolume() == null)) {
@@ -104,9 +115,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                             if (((ticker.getHigh() == null) || pref_widgetbidask)
                                     && tickerBidAsk) {
-                                setBidAsk(ticker, views, pref_currency);
+                                setBidAsk(ticker, views, counterCurrency);
                             } else {
-                                setHighLow(ticker, views, pref_currency);
+                                setHighLow(ticker, views, counterCurrency);
                             }
 
                             // set the color
@@ -156,12 +167,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                             }
 
                             if (pref_priceAlarm) {
-                                checkAlarm(context, pref_currency, lastFloat,
+                                checkAlarm(context, counterCurrency, lastFloat,
                                         exchangeName, NOTIFY_ID);
                             }
 
                             if (pref_ticker
-                                    && pref_currency.equals(pref_main_currency)) {
+                                    && counterCurrency.equals(pref_main_currency)) {
 
                                 String msg = "Bitcoin value: " + lastString
                                         + " on " + exchangeName;

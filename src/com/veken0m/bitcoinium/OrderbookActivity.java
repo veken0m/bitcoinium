@@ -52,6 +52,8 @@ public class OrderbookActivity extends SherlockActivity {
     static Boolean pref_enableHighlight;
     static String pref_currency;
     static Boolean pref_showCurrencySymbol;
+    String baseCurrency;
+    String counterCurrency;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,12 +143,21 @@ public class OrderbookActivity extends SherlockActivity {
      */
     public void getOrderBook() {
         try {
+            
+            baseCurrency = Currencies.BTC;
+            counterCurrency = pref_currency;
+            
+            if (pref_currency.contains("/")) {
+                baseCurrency = pref_currency.substring(0, 3);
+                counterCurrency = pref_currency.substring(4, 7);
+            }
+            
             final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
                     .createExchange(xchangeExchange)
                     .getPollingMarketDataService();
 
-            OrderBook orderbook = marketData.getFullOrderBook(Currencies.BTC,
-                    pref_currency);
+            OrderBook orderbook = marketData.getFullOrderBook(baseCurrency,
+                    counterCurrency);
 
             // Limit OrderbookActivity orders drawn to speed up performance
             int length = 0;
@@ -184,7 +195,7 @@ public class OrderbookActivity extends SherlockActivity {
         linlaHeaderProgress.setVisibility(View.GONE);
 
         TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
-        orderBookHeader.setText(exchangeName + " " + pref_currency);
+        orderBookHeader.setText(exchangeName + " " + baseCurrency + "/" + counterCurrency);
 
         LayoutParams params = new TableRow.LayoutParams(
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -196,8 +207,8 @@ public class OrderbookActivity extends SherlockActivity {
         String currencySymbol = "";
 
         if (pref_showCurrencySymbol) {
-            currencySymbolBTC = " BTC";
-            currencySymbol = Utils.getCurrencySymbol(pref_currency);
+            currencySymbolBTC = " " + baseCurrency;
+            currencySymbol = Utils.getCurrencySymbol(counterCurrency);
         } else {
             currencySymbol = "";
             currencySymbolBTC = "";

@@ -178,11 +178,33 @@
         <item>USD - United States Dollar</item>
         <item>EUR - Euro</item>
         <item>RUR - Old Russian Ruble</item>
+        <item>LTC/BTC</item>
+        <item>LTC/USD</item>
+        <item>LTC/RUR</item>
+        <item>NMC/BTC</item>
+        <item>USD/RUR</item>
+        <item>EUR/USD</item>
+        <item>NVC/BTC</item>
+        <item>TRC/BTC</item>
+        <item>PPC/BTC</item>
+        <item>FTC/BTC</item>
+        <item>CNC/BTC</item>
     </string-array>
     <string-array name="btcecurrenciesvalues">
         <item>USD</item>
         <item>EUR</item>
         <item>RUR</item>
+        <item>LTC/BTC</item>
+        <item>LTC/USD</item>
+        <item>LTC/RUR</item>
+        <item>NMC/BTC</item>
+        <item>USD/RUR</item>
+        <item>EUR/USD</item>
+        <item>NVC/BTC</item>
+        <item>TRC/BTC</item>
+        <item>PPC/BTC</item>
+        <item>FTC/BTC</item>
+        <item>CNC/BTC</item>
     </string-array>
 
     <!-- Arrays for VirtEx Currencies -->
