@@ -14,7 +14,11 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -35,7 +39,7 @@ import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
 import java.util.List;
 
-public class OrderbookActivity extends SherlockActivity {
+public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener{
 
     final static Handler mOrderHandler = new Handler();
     protected static String exchangeName = "";
@@ -55,12 +59,17 @@ public class OrderbookActivity extends SherlockActivity {
     String baseCurrency;
     String counterCurrency;
 
+    private Spinner spinner;
+    private ArrayAdapter<String> dataAdapter;
+    String prefix = "mtgox";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderbook);
 
         ActionBar actionbar = getSupportActionBar();
+
         actionbar.show();
 
         Bundle extras = getIntent().getExtras();
@@ -75,7 +84,17 @@ public class OrderbookActivity extends SherlockActivity {
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
         String defaultCurrency = exchange.getMainCurrency();
-        String prefix = exchange.getPrefix();
+        prefix = exchange.getPrefix();
+        
+        final String[] dropdownValues = getResources().getStringArray(
+                getResources().getIdentifier(prefix+"currenciesvalues", "array", this.getPackageName()));
+
+        spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
+        dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, dropdownValues);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
 
         readPreferences(getApplicationContext(), prefix, defaultCurrency);
 
@@ -104,7 +123,17 @@ public class OrderbookActivity extends SherlockActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.orderbook);
+
         try {
+            // Re-populate the dropdown menu
+            final String[] dropdownValues = getResources().getStringArray(
+                    getResources().getIdentifier(prefix+"currenciesvalues", "array", this.getPackageName()));
+            spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
+            dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, dropdownValues);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+            spinner.setOnItemSelectedListener(this);
             drawOrderbookUI();
         } catch (Exception e) {
             viewOrderbook();
@@ -143,15 +172,15 @@ public class OrderbookActivity extends SherlockActivity {
      */
     public void getOrderBook() {
         try {
-            
+
             baseCurrency = Currencies.BTC;
             counterCurrency = pref_currency;
-            
+
             if (pref_currency.contains("/")) {
                 baseCurrency = pref_currency.substring(0, 3);
                 counterCurrency = pref_currency.substring(4, 7);
             }
-            
+
             final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
                     .createExchange(xchangeExchange)
                     .getPollingMarketDataService();
@@ -351,5 +380,23 @@ public class OrderbookActivity extends SherlockActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    /* (non-Javadoc)
+     * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android.widget.AdapterView, android.view.View, int, long)
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        pref_currency = (String) parent.getItemAtPosition(pos);
+        viewOrderbook();
+    }
+
+    /* (non-Javadoc)
+     * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android.widget.AdapterView)
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+      // Do nothing  
     }
 }

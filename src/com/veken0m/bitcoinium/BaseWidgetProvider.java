@@ -181,7 +181,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         }
     }
 
-	static void setAlarmClock(Context context) {
+    static void setAlarmClock(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

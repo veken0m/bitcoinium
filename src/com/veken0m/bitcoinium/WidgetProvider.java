@@ -8,7 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -85,7 +84,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                             String baseCurrency = Currencies.BTC;
                             String counterCurrency = pref_currency;
-                            
+
                             if (pref_currency.contains("/")) {
                                 baseCurrency = pref_currency.substring(0, 3);
                                 counterCurrency = pref_currency.substring(4, 7);

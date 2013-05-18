@@ -144,17 +144,17 @@ public class GraphActivity extends SherlockActivity {
             // Use API V1 instead of V0 for MtGox Trades
             graphExchange = xchangeExchange.replace("0", "1");
         }
-        
+
         String baseCurrency = Currencies.BTC;
         String counterCurrency = pref_currency;
-        
+
         if (pref_currency.contains("/")) {
             baseCurrency = pref_currency.substring(0, 3);
             counterCurrency = pref_currency.substring(4, 7);
         }
 
         try {
-            
+
             trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
                     .getPollingMarketDataService()
                     .getTrades(baseCurrency, counterCurrency);

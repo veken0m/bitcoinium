@@ -53,12 +53,12 @@ public class Utils {
         } else {
             currencyCode = "";
         }
-        
+
         // If too small, scale the value
-        if(amount < 0.1){
-            amount*=1000;
-            currencyCode =currencyCode.replace(" ", " m");
-            
+        if (amount < 0.1) {
+            amount *= 1000;
+            currencyCode = currencyCode.replace(" ", " m");
+
         }
 
         return symbol + formatDecimal(amount, 2, false) + currencyCode;
