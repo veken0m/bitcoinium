@@ -88,7 +88,9 @@ public class WidgetProvider extends BaseWidgetProvider {
                             if (pref_currency.contains("/")) {
                                 baseCurrency = pref_currency.substring(0, 3);
                                 counterCurrency = pref_currency.substring(4, 7);
-                                exchangeName = exchangeName + " (" + baseCurrency + ")";
+                                if (!baseCurrency.equals(Currencies.BTC)) {
+                                    exchangeName = exchangeName + " (" + baseCurrency + ")";
+                                }
                             }
 
                             // Get ticker using XChange

@@ -14,35 +14,35 @@
             android:summary="Configure the preferred currency for each exchange"
             android:title="Exchange Currency Settings" >
             <ListPreference
-                android:defaultValue="USD"
+                android:defaultValue="BTC/USD"
                 android:entries="@array/mtgoxcurrencies"
                 android:entryValues="@array/mtgoxcurrenciesvalues"
                 android:key="mtgoxCurrencyPref"
                 android:summary="MtGox prices will be displayed in selected currency"
                 android:title="MtGox Currency" />
             <ListPreference
-                android:defaultValue="CAD"
+                android:defaultValue="BTC/CAD"
                 android:entries="@array/virtexcurrencies"
                 android:entryValues="@array/virtexcurrenciesvalues"
                 android:key="virtexCurrencyPref"
                 android:summary="VirtEx prices will be displayed in selected currency"
                 android:title="VirtEx Currency" />
             <ListPreference
-                android:defaultValue="USD"
+                android:defaultValue="BTC/USD"
                 android:entries="@array/btcecurrencies"
                 android:entryValues="@array/btcecurrenciesvalues"
                 android:key="btceCurrencyPref"
                 android:summary="BTC-E prices will be displayed in selected currency"
                 android:title="BTC-E Currency" />
             <ListPreference
-                android:defaultValue="USD"
+                android:defaultValue="BTC/USD"
                 android:entries="@array/bitstampcurrencies"
                 android:entryValues="@array/bitstampcurrenciesvalues"
                 android:key="bitstampCurrencyPref"
                 android:summary="Bitstamp price will be displayed in selected currency"
                 android:title="Bitstamp Currency" />
             <ListPreference
-                android:defaultValue="USD"
+                android:defaultValue="BTC/USD"
                 android:entries="@array/campbxcurrencies"
                 android:entryValues="@array/campbxcurrenciesvalues"
                 android:key="campbxCurrencyPref"
