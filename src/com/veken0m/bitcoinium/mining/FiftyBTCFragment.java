@@ -224,7 +224,6 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr13.addView(tvTotalShares);
                 tr14.addView(tvAlive);
 
-                t1.addView(tr6);
                 t1.addView(tr9);
                 t1.addView(tr14);
                 t1.addView(tr10);

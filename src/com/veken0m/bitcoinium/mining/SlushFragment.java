@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.mining.slush.Slush;
 import com.veken0m.bitcoinium.mining.slush.Worker;
+import com.veken0m.bitcoinium.utils.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Date;
 import java.util.List;
 
 public class SlushFragment extends SherlockFragment {
@@ -64,6 +71,12 @@ public class SlushFragment extends SherlockFragment {
                             + pref_slushKey);
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
+            
+            // Testing from raw resource
+            //InputStream raw = getResources().openRawResource(R.raw.slush);
+            //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
+            //data = mapper.readValue(is, Slush.class);
+            
             data = mapper.readValue(new InputStreamReader(response.getEntity()
                     .getContent(), "UTF-8"), Slush.class);
 
@@ -212,6 +225,7 @@ public class SlushFragment extends SherlockFragment {
             // WORKER INFO
             List<Worker> workers = data.getWorkers().getWorkers();
             List<String> names = data.getWorkers().getNames();
+
             for (int i = 0; i < workers.size(); i++) {
                 Worker worker = workers.get(i);
 
@@ -221,7 +235,7 @@ public class SlushFragment extends SherlockFragment {
                         + " MH/s";
                 String shares = "Shares: " + worker.getShares().floatValue();
                 String lastShare = "Last Share: "
-                        + worker.getLast_share().floatValue();
+                        + Utils.dateFormat(getActivity(), worker.getLast_share()*1000);
                 String score = "Score: " + worker.getScore();
 
                 TableRow tr9 = new TableRow(getActivity());
@@ -265,7 +279,7 @@ public class SlushFragment extends SherlockFragment {
                 tr12.addView(tvLastShare);
                 tr13.addView(tvScore);
 
-                t1.addView(tr6);
+ 
                 t1.addView(tr9);
                 t1.addView(tr14);
                 t1.addView(tr10);

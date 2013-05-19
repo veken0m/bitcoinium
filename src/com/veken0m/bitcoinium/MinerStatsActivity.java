@@ -163,12 +163,16 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
         String CurrentDifficulty = "";
         String NextDifficulty = "";
+        String BlockCount = "";
+        String NextRetarget = "";
 
         @Override
         protected Boolean doInBackground(Boolean... params) {
 
             try {
                 HttpClient client = new DefaultHttpClient();
+
+                // Get current difficulty
                 HttpGet post = new HttpGet(
                         "http://blockexplorer.com/q/getdifficulty");
                 HttpResponse response;
@@ -177,12 +181,27 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                         new InputStreamReader(
                                 response.getEntity().getContent(), "UTF-8"));
                 CurrentDifficulty = reader.readLine();
-                reader.close();
+
+                // Get next difficulty
                 post = new HttpGet("http://blockexplorer.com/q/estimate");
                 response = client.execute(post);
                 reader = new BufferedReader(new InputStreamReader(response
                         .getEntity().getContent(), "UTF-8"));
                 NextDifficulty = reader.readLine();
+
+                // Get block count
+                post = new HttpGet("http://blockexplorer.com/q/getblockcount");
+                response = client.execute(post);
+                reader = new BufferedReader(new InputStreamReader(response
+                        .getEntity().getContent(), "UTF-8"));
+                BlockCount = reader.readLine();
+
+                // Get next retarget
+                post = new HttpGet("http://blockexplorer.com/q/nextretarget");
+                response = client.execute(post);
+                reader = new BufferedReader(new InputStreamReader(response
+                        .getEntity().getContent(), "UTF-8"));
+                NextRetarget = reader.readLine();
                 reader.close();
                 return true;
             } catch (Exception e) {
@@ -194,9 +213,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                LinearLayout view = (LinearLayout) findViewById(R.id.miner_difficulty);
+                LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
                 TextView tvCurrentDifficulty = new TextView(getBaseContext());
                 TextView tvNextDifficulty = new TextView(getBaseContext());
+                TextView tvBlockCount = new TextView(getBaseContext());
+                TextView tvNextRetarget = new TextView(getBaseContext());
 
                 try {
                     tvCurrentDifficulty.setText("\nCurrent Difficulty: "
@@ -205,9 +226,14 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextDifficulty.setText("Estimated Next Difficulty: "
                             + Utils.formatDecimal(
-                                    Float.valueOf(NextDifficulty), 0, true)
-                            + "\n");
+                                    Float.valueOf(NextDifficulty), 0, true));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                    tvBlockCount.setText("Block count: " + BlockCount);
+                    tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                    tvNextRetarget.setText("Next retarget in " + (Integer.parseInt(NextRetarget)- Integer.parseInt(BlockCount)) + " blocks\n");
+                    tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     if (Float.valueOf(NextDifficulty) < Float
                             .valueOf(CurrentDifficulty)) {
@@ -217,6 +243,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     }
                     view.addView(tvCurrentDifficulty);
                     view.addView(tvNextDifficulty);
+                    view.addView(tvBlockCount);
+                    view.addView(tvNextRetarget);
                 } catch (Exception e) {
                     // Difficulty was NaN...
                 }

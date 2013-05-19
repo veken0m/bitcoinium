@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Worker {
     private boolean alive;
     private Number hashrate;
-    private Number last_share;
+    private long last_share;
     private String score;
     private Number shares;
 
@@ -19,7 +19,7 @@ public class Worker {
             @JsonProperty("score")
             String score,
             @JsonProperty("last_share")
-            Number last_share) {
+            long last_share) {
         this.alive = alive;
         this.hashrate = hashrate;
         this.last_share = last_share;
@@ -36,7 +36,7 @@ public class Worker {
         return this.hashrate;
     }
 
-    public Number getLast_share() {
+    public long getLast_share() {
         return this.last_share;
     }
 
