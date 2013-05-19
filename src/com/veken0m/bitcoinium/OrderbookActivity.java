@@ -37,9 +37,10 @@ import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.marketdata.polling.PollingMarketDataService;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener{
+public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
 
     final static Handler mOrderHandler = new Handler();
     protected static String exchangeName = "";
@@ -69,7 +70,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         setContentView(R.layout.orderbook);
 
         ActionBar actionbar = getSupportActionBar();
-
         actionbar.show();
 
         Bundle extras = getIntent().getExtras();
@@ -85,18 +85,20 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         xchangeExchange = exchange.getClassName();
         String defaultCurrency = exchange.getMainCurrency();
         prefix = exchange.getPrefix();
-        
+
         final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(prefix+"currenciesvalues", "array", this.getPackageName()));
+                getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                        this.getPackageName()));
 
         spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
-        dataAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, dropdownValues);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
-        spinner.setOnItemSelectedListener(this);
 
         readPreferences(getApplicationContext(), prefix, defaultCurrency);
+        spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
+        spinner.setOnItemSelectedListener(this);
 
         viewOrderbook();
     }
@@ -127,7 +129,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         try {
             // Re-populate the dropdown menu
             final String[] dropdownValues = getResources().getStringArray(
-                    getResources().getIdentifier(prefix+"currenciesvalues", "array", this.getPackageName()));
+                    getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                            this.getPackageName()));
             spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
             dataAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, dropdownValues);
@@ -350,7 +353,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             });
             getOrderBook();
             mOrderHandler.post(mGraphView);
-
         }
     }
 
@@ -382,9 +384,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         alert.show();
     }
 
-    /* (non-Javadoc)
-     * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android.widget.AdapterView, android.view.View, int, long)
-     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -392,11 +391,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         viewOrderbook();
     }
 
-    /* (non-Javadoc)
-     * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android.widget.AdapterView)
-     */
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-      // Do nothing  
+        // Do nothing
     }
 }

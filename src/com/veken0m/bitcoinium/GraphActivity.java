@@ -11,7 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -29,15 +33,20 @@ import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class GraphActivity extends SherlockActivity {
+public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
 
     private static final Handler mOrderHandler = new Handler();
     public static String exchangeName;
-    public static Boolean connectionFail;
+    public static Boolean connectionFail = true;
+    public static Boolean noTradesFound = false;
     public String xchangeExchange;
     static String pref_currency;
+    private Spinner spinner;
+    private ArrayAdapter<String> dataAdapter;
+    String prefix = "mtgox";
 
     /**
      * Variables required for LineGraphView
@@ -66,12 +75,25 @@ public class GraphActivity extends SherlockActivity {
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
         String defaultCurrency = exchange.getMainCurrency();
-        String prefix = exchange.getPrefix();
+        prefix = exchange.getPrefix();
 
         readPreferences(getApplicationContext(), prefix, defaultCurrency);
 
         if (exchange.supportsPriceGraph()) {
             setContentView(R.layout.graph);
+            final String[] dropdownValues = getResources().getStringArray(
+                    getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                            this.getPackageName()));
+
+            spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
+            dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, dropdownValues);
+            dataAdapter
+                    .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+            spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
+            spinner.setOnItemSelectedListener(this);
+
             viewGraph();
         } else {
             Toast.makeText(getApplicationContext(),
@@ -94,6 +116,8 @@ public class GraphActivity extends SherlockActivity {
         }
         if (item.getItemId() == R.id.action_refresh) {
             viewGraph();
+            LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+            graphLinearLayout.removeAllViews();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -106,7 +130,6 @@ public class GraphActivity extends SherlockActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setContentView(R.layout.graph);
                     LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
                     linlaHeaderProgress.setVisibility(View.INVISIBLE);
                 }
@@ -121,8 +144,12 @@ public class GraphActivity extends SherlockActivity {
     final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            if (graphView != null && !connectionFail) {
-                setContentView(graphView);
+            if (graphView != null && !connectionFail && !noTradesFound) {
+                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+                graphLinearLayout.addView(graphView);
+
+            } else if (noTradesFound) {
+                createPopup("No recent trades found for this currency. Please try again later.");
             } else {
                 createPopup("Unable to retrieve transactions from "
                         + exchangeName + ", check your 3G or WiFi connection");
@@ -154,7 +181,6 @@ public class GraphActivity extends SherlockActivity {
         }
 
         try {
-
             trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
                     .getPollingMarketDataService()
                     .getTrades(baseCurrency, counterCurrency);
@@ -213,6 +239,10 @@ public class GraphActivity extends SherlockActivity {
                 graphView.setManualYAxisBounds(largest, smallest);
             }
             connectionFail = false;
+            noTradesFound = false;
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            noTradesFound = true;
 
         } catch (Exception e) {
             connectionFail = true;
@@ -237,9 +267,10 @@ public class GraphActivity extends SherlockActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.graph);
         if (graphView != null) {
-            setContentView(graphView);
+            LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+            graphLinearLayout.removeAllViews();
+            graphLinearLayout.addView(graphView);
         } else {
             viewGraph();
         }
@@ -249,7 +280,6 @@ public class GraphActivity extends SherlockActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setContentView(R.layout.graph);
                 LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
                 linlaHeaderProgress.setVisibility(View.VISIBLE);
             }
@@ -261,7 +291,6 @@ public class GraphActivity extends SherlockActivity {
 
     protected static void readPreferences(Context context, String prefix,
             String defaultCurrency) {
-        // Get the xml/preferences.xml preferences
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
@@ -270,6 +299,17 @@ public class GraphActivity extends SherlockActivity {
         pref_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
         pref_APIv1Mode = prefs.getBoolean("mtgoxapiv1Pref", false);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        pref_currency = (String) parent.getItemAtPosition(pos);
+        viewGraph();
+        LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+        graphLinearLayout.removeAllViews();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // Do nothing
     }
 
 }

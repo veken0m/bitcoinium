@@ -34,9 +34,9 @@
         <item>BTCEExchange</item>
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
-        <item>BitcoinCentralExchange</item> 
+        <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
-        <item>Bitcoin24Exchange</item>
+        <item>Bitcoin24Exchange</item> -->
     </string-array>
 
     <!-- Arrays that define properties of Exchanges -->
@@ -155,22 +155,22 @@
         <item>THB - Thai Baht</item>
     </string-array>
     <string-array name="mtgoxcurrenciesvalues">
-        <item>USD</item>
-        <item>AUD</item>
-        <item>CAD</item>
-        <item>GBP</item>
-        <item>CNY</item>
-        <item>DKK</item>
-        <item>EUR</item>
-        <item>CHF</item>
-        <item>HKD</item>
-        <item>JPY</item>
-        <item>NZD</item>
-        <item>PLN</item>
-        <item>RUB</item>
-        <item>SEK</item>
-        <item>SGD</item>
-        <item>THB</item>
+        <item>BTC/USD</item>
+        <item>BTC/AUD</item>
+        <item>BTC/CAD</item>
+        <item>BTC/GBP</item>
+        <item>BTC/CNY</item>
+        <item>BTC/DKK</item>
+        <item>BTC/EUR</item>
+        <item>BTC/CHF</item>
+        <item>BTC/HKD</item>
+        <item>BTC/JPY</item>
+        <item>BTC/NZD</item>
+        <item>BTC/PLN</item>
+        <item>BTC/RUB</item>
+        <item>BTC/SEK</item>
+        <item>BTC/SGD</item>
+        <item>BTC/THB</item>
     </string-array>
 
     <!-- Arrays for BTC-E Currencies -->
@@ -191,9 +191,9 @@
         <item>CNC/BTC</item>
     </string-array>
     <string-array name="btcecurrenciesvalues">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>RUR</item>
+        <item>BTC/USD</item>
+        <item>BTC/EUR</item>
+        <item>BTC/RUR</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
         <item>LTC/RUR</item>
@@ -212,7 +212,7 @@
         <item>CAD - Canadian Dollar</item>
     </string-array>
     <string-array name="virtexcurrenciesvalues">
-        <item>CAD</item>
+        <item>BTC/CAD</item>
     </string-array>
 
     <!-- Arrays for Bitstamp Currencies -->
@@ -220,7 +220,7 @@
         <item>USD - United States Dollar</item>
     </string-array>
     <string-array name="bitstampcurrenciesvalues">
-        <item>USD</item>
+        <item>BTC/USD</item>
     </string-array>
 
     <!-- Arrays for CampBX Currencies -->
@@ -228,7 +228,7 @@
         <item>USD - United States Dollar</item>
     </string-array>
     <string-array name="campbxcurrenciesvalues">
-        <item>USD</item>
+        <item>BTC/USD</item>
     </string-array>
 
     <!-- Arrays for BitcoinCentral Currencies -->
@@ -244,7 +244,7 @@
         <item>EUR - Euro</item>
     </string-array>
     <string-array name="bitcoincentralcurrenciesvalues">
-        <item>EUR</item>
+        <item>BTC/EUR</item>
     </string-array>
 
     <!-- Arrays for Bitfloor Currencies -->
@@ -252,7 +252,7 @@
         <item>USD - United States Dollar</item>
     </string-array>
     <string-array name="bitfloorcurrenciesvalues">
-        <item>USD</item>
+        <item>BTC/USD</item>
     </string-array>
 
     <!-- Arrays for Bitcoin24 Currencies -->
@@ -261,8 +261,8 @@
         <item>EUR - Euro</item>
     </string-array>
     <string-array name="bitcoin24currenciesvalues">
-        <item>USD</item>
-        <item>EUR</item>
+        <item>BTC/USD</item>
+        <item>BTC/EUR</item>
     </string-array>
 
 </resources>
