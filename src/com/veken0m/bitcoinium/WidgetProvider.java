@@ -64,7 +64,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     // Load Widget preferences
                     String pref_widget = WidgetConfigureActivity
                             .loadExchangePref(context, appWidgetId);
-                    String pref_currency = WidgetConfigureActivity
+                    pref_currency = WidgetConfigureActivity
                             .loadCurrencyPref(context, appWidgetId);
 
                     Exchange exchange = getExchange(pref_widget);
@@ -175,9 +175,9 @@ public class WidgetProvider extends BaseWidgetProvider {
                             if (pref_ticker
                                     && counterCurrency.equals(pref_main_currency)) {
 
-                                String msg = "Bitcoin value: " + lastString
+                                String msg = baseCurrency + " value: " + lastString
                                         + " on " + exchangeName;
-                                String title = "BTC @ " + lastString;
+                                String title = baseCurrency + " @ " + lastString;
 
                                 createPermanentNotification(context,
                                         R.drawable.bitcoin, title, msg,
@@ -264,12 +264,13 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextViewText(R.id.widgetHighText, highString);
         }
 
-        public void checkAlarm(Context context, String pref_currency,
+        public void checkAlarm(Context context, String prefcurrency,
                 float lastFloat, String exchangeName, int NOTIFY_ID) {
 
             Boolean triggered;
             try {
-                triggered = pref_currency.equals(pref_main_currency)
+                triggered = (pref_currency.equals(pref_main_currency) || prefcurrency
+                        .equals(pref_main_currency))
                         && !Utils.isBetween(lastFloat,
                                 Float.valueOf(pref_notifLimitLower),
                                 Float.valueOf(pref_notifLimitUpper));
@@ -284,8 +285,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             if (triggered) {
                 String lastString = Utils.formatWidgetMoney(lastFloat,
-                        pref_currency, true);
-                createNotification(context, lastString, exchangeName, NOTIFY_ID);
+                        prefcurrency, true);
+                createNotification(context, lastString, exchangeName, NOTIFY_ID, pref_currency);
                 if (pref_alarmClock) {
                     setAlarmClock(context);
                 }

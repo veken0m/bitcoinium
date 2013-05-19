@@ -20,6 +20,7 @@ import android.text.format.Time;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
+import com.xeiam.xchange.currency.Currencies;
 
 import java.util.Calendar;
 
@@ -41,6 +42,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static Boolean pref_wifionly;
     static Boolean pref_alarmClock;
     static String pref_main_currency;
+    static String pref_currency;
     static String pref_notificationSound;
     static String pref_notifLimitLower;
     static String pref_notifLimitUpper;
@@ -216,13 +218,19 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     }
 
     static void createNotification(Context ctxt, String lastPrice,
-            String exchange, int BITCOIN_NOTIFY_ID) {
+            String exchange, int BITCOIN_NOTIFY_ID, String currencyPair) {
         String ns = Context.NOTIFICATION_SERVICE;
 
-        String tickerText = "Bitcoin alarm value has been reached! \n"
-                + "Bitcoin valued at " + lastPrice + " on " + exchange;
-        String contentTitle = "BTC @ " + lastPrice;
-        String contentText = "Bitcoin value: " + lastPrice + " on " + exchange;
+        String baseCurrency = Currencies.BTC;
+
+        if (currencyPair.contains("/")) {
+            baseCurrency = currencyPair.substring(0, 3);
+        }
+
+        String tickerText = baseCurrency + " alarm value has been reached! \n"
+                + baseCurrency + " valued at " + lastPrice + " on " + exchange;
+        String contentTitle = baseCurrency + " @ " + lastPrice;
+        String contentText = baseCurrency + " value: " + lastPrice + " on " + exchange;
 
         int icon = R.drawable.bitcoin;
         NotificationManager mNotificationManager = (NotificationManager) ctxt

@@ -301,6 +301,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         pref_APIv1Mode = prefs.getBoolean("mtgoxapiv1Pref", false);
     }
 
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         pref_currency = (String) parent.getItemAtPosition(pos);
         viewGraph();
@@ -308,6 +309,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         graphLinearLayout.removeAllViews();
     }
 
+    @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // Do nothing
     }
