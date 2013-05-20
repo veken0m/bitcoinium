@@ -18,8 +18,6 @@ public class WebViewerActivity extends Activity {
     final static CharSequence cBitstamp = "Bitstamp";
     final static CharSequence cCampBX = "CampBX";
     final static CharSequence cmtGoxLive = "MtGoxLive";
-    final static CharSequence cBTCChartsVirtex = "BTCCharts - VirtEx";
-    final static CharSequence cBTCChartsMtGox = "BTCCharts - MtGox";
     final static CharSequence cClose = "Close";
 
     @Override
@@ -43,8 +41,7 @@ public class WebViewerActivity extends Activity {
     private void displayMenu() {
         final CharSequence[] items = {
                 cBitcoinium, cMtGox, cVirtEx, cBTCE,
-                cBitstamp, cCampBX, cmtGoxLive, cBTCChartsMtGox,
-                cBTCChartsVirtex, cClose
+                cBitstamp, cCampBX, cmtGoxLive, cClose
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -64,12 +61,6 @@ public class WebViewerActivity extends Activity {
                 } else if (items[item] == cVirtEx) {
                     dialog.cancel();
                     mWebView.loadUrl("https://www.cavirtex.com/orderbook");
-                } else if (items[item] == cBTCChartsVirtex) {
-                    dialog.cancel();
-                    mWebView.loadUrl("http://btccharts.com/#m=cavirtex-BTC-CAD");
-                } else if (items[item] == cBTCChartsMtGox) {
-                    dialog.cancel();
-                    mWebView.loadUrl("http://btccharts.com/#m=mtgox-BTC-USD");
                 } else if (items[item] == cmtGoxLive) {
                     dialog.cancel();
                     mWebView.loadUrl("http://mtgoxlive.com/orders");

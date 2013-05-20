@@ -7,46 +7,46 @@
             android:entries="@array/exchanges"
             android:entryValues="@array/exchangeID"
             android:key="favExchangePref"
-            android:summary="Favorite exchange will automatically be selected when Bitcoinium opens"
+            android:summary="Automatically selected when Bitcoinium opens"
             android:title="Favorite Exchange" />
 
         <PreferenceScreen
-            android:summary="Configure the preferred currency for each exchange"
-            android:title="Exchange Currency Settings" >
+            android:summary="Default currency for OrderBook and Price Graph"
+            android:title="Default Exchange Currency" >
             <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/mtgoxcurrencies"
                 android:entryValues="@array/mtgoxcurrenciesvalues"
                 android:key="mtgoxCurrencyPref"
-                android:summary="MtGox prices will be displayed in selected currency"
+                android:summary="MtGox prices will be displayed in this currency"
                 android:title="MtGox Currency" />
             <ListPreference
                 android:defaultValue="BTC/CAD"
                 android:entries="@array/virtexcurrencies"
                 android:entryValues="@array/virtexcurrenciesvalues"
                 android:key="virtexCurrencyPref"
-                android:summary="VirtEx prices will be displayed in selected currency"
+                android:summary="VirtEx prices will be displayed in this currency"
                 android:title="VirtEx Currency" />
             <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/btcecurrencies"
                 android:entryValues="@array/btcecurrenciesvalues"
                 android:key="btceCurrencyPref"
-                android:summary="BTC-E prices will be displayed in selected currency"
+                android:summary="BTC-E prices will be displayed in this currency"
                 android:title="BTC-E Currency" />
             <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/bitstampcurrencies"
                 android:entryValues="@array/bitstampcurrenciesvalues"
                 android:key="bitstampCurrencyPref"
-                android:summary="Bitstamp price will be displayed in selected currency"
+                android:summary="Bitstamp price will be displayed in this currency"
                 android:title="Bitstamp Currency" />
             <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/campbxcurrencies"
                 android:entryValues="@array/campbxcurrenciesvalues"
                 android:key="campbxCurrencyPref"
-                android:summary="CampBX price will be displayed in selected currency"
+                android:summary="CampBX price will be displayed in this currency"
                 android:title="CampBX Currency" />
             <!--
             <ListPreference
@@ -69,14 +69,14 @@
                 android:entryValues="@array/bitcoin24currenciesvalues"
                 android:key="bitcoin24CurrencyPref"
                 android:summary="Bitcoin24 price will be displayed in selected currency"
-                android:title="Bitcoin24 Currency" />
-                -->
+                android:title="Bitcoin24 Currency" />
+            -->
         </PreferenceScreen>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Widget Settings" >
+    <PreferenceCategory android:title="Widget Configuration" >
         <PreferenceScreen
-            android:summary="Configure the Widget(s)"
-            android:title="Widget Settings" >
+            android:summary="Various display and power saving"
+            android:title="Widget Configuration" >
             <PreferenceCategory android:title="General" >
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -86,44 +86,40 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bidasktogglePref"
-                    android:summary="Replace High/Low with Bid/Ask on widget if supported by exchange \n Note: Text will appear white instead of grey"
+                    android:summary="Replace High/Low with Bid/Ask if supported by exchange"
                     android:title="Bid/Ask on Widget" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wifiRefreshOnlyPref"
-                    android:summary="Widgets will only refresh when WiFi is connected"
-                    android:title="Only refresh on WiFi" />
+                    android:summary="Disable updates on mobile connection"
+                    android:title="Refresh only on WiFi" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
-                <Preference
-                    android:key="customPref"
-                    android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
-
                 <ListPreference
                     android:defaultValue="1800"
                     android:entries="@array/interval"
                     android:entryValues="@array/intervalvalues"
                     android:key="refreshPref"
-                    android:summary="Time interval between widget refresh \n *WARNING* \nRefreshing the widget more often will increase battery drain \n "
-                    android:title="Widget Refresh Interval" />
+                    android:summary="Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain \n "
+                    android:title="Widget Update Interval" />
 
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wakeupPref"
-                    android:summary="Will not wake up the phone from sleep to update widget"
+                    android:summary="Disable updates when screen is off"
                     android:title="Battery Saving Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceScreen
-        android:summary="Customize Widget Theme"
-        android:title="Widget Customizing" >
+        android:summary="Choose your own background and text colors"
+        android:title="Customize Widget" >
         <PreferenceCategory android:title="Customize Widget" >
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="enableWidgetCustomizationPref"
-                android:summary="If enabled default settings will be overriden"
+                android:summary="Put the theme into effect."
                 android:title="Enable Customization" />
 
             <net.margaritov.preference.colorpicker.ColorPickerPreference
@@ -140,31 +136,31 @@
                 alphaSlider="true"
                 android:defaultValue="@color/widgetBackgroundColor"
                 android:key="widgetBackgroundColorPref"
-                android:summary="Color and Transparency for widget background"
+                android:summary="Color for widget background"
                 android:title="Background Color" />
             <!--
                   <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="showRefreshTimePref"
                 android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />
+                android:title="Show Refresh Time" />
             -->
             <net.margaritov.preference.colorpicker.ColorPickerPreference
                 alphaSlider="true"
                 android:defaultValue="@color/widgetRefreshSuccessColor"
                 android:key="widgetRefreshSuccessColorPref"
-                android:summary="Color of the refresh time if successful"
-                android:title="Refresh Time Color (Success)" />
+                android:summary="Color of the update time if successful"
+                android:title="Update Time Color (Success)" />
             <net.margaritov.preference.colorpicker.ColorPickerPreference
                 alphaSlider="true"
                 android:defaultValue="@color/widgetRefreshFailedColor"
                 android:key="widgetRefreshFailedColorPref"
-                android:summary="Color of the refresh time if failed"
-                android:title="Refresh Time Color (Failed)" />
+                android:summary="Color of the update time if failed"
+                android:title="Update Time Color (Failed)" />
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen
-        android:summary="Enable notfications when main miner is down"
+        android:summary="Notfications when main miner is down"
         android:title="Bitcoin Miner Alert" >
         <PreferenceCategory android:title="Miner Widget Settings" >
             <CheckBoxPreference
@@ -183,6 +179,7 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
+
             <Preference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
@@ -193,13 +190,13 @@
     <PreferenceCategory android:title="Price Alarm" >
         <Preference
             android:key="alarmSettingsPref"
-            android:summary="Adjust settings of the price alarm notification. \n *Note*: The main currency of an exchange will be used to trigger alarm"
-            android:title="Price Alarm Notification" >
+            android:summary="Notifies you when price has passed a certain threshold \n *Note*: Alarm is triggered using default currency selected for exchange"
+            android:title="Price Alarm Notifications" >
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="Notification Area Tickers" >
         <PreferenceScreen
-            android:summary="Places tickers in the notification drawer \n *Note*: Only supports the general currency selected for the exchange and respective widget needs to be active"
+            android:summary="Enable tickers in the notification drawer \n *Note*: Only supports the default currency selected for the exchange and respective widget needs to be active"
             android:title="Notification Ticker" >
             <PreferenceCategory android:title="Notification Drawer Ticker" >
                 <CheckBoxPreference
@@ -222,7 +219,8 @@
                     android:defaultValue="false"
                     android:key="campBXTickerPref"
                     android:title="CampBX Notification Ticker" />
-                <!--<CheckBoxPreference
+                <!--
+                <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoincentralTickerPref"
                     android:title="BitcoinCentral Notification Ticker" />
@@ -233,14 +231,14 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bitcoin24TickerPref"
-                    android:title="Bitcoin-24 Notification Ticker" />
-                    -->
+                    android:title="Bitcoin-24 Notification Ticker" />
+                -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
         <PreferenceScreen
-            android:summary="Enter your mining pool API tokens here to use Miner Stats"
+            android:summary="MinerStats account information. Your API tokens can be obtained at the respective mining pool."
             android:title="Miner Stats API tokens" >
             <PreferenceCategory android:title="Miner Stats" >
                 <EditTextPreference
@@ -251,7 +249,7 @@
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="bitminterKey"
-                    android:summary="Enter your BitMinter API token to use MinerStats"
+                    android:summary="Enter your BitMinter API token to use MinerStats."
                     android:title="BitMinter API token" />
                 <EditTextPreference
                     android:defaultValue=""
@@ -273,40 +271,30 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="OrderBook Settings" >
         <PreferenceScreen
-            android:summary="Configure the OrderBook"
+            android:summary="Adjust liquidity highlighting and rendering settings"
             android:title="OrderBook Settings" >
             <PreferenceCategory android:title="OrderBook Settings" >
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:key="showCurrencySymbolPref"
-                    android:summary="Show currency symbols in the orderbook"
-                    android:title="Show Currency Symbols" />
+                    android:summary="Display currency symbols in the orderbook. \nDisable if text does not fit."
+                    android:title="Display Currency Symbols" />
 
                 <EditTextPreference
                     android:defaultValue="100"
                     android:digits="01234567890"
                     android:inputType="numberDecimal"
                     android:key="orderbookLimiterPref"
-                    android:summary="Limits the values printed on screen to improve performance"
-                    android:title="Orderbook Value limit" />
+                    android:summary="Limit values printed on screen to improve performance"
+                    android:title="OrderBook list length limit" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Liquidity Highlighting" >
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:key="highlightPref"
-                    android:summary="Changes the color of text in orderbook depending on depth"
+                    android:summary="Color of text depends on depth"
                     android:title="Enable Liquidity Highlighting" />
 
-                <EditTextPreference
-                    android:defaultValue="10"
-                    android:digits="01234567890"
-                    android:inputType="numberDecimal"
-                    android:key="highlightLower"
-                    android:summary="Text will be colored RED if depth under this value"
-                    android:title="Low Depth" />
-                <EditTextPreference
-                    android:summary="Text will be colored YELLOW if depth is between high and low"
-                    android:title="Medium Depth" />
                 <EditTextPreference
                     android:defaultValue="50"
                     android:digits="01234567890"
@@ -314,12 +302,22 @@
                     android:key="highlightUpper"
                     android:summary="Text will be colored GREEN if depth over this value"
                     android:title="High Depth" />
+                <EditTextPreference
+                    android:summary="Text will be colored YELLOW if depth is in between"
+                    android:title="Medium Depth" />
+                <EditTextPreference
+                    android:defaultValue="10"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="highlightLower"
+                    android:summary="Text will be colored RED if depth under this value"
+                    android:title="Low Depth" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Graph Settings" >
         <PreferenceScreen
-            android:summary="Configure the Price Graph"
+            android:summary="View window scaling and MtGox API mode settings"
             android:title="Price Graph Settings" >
             <PreferenceCategory android:title="Price Graph Settings" >
                 <CheckBoxPreference

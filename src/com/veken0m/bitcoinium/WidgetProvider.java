@@ -152,7 +152,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                             views.setTextViewText(R.id.widgetVolText,
                                     "Volume: " + volumeString);
 
-                            String refreshedTime = "Refreshed @ "
+                            String refreshedTime = "Updated @ "
                                     + Utils.getCurrentTime(context);
                             views.setTextViewText(R.id.label, refreshedTime);
                             if (pref_enableWidgetCustomization) {

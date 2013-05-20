@@ -5,37 +5,37 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmPref"
-            android:summary="Enable price alert when specified price is attained (widget needs to be active)"
+            android:summary="Enable notifications when price alarm is tripped (widget needs to be active)"
             android:title="Enable Price Alarm" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmVibratePref"
-            android:summary="Notification will cause phone to vibrate when when specified price is attained"
-            android:title="Notification Vibration" />
+            android:summary="Vibrate when price alarm is tripped"
+            android:title="Vibration" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmSoundPref"
-            android:summary="Notification sound will play when specified price is attained"
-            android:title="Notification Sound" />
+            android:summary="Play a sound when price alarm is tripped"
+            android:title="Sound" />
 
         <RingtonePreference
             android:key="notificationSoundPref"
             android:ringtoneType="ringtone|alarm|notification"
             android:showDefault="true"
-            android:summary="Pick the sound to be played when specified price is attained"
+            android:summary="Pick the sound to be played"
             android:title="Select Sound" >
         </RingtonePreference>
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmClockPref"
-            android:summary="Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing loudly until shut off."
+            android:summary="Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing until shut off."
             android:title="*Hardcore Mode*" />
     </PreferenceCategory>
     <PreferenceCategory
         android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"
         android:title="Alarm Settings" >
-        <PreferenceScreen android:title="MtGox Alarm" >
+        <PreferenceScreen android:title="MtGox alarm thresholds" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
@@ -51,7 +51,7 @@
                 android:summary="Notification will occur if MtGox price goes under this threshold"
                 android:title="MtGox Lower Threshold" />
         </PreferenceScreen>
-        <PreferenceScreen android:title="VirtEx Alarm" >
+        <PreferenceScreen android:title="VirtEx alarm thresholds" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
@@ -67,7 +67,7 @@
                 android:summary="Notification will occur if VirtEx price goes under this threshold"
                 android:title="VirtEx Lower Threshold" />
         </PreferenceScreen>
-        <PreferenceScreen android:title="BTC-E Alarm" >
+        <PreferenceScreen android:title="BTC-E alarm thresholds" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
@@ -83,7 +83,7 @@
                 android:summary="Notification will occur if BTC-E price goes under this threshold"
                 android:title="BTC-E Lower Threshold" />
         </PreferenceScreen>
-        <PreferenceScreen android:title="Bitstamp Alarm" >
+        <PreferenceScreen android:title="Bitstamp alarm thresholds" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
@@ -99,7 +99,7 @@
                 android:summary="Notification will occur if Bitstamp price goes under this threshold"
                 android:title="Bitstamp Lower Threshold" />
         </PreferenceScreen>
-        <PreferenceScreen android:title="CampBX Alarm" >
+        <PreferenceScreen android:title="CampBX alarm thresholds" >
             <EditTextPreference
                 android:defaultValue="999"
                 android:digits="01234567890."
