@@ -75,7 +75,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
         try {
             marketData = BitcoinChartsFactory.createInstance().getMarketData();
         } catch (Exception e) {
-            connectionFailed();
             e.printStackTrace();
         }
     }

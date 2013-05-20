@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.mining.fiftybtc.FiftyBTC;
 import com.veken0m.bitcoinium.mining.fiftybtc.Worker;
+import com.veken0m.bitcoinium.utils.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -63,6 +64,11 @@ public class FiftyBTCFragment extends SherlockFragment {
                     + pref_50BTCKey + "?text=1");
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
+            
+            // Testing from raw resource
+            //InputStream raw = getResources().openRawResource(R.raw.fiftybtc);
+            //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
+            //data = mapper.readValue(is, FiftyBTC.class);
             data = mapper.readValue(new InputStreamReader(response.getEntity()
                     .getContent(), "UTF-8"), FiftyBTC.class);
 
@@ -152,7 +158,7 @@ public class FiftyBTCFragment extends SherlockFragment {
             tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
             String RewardsBTC = "Reward: "
-                    + data.getUser().getConfirmed_rewards();
+                    + data.getUser().getConfirmed_rewards() + " BTC";
             String Hashrate = "Total Hashrate: "
                     + data.getUser().getHash_rate() + " MH/s\n";
             String Payout = "Total Payout: " + data.getUser().getPayouts()
@@ -181,7 +187,7 @@ public class FiftyBTCFragment extends SherlockFragment {
                         + " MH/s";
                 String shares = "Shares: " + worker.getShares().floatValue();
                 String lastShare = "Last Share: "
-                        + worker.getLast_share().floatValue();
+                        + Utils.dateFormat(getActivity(), worker.getLast_share().longValue()*1000);
                 String totalShares = "Total Shares: "
                         + worker.getTotal_shares();
 
