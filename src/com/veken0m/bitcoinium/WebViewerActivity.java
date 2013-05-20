@@ -1,100 +1,172 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.ActionBar.LayoutParams;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 
-public class WebViewerActivity extends Activity {
-    static WebView mWebView;
-    final static CharSequence cBitcoinium = "Bitcoinium.com";
-    final static CharSequence cMtGox = "MtGox";
-    final static CharSequence cVirtEx = "VirtEx";
-    final static CharSequence cBTCE = "BTC-E";
-    final static CharSequence cBitstamp = "Bitstamp";
-    final static CharSequence cCampBX = "CampBX";
-    final static CharSequence cmtGoxLive = "MtGoxLive";
-    final static CharSequence cClose = "Close";
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.vekenom.compatibility.WebViewSherlockFragment;
+
+public class WebViewerActivity extends SherlockFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
-        if (savedInstanceState != null) {
-            ((WebView) findViewById(R.id.webviewer))
-                    .restoreState(savedInstanceState);
-        } else {
-            mWebView = (WebView) findViewById(R.id.webviewer);
+        // ActionBar gets initiated
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ActionBar.Tab BitcoiniumTab = actionbar.newTab().setIcon(
+                R.drawable.bitcoiniumwebicon);
+        ActionBar.Tab MtGoxLiveTab = actionbar.newTab().setIcon(
+                R.drawable.mtgoxlogo);
+        ActionBar.Tab BitcoinityTab = actionbar.newTab().setText("Bitcoinity");
+        BitcoiniumTab.setText("itcoinium");
+
+        WebViewSherlockFragment BitcoiniumFragment = new BitcoiniumFragment();
+        WebViewSherlockFragment BitcoinityFragment = new BitcoinityFragment();
+        WebViewSherlockFragment MtGoxLiveFragment = new MtGoxLiveFragment();
+
+        BitcoiniumTab.setTabListener(new WebTabsListener(BitcoiniumFragment));
+        BitcoinityTab.setTabListener(new WebTabsListener(BitcoinityFragment));
+        MtGoxLiveTab.setTabListener(new WebTabsListener(MtGoxLiveFragment));
+
+        actionbar.addTab(BitcoiniumTab);
+        actionbar.addTab(BitcoinityTab);
+        actionbar.addTab(MtGoxLiveTab);
+
+        actionbar.show();
+
+        // if (savedInstanceState != null) {
+        // ((WebView) findViewById(R.id.webviewer))
+        // .restoreState(savedInstanceState);
+        // } else {
+        // }
+    }
+
+    static public class BitcoiniumFragment extends WebViewSherlockFragment {
+
+        public BitcoiniumFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+
+            if (mWebView != null) {
+                mWebView.destroy();
+            }
+
+            mWebView = new WebView(getActivity());
+            mWebView.setInitialScale(100);
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            mWebView.setLayoutParams(p);
+            mWebView.getSettings().setPluginState(
+                    WebSettings.PluginState.ON);
+            mWebView.getSettings().setJavaScriptEnabled(true);
+            mWebView.getSettings().setSupportZoom(true);
+            mWebView.getSettings().setBuiltInZoomControls(true);
+            mWebView.loadUrl("http://bitcoinium.com/");
+            mIsWebViewAvailable = true;
+
+            return mWebView;
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        mWebView.saveState(outState);
-    }
+    static public class MtGoxLiveFragment extends WebViewSherlockFragment {
 
-    private void displayMenu() {
-        final CharSequence[] items = {
-                cBitcoinium, cMtGox, cVirtEx, cBTCE,
-                cBitstamp, cCampBX, cmtGoxLive, cClose
-        };
+        public MtGoxLiveFragment() {
+        }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select an option");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                mWebView.getSettings().setPluginState(
-                        WebSettings.PluginState.ON);
-                mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.getSettings().setSupportZoom(true);
-                mWebView.getSettings().setBuiltInZoomControls(true);
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
 
-                if (items[item] == cBitcoinium) {
-                    dialog.cancel();
-                    mWebView.loadUrl("http://bitcoinium.com/");
-                } else if (items[item] == cVirtEx) {
-                    dialog.cancel();
-                    mWebView.loadUrl("https://www.cavirtex.com/orderbook");
-                } else if (items[item] == cmtGoxLive) {
-                    dialog.cancel();
-                    mWebView.loadUrl("http://mtgoxlive.com/orders");
-                } else if (items[item] == cMtGox) {
-                    dialog.cancel();
-                    mWebView.loadUrl("https://mtgox.com");
-                } else if (items[item] == cBTCE) {
-                    dialog.cancel();
-                    mWebView.loadUrl("https://btc-e.com/");
-                } else if (items[item] == cBitstamp) {
-                    dialog.cancel();
-                    mWebView.loadUrl("https://www.bitstamp.net/");
-                } else if (items[item] == cCampBX) {
-                    dialog.cancel();
-                    mWebView.loadUrl("https://campbx.com/mktexplorer.php");
-                } else {
-                    dialog.cancel();
-
-                }
+            if (mWebView != null) {
+                mWebView.destroy();
             }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+            mWebView = new WebView(getActivity());
+            mWebView.setInitialScale(100);
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            mWebView.setLayoutParams(p);
+            WebSettings webSettings = mWebView.getSettings();
+            webSettings.setPluginState(
+                    WebSettings.PluginState.ON);
+            webSettings.setJavaScriptEnabled(true);
+            webSettings.setSupportZoom(true);
+            webSettings.setBuiltInZoomControls(true);
+            mIsWebViewAvailable = true;
+            mWebView.loadUrl("http://mtgoxlive.com/orders");
+
+            return mWebView;
+        }
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        displayMenu();
-        return false;
+    static public class BitcoinityFragment extends WebViewSherlockFragment {
+
+        public BitcoinityFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+
+            if (mWebView != null) {
+                mWebView.destroy();
+            }
+
+            mWebView = new WebView(getActivity());
+            mWebView.setInitialScale(100);
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            mWebView.setLayoutParams(p);
+            mWebView.getSettings().setPluginState(
+                    WebSettings.PluginState.ON);
+            mWebView.getSettings().setJavaScriptEnabled(true);
+            // mWebView.getSettings().setSupportZoom(true);
+            // mWebView.getSettings().setBuiltInZoomControls(true);
+            mIsWebViewAvailable = true;
+            mWebView.loadUrl("http://bitcoinity.org/markets");
+
+            return mWebView;
+        }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        displayMenu();
-        return false;
+    class WebTabsListener implements ActionBar.TabListener {
+        public WebViewSherlockFragment fragment;
+
+        public WebTabsListener(WebViewSherlockFragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+            ft.replace(R.id.webfragment_container, fragment);
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            ft.replace(R.id.webfragment_container, fragment);
+        }
+
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+            ft.remove(fragment);
+        }
+
     }
 }

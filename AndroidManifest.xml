@@ -88,7 +88,7 @@
         <activity
             android:name="com.veken0m.bitcoinium.GraphActivity"
             android:configChanges="orientation|screenSize"
-            android:label="Graph" >
+            android:label="Price Graph" >
         </activity>
         <activity
             android:name="com.veken0m.bitcoinium.MinerStatsActivity"
@@ -106,7 +106,7 @@
         <activity
             android:name="com.veken0m.bitcoinium.WebViewerActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:label="OrderBook" >
+            android:label="Web Charts" >
         </activity>
     </application>
 

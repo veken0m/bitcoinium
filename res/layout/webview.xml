@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webviewer"
+    android:id="@+id/webfragment_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" ></WebView>
+    android:layout_height="match_parent" >
+
+</WebView>
