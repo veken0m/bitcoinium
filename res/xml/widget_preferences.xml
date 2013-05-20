@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Widget Exchange" >
+    <PreferenceCategory android:title="Exchange and Currency" >
         <ListPreference
             android:defaultValue="MtGoxExchange"
             android:entries="@array/exchanges"
@@ -9,10 +9,7 @@
             android:key="widgetExchangesPref"
             android:summary="Select the exchange used for the widget"
             android:title="Widget Exchange" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:key="widget_currency"
-        android:title="Widget Currency" >
+
         <PreferenceScreen
             android:summary="Select the currency used for the widget"
             android:title="Widget Currency" >
@@ -24,7 +21,7 @@
                     android:key="mtgoxWidgetCurrencyPref"
                     android:summary="MtGox Widget price will be displayed in selected currency"
                     android:title="MtGox Widget Currency" />
-                 <ListPreference
+                <ListPreference
                     android:defaultValue="BTC/CAD"
                     android:entries="@array/virtexcurrencies"
                     android:entryValues="@array/virtexcurrenciesvalues"
@@ -52,7 +49,7 @@
                     android:key="campbxWidgetCurrencyPref"
                     android:summary="CampBX Widget price will be displayed in selected currency"
                     android:title="CampBX Widget Currency" />
-                   <!--
+                <!--
                 <ListPreference
                     android:defaultValue="EUR"
                     android:entries="@array/bitcoincentralcurrencies"
@@ -74,15 +71,15 @@
                     android:entryValues="@array/bitcoin24currenciesvalues"
                     android:key="bitcoin24WidgetCurrencyPref"
                     android:summary="Bitcoin-24 Widget price will be displayed in selected currency"
-                    android:title="Bitcoin-24 Widget Currency" />
-                    -->
+                    android:title="Bitcoin-24 Widget Currency" />
+                -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-    <PreferenceCategory android:title="General Widget Settings" >
+    <PreferenceCategory android:title="Global Widget Settings" >
         <PreferenceScreen
-            android:summary="General settings that apply to all active widgets"
-            android:title="General Widget Settings" >
+            android:summary="Applies to all active widgets"
+            android:title="Global Widget Settings" >
             <PreferenceCategory android:title="Display" >
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -145,7 +142,7 @@
                 android:defaultValue="true"
                 android:key="showRefreshTimePref"
                 android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />
+                android:title="Show Refresh Time" />
                 -->
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     alphaSlider="true"
@@ -165,7 +162,8 @@
     <PreferenceCategory android:title=" " >
         <Preference
             android:key="OKpref"
-            android:title="Create Widget" />
+            android:title="Create Widget"
+            android:layout="@layout/custom_preference_layout" />
     </PreferenceCategory>
 
 </PreferenceScreen>
