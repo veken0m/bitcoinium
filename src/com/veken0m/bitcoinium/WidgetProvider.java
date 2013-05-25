@@ -19,12 +19,12 @@ import com.xeiam.xchange.dto.marketdata.Ticker;
 public class WidgetProvider extends BaseWidgetProvider {
 
     @Override
-    public void onReceive(Context ctxt, Intent intent) {
+    public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction())) {
-            setAlarm(ctxt);
+            setAlarm(context);
         } else {
-            super.onReceive(ctxt, intent);
+            super.onReceive(context, intent);
         }
     }
 
@@ -76,7 +76,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String prefix = exchange.getPrefix();
                     Boolean tickerBidAsk = exchange.supportsTickerBidAsk();
 
-                    readPreferences(context, prefix, defaultCurrency);
+                    readAllWidgetPreferences(context, prefix, defaultCurrency);
 
                     if (pref_currency.length() == 3 || pref_currency.length() == 7) {
 
@@ -121,30 +121,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 setHighLow(ticker, views, counterCurrency);
                             }
 
-                            // set the color
-                            if (pref_enableWidgetCustomization) {
-                                views.setInt(R.id.widget_layout,
-                                        "setBackgroundColor",
-                                        pref_backgroundWidgetColor);
-                                views.setTextColor(R.id.widgetLastText,
-                                        pref_mainWidgetTextColor);
-                                views.setTextColor(R.id.widgetExchange,
-                                        pref_mainWidgetTextColor);
-                            } else {
-                                views.setInt(
-                                        R.id.widget_layout,
-                                        "setBackgroundColor",
-                                        getResources().getColor(
-                                                R.color.widgetBackgroundColor));
-                                views.setTextColor(
-                                        R.id.widgetLastText,
-                                        getResources().getColor(
-                                                R.color.widgetMainTextColor));
-                                views.setTextColor(
-                                        R.id.widgetExchange,
-                                        getResources().getColor(
-                                                R.color.widgetMainTextColor));
-                            }
                             views.setTextViewText(R.id.widgetExchange,
                                     exchangeName);
                             views.setTextViewText(R.id.widgetLastText,
@@ -152,15 +128,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                             views.setTextViewText(R.id.widgetVolText,
                                     "Volume: " + volumeString);
 
-                            String refreshedTime = "Updated @ "
-                                    + Utils.getCurrentTime(context);
-                            views.setTextViewText(R.id.label, refreshedTime);
-                            if (pref_enableWidgetCustomization) {
-                                views.setTextColor(R.id.label,
-                                        pref_widgetRefreshSuccessColor);
-                            } else {
-                                views.setTextColor(R.id.label, Color.GREEN);
-                            }
 
                             if (pref_displayUpdates) {
                                 String text = exchangeName + " Updated!";
@@ -185,6 +152,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                             } else {
                                 removePermanentNotification(context, NOTIFY_ID);
                             }
+                            
+                            updateWidgetTheme(views);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -199,8 +168,13 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 String txt = exchangeName + " Update failed!";
                                 createTicker(context, R.drawable.bitcoin, txt);
                             }
+                        } finally {
+                            String refreshedTime = "Updated @ "
+                                    + Utils.getCurrentTime(context);
+                            views.setTextViewText(R.id.label, refreshedTime);
+
+                            widgetManager.updateAppWidget(appWidgetId, views);
                         }
-                        widgetManager.updateAppWidget(appWidgetId, views);
                     }
                 }
             }
@@ -262,6 +236,37 @@ public class WidgetProvider extends BaseWidgetProvider {
             }
             views.setTextViewText(R.id.widgetLowText, lowString);
             views.setTextViewText(R.id.widgetHighText, highString);
+        }
+        
+        public void updateWidgetTheme(RemoteViews views){
+            // set the color
+            if (pref_enableWidgetCustomization) {
+                views.setInt(R.id.widget_layout,
+                        "setBackgroundColor",
+                        pref_backgroundWidgetColor);
+                views.setTextColor(R.id.widgetLastText,
+                        pref_mainWidgetTextColor);
+                views.setTextColor(R.id.widgetExchange,
+                        pref_mainWidgetTextColor);
+                views.setTextColor(R.id.label,
+                        pref_widgetRefreshSuccessColor);
+                
+            } else {
+                views.setInt(
+                        R.id.widget_layout,
+                        "setBackgroundColor",
+                        getResources().getColor(
+                                R.color.widgetBackgroundColor));
+                views.setTextColor(
+                        R.id.widgetLastText,
+                        getResources().getColor(
+                                R.color.widgetMainTextColor));
+                views.setTextColor(
+                        R.id.widgetExchange,
+                        getResources().getColor(
+                                R.color.widgetMainTextColor));
+                views.setTextColor(R.id.label, Color.GREEN);
+            }
         }
 
         public void checkAlarm(Context context, String prefcurrency,

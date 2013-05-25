@@ -59,49 +59,20 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static PendingIntent widgetRefreshService = null;
     static PendingIntent widgetMinerRefreshService = null;
 
-    protected static void readPreferences(Context context, String prefix,
+    protected static void readAllWidgetPreferences(Context context, String prefix,
             String defaultCurrency) {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
-        pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
-                "refreshPref", "1800"));
-        pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
-        pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_notifLimitUpper = prefs.getString(prefix + "Upper", "999");
         pref_notifLimitLower = prefs.getString(prefix + "Lower", "0");
-        pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
-        pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
         pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
         pref_main_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
-        pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
-        pref_notificationSound = prefs.getString("notificationSoundPref",
-                "DEFAULT_RINGTONE_URI");
-        pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
-        pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
-        pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref",
-                R.color.widgetMainTextColor);
-        pref_secondaryWidgetTextColor = prefs.getInt(
-                "widgetSecondaryTextColorPref",
-                R.color.widgetSecondaryTextColor);
-        pref_backgroundWidgetColor = prefs.getInt("widgetBackgroundColorPref",
-                R.color.widgetBackgroundColor);
-        // pref_showWidgetRefreshTime = prefs.getBoolean("showRefreshTimePref",
-        // true);
-
-        pref_widgetRefreshSuccessColor = prefs.getInt(
-                "widgetRefreshSuccessColorPref",
-                R.color.widgetRefreshSuccessColor);
-        pref_widgetRefreshFailedColor = prefs.getInt(
-                "widgetRefreshFailedColorPref",
-                R.color.widgetRefreshFailedColor);
-        pref_enableWidgetCustomization = prefs.getBoolean(
-                "enableWidgetCustomizationPref", false);
-
+        readGeneralPreferences(context);
+        readAlarmPreferences(context);
     }
 
     protected static void readGeneralPreferences(Context context) {
@@ -121,6 +92,25 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 "DEFAULT_RINGTONE_URI");
         pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
+        
+        // Theming preferences
+        pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref",
+                R.color.widgetMainTextColor);
+        pref_secondaryWidgetTextColor = prefs.getInt(
+                "widgetSecondaryTextColorPref",
+                R.color.widgetSecondaryTextColor);
+        pref_backgroundWidgetColor = prefs.getInt("widgetBackgroundColorPref",
+                R.color.widgetBackgroundColor);
+        pref_widgetRefreshSuccessColor = prefs.getInt(
+                "widgetRefreshSuccessColorPref",
+                R.color.widgetRefreshSuccessColor);
+        pref_widgetRefreshFailedColor = prefs.getInt(
+                "widgetRefreshFailedColorPref",
+                R.color.widgetRefreshFailedColor);
+        pref_enableWidgetCustomization = prefs.getBoolean(
+                "enableWidgetCustomizationPref", false);
+        // pref_showWidgetRefreshTime = prefs.getBoolean("showRefreshTimePref",
+        // true);
     }
 
     protected static void readAlarmPreferences(Context context) {
