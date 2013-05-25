@@ -89,9 +89,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     pref_minerDownAlert = prefs.getBoolean(
                             pref_miningpool.toLowerCase() + "AlertPref", false);
-                    
+
                     if (getMinerInfo(pref_miningpool)) {
-                        // Convert to GH/s if larger than 3 digits to fit in widget
+                        // Switch to GH/s if over 3 digits to fit in widget
                         String hashRateAdjusted;
                         DecimalFormat df = new DecimalFormat("#0.00");
                         if (hashRate > 999) {
@@ -133,7 +133,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             try {
                 if (miningpool.equalsIgnoreCase("DeepBit")) {
-                    DeepBitData data = null;
                     pref_apiKey = prefs.getString("deepbitKey", "");
 
                     HttpGet post = new HttpGet("http://deepbit.net/api/"
@@ -141,7 +140,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpResponse response = client.execute(post);
                     response = client.execute(post);
-                    data = mapper.readValue(new InputStreamReader(response
+                    DeepBitData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             DeepBitData.class);
                     btcBalance = data.getConfirmed_reward().toString();
@@ -152,7 +151,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 }
 
                 if (miningpool.equalsIgnoreCase("BitMinter")) {
-                    BitMinterData data = null;
                     pref_apiKey = prefs.getString("bitminterKey", "");
 
                     HttpGet post = new HttpGet(
@@ -161,7 +159,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpResponse response = client.execute(post);
                     response = client.execute(post);
-                    data = mapper.readValue(new InputStreamReader(response
+                    BitMinterData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             BitMinterData.class);
                     btcBalance = "" + data.getBalances().getBTC();
@@ -178,15 +176,15 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             "https://eclipsemc.com/api.php?key=" + pref_apiKey
                                     + "&action=userstats");
 
-                    EMC data = null;
                     HttpResponse response = client.execute(post);
                     response = client.execute(post);
-                    data = mapper.readValue(new InputStreamReader(response
+                    EMC data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), EMC.class);
                     btcBalance = data.getData().getUser()
                             .getConfirmed_rewards();
-                    hashRate = Float.parseFloat(data.getWorkers().get(0).getHash_rate());
-                    alive = (hashRate > 0.0); // TODO: Look up "Alive" info from EclipseMC
+                    String hashRateString = data.getWorkers().get(0).getHash_rate();
+                    hashRate = (hashRateString == "") ? Float.parseFloat(hashRateString) : 0.0f;
+                    alive = (hashRate > 0.0);
                     NOTIFY_ID = 3;
                     return true;
                 }
@@ -197,9 +195,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     HttpGet post = new HttpGet(
                             "https://mining.bitcoin.cz/accounts/profile/json/"
                                     + pref_apiKey);
-                    Slush data = null;
+
                     HttpResponse response = client.execute(post);
-                    data = mapper.readValue(new InputStreamReader(response
+                    Slush data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), Slush.class);
                     btcBalance = data.getConfirmed_reward();
                     hashRate = Float.parseFloat(data.getHashrate());
@@ -213,9 +211,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpGet post = new HttpGet("https://50btc.com/en/api/"
                             + pref_apiKey + "?text=1");
-                    FiftyBTC data = null;
                     HttpResponse response = client.execute(post);
-                    data = mapper
+                    FiftyBTC data = mapper
                             .readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     FiftyBTC.class);
