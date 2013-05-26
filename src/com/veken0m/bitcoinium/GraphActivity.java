@@ -169,7 +169,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         if (pref_APIv1Mode == true) {
             // Use API V1 instead of V0 for MtGox Trades
-            graphExchange = xchangeExchange.replace("0", "1");
+            graphExchange = xchangeExchange.replace("0", "2");
         }
 
         String baseCurrency = Currencies.BTC;

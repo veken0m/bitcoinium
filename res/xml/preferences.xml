@@ -328,8 +328,8 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="mtgoxapiv1Pref"
-                    android:summary="Use MtGox API v1 for Price Graph. Allows to see a larger timeframe but uses a lot more bandwidth and very slow to load. \n*Caution*: May cause out of memory error on some devices"
-                    android:title="MtGox API v1 Mode" />
+                    android:summary="Use MtGox API v2 for Price Graph. Allows to see a larger timeframe but uses a lot more bandwidth and very slow to load. \n*Caution*: May cause out of memory error on some devices"
+                    android:title="MtGox API v2 Mode" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

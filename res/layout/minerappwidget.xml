@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:text="Hashrate"
         android:textColor="#FDD017"
-        android:textSize="18dp" />
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/widgetBTCPayout"
