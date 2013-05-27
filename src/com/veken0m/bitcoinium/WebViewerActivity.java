@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.vekenom.compatibility.WebViewSherlockFragment;
+import com.veken0m.compatibility.WebViewSherlockFragment;
 
 public class WebViewerActivity extends SherlockFragmentActivity {
 

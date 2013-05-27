@@ -21,8 +21,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.mining.deepbit.DeepBitData;
-import com.veken0m.bitcoinium.mining.deepbit.Worker;
+import com.veken0m.mining.deepbit.DeepBitData;
+import com.veken0m.mining.deepbit.Worker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

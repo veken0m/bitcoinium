@@ -13,12 +13,12 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.veken0m.bitcoinium.mining.bitminter.BitMinterData;
-import com.veken0m.bitcoinium.mining.deepbit.DeepBitData;
-import com.veken0m.bitcoinium.mining.emc.EMC;
-import com.veken0m.bitcoinium.mining.fiftybtc.FiftyBTC;
-import com.veken0m.bitcoinium.mining.slush.Slush;
 import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.mining.bitminter.BitMinterData;
+import com.veken0m.mining.deepbit.DeepBitData;
+import com.veken0m.mining.emc.EMC;
+import com.veken0m.mining.fiftybtc.FiftyBTC;
+import com.veken0m.mining.slush.Slush;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

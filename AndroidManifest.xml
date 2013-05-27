@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.bitcoinium"
-    android:versionCode="32"
-    android:versionName="1.5.5" >
+    android:versionCode="33"
+    android:versionName="1.6.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -20,7 +20,7 @@
         android:theme="@style/Theme.Sherlock" >
         <receiver
             android:name="com.veken0m.bitcoinium.WidgetProvider"
-            android:label="@string/app_name" >
+            android:label="@string/price_widget_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -36,7 +36,7 @@
         
                 <receiver
             android:name="com.veken0m.bitcoinium.MinerWidgetProvider"
-            android:label="Bitcoinium Miner (BETA)" >
+            android:label="@string/mining_widget_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

@@ -7,6 +7,8 @@
     <string name="default_currency">USD</string>
     
     <!--  Widget Strings -->
+    <string name ="price_widget_name">Bitcoinium Price</string>
+    <string name ="mining_widget_name">Bitcoinium Mining</string>
     <string name="exchange">Exchange</string>
     <string name="low">Low</string>
     <string name="high">High</string>

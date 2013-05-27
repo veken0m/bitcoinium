@@ -20,8 +20,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.mining.emc.EMC;
-import com.veken0m.bitcoinium.mining.emc.Workers;
+import com.veken0m.mining.emc.EMC;
+import com.veken0m.mining.emc.Workers;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
