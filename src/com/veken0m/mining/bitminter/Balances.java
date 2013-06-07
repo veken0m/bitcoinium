@@ -3,6 +3,7 @@ package com.veken0m.mining.bitminter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Balances {
     private float BTC;
     private float NMC;

@@ -3,6 +3,7 @@ package com.veken0m.mining.emc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Workers {
     private String hash_rate;
     private String last_activity;

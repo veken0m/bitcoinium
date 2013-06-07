@@ -3,6 +3,7 @@ package com.veken0m.mining.bitminter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Round_start {
     private float BTC;
     private float NMC;

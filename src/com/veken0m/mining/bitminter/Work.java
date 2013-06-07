@@ -3,6 +3,7 @@ package com.veken0m.mining.bitminter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Work {
     private BTC bTC;
     private NMC nMC;

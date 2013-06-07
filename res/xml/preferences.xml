@@ -249,7 +249,7 @@
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="bitminterKey"
-                    android:summary="Enter your BitMinter API token to use MinerStats."
+                    android:summary="Enter your BitMinter API token to use MinerStats. \n *NOTE* - Remember to enable API perk!"
                     android:title="BitMinter API token" />
                 <EditTextPreference
                     android:defaultValue=""
@@ -350,7 +350,7 @@
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
                 <Preference
-                    android:summary="1.6.0"
+                    android:summary="1.6.1"
                     android:title="Version" />
                 <Preference
                     android:key="bitcoiniumGithubPref"

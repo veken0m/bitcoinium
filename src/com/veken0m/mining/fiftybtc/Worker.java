@@ -4,6 +4,7 @@ package com.veken0m.mining.fiftybtc;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Worker {
     private boolean alive;
     private Number blocks_found;
