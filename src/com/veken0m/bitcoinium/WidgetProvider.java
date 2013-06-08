@@ -153,6 +153,10 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 removePermanentNotification(context, NOTIFY_ID);
                             }
                             
+                            String refreshedTime = "Updated @ "
+                                    + Utils.getCurrentTime(context);
+                            views.setTextViewText(R.id.label, refreshedTime);
+                            
                             updateWidgetTheme(views);
 
                         } catch (Exception e) {
@@ -169,9 +173,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 createTicker(context, R.drawable.bitcoin, txt);
                             }
                         } finally {
-                            String refreshedTime = "Updated @ "
-                                    + Utils.getCurrentTime(context);
-                            views.setTextViewText(R.id.label, refreshedTime);
 
                             widgetManager.updateAppWidget(appWidgetId, views);
                         }
@@ -250,6 +251,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         pref_mainWidgetTextColor);
                 views.setTextColor(R.id.label,
                         pref_widgetRefreshSuccessColor);
+                views.setTextColor(R.id.widgetVolText, pref_secondaryWidgetTextColor);
                 
             } else {
                 views.setInt(

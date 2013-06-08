@@ -119,6 +119,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     pref_miningpool, NOTIFY_ID * 10);
                         }
                         
+                        String refreshedTime = "Upd. @ "
+                                + Utils.getCurrentTime(context);
+                        views.setTextViewText(R.id.refreshtime, refreshedTime);
+                        
                         updateWidgetTheme(views);
 
                     } else {
@@ -129,9 +133,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             views.setTextColor(R.id.refreshtime, Color.RED);
                         }
                     }
-                    String refreshedTime = "Upd. @ "
-                            + Utils.getCurrentTime(context);
-                    views.setTextViewText(R.id.refreshtime, refreshedTime);
                     widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
@@ -263,6 +264,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         pref_mainWidgetTextColor);
                 views.setTextColor(R.id.refreshtime,
                         pref_widgetRefreshSuccessColor);
+                views.setTextColor(R.id.widgetBTCPayout, pref_secondaryWidgetTextColor);
                 
             } else {
                 views.setInt(
@@ -278,6 +280,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         R.id.widgetMiner,
                         getResources().getColor(
                                 R.color.widgetMainTextColor));
+                
+                views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
                 views.setTextColor(R.id.refreshtime, Color.GREEN);
             }
         }
