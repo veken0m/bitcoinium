@@ -37,15 +37,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static Boolean pref_wakeupRefresh;
     static Boolean pref_alarmSound;
     static Boolean pref_alarmVibrate;
-    static Boolean pref_ticker;
+    static Boolean pref_enableTicker;
     static Boolean pref_widgetbidask;
     static Boolean pref_wifionly;
     static Boolean pref_alarmClock;
     static String pref_main_currency;
     static String pref_currency;
     static String pref_notificationSound;
-    static String pref_notifLimitLower;
-    static String pref_notifLimitUpper;
 
     static int pref_mainWidgetTextColor;
     static int pref_secondaryWidgetTextColor;
@@ -64,10 +62,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-
-        pref_notifLimitUpper = prefs.getString(prefix + "Upper", "999");
-        pref_notifLimitLower = prefs.getString(prefix + "Lower", "0");
-        pref_ticker = prefs.getBoolean(prefix + "TickerPref", false);
+        
+        pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
         pref_main_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
 

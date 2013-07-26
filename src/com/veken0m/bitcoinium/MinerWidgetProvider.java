@@ -99,7 +99,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         DecimalFormat df = new DecimalFormat("#0.00");
                         
                         if (hashRate > 999) {
-                            hashRateAdjusted = "" + df.format((hashRate / 1024)) + " GH/s";
+                            hashRateAdjusted = "" + df.format((hashRate / 1000)) + " GH/s";
                         } else {
                             hashRateAdjusted = "" + df.format((hashRate)) + " MH/s";
                         }

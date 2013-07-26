@@ -35,85 +35,524 @@
     <PreferenceCategory
         android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"
         android:title="Alarm Settings" >
+        
         <PreferenceScreen android:title="MtGox alarm thresholds" >
-            <EditTextPreference
-                android:defaultValue="999"
-                android:digits="01234567890."
-                android:inputType="numberDecimal"
-                android:key="mtgoxUpper"
-                android:summary="Notification will occur if MtGox price goes over this threshold"
-                android:title="MtGox Upper Threshold" />
-            <EditTextPreference
-                android:defaultValue="0"
-                android:digits="01234567890."
-                android:inputType="numberDecimal"
-                android:key="mtgoxLower"
-                android:summary="Notification will occur if MtGox price goes under this threshold"
-                android:title="MtGox Lower Threshold" />
+            <PreferenceScreen android:title="BTC/USD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCUSDUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCUSDLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/USD Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/AUD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCAUDUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/AUD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCAUDLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/AUD Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/CAD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCADUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/CAD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCADLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/CAD Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/GBP" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCGBPUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/GBP Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCGBPLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/GBP Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/CNY" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCNYUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/CNY Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCNYLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/CNY Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/DKK" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCDKKUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/DKK Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCDKKLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/DKK Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/EUR" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCEURUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/EUR Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCEURLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/EUR Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/CHF" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCHFUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/CHF Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCCHFLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/CHF Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/HKD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCHKDUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/HKD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCHKDLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/HKD Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/JPY" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCJPYUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/JPY Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCJPYLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/JPY Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/NZD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCNZDUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/NZD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCNZDLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/NZD Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/PLN" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCPLNUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/PLN Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCPLNLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/PLN Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/RUB" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCRUBUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/RUB Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCRUBLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/RUB Lower Threshold" />
+	        </PreferenceScreen>
+	        <PreferenceScreen android:title="BTC/SEK" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCSEKUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/SEK Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCSEKLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/SEK Lower Threshold" />
+	        </PreferenceScreen>
+	       	<PreferenceScreen android:title="BTC/SGD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCSGDUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/SGD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCSGDLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/SGD Lower Threshold" />
+	        </PreferenceScreen>
+	       	<PreferenceScreen android:title="BTC/THB" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCTHBUpper"
+	                android:summary="Notification will occur if MtGox price goes over this threshold"
+	                android:title="MtGox BTC/THB Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="mtgoxBTCTHBLower"
+	                android:summary="Notification will occur if MtGox price goes under this threshold"
+	                android:title="MtGox BTC/THB Lower Threshold" />
+	        </PreferenceScreen>
         </PreferenceScreen>
         <PreferenceScreen android:title="VirtEx alarm thresholds" >
             <EditTextPreference
-                android:defaultValue="999"
+                android:defaultValue="999999"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="virtexUpper"
+                android:key="virtexBTCCADUpper"
                 android:summary="Notification will occur if VirtEx price goes over this threshold"
-                android:title="VirtEx Upper Threshold" />
+                android:title="VirtEx BTC/CAD Upper Threshold" />
             <EditTextPreference
                 android:defaultValue="0"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="virtexLower"
+                android:key="virtexBTCCADLower"
                 android:summary="Notification will occur if VirtEx price goes under this threshold"
-                android:title="VirtEx Lower Threshold" />
+                android:title="VirtEx BTC/CAD Lower Threshold" />
         </PreferenceScreen>
         <PreferenceScreen android:title="BTC-E alarm thresholds" >
-            <EditTextPreference
-                android:defaultValue="999"
-                android:digits="01234567890."
-                android:inputType="numberDecimal"
-                android:key="btceUpper"
-                android:summary="Notification will occur if BTC-E price goes over this threshold"
-                android:title="BTC-E Upper Threshold" />
-            <EditTextPreference
-                android:defaultValue="0"
-                android:digits="01234567890."
-                android:inputType="numberDecimal"
-                android:key="btceLower"
-                android:summary="Notification will occur if BTC-E price goes under this threshold"
-                android:title="BTC-E Lower Threshold" />
+            <Preference
+	                android:summary="Please enter UNSCALED values\nFor example, enter BTC not mBTC"/>
+            <PreferenceScreen android:title="BTC/USD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCUSDUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E BTC/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCUSDLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E BTC/USD Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="BTC/RUR" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCRURUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E BTC/RUR Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCRURLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E BTC/RUR Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="BTC/EUR" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCEURUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E BTC/EUR Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceBTCEURLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E BTC/EUR Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="LTC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E LTC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E LTC/BTC Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="LTC/USD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCUSDUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E LTC/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCUSDLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E LTC/USD Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="LTC/RUR" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCRURUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E LTC/RUR Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceLTCRURLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E LTC/RUR Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="NMC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceNMCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E NMC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceNMCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E NMC/BTC Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="NVC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceNVCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E NVC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceNVCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E NVC/BTC Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="USD/RUR" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceUSDRURUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E USD/RUR Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceUSDRURLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E USD/RUR Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="EUR/USD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceEURUSDUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E EUR/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceEURUSDLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E EUR/USD Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="TRC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceTRCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E TRC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceTRCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E TRC/BTC Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="PPC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btcePPCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E PPC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btcePPCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E PPC/BTC Lower Threshold" />
+        	</PreferenceScreen>
+        	<PreferenceScreen android:title="FTC/BTC" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceFTCBTCUpper"
+	                android:summary="Notification will occur if BTC-E price goes over this threshold"
+	                android:title="BTC-E FTC/BTC Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="btceFTCBTCLower"
+	                android:summary="Notification will occur if BTC-E price goes under this threshold"
+	                android:title="BTC-E FTC/BTC Lower Threshold" />
+        	</PreferenceScreen>
         </PreferenceScreen>
         <PreferenceScreen android:title="Bitstamp alarm thresholds" >
             <EditTextPreference
-                android:defaultValue="999"
+                android:defaultValue="999999"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="bitstampUpper"
+                android:key="bitstampBTCEURUpper"
                 android:summary="Notification will occur if Bitstamp price goes over this threshold"
-                android:title="Bitstamp Upper Threshold" />
+                android:title="Bitstamp BTC/EUR Upper Threshold" />
             <EditTextPreference
                 android:defaultValue="0"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="bitstampLower"
+                android:key="bitstampBTCEURLower"
                 android:summary="Notification will occur if Bitstamp price goes under this threshold"
-                android:title="Bitstamp Lower Threshold" />
+                android:title="Bitstamp BTC/EUR Lower Threshold" />
         </PreferenceScreen>
         <PreferenceScreen android:title="CampBX alarm thresholds" >
             <EditTextPreference
-                android:defaultValue="999"
+                android:defaultValue="999999"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="campbxUpper"
+                android:key="campbxBTCUSDUpper"
                 android:summary="Notification will occur if CampBX price goes over this threshold"
-                android:title="CampBX Upper Threshold" />
+                android:title="CampBX BTC/USD Upper Threshold" />
             <EditTextPreference
                 android:defaultValue="0"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="campbxLower"
+                android:key="campbxBTCUSDLower"
                 android:summary="Notification will occur if CampBX price goes under this threshold"
-                android:title="CampBX Lower Threshold" />
+                android:title="CampBX BTC/USD Lower Threshold" />
         </PreferenceScreen>
         <!-- <PreferenceScreen android:title="BitcoinCentral Alarm" >
             <EditTextPreference

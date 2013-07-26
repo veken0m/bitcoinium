@@ -142,7 +142,7 @@
         <item>CAD - Canadian Dollar</item>
         <item>GBP - British Pound</item>
         <item>CNY - Chinese Yuan</item>
-        <item>DKK - Danish Krona</item>
+        <item>DKK - Danish Krone</item>
         <item>EUR - Euro</item>
         <item>CHF - Swiss Francs</item>
         <item>HKD - Hong Kong Dollar</item>
@@ -232,14 +232,6 @@
     </string-array>
 
     <!-- Arrays for BitcoinCentral Currencies -->
-    <string-array name="bitcoincentralcurrencies">
-        <item>EUR - Euro</item>
-        <!--
-        Currently Disabled in XChange
-        <item>GBP - British Pound</item>
-        <item>USD - United States Dollar</item>
-        -->
-    </string-array>
     <string-array name="bitcoincentralcurrencies">
         <item>EUR - Euro</item>
     </string-array>
