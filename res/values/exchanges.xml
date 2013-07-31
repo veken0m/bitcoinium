@@ -56,7 +56,7 @@
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
-        <item>com.xeiam.xchange.mtgox.v0.MtGoxExchange</item>
+        <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>USD</item>
         <item>mtgoxlogo</item>
         <item>0</item>

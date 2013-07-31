@@ -54,7 +54,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     LineGraphView graphView;
     static Boolean pref_graphMode;
     static Boolean pref_scaleMode;
-    static Boolean pref_APIv1Mode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -166,11 +165,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         String graphExchange = xchangeExchange;
         Trades trades = null;
-
-        if (pref_APIv1Mode == true) {
-            // Use API V1 instead of V0 for MtGox Trades
-            graphExchange = xchangeExchange.replace("0", "2");
-        }
 
         String baseCurrency = Currencies.BTC;
         String counterCurrency = pref_currency;
@@ -298,7 +292,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
         pref_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
-        pref_APIv1Mode = prefs.getBoolean("mtgoxapiv1Pref", false);
     }
 
     @Override
