@@ -554,6 +554,22 @@
                 android:summary="Notification will occur if CampBX price goes under this threshold"
                 android:title="CampBX BTC/USD Lower Threshold" />
         </PreferenceScreen>
+        <PreferenceScreen android:title="BTC China alarm thresholds" >
+            <EditTextPreference
+                android:defaultValue="999999"
+                android:digits="01234567890."
+                android:inputType="numberDecimal"
+                android:key="btcchinaBTCCNYUpper"
+                android:summary="Notification will occur if BTC China price goes over this threshold"
+                android:title="BTC China BTC/CNY Upper Threshold" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:digits="01234567890."
+                android:inputType="numberDecimal"
+                android:key="btcchinaBTCCNYLower"
+                android:summary="Notification will occur if BTC China price goes under this threshold"
+                android:title="BTC China BTC/CNY Lower Threshold" />
+        </PreferenceScreen>
         <!-- <PreferenceScreen android:title="BitcoinCentral Alarm" >
             <EditTextPreference
                 android:defaultValue="999"

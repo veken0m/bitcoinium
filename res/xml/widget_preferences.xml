@@ -49,6 +49,13 @@
                     android:key="campbxWidgetCurrencyPref"
                     android:summary="CampBX Widget price will be displayed in selected currency"
                     android:title="CampBX Widget Currency" />
+                <ListPreference
+                    android:defaultValue="BTC/CNY"
+                    android:entries="@array/btcchinacurrencies"
+                    android:entryValues="@array/btcchinacurrenciesvalues"
+                    android:key="btcchinaWidgetCurrencyPref"
+                    android:summary="BTCChina Widget price will be displayed in selected currency"
+                    android:title="BTCChina Widget Currency" />
                 <!--
                 <ListPreference
                     android:defaultValue="EUR"

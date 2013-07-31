@@ -48,6 +48,13 @@
                 android:key="campbxCurrencyPref"
                 android:summary="CampBX price will be displayed in this currency"
                 android:title="CampBX Currency" />
+            <ListPreference
+                android:defaultValue="BTC/CNY"
+                android:entries="@array/btcchinacurrencies"
+                android:entryValues="@array/btcchinacurrenciesvalues"
+                android:key="btcchinaCurrencyPref"
+                android:summary="BTC China price will be displayed in this currency"
+                android:title="BTC China Currency" />
             <!--
             <ListPreference
                 android:defaultValue="EUR"
@@ -338,6 +345,10 @@
                     android:defaultValue="false"
                     android:key="campbxBTCUSDTickerPref"
                     android:title="CampBX BTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btcchinaBTCCNYTickerPref"
+                    android:title="BTC China BTC/CNY Ticker" />
 
                 <!--
                 <CheckBoxPreference
@@ -468,6 +479,10 @@
                     android:key="devEmailPref"
                     android:summary="veken0m.apps@gmail.com"
                     android:title="Email" />
+                <Preference
+                    android:key="devTwitterPref"
+                    android:summary=" @veken0m"
+                    android:title="Twitter" />
                 <Preference
                     android:summary="@string/version_name"
                     android:title="Version" />

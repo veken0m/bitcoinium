@@ -49,6 +49,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 .setEnabled(false);
         ((ListPreference) findPreference("campbxWidgetCurrencyPref"))
                 .setEnabled(false);
+        ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
+        .setEnabled(false);
         // ((ListPreference)
         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
         // ((ListPreference)
@@ -96,6 +98,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                         ((ListPreference) findPreference("bitstampWidgetCurrencyPref"))
                                 .setEnabled(false);
                         ((ListPreference) findPreference("campbxWidgetCurrencyPref"))
+                                .setEnabled(false);
+                        ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
                                 .setEnabled(false);
                         // ((ListPreference)
                         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);

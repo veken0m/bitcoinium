@@ -18,6 +18,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
@@ -58,6 +59,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 R.drawable.bitstamplogo);
         ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
                 R.drawable.campbxlogo);
+        ActionBar.Tab BTCChinaTab = actionbar.newTab().setText("BTC China");
         // ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
         // .setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
         // ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
@@ -71,6 +73,7 @@ public class MainActivity extends SherlockFragmentActivity {
         tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
         tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
         tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
+        tabsAdapter.addTab(BTCChinaTab, BTCChinaFragment.class, null);
         // tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
         // null);
         // tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
