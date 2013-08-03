@@ -51,6 +51,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 .setEnabled(false);
         ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
         .setEnabled(false);
+        ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
+        .setEnabled(false);
         // ((ListPreference)
         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
         // ((ListPreference)
@@ -101,6 +103,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                                 .setEnabled(false);
                         ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
                                 .setEnabled(false);
+                        ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
+                            .setEnabled(false);
                         // ((ListPreference)
                         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
                         // ((ListPreference)
