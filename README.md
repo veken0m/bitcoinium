@@ -9,16 +9,17 @@ Currently supported exchanges include:
 	- BTC-E	: http://btc-e.com
 	- Bitstamp : http://bitstamp.net
 	- CampBX: http://campbx.com
-	- BTC China: https://btcchina.com/
-	- Bitcurex: https://bitcurex.com/
+	- BTC China: https://btcchina.com
+	- Bitcurex: https://bitcurex.com
 	
 Removed Exchanges (closed down):
+
 	- BitcoinCentral: http://bitcoin-central.net
-	- Bitfloor: https://bitfloor.com/
-	- Bitcoin-24: https://bitcoin-24.com/
+	- Bitfloor: https://bitfloor.com
+	- Bitcoin-24: https://bitcoin-24.com
 		
 Additional Information from:	
-	- Bitcoin Charts			: http://bitcoincharts.com/markets/
+	- Bitcoin Charts			: http://bitcoincharts.com/markets
 
 Supported Mining Pools:
 
