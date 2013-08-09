@@ -66,12 +66,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                             pendingIntent);
 
                     // Load Widget preferences
-                    String pref_widget = WidgetConfigureActivity
+                    String pref_exchange = WidgetConfigureActivity
                             .loadExchangePref(context, appWidgetId);
                     pref_currency = WidgetConfigureActivity
                             .loadCurrencyPref(context, appWidgetId);
 
-                    Exchange exchange = getExchange(pref_widget);
+                    Exchange exchange = getExchange(pref_exchange);
                     String exchangeName = exchange.getExchangeName();
                     String pref_widgetExchange = exchange.getClassName();
                     String defaultCurrency = exchange.getMainCurrency();

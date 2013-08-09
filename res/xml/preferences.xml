@@ -55,6 +55,13 @@
                 android:key="btcchinaCurrencyPref"
                 android:summary="BTC China price will be displayed in this currency"
                 android:title="BTC China Currency" />
+            <ListPreference
+                android:defaultValue="BTC/PLN"
+                android:entries="@array/bitcurexcurrencies"
+                android:entryValues="@array/bitcurexcurrenciesvalues"
+                android:key="bitcurexCurrencyPref"
+                android:summary="Bitcurex price will be displayed in this currency"
+                android:title="Bitcurex Currency" />
             <!--
             <ListPreference
                 android:defaultValue="EUR"
