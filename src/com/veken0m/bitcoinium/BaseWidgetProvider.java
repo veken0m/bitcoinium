@@ -44,11 +44,12 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static String pref_main_currency;
     static String pref_currency;
     static String pref_notificationSound;
+    static Boolean pref_extremePowerSaver;
+    static Boolean pref_tapToUpdate;
 
     static int pref_mainWidgetTextColor;
     static int pref_secondaryWidgetTextColor;
     static int pref_backgroundWidgetColor;
-    static Boolean pref_showWidgetRefreshTime;
     static int pref_widgetRefreshSuccessColor;
     static int pref_widgetRefreshFailedColor;
     static Boolean pref_enableWidgetCustomization;
@@ -80,6 +81,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
         pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
+        //pref_extremePowerSaver = prefs.getBoolean("extremeSaverModePref", false);
+        pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
@@ -105,8 +108,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 R.color.widgetRefreshFailedColor);
         pref_enableWidgetCustomization = prefs.getBoolean(
                 "enableWidgetCustomizationPref", false);
-        // pref_showWidgetRefreshTime = prefs.getBoolean("showRefreshTimePref",
-        // true);
     }
 
     protected static void readAlarmPreferences(Context context) {
@@ -130,7 +131,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     public void onDestoy(Context context) {
         final AlarmManager m = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
-
+        
+        m.cancel(widgetMinerRefreshService);
         m.cancel(widgetRefreshService);
     }
 

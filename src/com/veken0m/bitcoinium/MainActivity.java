@@ -1,10 +1,13 @@
 
 package com.veken0m.bitcoinium;
 
+import android.R.color;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -33,7 +36,6 @@ import java.util.ArrayList;
  * @version 1.6.3 Aug 02 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
-    static String pref_favExchange;
     ViewPager mViewPager;
 
     /** Called when the activity is first created. */
@@ -41,7 +43,10 @@ public class MainActivity extends SherlockFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        readPreferences(getApplicationContext());
+        initTabbedActionBar();
+    }
+    
+    public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
@@ -49,6 +54,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
         // Tell the ActionBar we want to use Tabs.
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ColorDrawable color = new ColorDrawable(Color.argb(100, 160, 160, 160));
+        actionbar.setStackedBackgroundDrawable(color);
+        //actionbar.setBackgroundDrawable(color);
 
         // Create the actionbar tabs
         ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
@@ -60,14 +68,11 @@ public class MainActivity extends SherlockFragmentActivity {
                 R.drawable.bitstamplogo);
         ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
                 R.drawable.campbxlogo);
-        ActionBar.Tab BTCChinaTab = actionbar.newTab().setText("BTC China");
-        ActionBar.Tab BitcurexTab = actionbar.newTab().setText("Bitcurex");
-        // ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
-        // .setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
-        // ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
-        // R.drawable.bitfloorlogo);
-        // ActionBar.Tab Bitcoin24Tab = actionbar.newTab().setIcon(
-        // R.drawable.bitcoin24logo);
+        ActionBar.Tab BTCChinaTab = actionbar.newTab().setIcon(
+                R.drawable.btcchinalogo);
+        ActionBar.Tab BitcurexTab = actionbar.newTab().setIcon(
+                R.drawable.bitcurexlogo);
+        
 
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
         tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
@@ -77,19 +82,14 @@ public class MainActivity extends SherlockFragmentActivity {
         tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
         tabsAdapter.addTab(BTCChinaTab, BTCChinaFragment.class, null);
         tabsAdapter.addTab(BitcurexTab, BitcurexFragment.class, null);
-        // tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
-        // null);
-        // tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
-        // tabsAdapter.addTab(Bitcoin24Tab, Bitcoin24Fragment.class, null);
-
+        
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
         try {
             actionbar.setSelectedNavigationItem(Integer
-                    .parseInt(pref_favExchange));
+                    .parseInt(prefs.getString("favExchangePref", "0")));
         } catch (Exception e) {
             // If preference is not set a valid integer set to "0"
-            SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
-
             Editor editor = prefs.edit();
             editor.putString("favExchangePref", "0");
             editor.commit();
@@ -208,25 +208,6 @@ public class MainActivity extends SherlockFragmentActivity {
             startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    protected static void readPreferences(Context context) {
-        // Get the xml/preferences.xml preferences
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
-        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-                    String key) {
-
-                pref_favExchange = pPrefs.getString("favExchangePref", "0");
-            }
-        };
-
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
-
-        pref_favExchange = prefs.getString("favExchangePref", "0");
     }
 
 }

@@ -62,29 +62,6 @@
                 android:key="bitcurexCurrencyPref"
                 android:summary="Bitcurex price will be displayed in this currency"
                 android:title="Bitcurex Currency" />
-            <!--
-            <ListPreference
-                android:defaultValue="EUR"
-                android:entries="@array/bitcoincentralcurrencies"
-                android:entryValues="@array/bitcoincentralcurrenciesvalues"
-                android:key="bitcoincentralCurrencyPref"
-                android:summary="BitcoinCentral price will be displayed in selected currency"
-                android:title="BitcoinCentral Currency" />
-                <ListPreference
-                android:defaultValue="USD"
-                android:entries="@array/bitfloorcurrencies"
-                android:entryValues="@array/bitfloorcurrenciesvalues"
-                android:key="bitfloorCurrencyPref"
-                android:summary="Bitfloor price will be displayed in selected currency"
-                android:title="Bitfloor Currency" />
-            <ListPreference
-                android:defaultValue="EUR"
-                android:entries="@array/bitcoin24currencies"
-                android:entryValues="@array/bitcoin24currenciesvalues"
-                android:key="bitcoin24CurrencyPref"
-                android:summary="Bitcoin24 price will be displayed in selected currency"
-                android:title="Bitcoin24 Currency" />
-            -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Configuration" >
@@ -107,6 +84,11 @@
                     android:key="wifiRefreshOnlyPref"
                     android:summary="Disable updates on mobile connection"
                     android:title="Refresh only on WiFi" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="widgetTapUpdatePref"
+                    android:summary="Tapping the widget will update instead of opening app"
+                    android:title="Tap to Update" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <ListPreference
@@ -116,12 +98,16 @@
                     android:key="refreshPref"
                     android:summary="Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain \n "
                     android:title="Widget Update Interval" />
-
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wakeupPref"
                     android:summary="Disable updates when screen is off"
                     android:title="Battery Saving Mode" />
+<!--                 <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="extremeSaverModePref"
+                    android:summary="Widget will have to be manually refreshed"
+                    android:title="Extreme Battery Saving Mode" /> -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -152,13 +138,6 @@
                 android:key="widgetBackgroundColorPref"
                 android:summary="Color for widget background"
                 android:title="Background Color" />
-            <!--
-                  <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="showRefreshTimePref"
-                android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />
-            -->
             <net.margaritov.preference.colorpicker.ColorPickerPreference
                 alphaSlider="true"
                 android:defaultValue="@color/widgetRefreshSuccessColor"
@@ -356,21 +335,6 @@
                     android:defaultValue="false"
                     android:key="btcchinaBTCCNYTickerPref"
                     android:title="BTC China BTC/CNY Ticker" />
-
-                <!--
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="bitcoincentralTickerPref"
-                    android:title="BitcoinCentral Notification Ticker" />
-                     <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="bitfloorTickerPref"
-                    android:title="Bitfloor Notification Ticker" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="bitcoin24TickerPref"
-                    android:title="Bitcoin-24 Notification Ticker" />
-                -->
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
@@ -424,6 +388,7 @@
                     android:key="orderbookLimiterPref"
                     android:summary="Limit values printed on screen to improve performance"
                     android:title="OrderBook list length limit" />
+                         
             </PreferenceCategory>
             <PreferenceCategory android:title="Liquidity Highlighting" >
                 <CheckBoxPreference
