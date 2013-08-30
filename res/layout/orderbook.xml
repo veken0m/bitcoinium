@@ -20,11 +20,11 @@
             android:paddingRight="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Currency Pair" />
+            android:text="@string/currency_pair" />
 
         <Spinner
             android:id="@+id/orderbook_currency_spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
@@ -45,7 +45,7 @@
             android:background="#101010"
             android:gravity="center_horizontal"
             android:padding="3dip"
-            android:text="Bids"
+            android:text="@string/bids"
             android:textColor="#33B5E5"
             android:textSize="22sp" />
 
@@ -54,7 +54,7 @@
             android:background="#101010"
             android:gravity="center_horizontal"
             android:padding="3dip"
-            android:text="Asks"
+            android:text="@string/asks"
             android:textColor="#33B5E5"
             android:textSize="22sp" />
     </TableRow>
@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="Price"
+            android:text="@string/price"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
 
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="Amount"
+            android:text="@string/amount"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
 
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="Price"
+            android:text="@string/price"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
 
@@ -93,7 +93,7 @@
             android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="Amount"
+            android:text="@string/amount"
             android:textColor="#33B5E5"
             android:textSize="16sp" />
     </TableRow>
@@ -108,7 +108,7 @@
         <TableLayout
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:stretchColumns="4" >
         </TableLayout>
     </ScrollView>

@@ -1,12 +1,12 @@
 
 package com.veken0m.bitcoinium;
 
-import android.R.color;
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.webkit.WebView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -23,17 +24,15 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.veken0m.bitcoinium.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.exchanges.BTCEFragment;
+import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
-import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
-
-import java.util.ArrayList;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
- * @version 1.6.3 Aug 02 2013
+ * @version 1.7.0 Aug 29 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
     ViewPager mViewPager;
@@ -52,18 +51,18 @@ public class MainActivity extends SherlockFragmentActivity {
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
 
-        // Tell the ActionBar we want to use Tabs.
+        // Tell the ActionBar we want to use Tabs
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ColorDrawable color = new ColorDrawable(Color.argb(100, 160, 160, 160));
-        actionbar.setStackedBackgroundDrawable(color);
+        actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
 
-        // Create the actionbar tabs
+        // Create the ActionBar tabs
         ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
                 R.drawable.mtgoxlogo);
         ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
                 R.drawable.virtexlogo);
-        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
+        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
+                R.drawable.btcelogo);
         ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
                 R.drawable.bitstamplogo);
         ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
@@ -73,7 +72,6 @@ public class MainActivity extends SherlockFragmentActivity {
         ActionBar.Tab BitcurexTab = actionbar.newTab().setIcon(
                 R.drawable.bitcurexlogo);
         
-
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
         tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
         tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);

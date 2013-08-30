@@ -224,9 +224,9 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         stopLoading();
         setOrderBookHeader();
 
-        LayoutParams params = new TableRow.LayoutParams(
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, 1f);
        
         String currencySymbolBTC, currencySymbol;
         currencySymbolBTC = currencySymbol = "";
@@ -307,10 +307,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         stopLoading();
         setOrderBookHeader();
 
-        LayoutParams params = new TableRow.LayoutParams(
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, 1f);
+        
         String currencySymbolBTC = "";
         String currencySymbol = "";
 
@@ -324,7 +324,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         
         float previousBidAmount = 0;
         float previousAskAmount = 0;
-        
 
         for (int i = 0; i <  listAsksPrice.size(); i++) {
 

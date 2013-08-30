@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Miner"
+        android:text="@string/miner"
         android:textColor="#FDD017"
         android:paddingTop="1dp"
         android:paddingLeft="3dp"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/widgetMiner"
         android:layout_centerHorizontal="true"
-        android:text="Hashrate"
+        android:text="@string/hashrate"
         android:textColor="#FDD017"
         android:textSize="17dp" />
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/widgetMinerHashrate"
         android:layout_centerHorizontal="true"
-        android:text="Payout"
+        android:text="@string/payout"
         android:textSize="12dp" >
     </TextView>
 
