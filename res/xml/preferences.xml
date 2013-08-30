@@ -419,7 +419,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Price Graph Settings" >
         <PreferenceScreen
-            android:summary="View window scaling and MtGox API mode settings"
+            android:summary="View window scaling"
             android:title="Price Graph Settings" >
             <PreferenceCategory android:title="Price Graph Settings" >
                 <CheckBoxPreference
