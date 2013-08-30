@@ -4,32 +4,32 @@ package com.veken0m.bitcoinium.webservice.dto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class TickerHistory {
-    private ArrayList<BigDecimal> pp;
-    private long t;
-    private ArrayList<BigDecimal> tt;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public ArrayList<BigDecimal> getPp() {
+public class TickerHistory {
+    private final ArrayList<BigDecimal> pp;
+    private final long t;
+    private final ArrayList<BigDecimal> tt;
+
+    public TickerHistory(
+            @JsonProperty("pp") ArrayList<BigDecimal> pp, 
+            @JsonProperty("t") long t, 
+            @JsonProperty("tt") ArrayList<BigDecimal> tt) {
+
+        this.pp = pp;
+        this.t = t;
+        this.tt = tt;
+    }
+
+    public ArrayList<BigDecimal> getPriceHistoryList() {
         return this.pp;
     }
 
-    public void setPp(ArrayList<BigDecimal> pp) {
-        this.pp = pp;
-    }
-
-    public long getT() {
+    public long getBaseTimestamp() {
         return this.t;
     }
 
-    public void setT(long t) {
-        this.t = t;
-    }
-
-    public ArrayList<BigDecimal> getTt() {
+    public ArrayList<BigDecimal> getTimeStampOffsets() {
         return this.tt;
-    }
-
-    public void setTt(ArrayList<BigDecimal> tt) {
-        this.tt = tt;
     }
 }

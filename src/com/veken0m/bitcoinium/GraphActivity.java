@@ -261,7 +261,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         try {
 
-            int tradeListSize = trades.getPp().size();
+            int tradeListSize = trades.getPriceHistoryList().size();
             float[] values = new float[tradeListSize];
             long[] dates = new long[tradeListSize];
             final GraphViewData[] data = new GraphViewData[tradeListSize];
@@ -269,11 +269,11 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             float largest = Integer.MIN_VALUE;
             float smallest = Integer.MAX_VALUE;
 
-            long baseTime = trades.getT() * 1000;
+            long baseTime = trades.getBaseTimestamp() * 1000;
 
             for (int i = 0; i < tradeListSize; i++) {
-                values[i] = trades.getPp().get(i).floatValue();
-                long delta = trades.getTt().get(i).longValue() * 1000;
+                values[i] = trades.getPriceHistoryList().get(i).floatValue();
+                long delta = trades.getTimeStampOffsets().get(i).longValue() * 1000;
                 baseTime += delta;
                 dates[i] = baseTime;
 

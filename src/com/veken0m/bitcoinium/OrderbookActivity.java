@@ -189,19 +189,19 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                     .getContent(), "UTF-8"), com.veken0m.bitcoinium.webservice.dto.Orderbook.class);
 
             // Limit OrderbookActivity orders drawn to speed up performance
-            int size = orderbook.getBp().size();
-            if(orderbook.getAp().size() < size){
-                size = orderbook.getAp().size();
+            int size = orderbook.getBidPriceList().size();
+            if(orderbook.getAskPriceList().size() < size){
+                size = orderbook.getAskPriceList().size();
             }
 
             if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < size) {
                 size = pref_orderbookLimiter;
             }
            
-            listAsksPrice = orderbook.getAp().subList(0, size);
-            listBidsPrice = orderbook.getBp().subList(0, size);
-            listAsksAmount = orderbook.getAv().subList(0, size);
-            listBidsAmount = orderbook.getBv().subList(0, size);
+            listAsksPrice = orderbook.getAskPriceList().subList(0, size);
+            listBidsPrice = orderbook.getBidPriceList().subList(0, size);
+            listAsksAmount = orderbook.getAskVolumeList().subList(0, size);
+            listBidsAmount = orderbook.getBidVolumeList().subList(0, size);
 
         } catch (Exception e) {
             runOnUiThread(new Runnable() {
