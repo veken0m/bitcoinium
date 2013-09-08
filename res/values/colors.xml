@@ -6,4 +6,7 @@
     <color name="widgetSecondaryTextColor">#ffcccccc</color>
     <color name="widgetRefreshSuccessColor">#ff00ff00</color>
     <color name="widgetRefreshFailedColor">#ffff0000</color>
+    
+    <!--  Miscellaneous Colors -->
+    <color name="actionbar_color">#64A0A0A0</color>
 </resources>   

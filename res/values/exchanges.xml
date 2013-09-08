@@ -8,6 +8,8 @@
         <item>BTC-E</item>
         <item>Bitstamp</item>
         <item>CampBX</item>
+        <item>BTCChina</item>
+        <item>Bitcurex</item>
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -20,11 +22,8 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-        <!--
         <item>5</item>
-         <item>6</item>
-        <item>7</item>
-        -->
+        <item>6</item>
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -34,6 +33,8 @@
         <item>BTCEExchange</item>
         <item>BitstampExchange</item>
         <item>CampBXExchange</item>
+        <item>BTCChinaExchange</item>
+        <item>BitcurexExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->
@@ -53,7 +54,7 @@
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
-        <item>com.xeiam.xchange.mtgox.v0.MtGoxExchange</item>
+        <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>USD</item>
         <item>mtgoxlogo</item>
         <item>0</item>
@@ -102,12 +103,32 @@
  <!-- Not implemented -->
         <item>true</item>
     </string-array>
+    <string-array name="BTCChinaExchange">
+        <item>BTCChina</item>
+        <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
+        <item>CNY</item>
+        <item>none</item>
+        <item>5</item>
+        <item>btcchina</item>
+        <item>true</item>
+        <item>true</item>
+    </string-array>
+        <string-array name="BitcurexExchange">
+        <item>Bitcurex</item>
+        <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
+        <item>PLN</item>
+        <item>none</item>
+        <item>6</item>
+        <item>bitcurex</item>
+        <item>true</item>
+        <item>true</item>
+    </string-array>
     <string-array name="BitcoinCentralExchange">
         <item>BitcoinCentral</item>
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>5</item>
+        <item>7</item>
         <item>bitcoincentral</item>
         <item>true</item>
  <!-- Error 404 -->
@@ -118,7 +139,7 @@
         <item>com.xeiam.xchange.bitfloor.BitfloorExchange</item>
         <item>USD</item>
         <item>bitcoinicon</item>
-        <item>6</item>
+        <item>8</item>
         <item>bitfloor</item>
         <item>true</item>
         <item>false</item>
@@ -128,7 +149,7 @@
         <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>7</item>
+        <item>9</item>
         <item>bitcoin24</item>
         <item>false</item>
  <!-- Too large (contains all trades...) -->
@@ -142,7 +163,7 @@
         <item>CAD - Canadian Dollar</item>
         <item>GBP - British Pound</item>
         <item>CNY - Chinese Yuan</item>
-        <item>DKK - Danish Krona</item>
+        <item>DKK - Danish Krone</item>
         <item>EUR - Euro</item>
         <item>CHF - Swiss Francs</item>
         <item>HKD - Hong Kong Dollar</item>
@@ -230,16 +251,26 @@
     <string-array name="campbxcurrenciesvalues">
         <item>BTC/USD</item>
     </string-array>
+    
+    <!-- Arrays for CampBX Currencies -->
+    <string-array name="btcchinacurrencies">
+        <item>CNY - Chinese Yuan</item>
+    </string-array>
+    <string-array name="btcchinacurrenciesvalues">
+        <item>BTC/CNY</item>
+    </string-array>
+    
+    <!-- Arrays for Bitcurex Currencies -->
+    <string-array name="bitcurexcurrencies">
+        <item>PLN - Polish Zloty</item>
+        <item>EUR - Euro</item>
+    </string-array>
+    <string-array name="bitcurexcurrenciesvalues">
+        <item>BTC/PLN</item>
+        <item>BTC/EUR</item>
+    </string-array>
 
     <!-- Arrays for BitcoinCentral Currencies -->
-    <string-array name="bitcoincentralcurrencies">
-        <item>EUR - Euro</item>
-        <!--
-        Currently Disabled in XChange
-        <item>GBP - British Pound</item>
-        <item>USD - United States Dollar</item>
-        -->
-    </string-array>
     <string-array name="bitcoincentralcurrencies">
         <item>EUR - Euro</item>
     </string-array>

@@ -6,8 +6,6 @@
     android:layout_weight="1"
     android:orientation="vertical" >
     
-    <!-- android:drawableLeft="@drawable/navigation_refresh" -->
-
     <Button
         android:id="@+id/widgetrefresh"
         android:layout_width="match_parent"

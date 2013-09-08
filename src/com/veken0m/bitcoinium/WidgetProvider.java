@@ -2,12 +2,16 @@
 package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -46,11 +50,17 @@ public class WidgetProvider extends BaseWidgetProvider {
                     WidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-            final Intent intent = new Intent(context, MainActivity.class);
-            final PendingIntent pendingIntent = PendingIntent.getActivity(
-                    context, 0, intent, 0);
-
             readGeneralPreferences(context);
+            PendingIntent pendingIntent;
+            if (pref_tapToUpdate) {
+                Intent intent = new Intent(this, WidgetProvider.class);
+                intent.setAction(REFRESH);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            } else {
+                Intent intent = new Intent(context, MainActivity.class);
+                pendingIntent = PendingIntent.getActivity(
+                        context, 0, intent, 0);
+            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
@@ -62,14 +72,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                             pendingIntent);
 
                     // Load Widget preferences
-                    String pref_widget = WidgetConfigureActivity
+                    String pref_exchange = WidgetConfigureActivity
                             .loadExchangePref(context, appWidgetId);
                     pref_currency = WidgetConfigureActivity
                             .loadCurrencyPref(context, appWidgetId);
 
-                    Exchange exchange = getExchange(pref_widget);
-
-                    int NOTIFY_ID = exchange.getNotificationID();
+                    Exchange exchange = getExchange(pref_exchange);
                     String exchangeName = exchange.getExchangeName();
                     String pref_widgetExchange = exchange.getClassName();
                     String defaultCurrency = exchange.getMainCurrency();
@@ -92,6 +100,13 @@ public class WidgetProvider extends BaseWidgetProvider {
                                     exchangeName = exchangeName + " (" + baseCurrency + ")";
                                 }
                             }
+
+                            // int NOTIFY_ID = exchange.getNotificationID();
+                            // Get a unique id for the exchange/currency pair
+                            // combo
+                            int NOTIFY_ID = (exchangeName + baseCurrency + counterCurrency)
+                                    .hashCode();
+                            String pairId = exchange.getPrefix() + baseCurrency + counterCurrency;
 
                             // Get ticker using XChange
                             final Ticker ticker = ExchangeFactory.INSTANCE
@@ -128,23 +143,40 @@ public class WidgetProvider extends BaseWidgetProvider {
                             views.setTextViewText(R.id.widgetVolText,
                                     "Volume: " + volumeString);
 
-
                             if (pref_displayUpdates) {
                                 String text = exchangeName + " Updated!";
                                 createTicker(context, R.drawable.bitcoin, text);
                             }
 
+                            SharedPreferences prefs = PreferenceManager
+                                    .getDefaultSharedPreferences(context);
+
                             if (pref_priceAlarm) {
-                                checkAlarm(context, counterCurrency, lastFloat,
-                                        exchangeName, NOTIFY_ID);
+
+                                // If previous alarm key exists, purge them and
+                                // notify the user
+                                if (prefs.contains(prefix + "Upper")
+                                        || prefs.contains(prefix + "Lower")) {
+                                    prefs.edit().remove(prefix + "Upper").commit();
+                                    prefs.edit().remove(prefix + "Lower").commit();
+                                    prefs.edit().remove(prefix + "TickerPref").commit();
+
+                                    notifyUserOfAlarmUpgrade(context);
+                                }
+
+                                checkAlarm(context, counterCurrency, baseCurrency, pairId,
+                                        lastFloat,
+                                        exchange, NOTIFY_ID);
                             }
 
-                            if (pref_ticker
-                                    && counterCurrency.equals(pref_main_currency)) {
+                            Boolean pref_notifTicker = prefs.getBoolean(pairId + "TickerPref",
+                                    false);
+
+                            if (pref_enableTicker && pref_notifTicker) {
 
                                 String msg = baseCurrency + " value: " + lastString
                                         + " on " + exchangeName;
-                                String title = baseCurrency + " @ " + lastString;
+                                String title = prefix + baseCurrency + " @ " + lastString;
 
                                 createPermanentNotification(context,
                                         R.drawable.bitcoin, title, msg,
@@ -152,7 +184,11 @@ public class WidgetProvider extends BaseWidgetProvider {
                             } else {
                                 removePermanentNotification(context, NOTIFY_ID);
                             }
-                            
+
+                            String refreshedTime = "Updated @ "
+                                    + Utils.getCurrentTime(context);
+                            views.setTextViewText(R.id.label, refreshedTime);
+
                             updateWidgetTheme(views);
 
                         } catch (Exception e) {
@@ -169,9 +205,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 createTicker(context, R.drawable.bitcoin, txt);
                             }
                         } finally {
-                            String refreshedTime = "Updated @ "
-                                    + Utils.getCurrentTime(context);
-                            views.setTextViewText(R.id.label, refreshedTime);
 
                             widgetManager.updateAppWidget(appWidgetId, views);
                         }
@@ -182,13 +215,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public Exchange getExchange(String pref_widget) {
             try {
-                return new Exchange(getResources().getStringArray(
-                        getResources().getIdentifier(pref_widget, "array",
-                                getBaseContext().getPackageName())));
+                return new Exchange(getBaseContext(), pref_widget);
             } catch (Exception e) {
-                return new Exchange(getResources().getStringArray(
-                        getResources().getIdentifier("MtGoxExchange", "array",
-                                getBaseContext().getPackageName())));
+                return new Exchange(getBaseContext(), "MtGoxExchange");
             }
         }
 
@@ -237,8 +266,8 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextViewText(R.id.widgetLowText, lowString);
             views.setTextViewText(R.id.widgetHighText, highString);
         }
-        
-        public void updateWidgetTheme(RemoteViews views){
+
+        public void updateWidgetTheme(RemoteViews views) {
             // set the color
             if (pref_enableWidgetCustomization) {
                 views.setInt(R.id.widget_layout,
@@ -250,7 +279,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                         pref_mainWidgetTextColor);
                 views.setTextColor(R.id.label,
                         pref_widgetRefreshSuccessColor);
-                
+                views.setTextColor(R.id.widgetVolText, pref_secondaryWidgetTextColor);
+
             } else {
                 views.setInt(
                         R.id.widget_layout,
@@ -269,16 +299,20 @@ public class WidgetProvider extends BaseWidgetProvider {
             }
         }
 
-        public void checkAlarm(Context context, String prefcurrency,
-                float lastFloat, String exchangeName, int NOTIFY_ID) {
+        public void checkAlarm(Context context, String counterCurrency, String baseCurrency,
+                String pairId,
+                float lastFloat, Exchange exchange, int NOTIFY_ID) {
 
-            Boolean triggered;
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+            String pref_notifLimitUpper = prefs.getString(pairId + "Upper", "999999");
+            String pref_notifLimitLower = prefs.getString(pairId + "Lower", "0");
+
+            Boolean triggered = false;
             try {
-                triggered = (pref_currency.equals(pref_main_currency) || prefcurrency
-                        .equals(pref_main_currency))
-                        && !Utils.isBetween(lastFloat,
-                                Float.valueOf(pref_notifLimitLower),
-                                Float.valueOf(pref_notifLimitUpper));
+                triggered = !Utils.isBetween(lastFloat,
+                        Float.valueOf(pref_notifLimitLower),
+                        Float.valueOf(pref_notifLimitUpper));
             } catch (Exception e) {
                 e.printStackTrace();
                 triggered = false;
@@ -290,12 +324,34 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             if (triggered) {
                 String lastString = Utils.formatWidgetMoney(lastFloat,
-                        prefcurrency, true);
-                createNotification(context, lastString, exchangeName, NOTIFY_ID, pref_currency);
-                if (pref_alarmClock) {
+                        counterCurrency, true);
+                createNotification(context, lastString, exchange.getExchangeName(), NOTIFY_ID,
+                        pref_currency);
+
+                if (pref_alarmClock)
                     setAlarmClock(context);
-                }
             }
+        }
+
+        public void notifyUserOfAlarmUpgrade(Context ctxt) {
+            int icon = R.drawable.bitcoin;
+            NotificationManager mNotificationManager = (NotificationManager) ctxt
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            long when = System.currentTimeMillis();
+            String tickerText = "Bitcoinium Price Alarm upgraded. \nPlease reset your alarms! Sorry for the inconvenience";
+            String notificationText = "Please reset your alarms!\nSorry for the inconvenience";
+            Notification notification = new Notification(icon, tickerText, when);
+
+            Intent notificationIntent = new Intent(ctxt, PriceAlarmPreferencesActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
+                    notificationIntent, 0);
+
+            notification.setLatestEventInfo(ctxt, "Price Alarm upgraded", notificationText,
+                    contentIntent);
+
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+            mNotificationManager.notify(1337, notification);
         }
 
         public UpdateService() {

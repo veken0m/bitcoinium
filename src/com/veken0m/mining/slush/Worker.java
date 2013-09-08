@@ -3,6 +3,7 @@ package com.veken0m.mining.slush;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class Worker {
     private boolean alive;
     private Number hashrate;

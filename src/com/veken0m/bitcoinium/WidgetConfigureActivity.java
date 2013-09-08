@@ -49,6 +49,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 .setEnabled(false);
         ((ListPreference) findPreference("campbxWidgetCurrencyPref"))
                 .setEnabled(false);
+        ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
+        .setEnabled(false);
+        ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
+        .setEnabled(false);
         // ((ListPreference)
         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
         // ((ListPreference)
@@ -97,6 +101,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                                 .setEnabled(false);
                         ((ListPreference) findPreference("campbxWidgetCurrencyPref"))
                                 .setEnabled(false);
+                        ((ListPreference) findPreference("btcchinaWidgetCurrencyPref"))
+                                .setEnabled(false);
+                        ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
+                            .setEnabled(false);
                         // ((ListPreference)
                         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
                         // ((ListPreference)
@@ -122,11 +130,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
                 Exchange exchange;
                 try {
-                    exchange = new Exchange(getResources()
-                            .getStringArray(
-                                    getResources().getIdentifier(
-                                            pref_widgetExchange, "array",
-                                            getBaseContext().getPackageName())));
+                    exchange = new Exchange(getBaseContext(), pref_widgetExchange);
                 } catch (Exception e) {
                     // If preference is not set a valid integer set to
                     // "MtGoxExchange"
@@ -136,11 +140,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                     Editor editor = prefs.edit();
                     editor.putString("widgetExchangesPref", "MtGoxExchange");
                     editor.commit();
-                    exchange = new Exchange(getResources()
-                            .getStringArray(
-                                    getResources().getIdentifier(
-                                            pref_widgetExchange, "array",
-                                            getBaseContext().getPackageName())));
+                    exchange = new Exchange(getBaseContext(), pref_widgetExchange);
                 }
 
                 String defaultCurrency = exchange.getMainCurrency();

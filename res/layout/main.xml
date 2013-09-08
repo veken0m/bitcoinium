@@ -7,8 +7,15 @@
     
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
+        android:layout_weight="1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dip"
     />
-
+    
+<!-- 	<WebView
+        android:id="@+id/karmaad_container"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip" >
+    </WebView> -->
 </LinearLayout>
