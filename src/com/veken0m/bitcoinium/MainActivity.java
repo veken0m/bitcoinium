@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.webkit.WebView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -43,7 +42,14 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
+        //initKarmaAd();
     }
+    
+//    public void initKarmaAd(){
+//        WebView mWebView = (WebView) findViewById(R.id.karmaad_container);
+//        mWebView.getSettings().setSupportMultipleWindows(true); 
+//        mWebView.loadUrl("https://karma-ads.com/service/ad/1FvRohzjodKWQVjEoQBCJJtYUvfDpnNQ5r");
+//    }
     
     public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);

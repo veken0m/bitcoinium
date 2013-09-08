@@ -400,11 +400,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                     startLoading();
                 }
             });
-            if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
-                getXHubOrderBook();
-            } else {
+            //if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
+            //    getXHubOrderBook();
+            //} else {
                 getOrderBook();
-            }
+            //}
             mOrderHandler.post(mOrderView);
         }
     }
@@ -413,11 +413,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         @Override
         public void run() {
             try {
-                if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
-                    drawXHubOrderbookUI();
-                } else {
+                //if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
+                //    drawXHubOrderbookUI();
+                //} else {
                     drawOrderbookUI();
-                }
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
             }

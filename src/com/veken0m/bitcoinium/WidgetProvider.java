@@ -56,7 +56,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                 Intent intent = new Intent(this, WidgetProvider.class);
                 intent.setAction(REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
             } else {
                 Intent intent = new Intent(context, MainActivity.class);
                 pendingIntent = PendingIntent.getActivity(

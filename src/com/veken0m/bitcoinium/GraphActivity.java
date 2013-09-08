@@ -120,11 +120,11 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         @Override
         public void run() {
-            if (exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")) {
-                generateXHubPriceGraph();
-            } else {
+            //if (exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")) {
+            //    generateXHubPriceGraph();
+            //} else {
                 generatePriceGraph();
-            }
+            //}
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

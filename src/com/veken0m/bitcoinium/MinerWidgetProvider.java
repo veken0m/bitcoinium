@@ -68,11 +68,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     MinerWidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-            final Intent intent = new Intent(context, MinerStatsActivity.class);
-            final PendingIntent pendingIntent = PendingIntent.getActivity(
-                    context, 0, intent, 0);
-
             readGeneralPreferences(context);
+            PendingIntent pendingIntent;
+            if (pref_tapToUpdate) {
+                Intent intent = new Intent(this, WidgetProvider.class);
+                intent.setAction(REFRESH);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            } else {
+                Intent intent = new Intent(context, MinerStatsActivity.class);
+                pendingIntent = PendingIntent.getActivity(
+                        context, 0, intent, 0);
+            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
