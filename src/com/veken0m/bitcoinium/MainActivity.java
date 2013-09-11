@@ -61,34 +61,18 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
-
-        // Create the ActionBar tabs
-        ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
-                R.drawable.mtgoxlogo);
-        ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
-                R.drawable.virtexlogo);
-        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
-                R.drawable.btcelogo);
-        ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
-                R.drawable.bitstamplogo);
-        ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
-                R.drawable.campbxlogo);
-        ActionBar.Tab BTCChinaTab = actionbar.newTab().setIcon(
-                R.drawable.btcchinalogo);
-        ActionBar.Tab BitcurexTab = actionbar.newTab().setIcon(
-                R.drawable.bitcurexlogo);
-        
-        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
-        tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
-        tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
-        tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
-        tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
-        tabsAdapter.addTab(BTCChinaTab, BTCChinaFragment.class, null);
-        tabsAdapter.addTab(BitcurexTab, BitcurexFragment.class, null);
         
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
+        
+        // Create the actionbar tabs
+        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        addTab(R.drawable.mtgoxlogo, actionbar, tabsAdapter, MtGoxFragment.class);
+        addTab(R.drawable.virtexlogo, actionbar, tabsAdapter, VirtExFragment.class);
+        addTab(R.drawable.btcelogo, actionbar, tabsAdapter, BTCEFragment.class);
+        addTab(R.drawable.bitstamplogo, actionbar, tabsAdapter, BitstampFragment.class);
+        addTab(R.drawable.campbxlogo, actionbar, tabsAdapter, CampBXFragment.class);
+
         try {
             actionbar.setSelectedNavigationItem(Integer
                     .parseInt(prefs.getString("favExchangePref", "0")));
@@ -99,6 +83,11 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.commit();
         }
         actionbar.show();
+    }
+    
+    private void addTab(int logoResource, ActionBar actionbar, TabsAdapter tabsAdapter, Class<? extends Fragment> viewFragment) {
+        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
+        tabsAdapter.addTab(tab, viewFragment, null);
     }
 
     /**
