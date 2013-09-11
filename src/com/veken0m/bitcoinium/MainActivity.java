@@ -50,11 +50,11 @@ public class MainActivity extends SherlockFragmentActivity {
 
         // Create the actionbar tabs
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        addTab(R.drawable.mtgoxlogo, actionbar, tabsAdapter, MtGoxFragment.class);
-        addTab(R.drawable.virtexlogo, actionbar, tabsAdapter, VirtExFragment.class);
-        addTab(R.drawable.btcelogo, actionbar, tabsAdapter, BTCEFragment.class);
-        addTab(R.drawable.bitstamplogo, actionbar, tabsAdapter, BitstampFragment.class);
-        addTab(R.drawable.campbxlogo, actionbar, tabsAdapter, CampBXFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
 
         try {
             actionbar.setSelectedNavigationItem(Integer
@@ -71,7 +71,7 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar.show();
     }
     
-    private void addTab(int logoResource, ActionBar actionbar, TabsAdapter tabsAdapter, Class<? extends Fragment> viewFragment) {
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
         ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
         tabsAdapter.addTab(tab, viewFragment, null);
     }
