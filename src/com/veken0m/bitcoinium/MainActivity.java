@@ -1,6 +1,8 @@
 
 package com.veken0m.bitcoinium;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,8 +25,6 @@ import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
-
-import java.util.ArrayList;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
@@ -49,32 +49,12 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the actionbar tabs
-        ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
-                R.drawable.mtgoxlogo);
-        ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
-                R.drawable.virtexlogo);
-        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(R.drawable.btcelogo);
-        ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
-                R.drawable.bitstamplogo);
-        ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
-                R.drawable.campbxlogo);
-        // ActionBar.Tab BitcoinCentralTab = actionbar.newTab()
-        // .setIcon(R.drawable.bitcoinicon).setText("Bitcoin Central");
-        // ActionBar.Tab BitfloorTab = actionbar.newTab().setIcon(
-        // R.drawable.bitfloorlogo);
-        // ActionBar.Tab Bitcoin24Tab = actionbar.newTab().setIcon(
-        // R.drawable.bitcoin24logo);
-
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
-        tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
-        tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
-        tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
-        tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
-        // tabsAdapter.addTab(BitcoinCentralTab, BitcoinCentralFragment.class,
-        // null);
-        // tabsAdapter.addTab(BitfloorTab, BitFloorFragment.class, null);
-        // tabsAdapter.addTab(Bitcoin24Tab, Bitcoin24Fragment.class, null);
+        addTab(R.drawable.mtgoxlogo, actionbar, tabsAdapter, MtGoxFragment.class);
+        addTab(R.drawable.virtexlogo, actionbar, tabsAdapter, VirtExFragment.class);
+        addTab(R.drawable.btcelogo, actionbar, tabsAdapter, BTCEFragment.class);
+        addTab(R.drawable.bitstamplogo, actionbar, tabsAdapter, BitstampFragment.class);
+        addTab(R.drawable.campbxlogo, actionbar, tabsAdapter, CampBXFragment.class);
 
         try {
             actionbar.setSelectedNavigationItem(Integer
@@ -89,6 +69,11 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.commit();
         }
         actionbar.show();
+    }
+    
+    private void addTab(int logoResource, ActionBar actionbar, TabsAdapter tabsAdapter, Class<? extends Fragment> viewFragment) {
+        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
+        tabsAdapter.addTab(tab, viewFragment, null);
     }
 
     /**
