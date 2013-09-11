@@ -38,11 +38,43 @@
                 android:title="EclipseMC alert not yet supported" />
         </PreferenceCategory>
     </PreferenceScreen>
+    
+    <PreferenceScreen
+        android:summary="MinerStats account information. Your API tokens can be obtained at the respective mining pool."
+        android:title="Miner Stats API tokens" >
+        <PreferenceCategory android:title="Miner Stats" >
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="deepbitKey"
+                android:summary="Enter your Deepbit API token to use MinerStats"
+                android:title="Deepbit API token" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="bitminterKey"
+                android:summary="Enter your BitMinter API token to use MinerStats. \n *NOTE* - Remember to enable API perk!"
+                android:title="BitMinter API token" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="emcKey"
+                android:summary="Enter your EclipseMC API token to use MinerStats"
+                android:title="EclipseMC API token" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="slushKey"
+                android:summary="Enter your Slush API token to use MinerStats"
+                android:title="Slush API token" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="50BTCKey"
+                android:summary="Enter your 50BTC API token to use MinerStats"
+                android:title="50BTC API token" />
+        </PreferenceCategory>
+    </PreferenceScreen>
 
     <PreferenceCategory android:title=" " >
         <Preference
             android:key="OKpref"
-            android:layout="@layout/custom_preference_layout"
+            android:layout="@layout/green_preference_button"
             android:title="Create Widget" />
     </PreferenceCategory>
 

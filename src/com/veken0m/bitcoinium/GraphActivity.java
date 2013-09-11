@@ -1,6 +1,15 @@
 
 package com.veken0m.bitcoinium;
 
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,18 +32,18 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
 import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.currency.Currencies;
+import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -54,7 +63,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     LineGraphView graphView;
     static Boolean pref_graphMode;
     static Boolean pref_scaleMode;
-    static Boolean pref_APIv1Mode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +76,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             exchangeName = extras.getString("exchange");
         }
 
-        Exchange exchange = new Exchange(getResources().getStringArray(
-                getResources().getIdentifier(exchangeName, "array",
-                        this.getPackageName())));
+        Exchange exchange = new Exchange(this, exchangeName);
 
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
@@ -81,22 +87,10 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         if (exchange.supportsPriceGraph()) {
             setContentView(R.layout.graph);
-            final String[] dropdownValues = getResources().getStringArray(
-                    getResources().getIdentifier(prefix + "currenciesvalues", "array",
-                            this.getPackageName()));
-
-            spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-            dataAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, dropdownValues);
-            dataAdapter
-                    .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(dataAdapter);
-            spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
-            spinner.setOnItemSelectedListener(this);
-
+            createCurrencyDropdown();
             viewGraph();
         } else {
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(this,
                     exchangeName + " does not currently support Price Graph",
                     Toast.LENGTH_LONG).show();
         }
@@ -126,7 +120,11 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         @Override
         public void run() {
-            generatePriceGraph();
+            //if (exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")) {
+            //    generateXHubPriceGraph();
+            //} else {
+                generatePriceGraph();
+            //}
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -146,6 +144,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         public void run() {
             if (graphView != null && !connectionFail && !noTradesFound) {
                 LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+                graphLinearLayout.removeAllViews(); // make sure layout has no child
                 graphLinearLayout.addView(graphView);
 
             } else if (noTradesFound) {
@@ -167,23 +166,13 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         String graphExchange = xchangeExchange;
         Trades trades = null;
 
-        if (pref_APIv1Mode == true) {
-            // Use API V1 instead of V0 for MtGox Trades
-            graphExchange = xchangeExchange.replace("0", "2");
-        }
-
-        String baseCurrency = Currencies.BTC;
-        String counterCurrency = pref_currency;
-
-        if (pref_currency.contains("/")) {
-            baseCurrency = pref_currency.substring(0, 3);
-            counterCurrency = pref_currency.substring(4, 7);
-        }
+        CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
 
         try {
+
             trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
                     .getPollingMarketDataService()
-                    .getTrades(baseCurrency, counterCurrency);
+                    .getTrades(currencyPair.baseCurrency, currencyPair.counterCurrency);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -216,7 +205,92 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             }
 
             graphView = new LineGraphView(this, exchangeName + ": "
-                    + baseCurrency + "/" + counterCurrency) {
+                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
+                @Override
+                protected String formatLabel(double value, boolean isValueX) {
+                    if (isValueX) {
+                        return Utils.dateFormat(getBaseContext(), (long) value);
+                    } else
+                        return super.formatLabel(value, isValueX);
+                }
+            };
+
+            double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
+            // startValue enables graph window to be aligned with latest
+            // trades
+            final double startValue = dates[dates.length - 1] - windowSize;
+            graphView.addSeries(new GraphViewSeries(data));
+            graphView.setViewPort(startValue, windowSize);
+            graphView.setScrollable(true);
+            graphView.setScalable(true);
+
+            if (!pref_scaleMode) {
+                graphView.setManualYAxisBounds(largest, smallest);
+            }
+            connectionFail = false;
+            noTradesFound = false;
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            noTradesFound = true;
+
+        } catch (Exception e) {
+            connectionFail = true;
+            e.printStackTrace();
+        }
+    }
+
+    private void generateXHubPriceGraph() {
+
+        TickerHistory trades = null;
+
+        CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
+
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpGet post = new HttpGet(
+                    "http://bitcoinium.com:9090/service/tickerhistory?exchange=mtgox&pair=BTC_USD&timewindow=7d");
+            HttpResponse response = client.execute(post);
+            ObjectMapper mapper = new ObjectMapper();
+
+            trades = mapper.readValue(new InputStreamReader(response.getEntity()
+                    .getContent(), "UTF-8"), TickerHistory.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            int tradeListSize = trades.getPriceHistoryList().size();
+            float[] values = new float[tradeListSize];
+            long[] dates = new long[tradeListSize];
+            final GraphViewData[] data = new GraphViewData[tradeListSize];
+
+            float largest = Integer.MIN_VALUE;
+            float smallest = Integer.MAX_VALUE;
+
+            long baseTime = trades.getBaseTimestamp() * 1000;
+
+            for (int i = 0; i < tradeListSize; i++) {
+                values[i] = trades.getPriceHistoryList().get(i).floatValue();
+                long delta = trades.getTimeStampOffsets().get(i).longValue() * 1000;
+                baseTime += delta;
+                dates[i] = baseTime;
+
+                if (values[i] > largest) {
+                    largest = values[i];
+                }
+                if (values[i] < smallest) {
+                    smallest = values[i];
+                }
+            }
+
+            for (int i = 0; i < tradeListSize; i++) {
+                data[i] = new GraphViewData(dates[i], values[i]);
+            }
+
+            graphView = new LineGraphView(this, exchangeName + ": "
+                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
                 @Override
                 protected String formatLabel(double value, boolean isValueX) {
                     if (isValueX) {
@@ -298,7 +372,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
         pref_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
-        pref_APIv1Mode = prefs.getBoolean("mtgoxapiv1Pref", false);
     }
 
     @Override
@@ -312,6 +385,21 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // Do nothing
+    }
+
+    public void createCurrencyDropdown() {
+        final String[] dropdownValues = getResources().getStringArray(
+                getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                        this.getPackageName()));
+
+        spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
+        dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, dropdownValues);
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
+        spinner.setOnItemSelectedListener(this);
     }
 
 }

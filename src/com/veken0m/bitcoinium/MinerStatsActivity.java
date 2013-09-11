@@ -50,7 +50,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         // ActionBar gets initiated and set to tabbed mode
         ActionBar actionbar = getSupportActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

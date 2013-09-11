@@ -90,9 +90,9 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
         String previousCurrency = "";
         int backGroundColor = Color.rgb(31, 31, 31);
-        LayoutParams params = new TableRow.LayoutParams(
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, 1f);
 
         try {
             // Sort Tickers by volume
@@ -162,8 +162,8 @@ public class BitcoinChartsActivity extends SherlockActivity {
 
                     // Insert a divider between rows
                     View divider = new View(this);
-                    divider.setLayoutParams(new TableRow.LayoutParams(
-                            android.view.ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    divider.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT, 1));
                     divider.setBackgroundColor(Color.rgb(51, 51, 51));
                     t1.addView(divider);
 

@@ -1,6 +1,8 @@
 
 package com.veken0m.bitcoinium.exchanges;
 
+import android.content.Context;
+
 public class Exchange {
 
     private final String exchange_name;
@@ -12,7 +14,12 @@ public class Exchange {
     private final boolean supportsPriceGraph;
     private final boolean tickerSupportsBidAsk;
 
-    public Exchange(String[] exchangeProperties) {
+    public Exchange(Context ctxt, String exchangeName) {
+        
+        String[] exchangeProperties = ctxt.getResources().getStringArray(
+                ctxt.getResources().getIdentifier(exchangeName, "array",
+                        ctxt.getPackageName()));
+        
         exchange_name = exchangeProperties[0];
         class_name = exchangeProperties[1];
         main_currency = exchangeProperties[2];

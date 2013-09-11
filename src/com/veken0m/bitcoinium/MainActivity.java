@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.exchanges.BTCEFragment;
+import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
@@ -28,10 +31,9 @@ import com.veken0m.bitcoinium.exchanges.VirtExFragment;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
- * @version 1.5.5 May 11 2013
+ * @version 1.7.0 Aug 29 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
-    static String pref_favExchange;
     ViewPager mViewPager;
 
     /** Called when the activity is first created. */
@@ -39,31 +41,44 @@ public class MainActivity extends SherlockFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        readPreferences(getApplicationContext());
+        initTabbedActionBar();
+        //initKarmaAd();
+    }
+    
+//    public void initKarmaAd(){
+//        WebView mWebView = (WebView) findViewById(R.id.karmaad_container);
+//        mWebView.getSettings().setSupportMultipleWindows(true); 
+//        mWebView.loadUrl("https://karma-ads.com/service/ad/1FvRohzjodKWQVjEoQBCJJtYUvfDpnNQ5r");
+//    }
+    
+    public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
 
-        // Tell the ActionBar we want to use Tabs.
+        // Tell the ActionBar we want to use Tabs
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
+        //actionbar.setBackgroundDrawable(color);
 
-        // Create the actionbar tabs
+        // Create the ActionBar tabs
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
         addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
-
+        addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
+        
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
         try {
             actionbar.setSelectedNavigationItem(Integer
-                    .parseInt(pref_favExchange));
+                    .parseInt(prefs.getString("favExchangePref", "0")));
         } catch (Exception e) {
             // If preference is not set a valid integer set to "0"
-            SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
-
             Editor editor = prefs.edit();
             editor.putString("favExchangePref", "0");
             editor.commit();
@@ -187,25 +202,6 @@ public class MainActivity extends SherlockFragmentActivity {
             startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    protected static void readPreferences(Context context) {
-        // Get the xml/preferences.xml preferences
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
-        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences pPrefs,
-                    String key) {
-
-                pref_favExchange = pPrefs.getString("favExchangePref", "0");
-            }
-        };
-
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
-
-        pref_favExchange = prefs.getString("favExchangePref", "0");
     }
 
 }

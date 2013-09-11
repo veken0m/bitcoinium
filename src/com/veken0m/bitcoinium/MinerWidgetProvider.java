@@ -18,6 +18,7 @@ import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.deepbit.DeepBitData;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
+import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
 
 import org.apache.http.HttpResponse;
@@ -27,11 +28,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class MinerWidgetProvider extends BaseWidgetProvider {
 
     private static String pref_apiKey;
     private static float hashRate;
+    private static String hashRateString = "";
     private static String btcBalance;
     private static Boolean alive;
     private static int NOTIFY_ID;
@@ -65,11 +68,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     MinerWidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-            final Intent intent = new Intent(context, MainActivity.class);
-            final PendingIntent pendingIntent = PendingIntent.getActivity(
-                    context, 0, intent, 0);
-
             readGeneralPreferences(context);
+            PendingIntent pendingIntent;
+            if (pref_tapToUpdate) {
+                Intent intent = new Intent(this, WidgetProvider.class);
+                intent.setAction(REFRESH);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            } else {
+                Intent intent = new Intent(context, MinerStatsActivity.class);
+                pendingIntent = PendingIntent.getActivity(
+                        context, 0, intent, 0);
+            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
@@ -94,14 +103,20 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         // Switch to GH/s if over 3 digits to fit in widget
                         String hashRateAdjusted;
                         DecimalFormat df = new DecimalFormat("#0.00");
+                        
                         if (hashRate > 999) {
-                            hashRateAdjusted = "" + df.format((hashRate / 1024)) + " GH/s";
+                            hashRateAdjusted = "" + df.format((hashRate / 1000)) + " GH/s";
                         } else {
                             hashRateAdjusted = "" + df.format((hashRate)) + " MH/s";
                         }
 
+                        if (pref_miningpool.equalsIgnoreCase("EclipseMC")) {
+                        	views.setTextViewText(R.id.widgetMinerHashrate, hashRateString);
+                        } else {
+                        	views.setTextViewText(R.id.widgetMinerHashrate, hashRateAdjusted);
+                        }
+                        
                         views.setTextViewText(R.id.widgetMiner, pref_miningpool);
-                        views.setTextViewText(R.id.widgetMinerHashrate, hashRateAdjusted);
                         views.setTextViewText(R.id.widgetBTCPayout, btcBalance
                                 + " BTC");
 
@@ -109,15 +124,21 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             createMinerDownNotification(context,
                                     pref_miningpool, NOTIFY_ID * 10);
                         }
-
-                        views.setTextColor(R.id.refreshtime, Color.GREEN);
+                        
+                        String refreshedTime = "Upd. @ "
+                                + Utils.getCurrentTime(context);
+                        views.setTextViewText(R.id.refreshtime, refreshedTime);
+                        
+                        updateWidgetTheme(views);
 
                     } else {
-                        views.setTextColor(R.id.refreshtime, Color.RED);
+                        if (pref_enableWidgetCustomization) {
+                            views.setTextColor(R.id.refreshtime,
+                                    pref_widgetRefreshFailedColor);
+                        } else {
+                            views.setTextColor(R.id.refreshtime, Color.RED);
+                        }
                     }
-                    String refreshedTime = "Upd. @ "
-                            + Utils.getCurrentTime(context);
-                    views.setTextViewText(R.id.refreshtime, refreshedTime);
                     widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
@@ -182,9 +203,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             .getEntity().getContent(), "UTF-8"), EMC.class);
                     btcBalance = data.getData().getUser()
                             .getConfirmed_rewards();
-                    String hashRateString = data.getWorkers().get(0).getHash_rate();
-                    hashRate = (hashRateString == "") ? Float.parseFloat(hashRateString) : 0.0f;
-                    alive = (hashRate > 0.0);
+                    hashRateString = data.getWorkers().get(0).getHash_rate();
+                    hashRate = 0.0f;
+                    alive = true;
                     NOTIFY_ID = 3;
                     return true;
                 }
@@ -218,7 +239,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     FiftyBTC.class);
                     btcBalance = data.getUser().getConfirmed_rewards()
                             .toString();
-                    hashRate = Float.parseFloat(data.getWorkers().getWorker(0).getHash_rate());
+                    hashRate = 0.0f;
+                    
+                    List<Worker> workers = data.getWorkers().getWorkers();
+                    for (int i = 0; i < workers.size(); i++) {
+                        hashRate += Float.parseFloat(workers.get(i).getHash_rate());
+                    }
+                    
                     alive = data.getWorkers().getWorker(0).getAlive();
                     NOTIFY_ID = 5;
                     return true;
@@ -229,6 +256,40 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             }
             return false;
 
+        }
+        
+        public void updateWidgetTheme(RemoteViews views){
+            // set the color
+            if (pref_enableWidgetCustomization) {
+                views.setInt(R.id.minerwidget_layout,
+                        "setBackgroundColor",
+                        pref_backgroundWidgetColor);
+                views.setTextColor(R.id.widgetMinerHashrate,
+                        pref_mainWidgetTextColor);
+                views.setTextColor(R.id.widgetMiner,
+                        pref_mainWidgetTextColor);
+                views.setTextColor(R.id.refreshtime,
+                        pref_widgetRefreshSuccessColor);
+                views.setTextColor(R.id.widgetBTCPayout, pref_secondaryWidgetTextColor);
+                
+            } else {
+                views.setInt(
+                        R.id.minerwidget_layout,
+                        "setBackgroundColor",
+                        getResources().getColor(
+                                R.color.widgetBackgroundColor));
+                views.setTextColor(
+                        R.id.widgetMinerHashrate,
+                        getResources().getColor(
+                                R.color.widgetMainTextColor));
+                views.setTextColor(
+                        R.id.widgetMiner,
+                        getResources().getColor(
+                                R.color.widgetMainTextColor));
+                
+                views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
+                views.setTextColor(R.id.refreshtime, Color.GREEN);
+            }
         }
 
         public MinerUpdateService() {

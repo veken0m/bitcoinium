@@ -3,6 +3,7 @@ package com.veken0m.mining.deepbit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties
 public class Worker {
     private boolean alive;

@@ -3,6 +3,7 @@ package com.veken0m.mining.fiftybtc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class User {
     private Number active_workers;
     private Number confirmed_rewards;

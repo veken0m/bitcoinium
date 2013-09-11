@@ -2,6 +2,7 @@
 <resources>
 	<!--  General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
+    <string name="version_name">1.7.0</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">USD</string>
@@ -16,6 +17,18 @@
     <string name="vol">Volume</string>
     <string name="time">Time</string>
     <string name="widget_button">widgetButton</string>
+    
+    <!--  Miner Widget Strings -->
+    <string name="miner">Miner</string>
+    <string name="hashrate">Hashrate</string>
+    <string name="payout">Payout</string>
+    
+    <!--  Miscellaneous -->
+    <string name="currency_pair">Currency Pair</string>
+    <string name="bids">Bids</string>
+    <string name="asks">Asks</string>
+    <string name="price">Price</string>
+    <string name="amount">Amount</string>
 
     <!-- Main Menu Button Strings -->
     <string name="refreshButton">Update Widget(s)</string>

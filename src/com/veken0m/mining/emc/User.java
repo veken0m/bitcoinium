@@ -3,6 +3,7 @@ package com.veken0m.mining.emc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class User {
     private String blocks_found;
     private String confirmed_rewards;

@@ -49,30 +49,20 @@
                     android:key="campbxWidgetCurrencyPref"
                     android:summary="CampBX Widget price will be displayed in selected currency"
                     android:title="CampBX Widget Currency" />
-                <!--
                 <ListPreference
-                    android:defaultValue="EUR"
-                    android:entries="@array/bitcoincentralcurrencies"
-                    android:entryValues="@array/bitcoincentralcurrenciesvalues"
-                    android:key="bitcoincentralWidgetCurrencyPref"
-                    android:summary="BitcoinCentral Widget price will be displayed in selected currency"
-                    android:title="BitcoinCentral Widget Currency" />
-                      <ListPreference
-                    android:defaultValue="USD"
-                    android:entries="@array/bitfloorcurrencies"
-                    android:entryValues="@array/bitfloorcurrenciesvalues"
-                    android:key="bitfloorWidgetCurrencyPref"
-                    android:summary="Bitfloor Widget price will be displayed in selected currency"
-                    android:title="Bitfloor Widget Currency" />
-                
+                    android:defaultValue="BTC/CNY"
+                    android:entries="@array/btcchinacurrencies"
+                    android:entryValues="@array/btcchinacurrenciesvalues"
+                    android:key="btcchinaWidgetCurrencyPref"
+                    android:summary="BTCChina Widget price will be displayed in selected currency"
+                    android:title="BTCChina Widget Currency" />
                 <ListPreference
-                    android:defaultValue="EUR"
-                    android:entries="@array/bitcoin24currencies"
-                    android:entryValues="@array/bitcoin24currenciesvalues"
-                    android:key="bitcoin24WidgetCurrencyPref"
-                    android:summary="Bitcoin-24 Widget price will be displayed in selected currency"
-                    android:title="Bitcoin-24 Widget Currency" />
-                -->
+                    android:defaultValue="BTC/PLN"
+                    android:entries="@array/bitcurexcurrencies"
+                    android:entryValues="@array/bitcurexcurrenciesvalues"
+                    android:key="bitcurexWidgetCurrencyPref"
+                    android:summary="Bitcurex Widget price will be displayed in selected currency"
+                    android:title="Bitcurex Widget Currency" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -96,10 +86,14 @@
                     android:key="wifiRefreshOnlyPref"
                     android:summary="Widgets will only refresh when WiFi is connected"
                     android:title="Only refresh on WiFi" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="widgetTapUpdatePref"
+                    android:summary="Tapping the widget will update instead of opening app"
+                    android:title="Tap to Update" />
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <Preference android:summary="Widget(s) will need to be replaced for new power settings to take effect" />
-
                 <ListPreference
                     android:defaultValue="1800"
                     android:entries="@array/interval"
@@ -107,12 +101,16 @@
                     android:key="refreshPref"
                     android:summary="Time interval between widget refresh \n *WARNING* \nLow values will increase battery drain \n "
                     android:title="Widget Refresh Interval" />
-
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wakeupPref"
                     android:summary="Will not wake up the phone from sleep to update widget"
                     android:title="Battery Saving Mode" />
+<!--                 <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="extremeSaverModePref"
+                    android:summary="Widget will have to be manually refreshed"
+                    android:title="Extreme Battery Saving Mode" /> -->
             </PreferenceCategory>
             <PreferenceCategory android:title="Customize Widget" >
                 <CheckBoxPreference
@@ -137,13 +135,6 @@
                     android:key="widgetBackgroundColorPref"
                     android:summary="Color and Transparency for widget background"
                     android:title="Background Color" />
-                <!--
-                  <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="showRefreshTimePref"
-                android:summary="Toggle displaying last Refresh Time on widget"
-                android:title="Show Refresh Time" />
-                -->
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     alphaSlider="true"
                     android:defaultValue="@color/widgetRefreshSuccessColor"
@@ -163,7 +154,7 @@
         <Preference
             android:key="OKpref"
             android:title="Create Widget"
-            android:layout="@layout/custom_preference_layout" />
+            android:layout="@layout/green_preference_button" />
     </PreferenceCategory>
 
 </PreferenceScreen>

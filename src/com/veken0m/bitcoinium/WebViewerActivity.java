@@ -1,7 +1,8 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.ActionBar.LayoutParams;
+import android.view.ViewGroup.LayoutParams;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -9,21 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.veken0m.compatibility.WebViewSherlockFragment;
 
+@SuppressLint("SetJavaScriptEnabled")
 public class WebViewerActivity extends SherlockFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-
-        // ActionBar gets initiated
+        initTabbedActionBar();
+    }
+    
+    private void initTabbedActionBar(){
+     // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -46,13 +50,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         actionbar.addTab(BitcoinityTab);
         actionbar.addTab(MtGoxLiveTab);
 
-        actionbar.show();
-
-        // if (savedInstanceState != null) {
-        // ((WebView) findViewById(R.id.webviewer))
-        // .restoreState(savedInstanceState);
-        // } else {
-        // }
+        actionbar.show(); 
     }
 
     static public class BitcoiniumFragment extends WebViewSherlockFragment {
@@ -70,11 +68,9 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            LayoutParams p = new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mWebView.setLayoutParams(p);
-            mWebView.getSettings().setPluginState(
-                    WebSettings.PluginState.ON);
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setSupportZoom(true);
             mWebView.getSettings().setBuiltInZoomControls(true);
@@ -100,12 +96,10 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            LayoutParams p = new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mWebView.setLayoutParams(p);
             WebSettings webSettings = mWebView.getSettings();
-            webSettings.setPluginState(
-                    WebSettings.PluginState.ON);
             webSettings.setJavaScriptEnabled(true);
             webSettings.setSupportZoom(true);
             webSettings.setBuiltInZoomControls(true);
@@ -131,14 +125,10 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            LayoutParams p = new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mWebView.setLayoutParams(p);
-            mWebView.getSettings().setPluginState(
-                    WebSettings.PluginState.ON);
             mWebView.getSettings().setJavaScriptEnabled(true);
-            // mWebView.getSettings().setSupportZoom(true);
-            // mWebView.getSettings().setBuiltInZoomControls(true);
             mIsWebViewAvailable = true;
             mWebView.loadUrl("http://bitcoinity.org/markets");
 

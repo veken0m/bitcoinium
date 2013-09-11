@@ -46,6 +46,18 @@ public class PreferencesActivity extends PreferenceActivity {
                         return true;
                     }
                 });
+        
+        Preference devTwitterPref = findPreference("devTwitterPref");
+        devTwitterPref
+                .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                                .parse("http://twitter.com/veken0m")));
+                        return true;
+                    }
+                });
 
         Preference xchangeGithubPref = findPreference("xchangeGithubPref");
         xchangeGithubPref
