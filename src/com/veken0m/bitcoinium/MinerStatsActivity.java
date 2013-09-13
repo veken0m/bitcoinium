@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.mining.EMCFragment;
@@ -45,6 +46,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     private static String pref_bitminterKey;
     private static String pref_deepbitKey;
     private static String pref_50BTCKey;
+    private static String pref_btcguildKey;
 
     /** Called when the activity is first created. */
     @Override
@@ -60,7 +62,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
         if (pref_bitminterKey.length() <= 6 && pref_emcKey.length() <= 6
                 && pref_deepbitKey.length() <= 6 && pref_50BTCKey.length() <= 6
-                && pref_slushKey.length() <= 6) {
+                && pref_slushKey.length() <= 6 && pref_btcguildKey.length() <= 6) {
 
             int duration = Toast.LENGTH_LONG;
             CharSequence text = "Please enter at least one API Token to use Miner Stats";
@@ -105,6 +107,12 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
             ActionBar.Tab FiftyBTCTab = actionbar.newTab().setText("50BTC");
             FiftyBTCTab.setTabListener(new MyTabsListener(FiftyBTCFragment));
             actionbar.addTab(FiftyBTCTab);
+        }
+        if (pref_btcguildKey.length() > 6) {
+            SherlockFragment BTCGuildFragment = new BTCGuildFragment();
+            ActionBar.Tab BTCGuildTab = actionbar.newTab().setText("BTC Guild");
+            BTCGuildTab.setTabListener(new MyTabsListener(BTCGuildFragment));
+            actionbar.addTab(BTCGuildTab);
         }
 
         setContentView(R.layout.minerstats);
@@ -262,6 +270,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         pref_bitminterKey = prefs.getString("bitminterKey", "");
         pref_deepbitKey = prefs.getString("deepbitKey", "");
         pref_50BTCKey = prefs.getString("50BTCKey", "");
+        pref_btcguildKey = prefs.getString("btcguildKey", "");
     }
 
 }

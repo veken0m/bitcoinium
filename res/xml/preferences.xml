@@ -177,6 +177,10 @@
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
                 android:title="EclipseMC alert not yet supported" />
+            <Preference
+                android:defaultValue="false"
+                android:key="btcguildAlertPref"
+                android:title="BTC Guild alert not yet supported" />
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -367,6 +371,11 @@
                     android:key="50BTCKey"
                     android:summary="Enter your 50BTC API token to use MinerStats"
                     android:title="50BTC API token" />
+                 <EditTextPreference
+                    android:defaultValue=""
+                    android:key="btcguildKey"
+                    android:summary="Enter your BTCGuild API token to use MinerStats"
+                    android:title="BTCGuild API token" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

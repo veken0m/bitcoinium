@@ -15,6 +15,7 @@ import android.widget.RemoteViews;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
+import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.deepbit.DeepBitData;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
@@ -250,6 +251,31 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     NOTIFY_ID = 5;
                     return true;
                 }
+                
+                if (miningpool.equalsIgnoreCase("BTCGuild")) {
+                    pref_apiKey = prefs.getString("btcguildKey", "");
+
+                    HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
+                            + pref_apiKey);
+                    HttpResponse response = client.execute(post);
+                    BTCGuild data = mapper
+                            .readValue(new InputStreamReader(response
+                                    .getEntity().getContent(), "UTF-8"),
+                                    BTCGuild.class);
+                    btcBalance = data.getUser().getUnpaid_rewards()
+                            .toString();
+                    hashRate = 0.0f;
+                    
+                    List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers().getWorkers();
+                    for (int i = 0; i < workers.size(); i++) {
+                        hashRate += workers.get(i).getHash_rate().floatValue();
+                    }
+                    
+                    alive = true;
+                    NOTIFY_ID = 6;
+                    return true;
+                }
+                
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
