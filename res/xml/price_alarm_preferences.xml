@@ -527,16 +527,16 @@
                 android:defaultValue="999999"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="bitstampBTCEURUpper"
+                android:key="bitstampBTCUSDUpper"
                 android:summary="Notification will occur if Bitstamp price goes over this threshold"
-                android:title="Bitstamp BTC/EUR Upper Threshold" />
+                android:title="Bitstamp BTC/USD Upper Threshold" />
             <EditTextPreference
                 android:defaultValue="0"
                 android:digits="01234567890."
                 android:inputType="numberDecimal"
-                android:key="bitstampBTCEURLower"
+                android:key="bitstampBTCUSDLower"
                 android:summary="Notification will occur if Bitstamp price goes under this threshold"
-                android:title="Bitstamp BTC/EUR Lower Threshold" />
+                android:title="Bitstamp BTC/USD Lower Threshold" />
         </PreferenceScreen>
         <PreferenceScreen android:title="CampBX alarm thresholds" >
             <EditTextPreference
