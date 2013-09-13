@@ -37,5 +37,14 @@
         <item>Slush</item>
         <item>50BTC</item>
     </string-array>
+    <string-array name="exchangeMigration">
+        <item >mtgox</item>
+        <item >virtex</item>
+        <item >btce</item>
+        <item >bitstamp</item>
+        <item >campbx</item>
+        <item >btcchina</item>
+        <item >bitcurex</item>
+    </string-array>
 
 </resources>
