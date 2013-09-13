@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.MainActivity.TabsAdapter;
 import com.veken0m.bitcoinium.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.mining.DeepBitFragment;
@@ -38,6 +40,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 
@@ -47,6 +50,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     private static String pref_deepbitKey;
     private static String pref_50BTCKey;
     private static String pref_btcguildKey;
+    
+    private static final int MIN_KEY_LENGTH = 20;
 
     /** Called when the activity is first created. */
     @Override
@@ -58,66 +63,55 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add the pools that have API keys
-        readPreferences(getApplicationContext());
+        readPreferences(this);
 
-        if (pref_bitminterKey.length() <= 6 && pref_emcKey.length() <= 6
-                && pref_deepbitKey.length() <= 6 && pref_50BTCKey.length() <= 6
-                && pref_slushKey.length() <= 6 && pref_btcguildKey.length() <= 6) {
-
+        if (checkAtLeastOneKeySet()) {
+            
+            // If not API token set, switch to Preferences and ask User to enter one
             int duration = Toast.LENGTH_LONG;
             CharSequence text = "Please enter at least one API Token to use Miner Stats";
 
-            Toast toast = Toast.makeText(getApplicationContext(), text,
-                    duration);
+            Toast toast = Toast.makeText(this, text, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
-            Intent settingsActivity = new Intent(getApplicationContext(),
-                    PreferencesActivity.class);
+            Intent settingsActivity = new Intent(this, PreferencesActivity.class);
             startActivity(settingsActivity);
         }
 
-        if (pref_bitminterKey.length() > 6) {
-            SherlockFragment BitMinterFragment = new BitMinterFragment();
-            ActionBar.Tab BitMinterTab = actionbar.newTab()
-                    .setText("BitMinter");
-            BitMinterTab.setTabListener(new MyTabsListener(BitMinterFragment));
-            actionbar.addTab(BitMinterTab);
-        }
-        if (pref_deepbitKey.length() > 6) {
-            SherlockFragment DeepBitFragment = new DeepBitFragment();
-            ActionBar.Tab DeepBitTab = actionbar.newTab().setText("DeepBit");
-            DeepBitTab.setTabListener(new MyTabsListener(DeepBitFragment));
-            actionbar.addTab(DeepBitTab);
-        }
-        if (pref_slushKey.length() > 6) {
-            SherlockFragment SlushFragment = new SlushFragment();
-            ActionBar.Tab SlushTab = actionbar.newTab().setText("Slush");
-            SlushTab.setTabListener(new MyTabsListener(SlushFragment));
-            actionbar.addTab(SlushTab);
-        }
-        if (pref_emcKey.length() > 6) {
-            SherlockFragment EMCFragment = new EMCFragment();
-            ActionBar.Tab EMCTab = actionbar.newTab().setText("EclipseMC");
-            EMCTab.setTabListener(new MyTabsListener(EMCFragment));
-            actionbar.addTab(EMCTab);
-        }
-        if (pref_50BTCKey.length() > 6) {
-            SherlockFragment FiftyBTCFragment = new FiftyBTCFragment();
-            ActionBar.Tab FiftyBTCTab = actionbar.newTab().setText("50BTC");
-            FiftyBTCTab.setTabListener(new MyTabsListener(FiftyBTCFragment));
-            actionbar.addTab(FiftyBTCTab);
-        }
-        if (pref_btcguildKey.length() > 6) {
-            SherlockFragment BTCGuildFragment = new BTCGuildFragment();
-            ActionBar.Tab BTCGuildTab = actionbar.newTab().setText("BTC Guild");
-            BTCGuildTab.setTabListener(new MyTabsListener(BTCGuildFragment));
-            actionbar.addTab(BTCGuildTab);
-        }
-
+        if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "BitMinter", new BitMinterFragment());
+        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "DeepBit", new DeepBitFragment());
+        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Slush", new SlushFragment());
+        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "EclipseMC", new EMCFragment());
+        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "50BTC", new FiftyBTCFragment());
+        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "BTC Guild", new BTCGuildFragment());
+        
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
+    }
+    
+    private boolean checkAtLeastOneKeySet(){
+        
+               return (pref_bitminterKey.length() <= MIN_KEY_LENGTH 
+                && pref_emcKey.length() <= MIN_KEY_LENGTH
+                && pref_deepbitKey.length() <= MIN_KEY_LENGTH 
+                && pref_50BTCKey.length() <= MIN_KEY_LENGTH
+                && pref_slushKey.length() <= MIN_KEY_LENGTH 
+                && pref_btcguildKey.length() <= MIN_KEY_LENGTH);  
+    }
+    
+    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
+        
+        ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
+        tab.setTabListener(new MyTabsListener(viewFragment));
+        actionbar.addTab(tab);
     }
 
     @Override

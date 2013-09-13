@@ -1,12 +1,19 @@
 
 package com.veken0m.bitcoinium.mining;
 
+import java.io.InputStreamReader;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -22,17 +29,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.utils.Utils;
-import com.veken0m.mining.btcguild.Worker;
-import com.veken0m.mining.btcguild.Workers;
 import com.veken0m.mining.btcguild.BTCGuild;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
-import java.util.List;
+import com.veken0m.mining.btcguild.Worker;
 
 public class BTCGuildFragment extends SherlockFragment {
 
@@ -111,7 +109,7 @@ public class BTCGuildFragment extends SherlockFragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Could not retrieve data from "
                     + "BTCGuild"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly. \n\n*NOTE* BTC Guild limits calls to once every 15 seconds");
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override

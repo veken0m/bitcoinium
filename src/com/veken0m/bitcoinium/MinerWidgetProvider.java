@@ -154,6 +154,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             ObjectMapper mapper = new ObjectMapper();
 
             try {
+                
                 if (miningpool.equalsIgnoreCase("DeepBit")) {
                     pref_apiKey = prefs.getString("deepbitKey", "");
 
@@ -170,9 +171,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = data.getWorkers().getWorker(0).getAlive();
                     NOTIFY_ID = 1;
                     return true;
-                }
-
-                if (miningpool.equalsIgnoreCase("BitMinter")) {
+                    
+                } else if (miningpool.equalsIgnoreCase("BitMinter")) {
                     pref_apiKey = prefs.getString("bitminterKey", "");
 
                     HttpGet post = new HttpGet(
@@ -189,9 +189,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = data.getWorkers().get(0).getAlive();
                     NOTIFY_ID = 2;
                     return true;
-                }
-
-                if (miningpool.equalsIgnoreCase("EclipseMC")) {
+                    
+                } else if (miningpool.equalsIgnoreCase("EclipseMC")) {
 
                     pref_apiKey = prefs.getString("emcKey", "");
                     HttpGet post = new HttpGet(
@@ -209,9 +208,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = true;
                     NOTIFY_ID = 3;
                     return true;
-                }
-
-                if (miningpool.equalsIgnoreCase("Slush")) {
+                    
+                } else if (miningpool.equalsIgnoreCase("Slush")) {
                     pref_apiKey = prefs.getString("slushKey", "");
 
                     HttpGet post = new HttpGet(
@@ -226,9 +224,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = data.getWorkers().getWorker(0).getAlive();
                     NOTIFY_ID = 4;
                     return true;
-                }
-
-                if (miningpool.equalsIgnoreCase("50BTC")) {
+                    
+                } else if (miningpool.equalsIgnoreCase("50BTC")) {
                     pref_apiKey = prefs.getString("50BTCKey", "");
 
                     HttpGet post = new HttpGet("https://50btc.com/en/api/"
@@ -250,9 +247,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = data.getWorkers().getWorker(0).getAlive();
                     NOTIFY_ID = 5;
                     return true;
-                }
-                
-                if (miningpool.equalsIgnoreCase("BTCGuild")) {
+                    
+                } else if (miningpool.equalsIgnoreCase("BTCGuild")) {
                     pref_apiKey = prefs.getString("btcguildKey", "");
 
                     HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
@@ -277,8 +273,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 }
                 
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
+                return false;
             }
             return false;
 
