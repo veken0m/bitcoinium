@@ -31,6 +31,7 @@ import com.veken0m.bitcoinium.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.mining.EMCFragment;
 import com.veken0m.bitcoinium.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.mining.SlushFragment;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 
 import org.apache.http.HttpResponse;
@@ -95,6 +96,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
+        //KarmaAdsUtils.initAd(this);
     }
     
     private boolean checkAtLeastOneKeySet(){
@@ -243,10 +245,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     } else {
                         tvNextDifficulty.setTextColor(Color.RED);
                     }
-                    view.addView(tvCurrentDifficulty);
-                    view.addView(tvNextDifficulty);
-                    view.addView(tvBlockCount);
-                    view.addView(tvNextRetarget);
+                    
+                    view.addView(tvNextRetarget,1);
+                    view.addView(tvBlockCount,1);
+                    view.addView(tvNextDifficulty,1);
+                    view.addView(tvCurrentDifficulty,1);
                 } catch (Exception e) {
                     // Difficulty was NaN...
                 }

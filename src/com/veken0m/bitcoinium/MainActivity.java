@@ -28,6 +28,7 @@ import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
@@ -42,14 +43,8 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
-        //initKarmaAd();
+        //KarmaAdsUtils.initAd(this);
     }
-    
-//    public void initKarmaAd(){
-//        WebView mWebView = (WebView) findViewById(R.id.karmaad_container);
-//        mWebView.getSettings().setSupportMultipleWindows(true); 
-//        mWebView.loadUrl("https://karma-ads.com/service/ad/1FvRohzjodKWQVjEoQBCJJtYUvfDpnNQ5r");
-//    }
     
     public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);

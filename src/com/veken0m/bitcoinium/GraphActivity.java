@@ -38,6 +38,7 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.CurrencyUtils;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
 import com.xeiam.xchange.ExchangeFactory;
@@ -94,6 +95,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                     exchangeName + " does not currently support Price Graph",
                     Toast.LENGTH_LONG).show();
         }
+        //KarmaAdsUtils.initAd(this);
     }
 
     @Override
