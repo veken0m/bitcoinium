@@ -26,6 +26,7 @@ import com.veken0m.bitcoinium.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
+import com.veken0m.bitcoinium.exchanges.KrakenFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
 import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
@@ -69,6 +70,7 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
+        //addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
 
         try {
             actionbar.setSelectedNavigationItem(Integer
