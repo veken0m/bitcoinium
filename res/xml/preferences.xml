@@ -334,7 +334,18 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="btcchinaBTCCNYTickerPref"
-                    android:title="BTC China BTC/CNY Ticker" />
+                    android:title="BTC China BTC/CNY Ticker" />               
+                <PreferenceScreen android:title="Bitcurex Tickers" >
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcurexBTCPLNTickerPref"
+                        android:title="Bitcurex BTC/PLN Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcurexBTCEURTickerPref"
+                        android:title="Bitcurex BTC/EUR Ticker" />
+                </PreferenceScreen>
+
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >

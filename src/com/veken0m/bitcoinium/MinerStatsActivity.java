@@ -1,6 +1,14 @@
 
 package com.veken0m.bitcoinium;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +18,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -24,24 +31,13 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.MainActivity.TabsAdapter;
 import com.veken0m.bitcoinium.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.mining.EMCFragment;
 import com.veken0m.bitcoinium.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.mining.SlushFragment;
-import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 
