@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.veken0m.bitcoinium.R;
+import com.veken0m.cavirtex.R;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.emc.Workers;
 

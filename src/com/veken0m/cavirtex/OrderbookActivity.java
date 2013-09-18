@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -39,6 +39,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
@@ -100,7 +101,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         createCurrencyDropdown();
         viewOrderbook();
         
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
     }
 
     @Override

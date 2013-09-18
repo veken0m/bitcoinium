@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;

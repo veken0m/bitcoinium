@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
@@ -44,7 +45,7 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
     }
     
     public void initTabbedActionBar(){

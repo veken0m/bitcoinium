@@ -1,12 +1,14 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
+
+import com.veken0m.cavirtex.R;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 public class PriceAlarmPreferencesActivity extends PreferenceActivity {
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

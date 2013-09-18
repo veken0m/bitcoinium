@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -18,15 +18,16 @@ import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
 
-import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
-import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
+import com.veken0m.cavirtex.R;
+import com.veken0m.cavirtex.MinerWidgetProvider.MinerUpdateService;
+import com.veken0m.cavirtex.WidgetProvider.UpdateService;
 import com.xeiam.xchange.currency.Currencies;
 
 import java.util.Calendar;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    public static final String REFRESH = "com.veken0m.cavirtex.REFRESH";
 
     /**
      * List of preference variables

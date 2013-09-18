@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.veken0m.bitcoinium.BaseExchangeFragment;
-import com.veken0m.bitcoinium.R;
+import com.veken0m.cavirtex.R;
+import com.veken0m.cavirtex.BaseExchangeFragment;
 
 public class BitcoinCentralFragment extends BaseExchangeFragment {
 

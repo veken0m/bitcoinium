@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
@@ -95,7 +96,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                     exchangeName + " does not currently support Price Graph",
                     Toast.LENGTH_LONG).show();
         }
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
     }
 
     @Override

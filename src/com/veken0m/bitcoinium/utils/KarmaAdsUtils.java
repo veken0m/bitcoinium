@@ -3,7 +3,7 @@ package com.veken0m.bitcoinium.utils;
 import android.app.Activity;
 import android.webkit.WebView;
 
-import com.veken0m.bitcoinium.R;
+import com.veken0m.cavirtex.R;
 
 public class KarmaAdsUtils {
     

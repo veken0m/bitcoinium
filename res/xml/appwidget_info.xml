@@ -1,5 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.veken0m.bitcoinium.WidgetConfigureActivity"
+    android:configure="com.veken0m.cavirtex.WidgetConfigureActivity"
     android:initialLayout="@layout/appwidget"
     android:minHeight="50dp"
     android:minWidth="120dp"

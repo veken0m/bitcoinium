@@ -84,11 +84,11 @@
                     android:key="wifiRefreshOnlyPref"
                     android:summary="Disable updates on mobile connection"
                     android:title="Refresh only on WiFi" />
-                <CheckBoxPreference
+<!--                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="widgetTapUpdatePref"
                     android:summary="Tapping the widget will update instead of opening app"
-                    android:title="Tap to Update" />
+                    android:title="Tap to Update" /> -->
             </PreferenceCategory>
             <PreferenceCategory android:title="Power Saving" >
                 <ListPreference
@@ -473,6 +473,10 @@
                     android:key="bitcoiniumGithubPref"
                     android:summary="Please submit issues and feature requests here"
                     android:title="Bitcoinium Github" />
+                <Preference
+                    android:key="primepref"
+                    android:summary="Support Bitcoinium \nby purchasing Ad-Free version"
+                    android:title="Bitcoinium Prime" />
                 <Preference
                     android:key="xchangeGithubPref"
                     android:summary="A Financial Exchange Library for Java, with support for Bitcoin"

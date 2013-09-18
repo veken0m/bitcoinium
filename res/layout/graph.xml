@@ -32,6 +32,7 @@
         android:id="@+id/graphView"
         android:layout_width="wrap_content"
         android:paddingTop="35dip"
+        android:paddingBottom="50dip"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical" >
@@ -55,11 +56,11 @@
         </ProgressBar>
     </LinearLayout>
     
-<!--     <WebView
+	<WebView
         android:id="@+id/karma_ad"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_alignParentBottom="true" /> -->
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

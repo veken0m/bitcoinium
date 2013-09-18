@@ -1,5 +1,7 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
+
+import com.veken0m.cavirtex.R;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -13,7 +15,7 @@ import android.preference.PreferenceManager;
 
 public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
-    private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
+    private static final String PREFS_NAME = "com.veken0m.cavirtex.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 

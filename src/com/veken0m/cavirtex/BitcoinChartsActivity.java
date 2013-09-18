@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
@@ -41,7 +42,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.show();
 
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
         viewBitcoinCharts();
     }
 

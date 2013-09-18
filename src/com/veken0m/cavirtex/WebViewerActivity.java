@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import android.view.ViewGroup.LayoutParams;
 import android.annotation.SuppressLint;
@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.compatibility.WebViewSherlockFragment;
 
@@ -25,7 +26,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         initTabbedActionBar();
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
     }
     
     private void initTabbedActionBar(){

@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.cavirtex;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
