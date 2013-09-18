@@ -63,6 +63,13 @@
                     android:key="bitcurexWidgetCurrencyPref"
                     android:summary="Bitcurex Widget price will be displayed in selected currency"
                     android:title="Bitcurex Widget Currency" />
+<!--                 <ListPreference
+                    android:defaultValue="BTC/EUR"
+                    android:entries="@array/krakencurrencies"
+                    android:entryValues="@array/krakencurrenciesvalues"
+                    android:key="krakenWidgetCurrencyPref"
+                    android:summary="Kraken Widget price will be displayed in selected currency"
+                    android:title="Kraken Widget Currency" /> -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

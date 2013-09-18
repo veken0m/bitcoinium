@@ -20,5 +20,7 @@
             android:orientation="vertical" >
         </LinearLayout>
     </ScrollView>
+    
+    <!-- <include layout="@xml/karma_ad"/> -->
 
 </LinearLayout>

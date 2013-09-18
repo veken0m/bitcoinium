@@ -26,8 +26,10 @@ import com.veken0m.bitcoinium.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
 import com.veken0m.bitcoinium.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.exchanges.CampBXFragment;
+import com.veken0m.bitcoinium.exchanges.KrakenFragment;
 import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.exchanges.VirtExFragment;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
@@ -42,14 +44,8 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
-        //initKarmaAd();
+        //KarmaAdsUtils.initAd(this);
     }
-    
-//    public void initKarmaAd(){
-//        WebView mWebView = (WebView) findViewById(R.id.karmaad_container);
-//        mWebView.getSettings().setSupportMultipleWindows(true); 
-//        mWebView.loadUrl("https://karma-ads.com/service/ad/1FvRohzjodKWQVjEoQBCJJtYUvfDpnNQ5r");
-//    }
     
     public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -61,34 +57,21 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
-
-        // Create the ActionBar tabs
-        ActionBar.Tab MtGoxTab = actionbar.newTab().setIcon(
-                R.drawable.mtgoxlogo);
-        ActionBar.Tab VirtExTab = actionbar.newTab().setIcon(
-                R.drawable.virtexlogo);
-        ActionBar.Tab BTCETab = actionbar.newTab().setIcon(
-                R.drawable.btcelogo);
-        ActionBar.Tab BitstampTab = actionbar.newTab().setIcon(
-                R.drawable.bitstamplogo);
-        ActionBar.Tab CampBXTab = actionbar.newTab().setIcon(
-                R.drawable.campbxlogo);
-        ActionBar.Tab BTCChinaTab = actionbar.newTab().setIcon(
-                R.drawable.btcchinalogo);
-        ActionBar.Tab BitcurexTab = actionbar.newTab().setIcon(
-                R.drawable.bitcurexlogo);
-        
-        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        tabsAdapter.addTab(MtGoxTab, MtGoxFragment.class, null);
-        tabsAdapter.addTab(VirtExTab, VirtExFragment.class, null);
-        tabsAdapter.addTab(BTCETab, BTCEFragment.class, null);
-        tabsAdapter.addTab(BitstampTab, BitstampFragment.class, null);
-        tabsAdapter.addTab(CampBXTab, CampBXFragment.class, null);
-        tabsAdapter.addTab(BTCChinaTab, BTCChinaFragment.class, null);
-        tabsAdapter.addTab(BitcurexTab, BitcurexFragment.class, null);
         
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
+        
+        // Create the actionbar tabs
+        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
+        //addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
+
         try {
             actionbar.setSelectedNavigationItem(Integer
                     .parseInt(prefs.getString("favExchangePref", "0")));
@@ -99,6 +82,11 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.commit();
         }
         actionbar.show();
+    }
+    
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
+        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
+        tabsAdapter.addTab(tab, viewFragment, null);
     }
 
     /**

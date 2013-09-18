@@ -41,6 +41,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.utils.CurrencyUtils;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
@@ -98,6 +99,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         
         createCurrencyDropdown();
         viewOrderbook();
+        
+        //KarmaAdsUtils.initAd(this);
     }
 
     @Override

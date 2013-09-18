@@ -10,6 +10,7 @@
         <item>CampBX</item>
         <item>BTCChina</item>
         <item>Bitcurex</item>
+        <!-- <item>Kraken</item> -->
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -24,6 +25,7 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+        <!-- <item>7</item> -->
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -35,6 +37,7 @@
         <item>CampBXExchange</item>
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
+        <!-- <item>KrakenExchange</item> -->
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->
@@ -113,7 +116,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-        <string-array name="BitcurexExchange">
+    <string-array name="BitcurexExchange">
         <item>Bitcurex</item>
         <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
         <item>PLN</item>
@@ -123,6 +126,18 @@
         <item>true</item>
         <item>true</item>
     </string-array>
+    <string-array name="KrakenExchange">
+        <item>Kraken</item>
+        <item>com.xeiam.xchange.kraken.KrakenExchange</item>
+        <item>EUR</item>
+        <item>bitcoinicon</item>
+        <item>7</item>
+        <item>kraken</item>
+        <item>true</item>
+        <item>true</item>
+    </string-array>
+    
+    <!-- Dead Exchanges -->
     <string-array name="BitcoinCentralExchange">
         <item>BitcoinCentral</item>
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
@@ -209,7 +224,6 @@
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
-        <item>CNC/BTC</item>
     </string-array>
     <string-array name="btcecurrenciesvalues">
         <item>BTC/USD</item>
@@ -225,7 +239,6 @@
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
-        <item>CNC/BTC</item>
     </string-array>
 
     <!-- Arrays for VirtEx Currencies -->
@@ -268,6 +281,18 @@
     <string-array name="bitcurexcurrenciesvalues">
         <item>BTC/PLN</item>
         <item>BTC/EUR</item>
+    </string-array>
+    
+    <!-- Arrays for Bitcurex Currencies -->
+    <string-array name="krakencurrencies">
+        <item>BTC/EUR</item>
+        <item>BTC/LTC</item>
+        <item>LTC/EUR</item>
+    </string-array>
+    <string-array name="krakencurrenciesvalues">
+        <item>BTC/EUR</item>
+        <item>BTC/LTC</item>
+        <item>LTC/EUR</item>
     </string-array>
 
     <!-- Arrays for BitcoinCentral Currencies -->
