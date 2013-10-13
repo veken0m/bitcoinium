@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
 import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
@@ -40,6 +41,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.show();
 
+        //KarmaAdsUtils.initAd(this);
         viewBitcoinCharts();
     }
 

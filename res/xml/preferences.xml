@@ -177,6 +177,10 @@
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
                 android:title="EclipseMC alert not yet supported" />
+            <Preference
+                android:defaultValue="false"
+                android:key="btcguildAlertPref"
+                android:title="BTC Guild alert not yet supported" />
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -317,10 +321,6 @@
                         android:defaultValue="false"
                         android:key="btceFTCBTCTickerPref"
                         android:title="BTC-E FTC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceCNCBTCTickerPref"
-                        android:title="BTC-E CNC/BTC Ticker" />
                 </PreferenceScreen>
 
                 <CheckBoxPreference
@@ -334,7 +334,18 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="btcchinaBTCCNYTickerPref"
-                    android:title="BTC China BTC/CNY Ticker" />
+                    android:title="BTC China BTC/CNY Ticker" />               
+                <PreferenceScreen android:title="Bitcurex Tickers" >
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcurexBTCPLNTickerPref"
+                        android:title="Bitcurex BTC/PLN Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcurexBTCEURTickerPref"
+                        android:title="Bitcurex BTC/EUR Ticker" />
+                </PreferenceScreen>
+
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
@@ -367,6 +378,11 @@
                     android:key="50BTCKey"
                     android:summary="Enter your 50BTC API token to use MinerStats"
                     android:title="50BTC API token" />
+                 <EditTextPreference
+                    android:defaultValue=""
+                    android:key="btcguildKey"
+                    android:summary="Enter your BTCGuild API token to use MinerStats"
+                    android:title="BTCGuild API token" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
