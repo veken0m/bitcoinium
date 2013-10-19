@@ -70,7 +70,7 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
-        //addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
 
         try {
             actionbar.setSelectedNavigationItem(Integer
