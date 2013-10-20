@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
@@ -72,32 +73,37 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
             readGeneralPreferences(context);
-            PendingIntent pendingIntent;
-            if (pref_tapToUpdate) {
-                Intent intent = new Intent(this, WidgetProvider.class);
-                intent.setAction(REFRESH);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            } else {
-                Intent intent = new Intent(context, MinerStatsActivity.class);
-                pendingIntent = PendingIntent.getActivity(
-                        context, 0, intent, 0);
-            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
                 for (int appWidgetId : widgetIds) {
-
-                    RemoteViews views = new RemoteViews(
-                            context.getPackageName(), R.layout.minerappwidget);
-                    views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                            pendingIntent);
-
+                    
                     // Load Widget preferences
                     String pref_miningpool = MinerWidgetConfigureActivity
                             .loadMiningPoolPref(context, appWidgetId);
 
                     SharedPreferences prefs = PreferenceManager
                             .getDefaultSharedPreferences(context);
+                    
+                    PendingIntent pendingIntent;
+                    if (pref_tapToUpdate) {
+                        Intent intent = new Intent(this, WidgetProvider.class);
+                        intent.setAction(REFRESH);
+                        pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+                    } else {
+                        Intent intent = new Intent(context, MinerStatsActivity.class);
+                        Bundle tabSelection = new Bundle();
+                        tabSelection.putString("poolKey", pref_miningpool);
+                        intent.putExtras(tabSelection);
+                        pendingIntent = PendingIntent.getActivity(
+                                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+
+                    RemoteViews views = new RemoteViews(
+                            context.getPackageName(), R.layout.minerappwidget);
+                    views.setOnClickPendingIntent(R.id.widgetMinerButton,
+                            pendingIntent);
+
 
                     pref_minerDownAlert = prefs.getBoolean(
                             pref_miningpool.toLowerCase() + "AlertPref", false);

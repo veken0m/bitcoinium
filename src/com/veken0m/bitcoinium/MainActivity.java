@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -37,6 +38,7 @@ import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
  */
 public class MainActivity extends SherlockFragmentActivity {
     ViewPager mViewPager;
+    ActionBar actionbar;
 
     /** Called when the activity is first created. */
     @Override
@@ -44,22 +46,33 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
+        selectTabViaBundle();
+
         //KarmaAdsUtils.initAd(this);
+    }
+    
+    public void onResume() {
+        super.onResume();
+        selectTabViaBundle();
+    }
+    
+    public void selectTabViaBundle(){
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            selectTab(extras.getInt("exchangeKey"));
+        }
     }
     
     public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
-        ActionBar actionbar = getSupportActionBar();
+        actionbar = getSupportActionBar();
 
         // Tell the ActionBar we want to use Tabs
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
-        
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
         
         // Create the actionbar tabs
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
@@ -72,6 +85,19 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
         addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
 
+        selectTab();
+        actionbar.show();
+    }
+    
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
+        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
+        tabsAdapter.addTab(tab, viewFragment, null);
+    }
+    
+    // TODO: Change key to String and use Exchange Name
+    private void selectTab(){
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
         try {
             actionbar.setSelectedNavigationItem(Integer
                     .parseInt(prefs.getString("favExchangePref", "0")));
@@ -81,12 +107,14 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.putString("favExchangePref", "0");
             editor.commit();
         }
-        actionbar.show();
     }
     
-    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
-        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
-        tabsAdapter.addTab(tab, viewFragment, null);
+    private void selectTab(int key){
+        try{
+            actionbar.setSelectedNavigationItem(key);
+        } catch (Exception e){
+            selectTab();
+        }
     }
 
     /**

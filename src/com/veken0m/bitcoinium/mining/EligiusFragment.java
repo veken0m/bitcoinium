@@ -62,7 +62,8 @@ public class EligiusFragment extends SherlockFragment {
         try {
             HttpClient client = new DefaultHttpClient();
             
-            pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
+            // Test key
+            //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
 
             HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
                     + pref_eligiusKey);
@@ -123,7 +124,7 @@ public class EligiusFragment extends SherlockFragment {
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Could not retrieve data from "
-                    + "Slush"
+                    + "Eligius"
                     + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {

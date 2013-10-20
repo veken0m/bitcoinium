@@ -49,24 +49,28 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     private static String pref_50BTCKey;
     private static String pref_btcguildKey;
     private static String pref_eligiusKey;
-    
+
     private static final int MIN_KEY_LENGTH = 20;
+    
+    ActionBar actionbar;
+    Bundle extras;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // ActionBar gets initiated and set to tabbed mode
-        ActionBar actionbar = getSupportActionBar();
+        actionbar = getSupportActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add the pools that have API keys
         readPreferences(this);
 
         if (checkAtLeastOneKeySet()) {
-            
-            // If not API token set, switch to Preferences and ask User to enter one
+
+            // If not API token set, switch to Preferences and ask User to enter
+            // one
             int duration = Toast.LENGTH_LONG;
             CharSequence text = "Please enter at least one API Token to use Miner Stats";
 
@@ -78,21 +82,25 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
             startActivity(settingsActivity);
         }
 
-        if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
-            addTab(actionbar, "BitMinter", new BitMinterFragment());
-        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "DeepBit", new DeepBitFragment());
-        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "Slush", new SlushFragment());
-        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "EclipseMC", new EMCFragment());
-        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "50BTC", new FiftyBTCFragment());
-        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "BTC Guild", new BTCGuildFragment());
-        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "Eligius", new EligiusFragment());
-        
+        extras = getIntent().getExtras();
+        // If the bundle is empty, Activity created from MainActivity.
+        // Attach all tabs
+        if (extras == null) {
+            if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
+                addTab(actionbar, "BitMinter", new BitMinterFragment());
+            if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "DeepBit", new DeepBitFragment());
+            if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "Slush", new SlushFragment());
+            if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "EclipseMC", new EMCFragment());
+            if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "50BTC", new FiftyBTCFragment());
+            if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "BTC Guild", new BTCGuildFragment());
+            if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
+                addTab(actionbar, "Eligius", new EligiusFragment());
+        } 
         
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
@@ -100,18 +108,50 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         //KarmaAdsUtils.initAd(this);
     }
     
-    private boolean checkAtLeastOneKeySet(){
-        
-               return (pref_bitminterKey.length() <= MIN_KEY_LENGTH 
-                && pref_emcKey.length() <= MIN_KEY_LENGTH
-                && pref_deepbitKey.length() <= MIN_KEY_LENGTH 
-                && pref_50BTCKey.length() <= MIN_KEY_LENGTH
-                && pref_slushKey.length() <= MIN_KEY_LENGTH 
-                && pref_btcguildKey.length() <= MIN_KEY_LENGTH);  
+    public void onResume() {
+        super.onResume();
+
+        if (extras != null) {
+            String poolKey = extras.getString("poolKey");
+
+            actionbar.removeAllTabs();
+            if (poolKey.equalsIgnoreCase("bitminter")) {
+                addTab(actionbar, "BitMinter", new BitMinterFragment());
+            } else if (poolKey.equalsIgnoreCase("deepbit")) {
+                addTab(actionbar, "DeepBit", new DeepBitFragment());
+            } else if (poolKey.equalsIgnoreCase("slush")) {
+                addTab(actionbar, "Slush", new SlushFragment());
+            } else if (poolKey.equalsIgnoreCase("eclipsemc")) {
+                addTab(actionbar, "EclipseMC", new EMCFragment());
+            } else if (poolKey.equalsIgnoreCase("50btc")) {
+                addTab(actionbar, "50BTC", new FiftyBTCFragment());
+            } else if (poolKey.equalsIgnoreCase("btcguild")) {
+                addTab(actionbar, "BTC Guild", new BTCGuildFragment());
+            } else if (poolKey.equalsIgnoreCase("eligius")) {
+                addTab(actionbar, "Eligius", new EligiusFragment());
+            }
+        }
     }
     
+    @Override
+    protected void onPause() {
+       super.onPause();
+       finish();
+    }
+
+    private boolean checkAtLeastOneKeySet() {
+
+        return (pref_bitminterKey.length() <= MIN_KEY_LENGTH
+                && pref_emcKey.length() <= MIN_KEY_LENGTH
+                && pref_deepbitKey.length() <= MIN_KEY_LENGTH
+                && pref_50BTCKey.length() <= MIN_KEY_LENGTH
+                && pref_slushKey.length() <= MIN_KEY_LENGTH
+                && pref_btcguildKey.length() <= MIN_KEY_LENGTH
+                && pref_eligiusKey.length() <= MIN_KEY_LENGTH);
+    }
+
     private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
-        
+
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab);
@@ -237,7 +277,9 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     tvBlockCount.setText("Block count: " + BlockCount);
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                    tvNextRetarget.setText("Next retarget in " + (Integer.parseInt(NextRetarget)- Integer.parseInt(BlockCount)) + " blocks\n");
+                    tvNextRetarget.setText("Next retarget in "
+                            + (Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount))
+                            + " blocks\n");
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     if (Float.valueOf(NextDifficulty) < Float
@@ -246,11 +288,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     } else {
                         tvNextDifficulty.setTextColor(Color.RED);
                     }
-                    
-                    view.addView(tvNextRetarget,1);
-                    view.addView(tvBlockCount,1);
-                    view.addView(tvNextDifficulty,1);
-                    view.addView(tvCurrentDifficulty,1);
+
+                    view.addView(tvNextRetarget, 1);
+                    view.addView(tvBlockCount, 1);
+                    view.addView(tvNextDifficulty, 1);
+                    view.addView(tvCurrentDifficulty, 1);
                 } catch (Exception e) {
                     // Difficulty was NaN...
                 }
