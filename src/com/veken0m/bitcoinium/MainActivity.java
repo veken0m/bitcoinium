@@ -39,6 +39,7 @@ import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 public class MainActivity extends SherlockFragmentActivity {
     ViewPager mViewPager;
     ActionBar actionbar;
+    TabsAdapter tabsAdapter;
 
     /** Called when the activity is first created. */
     @Override
@@ -59,13 +60,12 @@ public class MainActivity extends SherlockFragmentActivity {
     public void selectTabViaBundle(){
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            selectTab(extras.getInt("exchangeKey"));//FIXME Keys are now string identifiers
+            selectTab(extras.getString("exchangeKey", "mtgox"));
         }
     }
     
     public void initTabbedActionBar(){
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // ActionBar gets initiated
         actionbar = getSupportActionBar();
@@ -76,7 +76,7 @@ public class MainActivity extends SherlockFragmentActivity {
         //actionbar.setBackgroundDrawable(color);
 
         // Create the actionbar tabs
-        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
         addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
         addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class, "virtex");
         addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class, "btce");
@@ -84,18 +84,17 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class, "campbx");
         addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class, "btcchina");
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
-        //TODO addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
+        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
 
         selectTab();
         actionbar.show();
     }
     
-    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment, String identity) {
         ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
-        tabsAdapter.addTab(tab, viewFragment, null);
+        tabsAdapter.addTab(tab, viewFragment, null, identity);
     }
     
-    // TODO: Change key to String and use Exchange Name
     private void selectTab(){
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -112,11 +111,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 editor.putString("favExchangePref", exchangeMap[preferredExchangeNum]);
                 editor.commit();
             } else {
-                int tabIndex = tabsAdapter.getIndexForIdentity(preferredExchange);
-                if(tabIndex >= 0)
-                    actionbar.setSelectedNavigationItem(tabIndex);
-                else
-                    actionbar.setSelectedNavigationItem(0);
+                selectTab(preferredExchange);
             }
         } catch (Exception e) {
             // If preference is not set a valid integer set to "0"
@@ -125,10 +120,14 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.commit();
         }
     }
-    //FIXME Change key to string
-    private void selectTab(int key){
+
+    private void selectTab(String key){
         try{
-            actionbar.setSelectedNavigationItem(key);
+            int tabIndex = tabsAdapter.getIndexForIdentity(key);
+            if(tabIndex >= 0)
+                actionbar.setSelectedNavigationItem(tabIndex);
+            else
+                actionbar.setSelectedNavigationItem(0);
         } catch (Exception e){
             selectTab();
         }
