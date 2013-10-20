@@ -604,7 +604,23 @@
 	                android:title="Bitcurex BTC/EUR Lower Threshold" />
             </PreferenceScreen>
         </PreferenceScreen>
-<!--         <PreferenceScreen android:title="Kraken alarm thresholds" >
+         <PreferenceScreen android:title="Kraken alarm thresholds" >
+            <PreferenceScreen android:title="BTC/USD" >
+	            <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="krakenBTCUSDUpper"
+	                android:summary="Notification will occur if Bitcurex price goes over this threshold"
+	                android:title="Kraken BTC/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="krakenBTCUSDLower"
+	                android:summary="Notification will occur if Kraken price goes under this threshold"
+	                android:title="Kraken BTC/USD Lower Threshold" />
+            </PreferenceScreen>
             <PreferenceScreen android:title="BTC/EUR" >
 	            <EditTextPreference
 	                android:defaultValue="999999"
@@ -637,6 +653,22 @@
 	                android:summary="Notification will occur if Kraken price goes under this threshold"
 	                android:title="Kraken BTC/LTC Lower Threshold" />
             </PreferenceScreen>
+            <PreferenceScreen android:title="LTC/USD" >
+                 <EditTextPreference
+	                android:defaultValue="999999"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="krakenLTCUSDUpper"
+	                android:summary="Notification will occur if Kraken price goes over this threshold"
+	                android:title="Kraken LTC/USD Upper Threshold" />
+	            <EditTextPreference
+	                android:defaultValue="0"
+	                android:digits="01234567890."
+	                android:inputType="numberDecimal"
+	                android:key="krakenLTCUSDLower"
+	                android:summary="Notification will occur if Kraken price goes under this threshold"
+	                android:title="Kraken LTC/USD Lower Threshold" />
+            </PreferenceScreen>
             <PreferenceScreen android:title="LTC/EUR" >
                  <EditTextPreference
 	                android:defaultValue="999999"
@@ -653,7 +685,7 @@
 	                android:summary="Notification will occur if Kraken price goes under this threshold"
 	                android:title="Kraken LTC/EUR Lower Threshold" />
             </PreferenceScreen>
-        </PreferenceScreen> -->
+        </PreferenceScreen>
         <!-- <PreferenceScreen android:title="BitcoinCentral Alarm" >
             <EditTextPreference
                 android:defaultValue="999"

@@ -10,7 +10,7 @@
         <item>CampBX</item>
         <item>BTCChina</item>
         <item>Bitcurex</item>
-        <!-- <item>Kraken</item> -->
+        <item>Kraken</item>
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -25,7 +25,7 @@
         <item>campbx</item>
         <item>btcchina</item>
         <item>bitcurex</item>
-        <!-- <item>7</item> -->
+        <item>kraken</item>
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -37,7 +37,7 @@
         <item>CampBXExchange</item>
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
-        <!-- <item>KrakenExchange</item> -->
+        <item>KrakenExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->
@@ -285,13 +285,17 @@
     
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="krakencurrencies">
+        <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/LTC</item>
+        <item>LTC/USD</item>
         <item>LTC/EUR</item>
     </string-array>
     <string-array name="krakencurrenciesvalues">
+        <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/LTC</item>
+        <item>LTC/USD</item>
         <item>LTC/EUR</item>
     </string-array>
 

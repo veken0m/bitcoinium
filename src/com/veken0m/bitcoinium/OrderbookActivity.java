@@ -230,6 +230,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         LayoutParams params = new LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, 1f);
+        int backGroundColor = Color.rgb(31, 31, 31);
        
         String currencySymbolBTC, currencySymbol;
         currencySymbolBTC = currencySymbol = "";
@@ -285,6 +286,14 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             
 
             try {
+                // Toggle background color
+                if (backGroundColor == Color.BLACK) {
+                      backGroundColor = Color.rgb(31, 31, 31);
+                } else {
+                      backGroundColor = Color.BLACK;
+                }
+                
+                tr1.setBackgroundColor(backGroundColor);
                 tr1.addView(tvBidPrice);
                 tr1.addView(tvBidAmount);
                 tr1.addView(tvAskPrice);

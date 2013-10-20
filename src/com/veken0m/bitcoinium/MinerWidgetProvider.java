@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
@@ -17,6 +18,8 @@ import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.deepbit.DeepBitData;
+import com.veken0m.mining.eligius.Eligius;
+import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
@@ -70,32 +73,37 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
             readGeneralPreferences(context);
-            PendingIntent pendingIntent;
-            if (pref_tapToUpdate) {
-                Intent intent = new Intent(this, WidgetProvider.class);
-                intent.setAction(REFRESH);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            } else {
-                Intent intent = new Intent(context, MinerStatsActivity.class);
-                pendingIntent = PendingIntent.getActivity(
-                        context, 0, intent, 0);
-            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
                 for (int appWidgetId : widgetIds) {
-
-                    RemoteViews views = new RemoteViews(
-                            context.getPackageName(), R.layout.minerappwidget);
-                    views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                            pendingIntent);
-
+                    
                     // Load Widget preferences
                     String pref_miningpool = MinerWidgetConfigureActivity
                             .loadMiningPoolPref(context, appWidgetId);
 
                     SharedPreferences prefs = PreferenceManager
                             .getDefaultSharedPreferences(context);
+                    
+                    PendingIntent pendingIntent;
+                    if (pref_tapToUpdate) {
+                        Intent intent = new Intent(this, WidgetProvider.class);
+                        intent.setAction(REFRESH);
+                        pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+                    } else {
+                        Intent intent = new Intent(context, MinerStatsActivity.class);
+                        Bundle tabSelection = new Bundle();
+                        tabSelection.putString("poolKey", pref_miningpool);
+                        intent.putExtras(tabSelection);
+                        pendingIntent = PendingIntent.getActivity(
+                                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+
+                    RemoteViews views = new RemoteViews(
+                            context.getPackageName(), R.layout.minerappwidget);
+                    views.setOnClickPendingIntent(R.id.widgetMinerButton,
+                            pendingIntent);
+
 
                     pref_minerDownAlert = prefs.getBoolean(
                             pref_miningpool.toLowerCase() + "AlertPref", false);
@@ -270,6 +278,32 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = true;
                     NOTIFY_ID = 6;
                     return true;
+                } else if (miningpool.equalsIgnoreCase("Eligius")){
+
+                        pref_apiKey = prefs.getString("eligiusKey", "");
+
+                        HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
+                                + pref_apiKey);
+                        HttpResponse response = client.execute(post);
+                        Eligius data = mapper
+                                .readValue(new InputStreamReader(response
+                                        .getEntity().getContent(), "UTF-8"),
+                                        Eligius.class);
+                        
+                        hashRate = data.get256().getHashrate().floatValue()/1000000;
+                        
+                        post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                                + pref_apiKey);
+                        EligiusBalance data2 = mapper
+                                .readValue(new InputStreamReader(client.execute(post)
+                                        .getEntity().getContent(), "UTF-8"),
+                                        EligiusBalance.class);
+                        
+                        btcBalance = "" + data2.getConfirmed().floatValue()/100000000;
+    
+                        alive = (hashRate > 0.0);
+                        NOTIFY_ID = 7;
+                        return true;      
                 }
                 
             } catch (Exception e) {

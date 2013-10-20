@@ -62,6 +62,13 @@
                 android:key="bitcurexCurrencyPref"
                 android:summary="Bitcurex price will be displayed in this currency"
                 android:title="Bitcurex Currency" />
+             <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/krakencurrencies"
+                android:entryValues="@array/krakencurrenciesvalues"
+                android:key="krakenCurrencyPref"
+                android:summary="Kraken price will be displayed in this currency"
+                android:title="Kraken Currency" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Widget Configuration" >
@@ -172,7 +179,6 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
-
             <Preference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
@@ -181,6 +187,10 @@
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
                 android:title="BTC Guild alert not yet supported" />
+            <Preference
+                android:defaultValue="false"
+                android:key="eligiusAlertPref"
+                android:title="Eligius alert not yet supported" />
         </PreferenceCategory>
     </PreferenceScreen>
 
@@ -345,7 +355,28 @@
                         android:key="bitcurexBTCEURTickerPref"
                         android:title="Bitcurex BTC/EUR Ticker" />
                 </PreferenceScreen>
-
+                <PreferenceScreen android:title="Kraken Tickers" >
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="krakenBTCUSDTickerPref"
+                        android:title="Kraken BTC/USD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="krakenBTCEURTickerPref"
+                        android:title="Kraken BTC/EUR Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="krakenBTCLTCTickerPref"
+                        android:title="Kraken BTC/LTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="krakenLTCUSDTickerPref"
+                        android:title="Kraken LTC/USD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="krakenLTCEURTickerPref"
+                        android:title="Kraken LTC/EUR Ticker" />
+                </PreferenceScreen>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
@@ -383,6 +414,11 @@
                     android:key="btcguildKey"
                     android:summary="Enter your BTCGuild API token to use MinerStats"
                     android:title="BTCGuild API token" />
+                 <EditTextPreference
+                    android:defaultValue=""
+                    android:key="eligiusKey"
+                    android:summary="Enter your Eligius API token to use MinerStats"
+                    android:title="Eligius API token" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

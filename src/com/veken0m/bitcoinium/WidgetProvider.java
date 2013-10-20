@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
@@ -49,27 +51,13 @@ public class WidgetProvider extends BaseWidgetProvider {
             ComponentName widgetComponent = new ComponentName(context,
                     WidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            PendingIntent pendingIntent;
 
             readGeneralPreferences(context);
-            PendingIntent pendingIntent;
-            if (pref_tapToUpdate) {
-                Intent intent = new Intent(this, WidgetProvider.class);
-                intent.setAction(REFRESH);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            } else {
-                Intent intent = new Intent(context, MainActivity.class);
-                pendingIntent = PendingIntent.getActivity(
-                        context, 0, intent, 0);
-            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
                 for (int appWidgetId : widgetIds) {
-
-                    RemoteViews views = new RemoteViews(
-                            context.getPackageName(), R.layout.appwidget);
-                    views.setOnClickPendingIntent(R.id.widgetButton,
-                            pendingIntent);
 
                     // Load Widget preferences
                     String pref_exchange = WidgetConfigureActivity
@@ -82,7 +70,28 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String pref_widgetExchange = exchange.getClassName();
                     String defaultCurrency = exchange.getMainCurrency();
                     String prefix = exchange.getPrefix();
+                    int exchangeKey = exchange.getNotificationID();
+                    
                     Boolean tickerBidAsk = exchange.supportsTickerBidAsk();
+                    
+                    if (pref_tapToUpdate) {
+                        Intent intent = new Intent(this, WidgetProvider.class);
+                        intent.setAction(REFRESH);
+                        pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+                    } else {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        Bundle tabSelection = new Bundle();
+                        tabSelection.putInt("exchangeKey", exchangeKey);
+                        intent.putExtras(tabSelection);
+                        pendingIntent = PendingIntent.getActivity(
+                                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+                    
+                    RemoteViews views = new RemoteViews(
+                            context.getPackageName(), R.layout.appwidget);
+                    
+                    views.setOnClickPendingIntent(R.id.widgetButton,
+                            pendingIntent);
 
                     readAllWidgetPreferences(context, prefix, defaultCurrency);
 
@@ -205,7 +214,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 createTicker(context, R.drawable.bitcoin, txt);
                             }
                         } finally {
-
                             widgetManager.updateAppWidget(appWidgetId, views);
                         }
                     }

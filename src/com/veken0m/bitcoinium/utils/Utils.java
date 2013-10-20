@@ -49,21 +49,26 @@ public class Utils {
             boolean includeCurrencyCode) {
 
         String symbol = getCurrencySymbol(currencyCode);
+        int numOfDecimals = 2;
 
         if (includeCurrencyCode) {
             currencyCode = " " + currencyCode;
         } else {
             currencyCode = "";
         }
+        
+        // If too large, remove a digit behind decimal
+        if (amount > 1000 && !includeCurrencyCode) {
+            numOfDecimals = 1;
+        }
 
         // If too small, scale the value
         if (amount < 0.1) {
             amount *= 1000;
             currencyCode = currencyCode.replace(" ", " m");
-
         }
-
-        return symbol + formatDecimal(amount, 2, false) + currencyCode;
+        
+        return symbol + formatDecimal(amount, numOfDecimals, false) + currencyCode;
     }
 
     public static String getCurrencySymbol(String currencyCode) {
