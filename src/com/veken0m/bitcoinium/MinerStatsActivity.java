@@ -35,6 +35,7 @@ import com.veken0m.bitcoinium.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.mining.EMCFragment;
+import com.veken0m.bitcoinium.mining.EligiusFragment;
 import com.veken0m.bitcoinium.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.mining.SlushFragment;
 import com.veken0m.bitcoinium.utils.Utils;
@@ -47,6 +48,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     private static String pref_deepbitKey;
     private static String pref_50BTCKey;
     private static String pref_btcguildKey;
+    private static String pref_eligiusKey;
     
     private static final int MIN_KEY_LENGTH = 20;
 
@@ -88,6 +90,9 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
             addTab(actionbar, "50BTC", new FiftyBTCFragment());
         if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
             addTab(actionbar, "BTC Guild", new BTCGuildFragment());
+        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Eligius", new EligiusFragment());
+        
         
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
@@ -264,6 +269,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         pref_deepbitKey = prefs.getString("deepbitKey", "");
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
+        pref_eligiusKey = prefs.getString("eligiusKey", "");
     }
 
 }

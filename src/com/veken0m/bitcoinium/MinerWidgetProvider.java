@@ -17,6 +17,8 @@ import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.deepbit.DeepBitData;
+import com.veken0m.mining.eligius.Eligius;
+import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
@@ -270,6 +272,32 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     alive = true;
                     NOTIFY_ID = 6;
                     return true;
+                } else if (miningpool.equalsIgnoreCase("Eligius")){
+
+                        pref_apiKey = prefs.getString("eligiusKey", "");
+
+                        HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
+                                + pref_apiKey);
+                        HttpResponse response = client.execute(post);
+                        Eligius data = mapper
+                                .readValue(new InputStreamReader(response
+                                        .getEntity().getContent(), "UTF-8"),
+                                        Eligius.class);
+                        
+                        hashRate = data.get256().getHashrate().floatValue()/1000000;
+                        
+                        post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                                + pref_apiKey);
+                        EligiusBalance data2 = mapper
+                                .readValue(new InputStreamReader(client.execute(post)
+                                        .getEntity().getContent(), "UTF-8"),
+                                        EligiusBalance.class);
+                        
+                        btcBalance = "" + data2.getConfirmed().floatValue()/100000000;
+    
+                        alive = (hashRate > 0.0);
+                        NOTIFY_ID = 7;
+                        return true;      
                 }
                 
             } catch (Exception e) {
