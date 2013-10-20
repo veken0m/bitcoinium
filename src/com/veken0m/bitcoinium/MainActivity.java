@@ -60,7 +60,7 @@ public class MainActivity extends SherlockFragmentActivity {
     public void selectTabViaBundle(){
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            selectTab(extras.getString("exchangeKey", "mtgox"));
+            selectTab(extras.getString("exchangeKey"));
         }
     }
     

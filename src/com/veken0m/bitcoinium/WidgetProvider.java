@@ -70,7 +70,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String pref_widgetExchange = exchange.getClassName();
                     String defaultCurrency = exchange.getMainCurrency();
                     String prefix = exchange.getPrefix();
-                    int exchangeKey = exchange.getNotificationID();
+                    String exchangeKey = exchange.getNotificationID();
                     
                     Boolean tickerBidAsk = exchange.supportsTickerBidAsk();
                     
@@ -81,7 +81,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     } else {
                         Intent intent = new Intent(context, MainActivity.class);
                         Bundle tabSelection = new Bundle();
-                        tabSelection.putInt("exchangeKey", exchangeKey);
+                        tabSelection.putString("exchangeKey", exchangeKey);
                         intent.putExtras(tabSelection);
                         pendingIntent = PendingIntent.getActivity(
                                 context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
