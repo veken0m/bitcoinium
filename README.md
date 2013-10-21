@@ -11,6 +11,7 @@ Currently supported exchanges include:
 	- CampBX: http://campbx.com
 	- BTC China: https://btcchina.com
 	- Bitcurex: https://bitcurex.com
+	- Kraken: https://www.kraken.com
 	
 Removed Exchanges (closed down):
 
@@ -28,6 +29,8 @@ Supported Mining Pools:
 	- EclipseMC : https://eclipsemc.com
 	- Slush : http://mining.bitcoin.cz
 	- 50BTC : https://50btc.com/en
+	- BTC Guild : https://www.btcguild.com
+	- Eligius.st : http://eligius.st
 
 Features
 ===============
@@ -39,22 +42,6 @@ Features
       - Volume of last 24 hours
       - Time of last data refresh (Green for successful, Red for unsuccessful)
       
-- MtGox can be displayed in any of the following currencies:
-	- EUR - Euro
-	- CAD - Canadian Dollar
-	- GBP - British Pound
-	- CHF - Swiss Francs
-	- RUB - Russian Rubles
-	- AUD - Australian Dollars
-	- SEK - Swedish Krona
-	- DKK - Danish Krona
-	- HKD - Hong Kong Dollars
-	- PLN - Polish Zloty
-	- CNY - Chinese Yuan
-	- SGD - Singapore Dollars
-	- THB - Thai Baht
-	- NZD - New Zealand Dollars
-	- JPY - Japanese Yen
 
 - Price Alarm Notifications. Uses android notification system with option for sound and vibration.
 - Plot price during the last week in a clean and simple graph
