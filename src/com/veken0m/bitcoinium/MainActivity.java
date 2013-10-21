@@ -39,6 +39,7 @@ import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 public class MainActivity extends SherlockFragmentActivity {
     ViewPager mViewPager;
     ActionBar actionbar;
+    TabsAdapter tabsAdapter;
 
     /** Called when the activity is first created. */
     @Override
@@ -59,7 +60,7 @@ public class MainActivity extends SherlockFragmentActivity {
     public void selectTabViaBundle(){
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            selectTab(extras.getInt("exchangeKey"));
+            selectTab(extras.getString("exchangeKey"));
         }
     }
     
@@ -73,49 +74,65 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
-        
+
         // Create the actionbar tabs
-        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class);
-        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class);
+        tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
+        addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class, "virtex");
+        addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class, "btce");
+        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class, "bitstamp");
+        addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class, "campbx");
+        addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class, "btcchina");
+        addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
+        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
 
         selectTab();
         actionbar.show();
     }
     
-    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment) {
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment, String identity) {
         ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
-        tabsAdapter.addTab(tab, viewFragment, null);
+        tabsAdapter.addTab(tab, viewFragment, null, identity);
     }
     
-    // TODO: Change key to String and use Exchange Name
     private void selectTab(){
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         try {
-            actionbar.setSelectedNavigationItem(Integer
-                    .parseInt(prefs.getString("favExchangePref", "0")));
+            String preferredExchange = prefs.getString("favExchangePref", "mtgox");
+            //Check if moving from integer index
+            if(preferredExchange.matches("\\d+")) {
+                int preferredExchangeNum = Integer.parseInt(preferredExchange);
+                actionbar.setSelectedNavigationItem(preferredExchangeNum);
+                
+                //Migrate to the newer tag index
+                String[] exchangeMap = getResources().getStringArray(R.array.exchangeMigration);
+                Editor editor = prefs.edit();
+                editor.putString("favExchangePref", exchangeMap[preferredExchangeNum]);
+                editor.commit();
+            } else {
+                selectTab(preferredExchange);
+            }
         } catch (Exception e) {
             // If preference is not set a valid integer set to "0"
             Editor editor = prefs.edit();
-            editor.putString("favExchangePref", "0");
+            editor.putString("favExchangePref", "mtgox");
             editor.commit();
         }
     }
-    
-    private void selectTab(int key){
+
+    private void selectTab(String key){
         try{
-            actionbar.setSelectedNavigationItem(key);
+            int tabIndex = tabsAdapter.getIndexForIdentity(key);
+            if(tabIndex >= 0)
+                actionbar.setSelectedNavigationItem(tabIndex);
+            else
+                actionbar.setSelectedNavigationItem(0);
         } catch (Exception e){
             selectTab();
         }
     }
+    
 
     /**
      * Obtained from: https://gist.github.com/2424383 This is a helper class
@@ -138,10 +155,12 @@ public class MainActivity extends SherlockFragmentActivity {
         static final class TabInfo {
             private final Class<?> clss;
             private final Bundle args;
+            private final String ident;
 
-            TabInfo(Class<?> _class, Bundle _args) {
+            TabInfo(Class<?> _class, Bundle _args, String _ident) {
                 clss = _class;
                 args = _args;
+                ident = _ident;
             }
         }
 
@@ -156,8 +175,8 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,
-                Bundle args) {
-            TabInfo info = new TabInfo(clss, args);
+                Bundle args, String ident) {
+            TabInfo info = new TabInfo(clss, args, ident);
             tab.setTag(info);
             tab.setTabListener(this);
             mTabs.add(info);
@@ -175,6 +194,15 @@ public class MainActivity extends SherlockFragmentActivity {
             TabInfo info = mTabs.get(position);
             return Fragment.instantiate(mContext, info.clss.getName(),
                     info.args);
+        }
+        
+        public int getIndexForIdentity(String identity) {
+            for(int i=0; i < mTabs.size(); i++) {
+                TabInfo info = mTabs.get(i);
+                if(identity.equals(info.ident))
+                    return i;
+            }
+            return -1;
         }
 
         @Override

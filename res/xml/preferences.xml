@@ -3,7 +3,7 @@
 
     <PreferenceCategory android:title="General" >
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="mtgox"
             android:entries="@array/exchanges"
             android:entryValues="@array/exchangeID"
             android:key="favExchangePref"
