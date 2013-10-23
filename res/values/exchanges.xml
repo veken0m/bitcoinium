@@ -219,11 +219,14 @@
         <item>RUR - Old Russian Ruble</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
+        <item>LTC/EUR</item>
         <item>LTC/RUR</item>
         <item>NMC/BTC</item>
+        <item>NMC/USD</item>
         <item>USD/RUR</item>
         <item>EUR/USD</item>
         <item>NVC/BTC</item>
+        <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
@@ -234,11 +237,14 @@
         <item>BTC/RUR</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
+        <item>LTC/EUR</item>
         <item>LTC/RUR</item>
         <item>NMC/BTC</item>
+        <item>NMC/USD</item>
         <item>USD/RUR</item>
         <item>EUR/USD</item>
         <item>NVC/BTC</item>
+        <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
