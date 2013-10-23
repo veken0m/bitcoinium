@@ -183,14 +183,14 @@
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
                 android:title="EclipseMC alert not yet supported" />
-            <Preference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
-                android:title="BTC Guild alert not yet supported" />
-            <Preference
+                android:title="BTC Guild alert miner down alert" />
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eligiusAlertPref"
-                android:title="Eligius alert not yet supported" />
+                android:title="Eligius alert miner down alert" />
         </PreferenceCategory>
     </PreferenceScreen>
 

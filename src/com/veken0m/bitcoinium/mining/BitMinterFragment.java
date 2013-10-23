@@ -196,10 +196,11 @@ public class BitMinterFragment extends SherlockFragment {
                 tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 tvMinerName.setText("Miner: " + workers.get(i).getName());
+                float hashrate = workers.get(i).getHash_rate()
+                .floatValue();
                 tvHashrate.setText("Hashrate: "
-                        + Utils.formatDecimal(workers.get(i).getHash_rate()
-                                .floatValue(), 2, false) + " MH/s");
-                tvAlive.setText("Alive: " + workers.get(i).getAlive());
+                        + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
+                tvAlive.setText("Alive: " + (hashrate>0.0));
                 tvShares.setText("Shares: "
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
                                 .getTotal_accepted().floatValue(), 0, true));
@@ -207,7 +208,7 @@ public class BitMinterFragment extends SherlockFragment {
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
                                 .getTotal_rejected().floatValue(), 0, true));
 
-                if (workers.get(i).getAlive()) {
+                if (hashrate>0.0) {
                     tvMinerName.setTextColor(Color.GREEN);
                 } else {
                     tvMinerName.setTextColor(Color.RED);

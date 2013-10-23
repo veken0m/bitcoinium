@@ -25,6 +25,7 @@ import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
+import com.veken0m.mining.slush.Workers;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -161,9 +162,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             HttpClient client = new DefaultHttpClient();
             ObjectMapper mapper = new ObjectMapper();
+            
+            // reset variables
+            btcBalance="";
+            hashRate=0;
+            alive = true;
 
             try {
-                
+                // TODO: fix this ugly mess
                 if (miningpool.equalsIgnoreCase("DeepBit")) {
                     pref_apiKey = prefs.getString("deepbitKey", "");
 
@@ -177,7 +183,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             DeepBitData.class);
                     btcBalance = data.getConfirmed_reward().toString();
                     hashRate = data.getHashrate().floatValue();
-                    alive = data.getWorkers().getWorker(0).getAlive();
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 1;
                     return true;
                     
@@ -195,7 +201,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             BitMinterData.class);
                     btcBalance = "" + data.getBalances().getBTC();
                     hashRate = data.getHash_rate().floatValue();
-                    alive = data.getWorkers().get(0).getAlive();
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 2;
                     return true;
                     
@@ -229,8 +235,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     Slush data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), Slush.class);
                     btcBalance = data.getConfirmed_reward();
-                    hashRate = Float.parseFloat(data.getHashrate());
-                    alive = data.getWorkers().getWorker(0).getAlive();
+                    
+                    Workers workers = data.getWorkers();
+                    
+                    for(int i = 0; i < workers.getWorkers().size(); i++){
+                        hashRate += workers.getWorker(i).getHashrate().floatValue();
+                    }
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 4;
                     return true;
                     
@@ -253,7 +264,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         hashRate += Float.parseFloat(workers.get(i).getHash_rate());
                     }
                     
-                    alive = data.getWorkers().getWorker(0).getAlive();
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 5;
                     return true;
                     
@@ -276,7 +287,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         hashRate += workers.get(i).getHash_rate().floatValue();
                     }
                     
-                    alive = true;
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 6;
                     return true;
                 } else if (miningpool.equalsIgnoreCase("Eligius")){
