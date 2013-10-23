@@ -53,8 +53,7 @@
         <item>xchangeClassName</item>
         <item>mainCurrency</item>
         <item>logo</item>
-        <item>notificationID</item>
-        <item>codename</item>
+        <item>identifier</item>
         <item>supports latest trades</item>
         <item>ticker supports bid/ask</item>
     -->
@@ -63,7 +62,6 @@
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>USD</item>
         <item>mtgoxlogo</item>
-        <item>mtgox</item>
         <item>mtgox</item>
         <item>true</item>
         <item>true</item>
@@ -74,7 +72,6 @@
         <item>CAD</item>
         <item>virtexlogo</item>
         <item>virtex</item>
-        <item>virtex</item>
         <item>true</item>
         <item>false</item>
     </string-array>
@@ -83,7 +80,6 @@
         <item>com.xeiam.xchange.btce.BTCEExchange</item>
         <item>USD</item>
         <item>btcelogo</item>
-        <item>btce</item>
         <item>btce</item>
         <item>true</item>
         <item>true</item>
@@ -94,7 +90,6 @@
         <item>USD</item>
         <item>bitstamplogo</item>
         <item>bitstamp</item>
-        <item>bitstamp</item>
         <item>true</item>
         <item>true</item>
     </string-array>
@@ -103,7 +98,6 @@
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
         <item>USD</item>
         <item>campbxlogo</item>
-        <item>campbx</item>
         <item>campbx</item>
         <item>false</item>
  <!-- Not implemented -->
@@ -115,7 +109,6 @@
         <item>CNY</item>
         <item>none</item>
         <item>btcchina</item>
-        <item>btcchina</item>
         <item>true</item>
         <item>true</item>
     </string-array>
@@ -125,7 +118,6 @@
         <item>PLN</item>
         <item>none</item>
         <item>bitcurex</item>
-        <item>bitcurex</item>
         <item>true</item>
         <item>true</item>
     </string-array>
@@ -134,7 +126,6 @@
         <item>com.xeiam.xchange.kraken.KrakenExchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>kraken</item>
         <item>kraken</item>
         <item>true</item>
         <item>true</item>
@@ -147,7 +138,6 @@
         <item>EUR</item>
         <item>bitcoinicon</item>
         <item>bitcoincentral</item>
-        <item>bitcoincentral</item>
         <item>true</item>
  <!-- Error 404 -->
         <item>false</item>
@@ -158,7 +148,6 @@
         <item>USD</item>
         <item>bitcoinicon</item>
         <item>bitfloor</item>
-        <item>bitfloor</item>
         <item>true</item>
         <item>false</item>
     </string-array>
@@ -167,7 +156,6 @@
         <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>bitcoin24</item>
         <item>bitcoin24</item>
         <item>false</item>
  <!-- Too large (contains all trades...) -->

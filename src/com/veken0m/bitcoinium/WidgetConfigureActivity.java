@@ -149,7 +149,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 }
 
                 String defaultCurrency = exchange.getMainCurrency();
-                String prefix = exchange.getPrefix();
+                String prefix = exchange.getIdentifier();
 
                 String pref_widgetCurrency = prefs.getString(prefix
                         + "WidgetCurrencyPref", defaultCurrency);
