@@ -76,7 +76,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setSupportZoom(true);
             mWebView.getSettings().setBuiltInZoomControls(true);
-            mWebView.loadUrl("http://bitcoinium.com/");
+            mWebView.loadUrl("https://bitcoinium.com/");
             mIsWebViewAvailable = true;
 
             return mWebView;
@@ -132,7 +132,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
             mWebView.setLayoutParams(p);
             mWebView.getSettings().setJavaScriptEnabled(true);
             mIsWebViewAvailable = true;
-            mWebView.loadUrl("http://bitcoinity.org/markets");
+            mWebView.loadUrl("https://bitcoinity.org/markets");
 
             return mWebView;
         }

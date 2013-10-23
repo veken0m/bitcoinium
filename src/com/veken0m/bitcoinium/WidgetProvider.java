@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -15,9 +16,11 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
+import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 
 public class WidgetProvider extends BaseWidgetProvider {
@@ -26,7 +29,7 @@ public class WidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction())) {
-            setAlarm(context);
+            setPriceWidgetAlarm(context);
         } else {
             super.onReceive(context, intent);
         }
@@ -35,7 +38,7 @@ public class WidgetProvider extends BaseWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
             int[] appWidgetIds) {
-        setAlarm(context);
+        setPriceWidgetAlarm(context);
     }
 
     /**
@@ -49,27 +52,13 @@ public class WidgetProvider extends BaseWidgetProvider {
             ComponentName widgetComponent = new ComponentName(context,
                     WidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            PendingIntent pendingIntent;
 
             readGeneralPreferences(context);
-            PendingIntent pendingIntent;
-            if (pref_tapToUpdate) {
-                Intent intent = new Intent(this, WidgetProvider.class);
-                intent.setAction(REFRESH);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            } else {
-                Intent intent = new Intent(context, MainActivity.class);
-                pendingIntent = PendingIntent.getActivity(
-                        context, 0, intent, 0);
-            }
 
             if (!pref_wifionly || checkWiFiConnected(context)) {
 
                 for (int appWidgetId : widgetIds) {
-
-                    RemoteViews views = new RemoteViews(
-                            context.getPackageName(), R.layout.appwidget);
-                    views.setOnClickPendingIntent(R.id.widgetButton,
-                            pendingIntent);
 
                     // Load Widget preferences
                     String pref_exchange = WidgetConfigureActivity
@@ -81,44 +70,56 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String exchangeName = exchange.getExchangeName();
                     String pref_widgetExchange = exchange.getClassName();
                     String defaultCurrency = exchange.getMainCurrency();
-                    String prefix = exchange.getPrefix();
+                    String exchangeKey = exchange.getIdentifier();
+                    
                     Boolean tickerBidAsk = exchange.supportsTickerBidAsk();
+                    
+                    if (pref_tapToUpdate) {
+                        Intent intent = new Intent(this, WidgetProvider.class);
+                        intent.setAction(REFRESH);
+                        pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+                    } else {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.putExtra("exchangeKey", exchangeKey);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        pendingIntent = PendingIntent.getActivity(
+                                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+                    
+                    RemoteViews views = new RemoteViews(
+                            context.getPackageName(), R.layout.appwidget);
+                    
+                    views.setOnClickPendingIntent(R.id.widgetButton,
+                            pendingIntent);
 
-                    readAllWidgetPreferences(context, prefix, defaultCurrency);
+                    readAllWidgetPreferences(context, exchangeKey, defaultCurrency);
 
                     if (pref_currency.length() == 3 || pref_currency.length() == 7) {
 
                         try {
 
-                            String baseCurrency = Currencies.BTC;
-                            String counterCurrency = pref_currency;
-
-                            if (pref_currency.contains("/")) {
-                                baseCurrency = pref_currency.substring(0, 3);
-                                counterCurrency = pref_currency.substring(4, 7);
-                                if (!baseCurrency.equals(Currencies.BTC)) {
-                                    exchangeName = exchangeName + " (" + baseCurrency + ")";
-                                }
+                            //TODO: Move this to Utils and generalize 
+                            CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(pref_currency);
+                            if (!pair.baseCurrency.equals(Currencies.BTC)) {
+                                    exchangeName = exchangeName + " (" + pair.baseCurrency + ")";
                             }
-
-                            // int NOTIFY_ID = exchange.getNotificationID();
-                            // Get a unique id for the exchange/currency pair
-                            // combo
-                            int NOTIFY_ID = (exchangeName + baseCurrency + counterCurrency)
+                            
+                            // Get a unique id for the exchange/currency pair combo
+                            int NOTIFY_ID = (exchangeName + pair.baseCurrency + pair.counterCurrency)
                                     .hashCode();
-                            String pairId = exchange.getPrefix() + baseCurrency + counterCurrency;
+                            String pairId = exchange.getIdentifier() + pair.baseCurrency + pair.counterCurrency;
 
                             // Get ticker using XChange
                             final Ticker ticker = ExchangeFactory.INSTANCE
                                     .createExchange(pref_widgetExchange)
                                     .getPollingMarketDataService()
-                                    .getTicker(baseCurrency, counterCurrency);
+                                    .getTicker(pair.baseCurrency, pair.counterCurrency);
 
                             // Retrieve values from ticker
                             final float lastFloat = ticker.getLast()
                                     .getAmount().floatValue();
                             final String lastString = Utils.formatWidgetMoney(
-                                    lastFloat, counterCurrency, true);
+                                    lastFloat, pair.counterCurrency, true);
 
                             String volumeString = "N/A";
                             if (!(ticker.getVolume() == null)) {
@@ -131,9 +132,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                             if (((ticker.getHigh() == null) || pref_widgetbidask)
                                     && tickerBidAsk) {
-                                setBidAsk(ticker, views, counterCurrency);
+                                setBidAsk(ticker, views, pair.counterCurrency);
                             } else {
-                                setHighLow(ticker, views, counterCurrency);
+                                setHighLow(ticker, views, pair.counterCurrency);
                             }
 
                             views.setTextViewText(R.id.widgetExchange,
@@ -155,16 +156,16 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                                 // If previous alarm key exists, purge them and
                                 // notify the user
-                                if (prefs.contains(prefix + "Upper")
-                                        || prefs.contains(prefix + "Lower")) {
-                                    prefs.edit().remove(prefix + "Upper").commit();
-                                    prefs.edit().remove(prefix + "Lower").commit();
-                                    prefs.edit().remove(prefix + "TickerPref").commit();
+                                if (prefs.contains(exchangeKey + "Upper")
+                                        || prefs.contains(exchangeKey + "Lower")) {
+                                    prefs.edit().remove(exchangeKey + "Upper").commit();
+                                    prefs.edit().remove(exchangeKey + "Lower").commit();
+                                    prefs.edit().remove(exchangeKey + "TickerPref").commit();
 
                                     notifyUserOfAlarmUpgrade(context);
                                 }
 
-                                checkAlarm(context, counterCurrency, baseCurrency, pairId,
+                                checkAlarm(context, pair.counterCurrency, pair.baseCurrency, pairId,
                                         lastFloat,
                                         exchange, NOTIFY_ID);
                             }
@@ -174,9 +175,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                             if (pref_enableTicker && pref_notifTicker) {
 
-                                String msg = baseCurrency + " value: " + lastString
+                                String msg = pair.baseCurrency + " value: " + lastString
                                         + " on " + exchangeName;
-                                String title = prefix + baseCurrency + " @ " + lastString;
+                                String title = exchangeKey + pair.baseCurrency + " @ " + lastString;
 
                                 createPermanentNotification(context,
                                         R.drawable.bitcoin, title, msg,
@@ -205,7 +206,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 createTicker(context, R.drawable.bitcoin, txt);
                             }
                         } finally {
-
                             widgetManager.updateAppWidget(appWidgetId, views);
                         }
                     }
@@ -373,6 +373,13 @@ public class WidgetProvider extends BaseWidgetProvider {
         public void onHandleIntent(Intent intent) {
             buildUpdate(this);
         }
+    }
+    
+    public void onDestoy(Context context) {
+        final AlarmManager m = (AlarmManager) context
+                .getSystemService(Context.ALARM_SERVICE);
+        
+        m.cancel(widgetPriceWidgetRefreshService);
     }
 
 }

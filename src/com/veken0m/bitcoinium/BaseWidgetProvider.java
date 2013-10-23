@@ -1,6 +1,8 @@
 
 package com.veken0m.bitcoinium;
 
+import java.util.Calendar;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,12 +19,11 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
+import android.util.Log;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.xeiam.xchange.currency.Currencies;
-
-import java.util.Calendar;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
@@ -34,7 +35,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static int pref_widgetRefreshFreq;
     static Boolean pref_priceAlarm;
     static Boolean pref_displayUpdates;
-    static Boolean pref_wakeupRefresh;
+    static Boolean pref_batterySavingMode;
     static Boolean pref_alarmSound;
     static Boolean pref_alarmVibrate;
     static Boolean pref_enableTicker;
@@ -55,8 +56,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static Boolean pref_enableWidgetCustomization;
 
     // Service used to refresh widget
-    static PendingIntent widgetRefreshService = null;
-    static PendingIntent widgetMinerRefreshService = null;
+    static PendingIntent widgetPriceWidgetRefreshService = null;
+    static PendingIntent widgetMinerWidgetRefreshService = null;
 
     protected static void readAllWidgetPreferences(Context context, String prefix,
             String defaultCurrency) {
@@ -80,7 +81,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
-        pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
+        pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
         //pref_extremePowerSaver = prefs.getBoolean("extremeSaverModePref", false);
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
@@ -118,7 +119,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
-        pref_wakeupRefresh = prefs.getBoolean("wakeupPref", true);
+        pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
@@ -127,48 +128,53 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
     }
-
-    public void onDestoy(Context context) {
-        final AlarmManager m = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
-        
-        m.cancel(widgetMinerRefreshService);
-        m.cancel(widgetRefreshService);
-    }
-
-    static void setAlarm(Context context) {
+    
+    static void setPriceWidgetAlarm(Context context) {
         readAlarmPreferences(context);
-        final AlarmManager m1 = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
-        final AlarmManager m2 = (AlarmManager) context
+
+        final AlarmManager alarmManager = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
         final Intent intent = new Intent(context, UpdateService.class);
+
+        if (widgetPriceWidgetRefreshService == null) {
+            widgetPriceWidgetRefreshService = PendingIntent.getService(context, 0,
+                    intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        }
+
+        int alarmType = AlarmManager.RTC_WAKEUP;
+        if(pref_batterySavingMode){alarmType = AlarmManager.RTC;}
+        
+        final Calendar TIME = Calendar.getInstance();
+        TIME.set(Calendar.MINUTE, 0);
+        TIME.set(Calendar.SECOND, 0);
+        TIME.set(Calendar.MILLISECOND, 0);
+        
+        alarmManager.setRepeating(alarmType, TIME.getTimeInMillis(),
+                    1000 * pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
+    }
+    
+    static void setMinerWidgetAlarm(Context context) {
+        readAlarmPreferences(context);
+
+        final AlarmManager alarmManager = (AlarmManager) context
+                .getSystemService(Context.ALARM_SERVICE);
         final Intent intentMiner = new Intent(context, MinerUpdateService.class);
+
+        if (widgetMinerWidgetRefreshService == null) {
+            widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0,
+                    intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
+        }
+        
         final Calendar TIME = Calendar.getInstance();
         TIME.set(Calendar.MINUTE, 0);
         TIME.set(Calendar.SECOND, 0);
         TIME.set(Calendar.MILLISECOND, 0);
 
-        if (widgetRefreshService == null) {
-            widgetRefreshService = PendingIntent.getService(context, 0, intent,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
-        }
-        if (widgetMinerRefreshService == null) {
-            widgetMinerRefreshService = PendingIntent.getService(context, 0,
-                    intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
-        }
-
-        if (pref_wakeupRefresh) {
-            m1.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
-                    1000 * pref_widgetRefreshFreq, widgetRefreshService);
-            m2.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(),
-                    1000 * pref_widgetRefreshFreq, widgetMinerRefreshService);
-        } else {
-            m1.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
-                    1000 * pref_widgetRefreshFreq, widgetRefreshService);
-            m2.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTime().getTime(),
-                    1000 * pref_widgetRefreshFreq, widgetMinerRefreshService);
-        }
+        int alarmType = AlarmManager.RTC_WAKEUP;
+        if(pref_batterySavingMode){alarmType = AlarmManager.RTC;}
+        
+        alarmManager.setRepeating(alarmType, TIME.getTimeInMillis(),
+                    1000 * pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
     }
 
     static void setAlarmClock(Context context) {

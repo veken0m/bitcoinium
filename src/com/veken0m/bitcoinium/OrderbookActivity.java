@@ -94,7 +94,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
-        prefix = exchange.getPrefix();
+        prefix = exchange.getIdentifier();
         readPreferences(getApplicationContext(), prefix, exchange.getMainCurrency());
         
         createCurrencyDropdown();
@@ -180,7 +180,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
      */
     public void getXHubOrderBook() {
         try {
-
             currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
 
             HttpClient client = new DefaultHttpClient();
@@ -230,6 +229,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         LayoutParams params = new LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, 1f);
+        int backGroundColor = Color.rgb(31, 31, 31);
        
         String currencySymbolBTC, currencySymbol;
         currencySymbolBTC = currencySymbol = "";
@@ -283,8 +283,14 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             tvAskAmount.setTextColor(askTextColor);
             tvAskPrice.setTextColor(askTextColor);
             
-
-            try {
+                // Toggle background color
+                if (backGroundColor == Color.BLACK) {
+                      backGroundColor = Color.rgb(31, 31, 31);
+                } else {
+                      backGroundColor = Color.BLACK;
+                }
+                
+                tr1.setBackgroundColor(backGroundColor);
                 tr1.addView(tvBidPrice);
                 tr1.addView(tvBidAmount);
                 tr1.addView(tvAskPrice);
@@ -292,10 +298,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
                 t1.addView(tr1);
                 addDivider(t1);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
     }
@@ -320,9 +322,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         if (pref_showCurrencySymbol) {
             currencySymbolBTC = " " + currencyPair.baseCurrency;
             currencySymbol = Utils.getCurrencySymbol(currencyPair.counterCurrency);
-        } else {
-            currencySymbol = "";
-            currencySymbolBTC = "";
         }
         
         float previousBidAmount = 0;

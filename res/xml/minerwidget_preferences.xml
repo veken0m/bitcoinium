@@ -31,15 +31,18 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
-
             <Preference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
                 android:title="EclipseMC alert not yet supported" />
-            <Preference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
-                android:title="BTC Guild alert not yet supported" />
+                android:title="BTC Guild miner down alert" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="eligiusAlertPref"
+                android:title="Eligius miner down alert" />
         </PreferenceCategory>
     </PreferenceScreen>
     
@@ -77,6 +80,11 @@
                 android:key="btcguildKey"
                 android:summary="Enter your BTC Guild API token to use MinerStats"
                 android:title="BTC Guild API token" />
+             <EditTextPreference
+                android:defaultValue=""
+                android:key="eligiusKey"
+                android:summary="Enter your Eligius API token to use MinerStats"
+                android:title="Eligius API token" />
         </PreferenceCategory>
     </PreferenceScreen>
 

@@ -90,8 +90,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
         linlaHeaderProgress.setVisibility(View.GONE);
 
-        String previousCurrency = "";
-        int backGroundColor = Color.rgb(31, 31, 31);
+        int backGroundColor = Color.rgb(51, 51, 51);
         LayoutParams params = new LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, 1f);
@@ -139,14 +138,11 @@ public class BitcoinChartsActivity extends SherlockActivity {
                     // Utils.setTextViewParams(tvBid, bid);
                     // Utils.setTextViewParams(tvAsk, ask);
 
-                    // If currencies are different
-                    if (!previousCurrency.equalsIgnoreCase(data.getCurrency())) {
-                        // Change the background color
-                        if (backGroundColor == Color.BLACK) {
-                            backGroundColor = Color.rgb(31, 31, 31);
-                        } else {
-                            backGroundColor = Color.BLACK;
-                        }
+                    // Toggle background color
+                    if (backGroundColor == Color.BLACK) {
+                          backGroundColor = Color.rgb(31, 31, 31);
+                    } else {
+                          backGroundColor = Color.BLACK;
                     }
 
                     tr1.setBackgroundColor(backGroundColor);
@@ -168,8 +164,6 @@ public class BitcoinChartsActivity extends SherlockActivity {
                             LayoutParams.MATCH_PARENT, 1));
                     divider.setBackgroundColor(Color.rgb(51, 51, 51));
                     t1.addView(divider);
-
-                    previousCurrency = data.getCurrency();
                 }
             }
         } catch (Exception e) {

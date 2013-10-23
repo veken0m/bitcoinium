@@ -53,8 +53,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         .setEnabled(false);
         ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
         .setEnabled(false);
-/*        ((ListPreference) findPreference("krakenWidgetCurrencyPref"))
-        .setEnabled(false);*/
+        ((ListPreference) findPreference("krakenWidgetCurrencyPref"))
+        .setEnabled(false);
         
         // ((ListPreference)
         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
@@ -108,8 +108,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                                 .setEnabled(false);
                         ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
                             .setEnabled(false);
-/*                        ((ListPreference) findPreference("bitcurexWidgetCurrencyPref"))
-                        .setEnabled(false);*/
+                        ((ListPreference) findPreference("krakenWidgetCurrencyPref"))
+                        .setEnabled(false);
                         // ((ListPreference)
                         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
                         // ((ListPreference)
@@ -149,7 +149,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 }
 
                 String defaultCurrency = exchange.getMainCurrency();
-                String prefix = exchange.getPrefix();
+                String prefix = exchange.getIdentifier();
 
                 String pref_widgetCurrency = prefs.getString(prefix
                         + "WidgetCurrencyPref", defaultCurrency);
@@ -161,7 +161,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
 
                 // Set alarm to refresh widget at specified interval
-                BaseWidgetProvider.setAlarm(context);
+                BaseWidgetProvider.setPriceWidgetAlarm(context);
 
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();

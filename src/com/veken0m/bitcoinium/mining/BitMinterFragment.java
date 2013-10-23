@@ -54,6 +54,12 @@ public class BitMinterFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
+    
+    public void onPause(){
+        super.onPause();
+        mMinerHandler.removeCallbacks(mGraphView);
+        minerProgressDialog.dismiss();
+    }
 
     public void getMinerStats(Context context) {
 
@@ -129,10 +135,12 @@ public class BitMinterFragment extends SherlockFragment {
     }
 
     public void drawMinerUI() {
+        
+        View view = getView();
 
+        if(view != null){
         try {
-
-            TableLayout t1 = (TableLayout) getView().findViewById(
+            TableLayout t1 = (TableLayout) view.findViewById(
                     R.id.minerStatlist);
 
             TableRow tr1 = new TableRow(getActivity());
@@ -188,10 +196,11 @@ public class BitMinterFragment extends SherlockFragment {
                 tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 tvMinerName.setText("Miner: " + workers.get(i).getName());
+                float hashrate = workers.get(i).getHash_rate()
+                .floatValue();
                 tvHashrate.setText("Hashrate: "
-                        + Utils.formatDecimal(workers.get(i).getHash_rate()
-                                .floatValue(), 2, false) + " MH/s");
-                tvAlive.setText("Alive: " + workers.get(i).getAlive());
+                        + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
+                tvAlive.setText("Alive: " + (hashrate>0.0));
                 tvShares.setText("Shares: "
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
                                 .getTotal_accepted().floatValue(), 0, true));
@@ -199,7 +208,7 @@ public class BitMinterFragment extends SherlockFragment {
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
                                 .getTotal_rejected().floatValue(), 0, true));
 
-                if (workers.get(i).getAlive()) {
+                if (hashrate>0.0) {
                     tvMinerName.setTextColor(Color.GREEN);
                 } else {
                     tvMinerName.setTextColor(Color.RED);
@@ -220,6 +229,7 @@ public class BitMinterFragment extends SherlockFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        } 
     }
 
     protected static void readPreferences(Context context) {

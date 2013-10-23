@@ -1,19 +1,12 @@
 
 package com.veken0m.bitcoinium.mining;
 
-import java.io.InputStreamReader;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -28,19 +21,29 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.utils.Utils;
-import com.veken0m.mining.btcguild.BTCGuild;
-import com.veken0m.mining.btcguild.Worker;
+import com.veken0m.mining.eligius.Eligius;
+import com.veken0m.mining.eligius.EligiusBalance;
+import com.veken0m.mining.eligius.TimeInterval;
 
-public class BTCGuildFragment extends SherlockFragment {
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-    protected static String pref_btcguildKey = "";
-    protected static BTCGuild data;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+
+public class EligiusFragment extends SherlockFragment {
+
+    protected static String pref_eligiusKey = "";
+    protected static Eligius data;
+    protected static EligiusBalance balanceData;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
     final Handler mMinerHandler = new Handler();
 
-    public BTCGuildFragment() {
+    public EligiusFragment() {
     }
 
     @Override
@@ -64,13 +67,26 @@ public class BTCGuildFragment extends SherlockFragment {
 
         try {
             HttpClient client = new DefaultHttpClient();
+            
+            // Test key
+            //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
 
-            HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key=" + pref_btcguildKey);
+            HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
+                    + pref_eligiusKey);
+
             HttpResponse response = client.execute(post);
-
             ObjectMapper mapper = new ObjectMapper();
+            
             data = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), BTCGuild.class);
+                    .getContent(), "UTF-8"), Eligius.class);
+            
+            post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                    + pref_eligiusKey);
+            
+            balanceData = mapper
+                    .readValue(new InputStreamReader(client.execute(post)
+                            .getEntity().getContent(), "UTF-8"),
+                            EligiusBalance.class);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,8 +130,8 @@ public class BTCGuildFragment extends SherlockFragment {
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Could not retrieve data from "
-                    + "BTCGuild"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly. \n\n*NOTE* BTC Guild limits calls to once every 15 seconds");
+                    + "Eligius"
+                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -142,71 +158,79 @@ public class BTCGuildFragment extends SherlockFragment {
                 TableRow tr2 = new TableRow(getActivity());
                 TableRow tr3 = new TableRow(getActivity());
 
-                TextView tvBTCRewards = new TextView(getActivity());
-                TextView tvNMCRewards = new TextView(getActivity());
-                TextView tvTotalHashrate = new TextView(getActivity());
+                TextView tvConfirmed_reward = new TextView(getActivity());
+                TextView tvEstimated_reward = new TextView(getActivity());
 
                 tr1.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                String RewardsBTC = "BTC Reward: " + data.getUser().getUnpaid_rewards()
-                        + " BTC";
-                String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
-                        + " NMC";
+                // USER INFO
+                String confirmed_reward = "Confirmed Reward: "
+                        + balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
+                String estimated_reward = "\nEstimated Reward: "
+                        + balanceData.getExpected().floatValue() / 100000000 + " BTC";
 
-                tvBTCRewards.setText(RewardsBTC);
-                tvNMCRewards.setText(RewardsNMC);
+                tvConfirmed_reward.setText(confirmed_reward);
+                tvEstimated_reward.setText(estimated_reward);
 
-                tr1.addView(tvBTCRewards);
-                tr2.addView(tvNMCRewards);
-                tr3.addView(tvTotalHashrate);
+                tr2.addView(tvEstimated_reward);
+                tr3.addView(tvConfirmed_reward);
 
                 t1.addView(tr1);
                 t1.addView(tr2);
                 t1.addView(tr3);
 
-                // End of Non-worker data
-                List<Worker> workers = data.getWorkers().getWorkers();
-                for (int i = 0; i < workers.size(); i++) {
-                    TableRow tr8 = new TableRow(getActivity());
+                // WORKER INFO
+                ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
+
+                intervals.add(data.get128());
+                intervals.add(data.get256());
+                intervals.add(data.get1350());
+                intervals.add(data.get10800());
+                intervals.add(data.get43200());
+
+                for (TimeInterval timeInterval : intervals) {
+
+                    String name = "\nInterval: " + timeInterval.getInterval_name();
+                    float hashRatef = timeInterval.getHashrate().floatValue() / 1000000;
+                    String minerHashrate = "Hashrate: " + hashRatef + " MH/s";
+                    String shares = "Shares: " + timeInterval.getShares().floatValue();
+
                     TableRow tr9 = new TableRow(getActivity());
+                    TableRow tr10 = new TableRow(getActivity());
                     TableRow tr11 = new TableRow(getActivity());
-                    TableRow tr12 = new TableRow(getActivity());
+
+                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     TextView tvMinerName = new TextView(getActivity());
-                    TextView tvHashrate = new TextView(getActivity());
+                    TextView tvMinerHashrate = new TextView(getActivity());
                     TextView tvShares = new TextView(getActivity());
-                    TextView tvStales = new TextView(getActivity());
 
-                    tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvMinerName.setText(name);
+                    tvMinerHashrate.setText(minerHashrate);
+                    tvShares.setText(shares);
 
-                    tvMinerName.setText("Miner: " + workers.get(i).getWorker_name());
-                    tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(workers.get(i).getHash_rate()
-                                    .floatValue(), 2, false) + " MH/s");
-                    tvShares.setText("Shares: "
-                            + Utils.formatDecimal(workers.get(i).getValid_shares().floatValue(), 0,
-                                    true));
-                    tvStales.setText("Stales: "
-                            + Utils.formatDecimal(workers.get(i).getStale_shares().floatValue(), 0,
-                                    true) + "\n");
+                    if (hashRatef > 0) {
+                        tvMinerName.setTextColor(Color.GREEN);
+                    } else {
+                        tvMinerName.setTextColor(Color.RED);
+                    }
 
-                    tr8.addView(tvMinerName);
-                    tr9.addView(tvHashrate);
+                    tr9.addView(tvMinerName);
+                    tr10.addView(tvMinerHashrate);
                     tr11.addView(tvShares);
-                    tr12.addView(tvStales);
 
-                    t1.addView(tr8);
                     t1.addView(tr9);
+                    t1.addView(tr10);
                     t1.addView(tr11);
-                    t1.addView(tr12);
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
+
             }
         }
     }
@@ -215,7 +239,7 @@ public class BTCGuildFragment extends SherlockFragment {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        pref_btcguildKey = prefs.getString("btcguildKey", "");
+        pref_eligiusKey = prefs.getString("eligiusKey", "");
     }
 
 }

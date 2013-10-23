@@ -10,7 +10,7 @@
         <item>CampBX</item>
         <item>BTCChina</item>
         <item>Bitcurex</item>
-        <!-- <item>Kraken</item> -->
+        <item>Kraken</item>
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -18,14 +18,17 @@
         -->
     </string-array>
     <string-array name="exchangeID">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <!-- <item>7</item> -->
+        <item>mtgox</item>
+        <item>virtex</item>
+        <item>btce</item>
+        <item>bitstamp</item>
+        <item>campbx</item>
+        <item>btcchina</item>
+        <item>bitcurex</item>
+        <item>kraken</item>
+        <!-- <item>bitcoincentral</item>
+        <item>bitfloor</item>
+        <item>bitcoin24</item>-->
     </string-array>
 
     <!-- Array for Widget Exchange preferences -->
@@ -37,7 +40,7 @@
         <item>CampBXExchange</item>
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
-        <!-- <item>KrakenExchange</item> -->
+        <item>KrakenExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->
@@ -50,17 +53,15 @@
         <item>xchangeClassName</item>
         <item>mainCurrency</item>
         <item>logo</item>
-        <item>notificationID</item>
-        <item>codename</item>
+        <item>identifier</item>
         <item>supports latest trades</item>
-        <item>ticker supports bid/ask</item>
+        <item>ticker supports bid/ask</item>
     -->
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>USD</item>
         <item>mtgoxlogo</item>
-        <item>0</item>
         <item>mtgox</item>
         <item>true</item>
         <item>true</item>
@@ -70,7 +71,6 @@
         <item>com.xeiam.xchange.virtex.VirtExExchange</item>
         <item>CAD</item>
         <item>virtexlogo</item>
-        <item>1</item>
         <item>virtex</item>
         <item>true</item>
         <item>false</item>
@@ -80,7 +80,6 @@
         <item>com.xeiam.xchange.btce.BTCEExchange</item>
         <item>USD</item>
         <item>btcelogo</item>
-        <item>2</item>
         <item>btce</item>
         <item>true</item>
         <item>true</item>
@@ -90,7 +89,6 @@
         <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
         <item>USD</item>
         <item>bitstamplogo</item>
-        <item>3</item>
         <item>bitstamp</item>
         <item>true</item>
         <item>true</item>
@@ -100,7 +98,6 @@
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
         <item>USD</item>
         <item>campbxlogo</item>
-        <item>4</item>
         <item>campbx</item>
         <item>false</item>
  <!-- Not implemented -->
@@ -111,7 +108,6 @@
         <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
         <item>CNY</item>
         <item>none</item>
-        <item>5</item>
         <item>btcchina</item>
         <item>true</item>
         <item>true</item>
@@ -121,7 +117,6 @@
         <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
         <item>PLN</item>
         <item>none</item>
-        <item>6</item>
         <item>bitcurex</item>
         <item>true</item>
         <item>true</item>
@@ -131,7 +126,6 @@
         <item>com.xeiam.xchange.kraken.KrakenExchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>7</item>
         <item>kraken</item>
         <item>true</item>
         <item>true</item>
@@ -143,7 +137,6 @@
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>7</item>
         <item>bitcoincentral</item>
         <item>true</item>
  <!-- Error 404 -->
@@ -154,7 +147,6 @@
         <item>com.xeiam.xchange.bitfloor.BitfloorExchange</item>
         <item>USD</item>
         <item>bitcoinicon</item>
-        <item>8</item>
         <item>bitfloor</item>
         <item>true</item>
         <item>false</item>
@@ -164,7 +156,6 @@
         <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
         <item>EUR</item>
         <item>bitcoinicon</item>
-        <item>9</item>
         <item>bitcoin24</item>
         <item>false</item>
  <!-- Too large (contains all trades...) -->
@@ -216,11 +207,14 @@
         <item>RUR - Old Russian Ruble</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
+        <item>LTC/EUR</item>
         <item>LTC/RUR</item>
         <item>NMC/BTC</item>
+        <item>NMC/USD</item>
         <item>USD/RUR</item>
         <item>EUR/USD</item>
         <item>NVC/BTC</item>
+        <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
@@ -231,11 +225,14 @@
         <item>BTC/RUR</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
+        <item>LTC/EUR</item>
         <item>LTC/RUR</item>
         <item>NMC/BTC</item>
+        <item>NMC/USD</item>
         <item>USD/RUR</item>
         <item>EUR/USD</item>
         <item>NVC/BTC</item>
+        <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
@@ -285,13 +282,17 @@
     
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="krakencurrencies">
+        <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/LTC</item>
+        <item>LTC/USD</item>
         <item>LTC/EUR</item>
     </string-array>
     <string-array name="krakencurrenciesvalues">
+        <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/LTC</item>
+        <item>LTC/USD</item>
         <item>LTC/EUR</item>
     </string-array>
 
