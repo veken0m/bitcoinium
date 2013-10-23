@@ -47,21 +47,31 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
-        selectTabViaBundle();
 
         //KarmaAdsUtils.initAd(this);
     }
     
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         selectTabViaBundle();
+    }
+    
+    public void onPause() {
+        super.onPause();
+        // clear the extra
+        getIntent().removeExtra("exchangeKey");
+    }
+    
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // getIntent() should always return the most recent
+        setIntent(intent);
     }
     
     public void selectTabViaBundle(){
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            selectTab(extras.getString("exchangeKey"));
-        }
+        if(extras != null) selectTab(extras.getString("exchangeKey"));
     }
     
     public void initTabbedActionBar(){

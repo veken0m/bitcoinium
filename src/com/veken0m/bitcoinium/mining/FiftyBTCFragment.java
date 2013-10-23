@@ -54,6 +54,12 @@ public class FiftyBTCFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
+    
+    public void onPause(){
+        super.onPause();
+        mMinerHandler.removeCallbacks(mGraphView);
+        minerProgressDialog.dismiss();
+    }
 
     public void getMinerStats(Context context) {
 

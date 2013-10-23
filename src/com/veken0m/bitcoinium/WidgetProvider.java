@@ -80,9 +80,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                         pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
                     } else {
                         Intent intent = new Intent(context, MainActivity.class);
-                        Bundle tabSelection = new Bundle();
-                        tabSelection.putString("exchangeKey", exchangeKey);
-                        intent.putExtras(tabSelection);
+                        intent.putExtra("exchangeKey", exchangeKey);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         pendingIntent = PendingIntent.getActivity(
                                 context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     }

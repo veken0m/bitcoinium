@@ -10,8 +10,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +57,12 @@ public class SlushFragment extends SherlockFragment {
         View view = inflater.inflate(R.layout.table_fragment, container, false);
         viewMinerStats(view);
         return view;
+    }
+    
+    public void onPause(){
+        super.onPause();
+        mMinerHandler.removeCallbacks(mGraphView);
+        minerProgressDialog.dismiss();
     }
 
     public void getMinerStats(Context context) {
