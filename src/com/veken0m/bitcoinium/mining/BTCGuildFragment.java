@@ -131,78 +131,83 @@ public class BTCGuildFragment extends SherlockFragment {
 
     public void drawMinerUI() {
 
-        try {
+        View view = getView();
 
-            TableLayout t1 = (TableLayout) getView().findViewById(
-                    R.id.minerStatlist);
+        if (view != null) {
+            try {
+                TableLayout t1 = (TableLayout) view.findViewById(
+                        R.id.minerStatlist);
 
-            TableRow tr1 = new TableRow(getActivity());
-            TableRow tr2 = new TableRow(getActivity());
-            TableRow tr3 = new TableRow(getActivity());
+                TableRow tr1 = new TableRow(getActivity());
+                TableRow tr2 = new TableRow(getActivity());
+                TableRow tr3 = new TableRow(getActivity());
 
-            TextView tvBTCRewards = new TextView(getActivity());
-            TextView tvNMCRewards = new TextView(getActivity());
-            TextView tvTotalHashrate = new TextView(getActivity());
+                TextView tvBTCRewards = new TextView(getActivity());
+                TextView tvNMCRewards = new TextView(getActivity());
+                TextView tvTotalHashrate = new TextView(getActivity());
 
-            tr1.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr2.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr3.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr1.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr2.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            String RewardsBTC = "BTC Reward: " + data.getUser().getUnpaid_rewards()
-                    + " BTC";
-            String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
-                    + " NMC";
+                String RewardsBTC = "BTC Reward: " + data.getUser().getUnpaid_rewards()
+                        + " BTC";
+                String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
+                        + " NMC";
 
-            tvBTCRewards.setText(RewardsBTC);
-            tvNMCRewards.setText(RewardsNMC);
+                tvBTCRewards.setText(RewardsBTC);
+                tvNMCRewards.setText(RewardsNMC);
 
-            tr1.addView(tvBTCRewards);
-            tr2.addView(tvNMCRewards);
-            tr3.addView(tvTotalHashrate);
+                tr1.addView(tvBTCRewards);
+                tr2.addView(tvNMCRewards);
+                tr3.addView(tvTotalHashrate);
 
-            t1.addView(tr1);
-            t1.addView(tr2);
-            t1.addView(tr3);
+                t1.addView(tr1);
+                t1.addView(tr2);
+                t1.addView(tr3);
 
-           // End of Non-worker data
-            List<Worker> workers = data.getWorkers().getWorkers();
-            for (int i = 0; i < workers.size(); i++) {
-                TableRow tr8 = new TableRow(getActivity());
-                TableRow tr9 = new TableRow(getActivity());
-                TableRow tr11 = new TableRow(getActivity());
-                TableRow tr12 = new TableRow(getActivity());
+                // End of Non-worker data
+                List<Worker> workers = data.getWorkers().getWorkers();
+                for (int i = 0; i < workers.size(); i++) {
+                    TableRow tr8 = new TableRow(getActivity());
+                    TableRow tr9 = new TableRow(getActivity());
+                    TableRow tr11 = new TableRow(getActivity());
+                    TableRow tr12 = new TableRow(getActivity());
 
-                TextView tvMinerName = new TextView(getActivity());
-                TextView tvHashrate = new TextView(getActivity());
-                TextView tvShares = new TextView(getActivity());
-                TextView tvStales = new TextView(getActivity());
+                    TextView tvMinerName = new TextView(getActivity());
+                    TextView tvHashrate = new TextView(getActivity());
+                    TextView tvShares = new TextView(getActivity());
+                    TextView tvStales = new TextView(getActivity());
 
-                tr8.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr8.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                tvMinerName.setText("Miner: " + workers.get(i).getWorker_name());
-                tvHashrate.setText("Hashrate: "
-                        + Utils.formatDecimal(workers.get(i).getHash_rate()
-                                .floatValue(), 2, false) + " MH/s");
-                tvShares.setText("Shares: "
-                        + Utils.formatDecimal(workers.get(i).getValid_shares().floatValue(), 0, true));
-                tvStales.setText("Stales: "
-                        + Utils.formatDecimal(workers.get(i).getStale_shares().floatValue(), 0, true) + "\n");
+                    tvMinerName.setText("Miner: " + workers.get(i).getWorker_name());
+                    tvHashrate.setText("Hashrate: "
+                            + Utils.formatDecimal(workers.get(i).getHash_rate()
+                                    .floatValue(), 2, false) + " MH/s");
+                    tvShares.setText("Shares: "
+                            + Utils.formatDecimal(workers.get(i).getValid_shares().floatValue(), 0,
+                                    true));
+                    tvStales.setText("Stales: "
+                            + Utils.formatDecimal(workers.get(i).getStale_shares().floatValue(), 0,
+                                    true) + "\n");
 
-                tr8.addView(tvMinerName);
-                tr9.addView(tvHashrate);
-                tr11.addView(tvShares);
-                tr12.addView(tvStales);
+                    tr8.addView(tvMinerName);
+                    tr9.addView(tvHashrate);
+                    tr11.addView(tvShares);
+                    tr12.addView(tvStales);
 
-                t1.addView(tr8);
-                t1.addView(tr9);
-                t1.addView(tr11);
-                t1.addView(tr12);
+                    t1.addView(tr8);
+                    t1.addView(tr9);
+                    t1.addView(tr11);
+                    t1.addView(tr12);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

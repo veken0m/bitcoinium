@@ -147,88 +147,91 @@ public class EligiusFragment extends SherlockFragment {
 
     public void drawMinerUI() {
 
-        try {
+        View view = getView();
 
-            TableLayout t1 = (TableLayout) getView().findViewById(
-                    R.id.minerStatlist);
+        if (view != null) {
+            try {
+                TableLayout t1 = (TableLayout) view.findViewById(
+                        R.id.minerStatlist);
 
-            TableRow tr1 = new TableRow(getActivity());
-            TableRow tr2 = new TableRow(getActivity());
-            TableRow tr3 = new TableRow(getActivity());
+                TableRow tr1 = new TableRow(getActivity());
+                TableRow tr2 = new TableRow(getActivity());
+                TableRow tr3 = new TableRow(getActivity());
 
-            TextView tvConfirmed_reward = new TextView(getActivity());
-            TextView tvEstimated_reward = new TextView(getActivity());
+                TextView tvConfirmed_reward = new TextView(getActivity());
+                TextView tvEstimated_reward = new TextView(getActivity());
 
-            tr1.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr2.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr3.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr1.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr2.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            // USER INFO
-            String confirmed_reward = "Confirmed Reward: "
-                    + balanceData.getConfirmed().floatValue()/100000000 + " BTC";
-            String estimated_reward = "\nEstimated Reward: "
-                    + balanceData.getExpected().floatValue()/100000000 + " BTC";
+                // USER INFO
+                String confirmed_reward = "Confirmed Reward: "
+                        + balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
+                String estimated_reward = "\nEstimated Reward: "
+                        + balanceData.getExpected().floatValue() / 100000000 + " BTC";
 
-            tvConfirmed_reward.setText(confirmed_reward);
-            tvEstimated_reward.setText(estimated_reward);
+                tvConfirmed_reward.setText(confirmed_reward);
+                tvEstimated_reward.setText(estimated_reward);
 
-            tr2.addView(tvEstimated_reward);
-            tr3.addView(tvConfirmed_reward);
+                tr2.addView(tvEstimated_reward);
+                tr3.addView(tvConfirmed_reward);
 
-            t1.addView(tr1);
-            t1.addView(tr2);
-            t1.addView(tr3);
+                t1.addView(tr1);
+                t1.addView(tr2);
+                t1.addView(tr3);
 
-            // WORKER INFO
-            ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
-            
-            intervals.add(data.get128());
-            intervals.add(data.get256());
-            intervals.add(data.get1350());
-            intervals.add(data.get10800());
-            intervals.add(data.get43200());
-            
-            for (TimeInterval timeInterval : intervals) {
+                // WORKER INFO
+                ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
 
-                String name = "\nInterval: " + timeInterval.getInterval_name();
-                float hashRatef = timeInterval.getHashrate().floatValue()/1000000;
-                String minerHashrate = "Hashrate: " + hashRatef + " MH/s";
-                String shares = "Shares: " + timeInterval.getShares().floatValue();
+                intervals.add(data.get128());
+                intervals.add(data.get256());
+                intervals.add(data.get1350());
+                intervals.add(data.get10800());
+                intervals.add(data.get43200());
 
-                TableRow tr9 = new TableRow(getActivity());
-                TableRow tr10 = new TableRow(getActivity());
-                TableRow tr11 = new TableRow(getActivity());
+                for (TimeInterval timeInterval : intervals) {
 
-                tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+                    String name = "\nInterval: " + timeInterval.getInterval_name();
+                    float hashRatef = timeInterval.getHashrate().floatValue() / 1000000;
+                    String minerHashrate = "Hashrate: " + hashRatef + " MH/s";
+                    String shares = "Shares: " + timeInterval.getShares().floatValue();
 
-                TextView tvMinerName = new TextView(getActivity());
-                TextView tvMinerHashrate = new TextView(getActivity());
-                TextView tvShares = new TextView(getActivity());
+                    TableRow tr9 = new TableRow(getActivity());
+                    TableRow tr10 = new TableRow(getActivity());
+                    TableRow tr11 = new TableRow(getActivity());
 
-                tvMinerName.setText(name);
-                tvMinerHashrate.setText(minerHashrate);
-                tvShares.setText(shares);
+                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                if (hashRatef > 0) {
-                    tvMinerName.setTextColor(Color.GREEN);
-                } else {
-                    tvMinerName.setTextColor(Color.RED);
+                    TextView tvMinerName = new TextView(getActivity());
+                    TextView tvMinerHashrate = new TextView(getActivity());
+                    TextView tvShares = new TextView(getActivity());
+
+                    tvMinerName.setText(name);
+                    tvMinerHashrate.setText(minerHashrate);
+                    tvShares.setText(shares);
+
+                    if (hashRatef > 0) {
+                        tvMinerName.setTextColor(Color.GREEN);
+                    } else {
+                        tvMinerName.setTextColor(Color.RED);
+                    }
+
+                    tr9.addView(tvMinerName);
+                    tr10.addView(tvMinerHashrate);
+                    tr11.addView(tvShares);
+
+                    t1.addView(tr9);
+                    t1.addView(tr10);
+                    t1.addView(tr11);
                 }
 
-                tr9.addView(tvMinerName);
-                tr10.addView(tvMinerHashrate);
-                tr11.addView(tvShares);
- 
-                t1.addView(tr9);
-                t1.addView(tr10);
-                t1.addView(tr11);
+            } catch (Exception e) {
+                e.printStackTrace();
+
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
         }
     }
 

@@ -135,10 +135,12 @@ public class BitMinterFragment extends SherlockFragment {
     }
 
     public void drawMinerUI() {
+        
+        View view = getView();
 
+        if(view != null){
         try {
-
-            TableLayout t1 = (TableLayout) getView().findViewById(
+            TableLayout t1 = (TableLayout) view.findViewById(
                     R.id.minerStatlist);
 
             TableRow tr1 = new TableRow(getActivity());
@@ -226,6 +228,7 @@ public class BitMinterFragment extends SherlockFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        } 
     }
 
     protected static void readPreferences(Context context) {

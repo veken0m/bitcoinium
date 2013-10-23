@@ -131,83 +131,86 @@ public class DeepBitFragment extends SherlockFragment {
 
     public void drawMinerUI() {
 
-        try {
+        View view = getView();
 
-            TableLayout t1 = (TableLayout) getView().findViewById(
-                    R.id.minerStatlist);
+        if (view != null) {
+            try {
+                TableLayout t1 = (TableLayout) view.findViewById(
+                        R.id.minerStatlist);
 
-            TableRow tr1 = new TableRow(getActivity());
-            TableRow tr2 = new TableRow(getActivity());
-            TableRow tr3 = new TableRow(getActivity());
+                TableRow tr1 = new TableRow(getActivity());
+                TableRow tr2 = new TableRow(getActivity());
+                TableRow tr3 = new TableRow(getActivity());
 
-            TextView tvBTCRewards = new TextView(getActivity());
-            TextView tvBTCPayout = new TextView(getActivity());
-            TextView tvHashrate = new TextView(getActivity());
-            tr1.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr2.setGravity(Gravity.CENTER_HORIZONTAL);
-            tr3.setGravity(Gravity.CENTER_HORIZONTAL);
+                TextView tvBTCRewards = new TextView(getActivity());
+                TextView tvBTCPayout = new TextView(getActivity());
+                TextView tvHashrate = new TextView(getActivity());
+                tr1.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr2.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            String RewardsBTC = "Reward: "
-                    + data.getConfirmed_reward().floatValue() + "BTC";
-            String TotalHashrate = "Total Hashrate: "
-                    + data.getHashrate().floatValue() + " MH/s";
-            String TotalPayout = "Total Payout: "
-                    + data.getPayout_history().floatValue() + "BTC";
+                String RewardsBTC = "Reward: "
+                        + data.getConfirmed_reward().floatValue() + "BTC";
+                String TotalHashrate = "Total Hashrate: "
+                        + data.getHashrate().floatValue() + " MH/s";
+                String TotalPayout = "Total Payout: "
+                        + data.getPayout_history().floatValue() + "BTC";
 
-            tvBTCRewards.setText(RewardsBTC);
-            tvBTCPayout.setText(TotalPayout);
-            tvHashrate.setText(TotalHashrate);
+                tvBTCRewards.setText(RewardsBTC);
+                tvBTCPayout.setText(TotalPayout);
+                tvHashrate.setText(TotalHashrate);
 
-            tr1.addView(tvBTCRewards);
-            tr2.addView(tvBTCPayout);
-            tr3.addView(tvHashrate);
+                tr1.addView(tvBTCRewards);
+                tr2.addView(tvBTCPayout);
+                tr3.addView(tvHashrate);
 
-            t1.addView(tr1);
-            t1.addView(tr2);
-            t1.addView(tr3);
+                t1.addView(tr1);
+                t1.addView(tr2);
+                t1.addView(tr3);
 
-            // End of Non-worker data
-            List<Worker> Workers = data.getWorkers().getWorkers();
-            List<String> WorkerNames = data.getWorkers().getNames();
-            for (int i = 0; i < Workers.size(); i++) {
-                TableRow tr9 = new TableRow(getActivity());
-                TableRow tr10 = new TableRow(getActivity());
-                TableRow tr11 = new TableRow(getActivity());
-                TableRow tr12 = new TableRow(getActivity());
+                // End of Non-worker data
+                List<Worker> Workers = data.getWorkers().getWorkers();
+                List<String> WorkerNames = data.getWorkers().getNames();
+                for (int i = 0; i < Workers.size(); i++) {
+                    TableRow tr9 = new TableRow(getActivity());
+                    TableRow tr10 = new TableRow(getActivity());
+                    TableRow tr11 = new TableRow(getActivity());
+                    TableRow tr12 = new TableRow(getActivity());
 
-                TextView tvMinerName = new TextView(getActivity());
-                TextView tvAlive = new TextView(getActivity());
-                TextView tvShares = new TextView(getActivity());
-                TextView tvStales = new TextView(getActivity());
+                    TextView tvMinerName = new TextView(getActivity());
+                    TextView tvAlive = new TextView(getActivity());
+                    TextView tvShares = new TextView(getActivity());
+                    TextView tvStales = new TextView(getActivity());
 
-                tr9.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr11.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr12.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr10.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                tvMinerName.setText("\nMiner: " + WorkerNames.get(i));
-                tvAlive.setText("Alive: " + Workers.get(i).getAlive());
-                tvShares.setText("Shares: " + Workers.get(i).getShares());
-                tvStales.setText("Stales: " + Workers.get(i).getStales());
+                    tvMinerName.setText("\nMiner: " + WorkerNames.get(i));
+                    tvAlive.setText("Alive: " + Workers.get(i).getAlive());
+                    tvShares.setText("Shares: " + Workers.get(i).getShares());
+                    tvStales.setText("Stales: " + Workers.get(i).getStales());
 
-                if (Workers.get(i).getAlive()) {
-                    tvMinerName.setTextColor(Color.GREEN);
-                } else {
-                    tvMinerName.setTextColor(Color.RED);
+                    if (Workers.get(i).getAlive()) {
+                        tvMinerName.setTextColor(Color.GREEN);
+                    } else {
+                        tvMinerName.setTextColor(Color.RED);
+                    }
+
+                    tr9.addView(tvMinerName);
+                    tr10.addView(tvAlive);
+                    tr11.addView(tvShares);
+                    tr12.addView(tvStales);
+
+                    t1.addView(tr9);
+                    t1.addView(tr10);
+                    t1.addView(tr11);
+                    t1.addView(tr12);
                 }
-
-                tr9.addView(tvMinerName);
-                tr10.addView(tvAlive);
-                tr11.addView(tvShares);
-                tr12.addView(tvStales);
-
-                t1.addView(tr9);
-                t1.addView(tr10);
-                t1.addView(tr11);
-                t1.addView(tr12);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
