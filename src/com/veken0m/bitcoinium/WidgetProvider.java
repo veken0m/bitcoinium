@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -28,7 +29,7 @@ public class WidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction())) {
-            setAlarm(context);
+            setPriceWidgetAlarm(context);
         } else {
             super.onReceive(context, intent);
         }
@@ -37,7 +38,7 @@ public class WidgetProvider extends BaseWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
             int[] appWidgetIds) {
-        setAlarm(context);
+        setPriceWidgetAlarm(context);
     }
 
     /**
@@ -372,6 +373,13 @@ public class WidgetProvider extends BaseWidgetProvider {
         public void onHandleIntent(Intent intent) {
             buildUpdate(this);
         }
+    }
+    
+    public void onDestoy(Context context) {
+        final AlarmManager m = (AlarmManager) context
+                .getSystemService(Context.ALARM_SERVICE);
+        
+        m.cancel(widgetPriceWidgetRefreshService);
     }
 
 }
