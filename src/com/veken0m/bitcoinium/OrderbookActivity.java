@@ -222,6 +222,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     public void drawOrderbookUI() {
 
         final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
+        t1.removeAllViews();
         
         stopLoading();
         setOrderBookHeader();
