@@ -64,7 +64,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
                 saveMiningPoolPref(context, mAppWidgetId, pref_widgetMiningPool);
 
                 // Set alarm to refresh widget at specified interval
-                BaseWidgetProvider.setAlarm(context);
+                BaseWidgetProvider.setMinerWidgetAlarm(context);
 
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();

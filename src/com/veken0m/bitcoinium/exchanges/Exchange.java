@@ -9,8 +9,7 @@ public class Exchange {
     private final String class_name;
     private final String main_currency;
     private final String logo_path;
-    private final int notification_id;
-    private final String prefix;
+    private final String identifier;
     private final boolean supportsPriceGraph;
     private final boolean tickerSupportsBidAsk;
 
@@ -24,10 +23,9 @@ public class Exchange {
         class_name = exchangeProperties[1];
         main_currency = exchangeProperties[2];
         logo_path = exchangeProperties[3];
-        notification_id = Integer.parseInt(exchangeProperties[4]);
-        prefix = exchangeProperties[5];
-        supportsPriceGraph = Boolean.parseBoolean(exchangeProperties[6]);
-        tickerSupportsBidAsk = Boolean.parseBoolean(exchangeProperties[7]);
+        identifier = exchangeProperties[4];
+        supportsPriceGraph = Boolean.parseBoolean(exchangeProperties[5]);
+        tickerSupportsBidAsk = Boolean.parseBoolean(exchangeProperties[6]);
     }
 
     public String getExchangeName() {
@@ -50,14 +48,8 @@ public class Exchange {
         return logo_path;
     }
 
-    public int getNotificationID() {
-
-        return notification_id;
-    }
-
-    public String getPrefix() {
-
-        return prefix;
+    public String getIdentifier() {
+        return identifier;
     }
 
     public Boolean supportsPriceGraph() {
