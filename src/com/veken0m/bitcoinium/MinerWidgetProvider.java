@@ -89,7 +89,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     
                     PendingIntent pendingIntent;
                     if (pref_tapToUpdate) {
-                        Intent intent = new Intent(this, WidgetProvider.class);
+                        Intent intent = new Intent(this, MinerWidgetProvider.class);
                         intent.setAction(REFRESH);
                         pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
                     } else {
