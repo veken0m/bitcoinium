@@ -331,6 +331,10 @@
                         android:defaultValue="false"
                         android:key="btceFTCBTCTickerPref"
                         android:title="BTC-E FTC/BTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="btceXPMBTCTickerPref"
+                        android:title="BTC-E XPM/BTC Ticker" />
                 </PreferenceScreen>
 
                 <CheckBoxPreference
