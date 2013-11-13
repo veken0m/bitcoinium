@@ -218,6 +218,7 @@
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
+        <item>XPM/BTC</item>
     </string-array>
     <string-array name="btcecurrenciesvalues">
         <item>BTC/USD</item>
@@ -236,6 +237,7 @@
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
         <item>FTC/BTC</item>
+        <item>XPM/BTC</item>
     </string-array>
 
     <!-- Arrays for VirtEx Currencies -->

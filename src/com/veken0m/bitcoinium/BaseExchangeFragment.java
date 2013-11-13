@@ -36,6 +36,7 @@ public class BaseExchangeFragment extends SherlockFragment {
                         .getApplicationContext(), MinerWidgetProvider.class);
                 intent2.setAction(REFRESH);
                 getActivity().sendBroadcast(intent);
+                getActivity().sendBroadcast(intent2);
                 getActivity().moveTaskToBack(true);
             }
         });
