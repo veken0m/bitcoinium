@@ -3,6 +3,7 @@ package com.veken0m.mining.eligius;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Eligius{
