@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.cavirtex.R;
 import com.veken0m.bitcoinium.utils.Utils;
@@ -90,7 +91,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     
                     PendingIntent pendingIntent;
                     if (pref_tapToUpdate) {
-                        Intent intent = new Intent(this, WidgetProvider.class);
+                        Intent intent = new Intent(this, MinerWidgetProvider.class);
                         intent.setAction(REFRESH);
                         pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
                     } else {
@@ -298,6 +299,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
                                 + pref_apiKey);
                         HttpResponse response = client.execute(post);
+                        mapper.setSerializationInclusion(Include.NON_NULL);
+                        
                         Eligius data = mapper
                                 .readValue(new InputStreamReader(response
                                         .getEntity().getContent(), "UTF-8"),
@@ -307,12 +310,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         
                         post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
                                 + pref_apiKey);
+                        
                         EligiusBalance data2 = mapper
                                 .readValue(new InputStreamReader(client.execute(post)
                                         .getEntity().getContent(), "UTF-8"),
                                         EligiusBalance.class);
                         
-                        btcBalance = "" + data2.getConfirmed().floatValue()/100000000;
+                        if(data2.getConfirmed() != null){
+                            btcBalance = "" + data2.getConfirmed().floatValue()/100000000;
+                        } else {
+                            btcBalance = "N/A";
+                        }
     
                         alive = (hashRate > 0.0);
                         NOTIFY_ID = 7;

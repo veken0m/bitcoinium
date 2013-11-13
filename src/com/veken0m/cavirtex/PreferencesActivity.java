@@ -183,9 +183,14 @@ public class PreferencesActivity extends PreferenceActivity {
         super.onStop();
 
         // Tell the widgets to update preferences
-        Intent intent = new Intent(getApplicationContext(),
+        Intent intent = new Intent(this,
                 WidgetProvider.class);
         intent.setAction(REFRESH);
         sendBroadcast(intent);
+        
+        Intent intent2 = new Intent(this,
+                MinerWidgetProvider.class);
+        intent2.setAction(REFRESH);
+        sendBroadcast(intent2);
     }
 }

@@ -160,7 +160,7 @@
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen
-        android:summary="Notfications when main miner is down"
+        android:summary="Enable notfications when total hashrate is 0 Mh/s"
         android:title="Bitcoin Miner Alert" >
         <PreferenceCategory android:title="Miner Widget Settings" >
             <CheckBoxPreference
@@ -331,6 +331,10 @@
                         android:defaultValue="false"
                         android:key="btceFTCBTCTickerPref"
                         android:title="BTC-E FTC/BTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="btceXPMBTCTickerPref"
+                        android:title="BTC-E XPM/BTC Ticker" />
                 </PreferenceScreen>
 
                 <CheckBoxPreference
@@ -392,7 +396,7 @@
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="bitminterKey"
-                    android:summary="Enter your BitMinter API token to use MinerStats. \n *NOTE* - Remember to enable API perk!"
+                    android:summary="Enter your BitMinter API token to use MinerStats \n *NOTE* - Remember to enable API perk!"
                     android:title="BitMinter API token" />
                 <EditTextPreference
                     android:defaultValue=""
@@ -417,8 +421,8 @@
                  <EditTextPreference
                     android:defaultValue=""
                     android:key="eligiusKey"
-                    android:summary="Enter your Eligius API token to use MinerStats"
-                    android:title="Eligius API token" />
+                    android:summary="Enter your Eligius BTC token to use MinerStats \n *NOTE* - The token is case sensitive!"
+                    android:title="Eligius API token (BTC Address)" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

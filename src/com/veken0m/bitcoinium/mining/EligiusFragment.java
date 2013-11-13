@@ -19,6 +19,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.cavirtex.R;
 import com.veken0m.mining.eligius.Eligius;
@@ -76,17 +78,18 @@ public class EligiusFragment extends SherlockFragment {
 
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
+            mapper.setSerializationInclusion(Include.NON_NULL);
             
             data = mapper.readValue(new InputStreamReader(response.getEntity()
                     .getContent(), "UTF-8"), Eligius.class);
             
-            post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
-                    + pref_eligiusKey);
-            
-            balanceData = mapper
-                    .readValue(new InputStreamReader(client.execute(post)
-                            .getEntity().getContent(), "UTF-8"),
-                            EligiusBalance.class);
+                post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                        + pref_eligiusKey);
+                
+                balanceData = mapper
+                        .readValue(new InputStreamReader(client.execute(post)
+                                .getEntity().getContent(), "UTF-8"),
+                                EligiusBalance.class);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,11 +168,18 @@ public class EligiusFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
+                
+                String confirmed_reward = "Confirmed Reward: ";
+                String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
-                String confirmed_reward = "Confirmed Reward: "
-                        + balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
-                String estimated_reward = "\nEstimated Reward: "
-                        + balanceData.getExpected().floatValue() / 100000000 + " BTC";
+                if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
+                    confirmed_reward += balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
+                    estimated_reward += balanceData.getExpected().floatValue() / 100000000 + " BTC";
+                } else {
+                    confirmed_reward += "N/A";
+                    estimated_reward += "N/A";
+                }
+
 
                 tvConfirmed_reward.setText(confirmed_reward);
                 tvEstimated_reward.setText(estimated_reward);
