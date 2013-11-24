@@ -11,6 +11,7 @@
         <item>BTCChina</item>
         <item>Bitcurex</item>
         <item>Kraken</item>
+        <item>BitcoinAverage</item>
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -26,6 +27,7 @@
         <item>btcchina</item>
         <item>bitcurex</item>
         <item>kraken</item>
+        <item>bitcoinaverage</item>
         <!-- <item>bitcoincentral</item>
         <item>bitfloor</item>
         <item>bitcoin24</item>-->
@@ -41,6 +43,7 @@
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
         <item>KrakenExchange</item>
+        <item>BitcoinAverageExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->
@@ -161,6 +164,17 @@
  <!-- Too large (contains all trades...) -->
         <item>true</item>
     </string-array>
+        <string-array name="BitcoinAverageExchange">
+        <item>BTCAvg</item>
+        <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
+        <item>USD</item>
+        <item>bitcoinicon</item>
+        <item>bitcoinaverage</item>
+        <item>false</item>
+ <!-- Too large (contains all trades...) -->
+        <item>true</item>
+    </string-array>
+    
 
     <!-- Arrays for MtGox Currencies -->
     <string-array name="mtgoxcurrencies">
@@ -322,6 +336,44 @@
     <string-array name="bitcoin24currenciesvalues">
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
+    </string-array>
+    
+        <!-- Arrays for BitcoinAverage Currencies -->
+    <string-array name="bitcoinaveragecurrencies">
+        <item>BTC/USD</item>
+        <item>BTC/EUR</item>
+        <item>BTC/AUD</item>
+        <item>BTC/CNY</item>
+        <item>BTC/CAD</item>
+        <item>BTC/BRL</item>
+        <item>BTC/GBP</item>
+        <item>BTC/CZK</item>
+        <item>BTC/ILS</item>
+        <item>BTC/NOK</item>
+        <item>BTC/JPY</item>
+        <item>BTC/NZD</item>
+        <item>BTC/PLN</item>
+        <item>BTC/RUB</item>
+        <item>BTC/SEK</item>
+        <item>BTC/ZAR</item>
+    </string-array>
+    <string-array name="bitcoinaveragecurrenciesvalues">
+        <item>BTC/USD</item>
+        <item>BTC/EUR</item>
+        <item>BTC/AUD</item>
+        <item>BTC/CNY</item>
+        <item>BTC/CAD</item>
+        <item>BTC/BRL</item>
+        <item>BTC/GBP</item>
+        <item>BTC/CZK</item>
+        <item>BTC/ILS</item>
+        <item>BTC/NOK</item>
+        <item>BTC/JPY</item>
+        <item>BTC/NZD</item>
+        <item>BTC/PLN</item>
+        <item>BTC/RUB</item>
+        <item>BTC/SEK</item>
+        <item>BTC/ZAR</item>
     </string-array>
 
 </resources>

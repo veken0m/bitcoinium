@@ -381,6 +381,72 @@
                         android:key="krakenLTCEURTickerPref"
                         android:title="Kraken LTC/EUR Ticker" />
                 </PreferenceScreen>
+                <PreferenceScreen android:title="BitcoinAverage Tickers" >
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCUSDTickerPref"
+                        android:title="BitcoinAverage BTC/USD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCEURTickerPref"
+                        android:title="BitcoinAverage BTC/EUR Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCAUDTickerPref"
+                        android:title="BitcoinAverage BTC/AUD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCCNYTickerPref"
+                        android:title="BitcoinAverage BTC/CNY Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCCADTickerPref"
+                        android:title="BitcoinAverage BTC/CAD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCBRLTickerPref"
+                        android:title="BitcoinAverage BTC/BRL Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCGBPTickerPref"
+                        android:title="BitcoinAverage BTC/GBP Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCCZKTickerPref"
+                        android:title="BitcoinAverage BTC/CZK Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCILSTickerPref"
+                        android:title="BitcoinAverage BTC/ILS Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCNOKTickerPref"
+                        android:title="BitcoinAverage BTC/NOK Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCJPYTickerPref"
+                        android:title="BitcoinAverage BTC/JPY Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCNZDTickerPref"
+                        android:title="BitcoinAverage BTC/NZD Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCPLNTickerPref"
+                        android:title="BitcoinAverage BTC/PLN Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCRUBTickerPref"
+                        android:title="BitcoinAverage BTC/RUB Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCSEKTickerPref"
+                        android:title="BitcoinAverage BTC/SEK Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="bitcoinaverageBTCZARTickerPref"
+                        android:title="BitcoinAverage BTC/ZAR Ticker" />
+                </PreferenceScreen>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >

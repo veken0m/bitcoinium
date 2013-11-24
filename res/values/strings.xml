@@ -14,7 +14,7 @@
     <string name="low">Low</string>
     <string name="high">High</string>
     <string name="last">Last</string>
-    <string name="vol">Volume</string>
+    <string name="vol">Vol</string>
     <string name="time">Time</string>
     <string name="widget_button">widgetButton</string>
     
@@ -29,11 +29,14 @@
     <string name="asks">Asks</string>
     <string name="price">Price</string>
     <string name="amount">Amount</string>
+    <string name="bid">Bid</string>
+    <string name="ask">Ask</string>
 
     <!-- Main Menu Button Strings -->
     <string name="refreshButton">Update Widget(s)</string>
     <string name="orderbookButton">OrderBook</string>
     <string name="bitcoinChartsButton">Bitcoin Charts</string>
+    <string name="bitcoinAverageButton">Bitcoin Average</string>
     <string name="minerstatsButton">Miner Stats</string>
     <string name="graphButton">Price Graph</string>
     <string name="exgraphButton">Web Charts</string>
@@ -42,4 +45,5 @@
     <string name="donationAddress">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
     <string name="bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
+    <string name="symbol">Symbol</string>
 </resources>
