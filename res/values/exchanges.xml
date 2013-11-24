@@ -80,7 +80,7 @@
     </string-array>
     <string-array name="BTCEExchange">
         <item>BTC-E</item>
-        <item>com.xeiam.xchange.btce.BTCEExchange</item>
+        <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
         <item>USD</item>
         <item>btcelogo</item>
         <item>btce</item>
@@ -338,7 +338,7 @@
         <item>BTC/EUR</item>
     </string-array>
     
-        <!-- Arrays for BitcoinAverage Currencies -->
+    <!-- Arrays for BitcoinAverage Currencies -->
     <string-array name="bitcoinaveragecurrencies">
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
