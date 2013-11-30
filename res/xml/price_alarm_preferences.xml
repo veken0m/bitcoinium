@@ -392,6 +392,22 @@
                     android:summary="Notification will occur if BTC-E price goes under this threshold"
                     android:title="BTC-E LTC/USD Lower Threshold" />
             </PreferenceScreen>
+            <PreferenceScreen android:title="LTC/EUR" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btceLTCEURUpper"
+                    android:summary="Notification will occur if BTC-E price goes over this threshold"
+                    android:title="BTC-E LTC/EUR Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btceLTCEURLower"
+                    android:summary="Notification will occur if BTC-E price goes under this threshold"
+                    android:title="BTC-E LTC/EUR Lower Threshold" />
+            </PreferenceScreen>
             <PreferenceScreen android:title="LTC/RUR" >
                 <EditTextPreference
                     android:defaultValue="999999"
@@ -423,6 +439,22 @@
                     android:key="btceNMCBTCLower"
                     android:summary="Notification will occur if BTC-E price goes under this threshold"
                     android:title="BTC-E NMC/BTC Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="NMC/USD" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btceNMCUSDUpper"
+                    android:summary="Notification will occur if BTC-E price goes over this threshold"
+                    android:title="BTC-E NMC/USD Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btceNMCUSDLower"
+                    android:summary="Notification will occur if BTC-E price goes under this threshold"
+                    android:title="BTC-E NMC/USD Lower Threshold" />
             </PreferenceScreen>
             <PreferenceScreen android:title="NVC/BTC" >
                 <EditTextPreference
@@ -503,6 +535,22 @@
                     android:key="btcePPCBTCLower"
                     android:summary="Notification will occur if BTC-E price goes under this threshold"
                     android:title="BTC-E PPC/BTC Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="PPC/USD" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btcePPCUSDUpper"
+                    android:summary="Notification will occur if BTC-E price goes over this threshold"
+                    android:title="BTC-E PPC/USD Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="btcePPCUSDLower"
+                    android:summary="Notification will occur if BTC-E price goes under this threshold"
+                    android:title="BTC-E PPC/USD Lower Threshold" />
             </PreferenceScreen>
             <PreferenceScreen android:title="FTC/BTC" >
                 <EditTextPreference

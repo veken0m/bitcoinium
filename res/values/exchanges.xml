@@ -231,6 +231,7 @@
         <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
+        <item>PPC/USD</item>
         <item>FTC/BTC</item>
         <item>XPM/BTC</item>
     </string-array>
@@ -250,6 +251,7 @@
         <item>NVC/USD</item>
         <item>TRC/BTC</item>
         <item>PPC/BTC</item>
+        <item>PPC/USD</item>
         <item>FTC/BTC</item>
         <item>XPM/BTC</item>
     </string-array>

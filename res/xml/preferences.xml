@@ -179,10 +179,10 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
-            <Preference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
-                android:title="EclipseMC alert not yet supported" />
+                android:title="EclipseMC miner down alert" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
@@ -305,12 +305,20 @@
                         android:title="BTC-E LTC/USD Ticker" />
                     <CheckBoxPreference
                         android:defaultValue="false"
+                        android:key="btceLTCEURTickerPref"
+                        android:title="BTC-E LTC/EUR Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
                         android:key="btceLTCRURTickerPref"
                         android:title="BTC-E LTC/RUR Ticker" />
                     <CheckBoxPreference
                         android:defaultValue="false"
                         android:key="btceNMCBTCTickerPref"
                         android:title="BTC-E NMC/BTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="btceNMCUSDTickerPref"
+                        android:title="BTC-E NMC/USD Ticker" />
                     <CheckBoxPreference
                         android:defaultValue="false"
                         android:key="btceUSDRURTickerPref"
@@ -335,6 +343,14 @@
                         android:defaultValue="false"
                         android:key="btceXPMBTCTickerPref"
                         android:title="BTC-E XPM/BTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="btcePPCBTCTickerPref"
+                        android:title="BTC-E PPC/BTC Ticker" />
+                    <CheckBoxPreference
+                        android:defaultValue="false"
+                        android:key="btcePPCUSDTickerPref"
+                        android:title="BTC-E PPC/USD Ticker" />
                 </PreferenceScreen>
 
                 <CheckBoxPreference
