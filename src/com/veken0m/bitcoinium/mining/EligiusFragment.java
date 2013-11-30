@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.eligius.Eligius;
 import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.eligius.TimeInterval;
@@ -132,9 +134,9 @@ public class EligiusFragment extends SherlockFragment {
         }
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Could not retrieve data from "
-                    + "Eligius"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError), "Eligius");
+            builder.setMessage(text);
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -173,8 +175,8 @@ public class EligiusFragment extends SherlockFragment {
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                    confirmed_reward += balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
-                    estimated_reward += balanceData.getExpected().floatValue() / 100000000 + " BTC";
+                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed().floatValue() / 100000000);
+                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected().floatValue() / 100000000);
                 } else {
                     confirmed_reward += "N/A";
                     estimated_reward += "N/A";

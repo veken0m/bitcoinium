@@ -12,7 +12,7 @@
     </PreferenceCategory>
 
     <PreferenceScreen
-        android:summary="Enable notfications when total hashrate is 0 Mh/s"
+        android:summary="Enable notfications when total hashrate is 0 MH/s"
         android:title="Bitcoin Miner Alert" >
         <PreferenceCategory android:title="Miner Widget Settings" >
             <CheckBoxPreference
@@ -31,10 +31,10 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
-            <Preference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
-                android:title="EclipseMC alert not yet supported" />
+                android:title="EclipseMC miner down alert" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"

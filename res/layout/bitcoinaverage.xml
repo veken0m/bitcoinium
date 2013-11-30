@@ -1,50 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bitcoincharts_layout"
+    android:id="@+id/bitcoinaverage_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:stretchColumns="5"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp">
-    
-    <LinearLayout
-        android:id="@+id/currencyFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/currency_header"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Currency Pair Filter" />
-
-        <Spinner
-            android:id="@+id/bitcoincharts_currency_spinner"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
 
     <TableRow>
 
         <TextView
-            android:id="@+id/bitcoincharts_symbol"
+            android:id="@+id/bitcoinaverage_symbol"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#101010"
-            android:text="Symbol"
+            android:text="Sym."
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
         <TextView
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#101010"
-            android:gravity="center_horizontal"
             android:text="@string/last"
+            android:gravity="center_horizontal"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
         <!--
@@ -59,54 +38,35 @@
 
         <TextView
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#101010"
+            android:text="@string/vol"
             android:gravity="center_horizontal"
-            android:text="Vol"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
         <TextView
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#101010"
+            android:text="@string/bid"
             android:gravity="center_horizontal"
-            android:text="@string/low"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
         <TextView
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="@string/high"
+            android:text="@string/ask"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
-        <!--
-        <TextView
-            android:layout_weight="1"
-            android:background="#101010"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:layout_height="fill_parent"
-            android:text="Bid"
-            android:textColor="#33B5E5" />
-
-        <TextView
-            android:layout_weight="1"
-            android:background="#101010"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:layout_height="fill_parent"
-            android:text="Ask"
-            android:textColor="#33B5E5" />
-        -->
     </TableRow>
 
     <ScrollView
-        android:id="@+id/bitcoincharts_tablescroll"
+        android:id="@+id/bitcoinaverage_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -115,7 +75,7 @@
         android:layout_marginRight="2dp" >
 
         <TableLayout
-            android:id="@+id/bitcoincharts_list"
+            android:id="@+id/bitcoinaverage_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:showDividers="beginning"

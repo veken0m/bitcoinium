@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
@@ -118,9 +120,9 @@ public class FiftyBTCFragment extends SherlockFragment {
         }
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Could not retrieve data from "
-                    + "50BTC"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError), "50BTC");
+            builder.setMessage(text);
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -166,11 +168,10 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + data.getUser().getConfirmed_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards());
                 String Hashrate = "Total Hashrate: "
                         + data.getUser().getHash_rate() + " MH/s\n";
-                String Payout = "Total Payout: " + data.getUser().getPayouts()
-                        + " BTC";
+                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts());
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(Payout);

@@ -2,7 +2,7 @@
 <resources>
 	<!--  General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">1.8.2</string>
+    <string name="version_name">1.8.3</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">USD</string>
@@ -14,7 +14,7 @@
     <string name="low">Low</string>
     <string name="high">High</string>
     <string name="last">Last</string>
-    <string name="vol">Volume</string>
+    <string name="vol">Vol</string>
     <string name="time">Time</string>
     <string name="widget_button">widgetButton</string>
     
@@ -29,17 +29,29 @@
     <string name="asks">Asks</string>
     <string name="price">Price</string>
     <string name="amount">Amount</string>
+    <string name="bid">Bid</string>
+    <string name="ask">Ask</string>
+    <string name="orderbook">Orderbook</string>
+    <string name="trades">Trades</string>
 
     <!-- Main Menu Button Strings -->
     <string name="refreshButton">Update Widget(s)</string>
     <string name="orderbookButton">OrderBook</string>
     <string name="bitcoinChartsButton">Bitcoin Charts</string>
+    <string name="bitcoinAverageButton">Bitcoin Average</string>
     <string name="minerstatsButton">Miner Stats</string>
     <string name="graphButton">Price Graph</string>
     <string name="exgraphButton">Web Charts</string>
+    
+    <!-- Error Messages -->
+    <string name="connectionError">Could not retrieve %1$s from %2$s.\n\nCheck internet connection and try again.</string>
+    <string name="minerConnectionError">Could not retrieve data from %1$s.\n\nPlease make sure that your API Token is entered correctly and that internet is working properly.</string>
+    <string name="priceAlarmUpgrade">Bitcoinium Price Alarm upgraded. \nPlease reset your alarms! Sorry for the inconvenience</string>
+    <string name="priceAlarmUpgrade2">Please reset your alarms!\nSorry for the inconvenience</string>
     
     <!--  About Links -->
     <string name="donationAddress">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
     <string name="bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
+    <string name="symbol">Symbol</string>
 </resources>

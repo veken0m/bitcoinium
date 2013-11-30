@@ -9,14 +9,11 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
@@ -25,49 +22,34 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.bitcoinium.utils.Utils;
-import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
-import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.dto.marketdata.Ticker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
-public class BitcoinChartsActivity extends SherlockActivity implements OnItemSelectedListener {
+public class BitcoinAverageActivity extends SherlockActivity {
 
     final static Handler mOrderHandler = new Handler();
-    BitcoinChartsTicker[] marketData;
-    private Spinner spinner;
-    private ArrayAdapter<String> dataAdapter;
-    String currencyFilter = "SHOW ALL";
+    ArrayList<Ticker> tickers = new ArrayList<Ticker>();
+    String[] curr = new String[] {
+            "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
+            "PLN", "RUB", "SEK", "USD", "ZAR"
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bitcoincharts);
+        setContentView(R.layout.bitcoinaverage);
 
-        createCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
         actionbar.show();
 
-        //KarmaAdsUtils.initAd(this);
-        viewBitcoinCharts();
-    }
-    
-    public void createCurrencyDropdown(){
-        // Re-populate the dropdown menu
-        final String[] dropdownValues = {"SHOW ALL",
-                "USD", "CAD", "GBP", "EUR", "CNY", "RUR", "PLN", "JPY", "XRP", "SLL", "AUD", "BRL",
-                "HKD", "SEK", "NOK", "LTC", "SGD", "NZD", "XRP", "ZAR", "CHF", "DKK", "ARS", "MXN",
-                "INR", "THB", "RUB"
-        };
-
-        spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
-        dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, dropdownValues);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        spinner.setOnItemSelectedListener(this);
+        // KarmaAdsUtils.initAd(this);
+        viewBitcoinAverage();
     }
 
     @Override
@@ -83,7 +65,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             startActivity(new Intent(this, PreferencesActivity.class));
         }
         if (item.getItemId() == R.id.action_refresh) {
-            viewBitcoinCharts();
+            viewBitcoinAverage();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -91,18 +73,26 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.bitcoincharts);
-        drawBitcoinChartsUI();
+        setContentView(R.layout.bitcoinaverage);
+        drawBitcoinAverageUI();
     }
-    
 
     /**
-     * Fetch the Bitcoin Charts data
+     * Fetch the Bitcoin Average data
      */
-    public void getBitcoinCharts() {
+    public void getBitcoinAverage() {
         try {
-            marketData = BitcoinChartsFactory.createInstance().getMarketData();
+            tickers.clear();
+
+            for (String currency : curr) {
+                tickers.add(ExchangeFactory.INSTANCE
+                        .createExchange("com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange")
+                        .getPollingMarketDataService()
+                        .getTicker("BTC",currency));
+            }
+
         } catch (Exception e) {
+            tickers = null;
             e.printStackTrace();
         }
     }
@@ -110,9 +100,9 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     /**
      * Draw the Tickers to the screen in a table
      */
-    public void drawBitcoinChartsUI() {
+    public void drawBitcoinAverageUI() {
 
-        final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
+        final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoinaverage_list);
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
         linlaHeaderProgress.setVisibility(View.GONE);
 
@@ -122,21 +112,21 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                 LayoutParams.WRAP_CONTENT, 1f);
 
         try {
+            
             // Sort Tickers by volume
-            Arrays.sort(marketData, new Comparator<BitcoinChartsTicker>() {
-                @Override
-                public int compare(BitcoinChartsTicker entry1,
-                        BitcoinChartsTicker entry2) {
-                    return entry2.getVolume().compareTo(entry1.getVolume());
-                }
-            });
+            Collections.sort(tickers, new
+                    Comparator<Ticker>() {
+                        @Override
+                        public int compare(Ticker entry1, Ticker entry2) {
+                            return entry2.getVolume().compareTo(entry1.getVolume());
+                        }
+                    });
+             
 
-            for (BitcoinChartsTicker data : marketData) {
+            for (Ticker ticker : tickers) {
 
                 // Only print active exchanges... vol > 0
-                if (data.getVolume().intValue() != 0
-                        && (currencyFilter.equalsIgnoreCase("SHOW ALL") || data.getCurrency()
-                                .contains(currencyFilter))) {
+                if (ticker.getVolume().intValue() != 0) {
 
                     final TableRow tr1 = new TableRow(this);
 
@@ -144,33 +134,28 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     final TextView tvLast = new TextView(this);
                     // final TextView tvAvg = new TextView(this);
                     final TextView tvVolume = new TextView(this);
-                    final TextView tvHigh = new TextView(this);
-                    final TextView tvLow = new TextView(this);
-                    // final TextView tvBid = new TextView(this);
-                    // final TextView tvAsk = new TextView(this);
-                    String last = Utils.formatDecimal(data.getClose(), 2, true);
-                    String high = Utils.formatDecimal(data.getHigh(), 2, true);
-                    String low = Utils.formatDecimal(data.getLow(), 2, true);
-                    String vol = Utils.formatDecimal(data.getVolume(), 2, true);
-                    // String avg = Utils.formatDecimal(data.getAvg(), 2, true);
-                    // String bid = Utils.formatDecimal(data.getBid(), 2, true);
-                    // String ask = Utils.formatDecimal(data.getAsk(), 2, true);
+                    final TextView tvBid = new TextView(this);
+                    final TextView tvAsk = new TextView(this);
+                    String last = Utils.formatDecimal(ticker.getLast().getAmount(), 2, true);
+                    String volume = Utils.formatDecimal(ticker.getVolume(), 2, true);
+                    String bid = Utils.formatDecimal(ticker.getBid().getAmount(), 2, true);
+                    String ask = Utils.formatDecimal(ticker.getAsk().getAmount(), 2, true);
 
-                    tvSymbol.setText(data.getSymbol());
+                    tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
                     tvSymbol.setLayoutParams(params);
                     Utils.setTextViewParams(tvLast, last);
-                    Utils.setTextViewParams(tvVolume, vol);
-                    Utils.setTextViewParams(tvLow, low);
-                    Utils.setTextViewParams(tvHigh, high);
+                    Utils.setTextViewParams(tvVolume, volume);
+                    Utils.setTextViewParams(tvBid, bid);
+                    Utils.setTextViewParams(tvAsk, ask);
                     // Utils.setTextViewParams(tvAvg, avg);
                     // Utils.setTextViewParams(tvBid, bid);
                     // Utils.setTextViewParams(tvAsk, ask);
 
                     // Toggle background color
                     if (backGroundColor == Color.BLACK) {
-                          backGroundColor = Color.rgb(31, 31, 31);
+                        backGroundColor = Color.rgb(31, 31, 31);
                     } else {
-                          backGroundColor = Color.BLACK;
+                        backGroundColor = Color.BLACK;
                     }
 
                     tr1.setBackgroundColor(backGroundColor);
@@ -179,10 +164,8 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     tr1.addView(tvLast);
                     // tr1.addView(tvAvg);
                     tr1.addView(tvVolume);
-                    tr1.addView(tvLow);
-                    tr1.addView(tvHigh);
-                    // tr1.addView(tvBid);
-                    // tr1.addView(tvAsk);
+                    tr1.addView(tvBid);
+                    tr1.addView(tvAsk);
                     tr1.setPadding(0, 3, 0, 3);
                     t1.addView(tr1);
 
@@ -195,29 +178,30 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             connectionFailed();
         }
     }
 
-    private void viewBitcoinCharts() {
-        bitcoinchartsThread gt = new bitcoinchartsThread();
+    private void viewBitcoinAverage() {
+        bitcoinaverageThread gt = new bitcoinaverageThread();
         gt.start();
     }
 
-    public class bitcoinchartsThread extends Thread {
+    public class bitcoinaverageThread extends Thread {
 
         @Override
         public void run() {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
+                    TableLayout t1 = (TableLayout) findViewById(R.id.bitcoinaverage_list);
                     t1.removeAllViews();
                     LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
                     linlaHeaderProgress.setVisibility(View.VISIBLE);
                 }
             });
-            getBitcoinCharts();
+            getBitcoinAverage();
             mOrderHandler.post(mGraphView);
         }
     }
@@ -225,7 +209,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            drawBitcoinChartsUI();
+            drawBitcoinAverageUI();
         }
     };
 
@@ -234,7 +218,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         linlaHeaderProgress.setVisibility(View.GONE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         Resources res = getResources();
-        String text = String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts");
+        String text = String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com");
         builder.setMessage(text);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -246,18 +230,5 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-        currencyFilter = (String) parent.getItemAtPosition(pos);
-        viewBitcoinCharts();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // Do nothing
-    }
-    
 
 }

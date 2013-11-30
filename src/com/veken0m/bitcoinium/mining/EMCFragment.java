@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -20,7 +21,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.emc.EMC;
+import com.veken0m.mining.emc.User;
 import com.veken0m.mining.emc.Workers;
 
 import org.apache.http.HttpResponse;
@@ -112,9 +115,9 @@ public class EMCFragment extends SherlockFragment {
         }
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Could not retrieve data from "
-                    + "EMC"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError), "EclipseMC");
+            builder.setMessage(text);
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -156,17 +159,17 @@ public class EMCFragment extends SherlockFragment {
                 tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 // User Data
+                User userData = data.getData().getUser();
                 String ConfirmedRewardsBTC = "Confirmed Rewards: "
-                        + data.getData().getUser().getConfirmed_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards());
                 String UnconfirmedRewardsBTC = "Unconfirmed Rewards: "
-                        + data.getData().getUser().getUnconfirmed_rewards()
-                        + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards());
                 String EstimatedRewardsBTC = "Estimated Rewards: "
-                        + data.getData().getUser().getEstimated_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards());
                 String TotalRewardsBTC = "Total Rewards: "
-                        + data.getData().getUser().getTotal_payout() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getTotal_payout());
                 String BlocksFound = "Blocks Found: "
-                        + data.getData().getUser().getBlocks_found();
+                        + userData.getBlocks_found();
 
                 tvConfirmedRewards.setText(ConfirmedRewardsBTC);
                 tvUnconfirmedRewards.setText(UnconfirmedRewardsBTC);

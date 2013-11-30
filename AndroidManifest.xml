@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.bitcoinium"
-    android:versionCode="46"
+    android:versionCode="48"
     android:versionName="@string/version_name" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/bitcoiniumlogo"
@@ -33,8 +34,8 @@
         </receiver>
 
         <service android:name="com.veken0m.bitcoinium.WidgetProvider$UpdateService" />
-        
-                <receiver
+
+        <receiver
             android:name="com.veken0m.bitcoinium.MinerWidgetProvider"
             android:label="@string/mining_widget_name" >
             <intent-filter>
@@ -67,7 +68,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-                <activity
+        <activity
             android:name="com.veken0m.bitcoinium.MinerWidgetConfigureActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -81,9 +82,15 @@
         </activity>
         <activity
             android:name="com.veken0m.bitcoinium.BitcoinChartsActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Bitcoin Charts" >
+            android:label="Bitcoin Charts"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.veken0m.bitcoinium.BitcoinAverageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="BitcoinAverage.com"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.veken0m.bitcoinium.GraphActivity"
@@ -99,7 +106,7 @@
             android:name="com.veken0m.bitcoinium.PreferencesActivity"
             android:label="Preferences" >
         </activity>
-                <activity
+        <activity
             android:name="com.veken0m.bitcoinium.PriceAlarmPreferencesActivity"
             android:label="Price Alarm Settings" >
         </activity>

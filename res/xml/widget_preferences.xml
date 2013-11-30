@@ -70,6 +70,13 @@
                     android:key="krakenWidgetCurrencyPref"
                     android:summary="Kraken Widget price will be displayed in selected currency"
                     android:title="Kraken Widget Currency" />
+                <ListPreference
+                    android:defaultValue="BTC/USD"
+                    android:entries="@array/bitcoinaveragecurrencies"
+                    android:entryValues="@array/bitcoinaveragecurrenciesvalues"
+                    android:key="bitcoinaverageWidgetCurrencyPref"
+                    android:summary="BitcoinAverage Widget price will be displayed in selected currency"
+                    android:title="BitcoinAverage Widget Currency" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -120,7 +127,7 @@
                     android:title="Extreme Battery Saving Mode" /> -->
             </PreferenceCategory>
             <PreferenceCategory android:title="Customize Widget" >
-                <CheckBoxPreference
+                <SwitchPreference
                     android:defaultValue="false"
                     android:key="enableWidgetCustomizationPref"
                     android:summary="If enabled default settings will be overriden"

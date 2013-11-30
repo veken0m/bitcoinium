@@ -55,6 +55,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         .setEnabled(false);
         ((ListPreference) findPreference("krakenWidgetCurrencyPref"))
         .setEnabled(false);
+        ((ListPreference) findPreference("bitcoinaverageWidgetCurrencyPref"))
+        .setEnabled(false);
         
         // ((ListPreference)
         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
@@ -110,6 +112,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                             .setEnabled(false);
                         ((ListPreference) findPreference("krakenWidgetCurrencyPref"))
                         .setEnabled(false);
+                        ((ListPreference) findPreference("bitcoinaverageWidgetCurrencyPref"))
+                        .setEnabled(false);
                         // ((ListPreference)
                         // findPreference("bitcoincentralWidgetCurrencyPref")).setEnabled(false);
                         // ((ListPreference)
@@ -148,7 +152,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                     exchange = new Exchange(getBaseContext(), pref_widgetExchange);
                 }
 
-                String defaultCurrency = exchange.getMainCurrency();
+                String defaultCurrency = exchange.getDefaultCurrency();
                 String prefix = exchange.getIdentifier();
 
                 String pref_widgetCurrency = prefs.getString(prefix
