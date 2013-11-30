@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Worker;
@@ -178,13 +179,13 @@ public class SlushFragment extends SherlockFragment {
                 // USER INFO
                 String hashrate = "Total Hashrate: " + data.getHashrate() + " MH/s";
                 String confirmed_reward = "Confirmed: "
-                        + data.getConfirmed_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward());
                 String estimated_reward = "Estimated: "
-                        + data.getEstimated_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getEstimated_reward());
                 String confirmed_nmc_reward = "Confirmed: "
                         + data.getConfirmed_nmc_reward() + " NMC";
                 String unconfirmed_reward = "Unconfirmed: "
-                        + data.getUnconfirmed_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward());
                 String unconfirmed_nmc_reward = "Unconfirmed: "
                         + data.getUnconfirmed_nmc_reward() + " NMC";
                 String username = "Username: " + data.getUsername();

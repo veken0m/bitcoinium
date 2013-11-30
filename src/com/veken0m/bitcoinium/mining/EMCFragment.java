@@ -20,7 +20,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.emc.EMC;
+import com.veken0m.mining.emc.User;
 import com.veken0m.mining.emc.Workers;
 
 import org.apache.http.HttpResponse;
@@ -156,17 +158,17 @@ public class EMCFragment extends SherlockFragment {
                 tr5.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 // User Data
+                User userData = data.getData().getUser();
                 String ConfirmedRewardsBTC = "Confirmed Rewards: "
-                        + data.getData().getUser().getConfirmed_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards());
                 String UnconfirmedRewardsBTC = "Unconfirmed Rewards: "
-                        + data.getData().getUser().getUnconfirmed_rewards()
-                        + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards());
                 String EstimatedRewardsBTC = "Estimated Rewards: "
-                        + data.getData().getUser().getEstimated_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards());
                 String TotalRewardsBTC = "Total Rewards: "
-                        + data.getData().getUser().getTotal_payout() + " BTC";
+                        + CurrencyUtils.formatPayout(userData.getTotal_payout());
                 String BlocksFound = "Blocks Found: "
-                        + data.getData().getUser().getBlocks_found();
+                        + userData.getBlocks_found();
 
                 tvConfirmedRewards.setText(ConfirmedRewardsBTC);
                 tvUnconfirmedRewards.setText(UnconfirmedRewardsBTC);

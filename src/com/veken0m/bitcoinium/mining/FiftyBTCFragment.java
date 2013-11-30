@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
@@ -166,11 +167,10 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + data.getUser().getConfirmed_rewards() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards());
                 String Hashrate = "Total Hashrate: "
                         + data.getUser().getHash_rate() + " MH/s\n";
-                String Payout = "Total Payout: " + data.getUser().getPayouts()
-                        + " BTC";
+                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts());
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(Payout);

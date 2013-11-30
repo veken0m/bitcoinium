@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.deepbit.DeepBitData;
 import com.veken0m.mining.deepbit.Worker;
 
@@ -150,11 +151,11 @@ public class DeepBitFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + data.getConfirmed_reward().floatValue() + "BTC";
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward().floatValue());
                 String TotalHashrate = "Total Hashrate: "
                         + data.getHashrate().floatValue() + " MH/s";
                 String TotalPayout = "Total Payout: "
-                        + data.getPayout_history().floatValue() + "BTC";
+                        + CurrencyUtils.formatPayout(data.getPayout_history().floatValue());
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(TotalPayout);

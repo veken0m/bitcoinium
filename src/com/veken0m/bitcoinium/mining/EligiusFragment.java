@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.eligius.Eligius;
 import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.eligius.TimeInterval;
@@ -173,8 +174,8 @@ public class EligiusFragment extends SherlockFragment {
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                    confirmed_reward += balanceData.getConfirmed().floatValue() / 100000000 + " BTC";
-                    estimated_reward += balanceData.getExpected().floatValue() / 100000000 + " BTC";
+                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed().floatValue() / 100000000);
+                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected().floatValue() / 100000000);
                 } else {
                     confirmed_reward += "N/A";
                     estimated_reward += "N/A";

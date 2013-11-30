@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.btcguild.Worker;
@@ -150,8 +151,7 @@ public class BTCGuildFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                String RewardsBTC = "BTC Reward: " + data.getUser().getUnpaid_rewards()
-                        + " BTC";
+                String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards().floatValue());
                 String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
                         + " NMC";
 

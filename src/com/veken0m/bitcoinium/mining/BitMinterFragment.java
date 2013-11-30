@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.bitminter.Workers;
@@ -155,8 +156,7 @@ public class BitMinterFragment extends SherlockFragment {
             tr2.setGravity(Gravity.CENTER_HORIZONTAL);
             tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            String RewardsBTC = "BTC Reward: " + data.getBalances().getBTC()
-                    + " BTC";
+            String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getBTC());
             String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
                     + " NMC";
             String Hashrate = "Total Hashrate: "
