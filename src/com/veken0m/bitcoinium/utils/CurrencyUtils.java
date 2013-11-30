@@ -7,9 +7,6 @@ import com.xeiam.xchange.currency.CurrencyPair;
 
 public class CurrencyUtils {
     
-    // TODO: move this to preferences and let user pick
-    static boolean forceMilliBTC = false;
-    
     public static CurrencyPair stringToCurrencyPair(String pref_currency){
         String baseCurrency = Currencies.BTC;
         String counterCurrency = pref_currency;
@@ -25,11 +22,12 @@ public class CurrencyUtils {
         
         DecimalFormat df = new DecimalFormat("#.#####");
         
-        if(amount < 0.1 || forceMilliBTC){
+        if(amount < 0.0001){
+            return df.format(amount*1000000) + " µBTC";        
+        } else if(amount < 0.1){
             return df.format(amount*1000) + " mBTC";
         } else {
             return df.format(amount) + " BTC";
         }
     }
-
 }

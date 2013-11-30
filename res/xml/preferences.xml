@@ -208,7 +208,7 @@
         <PreferenceScreen
             android:summary="Enable tickers in the notification drawer \n*Note*: Respective widget needs to be active"
             android:title="Notification Drawer Tickers" >
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="enableTickerPref"
                 android:summary="Enables use of notification drawer tickers"

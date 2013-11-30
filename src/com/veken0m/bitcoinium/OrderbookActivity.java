@@ -97,7 +97,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
         prefix = exchange.getIdentifier();
-        readPreferences(getApplicationContext(), prefix, exchange.getMainCurrency());
+        readPreferences(getApplicationContext(), prefix, exchange.getDefaultCurrency());
         
         createCurrencyDropdown();
         viewOrderbook();

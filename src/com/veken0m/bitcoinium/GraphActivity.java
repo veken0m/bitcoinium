@@ -82,7 +82,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
         exchangeName = exchange.getExchangeName();
         xchangeExchange = exchange.getClassName();
-        String defaultCurrency = exchange.getMainCurrency();
+        String defaultCurrency = exchange.getDefaultCurrency();
         prefix = exchange.getIdentifier();
 
         readPreferences(getApplicationContext(), prefix, defaultCurrency);
