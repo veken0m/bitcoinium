@@ -9,9 +9,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
@@ -28,21 +32,41 @@ import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BitcoinChartsActivity extends SherlockActivity {
+public class BitcoinChartsActivity extends SherlockActivity implements OnItemSelectedListener {
 
     final static Handler mOrderHandler = new Handler();
     BitcoinChartsTicker[] marketData;
+    private Spinner spinner;
+    private ArrayAdapter<String> dataAdapter;
+    String currencyFilter = "SHOW ALL";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bitcoincharts);
 
+        createCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
         actionbar.show();
 
         //KarmaAdsUtils.initAd(this);
         viewBitcoinCharts();
+    }
+    
+    public void createCurrencyDropdown(){
+        // Re-populate the dropdown menu
+        final String[] dropdownValues = {"SHOW ALL",
+                "USD", "CAD", "GBP", "EUR", "CNY", "RUR", "PLN", "JPY", "XRP", "SLL", "AUD", "BRL",
+                "HKD", "SEK", "NOK", "LTC", "SGD", "NZD", "XRP", "ZAR", "CHF", "DKK", "ARS", "MXN",
+                "INR", "THB", "RUB"
+        };
+
+        spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
+        dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, dropdownValues);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -69,6 +93,7 @@ public class BitcoinChartsActivity extends SherlockActivity {
         setContentView(R.layout.bitcoincharts);
         drawBitcoinChartsUI();
     }
+    
 
     /**
      * Fetch the Bitcoin Charts data
@@ -108,7 +133,9 @@ public class BitcoinChartsActivity extends SherlockActivity {
             for (BitcoinChartsTicker data : marketData) {
 
                 // Only print active exchanges... vol > 0
-                if (data.getVolume().intValue() != 0) {
+                if (data.getVolume().intValue() != 0
+                        && (currencyFilter.equalsIgnoreCase("SHOW ALL") || data.getCurrency()
+                                .contains(currencyFilter))) {
 
                     final TableRow tr1 = new TableRow(this);
 
@@ -217,5 +244,18 @@ public class BitcoinChartsActivity extends SherlockActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        currencyFilter = (String) parent.getItemAtPosition(pos);
+        viewBitcoinCharts();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // Do nothing
+    }
+    
 
 }
