@@ -305,6 +305,22 @@
         <item>BTC/LTC</item>
         <item>LTC/USD</item>
         <item>LTC/EUR</item>
+        <item>LTC/XRP</item>
+        <item>LTC/KRW</item>
+        <item>NMC/XRP</item>
+        <item>NMC/EUR</item>
+        <item>NMC/KRW</item>
+        <item>NMC/USD</item>
+        <item>BTC/NMC</item>
+        <item>BTC/XRP</item>
+        <item>BTC/XVN</item>
+        <item>BTC/KRW</item>
+        <item>XVN/XRP</item>
+        <item>EUR/XRP</item>
+        <item>EUR/XVN</item>
+        <item>KRW/XRP</item>
+        <item>USD/XRP</item>
+        <item>USD/XVN</item>
     </string-array>
     <string-array name="krakencurrenciesvalues">
         <item>BTC/USD</item>
@@ -312,6 +328,22 @@
         <item>BTC/LTC</item>
         <item>LTC/USD</item>
         <item>LTC/EUR</item>
+        <item>LTC/XRP</item>
+        <item>LTC/KRW</item>
+        <item>NMC/XRP</item>
+        <item>NMC/EUR</item>
+        <item>NMC/KRW</item>
+        <item>NMC/USD</item>
+        <item>BTC/NMC</item>
+        <item>BTC/XRP</item>
+        <item>BTC/XVN</item>
+        <item>BTC/KRW</item>
+        <item>XVN/XRP</item>
+        <item>EUR/XRP</item>
+        <item>EUR/XVN</item>
+        <item>KRW/XRP</item>
+        <item>USD/XRP</item>
+        <item>USD/XVN</item>
     </string-array>
 
     <!-- Arrays for BitcoinCentral Currencies -->

@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="Price Alarm" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="alarmPref"
             android:summary="Enable notifications when price alarm is tripped (widget needs to be active)"
@@ -748,6 +748,262 @@
                     android:summary="Notification will occur if Kraken price goes under this threshold"
                     android:title="Kraken LTC/EUR Lower Threshold" />
             </PreferenceScreen>
+            <PreferenceScreen android:title="LTC/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenLTCXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken LTC/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenLTCXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken LTC/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="LTC/KRW" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenLTCKRWUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken LTC/KRW Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenLTCKRWLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken LTC/KRW Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="NMC/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken NMC/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken NMC/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="NMC/EUR" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCEURUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken NMC/EUR Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCEURLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken NMC/EUR Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="NMC/KRW" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCKRWUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken NMC/KRW Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCKRWLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken NMC/KRW Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="NMC/USD" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCUSDUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken NMC/USD Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenNMCUSDLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken NMC/USD Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="BTC/NMC" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCNMCUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken BTC/NMC Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCNMCLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken BTC/NMC Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="BTC/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken BTC/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken BTC/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="BTC/XVN" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCXVNUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken BTC/XVN Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCXVNLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken BTC/XVN Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="BTC/EUR" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCEURUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken BTC/EUR Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenBTCEURLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken BTC/EUR Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="XVN/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenXVNXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken XVN/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenXVNXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken XVN/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="EUR/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenEURXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken EUR/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenEURXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken EUR/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="EUR/XVN" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenEURXVNUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken EUR/XVN Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenEURXVNLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken EUR/XVN Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="KRW/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenKRWXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken KRW/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenKRWXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken KRW/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="USD/XRP" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenUSDXRPUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken USD/XRP Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenUSDXRPLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken USD/XRP Lower Threshold" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="USD/XVN" >
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenUSDXVNUpper"
+                    android:summary="Notification will occur if Kraken price goes over this threshold"
+                    android:title="Kraken USD/XVN Upper Threshold" />
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="krakenUSDXVNLower"
+                    android:summary="Notification will occur if Kraken price goes under this threshold"
+                    android:title="Kraken USD/XVN Lower Threshold" />
+            </PreferenceScreen>
         </PreferenceScreen>
         <PreferenceScreen android:title="BitcoinAverage alarm thresholds" >
             <PreferenceScreen android:title="BTC/USD" >
@@ -992,8 +1248,8 @@
             </PreferenceScreen>
         </PreferenceScreen>
     </PreferenceCategory>
-</PreferenceScreen>
 
+</PreferenceScreen>
 <!--
         <PreferenceScreen android:title="BitcoinCentral Alarm" >
             <EditTextPreference
@@ -1042,5 +1298,5 @@
                 android:key="bitcoin24Lower"
                 android:summary="Notification will occur if Bitcoin-24 price goes under this threshold"
                 android:title="Bitcoin-24 Lower Threshold" />
-        </PreferenceScreen>
+        </PreferenceScreen>
 -->
