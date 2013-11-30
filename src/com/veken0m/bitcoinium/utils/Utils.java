@@ -58,7 +58,7 @@ public class Utils {
         }
         
         // If too large, remove a digit behind decimal
-        if (amount > 1000 && !includeCurrencyCode) {
+        if (amount >= 1000 && !includeCurrencyCode) {
             numOfDecimals = 1;
         }
 
@@ -83,8 +83,10 @@ public class Utils {
                 || currencyCode.equalsIgnoreCase("RUB")
                 || currencyCode.equalsIgnoreCase("SEK")
                 || currencyCode.equalsIgnoreCase("SGD")
-                || currencyCode.equalsIgnoreCase("CHF") || currencyCode
-                    .equalsIgnoreCase("RUR"))) {
+                || currencyCode.equalsIgnoreCase("XVN")
+                || currencyCode.equalsIgnoreCase("XRP")
+                || currencyCode.equalsIgnoreCase("CHF") 
+                || currencyCode.equalsIgnoreCase("RUR"))) {
             symbol = CurrencyUnit.of(currencyCode).getSymbol();
             symbol = symbol.substring(symbol.length() - 1);
         }

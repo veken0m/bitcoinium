@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -152,8 +153,9 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             } else if (noTradesFound) {
                 createPopup("No recent trades found for this currency. Please try again later.");
             } else {
-                createPopup("Unable to retrieve transactions from "
-                        + exchangeName + ", check your 3G or WiFi connection");
+                Resources res = getResources();
+                String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
+                createPopup(text);
             }
         }
     };

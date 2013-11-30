@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +49,7 @@ import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.service.polling.PollingMarketDataService.OrderBookType;
 
 public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -145,9 +147,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
                     .createExchange(xchangeExchange)
                     .getPollingMarketDataService();
-
-            OrderBook orderbook = marketData.getFullOrderBook(currencyPair.baseCurrency,
-                    currencyPair.counterCurrency);
+            
+            // TODO: Set to partial orderbook when working for all exchanges
+            OrderBook orderbook = marketData.getOrderBook(currencyPair.baseCurrency,
+                    currencyPair.counterCurrency);//, OrderBookType.PARTIAL);
 
             // Limit OrderbookActivity orders drawn to speed up performance
             int length = 0;
@@ -257,10 +260,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                     .floatValue();
             float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-            final String sBidPrice = Utils.formatDecimal(bidPrice, 5, false);
-            final String sBidAmount = Utils.formatDecimal(bidAmount, 2, false);
-            final String sAskPrice = Utils.formatDecimal(askPrice, 5, false);
-            final String sAskAmount = Utils.formatDecimal(askAmount, 2, false);
+            final String sBidPrice = Utils.formatDecimal(bidPrice, 3, false);
+            final String sBidAmount = Utils.formatDecimal(bidAmount, 4, false);
+            final String sAskPrice = Utils.formatDecimal(askPrice, 3, false);
+            final String sAskAmount = Utils.formatDecimal(askAmount, 4, false);
 
             tvBidAmount.setText(sBidAmount + currencySymbolBTC);
             tvBidAmount.setLayoutParams(params);
@@ -442,8 +445,9 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private void connectionFailed() {
         stopLoading();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Could not retrieve orderbook from " + exchangeName
-                + ".\n\nCheck 3G or Wifi connection and try again.");
+        Resources res = getResources();
+        String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.orderbook), exchangeName);
+        builder.setMessage(text);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {

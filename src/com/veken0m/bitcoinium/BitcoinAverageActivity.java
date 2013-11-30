@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,7 +78,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     }
 
     /**
-     * Fetch the Bitcoin Charts data
+     * Fetch the Bitcoin Average data
      */
     public void getBitcoinAverage() {
         try {
@@ -91,6 +92,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
             }
 
         } catch (Exception e) {
+            tickers = null;
             e.printStackTrace();
         }
     }
@@ -215,8 +217,9 @@ public class BitcoinAverageActivity extends SherlockActivity {
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
         linlaHeaderProgress.setVisibility(View.GONE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Could not retrieve data from " + "Bitcoin Charts"
-                + ".\n\nCheck 3G or Wifi connection and try again.");
+        Resources res = getResources();
+        String text = String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com");
+        builder.setMessage(text);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
