@@ -35,26 +35,20 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStreamReader;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class MinerWidgetProvider extends BaseWidgetProvider {
 
-    private static String pref_apiKey;
     private static float hashRate;
     private static float btcBalance;
-    private static Boolean alive;
-    private static int NOTIFY_ID;
-    private static Boolean pref_minerDownAlert;
 
     @Override
     public void onReceive(Context ctxt, Intent intent) {
 
-        if (REFRESH.equals(intent.getAction())) {
+        if (REFRESH.equals(intent.getAction()))
             setMinerWidgetAlarm(ctxt);
-        } else {
-            super.onReceive(ctxt, intent);
-        }
+
+        super.onReceive(ctxt, intent);
     }
 
     @Override
@@ -68,79 +62,46 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
      */
     public static class MinerUpdateService extends IntentService {
 
-        public void buildUpdate(Context context) {
-            AppWidgetManager widgetManager = AppWidgetManager
-                    .getInstance(context);
-            ComponentName widgetComponent = new ComponentName(context,
-                    MinerWidgetProvider.class);
+        public void buildUpdate() {
+            AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
+            ComponentName widgetComponent = new ComponentName(this, MinerWidgetProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
-            readGeneralPreferences(context);
+            readGeneralPreferences(this);
 
-            if (!pref_wifionly || checkWiFiConnected(context)) {
+            if (!pref_wifionly || checkWiFiConnected(this)) {
 
                 for (int appWidgetId : widgetIds) {
-                    
-                    // Load Widget preferences
-                    String pref_miningpool = MinerWidgetConfigureActivity
-                            .loadMiningPoolPref(context, appWidgetId);
 
-                    SharedPreferences prefs = PreferenceManager
-                            .getDefaultSharedPreferences(context);
-                    
-                    PendingIntent pendingIntent;
-                    if (pref_tapToUpdate) {
-                        Intent intent = new Intent(this, MinerWidgetProvider.class);
-                        intent.setAction(REFRESH);
-                        pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
-                    } else {
-                        Intent intent = new Intent(context, MinerStatsActivity.class);
-                        Bundle tabSelection = new Bundle();
-                        tabSelection.putString("poolKey", pref_miningpool);
-                        intent.putExtras(tabSelection);
-                        pendingIntent = PendingIntent.getActivity(
-                                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    }
+                    // Load Widget configuration
+                    String pref_miningpool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
+                            appWidgetId);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                   
+                    RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.minerappwidget);
+                    setTapBehaviour(this, appWidgetId, pref_miningpool, views);
 
-                    RemoteViews views = new RemoteViews(
-                            context.getPackageName(), R.layout.minerappwidget);
-                    views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                            pendingIntent);
-
-
-                    pref_minerDownAlert = prefs.getBoolean(
+                    Boolean pref_minerDownAlert = prefs.getBoolean(
                             pref_miningpool.toLowerCase() + "AlertPref", false);
 
                     if (getMinerInfo(pref_miningpool)) {
-                        // Switch to GH/s if over 3 digits to fit in widget
-                        String hashRateAdjusted;
-                        DecimalFormat df = new DecimalFormat("#0.00");
-                        
-                        if (hashRate > 999) {
-                            hashRateAdjusted = "" + df.format((hashRate / 1000)) + " GH/s";
-                        } else {
-                            hashRateAdjusted = "" + df.format((hashRate)) + " MH/s";
-                        }
 
-                        views.setTextViewText(R.id.widgetMinerHashrate, hashRateAdjusted);
+                        views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, pref_miningpool);
-                        views.setTextViewText(R.id.widgetBTCPayout, CurrencyUtils.formatPayout(btcBalance));
+                        views.setTextViewText(R.id.widgetBTCPayout,
+                                CurrencyUtils.formatPayout(btcBalance));
 
-                        if (!alive && pref_minerDownAlert) {
-                            createMinerDownNotification(context,
-                                    pref_miningpool, NOTIFY_ID * 10);
-                        }
-                        
-                        String refreshedTime = "Upd. @ "
-                                + Utils.getCurrentTime(context);
+                        if (!(hashRate>0.0) && pref_minerDownAlert)
+                            createMinerDownNotification(this, pref_miningpool);
+
+                        String refreshedTime = "Upd. @ " + Utils.getCurrentTime(this);
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
-                        
+
                         updateWidgetTheme(views);
 
                     } else {
                         if (pref_enableWidgetCustomization) {
-                            views.setTextColor(R.id.refreshtime,
-                                    pref_widgetRefreshFailedColor);
+                            views.setTextColor(R.id.refreshtime, pref_widgetRefreshFailedColor);
                         } else {
                             views.setTextColor(R.id.refreshtime, Color.RED);
                         }
@@ -152,21 +113,19 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
         public Boolean getMinerInfo(String miningpool) {
 
-            SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             HttpClient client = new DefaultHttpClient();
             ObjectMapper mapper = new ObjectMapper();
-            
+
             // reset variables
-            btcBalance=0;
-            hashRate=0;
-            alive = true;
+            btcBalance = 0;
+            hashRate = 0;
 
             try {
                 // TODO: fix this ugly mess
                 if (miningpool.equalsIgnoreCase("DeepBit")) {
-                    pref_apiKey = prefs.getString("deepbitKey", "");
+                    String pref_apiKey = prefs.getString("deepbitKey", "");
 
                     HttpGet post = new HttpGet("http://deepbit.net/api/"
                             + pref_apiKey);
@@ -178,12 +137,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             DeepBitData.class);
                     btcBalance = data.getConfirmed_reward().floatValue();
                     hashRate = data.getHashrate().floatValue();
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 1;
                     return true;
-                    
+
                 } else if (miningpool.equalsIgnoreCase("BitMinter")) {
-                    pref_apiKey = prefs.getString("bitminterKey", "");
+                    String pref_apiKey = prefs.getString("bitminterKey", "");
 
                     HttpGet post = new HttpGet(
                             "https://bitminter.com/api/users" + "?key="
@@ -196,13 +153,11 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             BitMinterData.class);
                     btcBalance = data.getBalances().getBTC();
                     hashRate = data.getHash_rate().floatValue();
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 2;
                     return true;
-                    
+
                 } else if (miningpool.equalsIgnoreCase("EclipseMC")) {
 
-                    pref_apiKey = prefs.getString("emcKey", "");
+                    String pref_apiKey = prefs.getString("emcKey", "");
                     HttpGet post = new HttpGet(
                             "https://eclipsemc.com/api.php?key=" + pref_apiKey
                                     + "&action=userstats");
@@ -211,34 +166,31 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     response = client.execute(post);
                     EMC data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), EMC.class);
-                    
+
                     btcBalance = data.getData().getUser()
-                                .getConfirmed_rewards();
-                    
-                    for(int i = 0; i < data.getWorkers().size(); i++){
+                            .getConfirmed_rewards();
+
+                    for (int i = 0; i < data.getWorkers().size(); i++) {
                         String hashRateString = data.getWorkers().get(i).getHash_rate();
                         // EclipseMC hashrate contains units. Strip them off
                         // And convert all GH/s to MH/s
                         float temp_hashRate = 0;
-                        if(!hashRateString.contentEquals(" ")){
+                        if (!hashRateString.contentEquals(" ")) {
                             String hash_rate[] = hashRateString.split(" ");
-                            temp_hashRate = Float.parseFloat(hash_rate[0]); 
-                            if(hash_rate[1].contains("G")){
+                            temp_hashRate = Float.parseFloat(hash_rate[0]);
+                            if (hash_rate[1].contains("G")) {
                                 temp_hashRate *= 1000;
-                            } 
+                            }
                         } else {
                             // empty hashrate, set to 0;
                             temp_hashRate = 0;
                         }
-                        hashRate += temp_hashRate; 
+                        hashRate += temp_hashRate;
                     }
-                                     
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 3;
                     return true;
-                    
+
                 } else if (miningpool.equalsIgnoreCase("Slush")) {
-                    pref_apiKey = prefs.getString("slushKey", "");
+                    String pref_apiKey = prefs.getString("slushKey", "");
 
                     HttpGet post = new HttpGet(
                             "https://mining.bitcoin.cz/accounts/profile/json/"
@@ -248,18 +200,16 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     Slush data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), Slush.class);
                     btcBalance = data.getConfirmed_reward();
-                    
+
                     Workers workers = data.getWorkers();
-                    
-                    for(int i = 0; i < workers.getWorkers().size(); i++){
+
+                    for (int i = 0; i < workers.getWorkers().size(); i++) {
                         hashRate += workers.getWorker(i).getHashrate().floatValue();
                     }
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 4;
                     return true;
-                    
+
                 } else if (miningpool.equalsIgnoreCase("50BTC")) {
-                    pref_apiKey = prefs.getString("50BTCKey", "");
+                    String pref_apiKey = prefs.getString("50BTCKey", "");
 
                     HttpGet post = new HttpGet("https://50btc.com/en/api/"
                             + pref_apiKey + "?text=1");
@@ -270,18 +220,15 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     FiftyBTC.class);
                     btcBalance = data.getUser().getConfirmed_rewards();
                     hashRate = 0.0f;
-                    
+
                     List<Worker> workers = data.getWorkers().getWorkers();
                     for (int i = 0; i < workers.size(); i++) {
                         hashRate += Float.parseFloat(workers.get(i).getHash_rate());
                     }
-                    
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 5;
                     return true;
-                    
+
                 } else if (miningpool.equalsIgnoreCase("BTCGuild")) {
-                    pref_apiKey = prefs.getString("btcguildKey", "");
+                    String pref_apiKey = prefs.getString("btcguildKey", "");
 
                     HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
                             + pref_apiKey);
@@ -292,57 +239,73 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     BTCGuild.class);
                     btcBalance = data.getUser().getUnpaid_rewards().floatValue();
                     hashRate = 0.0f;
-                    
-                    List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers().getWorkers();
+
+                    List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers()
+                            .getWorkers();
                     for (int i = 0; i < workers.size(); i++) {
                         hashRate += workers.get(i).getHash_rate().floatValue();
                     }
-                    
-                    alive = (hashRate>0.0);
-                    NOTIFY_ID = 6;
                     return true;
-                } else if (miningpool.equalsIgnoreCase("Eligius")){
+                } else if (miningpool.equalsIgnoreCase("Eligius")) {
 
-                        pref_apiKey = prefs.getString("eligiusKey", "");
+                    String pref_apiKey = prefs.getString("eligiusKey", "");
 
-                        HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
-                                + pref_apiKey);
-                        HttpResponse response = client.execute(post);
-                        mapper.setSerializationInclusion(Include.NON_NULL);
-                        
-                        Eligius data = mapper
-                                .readValue(new InputStreamReader(response
-                                        .getEntity().getContent(), "UTF-8"),
-                                        Eligius.class);
-                        
-                        hashRate = data.get256().getHashrate().floatValue()/1000000;
-                        
-                        post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
-                                + pref_apiKey);
-                        
-                        EligiusBalance data2 = mapper
-                                .readValue(new InputStreamReader(client.execute(post)
-                                        .getEntity().getContent(), "UTF-8"),
-                                        EligiusBalance.class);
-                        
-                        if(data2.getConfirmed() != null){
-                            btcBalance = data2.getConfirmed().floatValue()/100000000;
-                        }
-    
-                        alive = (hashRate > 0.0);
-                        NOTIFY_ID = 7;
-                        return true;      
+                    HttpGet post = new HttpGet(
+                            "http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
+                                    + pref_apiKey);
+                    HttpResponse response = client.execute(post);
+                    mapper.setSerializationInclusion(Include.NON_NULL);
+
+                    Eligius data = mapper
+                            .readValue(new InputStreamReader(response
+                                    .getEntity().getContent(), "UTF-8"),
+                                    Eligius.class);
+
+                    hashRate = data.get256().getHashrate().floatValue() / 1000000;
+
+                    post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                            + pref_apiKey);
+
+                    EligiusBalance data2 = mapper
+                            .readValue(new InputStreamReader(client.execute(post)
+                                    .getEntity().getContent(), "UTF-8"),
+                                    EligiusBalance.class);
+
+                    if (data2.getConfirmed() != null) {
+                        btcBalance = data2.getConfirmed().floatValue() / 100000000;
+                    }
+                    return true;
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
             return false;
-
         }
         
-        public void updateWidgetTheme(RemoteViews views){
+        private void setTapBehaviour(MinerUpdateService minerUpdateService, int appWidgetId,
+                String poolKey, RemoteViews views) {
+            
+            PendingIntent pendingIntent;
+            if (pref_tapToUpdate) {
+                Intent intent = new Intent(this, MinerWidgetProvider.class);
+                intent.setAction(REFRESH);
+                pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
+            } else {
+                Intent intent = new Intent(this, MinerStatsActivity.class);
+                Bundle tabSelection = new Bundle();
+                tabSelection.putString("poolKey", poolKey);
+                intent.putExtras(tabSelection);
+                pendingIntent = PendingIntent.getActivity(
+                        this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+
+            views.setOnClickPendingIntent(R.id.widgetMinerButton,
+                    pendingIntent); 
+        }
+
+        public void updateWidgetTheme(RemoteViews views) {
             // set the color
             if (pref_enableWidgetCustomization) {
                 views.setInt(R.id.minerwidget_layout,
@@ -355,7 +318,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 views.setTextColor(R.id.refreshtime,
                         pref_widgetRefreshSuccessColor);
                 views.setTextColor(R.id.widgetBTCPayout, pref_secondaryWidgetTextColor);
-                
+
             } else {
                 views.setInt(
                         R.id.minerwidget_layout,
@@ -370,7 +333,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         R.id.widgetMiner,
                         getResources().getColor(
                                 R.color.widgetMainTextColor));
-                
+
                 views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
                 views.setTextColor(R.id.refreshtime, Color.GREEN);
             }
@@ -393,14 +356,16 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
         @Override
         public void onHandleIntent(Intent intent) {
-            buildUpdate(this);
+            buildUpdate();
         }
     }
     
+    
+
     public void onDestoy(Context context) {
         final AlarmManager m = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
-        
+
         m.cancel(widgetMinerWidgetRefreshService);
     }
 

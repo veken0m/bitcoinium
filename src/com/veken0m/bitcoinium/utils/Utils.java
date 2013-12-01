@@ -12,6 +12,7 @@ import com.xeiam.xchange.currency.Currencies;
 import org.joda.money.CurrencyUnit;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 
@@ -129,6 +130,16 @@ public class Utils {
         tv.setText(text);
         tv.setLayoutParams(params);
         tv.setGravity(1);
+    }
+    
+    public static String formatHashrate(float hashRate){
+    
+        DecimalFormat df = new DecimalFormat("#0.00");
+        if (hashRate > 999) {
+            return df.format((hashRate / 1000)) + " GH/s";
+        } else {
+            return df.format((hashRate)) + " MH/s";
+        }
     }
 
     /*

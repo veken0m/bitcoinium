@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
@@ -19,11 +20,12 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
-import android.util.Log;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
-import com.xeiam.xchange.currency.Currencies;
+import com.veken0m.bitcoinium.utils.Utils;
+
+import com.xeiam.xchange.currency.CurrencyPair;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
@@ -34,7 +36,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
      */
     static int pref_widgetRefreshFreq;
     static Boolean pref_priceAlarm;
-    static Boolean pref_displayUpdates;
     static Boolean pref_batterySavingMode;
     static Boolean pref_alarmSound;
     static Boolean pref_alarmVibrate;
@@ -42,10 +43,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static Boolean pref_widgetbidask;
     static Boolean pref_wifionly;
     static Boolean pref_alarmClock;
-    static String pref_main_currency;
-    static String pref_currency;
     static String pref_notificationSound;
-    static Boolean pref_extremePowerSaver;
+    //static Boolean pref_extremePowerSaver;
     static Boolean pref_tapToUpdate;
 
     static int pref_mainWidgetTextColor;
@@ -66,8 +65,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 .getDefaultSharedPreferences(context);
 
         pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
-        pref_main_currency = prefs.getString(prefix + "CurrencyPref",
-                defaultCurrency);
 
         readGeneralPreferences(context);
         readAlarmPreferences(context);
@@ -78,7 +75,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
@@ -117,7 +113,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        pref_displayUpdates = prefs.getBoolean("checkboxPref", false);
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
@@ -215,24 +210,23 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    static void createNotification(Context ctxt, String lastPrice,
-            String exchange, int BITCOIN_NOTIFY_ID, String currencyPair) {
-        String ns = Context.NOTIFICATION_SERVICE;
+    static void createNotification(Context ctxt, float last, String exchange, int NOTIFY_ID,
+            CurrencyPair pair) {
 
-        String baseCurrency = Currencies.BTC;
+        String baseCurrency = pair.baseCurrency;
+        String lastPrice = Utils.formatWidgetMoney(last, pair.counterCurrency, true);
 
-        if (currencyPair.contains("/")) {
-            baseCurrency = currencyPair.substring(0, 3);
-        }
-
-        String tickerText = baseCurrency + " alarm value has been reached! \n"
-                + baseCurrency + " valued at " + lastPrice + " on " + exchange;
-        String contentTitle = baseCurrency + " @ " + lastPrice;
-        String contentText = baseCurrency + " value: " + lastPrice + " on " + exchange;
+        Resources res = ctxt.getResources();
+        String tickerText = String.format(res.getString(R.string.priceTickerNotif), baseCurrency,
+                lastPrice, exchange);
+        String contentTitle = String.format(res.getString(R.string.priceTitleNotif), baseCurrency,
+                lastPrice);
+        String contentText = String.format(res.getString(R.string.priceContentNotif), baseCurrency,
+                lastPrice, exchange);
 
         int icon = R.drawable.bitcoin;
         NotificationManager mNotificationManager = (NotificationManager) ctxt
-                .getSystemService(ns);
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);
 
@@ -244,53 +238,44 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         notification.setLatestEventInfo(ctxt, contentTitle, contentText,
                 contentIntent);
 
-        if (pref_alarmSound) {
+        if (pref_alarmSound)
             notification.sound = Uri.parse(pref_notificationSound);
-        }
 
-        if (pref_alarmVibrate) {
+        if (pref_alarmVibrate)
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-        }
 
-        mNotificationManager.notify(BITCOIN_NOTIFY_ID, notification);
+        mNotificationManager.notify(NOTIFY_ID, notification);
     }
 
-    static void createMinerDownNotification(Context ctxt, String miningpool,
-            int BITCOIN_NOTIFY_ID) {
-        String ns = Context.NOTIFICATION_SERVICE;
+    static void createMinerDownNotification(Context ctxt, String miningpool) {
 
-        String tickerText = "Bitcoin Miner down!";
-        String contentTitle = "Bitcoin miner down";
-        String contentText = "Miner on " + miningpool + " is down";
+        Resources res = ctxt.getResources();
+        String tickerText = res.getString(R.string.minerDownTickerNotif);
+        String contentTitle = res.getString(R.string.minerDownTitleNotif);
+        String contentText = String.format(res.getString(R.string.minerDownContentNotif),
+                miningpool);
 
-        int icon = R.drawable.bitcoin;
-        NotificationManager mNotificationManager = (NotificationManager) ctxt
-                .getSystemService(ns);
-        long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
+        NotificationManager mNotifManager = (NotificationManager) ctxt
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.bitcoin, tickerText,
+                System.currentTimeMillis());
 
-        Intent notificationIntent = new Intent(ctxt, PreferencesActivity.class);
+        Intent notifIntent = new Intent(ctxt, PreferencesActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0, notifIntent, 0);
+        notification.setLatestEventInfo(ctxt, contentTitle, contentText, contentIntent);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
-                notificationIntent, 0);
-
-        notification.setLatestEventInfo(ctxt, contentTitle, contentText,
-                contentIntent);
-
-        if (pref_alarmSound) {
+        if (pref_alarmSound)
             notification.sound = Uri.parse(pref_notificationSound);
-        }
 
-        if (pref_alarmVibrate) {
+        if (pref_alarmVibrate)
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-        }
 
-        mNotificationManager.notify(BITCOIN_NOTIFY_ID * 100, notification);
+        mNotifManager.notify(miningpool.hashCode(), notification);
     }
 
     static void createPermanentNotification(Context ctxt, int icon,
             CharSequence contentTitle, CharSequence contentText,
-            int BITCOIN_NOTIFY_ID) {
+            int NOTIFY_ID) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) ctxt
                 .getSystemService(ns);
@@ -307,14 +292,14 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
         notification.flags |= Notification.FLAG_NO_CLEAR;
 
-        mNotificationManager.notify(100 + BITCOIN_NOTIFY_ID, notification);
+        mNotificationManager.notify(100 + NOTIFY_ID, notification);
     }
 
-    static void removePermanentNotification(Context ctxt, int BITCOIN_NOTIFY_ID) {
+    static void removePermanentNotification(Context ctxt, int NOTIFY_ID) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) ctxt
                 .getSystemService(ns);
-        mNotificationManager.cancel(100 + BITCOIN_NOTIFY_ID);
+        mNotificationManager.cancel(100 + NOTIFY_ID);
     }
 
     static void createTicker(Context ctxt, int icon, CharSequence tickerText) {
