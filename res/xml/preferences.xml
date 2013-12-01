@@ -126,7 +126,7 @@
         android:summary="Choose your own background and text colors"
         android:title="Customize Widget" >
         <PreferenceCategory android:title="Customize Widget" >
-            <SwitchPreference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="enableWidgetCustomizationPref"
                 android:summary="Put the theme into effect."
@@ -208,7 +208,7 @@
         <PreferenceScreen
             android:summary="Enable tickers in the notification drawer \n*Note*: Respective widget needs to be active"
             android:title="Notification Drawer Tickers" >
-            <SwitchPreference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="enableTickerPref"
                 android:summary="Enables use of notification drawer tickers"

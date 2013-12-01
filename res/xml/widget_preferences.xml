@@ -127,7 +127,7 @@
                     android:title="Extreme Battery Saving Mode" /> -->
             </PreferenceCategory>
             <PreferenceCategory android:title="Customize Widget" >
-                <SwitchPreference
+                <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="enableWidgetCustomizationPref"
                     android:summary="If enabled default settings will be overriden"
