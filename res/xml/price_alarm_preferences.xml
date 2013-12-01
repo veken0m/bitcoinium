@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="Price Alarm" >
-        <SwitchPreference
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmPref"
             android:summary="Enable notifications when price alarm is tripped (widget needs to be active)"

@@ -2,7 +2,7 @@
 <resources>
 	<!--  General and Defaults -->
     <string name="app_name">Bitcoinium</string>
-    <string name="version_name">1.8.3</string>
+    <string name="version_name">1.8.4</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">USD</string>
