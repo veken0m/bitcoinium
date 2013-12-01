@@ -5,30 +5,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class User {
-    private Number active_workers;
-    private Number confirmed_rewards;
+    private int active_workers;
+    private float confirmed_rewards;
     private String hash_rate;
-    private Number payouts;
+    private float payouts;
 
     public User(@JsonProperty("active_workers")
-    Number active_workers,
+            int active_workers,
             @JsonProperty("confirmed_rewards")
-            Number confirmed_rewards,
+            float confirmed_rewards,
             @JsonProperty("hash_rate")
             String hash_rate,
             @JsonProperty("payouts")
-            Number payouts) {
+            float payouts) {
         this.active_workers = active_workers;
         this.confirmed_rewards = confirmed_rewards;
         this.hash_rate = hash_rate;
         this.payouts = payouts;
     }
 
-    public Number getActive_workers() {
+    public int getActive_workers() {
         return this.active_workers;
     }
 
-    public Number getConfirmed_rewards() {
+    public float getConfirmed_rewards() {
         return this.confirmed_rewards;
     }
 
@@ -36,7 +36,7 @@ public class User {
         return this.hash_rate;
     }
 
-    public Number getPayouts() {
+    public float getPayouts() {
         return this.payouts;
     }
 }

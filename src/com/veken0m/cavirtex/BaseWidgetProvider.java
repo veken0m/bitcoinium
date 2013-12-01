@@ -65,7 +65,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        
+
         pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
         pref_main_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
@@ -83,7 +83,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
-        //pref_extremePowerSaver = prefs.getBoolean("extremeSaverModePref", false);
+        // pref_extremePowerSaver = prefs.getBoolean("extremeSaverModePref",
+        // false);
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
@@ -93,7 +94,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 "DEFAULT_RINGTONE_URI");
         pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
-        
+
         // Theming preferences
         pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref",
                 R.color.widgetMainTextColor);
@@ -129,7 +130,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
 
     }
-    
+
     static void setPriceWidgetAlarm(Context context) {
         readAlarmPreferences(context);
 
@@ -143,17 +144,19 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         }
 
         int alarmType = AlarmManager.RTC_WAKEUP;
-        if(pref_batterySavingMode){alarmType = AlarmManager.RTC;}
-        
+        if (pref_batterySavingMode) {
+            alarmType = AlarmManager.RTC;
+        }
+
         final Calendar TIME = Calendar.getInstance();
         TIME.set(Calendar.MINUTE, 0);
         TIME.set(Calendar.SECOND, 0);
         TIME.set(Calendar.MILLISECOND, 0);
-        
+
         alarmManager.setRepeating(alarmType, TIME.getTimeInMillis(),
-                    1000 * pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
+                1000 * pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
     }
-    
+
     static void setMinerWidgetAlarm(Context context) {
         readAlarmPreferences(context);
 
@@ -165,17 +168,19 @@ public class BaseWidgetProvider extends AppWidgetProvider {
             widgetMinerWidgetRefreshService = PendingIntent.getService(context, 5,
                     intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
         }
-        
+
         final Calendar TIME = Calendar.getInstance();
         TIME.set(Calendar.MINUTE, 0);
         TIME.set(Calendar.SECOND, 0);
         TIME.set(Calendar.MILLISECOND, 0);
 
         int alarmType = AlarmManager.RTC_WAKEUP;
-        if(pref_batterySavingMode){alarmType = AlarmManager.RTC;}
-        
+        if (pref_batterySavingMode) {
+            alarmType = AlarmManager.RTC;
+        }
+
         alarmManager.setRepeating(alarmType, TIME.getTimeInMillis(),
-                    1000 * pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
+                1000 * pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
     }
 
     static void setAlarmClock(Context context) {
@@ -202,8 +207,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         try {
             ConnectivityManager connMgr = (ConnectivityManager) ctxt
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifi = connMgr
-                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
             return (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
         } catch (Exception e) {

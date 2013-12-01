@@ -17,6 +17,7 @@ import android.widget.RemoteViews;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.cavirtex.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
@@ -42,8 +43,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
     private static String pref_apiKey;
     private static float hashRate;
-    private static String hashRateString = "";
-    private static String btcBalance;
+    private static float btcBalance;
     private static Boolean alive;
     private static int NOTIFY_ID;
     private static Boolean pref_minerDownAlert;
@@ -123,15 +123,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             hashRateAdjusted = "" + df.format((hashRate)) + " MH/s";
                         }
 
-                        if (pref_miningpool.equalsIgnoreCase("EclipseMC")) {
-                        	views.setTextViewText(R.id.widgetMinerHashrate, hashRateString);
-                        } else {
-                        	views.setTextViewText(R.id.widgetMinerHashrate, hashRateAdjusted);
-                        }
-                        
+                        views.setTextViewText(R.id.widgetMinerHashrate, hashRateAdjusted);
                         views.setTextViewText(R.id.widgetMiner, pref_miningpool);
-                        views.setTextViewText(R.id.widgetBTCPayout, btcBalance
-                                + " BTC");
+                        views.setTextViewText(R.id.widgetBTCPayout, CurrencyUtils.formatPayout(btcBalance));
 
                         if (!alive && pref_minerDownAlert) {
                             createMinerDownNotification(context,
@@ -166,7 +160,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             ObjectMapper mapper = new ObjectMapper();
             
             // reset variables
-            btcBalance="";
+            btcBalance=0;
             hashRate=0;
             alive = true;
 
@@ -183,7 +177,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     DeepBitData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             DeepBitData.class);
-                    btcBalance = data.getConfirmed_reward().toString();
+                    btcBalance = data.getConfirmed_reward().floatValue();
                     hashRate = data.getHashrate().floatValue();
                     alive = (hashRate>0.0);
                     NOTIFY_ID = 1;
@@ -201,7 +195,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     BitMinterData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             BitMinterData.class);
-                    btcBalance = "" + data.getBalances().getBTC();
+                    btcBalance = data.getBalances().getBTC();
                     hashRate = data.getHash_rate().floatValue();
                     alive = (hashRate>0.0);
                     NOTIFY_ID = 2;
@@ -218,11 +212,29 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     response = client.execute(post);
                     EMC data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), EMC.class);
+                    
                     btcBalance = data.getData().getUser()
-                            .getConfirmed_rewards();
-                    hashRateString = data.getWorkers().get(0).getHash_rate();
-                    hashRate = 0.0f;
-                    alive = true;
+                                .getConfirmed_rewards();
+                    
+                    for(int i = 0; i < data.getWorkers().size(); i++){
+                        String hashRateString = data.getWorkers().get(i).getHash_rate();
+                        // EclipseMC hashrate contains units. Strip them off
+                        // And convert all GH/s to MH/s
+                        float temp_hashRate = 0;
+                        if(!hashRateString.contentEquals(" ")){
+                            String hash_rate[] = hashRateString.split(" ");
+                            temp_hashRate = Float.parseFloat(hash_rate[0]); 
+                            if(hash_rate[1].contains("G")){
+                                temp_hashRate *= 1000;
+                            } 
+                        } else {
+                            // empty hashrate, set to 0;
+                            temp_hashRate = 0;
+                        }
+                        hashRate += temp_hashRate; 
+                    }
+                                     
+                    alive = (hashRate>0.0);
                     NOTIFY_ID = 3;
                     return true;
                     
@@ -257,8 +269,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             .readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     FiftyBTC.class);
-                    btcBalance = data.getUser().getConfirmed_rewards()
-                            .toString();
+                    btcBalance = data.getUser().getConfirmed_rewards();
                     hashRate = 0.0f;
                     
                     List<Worker> workers = data.getWorkers().getWorkers();
@@ -280,8 +291,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             .readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     BTCGuild.class);
-                    btcBalance = data.getUser().getUnpaid_rewards()
-                            .toString();
+                    btcBalance = data.getUser().getUnpaid_rewards().floatValue();
                     hashRate = 0.0f;
                     
                     List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers().getWorkers();
@@ -317,9 +327,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                         EligiusBalance.class);
                         
                         if(data2.getConfirmed() != null){
-                            btcBalance = "" + data2.getConfirmed().floatValue()/100000000;
-                        } else {
-                            btcBalance = "N/A";
+                            btcBalance = data2.getConfirmed().floatValue()/100000000;
                         }
     
                         alive = (hashRate > 0.0);

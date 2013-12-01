@@ -38,7 +38,7 @@ public class Exchange {
         return class_name;
     }
 
-    public String getMainCurrency() {
+    public String getDefaultCurrency() {
 
         return main_currency;
     }

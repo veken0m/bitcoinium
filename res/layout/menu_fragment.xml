@@ -27,6 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/bitcoinChartsButton" />
+    
+    <Button
+        android:id="@+id/bitcoinaverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/bitcoinAverageButton" />
 
     <Button
         android:id="@+id/minerstats"

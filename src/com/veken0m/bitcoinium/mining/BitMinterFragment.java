@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.cavirtex.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.bitminter.Workers;
@@ -118,9 +120,9 @@ public class BitMinterFragment extends SherlockFragment {
         }
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Could not retrieve data from "
-                    + "BitMinter"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError), "BitMinter");
+            builder.setMessage(text);
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -155,8 +157,7 @@ public class BitMinterFragment extends SherlockFragment {
             tr2.setGravity(Gravity.CENTER_HORIZONTAL);
             tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            String RewardsBTC = "BTC Reward: " + data.getBalances().getBTC()
-                    + " BTC";
+            String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getBTC());
             String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
                     + " NMC";
             String Hashrate = "Total Hashrate: "

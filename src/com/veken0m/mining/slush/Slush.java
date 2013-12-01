@@ -8,18 +8,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Slush {
-    private String confirmed_nmc_reward;
-    private String confirmed_reward;
-    private String estimated_reward;
-    private String hashrate;
+    private float confirmed_nmc_reward;
+    private float confirmed_reward;
+    private float estimated_reward;
+    private float hashrate;
     @JsonIgnore
-    private String nmc_send_threshold;
+    private float nmc_send_threshold;
     @JsonIgnore
     private String rating;
     @JsonIgnore
-    private String send_threshold;
-    private String unconfirmed_nmc_reward;
-    private String unconfirmed_reward;
+    private float send_threshold;
+    private float unconfirmed_nmc_reward;
+    private float unconfirmed_reward;
     private String username;
     @JsonIgnore
     private String wallet;
@@ -27,17 +27,17 @@ public class Slush {
 
     public Slush(
             @JsonProperty("confirmed_nmc_reward")
-            String confirmed_nmc_reward,
+            float confirmed_nmc_reward,
             @JsonProperty("confirmed_reward")
-            String confirmed_reward,
+            float confirmed_reward,
             @JsonProperty("estimated_reward")
-            String estimated_reward,
+            float estimated_reward,
             @JsonProperty("hashrate")
-            String hashrate,
+            float hashrate,
             @JsonProperty("unconfirmed_nmc_reward")
-            String unconfirmed_nmc_reward,
+            float unconfirmed_nmc_reward,
             @JsonProperty("unconfirmed_reward")
-            String unconfirmed_reward,
+            float unconfirmed_reward,
             @JsonProperty("username")
             String username,
             @JsonProperty("workers")
@@ -52,23 +52,23 @@ public class Slush {
         this.workers = workers;
     }
 
-    public String getConfirmed_nmc_reward() {
+    public float getConfirmed_nmc_reward() {
         return this.confirmed_nmc_reward;
     }
 
-    public String getConfirmed_reward() {
+    public float getConfirmed_reward() {
         return this.confirmed_reward;
     }
 
-    public String getEstimated_reward() {
+    public float getEstimated_reward() {
         return this.estimated_reward;
     }
 
-    public String getHashrate() {
+    public float getHashrate() {
         return this.hashrate;
     }
 
-    public String getNmc_send_threshold() {
+    public float getNmc_send_threshold() {
         return this.nmc_send_threshold;
     }
 
@@ -76,19 +76,19 @@ public class Slush {
         return this.rating;
     }
 
-    public String getSend_threshold() {
+    public float getSend_threshold() {
         return this.send_threshold;
     }
 
-    public String getUnconfirmed_nmc_reward() {
+    public float getUnconfirmed_nmc_reward() {
         return this.unconfirmed_nmc_reward;
     }
 
-    public void setUnconfirmed_nmc_reward(String unconfirmed_nmc_reward) {
+    public void setUnconfirmed_nmc_reward(float unconfirmed_nmc_reward) {
         this.unconfirmed_nmc_reward = unconfirmed_nmc_reward;
     }
 
-    public String getUnconfirmed_reward() {
+    public float getUnconfirmed_reward() {
         return this.unconfirmed_reward;
     }
 

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.cavirtex.R;
+import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Worker;
@@ -121,9 +123,9 @@ public class SlushFragment extends SherlockFragment {
         }
         if (connectionFail) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Could not retrieve data from "
-                    + "Slush"
-                    + "\n\nPlease make sure that your API Token is entered correctly and that 3G or Wifi is working properly.");
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError), "Slush");
+            builder.setMessage(text);
             builder.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -178,13 +180,13 @@ public class SlushFragment extends SherlockFragment {
                 // USER INFO
                 String hashrate = "Total Hashrate: " + data.getHashrate() + " MH/s";
                 String confirmed_reward = "Confirmed: "
-                        + data.getConfirmed_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward());
                 String estimated_reward = "Estimated: "
-                        + data.getEstimated_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getEstimated_reward());
                 String confirmed_nmc_reward = "Confirmed: "
                         + data.getConfirmed_nmc_reward() + " NMC";
                 String unconfirmed_reward = "Unconfirmed: "
-                        + data.getUnconfirmed_reward() + " BTC";
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward());
                 String unconfirmed_nmc_reward = "Unconfirmed: "
                         + data.getUnconfirmed_nmc_reward() + " NMC";
                 String username = "Username: " + data.getUsername();

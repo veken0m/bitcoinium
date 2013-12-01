@@ -62,7 +62,7 @@
                 android:key="bitcurexCurrencyPref"
                 android:summary="Bitcurex price will be displayed in this currency"
                 android:title="Bitcurex Currency" />
-             <ListPreference
+            <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/krakencurrencies"
                 android:entryValues="@array/krakencurrenciesvalues"
@@ -105,16 +105,19 @@
                     android:key="refreshPref"
                     android:summary="Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain \n "
                     android:title="Widget Update Interval" />
+
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wakeupPref"
                     android:summary="Disable updates when screen is off"
                     android:title="Battery Saving Mode" />
-<!--                 <CheckBoxPreference
+                <!--
+                     <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="extremeSaverModePref"
                     android:summary="Widget will have to be manually refreshed"
-                    android:title="Extreme Battery Saving Mode" /> -->
+                    android:title="Extreme Battery Saving Mode" />
+                -->
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -123,7 +126,7 @@
         android:summary="Choose your own background and text colors"
         android:title="Customize Widget" >
         <PreferenceCategory android:title="Customize Widget" >
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="enableWidgetCustomizationPref"
                 android:summary="Put the theme into effect."
@@ -179,10 +182,10 @@
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
                 android:title="50BTC miner down alert" />
-            <Preference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
-                android:title="EclipseMC alert not yet supported" />
+                android:title="EclipseMC miner down alert" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
@@ -205,182 +208,330 @@
         <PreferenceScreen
             android:summary="Enable tickers in the notification drawer \n*Note*: Respective widget needs to be active"
             android:title="Notification Drawer Tickers" >
-               <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="enableTickerPref"
-                        android:title="Enable Tickers"
-                        android:summary="Enables use of notification drawer tickers" />
-                <PreferenceScreen android:title="MtGox Tickers" >
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCUSDTickerPref"
-                        android:title="MtGox BTC/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCAUDTickerPref"
-                        android:title="MtGox BTC/AUD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCCADTickerPref"
-                        android:title="MtGox BTC/CAD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCGBPTickerPref"
-                        android:title="MtGox BTC/GBP Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCCNYTickerPref"
-                        android:title="MtGox BTC/CNY Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCDKKTickerPref"
-                        android:title="MtGox BTC/DKK Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCEURTickerPref"
-                        android:title="MtGox BTC/EUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCCHFTickerPref"
-                        android:title="MtGox BTC/CHF Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCHKDTickerPref"
-                        android:title="MtGox BTC/HKD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCJPYTickerPref"
-                        android:title="MtGox BTC/JPY Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCNZDTickerPref"
-                        android:title="MtGox BTC/NZD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCPLNTickerPref"
-                        android:title="MtGox BTC/PLN Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCRUBTickerPref"
-                        android:title="MtGox BTC/RUB Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCSEKTickerPref"
-                        android:title="MtGox BTC/SEK Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCSGDTickerPref"
-                        android:title="MtGox BTC/SGD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="mtgoxBTCTHBTickerPref"
-                        android:title="MtGox BTC/THB Ticker" />
-                </PreferenceScreen>
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="enableTickerPref"
+                android:summary="Enables use of notification drawer tickers"
+                android:title="Enable Tickers" />
 
+            <PreferenceScreen android:title="MtGox Tickers" >
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="virtexBTCCADTickerPref"
-                    android:title="VirtEx BTC/CAD Ticker" />
+                    android:key="mtgoxBTCUSDTickerPref"
+                    android:title="MtGox BTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCAUDTickerPref"
+                    android:title="MtGox BTC/AUD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCCADTickerPref"
+                    android:title="MtGox BTC/CAD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCGBPTickerPref"
+                    android:title="MtGox BTC/GBP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCCNYTickerPref"
+                    android:title="MtGox BTC/CNY Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCDKKTickerPref"
+                    android:title="MtGox BTC/DKK Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCEURTickerPref"
+                    android:title="MtGox BTC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCCHFTickerPref"
+                    android:title="MtGox BTC/CHF Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCHKDTickerPref"
+                    android:title="MtGox BTC/HKD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCJPYTickerPref"
+                    android:title="MtGox BTC/JPY Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCNZDTickerPref"
+                    android:title="MtGox BTC/NZD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCPLNTickerPref"
+                    android:title="MtGox BTC/PLN Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCRUBTickerPref"
+                    android:title="MtGox BTC/RUB Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCSEKTickerPref"
+                    android:title="MtGox BTC/SEK Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCSGDTickerPref"
+                    android:title="MtGox BTC/SGD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="mtgoxBTCTHBTickerPref"
+                    android:title="MtGox BTC/THB Ticker" />
+            </PreferenceScreen>
 
-                <PreferenceScreen android:title="BTC-E Tickers" >
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceBTCUSDTickerPref"
-                        android:title="BTC-E BTC/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceBTCEURTickerPref"
-                        android:title="BTC-E BTC/EUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceBTCRURTickerPref"
-                        android:title="BTC-E BTC/RUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceLTCBTCTickerPref"
-                        android:title="BTC-E LTC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceLTCUSDTickerPref"
-                        android:title="BTC-E LTC/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceLTCRURTickerPref"
-                        android:title="BTC-E LTC/RUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceNMCBTCTickerPref"
-                        android:title="BTC-E NMC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceUSDRURTickerPref"
-                        android:title="BTC-E USD/RUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceEURUSDTickerPref"
-                        android:title="BTC-E EUR/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceNVCBTCTickerPref"
-                        android:title="BTC-E NVC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceTRCBTCTickerPref"
-                        android:title="BTC-E TRC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceFTCBTCTickerPref"
-                        android:title="BTC-E FTC/BTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="btceXPMBTCTickerPref"
-                        android:title="BTC-E XPM/BTC Ticker" />
-                </PreferenceScreen>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="virtexBTCCADTickerPref"
+                android:title="VirtEx BTC/CAD Ticker" />
 
+            <PreferenceScreen android:title="BTC-E Tickers" >
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="bitstampBTCUSDTickerPref"
-                    android:title="Bitstamp BTC/USD Ticker" />
+                    android:key="btceBTCUSDTickerPref"
+                    android:title="BTC-E BTC/USD Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="campbxBTCUSDTickerPref"
-                    android:title="CampBX BTC/USD Ticker" />
+                    android:key="btceBTCEURTickerPref"
+                    android:title="BTC-E BTC/EUR Ticker" />
                 <CheckBoxPreference
                     android:defaultValue="false"
-                    android:key="btcchinaBTCCNYTickerPref"
-                    android:title="BTC China BTC/CNY Ticker" />               
-                <PreferenceScreen android:title="Bitcurex Tickers" >
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="bitcurexBTCPLNTickerPref"
-                        android:title="Bitcurex BTC/PLN Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="bitcurexBTCEURTickerPref"
-                        android:title="Bitcurex BTC/EUR Ticker" />
-                </PreferenceScreen>
-                <PreferenceScreen android:title="Kraken Tickers" >
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="krakenBTCUSDTickerPref"
-                        android:title="Kraken BTC/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="krakenBTCEURTickerPref"
-                        android:title="Kraken BTC/EUR Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="krakenBTCLTCTickerPref"
-                        android:title="Kraken BTC/LTC Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="krakenLTCUSDTickerPref"
-                        android:title="Kraken LTC/USD Ticker" />
-                    <CheckBoxPreference
-                        android:defaultValue="false"
-                        android:key="krakenLTCEURTickerPref"
-                        android:title="Kraken LTC/EUR Ticker" />
-                </PreferenceScreen>
+                    android:key="btceBTCRURTickerPref"
+                    android:title="BTC-E BTC/RUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceLTCBTCTickerPref"
+                    android:title="BTC-E LTC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceLTCUSDTickerPref"
+                    android:title="BTC-E LTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceLTCEURTickerPref"
+                    android:title="BTC-E LTC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceLTCRURTickerPref"
+                    android:title="BTC-E LTC/RUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceNMCBTCTickerPref"
+                    android:title="BTC-E NMC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceNMCUSDTickerPref"
+                    android:title="BTC-E NMC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceUSDRURTickerPref"
+                    android:title="BTC-E USD/RUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceEURUSDTickerPref"
+                    android:title="BTC-E EUR/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceNVCBTCTickerPref"
+                    android:title="BTC-E NVC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceTRCBTCTickerPref"
+                    android:title="BTC-E TRC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceFTCBTCTickerPref"
+                    android:title="BTC-E FTC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btceXPMBTCTickerPref"
+                    android:title="BTC-E XPM/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btcePPCBTCTickerPref"
+                    android:title="BTC-E PPC/BTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="btcePPCUSDTickerPref"
+                    android:title="BTC-E PPC/USD Ticker" />
+            </PreferenceScreen>
+
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="bitstampBTCUSDTickerPref"
+                android:title="Bitstamp BTC/USD Ticker" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="campbxBTCUSDTickerPref"
+                android:title="CampBX BTC/USD Ticker" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="btcchinaBTCCNYTickerPref"
+                android:title="BTC China BTC/CNY Ticker" />
+
+            <PreferenceScreen android:title="Bitcurex Tickers" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcurexBTCPLNTickerPref"
+                    android:title="Bitcurex BTC/PLN Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcurexBTCEURTickerPref"
+                    android:title="Bitcurex BTC/EUR Ticker" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="Kraken Tickers" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCUSDTickerPref"
+                    android:title="Kraken BTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCEURTickerPref"
+                    android:title="Kraken BTC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCLTCTickerPref"
+                    android:title="Kraken BTC/LTC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenLTCUSDTickerPref"
+                    android:title="Kraken LTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenLTCEURTickerPref"
+                    android:title="Kraken LTC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenLTCXRPTickerPref"
+                    android:title="Kraken LTC/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenLTCKRWTickerPref"
+                    android:title="Kraken LTC/KRW Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenNMCXRPTickerPref"
+                    android:title="Kraken NMC/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenNMCEURTickerPref"
+                    android:title="Kraken NMC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenNMCKRWTickerPref"
+                    android:title="Kraken NMC/KRW Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenNMCUSDTickerPref"
+                    android:title="Kraken NMC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCNMCTickerPref"
+                    android:title="Kraken BTC/NMC Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCXRPTickerPref"
+                    android:title="Kraken BTC/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCXVNTickerPref"
+                    android:title="Kraken BTC/XVN Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenBTCKRWTickerPref"
+                    android:title="Kraken BTC/KRW Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenXVNXRPTickerPref"
+                    android:title="Kraken XVN/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenEURXRPTickerPref"
+                    android:title="Kraken EUR/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenEURXVNTickerPref"
+                    android:title="Kraken EUR/XVN Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenKRWXRPTickerPref"
+                    android:title="Kraken KRW/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenUSDXRPTickerPref"
+                    android:title="Kraken USD/XRP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="krakenUSDXVNTickerPref"
+                    android:title="Kraken USD/XVN Ticker" />
+            </PreferenceScreen>
+            <PreferenceScreen android:title="BitcoinAverage Tickers" >
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCUSDTickerPref"
+                    android:title="BitcoinAverage BTC/USD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCEURTickerPref"
+                    android:title="BitcoinAverage BTC/EUR Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCAUDTickerPref"
+                    android:title="BitcoinAverage BTC/AUD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCCNYTickerPref"
+                    android:title="BitcoinAverage BTC/CNY Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCCADTickerPref"
+                    android:title="BitcoinAverage BTC/CAD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCBRLTickerPref"
+                    android:title="BitcoinAverage BTC/BRL Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCGBPTickerPref"
+                    android:title="BitcoinAverage BTC/GBP Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCCZKTickerPref"
+                    android:title="BitcoinAverage BTC/CZK Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCILSTickerPref"
+                    android:title="BitcoinAverage BTC/ILS Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCNOKTickerPref"
+                    android:title="BitcoinAverage BTC/NOK Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCJPYTickerPref"
+                    android:title="BitcoinAverage BTC/JPY Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCNZDTickerPref"
+                    android:title="BitcoinAverage BTC/NZD Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCPLNTickerPref"
+                    android:title="BitcoinAverage BTC/PLN Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCRUBTickerPref"
+                    android:title="BitcoinAverage BTC/RUB Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCSEKTickerPref"
+                    android:title="BitcoinAverage BTC/SEK Ticker" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="bitcoinaverageBTCZARTickerPref"
+                    android:title="BitcoinAverage BTC/ZAR Ticker" />
+            </PreferenceScreen>
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="Miner Stats Settings" >
@@ -413,12 +564,12 @@
                     android:key="50BTCKey"
                     android:summary="Enter your 50BTC API token to use MinerStats"
                     android:title="50BTC API token" />
-                 <EditTextPreference
+                <EditTextPreference
                     android:defaultValue=""
                     android:key="btcguildKey"
                     android:summary="Enter your BTCGuild API token to use MinerStats"
                     android:title="BTCGuild API token" />
-                 <EditTextPreference
+                <EditTextPreference
                     android:defaultValue=""
                     android:key="eligiusKey"
                     android:summary="Enter your Eligius BTC token to use MinerStats \n *NOTE* - The token is case sensitive!"
@@ -444,7 +595,6 @@
                     android:key="orderbookLimiterPref"
                     android:summary="Limit values printed on screen to improve performance"
                     android:title="OrderBook list length limit" />
-                         
             </PreferenceCategory>
             <PreferenceCategory android:title="Liquidity Highlighting" >
                 <CheckBoxPreference
