@@ -2,6 +2,8 @@
 package com.veken0m.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -9,10 +11,15 @@ import android.widget.TextView;
 
 import org.joda.money.CurrencyUnit;
 
+import com.xeiam.xchange.currency.Currencies;
+import com.xeiam.xchange.currency.CurrencyPair;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Utils {
 
@@ -43,28 +50,29 @@ public class Utils {
         }
     }
 
-    public static String formatWidgetMoney(float amount, String currencyCode,
-            boolean includeCurrencyCode) {
+    public static String formatWidgetMoney(float amount, CurrencyPair pair,
+            boolean includeCurrencyCode, boolean displayInMilliBtc) {
 
-        String symbol = getCurrencySymbol(currencyCode);
+        String symbol = getCurrencySymbol(pair.counterCurrency);
         int numOfDecimals = 2;
-
-        if (includeCurrencyCode) {
-            currencyCode = " " + currencyCode;
-        } else {
-            currencyCode = "";
+        
+        // If BTC and user wants price in mBTC
+        if (displayInMilliBtc && pair.baseCurrency.equalsIgnoreCase(Currencies.BTC)) {
+            amount /= 1000;
+            numOfDecimals = 3;
         }
+        
+        String currencyCode = (includeCurrencyCode) ? " " + pair.counterCurrency : "";
+            
+            // If too large, remove a digit behind decimal
+            if (amount >= 1000 && !includeCurrencyCode)
+                numOfDecimals--;
 
-        // If too large, remove a digit behind decimal
-        if (amount >= 1000 && !includeCurrencyCode) {
-            numOfDecimals = 1;
-        }
-
-        // If too small, scale the value
-        if (amount < 0.1) {
-            amount *= 1000;
-            currencyCode = currencyCode.replace(" ", " m");
-        }
+            // If too small, scale the value
+            if (amount < 0.1) {
+                amount *= 1000;
+                currencyCode = currencyCode.replace(" ", " m");
+            }
 
         return symbol + formatDecimal(amount, numOfDecimals, false) + currencyCode;
     }
@@ -72,19 +80,10 @@ public class Utils {
     public static String getCurrencySymbol(String currencyCode) {
 
         String symbol = "";
+        
+        List<String> ignoredCurrencies =  Arrays.asList("DKK","BTC","LTC","NMC","PLN","RUB","SEK","SGD","XVN","XRP","CHF","RUR");
 
-        if (!(currencyCode.equalsIgnoreCase("DKK")
-                || currencyCode.equalsIgnoreCase("BTC")
-                || currencyCode.equalsIgnoreCase("LTC")
-                || currencyCode.equalsIgnoreCase("NMC")
-                || currencyCode.equalsIgnoreCase("PLN")
-                || currencyCode.equalsIgnoreCase("RUB")
-                || currencyCode.equalsIgnoreCase("SEK")
-                || currencyCode.equalsIgnoreCase("SGD")
-                || currencyCode.equalsIgnoreCase("XVN")
-                || currencyCode.equalsIgnoreCase("XRP")
-                || currencyCode.equalsIgnoreCase("CHF")
-                || currencyCode.equalsIgnoreCase("RUR"))) {
+        if (!(ignoredCurrencies.contains(currencyCode))) {
             symbol = CurrencyUnit.of(currencyCode).getSymbol();
             symbol = symbol.substring(symbol.length() - 1);
         }

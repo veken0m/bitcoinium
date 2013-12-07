@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -54,6 +55,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
 
             readGeneralPreferences(this);
+            notifyUserOfMilli(this);
 
             if (!pref_wifionly || checkWiFiConnected(this)) {
 
@@ -88,15 +90,15 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         // Retrieve values from ticker
                         float lastFloat = ticker.getLast().getAmount().floatValue();
-                        String lastString = Utils.formatWidgetMoney(lastFloat,
-                                pair.counterCurrency, true);
+                        String lastString = Utils.formatWidgetMoney(lastFloat, pair, true,
+                                pref_pricesInMilliBtc);
 
                         String volumeString = "N/A";
                         if (!(ticker.getVolume() == null))
                             volumeString = Utils.formatDecimal(ticker.getVolume().floatValue(), 2,
                                     false);
 
-                        setBidAskHighLow(ticker, views, pair.counterCurrency,
+                        setBidAskHighLow(ticker, views, pair,
                                 exchange.supportsTickerBidAsk());
 
                         views.setTextViewText(R.id.widgetExchange, exchangeName);
@@ -177,21 +179,21 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextColor(R.id.widgetVolText, color);
         }
 
-        private void setBidAskHighLow(Ticker ticker, RemoteViews views, String counterCurrency,
+        private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair,
                 boolean bidAskSupported) {
             if (((ticker.getHigh() == null) || pref_widgetbidask) && bidAskSupported) {
-                setBidAsk(ticker, views, counterCurrency);
+                setBidAsk(ticker, views, pair);
             } else {
-                setHighLow(ticker, views, counterCurrency);
+                setHighLow(ticker, views, pair);
             }
         }
 
-        public void setBidAsk(Ticker ticker, RemoteViews views, String counterCurrency) {
+        public void setBidAsk(Ticker ticker, RemoteViews views, CurrencyPair pair) {
 
             String bidString = Utils.formatWidgetMoney(ticker.getBid().getAmount().floatValue(),
-                    counterCurrency, false);
+                    pair, false, pref_pricesInMilliBtc);
             String askString = Utils.formatWidgetMoney(ticker.getAsk().getAmount().floatValue(),
-                    counterCurrency, false);
+                    pair, false, pref_pricesInMilliBtc);
 
             if (pref_enableWidgetCustomization) {
                 setTextColors(views, pref_secondaryWidgetTextColor);
@@ -203,12 +205,12 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextViewText(R.id.widgetHighText, askString);
         }
 
-        public void setHighLow(Ticker ticker, RemoteViews views, String counterCurrency) {
+        public void setHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair) {
 
             String highString = Utils.formatWidgetMoney(ticker.getHigh().getAmount().floatValue(),
-                    counterCurrency, false);
+                    pair, false, pref_pricesInMilliBtc);
             String lowString = Utils.formatWidgetMoney(ticker.getLow().getAmount().floatValue(),
-                    counterCurrency, false);
+                    pair, false, pref_pricesInMilliBtc);
 
             if (pref_enableWidgetCustomization) {
                 setTextColors(views, pref_secondaryWidgetTextColor);
@@ -280,14 +282,13 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
 
         public void notifyUserOfAlarmUpgrade(Context ctxt) {
-            int icon = R.drawable.bitcoin;
             NotificationManager mNotificationManager = (NotificationManager) ctxt
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             long when = System.currentTimeMillis();
             Resources res = getResources();
             String tickerText = res.getString(R.string.priceAlarmUpgrade);
             String notifText = res.getString(R.string.priceAlarmUpgrade2);
-            Notification notif = new Notification(icon, tickerText, when);
+            Notification notif = new Notification(R.drawable.bitcoin, tickerText, when);
 
             Intent notifIntent = new Intent(ctxt, PriceAlarmPreferencesActivity.class);
             PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0, notifIntent, 0);
@@ -296,6 +297,38 @@ public class WidgetProvider extends BaseWidgetProvider {
             notif.defaults |= Notification.DEFAULT_VIBRATE;
 
             mNotificationManager.notify(1337, notif);
+        }
+
+        public void notifyUserOfMilli(Context ctxt) {
+
+            SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(ctxt);
+
+            boolean pref_warnUnitsChangeNotif = prefs.getBoolean("warnUnitChangePref", true);
+
+            if (pref_warnUnitsChangeNotif) {
+                NotificationManager mNotificationManager = (NotificationManager) ctxt
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                long when = System.currentTimeMillis();
+                Resources res = getResources();
+                String tickerText = "*NOTICE* - Widgets now display mBTC by default!";
+                String notifText = "Change back to BTC in the Preferences";
+                Notification notif = new Notification(R.drawable.bitcoin, tickerText, when);
+
+                Intent notifIntent = new Intent(ctxt, PreferencesActivity.class);
+                PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0, notifIntent, 0);
+
+                notif.setLatestEventInfo(ctxt, "Widgets in mBTC by default!", notifText,
+                        contentIntent);
+                notif.defaults |= Notification.DEFAULT_VIBRATE;
+
+                mNotificationManager.notify(817, notif);
+
+                Editor editor = prefs.edit();
+                editor.putBoolean("warnUnitChangePref", false);
+                editor.commit();
+            }
+
         }
 
         public UpdateService() {

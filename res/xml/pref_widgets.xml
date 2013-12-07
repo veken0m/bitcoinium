@@ -12,6 +12,11 @@
                     android:summary="Replace High/Low with Bid/Ask if supported by exchange"
                     android:title="Bid/Ask on Widget" />
                 <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="displayPricesInMilliBtcPref"
+                    android:summary="Changes all BTC widget prices to mBTC"
+                    android:title="Display BTC prices in mBTC" />
+                <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wifiRefreshOnlyPref"
                     android:summary="Disable updates on mobile connection"

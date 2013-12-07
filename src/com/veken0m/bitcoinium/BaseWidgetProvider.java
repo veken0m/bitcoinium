@@ -35,24 +35,25 @@ public class BaseWidgetProvider extends AppWidgetProvider {
      * List of preference variables
      */
     static int pref_widgetRefreshFreq;
-    static Boolean pref_priceAlarm;
-    static Boolean pref_batterySavingMode;
-    static Boolean pref_alarmSound;
-    static Boolean pref_alarmVibrate;
-    static Boolean pref_enableTicker;
-    static Boolean pref_widgetbidask;
-    static Boolean pref_wifionly;
-    static Boolean pref_alarmClock;
+    static boolean pref_priceAlarm;
+    static boolean pref_batterySavingMode;
+    static boolean pref_alarmSound;
+    static boolean pref_alarmVibrate;
+    static boolean pref_enableTicker;
+    static boolean pref_widgetbidask;
+    static boolean pref_wifionly;
+    static boolean pref_alarmClock;
     static String pref_notificationSound;
-    //static Boolean pref_extremePowerSaver;
-    static Boolean pref_tapToUpdate;
+    //static boolean pref_extremePowerSaver;
+    static boolean pref_tapToUpdate;
 
     static int pref_mainWidgetTextColor;
     static int pref_secondaryWidgetTextColor;
     static int pref_backgroundWidgetColor;
     static int pref_widgetRefreshSuccessColor;
     static int pref_widgetRefreshFailedColor;
-    static Boolean pref_enableWidgetCustomization;
+    static boolean pref_enableWidgetCustomization;
+    static boolean pref_pricesInMilliBtc;
 
     // Service used to refresh widget
     static PendingIntent widgetPriceWidgetRefreshService = null;
@@ -85,6 +86,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
         pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+        pref_pricesInMilliBtc = prefs.getBoolean("displayPricesInMilliBtcPref", true);
         pref_notificationSound = prefs.getString("notificationSoundPref",
                 "DEFAULT_RINGTONE_URI");
         pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
@@ -214,7 +216,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
             CurrencyPair pair) {
 
         String baseCurrency = pair.baseCurrency;
-        String lastPrice = Utils.formatWidgetMoney(last, pair.counterCurrency, true);
+        String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = ctxt.getResources();
         String tickerText = String.format(res.getString(R.string.priceTickerNotif), baseCurrency,
