@@ -83,24 +83,10 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         }
 
         extras = getIntent().getExtras();
-        // If the bundle is empty, Activity created from MainActivity.
+        // If the bundle is empty, Activity created from MainActivity
         // Attach all tabs
-        if (extras == null) {
-            if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
-                addTab(actionbar, "BitMinter", new BitMinterFragment());
-            if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "DeepBit", new DeepBitFragment());
-            if (pref_slushKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "Slush", new SlushFragment());
-            if (pref_emcKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "EclipseMC", new EMCFragment());
-            if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "50BTC", new FiftyBTCFragment());
-            if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "BTC Guild", new BTCGuildFragment());
-            if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
-                addTab(actionbar, "Eligius", new EligiusFragment());
-        } 
+        if (extras == null)
+            addTabs(actionbar);
         
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
@@ -108,30 +94,70 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         //KarmaAdsUtils.initAd(this);
     }
     
+    private void addTabs(ActionBar actionbar, String poolkey){
+        
+        actionbar.removeAllTabs();
+        
+        if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "BitMinter", new BitMinterFragment(), poolkey.equalsIgnoreCase("bitminter"));
+        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "DeepBit", new DeepBitFragment(), poolkey.equalsIgnoreCase("deepbit"));
+        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Slush", new SlushFragment(), poolkey.equalsIgnoreCase("slush"));
+        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "EclipseMC", new EMCFragment(), poolkey.equalsIgnoreCase("eclipsemc"));
+        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "50BTC", new FiftyBTCFragment(), poolkey.equalsIgnoreCase("50btc"));
+        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "BTC Guild", new BTCGuildFragment(), poolkey.equalsIgnoreCase("btcguild"));
+        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Eligius", new EligiusFragment(), poolkey.equalsIgnoreCase("eligius"));   
+    }
+    
+    private void addTabs(ActionBar actionbar){
+        
+        actionbar.removeAllTabs();
+        
+        if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "BitMinter", new BitMinterFragment());
+        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "DeepBit", new DeepBitFragment());
+        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Slush", new SlushFragment());
+        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "EclipseMC", new EMCFragment());
+        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "50BTC", new FiftyBTCFragment());
+        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "BTC Guild", new BTCGuildFragment());
+        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
+            addTab(actionbar, "Eligius", new EligiusFragment());   
+    }
+    
     public void onResume() {
         super.onResume();
 
         if (extras != null) {
             String poolKey = extras.getString("poolKey");
-
-            actionbar.removeAllTabs();
-            if (poolKey.equalsIgnoreCase("bitminter")) {
-                addTab(actionbar, "BitMinter", new BitMinterFragment());
-            } else if (poolKey.equalsIgnoreCase("deepbit")) {
-                addTab(actionbar, "DeepBit", new DeepBitFragment());
-            } else if (poolKey.equalsIgnoreCase("slush")) {
-                addTab(actionbar, "Slush", new SlushFragment());
-            } else if (poolKey.equalsIgnoreCase("eclipsemc")) {
-                addTab(actionbar, "EclipseMC", new EMCFragment());
-            } else if (poolKey.equalsIgnoreCase("50btc")) {
-                addTab(actionbar, "50BTC", new FiftyBTCFragment());
-            } else if (poolKey.equalsIgnoreCase("btcguild")) {
-                addTab(actionbar, "BTC Guild", new BTCGuildFragment());
-            } else if (poolKey.equalsIgnoreCase("eligius")) {
-                addTab(actionbar, "Eligius", new EligiusFragment());
-            }
+            readPreferences(this);
+            addTabs(actionbar, poolKey);
         }
     }
+    
+    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment, boolean selectedTab) {
+
+        ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
+        tab.setTabListener(new MyTabsListener(viewFragment));
+        actionbar.addTab(tab, selectedTab);
+    }
+    
+    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
+
+        ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
+        tab.setTabListener(new MyTabsListener(viewFragment));
+        actionbar.addTab(tab);
+    }
+    
     
     @Override
     protected void onPause() {
@@ -148,13 +174,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 && pref_slushKey.length() <= MIN_KEY_LENGTH
                 && pref_btcguildKey.length() <= MIN_KEY_LENGTH
                 && pref_eligiusKey.length() <= MIN_KEY_LENGTH);
-    }
-
-    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
-
-        ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
-        tab.setTabListener(new MyTabsListener(viewFragment));
-        actionbar.addTab(tab);
     }
 
     @Override

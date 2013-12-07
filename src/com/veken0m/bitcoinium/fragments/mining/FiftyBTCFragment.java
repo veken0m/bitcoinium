@@ -119,7 +119,10 @@ public class FiftyBTCFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            
+            final Context context = getActivity();
+            
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "50BTC");
             builder.setMessage(text);
