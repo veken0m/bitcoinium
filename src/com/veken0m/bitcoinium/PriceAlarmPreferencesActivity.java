@@ -11,7 +11,7 @@ public class PriceAlarmPreferencesActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.price_alarm_preferences);
+        addPreferencesFromResource(R.xml.pref_price_alarm);
 
     }
 

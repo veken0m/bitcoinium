@@ -17,13 +17,19 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 public class PreferencesActivity extends PreferenceActivity {
     public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Change Preferences to use Fragments, current method is
-        // deprecated.
-        addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_widgets);
+        addPreferencesFromResource(R.xml.pref_price_alarm_category);
+        addPreferencesFromResource(R.xml.pref_notfication_tickers);
+        addPreferencesFromResource(R.xml.pref_miner);
+        addPreferencesFromResource(R.xml.pref_orderbook);
+        addPreferencesFromResource(R.xml.pref_graph);
+        addPreferencesFromResource(R.xml.pref_about);
 
         Preference devEmailPref = findPreference("devEmailPref");
         devEmailPref

@@ -178,24 +178,6 @@
 
     <!-- Arrays for MtGox Currencies -->
     <string-array name="mtgoxcurrencies">
-        <item>USD - United States Dollar</item>
-        <item>AUD - Australian Dollar</item>
-        <item>CAD - Canadian Dollar</item>
-        <item>GBP - British Pound</item>
-        <item>CNY - Chinese Yuan</item>
-        <item>DKK - Danish Krone</item>
-        <item>EUR - Euro</item>
-        <item>CHF - Swiss Francs</item>
-        <item>HKD - Hong Kong Dollar</item>
-        <item>JPY - Japanese Yen</item>
-        <item>NZD - New Zealand Dollar</item>
-        <item>PLN - Polish Zloty</item>
-        <item>RUB - Russian Rubles</item>
-        <item>SEK - Swedish Krona</item>
-        <item>SGD - Singapore Dollar</item>
-        <item>THB - Thai Baht</item>
-    </string-array>
-    <string-array name="mtgoxcurrenciesvalues">
         <item>BTC/USD</item>
         <item>BTC/AUD</item>
         <item>BTC/CAD</item>
@@ -216,26 +198,6 @@
 
     <!-- Arrays for BTC-E Currencies -->
     <string-array name="btcecurrencies">
-        <item>USD - United States Dollar</item>
-        <item>EUR - Euro</item>
-        <item>RUR - Old Russian Ruble</item>
-        <item>LTC/BTC</item>
-        <item>LTC/USD</item>
-        <item>LTC/EUR</item>
-        <item>LTC/RUR</item>
-        <item>NMC/BTC</item>
-        <item>NMC/USD</item>
-        <item>USD/RUR</item>
-        <item>EUR/USD</item>
-        <item>NVC/BTC</item>
-        <item>NVC/USD</item>
-        <item>TRC/BTC</item>
-        <item>PPC/BTC</item>
-        <item>PPC/USD</item>
-        <item>FTC/BTC</item>
-        <item>XPM/BTC</item>
-    </string-array>
-    <string-array name="btcecurrenciesvalues">
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/RUR</item>
@@ -258,42 +220,26 @@
 
     <!-- Arrays for VirtEx Currencies -->
     <string-array name="virtexcurrencies">
-        <item>CAD - Canadian Dollar</item>
-    </string-array>
-    <string-array name="virtexcurrenciesvalues">
         <item>BTC/CAD</item>
     </string-array>
 
     <!-- Arrays for Bitstamp Currencies -->
     <string-array name="bitstampcurrencies">
-        <item>USD - United States Dollar</item>
-    </string-array>
-    <string-array name="bitstampcurrenciesvalues">
         <item>BTC/USD</item>
     </string-array>
 
     <!-- Arrays for CampBX Currencies -->
     <string-array name="campbxcurrencies">
-        <item>USD - United States Dollar</item>
-    </string-array>
-    <string-array name="campbxcurrenciesvalues">
         <item>BTC/USD</item>
     </string-array>
     
     <!-- Arrays for CampBX Currencies -->
     <string-array name="btcchinacurrencies">
-        <item>CNY - Chinese Yuan</item>
-    </string-array>
-    <string-array name="btcchinacurrenciesvalues">
         <item>BTC/CNY</item>
     </string-array>
     
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="bitcurexcurrencies">
-        <item>PLN - Polish Zloty</item>
-        <item>EUR - Euro</item>
-    </string-array>
-    <string-array name="bitcurexcurrenciesvalues">
         <item>BTC/PLN</item>
         <item>BTC/EUR</item>
     </string-array>
@@ -322,76 +268,9 @@
         <item>USD/XRP</item>
         <item>USD/XVN</item>
     </string-array>
-    <string-array name="krakencurrenciesvalues">
-        <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-        <item>BTC/LTC</item>
-        <item>LTC/USD</item>
-        <item>LTC/EUR</item>
-        <item>LTC/XRP</item>
-        <item>LTC/KRW</item>
-        <item>NMC/XRP</item>
-        <item>NMC/EUR</item>
-        <item>NMC/KRW</item>
-        <item>NMC/USD</item>
-        <item>BTC/NMC</item>
-        <item>BTC/XRP</item>
-        <item>BTC/XVN</item>
-        <item>BTC/KRW</item>
-        <item>XVN/XRP</item>
-        <item>EUR/XRP</item>
-        <item>EUR/XVN</item>
-        <item>KRW/XRP</item>
-        <item>USD/XRP</item>
-        <item>USD/XVN</item>
-    </string-array>
-
-    <!-- Arrays for BitcoinCentral Currencies -->
-    <string-array name="bitcoincentralcurrencies">
-        <item>EUR - Euro</item>
-    </string-array>
-    <string-array name="bitcoincentralcurrenciesvalues">
-        <item>BTC/EUR</item>
-    </string-array>
-
-    <!-- Arrays for Bitfloor Currencies -->
-    <string-array name="bitfloorcurrencies">
-        <item>USD - United States Dollar</item>
-    </string-array>
-    <string-array name="bitfloorcurrenciesvalues">
-        <item>BTC/USD</item>
-    </string-array>
-
-    <!-- Arrays for Bitcoin24 Currencies -->
-    <string-array name="bitcoin24currencies">
-        <item>USD - United States Dollar</item>
-        <item>EUR - Euro</item>
-    </string-array>
-    <string-array name="bitcoin24currenciesvalues">
-        <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-    </string-array>
     
     <!-- Arrays for BitcoinAverage Currencies -->
     <string-array name="bitcoinaveragecurrencies">
-        <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-        <item>BTC/AUD</item>
-        <item>BTC/CNY</item>
-        <item>BTC/CAD</item>
-        <item>BTC/BRL</item>
-        <item>BTC/GBP</item>
-        <item>BTC/CZK</item>
-        <item>BTC/ILS</item>
-        <item>BTC/NOK</item>
-        <item>BTC/JPY</item>
-        <item>BTC/NZD</item>
-        <item>BTC/PLN</item>
-        <item>BTC/RUB</item>
-        <item>BTC/SEK</item>
-        <item>BTC/ZAR</item>
-    </string-array>
-    <string-array name="bitcoinaveragecurrenciesvalues">
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
         <item>BTC/AUD</item>

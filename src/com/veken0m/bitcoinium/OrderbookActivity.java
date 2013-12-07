@@ -488,7 +488,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     public void createCurrencyDropdown(){
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                getResources().getIdentifier(prefix + "currencies", "array",
                         this.getPackageName()));
         spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
         dataAdapter = new ArrayAdapter<String>(this,

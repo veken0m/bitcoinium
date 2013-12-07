@@ -393,7 +393,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
     public void createCurrencyDropdown() {
         final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(prefix + "currenciesvalues", "array",
+                getResources().getIdentifier(prefix + "currencies", "array",
                         this.getPackageName()));
 
         spinner = (Spinner) findViewById(R.id.graph_currency_spinner);

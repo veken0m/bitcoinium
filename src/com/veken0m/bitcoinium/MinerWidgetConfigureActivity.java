@@ -24,7 +24,10 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.minerwidget_preferences);
+        addPreferencesFromResource(R.xml.pref_miner_widget);
+        addPreferencesFromResource(R.xml.pref_miner);
+        addPreferencesFromResource(R.xml.pref_widgets);
+        addPreferencesFromResource(R.xml.ok_button);
 
         // Set the result to CANCELED. This will cause the widget host to cancel
         // out of the widget placement if they press the back button.
@@ -55,20 +58,19 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
                 final Context context = MinerWidgetConfigureActivity.this;
 
                 String pref_widgetMiningPool = prefs.getString(
-                        "widgetMiningPoolPref", "BitMinter");
+                        "widgetMiningPoolPref", getString(R.string.default_miningpool));
 
-                // When the button is clicked, save the string in our prefs and
-                // return that they clicked OK.
                 saveMiningPoolPref(context, mAppWidgetId, pref_widgetMiningPool);
-
-                // Set alarm to refresh widget at specified interval
-                BaseWidgetProvider.setMinerWidgetAlarm(context);
 
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                         mAppWidgetId);
                 setResult(RESULT_OK, resultValue);
+                
+                // Set alarm to refresh widget at specified interval
+                BaseWidgetProvider.setMinerWidgetAlarm(context);
+                
                 finish();
                 return true;
             }
