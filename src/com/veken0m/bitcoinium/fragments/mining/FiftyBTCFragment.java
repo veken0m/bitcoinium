@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium.mining;
+package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,10 +22,10 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.utils.CurrencyUtils;
-import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
+import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

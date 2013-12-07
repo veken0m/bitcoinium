@@ -22,7 +22,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 

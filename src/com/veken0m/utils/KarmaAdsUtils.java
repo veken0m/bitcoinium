@@ -1,4 +1,4 @@
-package com.veken0m.bitcoinium.utils;
+package com.veken0m.utils;
 
 import android.app.Activity;
 import android.webkit.WebView;

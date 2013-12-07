@@ -14,8 +14,8 @@ import android.webkit.WebView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
 import com.veken0m.compatibility.WebViewSherlockFragment;
+import com.veken0m.utils.KarmaAdsUtils;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class WebViewerActivity extends SherlockFragmentActivity {

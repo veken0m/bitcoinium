@@ -17,8 +17,8 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
-import com.veken0m.bitcoinium.utils.CurrencyUtils;
-import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.Utils;
 
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;

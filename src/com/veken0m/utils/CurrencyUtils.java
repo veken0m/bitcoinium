@@ -1,4 +1,4 @@
-package com.veken0m.bitcoinium.utils;
+package com.veken0m.utils;
 
 import java.text.DecimalFormat;
 
@@ -7,14 +7,20 @@ import com.xeiam.xchange.currency.CurrencyPair;
 
 public class CurrencyUtils {
     
-    public static CurrencyPair stringToCurrencyPair(String pref_currency){
+    public static CurrencyPair stringToCurrencyPair(String currencyPair){
         String baseCurrency = Currencies.BTC;
-        String counterCurrency = pref_currency;
-    
-        if (pref_currency.contains("/")) {
-            baseCurrency = pref_currency.substring(0, 3);
-            counterCurrency = pref_currency.substring(4, 7);
+        String counterCurrency = currencyPair;
+        
+        String[] currPair = currencyPair.split("/");
+        
+        if(currPair.length == 2){
+            baseCurrency = currPair[0];
+            counterCurrency = currPair[1];  
+        } else {
+            baseCurrency = Currencies.BTC;
+            counterCurrency = currencyPair;       
         }
+
         return new CurrencyPair(baseCurrency, counterCurrency);
     }
     

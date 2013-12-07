@@ -31,14 +31,14 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.mining.BTCGuildFragment;
-import com.veken0m.bitcoinium.mining.BitMinterFragment;
-import com.veken0m.bitcoinium.mining.DeepBitFragment;
-import com.veken0m.bitcoinium.mining.EMCFragment;
-import com.veken0m.bitcoinium.mining.EligiusFragment;
-import com.veken0m.bitcoinium.mining.FiftyBTCFragment;
-import com.veken0m.bitcoinium.mining.SlushFragment;
-import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
+import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
+import com.veken0m.bitcoinium.fragments.mining.DeepBitFragment;
+import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
+import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
+import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
+import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
+import com.veken0m.utils.Utils;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 

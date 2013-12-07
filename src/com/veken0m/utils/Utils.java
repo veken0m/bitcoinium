@@ -1,13 +1,11 @@
 
-package com.veken0m.bitcoinium.utils;
+package com.veken0m.utils;
 
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
-
-import com.xeiam.xchange.currency.Currencies;
 
 import org.joda.money.CurrencyUnit;
 
@@ -24,8 +22,7 @@ public class Utils {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
         numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
-        // Remove grouping if commas cause errors when parsing to
-        // double/float
+        // Remove grouping if commas cause errors when parsing to double/float
         numberFormat.setGroupingUsed(useGroupings);
 
         return numberFormat.format(valueToFormat);
@@ -57,7 +54,7 @@ public class Utils {
         } else {
             currencyCode = "";
         }
-        
+
         // If too large, remove a digit behind decimal
         if (amount >= 1000 && !includeCurrencyCode) {
             numOfDecimals = 1;
@@ -68,7 +65,7 @@ public class Utils {
             amount *= 1000;
             currencyCode = currencyCode.replace(" ", " m");
         }
-        
+
         return symbol + formatDecimal(amount, numOfDecimals, false) + currencyCode;
     }
 
@@ -86,7 +83,7 @@ public class Utils {
                 || currencyCode.equalsIgnoreCase("SGD")
                 || currencyCode.equalsIgnoreCase("XVN")
                 || currencyCode.equalsIgnoreCase("XRP")
-                || currencyCode.equalsIgnoreCase("CHF") 
+                || currencyCode.equalsIgnoreCase("CHF")
                 || currencyCode.equalsIgnoreCase("RUR"))) {
             symbol = CurrencyUnit.of(currencyCode).getSymbol();
             symbol = symbol.substring(symbol.length() - 1);
@@ -131,34 +128,14 @@ public class Utils {
         tv.setLayoutParams(params);
         tv.setGravity(1);
     }
-    
-    public static String formatHashrate(float hashRate){
-    
+
+    public static String formatHashrate(float hashRate) {
+
         DecimalFormat df = new DecimalFormat("#0.00");
         if (hashRate > 999) {
             return df.format((hashRate / 1000)) + " GH/s";
         } else {
             return df.format((hashRate)) + " MH/s";
-        }
-    }
-
-    /*
-     * Currency pair defined as "baseCurrency/counterCurrency". This methods
-     * splits the pair into it's components and removes the "/"
-     */
-    public static void splitCurrencyPair(String currencyPair, String exchangeName, boolean appendBase) {
-
-        // BTC is default baseCurrency for backwards compatibility with previous
-        // currency pair format before Alt. Coins were introduced.
-        String baseCurrency = Currencies.BTC;
-        String counterCurrency = currencyPair;
-
-        if (currencyPair.contains("/")) {
-            baseCurrency = currencyPair.substring(0, 3);
-            counterCurrency = currencyPair.substring(4, 7);
-            if (!baseCurrency.equals(Currencies.BTC) && appendBase) {
-                exchangeName = exchangeName + " (" + baseCurrency + ")";
-            }
         }
     }
 

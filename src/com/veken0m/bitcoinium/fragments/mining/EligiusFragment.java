@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium.mining;
+package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -24,10 +24,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.utils.CurrencyUtils;
 import com.veken0m.mining.eligius.Eligius;
 import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.eligius.TimeInterval;
+import com.veken0m.utils.CurrencyUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

@@ -16,8 +16,6 @@ import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.veken0m.bitcoinium.utils.CurrencyUtils;
-import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.deepbit.DeepBitData;
@@ -28,6 +26,8 @@ import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
+import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

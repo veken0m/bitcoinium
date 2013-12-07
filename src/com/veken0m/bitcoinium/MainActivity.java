@@ -21,15 +21,15 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.veken0m.bitcoinium.exchanges.BTCChinaFragment;
-import com.veken0m.bitcoinium.exchanges.BTCEFragment;
-import com.veken0m.bitcoinium.exchanges.BitcurexFragment;
-import com.veken0m.bitcoinium.exchanges.BitstampFragment;
-import com.veken0m.bitcoinium.exchanges.CampBXFragment;
-import com.veken0m.bitcoinium.exchanges.KrakenFragment;
-import com.veken0m.bitcoinium.exchanges.MtGoxFragment;
-import com.veken0m.bitcoinium.exchanges.VirtExFragment;
-import com.veken0m.bitcoinium.utils.KarmaAdsUtils;
+import com.veken0m.bitcoinium.fragments.exchanges.BTCChinaFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.BTCEFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.BitcurexFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.BitstampFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.CampBXFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.KrakenFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
+import com.veken0m.utils.KarmaAdsUtils;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m

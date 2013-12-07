@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium.mining;
+package com.veken0m.bitcoinium.fragments.mining;
 
 import java.io.InputStreamReader;
 import java.util.List;
@@ -29,10 +29,10 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.utils.CurrencyUtils;
-import com.veken0m.bitcoinium.utils.Utils;
 import com.veken0m.mining.btcguild.BTCGuild;
 import com.veken0m.mining.btcguild.Worker;
+import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.Utils;
 
 public class BTCGuildFragment extends SherlockFragment {
 
