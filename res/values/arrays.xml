@@ -48,5 +48,19 @@
         <item >btcchina</item>
         <item >bitcurex</item>
     </string-array>
+    
+     <!-- Arrays for Prefered Mining payout units preferences -->
+    <string-array name="payoutUnits">
+        <item>Auto (recommended)</item>
+        <item>BTC</item>
+        <item>mBTC</item>
+        <item>µBTC</item>
+    </string-array>
+    <string-array name="payoutUnitsValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 
 </resources>

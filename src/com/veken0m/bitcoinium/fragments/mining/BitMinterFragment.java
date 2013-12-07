@@ -38,6 +38,7 @@ import java.util.List;
 public class BitMinterFragment extends SherlockFragment {
 
     protected static String pref_bitminterKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static BitMinterData data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -162,7 +163,7 @@ public class BitMinterFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getBalances().getBTC());
+                        + CurrencyUtils.formatPayout(data.getBalances().getBTC(), pref_widgetMiningPayoutUnit);
                 String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
                         + " NMC";
                 String Hashrate = "Total Hashrate: "
@@ -242,6 +243,7 @@ public class BitMinterFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_bitminterKey = prefs.getString("bitminterKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

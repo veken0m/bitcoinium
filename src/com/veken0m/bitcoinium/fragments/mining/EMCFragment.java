@@ -37,6 +37,7 @@ import java.util.List;
 public class EMCFragment extends SherlockFragment {
 
     protected static String pref_emcKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static EMC data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -164,13 +165,13 @@ public class EMCFragment extends SherlockFragment {
                 // User Data
                 User userData = data.getData().getUser();
                 String ConfirmedRewardsBTC = "Confirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards());
+                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
                 String UnconfirmedRewardsBTC = "Unconfirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards());
+                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards(), pref_widgetMiningPayoutUnit);
                 String EstimatedRewardsBTC = "Estimated Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards());
+                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards(), pref_widgetMiningPayoutUnit);
                 String TotalRewardsBTC = "Total Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getTotal_payout());
+                        + CurrencyUtils.formatPayout(userData.getTotal_payout(), pref_widgetMiningPayoutUnit);
                 String BlocksFound = "Blocks Found: "
                         + userData.getBlocks_found();
 
@@ -264,6 +265,7 @@ public class EMCFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

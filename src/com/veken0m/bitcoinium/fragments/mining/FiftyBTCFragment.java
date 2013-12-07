@@ -38,6 +38,7 @@ import java.util.List;
 public class FiftyBTCFragment extends SherlockFragment {
 
     protected static String pref_50BTCKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static FiftyBTC data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -171,10 +172,10 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards());
+                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
                 String Hashrate = "Total Hashrate: "
                         + data.getUser().getHash_rate() + " MH/s\n";
-                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts());
+                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts(), pref_widgetMiningPayoutUnit);
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(Payout);
@@ -263,6 +264,7 @@ public class FiftyBTCFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_50BTCKey = prefs.getString("50BTCKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

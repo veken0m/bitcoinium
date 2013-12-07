@@ -79,4 +79,12 @@
         </PreferenceCategory>
     </PreferenceScreen>
 
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/payoutUnits"
+            android:entryValues="@array/payoutUnitsValues"
+            android:key="widgetMiningPayoutUnitPref"
+            android:summary="Select the units used to display payout"
+            android:title="Payout units" />
+
 </PreferenceScreen>

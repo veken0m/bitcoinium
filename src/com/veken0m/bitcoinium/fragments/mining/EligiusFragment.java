@@ -41,6 +41,7 @@ import java.util.ArrayList;
 public class EligiusFragment extends SherlockFragment {
 
     protected static String pref_eligiusKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static Eligius data;
     protected static EligiusBalance balanceData;
     protected Boolean connectionFail = false;
@@ -178,8 +179,8 @@ public class EligiusFragment extends SherlockFragment {
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 //if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000);
-                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000);
+                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit);
+                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit);
                 //} else {
                 //    confirmed_reward += "N/A";
                 //    estimated_reward += "N/A";
@@ -255,6 +256,7 @@ public class EligiusFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_eligiusKey = prefs.getString("eligiusKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

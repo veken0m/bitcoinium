@@ -37,6 +37,7 @@ import com.veken0m.utils.Utils;
 public class BTCGuildFragment extends SherlockFragment {
 
     protected static String pref_btcguildKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static BTCGuild data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -158,7 +159,7 @@ public class BTCGuildFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards());
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards(), pref_widgetMiningPayoutUnit);
                 String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
                         + " NMC";
 
@@ -223,6 +224,7 @@ public class BTCGuildFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_btcguildKey = prefs.getString("btcguildKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

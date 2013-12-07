@@ -107,6 +107,7 @@ public class MainActivity extends SherlockFragmentActivity {
     private void selectTab(){
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
+        
         try {
             String preferredExchange = prefs.getString("favExchangePref", "mtgox");
             //Check if moving from integer index

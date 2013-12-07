@@ -54,6 +54,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static int pref_widgetRefreshFailedColor;
     static boolean pref_enableWidgetCustomization;
     static boolean pref_pricesInMilliBtc;
+    static int pref_widgetMiningPayoutUnit;
 
     // Service used to refresh widget
     static PendingIntent widgetPriceWidgetRefreshService = null;
@@ -91,6 +92,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 "DEFAULT_RINGTONE_URI");
         pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
+        
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
 
         // Theming preferences
         pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref",

@@ -38,6 +38,7 @@ import java.util.List;
 public class SlushFragment extends SherlockFragment {
 
     protected static String pref_slushKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static Slush data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -183,13 +184,13 @@ public class SlushFragment extends SherlockFragment {
                 // USER INFO
                 String hashrate = "Total Hashrate: " + data.getHashrate() + " MH/s";
                 String confirmed_reward = "Confirmed: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward());
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit);
                 String estimated_reward = "Estimated: "
-                        + CurrencyUtils.formatPayout(data.getEstimated_reward());
+                        + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit);
                 String confirmed_nmc_reward = "Confirmed: "
                         + data.getConfirmed_nmc_reward() + " NMC";
                 String unconfirmed_reward = "Unconfirmed: "
-                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward());
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit);
                 String unconfirmed_nmc_reward = "Unconfirmed: "
                         + data.getUnconfirmed_nmc_reward() + " NMC";
                 String username = "Username: " + data.getUsername();
@@ -306,6 +307,7 @@ public class SlushFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_slushKey = prefs.getString("slushKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }

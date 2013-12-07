@@ -91,7 +91,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                 Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, pref_miningpool);
                         views.setTextViewText(R.id.widgetBTCPayout,
-                                CurrencyUtils.formatPayout(btcBalance));
+                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
 
                         if (!(hashRate > 0.0) && pref_minerDownAlert)
                             createMinerDownNotification(this, pref_miningpool);

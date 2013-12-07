@@ -37,6 +37,7 @@ import java.util.List;
 public class DeepBitFragment extends SherlockFragment {
 
     protected static String pref_deepbitKey = "";
+    protected static int pref_widgetMiningPayoutUnit = 0;
     protected static DeepBitData data;
     protected Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
@@ -155,11 +156,11 @@ public class DeepBitFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward());
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit);
                 String TotalHashrate = "Total Hashrate: "
                         + data.getHashrate() + " MH/s";
                 String TotalPayout = "Total Payout: "
-                        + CurrencyUtils.formatPayout(data.getPayout_history());
+                        + CurrencyUtils.formatPayout(data.getPayout_history(), pref_widgetMiningPayoutUnit);
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(TotalPayout);
@@ -224,6 +225,7 @@ public class DeepBitFragment extends SherlockFragment {
                 .getDefaultSharedPreferences(context);
 
         pref_deepbitKey = prefs.getString("deepbitKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
 }
