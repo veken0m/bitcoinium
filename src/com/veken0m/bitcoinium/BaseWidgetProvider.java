@@ -23,7 +23,7 @@ import android.text.format.Time;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
-import com.veken0m.bitcoinium.utils.Utils;
+import com.veken0m.utils.Utils;
 
 import com.xeiam.xchange.currency.CurrencyPair;
 
