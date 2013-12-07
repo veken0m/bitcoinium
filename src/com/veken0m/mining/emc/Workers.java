@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Workers {
     private String hash_rate;
     private String last_activity;
-    private Number reset_shares;
-    private Number round_shares;
-    private Number total_shares;
+    private float reset_shares;
+    private float round_shares;
+    private float total_shares;
     private String worker_name;
 
     public Workers(@JsonProperty("hash_rate")
@@ -17,11 +17,11 @@ public class Workers {
             @JsonProperty("last_activity")
             String last_activity,
             @JsonProperty("reset_shares")
-            Number reset_shares,
+            float reset_shares,
             @JsonProperty("round_shares")
-            Number round_shares,
+            float round_shares,
             @JsonProperty("total_shares")
-            Number total_shares,
+            float total_shares,
             @JsonProperty("worker_name")
             String worker_name) {
         this.hash_rate = hash_rate;
@@ -40,15 +40,15 @@ public class Workers {
         return this.last_activity;
     }
 
-    public Number getReset_shares() {
+    public float getReset_shares() {
         return this.reset_shares;
     }
 
-    public Number getRound_shares() {
+    public float getRound_shares() {
         return this.round_shares;
     }
 
-    public Number getTotal_shares() {
+    public float getTotal_shares() {
         return this.total_shares;
     }
 

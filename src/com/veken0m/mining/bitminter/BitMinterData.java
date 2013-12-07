@@ -4,20 +4,20 @@ package com.veken0m.mining.bitminter;
 import java.util.List;
 
 public class BitMinterData {
-    private Number active_workers;
+    private float active_workers;
     private Balances balances;
-    private Number hash_rate;
+    private float hash_rate;
     private String name;
-    private Number now;
+    private float now;
     private Round_start round_start;
     private Shift shift;
     private List<Workers> workers;
 
-    public Number getActive_workers() {
+    public float getActive_workers() {
         return this.active_workers;
     }
 
-    public void setActive_workers(Number active_workers) {
+    public void setActive_workers(float active_workers) {
         this.active_workers = active_workers;
     }
 
@@ -29,11 +29,11 @@ public class BitMinterData {
         this.balances = balances;
     }
 
-    public Number getHash_rate() {
+    public float getHash_rate() {
         return this.hash_rate;
     }
 
-    public void setHash_rate(Number hash_rate) {
+    public void setHash_rate(float hash_rate) {
         this.hash_rate = hash_rate;
     }
 
@@ -45,11 +45,11 @@ public class BitMinterData {
         this.name = name;
     }
 
-    public Number getNow() {
+    public float getNow() {
         return this.now;
     }
 
-    public void setNow(Number now) {
+    public void setNow(float now) {
         this.now = now;
     }
 

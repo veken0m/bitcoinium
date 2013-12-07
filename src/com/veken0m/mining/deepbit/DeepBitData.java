@@ -9,20 +9,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeepBitData {
 
-    private Number confirmed_reward;
-    private Number hashrate;
+    private float confirmed_reward;
+    private float hashrate;
     @JsonIgnore
     private boolean ipa;
-    private Number payout_history;
+    private float payout_history;
     private Workers workers;
 
     public DeepBitData(
             @JsonProperty("confirmed_reward")
-            Number confirmed_reward,
+            float confirmed_reward,
             @JsonProperty("hashrate")
-            Number hashrate,
+            float hashrate,
             @JsonProperty("payout_history")
-            Number payout_history,
+            float payout_history,
             @JsonProperty("workers")
             Workers workers) {
         this.confirmed_reward = confirmed_reward;
@@ -31,11 +31,11 @@ public class DeepBitData {
         this.workers = workers;
     }
 
-    public Number getConfirmed_reward() {
+    public float getConfirmed_reward() {
         return this.confirmed_reward;
     }
 
-    public Number getHashrate() {
+    public float getHashrate() {
         return this.hashrate;
     }
 
@@ -43,7 +43,7 @@ public class DeepBitData {
         return this.ipa;
     }
 
-    public Number getPayout_history() {
+    public float getPayout_history() {
         return this.payout_history;
     }
 

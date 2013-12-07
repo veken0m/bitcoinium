@@ -194,10 +194,10 @@ public class FiftyBTCFragment extends SherlockFragment {
                     String alive = "Alive: " + worker.getAlive();
                     String minerHashrate = "Hashrate: " + worker.getHash_rate()
                             + " MH/s";
-                    String shares = "Shares: " + worker.getShares().floatValue();
+                    String shares = "Shares: " + worker.getShares();
                     String lastShare = "Last Share: "
                             + Utils.dateFormat(getActivity(),
-                                    worker.getLast_share().longValue() * 1000);
+                                    worker.getLast_share() * 1000);
                     String totalShares = "Total Shares: "
                             + worker.getTotal_shares();
 

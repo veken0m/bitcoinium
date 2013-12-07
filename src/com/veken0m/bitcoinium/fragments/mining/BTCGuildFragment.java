@@ -55,8 +55,8 @@ public class BTCGuildFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -67,7 +67,8 @@ public class BTCGuildFragment extends SherlockFragment {
         try {
             HttpClient client = new DefaultHttpClient();
 
-            HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key=" + pref_btcguildKey);
+            HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
+                    + pref_btcguildKey);
             HttpResponse response = client.execute(post);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -153,7 +154,8 @@ public class BTCGuildFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards().floatValue());
+                String RewardsBTC = "BTC Reward: "
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards());
                 String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
                         + " NMC";
 
@@ -188,13 +190,13 @@ public class BTCGuildFragment extends SherlockFragment {
 
                     tvMinerName.setText("Miner: " + workers.get(i).getWorker_name());
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(workers.get(i).getHash_rate()
-                                    .floatValue(), 2, false) + " MH/s");
+                            + Utils.formatDecimal(workers.get(i).getHash_rate(), 2, false)
+                            + " MH/s");
                     tvShares.setText("Shares: "
-                            + Utils.formatDecimal(workers.get(i).getValid_shares().floatValue(), 0,
+                            + Utils.formatDecimal(workers.get(i).getValid_shares(), 0,
                                     true));
                     tvStales.setText("Stales: "
-                            + Utils.formatDecimal(workers.get(i).getStale_shares().floatValue(), 0,
+                            + Utils.formatDecimal(workers.get(i).getStale_shares(), 0,
                                     true) + "\n");
 
                     tr8.addView(tvMinerName);

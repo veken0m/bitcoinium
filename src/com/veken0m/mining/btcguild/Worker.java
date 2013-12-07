@@ -6,44 +6,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Worker {
     
     private String worker_name;
-    private Number hash_rate;
-    private Number valid_shares;
-    private Number stale_shares;
-    private Number dupe_shares;
-    private Number unknown_shares;
-    private Number valid_shares_since_reset;
-    private Number stale_shares_since_reset;
-    private Number dupe_shares_since_reset;
-    private Number unknown_shares_since_reset;
-    private Number valid_shares_nmc;
-    private Number stale_shares_nmc;
-    private Number dupe_shares_nmc;
-    private Number unknown_shares_nmc;
-    private Number valid_shares_nmc_since_reset;
-    private Number stale_shares_nmc_since_reset;
-    private Number dupe_shares_nmc_since_reset;
-    private Number unknown_shares_nmc_since_reset;
-    private Number last_share;
+    private float hash_rate;
+    private float valid_shares;
+    private float stale_shares;
+    private float dupe_shares;
+    private float unknown_shares;
+    private float valid_shares_since_reset;
+    private float stale_shares_since_reset;
+    private float dupe_shares_since_reset;
+    private float unknown_shares_since_reset;
+    private float valid_shares_nmc;
+    private float stale_shares_nmc;
+    private float dupe_shares_nmc;
+    private float unknown_shares_nmc;
+    private float valid_shares_nmc_since_reset;
+    private float stale_shares_nmc_since_reset;
+    private float dupe_shares_nmc_since_reset;
+    private float unknown_shares_nmc_since_reset;
+    private float last_share;
     
     public Worker(@JsonProperty("worker_name") String worker_name, 
-            @JsonProperty("hash_rate") Number hash_rate, 
-            @JsonProperty("valid_shares") Number valid_shares, 
-            @JsonProperty("stale_shares") Number stale_shares,
-            @JsonProperty("dupe_shares") Number dupe_shares, 
-            @JsonProperty("unknown_shares") Number unknown_shares, 
-            @JsonProperty("valid_shares_since_reset") Number valid_shares_since_reset,
-            @JsonProperty("stale_shares_since_reset") Number stale_shares_since_reset, 
-            @JsonProperty("dupe_shares_since_reset") Number dupe_shares_since_reset,
-            @JsonProperty("unknown_shares_since_reset") Number unknown_shares_since_reset, 
-            @JsonProperty("valid_shares_nmc") Number valid_shares_nmc, 
-            @JsonProperty("stale_shares_nmc") Number stale_shares_nmc,
-            @JsonProperty("dupe_shares_nmc") Number dupe_shares_nmc, 
-            @JsonProperty("unknown_shares_nmc") Number unknown_shares_nmc, 
-            @JsonProperty("valid_shares_nmc_since_reset") Number valid_shares_nmc_since_reset,
-            @JsonProperty("stale_shares_nmc_since_reset") Number stale_shares_nmc_since_reset, 
-            @JsonProperty("dupe_shares_nmc_since_reset") Number dupe_shares_nmc_since_reset,
-            @JsonProperty("unknown_shares_nmc_since_reset") Number unknown_shares_nmc_since_reset, 
-            @JsonProperty("last_share") Number last_share) {
+            @JsonProperty("hash_rate") float hash_rate, 
+            @JsonProperty("valid_shares") float valid_shares, 
+            @JsonProperty("stale_shares") float stale_shares,
+            @JsonProperty("dupe_shares") float dupe_shares, 
+            @JsonProperty("unknown_shares") float unknown_shares, 
+            @JsonProperty("valid_shares_since_reset") float valid_shares_since_reset,
+            @JsonProperty("stale_shares_since_reset") float stale_shares_since_reset, 
+            @JsonProperty("dupe_shares_since_reset") float dupe_shares_since_reset,
+            @JsonProperty("unknown_shares_since_reset") float unknown_shares_since_reset, 
+            @JsonProperty("valid_shares_nmc") float valid_shares_nmc, 
+            @JsonProperty("stale_shares_nmc") float stale_shares_nmc,
+            @JsonProperty("dupe_shares_nmc") float dupe_shares_nmc, 
+            @JsonProperty("unknown_shares_nmc") float unknown_shares_nmc, 
+            @JsonProperty("valid_shares_nmc_since_reset") float valid_shares_nmc_since_reset,
+            @JsonProperty("stale_shares_nmc_since_reset") float stale_shares_nmc_since_reset, 
+            @JsonProperty("dupe_shares_nmc_since_reset") float dupe_shares_nmc_since_reset,
+            @JsonProperty("unknown_shares_nmc_since_reset") float unknown_shares_nmc_since_reset, 
+            @JsonProperty("last_share") float last_share) {
 
         this.worker_name = worker_name;
         this.hash_rate = hash_rate;
@@ -70,75 +70,75 @@ public class Worker {
         return worker_name;
     }
 
-    public Number getHash_rate() {
+    public float getHash_rate() {
         return hash_rate;
     }
 
-    public Number getValid_shares() {
+    public float getValid_shares() {
         return valid_shares;
     }
 
-    public Number getStale_shares() {
+    public float getStale_shares() {
         return stale_shares;
     }
 
-    public Number getDupe_shares() {
+    public float getDupe_shares() {
         return dupe_shares;
     }
 
-    public Number getUnknown_shares() {
+    public float getUnknown_shares() {
         return unknown_shares;
     }
 
-    public Number getValid_shares_since_reset() {
+    public float getValid_shares_since_reset() {
         return valid_shares_since_reset;
     }
 
-    public Number getStale_shares_since_reset() {
+    public float getStale_shares_since_reset() {
         return stale_shares_since_reset;
     }
 
-    public Number getDupe_shares_since_reset() {
+    public float getDupe_shares_since_reset() {
         return dupe_shares_since_reset;
     }
 
-    public Number getUnknown_shares_since_reset() {
+    public float getUnknown_shares_since_reset() {
         return unknown_shares_since_reset;
     }
 
-    public Number getValid_shares_nmc() {
+    public float getValid_shares_nmc() {
         return valid_shares_nmc;
     }
 
-    public Number getStale_shares_nmc() {
+    public float getStale_shares_nmc() {
         return stale_shares_nmc;
     }
 
-    public Number getDupe_shares_nmc() {
+    public float getDupe_shares_nmc() {
         return dupe_shares_nmc;
     }
 
-    public Number getUnknown_shares_nmc() {
+    public float getUnknown_shares_nmc() {
         return unknown_shares_nmc;
     }
 
-    public Number getValid_shares_nmc_since_reset() {
+    public float getValid_shares_nmc_since_reset() {
         return valid_shares_nmc_since_reset;
     }
 
-    public Number getStale_shares_nmc_since_reset() {
+    public float getStale_shares_nmc_since_reset() {
         return stale_shares_nmc_since_reset;
     }
 
-    public Number getDupe_shares_nmc_since_reset() {
+    public float getDupe_shares_nmc_since_reset() {
         return dupe_shares_nmc_since_reset;
     }
 
-    public Number getUnknown_shares_nmc_since_reset() {
+    public float getUnknown_shares_nmc_since_reset() {
         return unknown_shares_nmc_since_reset;
     }
 
-    public Number getLast_share() {
+    public float getLast_share() {
         return last_share;
     }
 

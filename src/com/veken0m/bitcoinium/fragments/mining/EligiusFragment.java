@@ -174,13 +174,13 @@ public class EligiusFragment extends SherlockFragment {
                 String confirmed_reward = "Confirmed Reward: ";
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
-                if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed().floatValue() / 100000000);
-                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected().floatValue() / 100000000);
-                } else {
-                    confirmed_reward += "N/A";
-                    estimated_reward += "N/A";
-                }
+                //if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
+                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000);
+                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000);
+                //} else {
+                //    confirmed_reward += "N/A";
+                //    estimated_reward += "N/A";
+                //}
 
 
                 tvConfirmed_reward.setText(confirmed_reward);
@@ -205,9 +205,9 @@ public class EligiusFragment extends SherlockFragment {
                 for (TimeInterval timeInterval : intervals) {
 
                     String name = "\nInterval: " + timeInterval.getInterval_name();
-                    float hashRatef = timeInterval.getHashrate().floatValue() / 1000000;
+                    float hashRatef = timeInterval.getHashrate() / 1000000;
                     String minerHashrate = "Hashrate: " + hashRatef + " MH/s";
-                    String shares = "Shares: " + timeInterval.getShares().floatValue();
+                    String shares = "Shares: " + timeInterval.getShares();
 
                     TableRow tr9 = new TableRow(getActivity());
                     TableRow tr10 = new TableRow(getActivity());

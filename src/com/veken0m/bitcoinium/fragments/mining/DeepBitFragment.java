@@ -152,11 +152,11 @@ public class DeepBitFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward().floatValue());
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward());
                 String TotalHashrate = "Total Hashrate: "
-                        + data.getHashrate().floatValue() + " MH/s";
+                        + data.getHashrate() + " MH/s";
                 String TotalPayout = "Total Payout: "
-                        + CurrencyUtils.formatPayout(data.getPayout_history().floatValue());
+                        + CurrencyUtils.formatPayout(data.getPayout_history());
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(TotalPayout);

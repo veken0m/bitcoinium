@@ -7,43 +7,43 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Worker {
     private boolean alive;
-    private Number blocks_found;
+    private float blocks_found;
     @JsonIgnore
-    private Number checkpoint_invalid;
+    private float checkpoint_invalid;
     @JsonIgnore
-    private Number checkpoint_shares;
+    private float checkpoint_shares;
     @JsonIgnore
-    private Number checkpoint_stales;
+    private float checkpoint_stales;
     private String hash_rate;
-    private Number invalid;
-    private Number last_share;
-    private Number shares;
-    private Number stales;
-    private Number total_invalid;
-    private Number total_shares;
-    private Number total_stales;
+    private float invalid;
+    private long last_share;
+    private float shares;
+    private float stales;
+    private float total_invalid;
+    private float total_shares;
+    private float total_stales;
     private String worker_name;
 
     public Worker(@JsonProperty("alive")
     Boolean alive,
             @JsonProperty("blocks_found")
-            Number blocks_found,
+            float blocks_found,
             @JsonProperty("hash_rate")
             String hash_rate,
             @JsonProperty("invalid")
-            Number invalid,
+            float invalid,
             @JsonProperty("last_share")
-            Number last_share,
+            long last_share,
             @JsonProperty("shares")
-            Number shares,
+            float shares,
             @JsonProperty("stales")
-            Number stales,
+            float stales,
             @JsonProperty("total_invalid")
-            Number total_invalid,
+            float total_invalid,
             @JsonProperty("total_shares")
-            Number total_shares,
+            float total_shares,
             @JsonProperty("total_stales")
-            Number total_stales,
+            float total_stales,
             @JsonProperty("worker_name")
             String worker_name) {
         this.alive = alive;
@@ -64,19 +64,19 @@ public class Worker {
         return this.alive;
     }
 
-    public Number getBlocks_found() {
+    public float getBlocks_found() {
         return this.blocks_found;
     }
 
-    public Number getCheckpoint_invalid() {
+    public float getCheckpoint_invalid() {
         return this.checkpoint_invalid;
     }
 
-    public Number getCheckpoint_shares() {
+    public float getCheckpoint_shares() {
         return this.checkpoint_shares;
     }
 
-    public Number getCheckpoint_stales() {
+    public float getCheckpoint_stales() {
         return this.checkpoint_stales;
     }
 
@@ -84,31 +84,31 @@ public class Worker {
         return this.hash_rate;
     }
 
-    public Number getInvalid() {
+    public float getInvalid() {
         return this.invalid;
     }
 
-    public Number getLast_share() {
+    public long getLast_share() {
         return this.last_share;
     }
 
-    public Number getShares() {
+    public float getShares() {
         return this.shares;
     }
 
-    public Number getStales() {
+    public float getStales() {
         return this.stales;
     }
 
-    public Number getTotal_invalid() {
+    public float getTotal_invalid() {
         return this.total_invalid;
     }
 
-    public Number getTotal_shares() {
+    public float getTotal_shares() {
         return this.total_shares;
     }
 
-    public Number getTotal_stales() {
+    public float getTotal_stales() {
         return this.total_stales;
     }
 

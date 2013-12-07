@@ -3,20 +3,19 @@ package com.veken0m.mining.slush;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public class Worker {
     private boolean alive;
-    private Number hashrate;
+    private float hashrate;
     private long last_share;
     private String score;
-    private Number shares;
+    private float shares;
 
     public Worker(@JsonProperty("alive")
     Boolean alive,
             @JsonProperty("hashrate")
-            Number hashrate,
+            float hashrate,
             @JsonProperty("shares")
-            Number shares,
+            float shares,
             @JsonProperty("score")
             String score,
             @JsonProperty("last_share")
@@ -33,7 +32,7 @@ public class Worker {
         return this.alive;
     }
 
-    public Number getHashrate() {
+    public float getHashrate() {
         return this.hashrate;
     }
 
@@ -45,7 +44,7 @@ public class Worker {
         return this.score;
     }
 
-    public Number getShares() {
+    public float getShares() {
         return this.shares;
     }
 }

@@ -237,7 +237,7 @@ public class SlushFragment extends SherlockFragment {
                     String alive = "Alive: " + worker.getAlive();
                     String minerHashrate = "Hashrate: " + worker.getHashrate()
                             + " MH/s";
-                    String shares = "Shares: " + worker.getShares().floatValue();
+                    String shares = "Shares: " + worker.getShares();
                     String lastShare = "Last Share: "
                             + Utils.dateFormat(getActivity(), worker.getLast_share() * 1000);
                     String score = "Score: " + worker.getScore();

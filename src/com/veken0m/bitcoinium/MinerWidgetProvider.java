@@ -77,8 +77,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     String pref_miningpool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
                             appWidgetId);
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                   
-                    RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.minerappwidget);
+
+                    RemoteViews views = new RemoteViews(this.getPackageName(),
+                            R.layout.minerappwidget);
                     setTapBehaviour(this, appWidgetId, pref_miningpool, views);
 
                     Boolean pref_minerDownAlert = prefs.getBoolean(
@@ -86,12 +87,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     if (getMinerInfo(pref_miningpool)) {
 
-                        views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
+                        views.setTextViewText(R.id.widgetMinerHashrate,
+                                Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, pref_miningpool);
                         views.setTextViewText(R.id.widgetBTCPayout,
                                 CurrencyUtils.formatPayout(btcBalance));
 
-                        if (!(hashRate>0.0) && pref_minerDownAlert)
+                        if (!(hashRate > 0.0) && pref_minerDownAlert)
                             createMinerDownNotification(this, pref_miningpool);
 
                         String refreshedTime = "Upd. @ " + Utils.getCurrentTime(this);
@@ -135,8 +137,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     DeepBitData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             DeepBitData.class);
-                    btcBalance = data.getConfirmed_reward().floatValue();
-                    hashRate = data.getHashrate().floatValue();
+                    btcBalance = data.getConfirmed_reward();
+                    hashRate = data.getHashrate();
                     return true;
 
                 } else if (miningpool.equalsIgnoreCase("BitMinter")) {
@@ -152,7 +154,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             .getEntity().getContent(), "UTF-8"),
                             BitMinterData.class);
                     btcBalance = data.getBalances().getBTC();
-                    hashRate = data.getHash_rate().floatValue();
+                    hashRate = data.getHash_rate();
                     return true;
 
                 } else if (miningpool.equalsIgnoreCase("EclipseMC")) {
@@ -204,7 +206,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     Workers workers = data.getWorkers();
 
                     for (int i = 0; i < workers.getWorkers().size(); i++) {
-                        hashRate += workers.getWorker(i).getHashrate().floatValue();
+                        hashRate += workers.getWorker(i).getHashrate();
                     }
                     return true;
 
@@ -237,13 +239,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             .readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     BTCGuild.class);
-                    btcBalance = data.getUser().getUnpaid_rewards().floatValue();
+                    btcBalance = data.getUser().getUnpaid_rewards();
                     hashRate = 0.0f;
 
                     List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers()
                             .getWorkers();
                     for (int i = 0; i < workers.size(); i++) {
-                        hashRate += workers.get(i).getHash_rate().floatValue();
+                        hashRate += workers.get(i).getHash_rate();
                     }
                     return true;
                 } else if (miningpool.equalsIgnoreCase("Eligius")) {
@@ -261,7 +263,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     .getEntity().getContent(), "UTF-8"),
                                     Eligius.class);
 
-                    hashRate = data.get256().getHashrate().floatValue() / 1000000;
+                    hashRate = data.get256().getHashrate() / 1000000;
 
                     post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
                             + pref_apiKey);
@@ -271,9 +273,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     .getEntity().getContent(), "UTF-8"),
                                     EligiusBalance.class);
 
-                    if (data2.getConfirmed() != null) {
-                        btcBalance = data2.getConfirmed().floatValue() / 100000000;
-                    }
+                    btcBalance = data2.getConfirmed() / 100000000;
+                    
                     return true;
                 }
 
@@ -283,10 +284,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             }
             return false;
         }
-        
+
         private void setTapBehaviour(MinerUpdateService minerUpdateService, int appWidgetId,
                 String poolKey, RemoteViews views) {
-            
+
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {
                 Intent intent = new Intent(this, MinerWidgetProvider.class);
@@ -302,7 +303,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             }
 
             views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                    pendingIntent); 
+                    pendingIntent);
         }
 
         public void updateWidgetTheme(RemoteViews views) {
@@ -359,8 +360,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             buildUpdate();
         }
     }
-    
-    
 
     public void onDestoy(Context context) {
         final AlarmManager m = (AlarmManager) context

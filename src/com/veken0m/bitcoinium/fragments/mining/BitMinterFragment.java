@@ -161,7 +161,7 @@ public class BitMinterFragment extends SherlockFragment {
             String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
                     + " NMC";
             String Hashrate = "Total Hashrate: "
-                    + data.getHash_rate().toString() + " MH/s\n";
+                    + data.getHash_rate() + " MH/s\n";
 
             tvBTCRewards.setText(RewardsBTC);
             tvNMCRewards.setText(RewardsNMC);
@@ -197,17 +197,16 @@ public class BitMinterFragment extends SherlockFragment {
                 tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 tvMinerName.setText("Miner: " + workers.get(i).getName());
-                float hashrate = workers.get(i).getHash_rate()
-                .floatValue();
+                float hashrate = workers.get(i).getHash_rate();
                 tvHashrate.setText("Hashrate: "
                         + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
                 tvAlive.setText("Alive: " + (hashrate>0.0));
                 tvShares.setText("Shares: "
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
-                                .getTotal_accepted().floatValue(), 0, true));
+                                .getTotal_accepted(), 0, true));
                 tvStales.setText("Stales: "
                         + Utils.formatDecimal(workers.get(i).getWork().getBTC()
-                                .getTotal_rejected().floatValue(), 0, true));
+                                .getTotal_rejected(), 0, true));
 
                 if (hashrate>0.0) {
                     tvMinerName.setTextColor(Color.GREEN);

@@ -1,30 +1,28 @@
 
 package com.veken0m.mining.eligius;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EligiusBalance{
-    
-    private BigDecimal confirmed;
-    private BigDecimal expected;
-    
-   	public EligiusBalance(
-   	        @JsonProperty("confirmed")
-   	        BigDecimal confirmed, 
-   	        @JsonProperty("expected")
-   	        BigDecimal expected) {
+public class EligiusBalance {
+
+    private float confirmed;
+    private float expected;
+
+    public EligiusBalance(
+            @JsonProperty("confirmed")
+            float confirmed,
+            @JsonProperty("expected")
+            float expected) {
 
         this.confirmed = confirmed;
         this.expected = expected;
     }
-   	
- 	public BigDecimal getConfirmed(){
-		return this.confirmed;
-	}
 
- 	public BigDecimal getExpected(){
-		return this.expected;
-	}
+    public float getConfirmed() {
+        return this.confirmed;
+    }
+
+    public float getExpected() {
+        return this.expected;
+    }
 }

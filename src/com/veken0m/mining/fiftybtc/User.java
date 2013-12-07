@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     private int active_workers;
     private float confirmed_rewards;
-    private String hash_rate;
+    private float hash_rate;
     private float payouts;
 
     public User(@JsonProperty("active_workers")
@@ -15,7 +15,7 @@ public class User {
             @JsonProperty("confirmed_rewards")
             float confirmed_rewards,
             @JsonProperty("hash_rate")
-            String hash_rate,
+            float hash_rate,
             @JsonProperty("payouts")
             float payouts) {
         this.active_workers = active_workers;
@@ -32,7 +32,7 @@ public class User {
         return this.confirmed_rewards;
     }
 
-    public String getHash_rate() {
+    public float getHash_rate() {
         return this.hash_rate;
     }
 

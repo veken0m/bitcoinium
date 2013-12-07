@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties
 public class Worker {
     private boolean alive;
-    private Number shares;
-    private Number stales;
+    private float shares;
+    private float stales;
 
     public boolean getAlive() {
         return this.alive;
@@ -22,7 +22,7 @@ public class Worker {
         return this.shares;
     }
 
-    public void setShares(Number shares) {
+    public void setShares(float shares) {
         this.shares = shares;
     }
 
@@ -30,7 +30,7 @@ public class Worker {
         return this.stales;
     }
 
-    public void setStales(Number stales) {
+    public void setStales(float stales) {
         this.stales = stales;
     }
 }
