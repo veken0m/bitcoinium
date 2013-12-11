@@ -44,7 +44,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static boolean pref_wifionly;
     static boolean pref_alarmClock;
     static String pref_notificationSound;
-    //static boolean pref_extremePowerSaver;
     static boolean pref_tapToUpdate;
 
     static int pref_mainWidgetTextColor;
@@ -80,8 +79,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString(
                 "refreshPref", "1800"));
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
-        // pref_extremePowerSaver = prefs.getBoolean("extremeSaverModePref",
-        // false);
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);

@@ -56,11 +56,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     
     public void createCurrencyDropdown(){
         // Re-populate the dropdown menu
-        final String[] dropdownValues = {"SHOW ALL",
-                "USD", "CAD", "GBP", "EUR", "CNY", "RUR", "PLN", "JPY", "XRP", "SLL", "AUD", "BRL",
-                "HKD", "SEK", "NOK", "LTC", "SGD", "NZD", "XRP", "ZAR", "CHF", "DKK", "ARS", "MXN",
-                "INR", "THB", "RUB"
-        };
+        final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
 
         spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
         dataAdapter = new ArrayAdapter<String>(this,
@@ -112,7 +108,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
      */
     public void drawBitcoinChartsUI() {
 
-        final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
+        TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
         linlaHeaderProgress.setVisibility(View.GONE);
 
@@ -167,11 +163,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     // Utils.setTextViewParams(tvAsk, ask);
 
                     // Toggle background color
-                    if (backGroundColor == Color.BLACK) {
-                          backGroundColor = Color.rgb(31, 31, 31);
-                    } else {
-                          backGroundColor = Color.BLACK;
-                    }
+                    backGroundColor = (backGroundColor == Color.BLACK) ? Color.rgb(31, 31, 31) : Color.BLACK;
 
                     tr1.setBackgroundColor(backGroundColor);
 

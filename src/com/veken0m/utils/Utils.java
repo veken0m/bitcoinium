@@ -1,6 +1,7 @@
 
 package com.veken0m.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -136,6 +137,15 @@ public class Utils {
         } else {
             return df.format((hashRate)) + " MH/s";
         }
+    }
+    
+    public static void errorDialog(Context context, String msg) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Error");
+        builder.setMessage(msg);
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 
 }

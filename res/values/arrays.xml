@@ -62,5 +62,33 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    
+    <string-array name="bitcoinChartsDropdown">
+        <item>SHOW ALL</item>
+        <item>USD</item>
+        <item>CAD</item>
+        <item>GBP</item>
+        <item>EUR</item>
+        <item>PLN</item>
+        <item>JPY</item>
+        <item>XRP</item>
+        <item>SLL</item>
+        <item>AUD</item>
+        <item>BRL</item>
+        <item>HKD</item>
+        <item>SEK</item>
+        <item>NOK</item>
+        <item>LTC</item>
+        <item>SGD</item>
+        <item>NZD</item>
+        <item>ZAR</item>
+        <item>CHF</item>
+        <item>DKK</item>
+        <item>ARS</item>
+        <item>MXN</item>
+        <item>INR</item>
+        <item>THB</item>
+        <item>RUB</item>
+    </string-array>
 
 </resources>

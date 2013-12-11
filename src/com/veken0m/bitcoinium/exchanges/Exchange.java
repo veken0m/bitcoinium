@@ -14,11 +14,11 @@ public class Exchange {
     private final boolean tickerSupportsBidAsk;
 
     public Exchange(Context ctxt, String exchangeName) {
-        
+
         String[] exchangeProperties = ctxt.getResources().getStringArray(
                 ctxt.getResources().getIdentifier(exchangeName, "array",
                         ctxt.getPackageName()));
-        
+
         exchange_name = exchangeProperties[0];
         class_name = exchangeProperties[1];
         main_currency = exchangeProperties[2];

@@ -58,7 +58,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     protected String xchangeExchange = null;
     protected List<LimitOrder> listAsks;
     protected List<LimitOrder> listBids;
-    
+
     protected List<BigDecimal> listAsksPrice;
     protected List<BigDecimal> listBidsPrice;
     protected List<BigDecimal> listAsksAmount;
@@ -98,11 +98,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         xchangeExchange = exchange.getClassName();
         prefix = exchange.getIdentifier();
         readPreferences(getApplicationContext(), prefix, exchange.getDefaultCurrency());
-        
+
         createCurrencyDropdown();
         viewOrderbook();
-        
-        //KarmaAdsUtils.initAd(this);
+
+        // KarmaAdsUtils.initAd(this);
     }
 
     @Override
@@ -147,22 +147,16 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
                     .createExchange(xchangeExchange)
                     .getPollingMarketDataService();
-            
+
             // TODO: Set to partial orderbook when working for all exchanges
             OrderBook orderbook = marketData.getOrderBook(currencyPair.baseCurrency,
-                    currencyPair.counterCurrency);//, OrderBookType.PARTIAL);
+                    currencyPair.counterCurrency);
 
             // Limit OrderbookActivity orders drawn to speed up performance
-            int length = 0;
-            if (orderbook.getAsks().size() < orderbook.getBids().size()) {
-                length = orderbook.getAsks().size();
-            } else {
-                length = orderbook.getBids().size();
-            }
-
-            if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length) {
+            int length = (orderbook.getAsks().size() < orderbook.getBids().size()) ? orderbook
+                    .getAsks().size() : orderbook.getBids().size();
+            if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length)
                 length = pref_orderbookLimiter;
-            }
 
             listAsks = orderbook.getAsks().subList(0, length);
             listBids = orderbook.getBids().subList(0, length);
@@ -186,23 +180,26 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
 
             HttpClient client = new DefaultHttpClient();
-            HttpGet post = new HttpGet("http://bitcoinium.com:9090/service/orderbook?exchange=mtgox&pair=BTC_USD&pricewindow=1p");
+            HttpGet post = new HttpGet(
+                    "http://bitcoinium.com:9090/service/orderbook?exchange=mtgox&pair=BTC_USD&pricewindow=1p");
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
 
-            com.veken0m.bitcoinium.webservice.dto.Orderbook orderbook = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), com.veken0m.bitcoinium.webservice.dto.Orderbook.class);
+            com.veken0m.bitcoinium.webservice.dto.Orderbook orderbook = mapper.readValue(
+                    new InputStreamReader(response.getEntity()
+                            .getContent(), "UTF-8"),
+                    com.veken0m.bitcoinium.webservice.dto.Orderbook.class);
 
             // Limit OrderbookActivity orders drawn to speed up performance
             int size = orderbook.getBidPriceList().size();
-            if(orderbook.getAskPriceList().size() < size){
+            if (orderbook.getAskPriceList().size() < size) {
                 size = orderbook.getAskPriceList().size();
             }
 
             if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < size) {
                 size = pref_orderbookLimiter;
             }
-           
+
             listAsksPrice = orderbook.getAskPriceList().subList(0, size);
             listBidsPrice = orderbook.getBidPriceList().subList(0, size);
             listAsksAmount = orderbook.getAskVolumeList().subList(0, size);
@@ -226,7 +223,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
         t1.removeAllViews();
-        
+
         stopLoading();
         setOrderBookHeader();
 
@@ -234,7 +231,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, 1f);
         int backGroundColor = Color.rgb(31, 31, 31);
-       
+
         String currencySymbolBTC, currencySymbol;
         currencySymbolBTC = currencySymbol = "";
         if (pref_showCurrencySymbol) {
@@ -281,45 +278,45 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
             int bidTextColor = depthColor(bidAmount);
             int askTextColor = depthColor(askAmount);
-            
+
             tvBidAmount.setTextColor(bidTextColor);
             tvBidPrice.setTextColor(bidTextColor);
             tvAskAmount.setTextColor(askTextColor);
             tvAskPrice.setTextColor(askTextColor);
-            
-                // Toggle background color
-                if (backGroundColor == Color.BLACK) {
-                      backGroundColor = Color.rgb(31, 31, 31);
-                } else {
-                      backGroundColor = Color.BLACK;
-                }
-                
-                tr1.setBackgroundColor(backGroundColor);
-                tr1.addView(tvBidPrice);
-                tr1.addView(tvBidAmount);
-                tr1.addView(tvAskPrice);
-                tr1.addView(tvAskAmount);
 
-                t1.addView(tr1);
-                addDivider(t1);
+            // Toggle background color
+            if (backGroundColor == Color.BLACK) {
+                backGroundColor = Color.rgb(31, 31, 31);
+            } else {
+                backGroundColor = Color.BLACK;
+            }
+
+            tr1.setBackgroundColor(backGroundColor);
+            tr1.addView(tvBidPrice);
+            tr1.addView(tvBidAmount);
+            tr1.addView(tvAskPrice);
+            tr1.addView(tvAskAmount);
+
+            t1.addView(tr1);
+            addDivider(t1);
         }
 
     }
-    
+
     /**
      * Draw the Orders to the screen in a table
      */
     public void drawXHubOrderbookUI() {
 
         final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-        
+
         stopLoading();
         setOrderBookHeader();
 
         LayoutParams params = new LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, 1f);
-        
+
         String currencySymbolBTC = "";
         String currencySymbol = "";
 
@@ -327,11 +324,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             currencySymbolBTC = " " + currencyPair.baseCurrency;
             currencySymbol = Utils.getCurrencySymbol(currencyPair.counterCurrency);
         }
-        
+
         float previousBidAmount = 0;
         float previousAskAmount = 0;
 
-        for (int i = 0; i <  listAsksPrice.size(); i++) {
+        for (int i = 0; i < listAsksPrice.size(); i++) {
 
             final TableRow tr1 = new TableRow(this);
             final TextView tvAskAmount = new TextView(this);
@@ -344,7 +341,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             float bidAmount = listBidsAmount.get(i).floatValue() - previousBidAmount;
             float askPrice = listAsksPrice.get(i).floatValue();
             float askAmount = listAsksAmount.get(i).floatValue() - previousAskAmount;
-            
+
             previousAskAmount = listAsksAmount.get(i).floatValue();
             previousBidAmount = listBidsAmount.get(i).floatValue();
 
@@ -369,7 +366,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
             int bidTextColor = depthColor(bidAmount);
             int askTextColor = depthColor(askAmount);
-            
+
             tvBidAmount.setTextColor(bidTextColor);
             tvBidPrice.setTextColor(bidTextColor);
             tvAskAmount.setTextColor(askTextColor);
@@ -380,7 +377,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 tr1.addView(tvBidAmount);
                 tr1.addView(tvAskPrice);
                 tr1.addView(tvAskAmount);
-                
+
                 t1.addView(tr1);
                 addDivider(t1);
 
@@ -406,11 +403,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                     startLoading();
                 }
             });
-            //if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
-            //    getXHubOrderBook();
-            //} else {
-                getOrderBook();
-            //}
+            // if(exchangeName.equalsIgnoreCase("mtgox") &&
+            // pref_currency.contains("USD")){
+            // getXHubOrderBook();
+            // } else {
+            getOrderBook();
+            // }
             mOrderHandler.post(mOrderView);
         }
     }
@@ -419,11 +417,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         @Override
         public void run() {
             try {
-                //if(exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")){
-                //    drawXHubOrderbookUI();
-                //} else {
-                    drawOrderbookUI();
-                //}
+                // if(exchangeName.equalsIgnoreCase("mtgox") &&
+                // pref_currency.contains("USD")){
+                // drawXHubOrderbookUI();
+                // } else {
+                drawOrderbookUI();
+                // }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -441,12 +440,13 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     public void onNothingSelected(AdapterView<?> arg0) {
         // Do nothing
     }
-    
+
     private void connectionFailed() {
         stopLoading();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         Resources res = getResources();
-        String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.orderbook), exchangeName);
+        String text = String.format(res.getString(R.string.connectionError),
+                res.getString(R.string.orderbook), exchangeName);
         builder.setMessage(text);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -458,25 +458,26 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         AlertDialog alert = builder.create();
         alert.show();
     }
-    
-    public void startLoading(){
+
+    public void startLoading() {
         TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
         t1.removeAllViews();
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         linlaHeaderProgress.setVisibility(View.VISIBLE);
     }
-    
-    public void stopLoading(){
+
+    public void stopLoading() {
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         linlaHeaderProgress.setVisibility(View.GONE);
     }
-    
-    public void setOrderBookHeader(){
+
+    public void setOrderBookHeader() {
         TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
-        orderBookHeader.setText(exchangeName + " " + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency);
+        orderBookHeader.setText(exchangeName + " " + currencyPair.baseCurrency + "/"
+                + currencyPair.counterCurrency);
     }
-    
-    public void addDivider(TableLayout table){
+
+    public void addDivider(TableLayout table) {
         // Insert a divider between rows
         View divider = new View(this);
         divider.setLayoutParams(new TableRow.LayoutParams(
@@ -484,8 +485,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         divider.setBackgroundColor(Color.rgb(51, 51, 51));
         table.addView(divider);
     }
-    
-    public void createCurrencyDropdown(){
+
+    public void createCurrencyDropdown() {
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(
                 getResources().getIdentifier(prefix + "currencies", "array",
@@ -497,23 +498,20 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
     }
-    
-    public int depthColor(float amount){
+
+    public int depthColor(float amount) {
         int color = Color.GRAY;
         if (pref_enableHighlight) {
-            if ((int) amount < pref_highlightLow) {
+            if ((int) amount < pref_highlightLow)
                 color = Color.RED;
-            }
-            if ((int) amount >= pref_highlightLow) {
+            if ((int) amount >= pref_highlightLow)
                 color = Color.YELLOW;
-            }
-            if ((int) amount >= pref_highlightHigh) {
+            if ((int) amount >= pref_highlightHigh)
                 color = Color.GREEN;
-            }
         }
-        return color;  
+        return color;
     }
-    
+
     protected static void readPreferences(Context context, String prefix,
             String defaultCurrency) {
 
