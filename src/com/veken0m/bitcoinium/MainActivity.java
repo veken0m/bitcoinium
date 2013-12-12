@@ -46,6 +46,8 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initTabbedActionBar();
+        // Some hack to make widgets appear on devices without rebooting
+        sendBroadcast(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
 
         //KarmaAdsUtils.initAd(this);
     }
