@@ -1,7 +1,10 @@
 bin/
 gen/
 proguard/
+build/
+.idea/
 .project
 .settings
 .classpath
-/project.properties
+project.properties
+local.properties
