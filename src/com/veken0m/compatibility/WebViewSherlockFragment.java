@@ -20,8 +20,8 @@ import com.actionbarsherlock.app.SherlockFragment;
  * resumed.
  */
 public class WebViewSherlockFragment extends SherlockFragment {
-    protected WebView mWebView;
-    protected boolean mIsWebViewAvailable;
+    protected WebView mWebView = null;
+    protected boolean mIsWebViewAvailable = false;
 
     public WebViewSherlockFragment() {
     }

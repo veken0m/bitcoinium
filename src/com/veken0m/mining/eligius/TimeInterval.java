@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TimeInterval {
 
-    private float hashrate;
-    private float interval;
-    private String interval_name;
-    private float shares;
+    private final float hashrate;
+    private final float interval;
+    private final String interval_name;
+    private final float shares;
 
     public TimeInterval(
             @JsonProperty("hashrate")

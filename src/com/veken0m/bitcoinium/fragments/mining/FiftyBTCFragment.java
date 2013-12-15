@@ -37,12 +37,12 @@ import java.util.List;
 
 public class FiftyBTCFragment extends SherlockFragment {
 
-    protected static String pref_50BTCKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static FiftyBTC data;
-    protected Boolean connectionFail = false;
+    private static String pref_50BTCKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static FiftyBTC data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public FiftyBTCFragment() {
     }
@@ -64,7 +64,7 @@ public class FiftyBTCFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -98,16 +98,16 @@ public class FiftyBTCFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class MinerStatsThread extends Thread {
+    private class MinerStatsThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -140,7 +140,7 @@ public class FiftyBTCFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -191,9 +191,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 
                 // WORKER INFO
                 List<Worker> workers = data.getWorkers().getWorkers();
-                for (int i = 0; i < workers.size(); i++) {
-                    Worker worker = workers.get(i);
-
+                for (Worker worker : workers) {
                     String name = "Miner: " + worker.getWorker_name();
                     String alive = "Alive: " + worker.getAlive();
                     String minerHashrate = "Hashrate: " + worker.getHash_rate()
@@ -201,7 +199,7 @@ public class FiftyBTCFragment extends SherlockFragment {
                     String shares = "Shares: " + worker.getShares();
                     String lastShare = "Last Share: "
                             + Utils.dateFormat(getActivity(),
-                                    worker.getLast_share() * 1000);
+                            worker.getLast_share() * 1000);
                     String totalShares = "Total Shares: "
                             + worker.getTotal_shares();
 
@@ -259,7 +257,7 @@ public class FiftyBTCFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

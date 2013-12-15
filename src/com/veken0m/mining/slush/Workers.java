@@ -10,8 +10,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Workers {
 
-    private List<Worker> workers = new ArrayList<Worker>();
-    private List<String> names = new ArrayList<String>();
+    private final List<Worker> workers = new ArrayList<Worker>();
+    private final List<String> names = new ArrayList<String>();
 
     public Worker getWorker(int i) {
         return workers.get(i);

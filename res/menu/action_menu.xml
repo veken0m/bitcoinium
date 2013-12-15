@@ -6,11 +6,11 @@
         android:id="@+id/action_preferences"
         android:icon="@drawable/action_settings"
         android:showAsAction="ifRoom"
-        android:title="Settings"/>
+        android:title="@string/settings"/>
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/navigation_refresh"
         android:showAsAction="ifRoom"
-        android:title="Refresh"/>
+        android:title="@string/refresh"/>
 
 </menu>

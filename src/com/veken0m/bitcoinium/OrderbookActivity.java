@@ -49,35 +49,32 @@ import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
-import com.xeiam.xchange.service.polling.PollingMarketDataService.OrderBookType;
 
 public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
 
-    final static Handler mOrderHandler = new Handler();
-    protected static String exchangeName = "";
-    protected String xchangeExchange = null;
-    protected List<LimitOrder> listAsks;
-    protected List<LimitOrder> listBids;
+    private final static Handler mOrderHandler = new Handler();
+    private static String exchangeName = "";
+    private String xchangeExchange = null;
+    private List<LimitOrder> listAsks = null;
+    private List<LimitOrder> listBids = null;
 
-    protected List<BigDecimal> listAsksPrice;
-    protected List<BigDecimal> listBidsPrice;
-    protected List<BigDecimal> listAsksAmount;
-    protected List<BigDecimal> listBidsAmount;
+    private List<BigDecimal> listAsksPrice = null;
+    private List<BigDecimal> listBidsPrice = null;
+    private List<BigDecimal> listAsksAmount = null;
+    private List<BigDecimal> listBidsAmount = null;
 
     /**
      * List of preference variables
      */
-    static int pref_highlightHigh;
-    static int pref_highlightLow;
-    static int pref_orderbookLimiter;
-    static Boolean pref_enableHighlight;
-    static String pref_currency;
-    static Boolean pref_showCurrencySymbol;
+    private static int pref_highlightHigh = 0;
+    private static int pref_highlightLow = 0;
+    private static int pref_orderbookLimiter = 0;
+    private static String pref_currency = null;
+    private static Boolean pref_enableHighlight = true;
+    private static Boolean pref_showCurrencySymbol = true;
 
-    private Spinner spinner;
-    private ArrayAdapter<String> dataAdapter;
-    String prefix = "mtgox";
-    CurrencyPair currencyPair = null;
+    private String prefix = "mtgox";
+    private CurrencyPair currencyPair = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,7 +136,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     /**
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
-    public void getOrderBook() {
+    void getOrderBook() {
         try {
 
             currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
@@ -219,7 +216,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     /**
      * Draw the Orders to the screen in a table
      */
-    public void drawOrderbookUI() {
+    void drawOrderbookUI() {
 
         final TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
         t1.removeAllViews();
@@ -393,7 +390,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
@@ -413,7 +410,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         }
     }
 
-    final Runnable mOrderView = new Runnable() {
+    private final Runnable mOrderView = new Runnable() {
         @Override
         public void run() {
             try {
@@ -459,25 +456,25 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         alert.show();
     }
 
-    public void startLoading() {
+    void startLoading() {
         TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
         t1.removeAllViews();
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         linlaHeaderProgress.setVisibility(View.VISIBLE);
     }
 
-    public void stopLoading() {
+    void stopLoading() {
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         linlaHeaderProgress.setVisibility(View.GONE);
     }
 
-    public void setOrderBookHeader() {
+    void setOrderBookHeader() {
         TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
         orderBookHeader.setText(exchangeName + " " + currencyPair.baseCurrency + "/"
                 + currencyPair.counterCurrency);
     }
 
-    public void addDivider(TableLayout table) {
+    void addDivider(TableLayout table) {
         // Insert a divider between rows
         View divider = new View(this);
         divider.setLayoutParams(new TableRow.LayoutParams(
@@ -486,20 +483,20 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         table.addView(divider);
     }
 
-    public void createCurrencyDropdown() {
+    void createCurrencyDropdown() {
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(
                 getResources().getIdentifier(prefix + "currencies", "array",
                         this.getPackageName()));
-        spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
-        dataAdapter = new ArrayAdapter<String>(this,
+        Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, dropdownValues);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
     }
 
-    public int depthColor(float amount) {
+    int depthColor(float amount) {
         int color = Color.GRAY;
         if (pref_enableHighlight) {
             if ((int) amount < pref_highlightLow)
@@ -512,8 +509,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         return color;
     }
 
-    protected static void readPreferences(Context context, String prefix,
-            String defaultCurrency) {
+    private static void readPreferences(Context context, String prefix,
+                                        String defaultCurrency) {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);

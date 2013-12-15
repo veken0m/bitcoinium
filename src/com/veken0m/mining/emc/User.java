@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class User {
-    private long blocks_found;
-    private float confirmed_rewards;
-    private float estimated_rewards;
-    private float total_payout;
-    private float unconfirmed_rewards;
+    private final long blocks_found;
+    private final float confirmed_rewards;
+    private final float estimated_rewards;
+    private final float total_payout;
+    private final float unconfirmed_rewards;
 
     public User(@JsonProperty("blocks_found")
     long blocks_found,

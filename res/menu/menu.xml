@@ -4,10 +4,10 @@
         android:id="@+id/price_alarm_preferences"
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_alarms"
-        android:title="Price Alarms"/>
+        android:title="@string/priceAlarm"/>
     <item
         android:id="@+id/preferences"
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_settings"
-        android:title="Settings"/>
+        android:title="@string/settings"/>
 </menu>

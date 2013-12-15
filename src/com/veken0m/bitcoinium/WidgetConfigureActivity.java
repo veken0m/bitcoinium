@@ -15,7 +15,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
 
@@ -24,11 +23,11 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    ListPreference widgetExchangePref;
-    PreferenceCategory prefCategory;
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private ListPreference widgetExchangePref = null;
+    private PreferenceCategory prefCategory = null;
 
-    HashMap<String, Preference> currencyPref = new HashMap<String, Preference>();
+    private final HashMap<String, Preference> currencyPref = new HashMap<String, Preference>();
 
     public WidgetConfigureActivity() {
         super();
@@ -63,10 +62,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
             // Disable all the currency pickers and enable the selected exchange
             for (Preference value : currencyPref.values()){
-                prefCategory.removePreference((ListPreference) value);
+                prefCategory.removePreference(value);
             }
 
-            prefCategory.addPreference((ListPreference) currencyPref.get(widgetExchangePref
+            prefCategory.addPreference(currencyPref.get(widgetExchangePref
                     .getEntry().toString().replace("Exchange", "").replace("-", "")));
 
         } catch (Exception e) {
@@ -93,10 +92,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
                             // Disable all the currency pickers
                             for (Preference value : currencyPref.values())
-                                prefCategory.removePreference((ListPreference) value);
+                                prefCategory.removePreference(value);
 
                             // Enable the selected exchange
-                            prefCategory.addPreference((ListPreference) currencyPref.get(newValue
+                            prefCategory.addPreference(currencyPref.get(newValue
                                     .toString().replace("Exchange", "").replace("-", "")));
                             
                         } catch (Exception e) {
@@ -148,8 +147,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveCurrencyPref(Context context, int appWidgetId,
-            String currency) {
+    private static void saveCurrencyPref(Context context, int appWidgetId,
+                                         String currency) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(
                 PREFS_NAME, 0).edit();
         prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
@@ -169,7 +168,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveExchangePref(Context context, int appWidgetId, String exchange) {
+    private static void saveExchangePref(Context context, int appWidgetId, String exchange) {
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, exchange);

@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class EMC {
-    private String apikey;
-    private Data data;
-    private List<Workers> workers;
+    private final String apikey;
+    private final Data data;
+    private final List<Workers> workers;
 
     public EMC(@JsonProperty("apikey")
     String apikey,

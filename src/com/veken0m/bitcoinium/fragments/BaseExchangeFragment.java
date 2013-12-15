@@ -16,24 +16,23 @@ import com.veken0m.bitcoinium.OrderbookActivity;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
-import com.veken0m.bitcoinium.R.id;
 
 public class BaseExchangeFragment extends SherlockFragment {
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
-    public static final String VIRTEX = "VirtExExchange";
-    public static final String MTGOX = "MtGoxExchange";
-    public static final String BTCE = "BTCEExchange";
-    public static final String BITSTAMP = "BitstampExchange";
-    public static final String CAMPBX = "CampBXExchange";
-    public static final String BITCOINCENTRAL = "BitcoinCentralExchange";
-    public static final String BITFLOOR = "BitfloorExchange";
-    public static final String BITCOIN24 = "Bitcoin24Exchange";
-    public static final String BTCCHINA = "BTCChinaExchange";
-    public static final String BITCUREX = "BitcurexExchange";
-    public static final String KRAKEN = "KrakenExchange";
+    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    protected static final String VIRTEX = "VirtExExchange";
+    protected static final String MTGOX = "MtGoxExchange";
+    protected static final String BTCE = "BTCEExchange";
+    protected static final String BITSTAMP = "BitstampExchange";
+    protected static final String CAMPBX = "CampBXExchange";
+    protected static final String BITCOINCENTRAL = "BitcoinCentralExchange";
+    protected static final String BITFLOOR = "BitfloorExchange";
+    protected static final String BITCOIN24 = "Bitcoin24Exchange";
+    protected static final String BTCCHINA = "BTCChinaExchange";
+    protected static final String BITCUREX = "BitcurexExchange";
+    protected static final String KRAKEN = "KrakenExchange";
 
     // Attaches OnClickListeners to menu buttons
-    public void buildMenu(View view, final String exchange, final Boolean graph) {
+    protected void buildMenu(View view, final String exchange, final Boolean graph) {
         
         final Button widgetRefreshButton = (Button) view
                 .findViewById(R.id.widgetrefresh);

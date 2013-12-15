@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EligiusBalance {
 
-    private float confirmed;
-    private float expected;
+    private final float confirmed;
+    private final float expected;
 
     public EligiusBalance(
             @JsonProperty("confirmed")

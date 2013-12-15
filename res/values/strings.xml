@@ -64,5 +64,10 @@
     <string name="bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
     <string name="symbol">Symbol</string>
+    <string name="priceAlarm">Price Alarms</string>
+    <string name="settings">Settings</string>
+    <string name="refresh">Refresh</string>
+    <string name="symbol_short">Sym.</string>
+    <string name="currencyPairFilter">Currency Pair Filter</string>
 
 </resources>

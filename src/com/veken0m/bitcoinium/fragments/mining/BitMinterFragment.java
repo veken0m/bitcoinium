@@ -37,12 +37,12 @@ import java.util.List;
 
 public class BitMinterFragment extends SherlockFragment {
 
-    protected static String pref_bitminterKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static BitMinterData data;
-    protected Boolean connectionFail = false;
+    private static String pref_bitminterKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static BitMinterData data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public BitMinterFragment() {
     }
@@ -64,7 +64,7 @@ public class BitMinterFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -98,16 +98,16 @@ public class BitMinterFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -141,7 +141,7 @@ public class BitMinterFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -183,7 +183,7 @@ public class BitMinterFragment extends SherlockFragment {
 
                 // End of Non-worker data
                 List<Workers> workers = data.getWorkers();
-                for (int i = 0; i < workers.size(); i++) {
+                for (Workers worker : workers) {
                     TableRow tr8 = new TableRow(getActivity());
                     TableRow tr9 = new TableRow(getActivity());
                     TableRow tr10 = new TableRow(getActivity());
@@ -202,17 +202,17 @@ public class BitMinterFragment extends SherlockFragment {
                     tr11.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                    tvMinerName.setText("Miner: " + workers.get(i).getName());
-                    float hashrate = workers.get(i).getHash_rate();
+                    tvMinerName.setText("Miner: " + worker.getName());
+                    float hashrate = worker.getHash_rate();
                     tvHashrate.setText("Hashrate: "
                             + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
                     tvAlive.setText("Alive: " + (hashrate > 0.0));
                     tvShares.setText("Shares: "
-                            + Utils.formatDecimal(workers.get(i).getWork().getBTC()
-                                    .getTotal_accepted(), 0, true));
+                            + Utils.formatDecimal(worker.getWork().getBTC()
+                            .getTotal_accepted(), 0, true));
                     tvStales.setText("Stales: "
-                            + Utils.formatDecimal(workers.get(i).getWork().getBTC()
-                                    .getTotal_rejected(), 0, true));
+                            + Utils.formatDecimal(worker.getWork().getBTC()
+                            .getTotal_rejected(), 0, true));
 
                     if (hashrate > 0.0) {
                         tvMinerName.setTextColor(Color.GREEN);
@@ -238,7 +238,7 @@ public class BitMinterFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

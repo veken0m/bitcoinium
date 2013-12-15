@@ -4,9 +4,9 @@ package com.veken0m.mining.btcguild;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BTCGuild {
-    private User user;
-    private Workers workers;
-    private Pool pool;
+    private final User user;
+    private final Workers workers;
+    private final Pool pool;
 
     public BTCGuild(@JsonProperty("user") User user,
             @JsonProperty("workers")Workers workers, 

@@ -19,7 +19,7 @@
             android:paddingRight="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Currency Pair Filter" />
+            android:text="@string/currencyPairFilter" />
 
         <Spinner
             android:id="@+id/bitcoincharts_currency_spinner"
@@ -35,7 +35,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#101010"
-            android:text="Symbol"
+            android:text="@string/symbol"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:background="#101010"
             android:gravity="center_horizontal"
-            android:text="Vol"
+            android:text="@string/vol"
             android:textColor="#33B5E5"
             android:textSize="18sp" />
 
@@ -110,14 +110,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_below="@+id/header"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp" >
 
         <TableLayout
             android:id="@+id/bitcoincharts_list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:showDividers="beginning"
             android:stretchColumns="5" >
         </TableLayout>

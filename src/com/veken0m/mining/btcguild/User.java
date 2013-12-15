@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
-    private float user_id;
-    private float total_rewards;
-    private float paid_rewards;
-    private float unpaid_rewards;
-    private float past_24h_rewards;
-    private float total_rewards_nmc;
-    private float paid_rewards_nmc;
-    private float unpaid_rewards_nmc;
-    private float past_24h_rewards_nmc;
+    private final float user_id;
+    private final float total_rewards;
+    private final float paid_rewards;
+    private final float unpaid_rewards;
+    private final float past_24h_rewards;
+    private final float total_rewards_nmc;
+    private final float paid_rewards_nmc;
+    private final float unpaid_rewards_nmc;
+    private final float past_24h_rewards_nmc;
     
     public User(@JsonProperty("user_id") float user_id, 
             @JsonProperty("total_rewards") float total_rewards, 

@@ -35,11 +35,20 @@ import java.util.Comparator;
 
 public class BitcoinChartsActivity extends SherlockActivity implements OnItemSelectedListener {
 
-    final static Handler mOrderHandler = new Handler();
-    BitcoinChartsTicker[] marketData;
-    private Spinner spinner;
-    private ArrayAdapter<String> dataAdapter;
-    String currencyFilter = "SHOW ALL";
+    private final static Handler mOrderHandler = new Handler();
+    private BitcoinChartsTicker[] marketData = null;
+    private final Runnable mGraphView;
+    private String currencyFilter;
+
+    public BitcoinChartsActivity() {
+        currencyFilter = "SHOW ALL";
+        mGraphView = new Runnable() {
+            @Override
+            public void run() {
+                drawBitcoinChartsUI();
+            }
+        };
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,12 +63,12 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         viewBitcoinCharts();
     }
     
-    public void createCurrencyDropdown(){
+    void createCurrencyDropdown(){
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
 
-        spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
-        dataAdapter = new ArrayAdapter<String>(this,
+        Spinner spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, dropdownValues);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -95,7 +104,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     /**
      * Fetch the Bitcoin Charts data
      */
-    public void getBitcoinCharts() {
+    void getBitcoinCharts() {
         try {
             marketData = BitcoinChartsFactory.createInstance().getMarketData();
         } catch (Exception e) {
@@ -106,7 +115,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     /**
      * Draw the Tickers to the screen in a table
      */
-    public void drawBitcoinChartsUI() {
+    void drawBitcoinChartsUI() {
 
         TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
@@ -196,7 +205,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         gt.start();
     }
 
-    public class bitcoinchartsThread extends Thread {
+    private class bitcoinchartsThread extends Thread {
 
         @Override
         public void run() {
@@ -213,13 +222,6 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             mOrderHandler.post(mGraphView);
         }
     }
-
-    final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            drawBitcoinChartsUI();
-        }
-    };
 
     private void connectionFailed() {
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);

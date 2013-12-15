@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FiftyBTC {
-    private User user;
-    private Workers workers;
+    private final User user;
+    private final Workers workers;
 
     public FiftyBTC(@JsonProperty("user")
     User user,

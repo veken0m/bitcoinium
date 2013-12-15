@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Eligius{
-   	private TimeInterval threeHours;
-   	private TimeInterval twoMinutes;
-   	private TimeInterval twentyTwoMinutes;
-   	private TimeInterval fourMinutes;
-   	private TimeInterval twelveHours;
-   	private ArrayList<String> intervals;
+   	private final TimeInterval threeHours;
+   	private final TimeInterval twoMinutes;
+   	private final TimeInterval twentyTwoMinutes;
+   	private final TimeInterval fourMinutes;
+   	private final TimeInterval twelveHours;
+   	private final ArrayList<String> intervals;
    	
     public Eligius(@JsonProperty("128")
             TimeInterval twoMinutes,

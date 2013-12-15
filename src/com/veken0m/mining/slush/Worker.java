@@ -4,11 +4,11 @@ package com.veken0m.mining.slush;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Worker {
-    private boolean alive;
-    private float hashrate;
+    private final boolean alive;
+    private final float hashrate;
     private long last_share;
-    private String score;
-    private float shares;
+    private final String score;
+    private final float shares;
 
     public Worker(@JsonProperty("alive")
     Boolean alive,

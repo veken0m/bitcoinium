@@ -16,7 +16,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -42,18 +41,18 @@ import com.veken0m.utils.Utils;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 
-    private static String pref_emcKey;
-    private static String pref_slushKey;
-    private static String pref_bitminterKey;
-    private static String pref_deepbitKey;
-    private static String pref_50BTCKey;
-    private static String pref_btcguildKey;
-    private static String pref_eligiusKey;
+    private static String pref_emcKey = null;
+    private static String pref_slushKey = null;
+    private static String pref_bitminterKey = null;
+    private static String pref_deepbitKey = null;
+    private static String pref_50BTCKey = null;
+    private static String pref_btcguildKey = null;
+    private static String pref_eligiusKey = null;
 
     private static final int MIN_KEY_LENGTH = 20;
     
-    ActionBar actionbar;
-    Bundle extras;
+    private ActionBar actionbar = null;
+    private Bundle extras = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -183,7 +182,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     }
 
     class MyTabsListener implements ActionBar.TabListener {
-        public SherlockFragment fragment;
+        public final SherlockFragment fragment;
 
         public MyTabsListener(SherlockFragment fragment) {
             this.fragment = fragment;
@@ -204,9 +203,6 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         }
 
     }
-
-    final Handler mMinerHandler = new Handler();
-    protected Boolean connectionFail = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -320,7 +316,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

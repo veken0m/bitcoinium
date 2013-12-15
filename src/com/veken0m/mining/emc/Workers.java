@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Workers {
-    private String hash_rate;
-    private String last_activity;
-    private float reset_shares;
-    private float round_shares;
-    private float total_shares;
-    private String worker_name;
+    private final String hash_rate;
+    private final String last_activity;
+    private final float reset_shares;
+    private final float round_shares;
+    private final float total_shares;
+    private final String worker_name;
 
     public Workers(@JsonProperty("hash_rate")
     String hash_rate,

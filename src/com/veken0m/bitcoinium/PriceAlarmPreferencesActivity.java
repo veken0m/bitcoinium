@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 public class PriceAlarmPreferencesActivity extends PreferenceActivity {
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

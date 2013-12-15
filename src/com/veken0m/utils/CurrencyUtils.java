@@ -9,8 +9,8 @@ import com.xeiam.xchange.currency.CurrencyPair;
 public class CurrencyUtils {
 
     public static CurrencyPair stringToCurrencyPair(String currencyPair) {
-        String baseCurrency = Currencies.BTC;
-        String counterCurrency = currencyPair;
+        String baseCurrency;
+        String counterCurrency;
 
         String[] currPair = currencyPair.split("/");
 

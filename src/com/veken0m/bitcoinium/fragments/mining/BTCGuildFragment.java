@@ -36,12 +36,12 @@ import com.veken0m.utils.Utils;
 
 public class BTCGuildFragment extends SherlockFragment {
 
-    protected static String pref_btcguildKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static BTCGuild data;
-    protected Boolean connectionFail = false;
+    private static String pref_btcguildKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static BTCGuild data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public BTCGuildFragment() {
     }
@@ -63,7 +63,7 @@ public class BTCGuildFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -94,16 +94,16 @@ public class BTCGuildFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -137,7 +137,7 @@ public class BTCGuildFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -176,7 +176,7 @@ public class BTCGuildFragment extends SherlockFragment {
 
                 // End of Non-worker data
                 List<Worker> workers = data.getWorkers().getWorkers();
-                for (int i = 0; i < workers.size(); i++) {
+                for (Worker worker : workers) {
                     TableRow tr8 = new TableRow(getActivity());
                     TableRow tr9 = new TableRow(getActivity());
                     TableRow tr11 = new TableRow(getActivity());
@@ -192,16 +192,16 @@ public class BTCGuildFragment extends SherlockFragment {
                     tr11.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr12.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                    tvMinerName.setText("Miner: " + workers.get(i).getWorker_name());
+                    tvMinerName.setText("Miner: " + worker.getWorker_name());
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(workers.get(i).getHash_rate(), 2, false)
+                            + Utils.formatDecimal(worker.getHash_rate(), 2, false)
                             + " MH/s");
                     tvShares.setText("Shares: "
-                            + Utils.formatDecimal(workers.get(i).getValid_shares(), 0,
-                                    true));
+                            + Utils.formatDecimal(worker.getValid_shares(), 0,
+                            true));
                     tvStales.setText("Stales: "
-                            + Utils.formatDecimal(workers.get(i).getStale_shares(), 0,
-                                    true) + "\n");
+                            + Utils.formatDecimal(worker.getStale_shares(), 0,
+                            true) + "\n");
 
                     tr8.addView(tvMinerName);
                     tr9.addView(tvHashrate);
@@ -219,7 +219,7 @@ public class BTCGuildFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

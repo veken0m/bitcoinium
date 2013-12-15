@@ -6,23 +6,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Worker {
-    private boolean alive;
-    private float blocks_found;
+    private final boolean alive;
+    private final float blocks_found;
     @JsonIgnore
     private float checkpoint_invalid;
     @JsonIgnore
     private float checkpoint_shares;
     @JsonIgnore
     private float checkpoint_stales;
-    private String hash_rate;
+    private final String hash_rate;
     private float invalid;
-    private long last_share;
-    private float shares;
-    private float stales;
-    private float total_invalid;
-    private float total_shares;
-    private float total_stales;
-    private String worker_name;
+    private final long last_share;
+    private final float shares;
+    private final float stales;
+    private final float total_invalid;
+    private final float total_shares;
+    private final float total_stales;
+    private final String worker_name;
 
     public Worker(@JsonProperty("alive")
     Boolean alive,

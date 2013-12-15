@@ -15,7 +15,7 @@ import android.widget.Toast;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class PreferencesActivity extends PreferenceActivity {
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
     @SuppressWarnings("deprecation")
     @Override
@@ -35,7 +35,7 @@ public class PreferencesActivity extends PreferenceActivity {
         devEmailPref
                 .setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-                    Resources res = getResources();
+                    final Resources res = getResources();
 
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
@@ -89,7 +89,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 });
 
         // Widget Customization
-        ((ColorPickerPreference) findPreference("widgetBackgroundColorPref"))
+        findPreference("widgetBackgroundColorPref")
                 .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
                     @Override
@@ -103,7 +103,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
                 });
 
-        ((ColorPickerPreference) findPreference("widgetMainTextColorPref"))
+        findPreference("widgetMainTextColorPref")
                 .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
                     @Override
@@ -117,7 +117,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
                 });
 
-        ((ColorPickerPreference) findPreference("widgetSecondaryTextColorPref"))
+        findPreference("widgetSecondaryTextColorPref")
                 .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
                     @Override

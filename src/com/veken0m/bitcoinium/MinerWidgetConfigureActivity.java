@@ -15,7 +15,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     public MinerWidgetConfigureActivity() {
         super();
@@ -80,8 +80,8 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveMiningPoolPref(Context context, int appWidgetId,
-            String miningPool) {
+    private static void saveMiningPoolPref(Context context, int appWidgetId,
+                                           String miningPool) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(
                 PREFS_NAME, 0).edit();
         prefs.putString(PREF_MININGPOOL_KEY + appWidgetId, miningPool);

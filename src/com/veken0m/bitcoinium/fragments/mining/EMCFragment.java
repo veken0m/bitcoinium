@@ -36,12 +36,12 @@ import java.util.List;
 
 public class EMCFragment extends SherlockFragment {
 
-    protected static String pref_emcKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static EMC data;
-    protected Boolean connectionFail = false;
+    private static String pref_emcKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static EMC data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public EMCFragment() {
     }
@@ -63,7 +63,7 @@ public class EMCFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
 
@@ -93,16 +93,16 @@ public class EMCFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -135,7 +135,7 @@ public class EMCFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -197,18 +197,18 @@ public class EMCFragment extends SherlockFragment {
                 // Miner Data
                 List<Workers> workers = data.getWorkers();
 
-                for (int i = 0; i < workers.size(); i++) {
+                for (Workers worker : workers) {
                     String WorkerName = "\nWorker: "
-                            + workers.get(i).getWorker_name();
-                    String HashRate = "Hashrate: " + workers.get(i).getHash_rate();
+                            + worker.getWorker_name();
+                    String HashRate = "Hashrate: " + worker.getHash_rate();
                     String RoundShares = "Round Shares: "
-                            + workers.get(i).getRound_shares();
+                            + worker.getRound_shares();
                     String ResetShares = "Reset Shares: "
-                            + workers.get(i).getReset_shares();
+                            + worker.getReset_shares();
                     String TotalShares = "Total Shares: "
-                            + workers.get(i).getTotal_shares();
+                            + worker.getTotal_shares();
                     String LastActivity = "Latest Activity: "
-                            + workers.get(i).getLast_activity();
+                            + worker.getLast_activity();
 
                     TableRow tr8 = new TableRow(getActivity());
                     TableRow tr9 = new TableRow(getActivity());
@@ -260,7 +260,7 @@ public class EMCFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

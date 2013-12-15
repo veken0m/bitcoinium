@@ -37,12 +37,12 @@ import java.util.List;
 
 public class SlushFragment extends SherlockFragment {
 
-    protected static String pref_slushKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static Slush data;
-    protected Boolean connectionFail = false;
+    private static String pref_slushKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static Slush data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public SlushFragment() {
     }
@@ -64,7 +64,7 @@ public class SlushFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -101,16 +101,16 @@ public class SlushFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -143,7 +143,7 @@ public class SlushFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
         
         View view = getView();
 
@@ -302,7 +302,7 @@ public class SlushFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

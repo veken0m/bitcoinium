@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Data {
-    private User user;
+    private final User user;
 
     public Data(@JsonProperty("user")
     User user) {

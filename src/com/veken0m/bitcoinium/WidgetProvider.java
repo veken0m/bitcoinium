@@ -1,7 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -70,9 +69,9 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String exchangeKey = exchange.getIdentifier();
 
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
-                    setTapBehaviour(this, appWidgetId, exchangeKey, views);
+                    setTapBehaviour(appWidgetId, exchangeKey, views);
 
-                    readAllWidgetPreferences(this, exchangeKey, exchange.getDefaultCurrency());
+                    readAllWidgetPreferences(this);
 
                     try {
                         CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
@@ -146,8 +145,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         }
 
-        private void setTapBehaviour(UpdateService updateService, int appWidgetId,
-                String exchangeKey, RemoteViews views) {
+        private void setTapBehaviour(int appWidgetId,
+                                     String exchangeKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {
@@ -310,7 +309,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                 NotificationManager mNotificationManager = (NotificationManager) ctxt
                         .getSystemService(Context.NOTIFICATION_SERVICE);
                 long when = System.currentTimeMillis();
-                Resources res = getResources();
+                //Resources res = getResources();
                 String tickerText = "*NOTICE* - Widgets now display mBTC by default!";
                 String notifText = "Change back to BTC in the Preferences";
                 Notification notif = new Notification(R.drawable.bitcoin, tickerText, when);
@@ -336,11 +335,6 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
 
         @Override
-        public void onCreate() {
-            super.onCreate();
-        }
-
-        @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
             super.onStartCommand(intent, flags, startId);
             return START_STICKY;
@@ -352,11 +346,13 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
     }
 
+    /*
     public void onDestoy(Context context) {
         final AlarmManager m = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
 
         m.cancel(widgetPriceWidgetRefreshService);
     }
+    */
 
 }

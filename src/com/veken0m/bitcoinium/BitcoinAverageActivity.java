@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -27,18 +26,22 @@ import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class BitcoinAverageActivity extends SherlockActivity {
 
-    final static Handler mOrderHandler = new Handler();
-    ArrayList<Ticker> tickers = new ArrayList<Ticker>();
-    String[] curr = new String[] {
-            "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
-            "PLN", "RUB", "SEK", "USD", "ZAR"
-    };
+    private final static Handler mOrderHandler = new Handler();
+    private ArrayList<Ticker> tickers;
+    private final String[] curr;
+
+    public BitcoinAverageActivity() {
+        tickers = new ArrayList<Ticker>();
+        curr = new String[] {
+                "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
+                "PLN", "RUB", "SEK", "USD", "ZAR"
+        };
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     /**
      * Fetch the Bitcoin Average data
      */
-    public void getBitcoinAverage() {
+    void getBitcoinAverage() {
         try {
             tickers.clear();
 
@@ -100,7 +103,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     /**
      * Draw the Tickers to the screen in a table
      */
-    public void drawBitcoinAverageUI() {
+    void drawBitcoinAverageUI() {
 
         final TableLayout t1 = (TableLayout) findViewById(R.id.bitcoinaverage_list);
         LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
@@ -188,7 +191,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         gt.start();
     }
 
-    public class bitcoinaverageThread extends Thread {
+    private class bitcoinaverageThread extends Thread {
 
         @Override
         public void run() {
@@ -206,7 +209,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             drawBitcoinAverageUI();

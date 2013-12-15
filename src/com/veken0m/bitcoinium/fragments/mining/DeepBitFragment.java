@@ -36,12 +36,12 @@ import java.util.List;
 
 public class DeepBitFragment extends SherlockFragment {
 
-    protected static String pref_deepbitKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static DeepBitData data;
-    protected Boolean connectionFail = false;
+    private static String pref_deepbitKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static DeepBitData data = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public DeepBitFragment() {
     }
@@ -63,7 +63,7 @@ public class DeepBitFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -93,16 +93,16 @@ public class DeepBitFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class MinerStatsThread extends Thread {
+    private class MinerStatsThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -135,7 +135,7 @@ public class DeepBitFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -220,7 +220,7 @@ public class DeepBitFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

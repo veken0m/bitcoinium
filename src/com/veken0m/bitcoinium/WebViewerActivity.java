@@ -139,7 +139,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
     }
 
     class WebTabsListener implements ActionBar.TabListener {
-        public WebViewSherlockFragment fragment;
+        public final WebViewSherlockFragment fragment;
 
         public WebTabsListener(WebViewSherlockFragment fragment) {
             this.fragment = fragment;

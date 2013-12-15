@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Balances {
-    private float BTC;
-    private float NMC;
+    private final float BTC;
+    private final float NMC;
 
     public Balances(@JsonProperty("BTC")
     float BTC,

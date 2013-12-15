@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class User {
-    private int active_workers;
-    private float confirmed_rewards;
-    private float hash_rate;
-    private float payouts;
+    private final int active_workers;
+    private final float confirmed_rewards;
+    private final float hash_rate;
+    private final float payouts;
 
     public User(@JsonProperty("active_workers")
             int active_workers,

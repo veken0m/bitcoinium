@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Slush {
-    private float confirmed_nmc_reward;
-    private float confirmed_reward;
-    private float estimated_reward;
-    private float hashrate;
+    private final float confirmed_nmc_reward;
+    private final float confirmed_reward;
+    private final float estimated_reward;
+    private final float hashrate;
     @JsonIgnore
     private float nmc_send_threshold;
     @JsonIgnore
@@ -19,11 +19,11 @@ public class Slush {
     @JsonIgnore
     private float send_threshold;
     private float unconfirmed_nmc_reward;
-    private float unconfirmed_reward;
-    private String username;
+    private final float unconfirmed_reward;
+    private final String username;
     @JsonIgnore
     private String wallet;
-    private Workers workers;
+    private final Workers workers;
 
     public Slush(
             @JsonProperty("confirmed_nmc_reward")

@@ -27,40 +27,40 @@ import com.veken0m.utils.Utils;
 
 import com.xeiam.xchange.currency.CurrencyPair;
 
-public class BaseWidgetProvider extends AppWidgetProvider {
+class BaseWidgetProvider extends AppWidgetProvider {
 
-    public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
     /**
      * List of preference variables
      */
-    static int pref_widgetRefreshFreq;
-    static boolean pref_priceAlarm;
-    static boolean pref_batterySavingMode;
-    static boolean pref_alarmSound;
-    static boolean pref_alarmVibrate;
-    static boolean pref_enableTicker;
-    static boolean pref_widgetbidask;
-    static boolean pref_wifionly;
-    static boolean pref_alarmClock;
-    static String pref_notificationSound;
-    static boolean pref_tapToUpdate;
+    private static int pref_widgetRefreshFreq = 0;
+    private static boolean pref_batterySavingMode = false;
+    private static boolean pref_alarmSound = false;
+    private static boolean pref_alarmVibrate = false;
+    private static String pref_notificationSound = null;
 
-    static int pref_mainWidgetTextColor;
-    static int pref_secondaryWidgetTextColor;
-    static int pref_backgroundWidgetColor;
-    static int pref_widgetRefreshSuccessColor;
-    static int pref_widgetRefreshFailedColor;
-    static boolean pref_enableWidgetCustomization;
-    static boolean pref_pricesInMilliBtc;
-    static int pref_widgetMiningPayoutUnit;
+    static boolean pref_priceAlarm = false;
+    static boolean pref_enableTicker = false;
+    static boolean pref_widgetbidask = false;
+    static boolean pref_wifionly = false;
+    static boolean pref_alarmClock = false;
+    static boolean pref_tapToUpdate = false;
+
+    static int pref_mainWidgetTextColor = 0;
+    static int pref_secondaryWidgetTextColor = 0;
+    static int pref_backgroundWidgetColor = 0;
+    static int pref_widgetRefreshSuccessColor = 0;
+    static int pref_widgetRefreshFailedColor = 0;
+    static boolean pref_enableWidgetCustomization = false;
+    static boolean pref_pricesInMilliBtc = false;
+    static int pref_widgetMiningPayoutUnit = 0;
 
     // Service used to refresh widget
-    static PendingIntent widgetPriceWidgetRefreshService = null;
-    static PendingIntent widgetMinerWidgetRefreshService = null;
+    private static PendingIntent widgetPriceWidgetRefreshService = null;
+    private static PendingIntent widgetMinerWidgetRefreshService = null;
 
-    protected static void readAllWidgetPreferences(Context context, String prefix,
-            String defaultCurrency) {
+    static void readAllWidgetPreferences(Context context) {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -71,7 +71,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         readAlarmPreferences(context);
     }
 
-    protected static void readGeneralPreferences(Context context) {
+    static void readGeneralPreferences(Context context) {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -110,7 +110,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 "enableWidgetCustomizationPref", false);
     }
 
-    protected static void readAlarmPreferences(Context context) {
+    private static void readAlarmPreferences(Context context) {
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -199,17 +199,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         context.startActivity(i);
     }
 
-    public static Boolean checkWiFiConnected(Context ctxt) {
-        try {
+    static Boolean checkWiFiConnected(Context ctxt) {
+
             ConnectivityManager connMgr = (ConnectivityManager) ctxt
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            return (wifi.isAvailable() && wifi.getDetailedState() == DetailedState.CONNECTED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+            return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == DetailedState.CONNECTED));
     }
 
     static void createNotification(Context ctxt, float last, String exchange, int NOTIFY_ID,
@@ -303,21 +299,4 @@ public class BaseWidgetProvider extends AppWidgetProvider {
                 .getSystemService(ns);
         mNotificationManager.cancel(100 + NOTIFY_ID);
     }
-
-    static void createTicker(Context ctxt, int icon, CharSequence tickerText) {
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager mNotificationManager = (NotificationManager) ctxt
-                .getSystemService(ns);
-        long when = System.currentTimeMillis();
-
-        Notification notification = new Notification(icon, tickerText, when);
-
-        Intent notificationIntent = new Intent(ctxt, BaseWidgetProvider.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
-                notificationIntent, 0);
-        notification.setLatestEventInfo(ctxt, null, null, contentIntent);
-        mNotificationManager.notify(0, notification);
-        mNotificationManager.cancel(0);
-    }
-
 }

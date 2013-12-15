@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Work {
-    private BTC bTC;
-    private NMC nMC;
+    private final BTC bTC;
+    private final NMC nMC;
 
     public Work(@JsonProperty("BTC")
     BTC bTC, @JsonProperty("NMC")

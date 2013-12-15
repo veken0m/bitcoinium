@@ -47,24 +47,21 @@ import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 
-public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
+public class  GraphActivity extends SherlockActivity implements OnItemSelectedListener {
 
     private static final Handler mOrderHandler = new Handler();
-    public static String exchangeName;
-    public static Boolean connectionFail = true;
-    public static Boolean noTradesFound = false;
-    public String xchangeExchange;
-    static String pref_currency;
-    private Spinner spinner;
-    private ArrayAdapter<String> dataAdapter;
-    String prefix = "mtgox";
+    private static String exchangeName = null;
+    private static Boolean connectionFail = true;
+    private static Boolean noTradesFound = false;
+    private String xchangeExchange = null;
+    private static String pref_currency = null;
+    private String prefix = "mtgox";
 
     /**
      * Variables required for LineGraphView
      */
-    LineGraphView graphView;
-    static Boolean pref_graphMode;
-    static Boolean pref_scaleMode;
+    private LineGraphView graphView = null;
+    private static Boolean pref_scaleMode = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,7 +116,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         return super.onOptionsItemSelected(item);
     }
 
-    public class GraphThread extends Thread {
+    private class GraphThread extends Thread {
 
         @Override
         public void run() {
@@ -142,7 +139,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     /**
      * mGraphView run() is called when our GraphThread is finished
      */
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             if (graphView != null && !connectionFail && !noTradesFound) {
@@ -173,7 +170,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
 
         try {
-
             trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
                     .getPollingMarketDataService()
                     .getTrades(currencyPair.baseCurrency, currencyPair.counterCurrency);
@@ -202,9 +198,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 if (values[i] < smallest) {
                     smallest = values[i];
                 }
-            }
-
-            for (int i = 0; i < tradesListSize; i++) {
                 data[i] = new GraphViewData(dates[i], values[i]);
             }
 
@@ -215,7 +208,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                     if (isValueX) {
                         return Utils.dateFormat(getBaseContext(), (long) value);
                     } else
-                        return super.formatLabel(value, isValueX);
+                        return super.formatLabel(value, false);
                 }
             };
 
@@ -287,9 +280,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 if (values[i] < smallest) {
                     smallest = values[i];
                 }
-            }
-
-            for (int i = 0; i < tradeListSize; i++) {
                 data[i] = new GraphViewData(dates[i], values[i]);
             }
 
@@ -367,12 +357,11 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         gt.start();
     }
 
-    protected static void readPreferences(Context context, String prefix,
-            String defaultCurrency) {
+    private static void readPreferences(Context context, String prefix,
+                                        String defaultCurrency) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        pref_graphMode = prefs.getBoolean("graphmodePref", false);
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
         pref_currency = prefs.getString(prefix + "CurrencyPref",
                 defaultCurrency);
@@ -391,13 +380,13 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         // Do nothing
     }
 
-    public void createCurrencyDropdown() {
+    void createCurrencyDropdown() {
         final String[] dropdownValues = getResources().getStringArray(
                 getResources().getIdentifier(prefix + "currencies", "array",
                         this.getPackageName()));
 
-        spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        dataAdapter = new ArrayAdapter<String>(this,
+        Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, dropdownValues);
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -5,25 +5,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Worker {
     
-    private String worker_name;
-    private float hash_rate;
-    private float valid_shares;
-    private float stale_shares;
-    private float dupe_shares;
-    private float unknown_shares;
-    private float valid_shares_since_reset;
-    private float stale_shares_since_reset;
-    private float dupe_shares_since_reset;
-    private float unknown_shares_since_reset;
-    private float valid_shares_nmc;
-    private float stale_shares_nmc;
-    private float dupe_shares_nmc;
-    private float unknown_shares_nmc;
-    private float valid_shares_nmc_since_reset;
-    private float stale_shares_nmc_since_reset;
-    private float dupe_shares_nmc_since_reset;
-    private float unknown_shares_nmc_since_reset;
-    private float last_share;
+    private final String worker_name;
+    private final float hash_rate;
+    private final float valid_shares;
+    private final float stale_shares;
+    private final float dupe_shares;
+    private final float unknown_shares;
+    private final float valid_shares_since_reset;
+    private final float stale_shares_since_reset;
+    private final float dupe_shares_since_reset;
+    private final float unknown_shares_since_reset;
+    private final float valid_shares_nmc;
+    private final float stale_shares_nmc;
+    private final float dupe_shares_nmc;
+    private final float unknown_shares_nmc;
+    private final float valid_shares_nmc_since_reset;
+    private final float stale_shares_nmc_since_reset;
+    private final float dupe_shares_nmc_since_reset;
+    private final float unknown_shares_nmc_since_reset;
+    private final float last_share;
     
     public Worker(@JsonProperty("worker_name") String worker_name, 
             @JsonProperty("hash_rate") float hash_rate, 

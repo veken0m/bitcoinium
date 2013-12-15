@@ -86,6 +86,7 @@
             android:label="Web Charts" >
         </activity>
                 <receiver
+            android:exported ="false"
             android:name=".WidgetProvider"
             android:label="@string/price_widget_name" >
             <intent-filter>
@@ -103,6 +104,7 @@
         <service android:name=".WidgetProvider$UpdateService" />
 
         <receiver
+            android:exported ="false"
             android:name=".MinerWidgetProvider"
             android:label="@string/mining_widget_name" >
             <intent-filter>

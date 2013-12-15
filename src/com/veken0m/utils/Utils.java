@@ -3,8 +3,6 @@ package com.veken0m.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -99,23 +97,14 @@ public class Utils {
 
     public static String getCurrentTime(Context ctxt) {
         Date time = new Date();
-        DateFormat.getTimeFormat(ctxt).format(time);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(DateFormat.format("E", time));
-        sb.append(" ");
-        sb.append(DateFormat.getTimeFormat(ctxt).format(time));
-
-        return sb.toString();
+        return DateFormat.format("E", time) + " " + DateFormat.getTimeFormat(ctxt).format(time);
     }
 
     public static String dateFormat(Context ctxt, long date) {
         Date dateFormatted = new Date(date);
-        StringBuilder sb = new StringBuilder();
-        sb.append(DateFormat.format("MMM dd", dateFormatted));
-        sb.append(" @ ");
-        sb.append(DateFormat.getTimeFormat(ctxt).format(dateFormatted));
-        return sb.toString();
+
+        return DateFormat.format("MMM dd", dateFormatted) + " @ " + DateFormat.getTimeFormat(ctxt).format(dateFormatted);
     }
 
     public static void setTextViewParams(TextView tv, String text) {

@@ -36,9 +36,8 @@ import com.veken0m.utils.KarmaAdsUtils;
  * @version 1.7.0 Aug 29 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
-    ViewPager mViewPager;
-    ActionBar actionbar;
-    TabsAdapter tabsAdapter;
+    private ActionBar actionbar;
+    private TabsAdapter tabsAdapter;
 
     /** Called when the activity is first created. */
     @Override
@@ -70,13 +69,13 @@ public class MainActivity extends SherlockFragmentActivity {
         setIntent(intent);
     }
     
-    public void selectTabViaBundle(){
+    void selectTabViaBundle(){
         Bundle extras = getIntent().getExtras();
         if(extras != null) selectTab(extras.getString("exchangeKey"));
     }
     
-    public void initTabbedActionBar(){
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+    void initTabbedActionBar(){
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
         actionbar = getSupportActionBar();

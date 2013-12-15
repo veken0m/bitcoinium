@@ -4,5 +4,5 @@
         android:id="@+id/preferences"
         android:showAsAction="ifRoom"
         android:icon="@drawable/action_settings"
-        android:title="Settings"/>
+        android:title="@string/settings"/>
 </menu>

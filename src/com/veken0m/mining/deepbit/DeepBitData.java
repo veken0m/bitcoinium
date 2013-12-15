@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeepBitData {
 
-    private float confirmed_reward;
-    private float hashrate;
+    private final float confirmed_reward;
+    private final float hashrate;
     @JsonIgnore
     private boolean ipa;
-    private float payout_history;
-    private Workers workers;
+    private final float payout_history;
+    private final Workers workers;
 
     public DeepBitData(
             @JsonProperty("confirmed_reward")

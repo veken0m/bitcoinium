@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.mining.eligius.Eligius;
@@ -40,13 +39,13 @@ import java.util.ArrayList;
 
 public class EligiusFragment extends SherlockFragment {
 
-    protected static String pref_eligiusKey = "";
-    protected static int pref_widgetMiningPayoutUnit = 0;
-    protected static Eligius data;
-    protected static EligiusBalance balanceData;
-    protected Boolean connectionFail = false;
+    private static String pref_eligiusKey = "";
+    private static int pref_widgetMiningPayoutUnit = 0;
+    private static Eligius data = null;
+    private static EligiusBalance balanceData = null;
+    private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    final Handler mMinerHandler = new Handler();
+    private final Handler mMinerHandler = new Handler();
 
     public EligiusFragment() {
     }
@@ -68,7 +67,7 @@ public class EligiusFragment extends SherlockFragment {
         minerProgressDialog.dismiss();
     }
 
-    public void getMinerStats(Context context) {
+    void getMinerStats() {
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -112,16 +111,16 @@ public class EligiusFragment extends SherlockFragment {
         gt.start();
     }
 
-    public class OrderbookThread extends Thread {
+    private class OrderbookThread extends Thread {
 
         @Override
         public void run() {
-            getMinerStats(getActivity());
+            getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
 
-    final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
             safelyDismiss(minerProgressDialog);
@@ -154,7 +153,7 @@ public class EligiusFragment extends SherlockFragment {
         }
     }
 
-    public void drawMinerUI() {
+    void drawMinerUI() {
 
         View view = getView();
 
@@ -251,7 +250,7 @@ public class EligiusFragment extends SherlockFragment {
         }
     }
 
-    protected static void readPreferences(Context context) {
+    private static void readPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 

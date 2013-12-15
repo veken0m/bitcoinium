@@ -1,7 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -39,8 +38,8 @@ import java.util.List;
 
 public class MinerWidgetProvider extends BaseWidgetProvider {
 
-    private static float hashRate;
-    private static float btcBalance;
+    private static float hashRate = 0.0F;
+    private static float btcBalance = 0.0F;
 
     @Override
     public void onReceive(Context ctxt, Intent intent) {
@@ -80,7 +79,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     RemoteViews views = new RemoteViews(this.getPackageName(),
                             R.layout.minerappwidget);
-                    setTapBehaviour(this, appWidgetId, pref_miningpool, views);
+                    setTapBehaviour(appWidgetId, pref_miningpool, views);
 
                     Boolean pref_minerDownAlert = prefs.getBoolean(
                             pref_miningpool.toLowerCase() + "AlertPref", false);
@@ -133,7 +132,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             + pref_apiKey);
 
                     HttpResponse response = client.execute(post);
-                    response = client.execute(post);
                     DeepBitData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             DeepBitData.class);
@@ -149,7 +147,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     + pref_apiKey);
 
                     HttpResponse response = client.execute(post);
-                    response = client.execute(post);
                     BitMinterData data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"),
                             BitMinterData.class);
@@ -165,7 +162,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     + "&action=userstats");
 
                     HttpResponse response = client.execute(post);
-                    response = client.execute(post);
                     EMC data = mapper.readValue(new InputStreamReader(response
                             .getEntity().getContent(), "UTF-8"), EMC.class);
 
@@ -176,7 +172,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         String hashRateString = data.getWorkers().get(i).getHash_rate();
                         // EclipseMC hashrate contains units. Strip them off
                         // And convert all GH/s to MH/s
-                        float temp_hashRate = 0;
+                        float temp_hashRate;
                         if (!hashRateString.contentEquals(" ")) {
                             String hash_rate[] = hashRateString.split(" ");
                             temp_hashRate = Float.parseFloat(hash_rate[0]);
@@ -224,8 +220,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     hashRate = 0.0f;
 
                     List<Worker> workers = data.getWorkers().getWorkers();
-                    for (int i = 0; i < workers.size(); i++) {
-                        hashRate += Float.parseFloat(workers.get(i).getHash_rate());
+                    for (Worker worker : workers) {
+                        hashRate += Float.parseFloat(worker.getHash_rate());
                     }
                     return true;
 
@@ -244,8 +240,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers()
                             .getWorkers();
-                    for (int i = 0; i < workers.size(); i++) {
-                        hashRate += workers.get(i).getHash_rate();
+                    for (com.veken0m.mining.btcguild.Worker worker : workers) {
+                        hashRate += worker.getHash_rate();
                     }
                     return true;
                 } else if (miningpool.equalsIgnoreCase("Eligius")) {
@@ -285,8 +281,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             return false;
         }
 
-        private void setTapBehaviour(MinerUpdateService minerUpdateService, int appWidgetId,
-                String poolKey, RemoteViews views) {
+        private void setTapBehaviour(int appWidgetId, String poolKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {
@@ -345,11 +340,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         }
 
         @Override
-        public void onCreate() {
-            super.onCreate();
-        }
-
-        @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
             super.onStartCommand(intent, flags, startId);
             return START_STICKY;
@@ -361,11 +351,12 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         }
     }
 
+    /*
     public void onDestoy(Context context) {
         final AlarmManager m = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
 
         m.cancel(widgetMinerWidgetRefreshService);
     }
-
+    */
 }
