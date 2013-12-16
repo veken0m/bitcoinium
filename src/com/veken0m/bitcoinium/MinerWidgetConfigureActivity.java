@@ -68,9 +68,6 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
                         mAppWidgetId);
                 setResult(RESULT_OK, resultValue);
                 
-                // Set alarm to refresh widget at specified interval
-                BaseWidgetProvider.setMinerWidgetAlarm(context);
-                
                 finish();
                 return true;
             }

@@ -138,8 +138,6 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
                 setResult(RESULT_OK, resultValue);
 
-                // Set alarm to refresh widget at specified interval
-                BaseWidgetProvider.setPriceWidgetAlarm(context);
                 finish();
                 return true;
             }
