@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:orientation="vertical" >
+    
+    <Button
+        android:id="@+id/widgetrefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/refreshButton"/>
+        <!--  android:drawableLeft="@drawable/bitcoiniumlogo" -->
+
+    <Button
+        android:id="@+id/orderbook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/orderbookButton" />
+
+    <Button
+        android:id="@+id/bitcoincharts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/bitcoinChartsButton" />
+    
+    <Button
+        android:id="@+id/bitcoinaverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/bitcoinAverageButton" />
+
+    <Button
+        android:id="@+id/minerstats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/minerstatsButton" />
+
+    <Button
+        android:id="@+id/displaygraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/graphButton" />
+
+    <Button
+        android:id="@+id/marketdepth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/exgraphButton" />
+
+</LinearLayout>
