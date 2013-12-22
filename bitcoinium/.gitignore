@@ -1,0 +1,11 @@
+bin/
+gen/
+proguard/
+build/
+.gradle/
+.idea/
+.project
+.settings
+.classpath
+project.properties
+local.properties

@@ -1,53 +1,15 @@
-apply plugin: 'android'
-
-android {
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
     }
-
-    compileSdkVersion 19
-    buildToolsVersion "19.0.0"
-
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
-    }
-
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 
-dependencies {
-    compile project(':androidColorPickerPreference')
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:+'
-    compile files('libs/acra-4.5.0.jar')
-    compile files('libs/jackson-annotations-2.2.3.jar')
-    compile files('libs/jackson-core-2.2.3.jar')
-    compile files('libs/jackson-databind-2.2.3.jar')
-    compile files('libs/joda-money-0.9.jar')
-    compile files('libs/jsr311-api-1.1.1.jar')
-    compile files('libs/rescu-1.5.0.jar')
-    compile files('libs/slf4j-android-1.6.1-RC1.jar')
-    compile files('libs/xchange-bitcoinaverage-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-bitcoincharts-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-bitcoinium-1.9.0-SNAPSHOT.jar')
-    compile files('libs/xchange-bitcurex-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-bitstamp-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-btcchina-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-btce-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-campbx-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-cavirtex-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-core-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-kraken-2.0.0-SNAPSHOT.jar')
-    compile files('libs/xchange-mtgox-2.0.0-SNAPSHOT.jar')
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }

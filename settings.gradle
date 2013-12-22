@@ -1,0 +1,2 @@
+include ':bitcoinium'
+include ':androidColorPickerPreference'
