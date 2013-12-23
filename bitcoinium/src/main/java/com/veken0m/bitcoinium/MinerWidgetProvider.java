@@ -95,7 +95,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.widgetBTCPayout,
                                 CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
 
-                        if (!(hashRate > 0.0) && pref_minerDownAlert)
+                        if ((hashRate < 0.01) && pref_minerDownAlert)
                             createMinerDownNotification(this, pref_miningpool);
 
                         String refreshedTime = "Upd. @ " + Utils.getCurrentTime(this);

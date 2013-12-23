@@ -1,8 +1,7 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -11,13 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -36,15 +34,16 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
     private final static Handler mOrderHandler = new Handler();
     private BitcoinChartsTicker[] marketData = null;
-    private final Runnable mGraphView;
+    private final Runnable mBitcoinChartsView;
     private String currencyFilter;
+    private Dialog dialog = null;
 
     public BitcoinChartsActivity() {
         currencyFilter = "SHOW ALL";
-        mGraphView = new Runnable() {
+        mBitcoinChartsView = new Runnable() {
             @Override
             public void run() {
-                drawBitcoinChartsUI();
+                if (marketData != null) drawBitcoinChartsUI();
             }
         };
     }
@@ -61,18 +60,6 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         //KarmaAdsUtils.initAd(this);
         viewBitcoinCharts();
     }
-    
-    void createCurrencyDropdown(){
-        // Re-populate the dropdown menu
-        final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
-
-        Spinner spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, dropdownValues);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        spinner.setOnItemSelectedListener(this);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,12 +70,12 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences) {
+        if (item.getItemId() == R.id.action_preferences)
             startActivity(new Intent(this, PreferencesActivity.class));
-        }
-        if (item.getItemId() == R.id.action_refresh) {
+
+        if (item.getItemId() == R.id.action_refresh)
             viewBitcoinCharts();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,18 +83,47 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.bitcoincharts);
-        drawBitcoinChartsUI();
+        if (marketData != null) drawBitcoinChartsUI();
     }
-    
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        String prevCurrencyfilter = currencyFilter;
+        currencyFilter = (String) parent.getItemAtPosition(pos);
+        if (prevCurrencyfilter != null && currencyFilter != null && !currencyFilter.equals(prevCurrencyfilter))
+            drawBitcoinChartsUI();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // Do nothing
+    }
+
+    void createCurrencyDropdown() {
+        // Re-populate the dropdown menu
+        final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
+
+        Spinner spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
+        if (spinner != null) {
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, dropdownValues);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+            spinner.setOnItemSelectedListener(this);
+        }
+    }
 
     /**
      * Fetch the Bitcoin Charts data
      */
-    void getBitcoinCharts() {
+    boolean getBitcoinCharts() {
         try {
             marketData = BitcoinChartsFactory.createInstance().getMarketData();
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            errorOccured();
+            return false;
         }
     }
 
@@ -116,141 +132,134 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
      */
     void drawBitcoinChartsUI() {
 
-        TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
-        LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
-        linlaHeaderProgress.setVisibility(View.GONE);
+        TableLayout bitcoinChartsTable = (TableLayout) findViewById(R.id.bitcoincharts_list);
+        removeLoadingSpinner();
 
-        int backGroundColor = Color.rgb(51, 51, 51);
-        LayoutParams params = new LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT, 1f);
+        if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null) {
 
-        try {
+            // Clear table
+            bitcoinChartsTable.removeAllViews();
+
             // Sort Tickers by volume
             Arrays.sort(marketData, new Comparator<BitcoinChartsTicker>() {
                 @Override
                 public int compare(BitcoinChartsTicker entry1,
-                        BitcoinChartsTicker entry2) {
+                                   BitcoinChartsTicker entry2) {
                     return entry2.getVolume().compareTo(entry1.getVolume());
                 }
             });
 
+            boolean bBackGroundColor = true;
             for (BitcoinChartsTicker data : marketData) {
 
-                // Only print active exchanges... vol > 0
+                // Only print active exchanges... vol > 0 or contains selected currency
                 if (data.getVolume().intValue() != 0
-                        && (currencyFilter.equalsIgnoreCase("SHOW ALL") || data.getCurrency()
-                                .contains(currencyFilter))) {
-
-                    final TableRow tr1 = new TableRow(this);
+                        && (currencyFilter.equals("SHOW ALL")
+                        || data.getCurrency().contains(currencyFilter))) {
 
                     final TextView tvSymbol = new TextView(this);
                     final TextView tvLast = new TextView(this);
-                    // final TextView tvAvg = new TextView(this);
                     final TextView tvVolume = new TextView(this);
                     final TextView tvHigh = new TextView(this);
                     final TextView tvLow = new TextView(this);
+                    // final TextView tvAvg = new TextView(this);
                     // final TextView tvBid = new TextView(this);
                     // final TextView tvAsk = new TextView(this);
-                    String last = Utils.formatDecimal(data.getClose());
-                    String high = Utils.formatDecimal(data.getHigh());
-                    String low = Utils.formatDecimal(data.getLow());
-                    String vol = Utils.formatDecimal(data.getVolume());
-                    // String avg = Utils.formatDecimal(data.getAvg(), 2, true);
-                    // String bid = Utils.formatDecimal(data.getBid(), 2, true);
-                    // String ask = Utils.formatDecimal(data.getAsk(), 2, true);
 
                     tvSymbol.setText(data.getSymbol());
-                    tvSymbol.setLayoutParams(params);
-                    Utils.setTextViewParams(tvLast, last);
-                    Utils.setTextViewParams(tvVolume, vol);
-                    Utils.setTextViewParams(tvLow, low);
-                    Utils.setTextViewParams(tvHigh, high);
-                    // Utils.setTextViewParams(tvAvg, avg);
-                    // Utils.setTextViewParams(tvBid, bid);
-                    // Utils.setTextViewParams(tvAsk, ask);
+                    Utils.setTextViewParams(tvLast, data.getClose());
+                    Utils.setTextViewParams(tvVolume, data.getVolume());
+                    Utils.setTextViewParams(tvLow, data.getLow());
+                    Utils.setTextViewParams(tvHigh, data.getHigh());
+                    // Utils.setTextViewParams(tvAvg, data.getAvg());
+                    // Utils.setTextViewParams(tvBid, data.getBid());
+                    // Utils.setTextViewParams(tvAsk, data.getAsk());
+
+                    final TableRow newRow = new TableRow(this);
 
                     // Toggle background color
-                    backGroundColor = (backGroundColor == Color.BLACK) ? Color.rgb(31, 31, 31) : Color.BLACK;
+                    bBackGroundColor = !bBackGroundColor;
+                    if (bBackGroundColor)
+                        newRow.setBackgroundColor(Color.BLACK);
+                    else
+                        newRow.setBackgroundColor(Color.rgb(31, 31, 31));
 
-                    tr1.setBackgroundColor(backGroundColor);
-
-                    tr1.addView(tvSymbol);
-                    tr1.addView(tvLast);
-                    // tr1.addView(tvAvg);
-                    tr1.addView(tvVolume);
-                    tr1.addView(tvLow);
-                    tr1.addView(tvHigh);
-                    // tr1.addView(tvBid);
-                    // tr1.addView(tvAsk);
-                    tr1.setPadding(0, 3, 0, 3);
-                    t1.addView(tr1);
-
-                    // Insert a divider between rows
-                    View divider = new View(this);
-                    divider.setLayoutParams(new LayoutParams(
-                            LayoutParams.MATCH_PARENT, 1));
-                    divider.setBackgroundColor(Color.rgb(51, 51, 51));
-                    t1.addView(divider);
+                    newRow.addView(tvSymbol, Utils.symbolParams);
+                    newRow.addView(tvLast);
+                    newRow.addView(tvVolume);
+                    newRow.addView(tvLow);
+                    newRow.addView(tvHigh);
+                    // newRow.addView(tvBid);
+                    // newRow.addView(tvAsk);
+                    // newRow.addView(tvAvg);
+                    newRow.setPadding(0, 3, 0, 3);
+                    bitcoinChartsTable.addView(newRow);
                 }
             }
-        } catch (Exception e) {
-            connectionFailed();
+        } else {
+            failedToDrawUI();
         }
     }
 
     private void viewBitcoinCharts() {
-        bitcoinchartsThread gt = new bitcoinchartsThread();
-        gt.start();
+        if (Utils.isConnected(getApplicationContext())) {
+            (new bitcoinChartsThread()).start();
+        } else {
+            notConnected();
+        }
     }
 
-    private class bitcoinchartsThread extends Thread {
+    private class bitcoinChartsThread extends Thread {
 
         @Override
         public void run() {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TableLayout t1 = (TableLayout) findViewById(R.id.bitcoincharts_list);
-                    t1.removeAllViews();
-                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
-                    linlaHeaderProgress.setVisibility(View.VISIBLE);
+                    LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+                    if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.VISIBLE);
                 }
             });
-            getBitcoinCharts();
-            mOrderHandler.post(mGraphView);
+
+            if (getBitcoinCharts())
+                mOrderHandler.post(mBitcoinChartsView);
         }
     }
 
-    private void connectionFailed() {
-        LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress3);
-        linlaHeaderProgress.setVisibility(View.GONE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Resources res = getResources();
-        String text = String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts");
-        builder.setMessage(text);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
+    private void errorOccured() {
 
-        AlertDialog alert = builder.create();
-        alert.show();
+        removeLoadingSpinner();
+
+        if (dialog == null || !dialog.isShowing()) {
+            // Display error Dialog
+            Resources res = getResources();
+            dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+        }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+    private void notConnected() {
 
-        currencyFilter = (String) parent.getItemAtPosition(pos);
-        viewBitcoinCharts();
+        removeLoadingSpinner();
+
+        if (dialog == null || !dialog.isShowing()) {
+            // Display error Dialog
+            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
+        }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // Do nothing
+    private void failedToDrawUI() {
+
+        removeLoadingSpinner();
+        if (dialog == null || !dialog.isShowing()) {
+            // Display error Dialog
+            dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
+        }
     }
-    
+
+    // Remove loading spinner
+    void removeLoadingSpinner() {
+        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+        if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
+    }
 
 }

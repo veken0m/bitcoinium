@@ -20,9 +20,7 @@ public class PriceAlarmPreferencesActivity extends PreferenceActivity {
         super.onStop();
 
         // Tell the widgets to update preferences
-        Intent intent = new Intent(getApplicationContext(),
-                WidgetProvider.class);
-        intent.setAction(REFRESH);
-        sendBroadcast(intent);
+        sendBroadcast(new Intent(this,
+                WidgetProvider.class).setAction(REFRESH));
     }
 }

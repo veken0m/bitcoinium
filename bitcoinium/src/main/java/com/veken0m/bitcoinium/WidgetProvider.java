@@ -19,7 +19,6 @@ import android.widget.RemoteViews;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
@@ -38,7 +37,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-            int[] appWidgetIds) {
+                         int[] appWidgetIds) {
         setPriceWidgetAlarm(context);
     }
 
@@ -66,8 +65,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     // Load widget configuration
                     Exchange exchange = getExchange(WidgetConfigureActivity.loadExchangePref(this,
                             appWidgetId));
-                    String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this,
-                            appWidgetId);
+                    String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String exchangeName = exchange.getExchangeName();
                     String exchangeKey = exchange.getIdentifier();
 
@@ -77,6 +75,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     readAllWidgetPreferences(this);
 
                     try {
+                        // if altcoin append baseCurrency
                         CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
                         if (!pair.baseCurrency.equals(Currencies.BTC))
                             exchangeName += " (" + pair.baseCurrency + ")";
@@ -97,8 +96,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         String volumeString = "N/A";
                         if (!(ticker.getVolume() == null))
-                            volumeString = Utils.formatDecimal(ticker.getVolume().floatValue(), 2,
-                                    false);
+                            volumeString = Utils.formatDecimal(ticker.getVolume());
 
                         setBidAskHighLow(ticker, views, pair,
                                 exchange.supportsTickerBidAsk());
@@ -113,12 +111,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                         createTickerNotif(pair, pairId, lastString, exchangeName, exchangeKey);
 
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        if (pref_enableWidgetCustomization) {
+
+                        if (pref_enableWidgetCustomization)
                             views.setTextColor(R.id.label, pref_widgetRefreshFailedColor);
-                        } else {
+                        else
                             views.setTextColor(R.id.label, Color.RED);
-                        }
+
                     } finally {
                         if (widgetManager != null) {
                             widgetManager.updateAppWidget(appWidgetId, views);
@@ -129,7 +127,7 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
 
         private void createTickerNotif(CurrencyPair pair, String pairId, String lastString,
-                String exchangeName, String exchangeKey) {
+                                       String exchangeName, String exchangeKey) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -183,8 +181,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextColor(R.id.widgetVolText, color);
         }
 
-        private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair,
-                boolean bidAskSupported) {
+        private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair, boolean bidAskSupported) {
             if (((ticker.getHigh() == null) || pref_widgetbidask) && bidAskSupported) {
                 setBidAsk(ticker, views, pair);
             } else {
@@ -245,7 +242,7 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
 
         public void checkAlarm(CurrencyPair pair, String pairId, float lastFloat,
-                String exchangeName, String exchangeKey) {
+                               String exchangeName, String exchangeKey) {
 
             if (pref_priceAlarm) {
 

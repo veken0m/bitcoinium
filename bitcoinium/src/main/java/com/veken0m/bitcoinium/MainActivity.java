@@ -234,9 +234,8 @@ public class MainActivity extends SherlockFragmentActivity {
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
             Object tag = tab.getTag();
             for (int i = 0; i < mTabs.size(); i++) {
-                if (mTabs.get(i) == tag) {
+                if (mTabs.get(i) == tag)
                     mViewPager.setCurrentItem(i);
-                }
             }
         }
 
@@ -260,12 +259,12 @@ public class MainActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.preferences) {
+        if (item.getItemId() == R.id.preferences)
             startActivity(new Intent(this, PreferencesActivity.class));
-        }
-        if (item.getItemId() == R.id.price_alarm_preferences) {
+
+        if (item.getItemId() == R.id.price_alarm_preferences)
             startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

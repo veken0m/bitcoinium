@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">1.8.5</string>
+    <string name="version_name">1.9.0</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">USD</string>
@@ -44,7 +44,7 @@
     <string name="exgraphButton">Web Charts</string>
 
     <!-- Error Messages -->
-    <string name="connectionError">Could not retrieve %1$s from %2$s.\n\nCheck internet connection and try again.</string>
+    <string name="connectionError">Could not retrieve %1$s from %2$s.\n\nIs %2$s down?</string>
     <string name="minerConnectionError">Could not retrieve data from %1$s.\n\nPlease make sure that your API Token is entered correctly and that internet is working properly.</string>
     <string name="priceAlarmUpgrade">Bitcoinium Price Alarm upgraded. \nPlease reset your alarms! Sorry for the inconvenience</string>
     <string name="priceAlarmUpgrade2">Please reset your alarms!\nSorry for the inconvenience</string>

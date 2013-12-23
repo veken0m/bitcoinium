@@ -123,7 +123,7 @@
     </ScrollView>
     
         <LinearLayout
-        android:id="@+id/linlaHeaderProgress3"
+        android:id="@+id/loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"

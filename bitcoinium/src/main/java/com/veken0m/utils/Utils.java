@@ -2,12 +2,19 @@
 package com.veken0m.utils;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
+import org.joda.money.BigMoney;
 import org.joda.money.CurrencyUnit;
 
 import com.xeiam.xchange.currency.Currencies;
@@ -20,7 +27,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static android.net.ConnectivityManager.*;
+
 public class Utils {
+
+    public static final LayoutParams symbolParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+    public static final LayoutParams symbolParams2 = new LayoutParams();
 
     public static String formatDecimal(float valueToFormat,
             int numberOfDecimalPlaces, boolean useGroupings) {
@@ -106,13 +118,24 @@ public class Utils {
         return DateFormat.format("MMM dd", dateFormatted) + " @ " + DateFormat.getTimeFormat(ctxt).format(dateFormatted);
     }
 
-    public static void setTextViewParams(TextView tv, String text) {
+    public static void setTextViewParams(TextView tv, BigDecimal value) {
 
         LayoutParams params = new TableRow.LayoutParams(
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
-        tv.setText(text);
+        tv.setText(Utils.formatDecimal(value));
+        tv.setLayoutParams(params);
+        tv.setGravity(1);
+    }
+
+    public static void setTextViewParams(TextView tv, BigMoney value) {
+
+        LayoutParams params = new TableRow.LayoutParams(
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+
+        tv.setText(Utils.formatDecimal(value.getAmount()));
         tv.setLayoutParams(params);
         tv.setGravity(1);
     }
@@ -127,13 +150,55 @@ public class Utils {
         }
     }
     
-    public static void errorDialog(Context context, String msg) {
+    public static Dialog errorDialog(Context context, String msg, String title) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Error");
+        builder.setMessage(msg).setTitle(title);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+
+        return builder.create();
+    }
+
+    public static Dialog errorDialog(Context context, String msg) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg);
         builder.setPositiveButton("OK", null);
         builder.show();
+
+        return builder.create();
+    }
+
+    public static boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo wifiNetwork = cm.getNetworkInfo(TYPE_WIFI);
+        if (wifiNetwork != null && wifiNetwork.isConnected()) {
+            return true;
+        }
+
+        NetworkInfo mobileNetwork = cm.getNetworkInfo(TYPE_MOBILE);
+        if (mobileNetwork != null && mobileNetwork.isConnected()) {
+            return true;
+        }
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // Inserts a divider to separate rows in table
+    public static void insertDivider(Context context, TableLayout table) {
+
+        View divider = new View(context);
+        divider.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
+        divider.setBackgroundColor(Color.rgb(51, 51, 51));
+        table.addView(divider);
     }
 
 }

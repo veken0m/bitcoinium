@@ -45,7 +45,7 @@
     </PreferenceCategory>
 
     <PreferenceScreen
-        android:summary="Enable notfications when total hashrate is 0 Mh/s"
+        android:summary="Enable notfications when total hashrate is below 0.01 Mh/s"
         android:title="Bitcoin Miner Alert" >
         <PreferenceCategory android:title="Miner Widget Settings" >
             <CheckBoxPreference

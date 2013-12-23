@@ -35,6 +35,7 @@
     <PreferenceCategory
         android:summary="Enter values where you want to be notified. Please enter valid numbers. Default Low:0, High:999"
         android:title="Alarm Settings" >
+        <Preference android:summary="Please enter UNSCALED values\nFor example, enter BTC not mBTC" />
         <PreferenceScreen android:title="MtGox alarm thresholds" >
             <PreferenceScreen android:title="BTC/USD" >
                 <EditTextPreference
@@ -310,7 +311,6 @@
                 android:title="VirtEx BTC/CAD Lower Threshold" />
         </PreferenceScreen>
         <PreferenceScreen android:title="BTC-E alarm thresholds" >
-            <Preference android:summary="Please enter UNSCALED values\nFor example, enter BTC not mBTC" />
 
             <PreferenceScreen android:title="BTC/USD" >
                 <EditTextPreference
