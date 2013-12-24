@@ -59,6 +59,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
             currencyPref.put("BTCChina", findPreference("btcchinaWidgetCurrencyPref"));
             currencyPref.put("Bitcurex", findPreference("bitcurexWidgetCurrencyPref"));
             currencyPref.put("Kraken", findPreference("krakenWidgetCurrencyPref"));
+            currencyPref.put("Bitfinex", findPreference("bitfinexWidgetCurrencyPref"));
             currencyPref.put("BitcoinAverage", findPreference("bitcoinaverageWidgetCurrencyPref"));
 
             // Disable all the currency pickers and enable the selected exchange
