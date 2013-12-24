@@ -64,6 +64,14 @@
                 android:title="Bitcurex Currency" />
             <ListPreference
                 android:defaultValue="BTC/USD"
+                android:entries="@array/bitfinexcurrencies"
+                android:entryValues="@array/bitfinexcurrencies"
+                android:key="bitfinexCurrencyPref"
+                android:summary="Bitfinex price will be displayed in this currency"
+                android:title="Bitfinex Currency"
+                />
+            <ListPreference
+                android:defaultValue="BTC/USD"
                 android:entries="@array/krakencurrencies"
                 android:entryValues="@array/krakencurrencies"
                 android:key="krakenCurrencyPref"

@@ -24,12 +24,12 @@ import com.actionbarsherlock.view.MenuItem;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BitcurexFragment;
+import com.veken0m.bitcoinium.fragments.exchanges.BitfinexFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BitstampFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.CampBXFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.KrakenFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
-import com.veken0m.utils.KarmaAdsUtils;
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
@@ -94,6 +94,7 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class, "campbx");
         addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class, "btcchina");
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
+        addTab(actionbar, tabsAdapter, R.drawable.bitfinexlogo, BitfinexFragment.class, "bitfinex");
         addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
 
         selectTab();

@@ -66,6 +66,7 @@ dependencies {
         compile "com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-kraken:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-bitfinex:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"
     } else {
         // Used for testing self-compiled XChange jars

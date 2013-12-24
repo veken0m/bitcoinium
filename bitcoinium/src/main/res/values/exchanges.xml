@@ -11,6 +11,7 @@
         <item>BTCChina</item>
         <item>Bitcurex</item>
         <item>Kraken</item>
+        <item>Bitfinex</item>
         <item>BitcoinAverage</item>
         <!--
         <item>BitcoinCentral</item> 
@@ -27,6 +28,7 @@
         <item>btcchina</item>
         <item>bitcurex</item>
         <item>kraken</item>
+        <item>bitfinex</item>
         <item>bitcoinaverage</item>
         <!-- <item>bitcoincentral</item>
         <item>bitfloor</item>
@@ -43,6 +45,7 @@
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
         <item>KrakenExchange</item>
+        <item>BitfinexExchange</item>
         <item>BitcoinAverageExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
@@ -130,6 +133,15 @@
         <item>EUR</item>
         <item>bitcoinicon</item>
         <item>kraken</item>
+        <item>true</item>
+        <item>true</item>
+    </string-array>
+    <string-array name="BitfinexExchange">
+        <item>Bitfinex</item>
+        <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
+        <item>USD</item>
+        <item>bitfinexlogo</item>
+        <item>bitfinex</item>
         <item>true</item>
         <item>true</item>
     </string-array>
@@ -267,6 +279,10 @@
         <item>KRW/XRP</item>
         <item>USD/XRP</item>
         <item>USD/XVN</item>
+    </string-array>
+
+    <string-array name="bitfinexcurrencies">
+        <item>BTC/USD</item>
     </string-array>
     
     <!-- Arrays for BitcoinAverage Currencies -->

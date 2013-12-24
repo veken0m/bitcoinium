@@ -30,6 +30,7 @@ public class BaseExchangeFragment extends SherlockFragment {
     protected static final String BTCCHINA = "BTCChinaExchange";
     protected static final String BITCUREX = "BitcurexExchange";
     protected static final String KRAKEN = "KrakenExchange";
+    protected static final String BITFINEX = "BitfinexExchange";
 
     // Attaches OnClickListeners to menu buttons
     protected void buildMenu(View view, final String exchange, final Boolean graph) {
