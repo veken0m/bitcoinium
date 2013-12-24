@@ -12,6 +12,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class PreferencesActivity extends PreferenceActivity {
@@ -193,5 +195,14 @@ public class PreferencesActivity extends PreferenceActivity {
 
         sendBroadcast(new Intent(this,
                 MinerWidgetProvider.class).setAction(REFRESH));
+
+        EasyTracker.getInstance(this).activityStop(this);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
 }

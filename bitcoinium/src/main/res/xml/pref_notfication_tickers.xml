@@ -327,6 +327,11 @@
                     android:title="Kraken USD/XVN Ticker" />
             </PreferenceScreen>
 
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="bitfinexBTCUSDTickerPref"
+                android:title="Bitfinex BTC/USD Ticker" />
+
             <PreferenceScreen android:title="BitcoinAverage Tickers" >
 
                 <CheckBoxPreference

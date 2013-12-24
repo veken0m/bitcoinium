@@ -9,3 +9,8 @@ build/
 .classpath
 project.properties
 local.properties
+*.apk
+bitcoinium/bitcoinium.apk
+gradle/
+gradlew
+gradlew.bat

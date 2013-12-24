@@ -31,9 +31,13 @@ import com.veken0m.bitcoinium.fragments.exchanges.KrakenFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.utils.KarmaAdsUtils;
+
+
 /**
  * @author Michael Lagacé a.k.a. veken0m
- * @version 1.7.0 Aug 29 2013
+ * @version 1.9.0 Dec 22 2013
  */
 public class MainActivity extends SherlockFragmentActivity {
     private ActionBar actionbar;
@@ -54,6 +58,7 @@ public class MainActivity extends SherlockFragmentActivity {
     public void onStart() {
         super.onStart();
         selectTabViaBundle();
+        EasyTracker.getInstance(this).activityStart(this);
     }
     
     public void onPause() {
@@ -61,7 +66,13 @@ public class MainActivity extends SherlockFragmentActivity {
         // clear the extra
         getIntent().removeExtra("exchangeKey");
     }
-    
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

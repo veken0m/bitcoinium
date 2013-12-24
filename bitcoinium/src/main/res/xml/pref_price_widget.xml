@@ -68,6 +68,13 @@
             android:title="Kraken Widget Currency" />
         <ListPreference
             android:defaultValue="BTC/USD"
+            android:entries="@array/bitfinexcurrencies"
+            android:entryValues="@array/bitfinexcurrencies"
+            android:key="bitfinexWidgetCurrencyPref"
+            android:summary="Widget will be displayed in selected currency"
+            android:title="Bitfinex Widget Currency" />
+        <ListPreference
+            android:defaultValue="BTC/USD"
             android:entries="@array/bitcoinaveragecurrencies"
             android:entryValues="@array/bitcoinaveragecurrencies"
             android:key="bitcoinaverageWidgetCurrencyPref"
