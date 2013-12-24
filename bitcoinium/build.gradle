@@ -52,6 +52,7 @@ dependencies {
     compile 'javax.ws.rs:jsr311-api:1.1.1'
     compile 'com.github.mmazi:rescu:1.5.0'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+    compile files('libs/libGoogleAnalyticsServices.jar')
 
     if(useXChangeFromMaven){
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"

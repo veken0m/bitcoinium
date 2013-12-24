@@ -34,6 +34,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
@@ -399,6 +400,18 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
         spinner.setAdapter(dataAdapter);
         spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
         spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

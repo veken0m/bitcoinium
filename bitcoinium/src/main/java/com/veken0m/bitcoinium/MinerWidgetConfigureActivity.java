@@ -11,6 +11,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
@@ -99,6 +101,18 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
             return context.getString(R.string.default_miningpool);
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

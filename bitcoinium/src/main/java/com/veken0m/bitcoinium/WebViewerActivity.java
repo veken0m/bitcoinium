@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.compatibility.WebViewSherlockFragment;
 import com.veken0m.utils.KarmaAdsUtils;
 
@@ -160,5 +161,17 @@ public class WebViewerActivity extends SherlockFragmentActivity {
             ft.remove(fragment);
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 }

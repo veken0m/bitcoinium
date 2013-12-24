@@ -16,6 +16,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
@@ -183,5 +184,17 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         } else {
             return context.getString(R.string.default_exchange);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 }

@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
 import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
@@ -260,6 +261,18 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     void removeLoadingSpinner() {
         LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
         if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

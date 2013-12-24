@@ -30,6 +30,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.fragments.mining.DeepBitFragment;
@@ -327,6 +328,18 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
         pref_eligiusKey = prefs.getString("eligiusKey", "");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }
