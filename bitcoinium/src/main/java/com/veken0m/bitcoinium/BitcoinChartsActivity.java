@@ -161,7 +161,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             for (BitcoinChartsTicker data : marketData) {
 
                 // Only print active exchanges... vol > 0 or contains selected currency
-                if (data.getVolume().intValue() != 0
+                if (data.getVolume().floatValue() != 0.0
                         && (currencyFilter.equals("SHOW ALL")
                         || data.getCurrency().contains(currencyFilter))) {
 
