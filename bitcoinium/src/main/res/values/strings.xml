@@ -6,7 +6,7 @@
     <string name="version_name">1.9.0</string>
     <string name="default_exchange">MtGoxExchange</string>
     <string name="default_miningpool">BitMinter</string>
-    <string name="default_currency">USD</string>
+    <string name="default_currency">BTC/USD</string>
 
     <!-- Widget Strings -->
     <string name="price_widget_name">Bitcoinium Price</string>

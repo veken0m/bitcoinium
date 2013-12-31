@@ -66,7 +66,7 @@
     <string-array name="MtGoxExchange">
         <item>MtGox</item>
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>mtgoxlogo</item>
         <item>mtgox</item>
         <item>true</item>
@@ -75,7 +75,7 @@
     <string-array name="VirtExExchange">
         <item>VirtEx</item>
         <item>com.xeiam.xchange.virtex.VirtExExchange</item>
-        <item>CAD</item>
+        <item>BTC/CAD</item>
         <item>virtexlogo</item>
         <item>virtex</item>
         <item>true</item>
@@ -84,7 +84,7 @@
     <string-array name="BTCEExchange">
         <item>BTC-E</item>
         <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>btcelogo</item>
         <item>btce</item>
         <item>true</item>
@@ -93,7 +93,7 @@
     <string-array name="BitstampExchange">
         <item>Bitstamp</item>
         <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>bitstamplogo</item>
         <item>bitstamp</item>
         <item>true</item>
@@ -102,7 +102,7 @@
     <string-array name="CampBXExchange">
         <item>CampBX</item>
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>campbxlogo</item>
         <item>campbx</item>
         <item>false</item>
@@ -112,8 +112,8 @@
     <string-array name="BTCChinaExchange">
         <item>BTCChina</item>
         <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
-        <item>CNY</item>
-        <item>none</item>
+        <item>BTC/CNY</item>
+        <item>btcchinalogo</item>
         <item>btcchina</item>
         <item>true</item>
         <item>true</item>
@@ -121,8 +121,8 @@
     <string-array name="BitcurexExchange">
         <item>Bitcurex</item>
         <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
-        <item>PLN</item>
-        <item>none</item>
+        <item>BTC/PLN</item>
+        <item>bitcurexlogo</item>
         <item>bitcurex</item>
         <item>true</item>
         <item>true</item>
@@ -130,7 +130,7 @@
     <string-array name="KrakenExchange">
         <item>Kraken</item>
         <item>com.xeiam.xchange.kraken.KrakenExchange</item>
-        <item>EUR</item>
+        <item>BTC/EUR</item>
         <item>bitcoinicon</item>
         <item>kraken</item>
         <item>true</item>
@@ -139,7 +139,7 @@
     <string-array name="BitfinexExchange">
         <item>Bitfinex</item>
         <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>bitfinexlogo</item>
         <item>bitfinex</item>
         <item>true</item>
@@ -150,7 +150,7 @@
     <string-array name="BitcoinCentralExchange">
         <item>BitcoinCentral</item>
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
-        <item>EUR</item>
+        <item>BTC/EUR</item>
         <item>bitcoinicon</item>
         <item>bitcoincentral</item>
         <item>true</item>
@@ -160,7 +160,7 @@
     <string-array name="BitfloorExchange">
         <item>Bitfloor</item>
         <item>com.xeiam.xchange.bitfloor.BitfloorExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>bitcoinicon</item>
         <item>bitfloor</item>
         <item>true</item>
@@ -169,7 +169,7 @@
     <string-array name="Bitcoin24Exchange">
         <item>Bitcoin24</item>
         <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
-        <item>EUR</item>
+        <item>BTC/EUR</item>
         <item>bitcoinicon</item>
         <item>bitcoin24</item>
         <item>false</item>
@@ -179,7 +179,7 @@
         <string-array name="BitcoinAverageExchange">
         <item>BTCAvg</item>
         <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
-        <item>USD</item>
+        <item>BTC/USD</item>
         <item>bitcoinicon</item>
         <item>bitcoinaverage</item>
         <item>false</item>
