@@ -39,6 +39,7 @@ import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.utils.Utils;
+//import com.veken0m.utils.KarmaAdsUtils;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
 

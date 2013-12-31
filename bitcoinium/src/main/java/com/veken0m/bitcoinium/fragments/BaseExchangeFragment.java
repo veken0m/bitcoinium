@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -40,15 +41,18 @@ public class BaseExchangeFragment extends SherlockFragment {
         widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity()
+
+                Activity activity = getActivity();
+
+                Intent intent = new Intent(activity
                         .getApplicationContext(), WidgetProvider.class);
                 intent.setAction(REFRESH);
-                Intent intent2 = new Intent(getActivity()
+                Intent intent2 = new Intent(activity
                         .getApplicationContext(), MinerWidgetProvider.class);
                 intent2.setAction(REFRESH);
-                getActivity().sendBroadcast(intent);
-                getActivity().sendBroadcast(intent2);
-                getActivity().moveTaskToBack(true);
+                activity.sendBroadcast(intent);
+                activity.sendBroadcast(intent2);
+                activity.moveTaskToBack(true);
             }
         });
 

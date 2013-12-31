@@ -59,7 +59,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             readGeneralPreferences(this);
             notifyUserOfMilli(this);
 
-            if (!pref_wifionly || checkWiFiConnected(this) && widgetIds.length > 0) {
+            if (widgetIds.length > 0 && (!pref_wifionly || checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
@@ -107,11 +107,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                                 pref_pricesInMilliBtc);
 
                         String volumeString = "N/A";
-                        if (!(ticker.getVolume() == null))
+
+                        //TODO: Return null volume in XChange for Bitfinex
+                        if (!(ticker.getVolume() == null) && !exchangeKey.equals("bitfinex"))
                             volumeString = Utils.formatDecimal(ticker.getVolume());
 
-                        setBidAskHighLow(ticker, views, pair,
-                                exchange.supportsTickerBidAsk());
+                        setBidAskHighLow(ticker, views, pair, exchange.supportsTickerBidAsk());
 
                         views.setTextViewText(R.id.widgetExchange, exchangeName);
                         views.setTextViewText(R.id.widgetLastText, lastString);

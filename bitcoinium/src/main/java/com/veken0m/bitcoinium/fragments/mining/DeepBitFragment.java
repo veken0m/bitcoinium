@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium.fragments.mining;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -115,10 +116,8 @@ public class DeepBitFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            
-            final Context context = getActivity();
-            
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "DeepBit");
             builder.setMessage(text);
@@ -144,13 +143,15 @@ public class DeepBitFragment extends SherlockFragment {
                 TableLayout t1 = (TableLayout) view.findViewById(
                         R.id.minerStatlist);
 
-                TableRow tr1 = new TableRow(getActivity());
-                TableRow tr2 = new TableRow(getActivity());
-                TableRow tr3 = new TableRow(getActivity());
+                Activity activity = getActivity();
+                
+                TableRow tr1 = new TableRow(activity);
+                TableRow tr2 = new TableRow(activity);
+                TableRow tr3 = new TableRow(activity);
 
-                TextView tvBTCRewards = new TextView(getActivity());
-                TextView tvBTCPayout = new TextView(getActivity());
-                TextView tvHashrate = new TextView(getActivity());
+                TextView tvBTCRewards = new TextView(activity);
+                TextView tvBTCPayout = new TextView(activity);
+                TextView tvHashrate = new TextView(activity);
                 tr1.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -178,15 +179,15 @@ public class DeepBitFragment extends SherlockFragment {
                 List<Worker> Workers = data.getWorkers().getWorkers();
                 List<String> WorkerNames = data.getWorkers().getNames();
                 for (int i = 0; i < Workers.size(); i++) {
-                    TableRow tr9 = new TableRow(getActivity());
-                    TableRow tr10 = new TableRow(getActivity());
-                    TableRow tr11 = new TableRow(getActivity());
-                    TableRow tr12 = new TableRow(getActivity());
+                    TableRow tr9 = new TableRow(activity);
+                    TableRow tr10 = new TableRow(activity);
+                    TableRow tr11 = new TableRow(activity);
+                    TableRow tr12 = new TableRow(activity);
 
-                    TextView tvMinerName = new TextView(getActivity());
-                    TextView tvAlive = new TextView(getActivity());
-                    TextView tvShares = new TextView(getActivity());
-                    TextView tvStales = new TextView(getActivity());
+                    TextView tvMinerName = new TextView(activity);
+                    TextView tvAlive = new TextView(activity);
+                    TextView tvShares = new TextView(activity);
+                    TextView tvStales = new TextView(activity);
 
                     tr9.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr10.setGravity(Gravity.CENTER_HORIZONTAL);

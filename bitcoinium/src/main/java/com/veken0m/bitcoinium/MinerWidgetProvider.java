@@ -27,6 +27,7 @@ import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
+//import com.veken0m.utils.KarmaAdsUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -65,13 +66,12 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, MinerWidgetProvider.class);
             int[] widgetIds = new int[0];
-            if (widgetManager != null) {
+            if (widgetManager != null)
                 widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
-            }
 
             readGeneralPreferences(this);
 
-            if (!pref_wifionly || checkWiFiConnected(this) && widgetIds.length > 0) {
+            if (widgetIds.length > 0 && (!pref_wifionly || checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 

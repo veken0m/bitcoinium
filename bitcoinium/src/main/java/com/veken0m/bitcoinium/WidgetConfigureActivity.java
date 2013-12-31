@@ -109,42 +109,44 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 });
         
         Preference OKpref = findPreference("OKpref");
-        OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        if(OKpref != null){
+            OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Context context = WidgetConfigureActivity.this;
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(context);
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Context context = WidgetConfigureActivity.this;
+                    SharedPreferences prefs = PreferenceManager
+                            .getDefaultSharedPreferences(context);
 
-                String pref_widgetExchange = prefs.getString(
-                        "widgetExchangesPref", "MtGoxExchange");
+                    String pref_widgetExchange = prefs.getString(
+                            "widgetExchangesPref", "MtGoxExchange");
 
-                Exchange exchange;
-                try {
-                    exchange = new Exchange(context, pref_widgetExchange);
-                } catch (Exception e) {
-                    Editor editor = prefs.edit();
-                    editor.putString("widgetExchangesPref", "MtGoxExchange").commit();
-                    exchange = new Exchange(context, "MtGoxExchange");
+                    Exchange exchange;
+                    try {
+                        exchange = new Exchange(context, pref_widgetExchange);
+                    } catch (Exception e) {
+                        Editor editor = prefs.edit();
+                        editor.putString("widgetExchangesPref", "MtGoxExchange").commit();
+                        exchange = new Exchange(context, "MtGoxExchange");
+                    }
+
+                    String sCurrency = prefs.getString(exchange.getIdentifier() + "WidgetCurrencyPref",
+                            exchange.getDefaultCurrency());
+
+                    // Save widget configuration
+                    saveCurrencyPref(context, mAppWidgetId, sCurrency);
+                    saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
+
+                    // Make sure we pass back the original appWidgetId
+                    Intent resultValue = new Intent();
+                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+                    setResult(RESULT_OK, resultValue);
+
+                    finish();
+                    return true;
                 }
-
-                String sCurrency = prefs.getString(exchange.getIdentifier() + "WidgetCurrencyPref",
-                        exchange.getDefaultCurrency());
-
-                // Save widget configuration
-                saveCurrencyPref(context, mAppWidgetId, sCurrency);
-                saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
-
-                // Make sure we pass back the original appWidgetId
-                Intent resultValue = new Intent();
-                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                setResult(RESULT_OK, resultValue);
-
-                finish();
-                return true;
-            }
-        });
+            });
+        }
     }
 
     // Write the prefix to the SharedPreferences object for this widget

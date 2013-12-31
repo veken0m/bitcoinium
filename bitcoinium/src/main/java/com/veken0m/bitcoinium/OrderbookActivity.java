@@ -247,7 +247,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         @Override
         public void run() {
-             startLoading();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startLoading();
+                }
+            });
             // if(exchangeName.equalsIgnoreCase("mtgox") &&
             // pref_currency.contains("USD")){
             // getXHubOrderBook();

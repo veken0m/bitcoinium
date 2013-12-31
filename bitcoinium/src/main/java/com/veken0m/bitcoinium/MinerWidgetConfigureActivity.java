@@ -39,15 +39,13 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
         // Find the widget id from the intent.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        if (extras != null) {
+        if (extras != null)
             mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
-        }
 
         // If they gave us an intent without the widget id, just bail.
-        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
             finish();
-        }
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());

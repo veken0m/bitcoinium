@@ -41,7 +41,7 @@ import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
 import com.veken0m.utils.CurrencyUtils;
-import com.veken0m.utils.KarmaAdsUtils;
+//import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;

@@ -1,12 +1,14 @@
 
 package com.veken0m.bitcoinium.fragments.mining;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -144,17 +146,19 @@ public class EMCFragment extends SherlockFragment {
                 TableLayout t1 = (TableLayout) view.findViewById(
                         R.id.minerStatlist);
 
-                TableRow tr1 = new TableRow(getActivity());
-                TableRow tr2 = new TableRow(getActivity());
-                TableRow tr3 = new TableRow(getActivity());
-                TableRow tr4 = new TableRow(getActivity());
-                TableRow tr5 = new TableRow(getActivity());
+                Activity activity = getActivity();
 
-                TextView tvConfirmedRewards = new TextView(getActivity());
-                TextView tvUnconfirmedRewards = new TextView(getActivity());
-                TextView tvEstimatedRewards = new TextView(getActivity());
-                TextView tvTotalRewards = new TextView(getActivity());
-                TextView tvBlocksFound = new TextView(getActivity());
+                TableRow tr1 = new TableRow(activity);
+                TableRow tr2 = new TableRow(activity);
+                TableRow tr3 = new TableRow(activity);
+                TableRow tr4 = new TableRow(activity);
+                TableRow tr5 = new TableRow(activity);
+
+                TextView tvConfirmedRewards = new TextView(activity);
+                TextView tvUnconfirmedRewards = new TextView(activity);
+                TextView tvEstimatedRewards = new TextView(activity);
+                TextView tvTotalRewards = new TextView(activity);
+                TextView tvBlocksFound = new TextView(activity);
 
                 tr1.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -210,19 +214,19 @@ public class EMCFragment extends SherlockFragment {
                     String LastActivity = "Latest Activity: "
                             + worker.getLast_activity();
 
-                    TableRow tr8 = new TableRow(getActivity());
-                    TableRow tr9 = new TableRow(getActivity());
-                    TableRow tr10 = new TableRow(getActivity());
-                    TableRow tr11 = new TableRow(getActivity());
-                    TableRow tr12 = new TableRow(getActivity());
-                    TableRow tr13 = new TableRow(getActivity());
+                    TableRow tr8 = new TableRow(activity);
+                    TableRow tr9 = new TableRow(activity);
+                    TableRow tr10 = new TableRow(activity);
+                    TableRow tr11 = new TableRow(activity);
+                    TableRow tr12 = new TableRow(activity);
+                    TableRow tr13 = new TableRow(activity);
 
-                    TextView tvWorkerName = new TextView(getActivity());
-                    TextView tvMinerHashrate = new TextView(getActivity());
-                    TextView tvRoundShares = new TextView(getActivity());
-                    TextView tvResetShares = new TextView(getActivity());
-                    TextView tvTotalShares = new TextView(getActivity());
-                    TextView tvLastActivity = new TextView(getActivity());
+                    TextView tvWorkerName = new TextView(activity);
+                    TextView tvMinerHashrate = new TextView(activity);
+                    TextView tvRoundShares = new TextView(activity);
+                    TextView tvResetShares = new TextView(activity);
+                    TextView tvTotalShares = new TextView(activity);
+                    TextView tvLastActivity = new TextView(activity);
 
                     tr8.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr9.setGravity(Gravity.CENTER_HORIZONTAL);
