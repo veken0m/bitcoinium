@@ -15,6 +15,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
+    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -93,13 +94,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadMiningPoolPref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String prefix = prefs
-                .getString(PREF_MININGPOOL_KEY + appWidgetId, null);
-        if (prefix != null) {
-            return prefix;
-        } else {
-            return context.getString(R.string.default_miningpool);
-        }
+        return prefs.getString(PREF_MININGPOOL_KEY + appWidgetId, null);
 
     }
 
@@ -112,6 +107,10 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     @Override
     public void onStop() {
         super.onStop();
+        Intent intent = new Intent(this, MinerWidgetProvider.class);
+        intent.setAction(REFRESH);
+        this.sendBroadcast(intent);
+
         EasyTracker.getInstance(this).activityStop(this);
     }
 

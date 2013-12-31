@@ -20,6 +20,7 @@ import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.bitfinex.v1.service.BitfinexAuthHelper;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
@@ -63,11 +64,22 @@ public class WidgetProvider extends BaseWidgetProvider {
                 for (int appWidgetId : widgetIds) {
 
                     // Load widget configuration
-                    Exchange exchange = getExchange(WidgetConfigureActivity.loadExchangePref(this,
-                            appWidgetId));
+                    String exchangePref = WidgetConfigureActivity.loadExchangePref(this,
+                            appWidgetId);
+
+                   if(exchangePref == null) continue; // skip to next
+                    Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String exchangeName = exchange.getExchangeName();
                     String exchangeKey = exchange.getIdentifier();
+
+                    if(exchange.getIdentifier().equals("bitfinex")){
+                        try {
+                            BitfinexAuthHelper.installCerts();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
                     setTapBehaviour(appWidgetId, exchangeKey, views);

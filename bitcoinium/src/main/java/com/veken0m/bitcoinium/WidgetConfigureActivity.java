@@ -21,6 +21,7 @@ import com.veken0m.bitcoinium.exchanges.Exchange;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
+    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
@@ -159,12 +160,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadCurrencyPref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String currency = prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
-        if (currency != null) {
-            return currency;
-        } else {
-            return context.getString(R.string.default_currency);
-        }
+
+        return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
     }
 
     // Write the prefix to the SharedPreferences object for this widget
@@ -179,12 +176,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadExchangePref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String prefix = prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
-        if (prefix != null) {
-            return prefix;
-        } else {
-            return context.getString(R.string.default_exchange);
-        }
+
+        return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
     }
 
     @Override
@@ -196,6 +189,10 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     @Override
     public void onStop() {
         super.onStop();
+        Intent intent = new Intent(this, WidgetProvider.class);
+        intent.setAction(REFRESH);
+        this.sendBroadcast(intent);
+
         EasyTracker.getInstance(this).activityStop(this);
     }
 }

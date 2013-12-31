@@ -42,12 +42,12 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
     private static float btcBalance = 0.0F;
 
     @Override
-    public void onReceive(Context ctxt, Intent intent) {
+    public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction()))
-            setMinerWidgetAlarm(ctxt);
+            setMinerWidgetAlarm(context);
 
-        super.onReceive(ctxt, intent);
+        super.onReceive(context, intent);
     }
 
     @Override
@@ -76,27 +76,27 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 for (int appWidgetId : widgetIds) {
 
                     // Load Widget configuration
-                    String pref_miningpool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
+                    String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
                             appWidgetId);
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-                    RemoteViews views = new RemoteViews(this.getPackageName(),
-                            R.layout.minerappwidget);
-                    setTapBehaviour(appWidgetId, pref_miningpool, views);
+                    if(miningPool == null) continue; // skip to next widget
 
-                    Boolean pref_minerDownAlert = prefs.getBoolean(
-                            pref_miningpool.toLowerCase() + "AlertPref", false);
+                    RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.minerappwidget);
+                    setTapBehaviour(appWidgetId, miningPool, views);
 
-                    if (getMinerInfo(pref_miningpool)) {
+                    Boolean pref_minerDownAlert = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+                            miningPool.toLowerCase() + "AlertPref", false);
+
+                    if (getMinerInfo(miningPool)) {
 
                         views.setTextViewText(R.id.widgetMinerHashrate,
                                 Utils.formatHashrate(hashRate));
-                        views.setTextViewText(R.id.widgetMiner, pref_miningpool);
+                        views.setTextViewText(R.id.widgetMiner, miningPool);
                         views.setTextViewText(R.id.widgetBTCPayout,
                                 CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
 
                         if ((hashRate < 0.01) && pref_minerDownAlert)
-                            createMinerDownNotification(this, pref_miningpool);
+                            createMinerDownNotification(this, miningPool);
 
                         String refreshedTime = "Upd. @ " + Utils.getCurrentTime(this);
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
