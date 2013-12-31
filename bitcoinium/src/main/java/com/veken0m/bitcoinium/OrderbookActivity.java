@@ -137,7 +137,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         try {
             orderbook = marketData.getOrderBook(currencyPair.baseCurrency, currencyPair.counterCurrency);
         } catch (IOException e) {
-            errorOccured();
             return false;
         }
 
@@ -149,11 +148,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
             listAsks = orderbook.getAsks().subList(0, length);
             listBids = orderbook.getBids().subList(0, length);
+            return true;
         } else {
-                errorOccured();
-                return false;
+            return false;
         }
-        return true;
     }
 
     /**
@@ -249,18 +247,15 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading();
-                }
-            });
+             startLoading();
             // if(exchangeName.equalsIgnoreCase("mtgox") &&
             // pref_currency.contains("USD")){
             // getXHubOrderBook();
             // } else {
             if(getOrderBook())
                 mOrderHandler.post(mOrderView);
+            else
+                mOrderHandler.post(mError);
             // }
         }
     }
@@ -272,8 +267,15 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 // pref_currency.contains("USD")){
                 // drawXHubOrderbookUI();
                 // } else {
-                drawOrderbookUI();
+            drawOrderbookUI();
                 // }
+        }
+    };
+
+    private final Runnable mError = new Runnable() {
+        @Override
+        public void run() {
+            errorOccured();
         }
     };
 

@@ -102,7 +102,6 @@ public class BitcoinAverageActivity extends SherlockActivity {
                         }
                  }
             } else {
-                errorOccured();
                 return false;
             }
         return true;
@@ -192,8 +191,10 @@ public class BitcoinAverageActivity extends SherlockActivity {
                     if(loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
                 }
             });
-            getBitcoinAverage();
-            mOrderHandler.post(mGraphView);
+            if(getBitcoinAverage())
+                mOrderHandler.post(mGraphView);
+            else
+                mOrderHandler.post(mError);
         }
     }
 
@@ -207,6 +208,13 @@ public class BitcoinAverageActivity extends SherlockActivity {
         @Override
         public void run() {
             drawBitcoinAverageUI();
+        }
+    };
+
+    private final Runnable mError = new Runnable() {
+        @Override
+        public void run() {
+            errorOccured();
         }
     };
 

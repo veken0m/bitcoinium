@@ -36,6 +36,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     private final static Handler mOrderHandler = new Handler();
     private BitcoinChartsTicker[] marketData = null;
     private final Runnable mBitcoinChartsView;
+    private final Runnable mError;
     private String currencyFilter;
     private Dialog dialog = null;
 
@@ -45,6 +46,13 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             @Override
             public void run() {
                 if (marketData != null) drawBitcoinChartsUI();
+            }
+        };
+
+        mError = new Runnable() {
+            @Override
+            public void run() {
+                errorOccured();
             }
         };
     }
@@ -123,7 +131,6 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             marketData = BitcoinChartsFactory.createInstance().getMarketData();
             return true;
         } catch (Exception e) {
-            errorOccured();
             return false;
         }
     }
@@ -224,8 +231,12 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
             if (getBitcoinCharts())
                 mOrderHandler.post(mBitcoinChartsView);
+            else
+                mOrderHandler.post(mError);
         }
     }
+
+
 
     private void errorOccured() {
 
