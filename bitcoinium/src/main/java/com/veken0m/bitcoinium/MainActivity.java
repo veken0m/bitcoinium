@@ -58,7 +58,9 @@ public class MainActivity extends SherlockFragmentActivity {
     public void onStart() {
         super.onStart();
         selectTabViaBundle();
-        EasyTracker.getInstance(this).activityStart(this);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
     
     public void onPause() {

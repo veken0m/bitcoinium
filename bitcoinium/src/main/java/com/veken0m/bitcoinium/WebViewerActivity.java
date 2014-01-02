@@ -1,6 +1,7 @@
 
 package com.veken0m.bitcoinium;
 
+import android.preference.PreferenceManager;
 import android.view.ViewGroup.LayoutParams;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -166,7 +167,9 @@ public class WebViewerActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
     @Override

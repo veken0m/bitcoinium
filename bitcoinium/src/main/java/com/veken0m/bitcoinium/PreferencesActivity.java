@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.EasyTracker;
@@ -202,7 +203,9 @@ public class PreferencesActivity extends PreferenceActivity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
 }

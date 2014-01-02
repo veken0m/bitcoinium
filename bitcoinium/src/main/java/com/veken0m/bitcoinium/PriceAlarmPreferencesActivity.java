@@ -4,6 +4,7 @@ package com.veken0m.bitcoinium;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -31,7 +32,9 @@ public class PriceAlarmPreferencesActivity extends PreferenceActivity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
 }

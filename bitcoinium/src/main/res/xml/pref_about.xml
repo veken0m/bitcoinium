@@ -37,5 +37,10 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
+        <CheckBoxPreference
+            android:key="googleAnalyticsPref"
+            android:summary="Provide anonymous data in order to help the developers improve the app"
+            android:title="Opt-in Google Analytics"
+            android:defaultValue="false"/>
 
 </PreferenceScreen>

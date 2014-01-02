@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -251,7 +252,9 @@ public class BitcoinAverageActivity extends SherlockActivity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
     @Override
