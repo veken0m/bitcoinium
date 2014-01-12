@@ -83,7 +83,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
                     setTapBehaviour(appWidgetId, exchangeKey, views);
 
-                    readAllWidgetPreferences(this);
+                    readGeneralPreferences(this);
 
                     try {
                         // if altcoin append baseCurrency
@@ -243,12 +243,9 @@ public class WidgetProvider extends BaseWidgetProvider {
                 views.setTextColor(R.id.label, pref_widgetRefreshSuccessColor);
                 views.setTextColor(R.id.widgetVolText, pref_secondaryWidgetTextColor);
             } else {
-                views.setInt(R.id.widget_layout, "setBackgroundColor",
-                        getResources().getColor(R.color.widgetBackgroundColor));
-                views.setTextColor(R.id.widgetLastText, getResources().getColor(
-                        R.color.widgetMainTextColor));
-                views.setTextColor(R.id.widgetExchange, getResources().getColor(
-                        R.color.widgetMainTextColor));
+                views.setInt(R.id.widget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetLastText, getResources().getColor(R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetExchange, getResources().getColor(R.color.widgetMainTextColor));
                 views.setTextColor(R.id.label, Color.GREEN);
             }
         }
@@ -280,7 +277,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             }
         }
 
-        public void removeOldAlarmKeys(Context ctxt, String exchangeKey) {
+        public void removeOldAlarmKeys(Context context, String exchangeKey) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -290,12 +287,12 @@ public class WidgetProvider extends BaseWidgetProvider {
                 prefs.edit().remove(exchangeKey + "Lower").commit();
                 prefs.edit().remove(exchangeKey + "TickerPref").commit();
 
-                notifyUserOfAlarmUpgrade(ctxt);
+                notifyUserOfAlarmUpgrade(context);
             }
         }
 
-        public void notifyUserOfAlarmUpgrade(Context ctxt) {
-            NotificationManager mNotificationManager = (NotificationManager) ctxt
+        public void notifyUserOfAlarmUpgrade(Context context) {
+            NotificationManager mNotificationManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             long when = System.currentTimeMillis();
             Resources res = getResources();
@@ -303,10 +300,10 @@ public class WidgetProvider extends BaseWidgetProvider {
             String notifText = res.getString(R.string.priceAlarmUpgrade2);
             Notification notif = new Notification(R.drawable.bitcoin, tickerText, when);
 
-            Intent notifIntent = new Intent(ctxt, PriceAlarmPreferencesActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0, notifIntent, 0);
+            Intent notifIntent = new Intent(context, PriceAlarmPreferencesActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifIntent, 0);
 
-            notif.setLatestEventInfo(ctxt, "Price Alarm upgraded", notifText, contentIntent);
+            notif.setLatestEventInfo(context, "Price Alarm upgraded", notifText, contentIntent);
             notif.defaults |= Notification.DEFAULT_VIBRATE;
 
             mNotificationManager.notify(1337, notif);
@@ -359,14 +356,4 @@ public class WidgetProvider extends BaseWidgetProvider {
             buildUpdate();
         }
     }
-
-    /*
-    public void onDestoy(Context context) {
-        final AlarmManager m = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
-
-        m.cancel(widgetPriceWidgetRefreshService);
-    }
-    */
-
 }

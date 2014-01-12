@@ -31,12 +31,12 @@ import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
 
 import java.util.ArrayList;
-//import com.veken0m.utils.KarmaAdsUtils;
+// import com.veken0m.utils.KarmaAdsUtils;
 
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
- * @version 1.9.0 Dec 22 2013
+ * @version 1.9.1 Jan 12 2014
  */
 public class MainActivity extends SherlockFragmentActivity {
     private ActionBar actionbar;
@@ -53,7 +53,7 @@ public class MainActivity extends SherlockFragmentActivity {
         // Some hack to make widgets appear on devices without rebooting
         sendBroadcast(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
 
-        //KarmaAdsUtils.initAd(this);
+        // KarmaAdsUtils.initAd(this);
     }
 
     public void onStart() {

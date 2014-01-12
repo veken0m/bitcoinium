@@ -89,8 +89,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     if (getMinerInfo(miningPool)) {
 
-                        views.setTextViewText(R.id.widgetMinerHashrate,
-                                Utils.formatHashrate(hashRate));
+                        views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, miningPool);
                         views.setTextViewText(R.id.widgetBTCPayout,
                                 CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
@@ -104,18 +103,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         updateWidgetTheme(views);
 
                     } else {
-                        if (pref_enableWidgetCustomization) {
+                        if (pref_enableWidgetCustomization)
                             views.setTextColor(R.id.refreshtime, pref_widgetRefreshFailedColor);
-                        } else {
+                        else
                             views.setTextColor(R.id.refreshtime, Color.RED);
-                        }
                     }
                     if (widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
         }
 
-        public Boolean getMinerInfo(String miningpool) {
+        public Boolean getMinerInfo(String sMiningPool) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -128,7 +126,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             try {
                 // TODO: fix this ugly mess
-                if (miningpool.equalsIgnoreCase("DeepBit")) {
+                if (sMiningPool.equalsIgnoreCase("DeepBit")) {
                     String pref_apiKey = prefs.getString("deepbitKey", "");
 
                     HttpGet post = new HttpGet("http://deepbit.net/api/"
@@ -140,9 +138,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             DeepBitData.class);
                     btcBalance = data.getConfirmed_reward();
                     hashRate = data.getHashrate();
+
                     return true;
 
-                } else if (miningpool.equalsIgnoreCase("BitMinter")) {
+                } else if (sMiningPool.equalsIgnoreCase("BitMinter")) {
                     String pref_apiKey = prefs.getString("bitminterKey", "");
 
                     HttpGet post = new HttpGet(
@@ -157,7 +156,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     hashRate = data.getHash_rate();
                     return true;
 
-                } else if (miningpool.equalsIgnoreCase("EclipseMC")) {
+                } else if (sMiningPool.equalsIgnoreCase("EclipseMC")) {
 
                     String pref_apiKey = prefs.getString("emcKey", "");
                     HttpGet post = new HttpGet(
@@ -190,7 +189,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     }
                     return true;
 
-                } else if (miningpool.equalsIgnoreCase("Slush")) {
+                } else if (sMiningPool.equalsIgnoreCase("Slush")) {
                     String pref_apiKey = prefs.getString("slushKey", "");
 
                     HttpGet post = new HttpGet(
@@ -209,7 +208,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     }
                     return true;
 
-                } else if (miningpool.equalsIgnoreCase("50BTC")) {
+                } else if (sMiningPool.equalsIgnoreCase("50BTC")) {
                     String pref_apiKey = prefs.getString("50BTCKey", "");
 
                     HttpGet post = new HttpGet("https://50btc.com/en/api/"
@@ -228,7 +227,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     }
                     return true;
 
-                } else if (miningpool.equalsIgnoreCase("BTCGuild")) {
+                } else if (sMiningPool.equalsIgnoreCase("BTCGuild")) {
                     String pref_apiKey = prefs.getString("btcguildKey", "");
 
                     HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
@@ -247,7 +246,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         hashRate += worker.getHash_rate();
                     }
                     return true;
-                } else if (miningpool.equalsIgnoreCase("Eligius")) {
+                } else if (sMiningPool.equalsIgnoreCase("Eligius")) {
 
                     String pref_apiKey = prefs.getString("eligiusKey", "");
 
@@ -307,32 +306,15 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         public void updateWidgetTheme(RemoteViews views) {
             // set the color
             if (pref_enableWidgetCustomization) {
-                views.setInt(R.id.minerwidget_layout,
-                        "setBackgroundColor",
-                        pref_backgroundWidgetColor);
-                views.setTextColor(R.id.widgetMinerHashrate,
-                        pref_mainWidgetTextColor);
-                views.setTextColor(R.id.widgetMiner,
-                        pref_mainWidgetTextColor);
-                views.setTextColor(R.id.refreshtime,
-                        pref_widgetRefreshSuccessColor);
+                views.setInt(R.id.minerwidget_layout, "setBackgroundColor", pref_backgroundWidgetColor);
+                views.setTextColor(R.id.widgetMinerHashrate, pref_mainWidgetTextColor);
+                views.setTextColor(R.id.widgetMiner, pref_mainWidgetTextColor);
+                views.setTextColor(R.id.refreshtime, pref_widgetRefreshSuccessColor);
                 views.setTextColor(R.id.widgetBTCPayout, pref_secondaryWidgetTextColor);
-
             } else {
-                views.setInt(
-                        R.id.minerwidget_layout,
-                        "setBackgroundColor",
-                        getResources().getColor(
-                                R.color.widgetBackgroundColor));
-                views.setTextColor(
-                        R.id.widgetMinerHashrate,
-                        getResources().getColor(
-                                R.color.widgetMainTextColor));
-                views.setTextColor(
-                        R.id.widgetMiner,
-                        getResources().getColor(
-                                R.color.widgetMainTextColor));
-
+                views.setInt(R.id.minerwidget_layout,"setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetMinerHashrate, getResources().getColor(R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetMiner, getResources().getColor(R.color.widgetMainTextColor));
                 views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
                 views.setTextColor(R.id.refreshtime, Color.GREEN);
             }
@@ -353,13 +335,4 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             buildUpdate();
         }
     }
-
-    /*
-    public void onDestoy(Context context) {
-        final AlarmManager m = (AlarmManager) context
-                .getSystemService(Context.ALARM_SERVICE);
-
-        m.cancel(widgetMinerWidgetRefreshService);
-    }
-    */
 }

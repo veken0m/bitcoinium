@@ -155,8 +155,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    startActivity(new Intent(getApplicationContext(),
-                            PriceAlarmPreferencesActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PriceAlarmPreferencesActivity.class));
                     return true;
                 }
             });
@@ -174,9 +173,7 @@ public class PreferencesActivity extends PreferenceActivity {
                         clipboard.setText(donationAddress);
                     } else {
                         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        android.content.ClipData clip = android.content.ClipData
-                                .newPlainText("Donation Address", donationAddress);
-                        clipboard.setPrimaryClip(clip);
+                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Donation Address", donationAddress));
                     }
                     Context context = getApplicationContext();
                     if (context != null)

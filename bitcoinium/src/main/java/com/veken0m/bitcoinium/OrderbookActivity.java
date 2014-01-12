@@ -40,7 +40,7 @@ import com.xeiam.xchange.service.polling.PollingMarketDataService;
 import java.io.IOException;
 import java.util.List;
 
-//import com.veken0m.utils.KarmaAdsUtils;
+// import com.veken0m.utils.KarmaAdsUtils;
 
 public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -81,7 +81,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         createCurrencyDropdown();
         viewOrderbook();
 
-        //KarmaAdsUtils.initAd(this);
+        // KarmaAdsUtils.initAd(this);
     }
 
     @Override
