@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.veken0m.bitcoinium"
+          android:versionCode="51"
+          android:versionName="@string/version_name">
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="false"
+        android:icon="@drawable/bitcoiniumlogo"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_CONFIGURE"/>
+                <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_CONFIGURE"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WidgetConfigureActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MinerWidgetConfigureActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OrderbookActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Orderbook">
+        </activity>
+        <activity
+            android:name=".BitcoinChartsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Bitcoin Charts"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".BitcoinAverageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="BitcoinAverage.com"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".GraphActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Price Graph">
+        </activity>
+        <activity
+            android:name=".MinerStatsActivity"
+            android:label="Miner Stats"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="Preferences">
+        </activity>
+        <activity
+            android:name=".PriceAlarmPreferencesActivity"
+            android:label="Price Alarm Settings">
+        </activity>
+        <activity
+            android:name=".WebViewerActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:label="Web Charts">
+        </activity>
+
+        <receiver
+            android:exported="false"
+            android:name=".WidgetProvider"
+            android:label="@string/price_widget_name">
+            <intent-filter>
+                <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_RECEIVER"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info"/>
+        </receiver>
+
+        <service android:name=".WidgetProvider$UpdateService"/>
+
+        <receiver
+            android:exported="false"
+            android:name=".MinerWidgetProvider"
+            android:label="@string/mining_widget_name">
+            <intent-filter>
+                <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_RECEIVER"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/miner_appwidget_info"/>
+        </receiver>
+
+        <service android:name=".MinerWidgetProvider$MinerUpdateService"/>
+    </application>
+
+</manifest>

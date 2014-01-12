@@ -2,7 +2,6 @@ bin/
 gen/
 proguard/
 build/
-gradle/
 .gradle/
 .idea/
 .project
@@ -10,4 +9,3 @@ gradle/
 .classpath
 project.properties
 local.properties
-Thumbs.db

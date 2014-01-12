@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="About">
+        <PreferenceScreen
+            android:summary="Contact info, feedback and credits"
+            android:title="About Bitcoinium">
+            <PreferenceCategory android:title="About">
+                <Preference
+                    android:summary="Michael Lagacé (veken0m)"
+                    android:title="Author"/>
+                <Preference
+                    android:key="donationAddressPref"
+                    android:summary="1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54"
+                    android:title="Bitcoin Donation Address"/>
+                <Preference
+                    android:key="devEmailPref"
+                    android:summary="veken0m.apps@gmail.com"
+                    android:title="Email"/>
+                <Preference
+                    android:key="devTwitterPref"
+                    android:summary=" @veken0m"
+                    android:title="Twitter"/>
+                <Preference
+                    android:summary="@string/version_name"
+                    android:title="Version"/>
+                <Preference
+                    android:key="bitcoiniumGithubPref"
+                    android:summary="Please submit issues and feature requests here"
+                    android:title="Bitcoinium Github"/>
+                <Preference
+                    android:key="xchangeGithubPref"
+                    android:summary="A Financial Exchange Library for Java, with support for Bitcoin"
+                    android:title="XChange Github"/>
+                <CheckBoxPreference
+                    android:key="googleAnalyticsPref"
+                    android:summary="Provide anonymous data in order to help the developers improve Bitcoinium"
+                    android:title="Opt-in Google Analytics"
+                    android:defaultValue="false"/>
+                <Preference
+                    android:summary="Tim Molter - XChange Library\nMatija Mazi - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library \nJonas Gehring - GraphView library \nSergey Margaritov - ColorPickerPreference library \nDaniel Nilsson - ColorPickerPreference library"
+                    android:title="Credits"/>
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

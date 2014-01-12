@@ -1,0 +1,50 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="OrderBook Settings">
+        <PreferenceScreen
+            android:summary="Adjust liquidity highlighting and rendering settings"
+            android:title="OrderBook Settings">
+            <PreferenceCategory android:title="OrderBook Settings">
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="showCurrencySymbolPref"
+                    android:summary="Display currency symbols in the orderbook. \nDisable if text does not fit."
+                    android:title="Display Currency Symbols"/>
+
+                <EditTextPreference
+                    android:defaultValue="100"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="orderbookLimiterPref"
+                    android:summary="Limit values printed on screen to improve performance"
+                    android:title="OrderBook list length limit"/>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="Liquidity Highlighting">
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="highlightPref"
+                    android:summary="Color of text depends on depth"
+                    android:title="Enable Liquidity Highlighting"/>
+
+                <EditTextPreference
+                    android:defaultValue="10"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="depthHighlightUpperPref"
+                    android:summary="Text will be colored GREEN if depth over this value"
+                    android:title="High Depth"/>
+                <EditTextPreference
+                    android:summary="Text will be colored YELLOW if depth is in between"
+                    android:title="Medium Depth"/>
+                <EditTextPreference
+                    android:defaultValue="1"
+                    android:digits="01234567890"
+                    android:inputType="numberDecimal"
+                    android:key="depthHighlightLowerPref"
+                    android:summary="Text will be colored RED if depth under this value"
+                    android:title="Low Depth"/>
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

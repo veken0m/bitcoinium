@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Mining Pool">
+        <ListPreference
+            android:defaultValue="BitMinter"
+            android:entries="@array/miningpools"
+            android:entryValues="@array/miningpools"
+            android:key="widgetMiningPoolPref"
+            android:summary="Select the mining pool used for the widget"
+            android:title="Mining Widget"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

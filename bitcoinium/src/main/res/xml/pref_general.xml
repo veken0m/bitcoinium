@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+        <ListPreference
+            android:defaultValue="mtgox"
+            android:entries="@array/exchanges"
+            android:entryValues="@array/exchangeID"
+            android:key="favExchangePref"
+            android:summary="Automatically selected when Bitcoinium opens"
+            android:title="Favorite Exchange"/>
+
+        <PreferenceScreen
+            android:summary="Default currency for OrderBook and Price Graph"
+            android:title="Default Exchange Currency">
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/mtgoxcurrencies"
+                android:entryValues="@array/mtgoxcurrencies"
+                android:key="mtgoxCurrencyPref"
+                android:summary="MtGox prices will be displayed in this currency"
+                android:title="MtGox Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/CAD"
+                android:entries="@array/virtexcurrencies"
+                android:entryValues="@array/virtexcurrencies"
+                android:key="virtexCurrencyPref"
+                android:summary="VirtEx prices will be displayed in this currency"
+                android:title="VirtEx Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/btcecurrencies"
+                android:entryValues="@array/btcecurrencies"
+                android:key="btceCurrencyPref"
+                android:summary="BTC-E prices will be displayed in this currency"
+                android:title="BTC-E Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/bitstampcurrencies"
+                android:entryValues="@array/bitstampcurrencies"
+                android:key="bitstampCurrencyPref"
+                android:summary="Bitstamp price will be displayed in this currency"
+                android:title="Bitstamp Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/campbxcurrencies"
+                android:entryValues="@array/campbxcurrencies"
+                android:key="campbxCurrencyPref"
+                android:summary="CampBX price will be displayed in this currency"
+                android:title="CampBX Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/CNY"
+                android:entries="@array/btcchinacurrencies"
+                android:entryValues="@array/btcchinacurrencies"
+                android:key="btcchinaCurrencyPref"
+                android:summary="BTC China price will be displayed in this currency"
+                android:title="BTC China Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/PLN"
+                android:entries="@array/bitcurexcurrencies"
+                android:entryValues="@array/bitcurexcurrencies"
+                android:key="bitcurexCurrencyPref"
+                android:summary="Bitcurex price will be displayed in this currency"
+                android:title="Bitcurex Currency"/>
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/bitfinexcurrencies"
+                android:entryValues="@array/bitfinexcurrencies"
+                android:key="bitfinexCurrencyPref"
+                android:summary="Bitfinex price will be displayed in this currency"
+                android:title="Bitfinex Currency"
+                />
+            <ListPreference
+                android:defaultValue="BTC/USD"
+                android:entries="@array/krakencurrencies"
+                android:entryValues="@array/krakencurrencies"
+                android:key="krakenCurrencyPref"
+                android:summary="Kraken price will be displayed in this currency"
+                android:title="Kraken Currency"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>
