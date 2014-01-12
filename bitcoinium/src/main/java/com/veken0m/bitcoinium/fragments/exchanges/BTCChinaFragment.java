@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BTCChinaFragment extends BaseExchangeFragment {
 
+    protected static final String BTCCHINA = "BTCChinaExchange";
+
     public BTCChinaFragment() {
     }
 

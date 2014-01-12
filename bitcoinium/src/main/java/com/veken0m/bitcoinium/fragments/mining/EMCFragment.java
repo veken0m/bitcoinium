@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -85,17 +84,18 @@ public class EMCFragment extends SherlockFragment {
     }
 
     private void viewMinerStats(View view) {
-        if (minerProgressDialog != null && minerProgressDialog.isShowing()) {
+        if (minerProgressDialog != null && minerProgressDialog.isShowing())
             return;
-        }
-        minerProgressDialog = ProgressDialog.show(view.getContext(),
-                "Working...", "Retrieving Miner Stats", true, false);
 
-        OrderbookThread gt = new OrderbookThread();
+        Context context = view.getContext();
+        if(context != null)
+            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+
+        MinerStatsThread gt = new MinerStatsThread();
         gt.start();
     }
 
-    private class OrderbookThread extends Thread {
+    private class MinerStatsThread extends Thread {
 
         @Override
         public void run() {

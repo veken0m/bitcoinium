@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class Bitcoin24Fragment extends BaseExchangeFragment {
 
+    protected static final String BITCOIN24 = "Bitcoin24Exchange";
+
     public Bitcoin24Fragment() {
     }
 

@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BitstampFragment extends BaseExchangeFragment {
 
+    protected static final String BITSTAMP = "BitstampExchange";
+
     public BitstampFragment() {
     }
 

@@ -46,14 +46,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction()))
-            setMinerWidgetAlarm(context);
+            onUpdate(context, null, null);
 
         super.onReceive(context, intent);
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-            int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setMinerWidgetAlarm(context);
     }
 
@@ -71,7 +70,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifionly || checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
@@ -110,7 +109,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             views.setTextColor(R.id.refreshtime, Color.RED);
                         }
                     }
-                    widgetManager.updateAppWidget(appWidgetId, views);
+                    if(widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
         }

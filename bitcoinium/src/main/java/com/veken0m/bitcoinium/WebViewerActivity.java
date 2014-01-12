@@ -17,7 +17,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.compatibility.WebViewSherlockFragment;
-import com.veken0m.utils.KarmaAdsUtils;
+//import com.veken0m.utils.KarmaAdsUtils;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class WebViewerActivity extends SherlockFragmentActivity {

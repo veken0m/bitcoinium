@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BitcoinCentralFragment extends BaseExchangeFragment {
 
+    protected static final String BITCOINCENTRAL = "BitcoinCentralExchange";
+
     public BitcoinCentralFragment() {
     }
 

@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class KrakenFragment extends BaseExchangeFragment {
 
+    protected static final String KRAKEN = "KrakenExchange";
+
     public KrakenFragment() {
     }
 

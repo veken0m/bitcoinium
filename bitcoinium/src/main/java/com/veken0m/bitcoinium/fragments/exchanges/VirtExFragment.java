@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class VirtExFragment extends BaseExchangeFragment {
 
+    protected static final String VIRTEX = "VirtExExchange";
+
     public VirtExFragment() {
     }
 

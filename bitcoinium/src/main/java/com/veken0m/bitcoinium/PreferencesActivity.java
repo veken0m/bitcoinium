@@ -178,7 +178,10 @@ public class PreferencesActivity extends PreferenceActivity {
                                 .newPlainText("Donation Address", donationAddress);
                         clipboard.setPrimaryClip(clip);
                     }
-                    Toast.makeText(getApplicationContext(), "Address copied to clipboard", Toast.LENGTH_SHORT).show();
+                    Context context = getApplicationContext();
+                    if(context != null)
+                        Toast.makeText(context, "Address copied to clipboard", Toast.LENGTH_SHORT).show();
+
                     return true;
                 }
             });

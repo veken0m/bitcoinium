@@ -80,7 +80,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.bitcoinaverage);
-        if(tickers != null) drawBitcoinAverageUI();
+        if(tickers.size() > 0) drawBitcoinAverageUI();
     }
 
     /**
@@ -118,7 +118,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
         boolean bBackGroundColor = true;
 
-        if(tickers != null && tickers.size() > 0 && bitcoinAverageTable != null){
+        if(tickers.size() > 0 && bitcoinAverageTable != null){
 
             // Clear table
             bitcoinAverageTable.removeAllViews();

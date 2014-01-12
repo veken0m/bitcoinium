@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BitFloorFragment extends BaseExchangeFragment {
 
+    protected static final String BITFLOOR = "BitfloorExchange";
+
     public BitFloorFragment() {
     }
 

@@ -32,7 +32,7 @@ import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
 
 import com.google.analytics.tracking.android.EasyTracker;
-import com.veken0m.utils.KarmaAdsUtils;
+//import com.veken0m.utils.KarmaAdsUtils;
 
 
 /**

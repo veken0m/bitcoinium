@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BTCEFragment extends BaseExchangeFragment {
 
+    protected static final String BTCE = "BTCEExchange";
+
     public BTCEFragment() {
     }
 

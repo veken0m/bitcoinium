@@ -20,8 +20,6 @@
         <TextView
             android:id="@+android:id/title"
             android:layout_width="wrap_content"
-
-
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textAppearance="?android:textAppearanceMedium"

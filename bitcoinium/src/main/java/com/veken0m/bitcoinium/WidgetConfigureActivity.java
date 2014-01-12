@@ -68,8 +68,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 prefCategory.removePreference(value);
             }
 
-            prefCategory.addPreference(currencyPref.get(widgetExchangePref
-                    .getEntry().toString().replace("Exchange", "").replace("-", "")));
+            String sExchange = (widgetExchangePref.getEntry() != null) ? widgetExchangePref.getEntry().toString().replace("Exchange", "").replace("-", "") : "";
+            prefCategory.addPreference(currencyPref.get(sExchange));
 
         } catch (Exception e) {
             e.printStackTrace();

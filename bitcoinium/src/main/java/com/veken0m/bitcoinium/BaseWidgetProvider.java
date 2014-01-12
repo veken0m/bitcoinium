@@ -42,8 +42,8 @@ class BaseWidgetProvider extends AppWidgetProvider {
 
     static boolean pref_priceAlarm = false;
     static boolean pref_enableTicker = false;
-    static boolean pref_widgetbidask = false;
-    static boolean pref_wifionly = false;
+    static boolean pref_widgetBidAsk = false;
+    static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
     static boolean pref_tapToUpdate = false;
 
@@ -83,11 +83,11 @@ class BaseWidgetProvider extends AppWidgetProvider {
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
-        pref_wifionly = prefs.getBoolean("wifiRefreshOnlyPref", false);
+        pref_wifiOnly = prefs.getBoolean("wifiRefreshOnlyPref", false);
         pref_pricesInMilliBtc = prefs.getBoolean("displayPricesInMilliBtcPref", true);
         pref_notificationSound = prefs.getString("notificationSoundPref",
                 "DEFAULT_RINGTONE_URI");
-        pref_widgetbidask = prefs.getBoolean("bidasktogglePref", false);
+        pref_widgetBidAsk = prefs.getBoolean("bidasktogglePref", false);
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
         
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
@@ -271,20 +271,20 @@ class BaseWidgetProvider extends AppWidgetProvider {
         mNotifManager.notify(miningpool.hashCode(), notification);
     }
 
-    static void createPermanentNotification(Context ctxt, int icon,
-            CharSequence contentTitle, CharSequence contentText,
-            int NOTIFY_ID) {
+    static void createPermanentNotification(Context context,
+                                            CharSequence contentTitle, CharSequence contentText,
+                                            int NOTIFY_ID) {
         String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager mNotificationManager = (NotificationManager) ctxt
+        NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(ns);
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, null, when);
+        Notification notification = new Notification(R.drawable.bitcoin, null, when);
 
-        Intent notificationIntent = new Intent(ctxt, PreferencesActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0,
+        Intent notificationIntent = new Intent(context, PreferencesActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
 
-        notification.setLatestEventInfo(ctxt, contentTitle, contentText,
+        notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);
 
         notification.flags |= Notification.FLAG_ONGOING_EVENT;

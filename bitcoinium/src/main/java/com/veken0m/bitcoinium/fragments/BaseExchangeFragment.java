@@ -19,19 +19,8 @@ import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 
 public class BaseExchangeFragment extends SherlockFragment {
+
     private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
-    protected static final String VIRTEX = "VirtExExchange";
-    protected static final String MTGOX = "MtGoxExchange";
-    protected static final String BTCE = "BTCEExchange";
-    protected static final String BITSTAMP = "BitstampExchange";
-    protected static final String CAMPBX = "CampBXExchange";
-    protected static final String BITCOINCENTRAL = "BitcoinCentralExchange";
-    protected static final String BITFLOOR = "BitfloorExchange";
-    protected static final String BITCOIN24 = "Bitcoin24Exchange";
-    protected static final String BTCCHINA = "BTCChinaExchange";
-    protected static final String BITCUREX = "BitcurexExchange";
-    protected static final String KRAKEN = "KrakenExchange";
-    protected static final String BITFINEX = "BitfinexExchange";
 
     // Attaches OnClickListeners to menu buttons
     protected void buildMenu(View view, final String exchange, final Boolean graph) {

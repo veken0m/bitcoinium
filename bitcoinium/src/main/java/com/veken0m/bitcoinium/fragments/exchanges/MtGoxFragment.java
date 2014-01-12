@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class MtGoxFragment extends BaseExchangeFragment {
 
+    protected static final String MTGOX = "MtGoxExchange";
+
     public MtGoxFragment() {
     }
 

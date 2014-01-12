@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class CampBXFragment extends BaseExchangeFragment {
 
+    protected static final String CAMPBX = "CampBXExchange";
+
     public CampBXFragment() {
     }
 

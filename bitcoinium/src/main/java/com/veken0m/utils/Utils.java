@@ -27,12 +27,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static android.net.ConnectivityManager.*;
-
 public class Utils {
 
     public static final LayoutParams symbolParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
-    public static final LayoutParams symbolParams2 = new LayoutParams();
 
     public static String formatDecimal(float valueToFormat,
             int numberOfDecimalPlaces, boolean useGroupings) {
@@ -174,22 +171,8 @@ public class Utils {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo wifiNetwork = cm.getNetworkInfo(TYPE_WIFI);
-        if (wifiNetwork != null && wifiNetwork.isConnected()) {
-            return true;
-        }
-
-        NetworkInfo mobileNetwork = cm.getNetworkInfo(TYPE_MOBILE);
-        if (mobileNetwork != null && mobileNetwork.isConnected()) {
-            return true;
-        }
-
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            return true;
-        }
-
-        return false;
+        return activeNetwork != null && activeNetwork.isConnected();
     }
 
     // Inserts a divider to separate rows in table

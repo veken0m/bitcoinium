@@ -19,8 +19,8 @@ import android.widget.RemoteViews;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
+import com.xeiam.xchange.AuthHelper;
 import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.bitfinex.v1.service.BitfinexAuthHelper;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
@@ -31,14 +31,13 @@ public class WidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
 
         if (REFRESH.equals(intent.getAction()))
-            setPriceWidgetAlarm(context);
+            onUpdate(context, null, null);
 
         super.onReceive(context, intent);
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setPriceWidgetAlarm(context);
     }
 
@@ -59,7 +58,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             readGeneralPreferences(this);
             notifyUserOfMilli(this);
 
-            if (widgetIds.length > 0 && (!pref_wifionly || checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
@@ -75,7 +74,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                     if(exchange.getIdentifier().equals("bitfinex")){
                         try {
-                            BitfinexAuthHelper.installCerts();
+                            AuthHelper.trustAllCerts();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -154,7 +153,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         res.getString(R.string.permPriceTitleNotif),
                         exchangeKey, pair.baseCurrency, lastString);
 
-                createPermanentNotification(this, R.drawable.bitcoin, title, msg, pairId.hashCode());
+                createPermanentNotification(this, title, msg, pairId.hashCode());
             } else {
                 removePermanentNotification(this, pairId.hashCode());
             }
@@ -195,7 +194,7 @@ public class WidgetProvider extends BaseWidgetProvider {
         }
 
         private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair, boolean bidAskSupported) {
-            if (((ticker.getHigh() == null) || pref_widgetbidask) && bidAskSupported) {
+            if (((ticker.getHigh() == null) || pref_widgetBidAsk) && bidAskSupported) {
                 setBidAsk(ticker, views, pair);
             } else {
                 setHighLow(ticker, views, pair);

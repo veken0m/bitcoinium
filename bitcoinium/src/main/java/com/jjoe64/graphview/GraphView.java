@@ -308,20 +308,20 @@ abstract public class GraphView extends LinearLayout {
         } else {
             // viewport
             List<GraphViewData> listData = new ArrayList<GraphViewData>();
-            for (int i = 0; i < values.length; i++) {
-                if (values[i].valueX >= viewportStart) {
-                    if (values[i].valueX > viewportStart + viewportSize) {
-                        listData.add(values[i]); // one more for nice scrolling
+            for (GraphViewData value : values) {
+                if (value.valueX >= viewportStart) {
+                    if (value.valueX > viewportStart + viewportSize) {
+                        listData.add(value); // one more for nice scrolling
                         break;
                     } else {
-                        listData.add(values[i]);
+                        listData.add(value);
                     }
                 } else {
                     if (listData.isEmpty()) {
-                        listData.add(values[i]);
+                        listData.add(value);
                     }
-                    listData.set(0, values[i]); // one before, for nice
-                                                // scrolling
+                    listData.set(0, value); // one before, for nice
+                    // scrolling
                 }
             }
             return listData.toArray(new GraphViewData[listData.size()]);
@@ -486,9 +486,9 @@ abstract public class GraphView extends LinearLayout {
             largest = Integer.MIN_VALUE;
             for (int i = 0; i < graphSeries.size(); i++) {
                 GraphViewData[] values = _values(i);
-                for (int ii = 0; ii < values.length; ii++)
-                    if (values[ii].valueY > largest)
-                        largest = values[ii].valueY;
+                for (GraphViewData value : values)
+                    if (value.valueY > largest)
+                        largest = value.valueY;
             }
         }
         return largest;
@@ -538,9 +538,9 @@ abstract public class GraphView extends LinearLayout {
             smallest = Integer.MAX_VALUE;
             for (int i = 0; i < graphSeries.size(); i++) {
                 GraphViewData[] values = _values(i);
-                for (int ii = 0; ii < values.length; ii++)
-                    if (values[ii].valueY < smallest)
-                        smallest = values[ii].valueY;
+                for (GraphViewData value : values)
+                    if (value.valueY < smallest)
+                        smallest = value.valueY;
             }
         }
         return smallest;

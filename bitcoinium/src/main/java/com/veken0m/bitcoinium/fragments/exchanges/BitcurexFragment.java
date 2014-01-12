@@ -11,6 +11,8 @@ import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 
 public class BitcurexFragment extends BaseExchangeFragment {
 
+    protected static final String BITCUREX = "BitcurexExchange";
+
     public BitcurexFragment() {
     }
 

@@ -2,6 +2,7 @@
 package com.veken0m.bitcoinium;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
     private static String exchangeName = null;
     private static Boolean connectionFail = true;
     private static Boolean noTradesFound = false;
-    private String xchangeExchange = null;
+    private String sExchangeClassName = null;
     private static String pref_currency = null;
     private String prefix = "mtgox";
 
@@ -79,7 +80,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
         Exchange exchange = new Exchange(this, exchangeName);
 
         exchangeName = exchange.getExchangeName();
-        xchangeExchange = exchange.getClassName();
+        sExchangeClassName = exchange.getClassName();
         String defaultCurrency = exchange.getDefaultCurrency();
         prefix = exchange.getIdentifier();
 
@@ -121,11 +122,9 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
 
         @Override
         public void run() {
-            //if (exchangeName.equalsIgnoreCase("mtgox") && pref_currency.contains("USD")) {
-            //    generateXHubPriceGraph();
-            //} else {
-                generatePriceGraph();
-            //}
+
+            generatePriceGraph();
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -165,7 +164,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
      */
     private void generatePriceGraph() {
 
-        String graphExchange = xchangeExchange;
+        String graphExchange = sExchangeClassName;
         Trades trades = null;
 
         CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
@@ -179,10 +178,8 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
         }
 
         try {
-            List<Trade> tradesList = null;
-            if (trades != null) {
-                tradesList = trades.getTrades();
-            }
+            List<Trade> tradesList = new ArrayList<Trade>();
+            if (trades != null) tradesList = trades.getTrades();
 
             float[] values = new float[tradesList.size()];
             long[] dates = new long[tradesList.size()];
@@ -263,17 +260,18 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
         try {
 
             int tradeListSize = 0;
-            if (trades != null) {
+            long baseTime = 0;
+            if (trades != null){
                 tradeListSize = trades.getPriceHistoryList().size();
+                baseTime = trades.getBaseTimestamp() * 1000;
             }
+
             float[] values = new float[tradeListSize];
             long[] dates = new long[tradeListSize];
             final GraphViewData[] data = new GraphViewData[tradeListSize];
 
             float largest = Integer.MIN_VALUE;
             float smallest = Integer.MAX_VALUE;
-
-            long baseTime = trades.getBaseTimestamp() * 1000;
 
             for (int i = 0; i < tradeListSize; i++) {
                 values[i] = trades.getPriceHistoryList().get(i).floatValue();
@@ -302,8 +300,8 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
             };
 
             double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
-            // startValue enables graph window to be aligned with latest
-            // trades
+            
+            // startValue enables graph window to be aligned with latest trades
             final double startValue = dates[dates.length - 1] - windowSize;
             graphView.addSeries(new GraphViewSeries(data));
             graphView.setViewPort(startValue, windowSize);
