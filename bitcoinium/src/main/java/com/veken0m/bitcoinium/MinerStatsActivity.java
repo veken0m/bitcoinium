@@ -1,14 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +31,14 @@ import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.utils.Utils;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 //import com.veken0m.utils.KarmaAdsUtils;
 
 public class MinerStatsActivity extends SherlockFragmentActivity {
@@ -52,11 +52,13 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     private static String pref_eligiusKey = null;
 
     private static final int MIN_KEY_LENGTH = 20;
-    
+
     private ActionBar actionbar = null;
     private Bundle extras = null;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,53 +90,53 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         // Attach all tabs
         if (extras == null)
             addTabs(actionbar);
-        
+
         setContentView(R.layout.minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
         //KarmaAdsUtils.initAd(this);
     }
-    
-    private void addTabs(ActionBar actionbar, String poolkey){
-        
+
+    private void addTabs(ActionBar actionbar, String poolkey) {
+
         actionbar.removeAllTabs();
-        
+
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BitMinter", new BitMinterFragment(), poolkey.equalsIgnoreCase("bitminter"));
-        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+        if (pref_deepbitKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "DeepBit", new DeepBitFragment(), poolkey.equalsIgnoreCase("deepbit"));
-        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+        if (pref_slushKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Slush", new SlushFragment(), poolkey.equalsIgnoreCase("slush"));
-        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+        if (pref_emcKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "EclipseMC", new EMCFragment(), poolkey.equalsIgnoreCase("eclipsemc"));
-        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+        if (pref_50BTCKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "50BTC", new FiftyBTCFragment(), poolkey.equalsIgnoreCase("50btc"));
-        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+        if (pref_btcguildKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BTC Guild", new BTCGuildFragment(), poolkey.equalsIgnoreCase("btcguild"));
-        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "Eligius", new EligiusFragment(), poolkey.equalsIgnoreCase("eligius"));   
+        if (pref_eligiusKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "Eligius", new EligiusFragment(), poolkey.equalsIgnoreCase("eligius"));
     }
-    
-    private void addTabs(ActionBar actionbar){
-        
+
+    private void addTabs(ActionBar actionbar) {
+
         actionbar.removeAllTabs();
-        
+
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BitMinter", new BitMinterFragment());
-        if (pref_deepbitKey.length() > MIN_KEY_LENGTH) 
+        if (pref_deepbitKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "DeepBit", new DeepBitFragment());
-        if (pref_slushKey.length() > MIN_KEY_LENGTH) 
+        if (pref_slushKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Slush", new SlushFragment());
-        if (pref_emcKey.length() > MIN_KEY_LENGTH) 
+        if (pref_emcKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "EclipseMC", new EMCFragment());
-        if (pref_50BTCKey.length() > MIN_KEY_LENGTH) 
+        if (pref_50BTCKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "50BTC", new FiftyBTCFragment());
-        if (pref_btcguildKey.length() > MIN_KEY_LENGTH) 
+        if (pref_btcguildKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BTC Guild", new BTCGuildFragment());
-        if (pref_eligiusKey.length() > MIN_KEY_LENGTH) 
-            addTab(actionbar, "Eligius", new EligiusFragment());   
+        if (pref_eligiusKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "Eligius", new EligiusFragment());
     }
-    
+
     public void onResume() {
         super.onResume();
 
@@ -144,26 +146,26 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
             addTabs(actionbar, poolKey);
         }
     }
-    
+
     private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment, boolean selectedTab) {
 
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab, selectedTab);
     }
-    
+
     private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
 
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab);
     }
-    
-    
+
+
     @Override
     protected void onPause() {
-       super.onPause();
-       finish();
+        super.onPause();
+        finish();
     }
 
     private boolean checkAtLeastOneKeySet() {
@@ -284,11 +286,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 try {
                     tvCurrentDifficulty.setText("\nCurrent Difficulty: "
                             + Utils.formatDecimal(
-                                    Float.valueOf(CurrentDifficulty), 0, true));
+                            Float.valueOf(CurrentDifficulty), 0, true));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextDifficulty.setText("Estimated Next Difficulty: "
                             + Utils.formatDecimal(
-                                    Float.valueOf(NextDifficulty), 0, true));
+                            Float.valueOf(NextDifficulty), 0, true));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     tvBlockCount.setText("Block count: " + BlockCount);
@@ -334,7 +336,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

@@ -179,7 +179,7 @@ public class PreferencesActivity extends PreferenceActivity {
                         clipboard.setPrimaryClip(clip);
                     }
                     Context context = getApplicationContext();
-                    if(context != null)
+                    if (context != null)
                         Toast.makeText(context, "Address copied to clipboard", Toast.LENGTH_SHORT).show();
 
                     return true;
@@ -206,7 +206,7 @@ public class PreferencesActivity extends PreferenceActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

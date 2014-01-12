@@ -9,9 +9,9 @@ public class Round_start {
     private float NMC;
 
     public Round_start(@JsonProperty("BTC")
-    float BTC,
-            @JsonProperty("NMC")
-            float NMC) {
+                       float BTC,
+                       @JsonProperty("NMC")
+                       float NMC) {
 
         this.BTC = BTC;
         this.NMC = NMC;

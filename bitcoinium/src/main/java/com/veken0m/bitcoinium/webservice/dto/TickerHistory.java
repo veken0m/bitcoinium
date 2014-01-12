@@ -1,10 +1,10 @@
 
 package com.veken0m.bitcoinium.webservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TickerHistory {
     private final ArrayList<BigDecimal> pp;
@@ -12,8 +12,8 @@ public class TickerHistory {
     private final ArrayList<BigDecimal> tt;
 
     public TickerHistory(
-            @JsonProperty("pp") ArrayList<BigDecimal> pp, 
-            @JsonProperty("t") long t, 
+            @JsonProperty("pp") ArrayList<BigDecimal> pp,
+            @JsonProperty("t") long t,
             @JsonProperty("tt") ArrayList<BigDecimal> tt) {
 
         this.pp = pp;

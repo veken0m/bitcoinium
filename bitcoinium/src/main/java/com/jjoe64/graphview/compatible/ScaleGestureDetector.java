@@ -27,7 +27,7 @@ public class ScaleGestureDetector {
      * @param simpleOnScaleGestureListener
      */
     public ScaleGestureDetector(Context context,
-            SimpleOnScaleGestureListener simpleOnScaleGestureListener) {
+                                SimpleOnScaleGestureListener simpleOnScaleGestureListener) {
         try {
             // check if class is available
             Class.forName("android.view.ScaleGestureDetector");

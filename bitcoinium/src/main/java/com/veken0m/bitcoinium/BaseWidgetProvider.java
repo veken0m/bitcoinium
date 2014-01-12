@@ -1,8 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.util.Calendar;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -24,8 +22,9 @@ import android.text.format.Time;
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.utils.Utils;
-
 import com.xeiam.xchange.currency.CurrencyPair;
+
+import java.util.Calendar;
 
 class BaseWidgetProvider extends AppWidgetProvider {
 
@@ -89,7 +88,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
                 "DEFAULT_RINGTONE_URI");
         pref_widgetBidAsk = prefs.getBoolean("bidasktogglePref", false);
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
-        
+
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
 
         // Theming preferences
@@ -201,15 +200,15 @@ class BaseWidgetProvider extends AppWidgetProvider {
 
     static Boolean checkWiFiConnected(Context ctxt) {
 
-            ConnectivityManager connMgr = (ConnectivityManager) ctxt
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        ConnectivityManager connMgr = (ConnectivityManager) ctxt
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == DetailedState.CONNECTED));
+        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == DetailedState.CONNECTED));
     }
 
     static void createNotification(Context ctxt, float last, String exchange, int NOTIFY_ID,
-            CurrencyPair pair) {
+                                   CurrencyPair pair) {
 
         String baseCurrency = pair.baseCurrency;
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);

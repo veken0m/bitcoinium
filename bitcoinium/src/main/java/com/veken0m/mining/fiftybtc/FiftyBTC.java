@@ -9,9 +9,9 @@ public class FiftyBTC {
     private final Workers workers;
 
     public FiftyBTC(@JsonProperty("user")
-    User user,
-            @JsonProperty("workers")
-            Workers workers) {
+                    User user,
+                    @JsonProperty("workers")
+                    Workers workers) {
         this.user = user;
         this.workers = workers;
     }

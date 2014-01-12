@@ -15,17 +15,17 @@ public class User {
     private final float paid_rewards_nmc;
     private final float unpaid_rewards_nmc;
     private final float past_24h_rewards_nmc;
-    
-    public User(@JsonProperty("user_id") float user_id, 
-            @JsonProperty("total_rewards") float total_rewards, 
-            @JsonProperty("paid_rewards") float paid_rewards, 
-            @JsonProperty("unpaid_rewards") float unpaid_rewards,
-            @JsonProperty("past_24h_rewards") float past_24h_rewards, 
-            @JsonProperty("total_rewards_nmc") float total_rewards_nmc, 
-            @JsonProperty("paid_rewards_nmc") float paid_rewards_nmc,
-            @JsonProperty("unpaid_rewards_nmc") float unpaid_rewards_nmc, 
-            @JsonProperty("past_24h_rewards_nmc") float past_24h_rewards_nmc) {
-        
+
+    public User(@JsonProperty("user_id") float user_id,
+                @JsonProperty("total_rewards") float total_rewards,
+                @JsonProperty("paid_rewards") float paid_rewards,
+                @JsonProperty("unpaid_rewards") float unpaid_rewards,
+                @JsonProperty("past_24h_rewards") float past_24h_rewards,
+                @JsonProperty("total_rewards_nmc") float total_rewards_nmc,
+                @JsonProperty("paid_rewards_nmc") float paid_rewards_nmc,
+                @JsonProperty("unpaid_rewards_nmc") float unpaid_rewards_nmc,
+                @JsonProperty("past_24h_rewards_nmc") float past_24h_rewards_nmc) {
+
         this.user_id = user_id;
         this.total_rewards = total_rewards;
         this.paid_rewards = paid_rewards;

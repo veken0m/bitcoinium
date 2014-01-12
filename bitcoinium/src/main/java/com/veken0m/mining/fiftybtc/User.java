@@ -11,13 +11,13 @@ public class User {
     private final float payouts;
 
     public User(@JsonProperty("active_workers")
-            int active_workers,
-            @JsonProperty("confirmed_rewards")
-            float confirmed_rewards,
-            @JsonProperty("hash_rate")
-            float hash_rate,
-            @JsonProperty("payouts")
-            float payouts) {
+                int active_workers,
+                @JsonProperty("confirmed_rewards")
+                float confirmed_rewards,
+                @JsonProperty("hash_rate")
+                float hash_rate,
+                @JsonProperty("payouts")
+                float payouts) {
         this.active_workers = active_workers;
         this.confirmed_rewards = confirmed_rewards;
         this.hash_rate = hash_rate;

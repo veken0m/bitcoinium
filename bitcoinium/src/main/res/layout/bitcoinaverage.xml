@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bitcoinaverage_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="5"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp">
+             android:id="@+id/bitcoinaverage_layout"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:stretchColumns="5"
+             android:layout_marginLeft="2dp"
+             android:layout_marginRight="2dp">
 
     <TableRow>
 
@@ -16,7 +16,7 @@
             android:background="#101010"
             android:text="@string/symbol_short"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -25,7 +25,7 @@
             android:text="@string/last"
             android:gravity="center_horizontal"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
         <!--
         <TextView
             android:layout_weight="1"
@@ -43,7 +43,7 @@
             android:text="@string/vol"
             android:gravity="center_horizontal"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -52,7 +52,7 @@
             android:text="@string/bid"
             android:gravity="center_horizontal"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -61,7 +61,7 @@
             android:gravity="center_horizontal"
             android:text="@string/ask"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
     </TableRow>
 
@@ -71,37 +71,37 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp" >
+        android:layout_marginRight="2dp">
 
         <TableLayout
             android:id="@+id/bitcoinaverage_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:showDividers="beginning"
-            android:stretchColumns="5" >
+            android:stretchColumns="5">
         </TableLayout>
     </ScrollView>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress3"
             style="?android:attr/progressBarStyleLarge"
             android:gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
         </ProgressBar>
     </LinearLayout>
-    
-<!--     <WebView
-        android:id="@+id/karma_ad"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_gravity="bottom|center_horizontal" /> -->
+
+    <!--     <WebView
+            android:id="@+id/karma_ad"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_gravity="bottom|center_horizontal" /> -->
 
 </TableLayout>

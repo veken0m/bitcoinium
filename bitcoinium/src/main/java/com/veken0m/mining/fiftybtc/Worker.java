@@ -25,27 +25,27 @@ public class Worker {
     private final String worker_name;
 
     public Worker(@JsonProperty("alive")
-    Boolean alive,
-            @JsonProperty("blocks_found")
-            float blocks_found,
-            @JsonProperty("hash_rate")
-            String hash_rate,
-            @JsonProperty("invalid")
-            float invalid,
-            @JsonProperty("last_share")
-            long last_share,
-            @JsonProperty("shares")
-            float shares,
-            @JsonProperty("stales")
-            float stales,
-            @JsonProperty("total_invalid")
-            float total_invalid,
-            @JsonProperty("total_shares")
-            float total_shares,
-            @JsonProperty("total_stales")
-            float total_stales,
-            @JsonProperty("worker_name")
-            String worker_name) {
+                  Boolean alive,
+                  @JsonProperty("blocks_found")
+                  float blocks_found,
+                  @JsonProperty("hash_rate")
+                  String hash_rate,
+                  @JsonProperty("invalid")
+                  float invalid,
+                  @JsonProperty("last_share")
+                  long last_share,
+                  @JsonProperty("shares")
+                  float shares,
+                  @JsonProperty("stales")
+                  float stales,
+                  @JsonProperty("total_invalid")
+                  float total_invalid,
+                  @JsonProperty("total_shares")
+                  float total_shares,
+                  @JsonProperty("total_stales")
+                  float total_stales,
+                  @JsonProperty("worker_name")
+                  String worker_name) {
         this.alive = alive;
         this.blocks_found = blocks_found;
         this.hash_rate = hash_rate;

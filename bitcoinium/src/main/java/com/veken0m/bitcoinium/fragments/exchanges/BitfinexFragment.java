@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xeiam.xchange.AuthHelper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.xeiam.xchange.AuthHelper;
 
 public class BitfinexFragment extends BaseExchangeFragment {
 

@@ -1,8 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +19,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BitcurexFragment;
@@ -31,7 +30,7 @@ import com.veken0m.bitcoinium.fragments.exchanges.KrakenFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
 
-import com.google.analytics.tracking.android.EasyTracker;
+import java.util.ArrayList;
 //import com.veken0m.utils.KarmaAdsUtils;
 
 
@@ -43,7 +42,9 @@ public class MainActivity extends SherlockFragmentActivity {
     private ActionBar actionbar;
     private TabsAdapter tabsAdapter;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +55,15 @@ public class MainActivity extends SherlockFragmentActivity {
 
         //KarmaAdsUtils.initAd(this);
     }
-    
+
     public void onStart() {
         super.onStart();
         selectTabViaBundle();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }
-    
+
     public void onPause() {
         super.onPause();
         // clear the extra
@@ -81,13 +82,13 @@ public class MainActivity extends SherlockFragmentActivity {
         // getIntent() should always return the most recent
         setIntent(intent);
     }
-    
-    void selectTabViaBundle(){
+
+    void selectTabViaBundle() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null) selectTab(extras.getString("exchangeKey"));
+        if (extras != null) selectTab(extras.getString("exchangeKey"));
     }
-    
-    void initTabbedActionBar(){
+
+    void initTabbedActionBar() {
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
@@ -113,23 +114,23 @@ public class MainActivity extends SherlockFragmentActivity {
         selectTab();
         actionbar.show();
     }
-    
+
     private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment, String identity) {
         ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
         tabsAdapter.addTab(tab, viewFragment, null, identity);
     }
-    
-    private void selectTab(){
+
+    private void selectTab() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
-        
+
         try {
             String preferredExchange = prefs.getString("favExchangePref", "mtgox");
             //Check if moving from integer index
-            if(preferredExchange.matches("\\d+")) {
+            if (preferredExchange.matches("\\d+")) {
                 int preferredExchangeNum = Integer.parseInt(preferredExchange);
                 actionbar.setSelectedNavigationItem(preferredExchangeNum);
-                
+
                 //Migrate to the newer tag index
                 String[] exchangeMap = getResources().getStringArray(R.array.exchangeMigration);
                 Editor editor = prefs.edit();
@@ -146,18 +147,18 @@ public class MainActivity extends SherlockFragmentActivity {
         }
     }
 
-    private void selectTab(String key){
-        try{
+    private void selectTab(String key) {
+        try {
             int tabIndex = tabsAdapter.getIndexForIdentity(key);
-            if(tabIndex >= 0)
+            if (tabIndex >= 0)
                 actionbar.setSelectedNavigationItem(tabIndex);
             else
                 actionbar.setSelectedNavigationItem(0);
-        } catch (Exception e){
+        } catch (Exception e) {
             selectTab();
         }
     }
-    
+
 
     /**
      * Obtained from: https://gist.github.com/2424383 This is a helper class
@@ -190,7 +191,7 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar,
-                ViewPager pager) {
+                           ViewPager pager) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mBar = bar;
@@ -200,7 +201,7 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,
-                Bundle args, String ident) {
+                           Bundle args, String ident) {
             TabInfo info = new TabInfo(clss, args, ident);
             tab.setTag(info);
             tab.setTabListener(this);
@@ -220,11 +221,11 @@ public class MainActivity extends SherlockFragmentActivity {
             return Fragment.instantiate(mContext, info.clss.getName(),
                     info.args);
         }
-        
+
         public int getIndexForIdentity(String identity) {
-            for(int i=0; i < mTabs.size(); i++) {
+            for (int i = 0; i < mTabs.size(); i++) {
                 TabInfo info = mTabs.get(i);
-                if(identity.equals(info.ident))
+                if (identity.equals(info.ident))
                     return i;
             }
             return -1;
@@ -232,7 +233,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
         @Override
         public void onPageScrolled(int position, float positionOffset,
-                int positionOffsetPixels) {
+                                   int positionOffsetPixels) {
         }
 
         @Override

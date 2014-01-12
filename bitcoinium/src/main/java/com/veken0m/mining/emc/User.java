@@ -12,15 +12,15 @@ public class User {
     private final float unconfirmed_rewards;
 
     public User(@JsonProperty("blocks_found")
-    long blocks_found,
-            @JsonProperty("confirmed_rewards")
-            float confirmed_rewards,
-            @JsonProperty("estimated_rewards")
-            float estimated_rewards,
-            @JsonProperty("total_payout")
-            float total_payout,
-            @JsonProperty("unconfirmed_rewards")
-            float unconfirmed_rewards) {
+                long blocks_found,
+                @JsonProperty("confirmed_rewards")
+                float confirmed_rewards,
+                @JsonProperty("estimated_rewards")
+                float estimated_rewards,
+                @JsonProperty("total_payout")
+                float total_payout,
+                @JsonProperty("unconfirmed_rewards")
+                float unconfirmed_rewards) {
         this.blocks_found = blocks_found;
         this.confirmed_rewards = confirmed_rewards;
         this.estimated_rewards = estimated_rewards;

@@ -49,7 +49,7 @@ public class GraphViewSeries {
     }
 
     public GraphViewSeries(String description, GraphViewSeriesStyle style,
-            GraphViewData[] values) {
+                           GraphViewData[] values) {
         super();
         this.description = description;
         if (style == null) {
@@ -61,7 +61,7 @@ public class GraphViewSeries {
 
     /**
      * this graphview will be redrawn if data changes
-     * 
+     *
      * @param graphView
      */
     public void addGraphView(GraphView graphView) {
@@ -70,8 +70,8 @@ public class GraphViewSeries {
 
     /**
      * add one data to current data
-     * 
-     * @param value the new data to append
+     *
+     * @param value       the new data to append
      * @param scrollToEnd true => graphview will scroll to the end (maxX)
      */
     public void appendData(GraphViewData value, boolean scrollToEnd) {
@@ -90,7 +90,7 @@ public class GraphViewSeries {
 
     /**
      * clears the current data and set the new. redraws the graphview(s)
-     * 
+     *
      * @param values new data
      */
     public void resetData(GraphViewData[] values) {

@@ -9,7 +9,7 @@ import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 
 /**
  * Line Graph View. This draws a line chart.
- * 
+ *
  * @author jjoe64 - jonas gehring - http://www.jjoe64.com Copyright (C) 2011
  *         Jonas Gehring Licensed under the GNU Lesser General Public License
  *         (LGPL) http://www.gnu.org/licenses/lgpl.html
@@ -28,9 +28,9 @@ public class LineGraphView extends GraphView {
 
     @Override
     public void drawSeries(Canvas canvas, GraphViewData[] values,
-            float graphwidth, float graphheight, float border, double minX,
-            double minY, double diffX, double diffY, float horstart,
-            GraphViewSeriesStyle style) {
+                           float graphwidth, float graphheight, float border, double minX,
+                           double minY, double diffX, double diffY, float horstart,
+                           GraphViewSeriesStyle style) {
         // draw background
         double lastEndY = 0;
         double lastEndX = 0;
@@ -107,7 +107,7 @@ public class LineGraphView extends GraphView {
 
     /**
      * @param drawBackground true for a light blue background under the graph
-     *            line
+     *                       line
      */
     public void setDrawBackground(boolean drawBackground) {
         this.drawBackground = drawBackground;

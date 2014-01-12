@@ -49,7 +49,7 @@ public class DeepBitFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -57,8 +57,8 @@ public class DeepBitFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -88,8 +88,8 @@ public class DeepBitFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
-        minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+        if (context != null)
+            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -145,7 +145,7 @@ public class DeepBitFragment extends SherlockFragment {
                         R.id.minerStatlist);
 
                 Activity activity = getActivity();
-                
+
                 TableRow tr1 = new TableRow(activity);
                 TableRow tr2 = new TableRow(activity);
                 TableRow tr3 = new TableRow(activity);

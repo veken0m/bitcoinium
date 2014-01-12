@@ -1,14 +1,6 @@
 
 package com.veken0m.bitcoinium.fragments.mining;
 
-import java.io.InputStreamReader;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -35,6 +27,14 @@ import com.veken0m.mining.btcguild.Worker;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.InputStreamReader;
+import java.util.List;
+
 public class BTCGuildFragment extends SherlockFragment {
 
     private static String pref_btcguildKey = "";
@@ -49,7 +49,7 @@ public class BTCGuildFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -89,8 +89,8 @@ public class BTCGuildFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
-        minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+        if (context != null)
+            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -118,9 +118,9 @@ public class BTCGuildFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            
+
             final Context context = getActivity();
-            
+
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "BTCGuild");

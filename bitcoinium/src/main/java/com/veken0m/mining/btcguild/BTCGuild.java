@@ -9,9 +9,9 @@ public class BTCGuild {
     private final Pool pool;
 
     public BTCGuild(@JsonProperty("user") User user,
-            @JsonProperty("workers")Workers workers, 
-            @JsonProperty("pool") Pool pool) {
-        
+                    @JsonProperty("workers") Workers workers,
+                    @JsonProperty("pool") Pool pool) {
+
         this.user = user;
         this.workers = workers;
         this.pool = pool;
@@ -24,7 +24,7 @@ public class BTCGuild {
     public Workers getWorkers() {
         return this.workers;
     }
-    
+
     public Pool getPool() {
         return this.pool;
     }

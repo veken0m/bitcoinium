@@ -11,11 +11,11 @@ public class EMC {
     private final List<Workers> workers;
 
     public EMC(@JsonProperty("apikey")
-    String apikey,
-            @JsonProperty("data")
-            Data data,
-            @JsonProperty("workers")
-            List<Workers> workers) {
+               String apikey,
+               @JsonProperty("data")
+               Data data,
+               @JsonProperty("workers")
+               List<Workers> workers) {
         this.apikey = apikey;
         this.data = data;
         this.workers = workers;

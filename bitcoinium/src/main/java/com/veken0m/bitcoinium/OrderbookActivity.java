@@ -1,9 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.io.IOException;
-import java.util.List;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,13 +30,17 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.CurrencyUtils;
-//import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
+
+import java.io.IOException;
+import java.util.List;
+
+//import com.veken0m.utils.KarmaAdsUtils;
 
 public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -69,7 +70,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         getSupportActionBar().show();
 
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if (extras != null) {
             exchange = new Exchange(this, extras.getString("exchange"));
         } else {
             // TODO: generation error message
@@ -106,7 +107,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.orderbook);
 
-        if(listAsks != null && listBids != null){
+        if (listAsks != null && listBids != null) {
             createCurrencyDropdown();
             drawOrderbookUI();
         } else {
@@ -120,7 +121,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
      */
     boolean getOrderBook() {
 
-        if(listAsks != null && listBids != null){
+        if (listAsks != null && listBids != null) {
             listAsks.clear();
             listBids.clear();
         }
@@ -136,7 +137,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             return false;
         }
 
-        if(orderbook != null){
+        if (orderbook != null) {
             // Limit OrderbookActivity orders drawn to improve performance
             int length = (orderbook.getAsks().size() < orderbook.getBids().size()) ? orderbook.getAsks().size() : orderbook.getBids().size();
             if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length)
@@ -156,7 +157,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     void drawOrderbookUI() {
 
         final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
-        if(orderbookTable != null) {
+        if (orderbookTable != null) {
 
             orderbookTable.removeAllViews();
 
@@ -202,7 +203,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 tvAskPrice.setGravity(Gravity.CENTER);
 
                 // Text coloring for depth highlighting
-                if(pref_enableHighlight){
+                if (pref_enableHighlight) {
                     int bidTextColor = depthColor(bidAmount);
                     int askTextColor = depthColor(askAmount);
                     tvBidAmount.setTextColor(bidTextColor);
@@ -213,7 +214,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
                 // Toggle background color
                 bBackGroundColor = !bBackGroundColor;
-                if(bBackGroundColor)
+                if (bBackGroundColor)
                     tr1.setBackgroundColor(Color.BLACK);
                 else
                     tr1.setBackgroundColor(Color.rgb(31, 31, 31));
@@ -232,7 +233,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     }
 
     private void viewOrderbook() {
-        if(Utils.isConnected(getApplicationContext())){
+        if (Utils.isConnected(getApplicationContext())) {
             (new OrderbookThread()).start();
         } else {
             notConnected();
@@ -250,7 +251,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 }
             });
 
-            if(getOrderBook())
+            if (getOrderBook())
                 mOrderHandler.post(mOrderView);
             else
                 mOrderHandler.post(mError);
@@ -289,7 +290,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         removeLoadingSpinner();
 
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             Resources res = getResources();
             String text = String.format(res.getString(R.string.connectionError),
@@ -302,7 +303,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         removeLoadingSpinner();
 
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
         }
@@ -311,7 +312,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private void failedToDrawUI() {
 
         removeLoadingSpinner();
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
         }
@@ -319,7 +320,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     void startLoading() {
         TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-        if(t1 != null) t1.removeAllViews();
+        if (t1 != null) t1.removeAllViews();
         LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.loadingSpinner);
         loadingSpinner.setVisibility(View.VISIBLE);
     }
@@ -350,12 +351,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     }
 
     int depthColor(float amount) {
-            if ((int) amount >= pref_highlightHigh)
-                return Color.GREEN;
-            else if ((int) amount < pref_highlightLow)
-                return Color.RED;
-            else
-                return Color.YELLOW;
+        if ((int) amount >= pref_highlightHigh)
+            return Color.GREEN;
+        else if ((int) amount < pref_highlightLow)
+            return Color.RED;
+        else
+            return Color.YELLOW;
     }
 
     private static void readPreferences(Context context) {
@@ -387,7 +388,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

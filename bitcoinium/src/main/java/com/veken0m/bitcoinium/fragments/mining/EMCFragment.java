@@ -49,7 +49,7 @@ public class EMCFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -57,8 +57,8 @@ public class EMCFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -88,7 +88,7 @@ public class EMCFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
+        if (context != null)
             minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
@@ -117,9 +117,9 @@ public class EMCFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            
+
             final Context context = getActivity();
-            
+
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "EclipseMC");

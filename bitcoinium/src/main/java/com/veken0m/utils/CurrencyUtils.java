@@ -1,10 +1,10 @@
 
 package com.veken0m.utils;
 
-import java.text.DecimalFormat;
-
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
+
+import java.text.DecimalFormat;
 
 public class CurrencyUtils {
 

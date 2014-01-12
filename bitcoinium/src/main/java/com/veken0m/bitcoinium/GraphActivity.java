@@ -1,16 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,14 +32,25 @@ import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
 import com.veken0m.utils.CurrencyUtils;
-//import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 
-public class  GraphActivity extends SherlockActivity implements OnItemSelectedListener {
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+//import com.veken0m.utils.KarmaAdsUtils;
+
+public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
 
     private static final Handler mOrderHandler = new Handler();
     private static String exchangeName = null;
@@ -261,7 +262,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
 
             int tradeListSize = 0;
             long baseTime = 0;
-            if (trades != null){
+            if (trades != null) {
                 tradeListSize = trades.getPriceHistoryList().size();
                 baseTime = trades.getBaseTimestamp() * 1000;
             }
@@ -300,7 +301,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
             };
 
             double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
-            
+
             // startValue enables graph window to be aligned with latest trades
             final double startValue = dates[dates.length - 1] - windowSize;
             graphView.addSeries(new GraphViewSeries(data));
@@ -403,7 +404,7 @@ public class  GraphActivity extends SherlockActivity implements OnItemSelectedLi
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

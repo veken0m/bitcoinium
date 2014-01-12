@@ -24,7 +24,7 @@ public class BaseExchangeFragment extends SherlockFragment {
 
     // Attaches OnClickListeners to menu buttons
     protected void buildMenu(View view, final String exchange, final Boolean graph) {
-        
+
         final Button widgetRefreshButton = (Button) view
                 .findViewById(R.id.widgetrefresh);
         widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class BaseExchangeFragment extends SherlockFragment {
                 startActivity(bitcoinChartsActivity);
             }
         });
-        
+
         final Button bitcoinAverageButton = (Button) view
                 .findViewById(R.id.bitcoinaverage);
         bitcoinAverageButton.setOnClickListener(new View.OnClickListener() {

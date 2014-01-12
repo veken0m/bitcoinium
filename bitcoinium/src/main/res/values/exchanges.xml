@@ -106,7 +106,7 @@
         <item>campbxlogo</item>
         <item>campbx</item>
         <item>false</item>
- <!-- Not implemented -->
+        <!-- Not implemented -->
         <item>true</item>
     </string-array>
     <string-array name="BTCChinaExchange">
@@ -145,7 +145,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    
+
     <!-- Dead Exchanges -->
     <string-array name="BitcoinCentralExchange">
         <item>BitcoinCentral</item>
@@ -154,7 +154,7 @@
         <item>bitcoinicon</item>
         <item>bitcoincentral</item>
         <item>true</item>
- <!-- Error 404 -->
+        <!-- Error 404 -->
         <item>false</item>
     </string-array>
     <string-array name="BitfloorExchange">
@@ -173,20 +173,20 @@
         <item>bitcoinicon</item>
         <item>bitcoin24</item>
         <item>false</item>
- <!-- Too large (contains all trades...) -->
+        <!-- Too large (contains all trades...) -->
         <item>true</item>
     </string-array>
-        <string-array name="BitcoinAverageExchange">
+    <string-array name="BitcoinAverageExchange">
         <item>BTCAvg</item>
         <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
         <item>BTC/USD</item>
         <item>bitcoinicon</item>
         <item>bitcoinaverage</item>
         <item>false</item>
- <!-- Too large (contains all trades...) -->
+        <!-- Too large (contains all trades...) -->
         <item>true</item>
     </string-array>
-    
+
 
     <!-- Arrays for MtGox Currencies -->
     <string-array name="mtgoxcurrencies">
@@ -244,18 +244,18 @@
     <string-array name="campbxcurrencies">
         <item>BTC/USD</item>
     </string-array>
-    
+
     <!-- Arrays for CampBX Currencies -->
     <string-array name="btcchinacurrencies">
         <item>BTC/CNY</item>
     </string-array>
-    
+
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="bitcurexcurrencies">
         <item>BTC/PLN</item>
         <item>BTC/EUR</item>
     </string-array>
-    
+
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="krakencurrencies">
         <item>BTC/USD</item>
@@ -284,7 +284,7 @@
     <string-array name="bitfinexcurrencies">
         <item>BTC/USD</item>
     </string-array>
-    
+
     <!-- Arrays for BitcoinAverage Currencies -->
     <string-array name="bitcoinaveragecurrencies">
         <item>BTC/USD</item>

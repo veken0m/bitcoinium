@@ -4,7 +4,7 @@ package com.veken0m.mining.btcguild;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Worker {
-    
+
     private final String worker_name;
     private final float hash_rate;
     private final float valid_shares;
@@ -24,26 +24,26 @@ public class Worker {
     private final float dupe_shares_nmc_since_reset;
     private final float unknown_shares_nmc_since_reset;
     private final float last_share;
-    
-    public Worker(@JsonProperty("worker_name") String worker_name, 
-            @JsonProperty("hash_rate") float hash_rate, 
-            @JsonProperty("valid_shares") float valid_shares, 
-            @JsonProperty("stale_shares") float stale_shares,
-            @JsonProperty("dupe_shares") float dupe_shares, 
-            @JsonProperty("unknown_shares") float unknown_shares, 
-            @JsonProperty("valid_shares_since_reset") float valid_shares_since_reset,
-            @JsonProperty("stale_shares_since_reset") float stale_shares_since_reset, 
-            @JsonProperty("dupe_shares_since_reset") float dupe_shares_since_reset,
-            @JsonProperty("unknown_shares_since_reset") float unknown_shares_since_reset, 
-            @JsonProperty("valid_shares_nmc") float valid_shares_nmc, 
-            @JsonProperty("stale_shares_nmc") float stale_shares_nmc,
-            @JsonProperty("dupe_shares_nmc") float dupe_shares_nmc, 
-            @JsonProperty("unknown_shares_nmc") float unknown_shares_nmc, 
-            @JsonProperty("valid_shares_nmc_since_reset") float valid_shares_nmc_since_reset,
-            @JsonProperty("stale_shares_nmc_since_reset") float stale_shares_nmc_since_reset, 
-            @JsonProperty("dupe_shares_nmc_since_reset") float dupe_shares_nmc_since_reset,
-            @JsonProperty("unknown_shares_nmc_since_reset") float unknown_shares_nmc_since_reset, 
-            @JsonProperty("last_share") float last_share) {
+
+    public Worker(@JsonProperty("worker_name") String worker_name,
+                  @JsonProperty("hash_rate") float hash_rate,
+                  @JsonProperty("valid_shares") float valid_shares,
+                  @JsonProperty("stale_shares") float stale_shares,
+                  @JsonProperty("dupe_shares") float dupe_shares,
+                  @JsonProperty("unknown_shares") float unknown_shares,
+                  @JsonProperty("valid_shares_since_reset") float valid_shares_since_reset,
+                  @JsonProperty("stale_shares_since_reset") float stale_shares_since_reset,
+                  @JsonProperty("dupe_shares_since_reset") float dupe_shares_since_reset,
+                  @JsonProperty("unknown_shares_since_reset") float unknown_shares_since_reset,
+                  @JsonProperty("valid_shares_nmc") float valid_shares_nmc,
+                  @JsonProperty("stale_shares_nmc") float stale_shares_nmc,
+                  @JsonProperty("dupe_shares_nmc") float dupe_shares_nmc,
+                  @JsonProperty("unknown_shares_nmc") float unknown_shares_nmc,
+                  @JsonProperty("valid_shares_nmc_since_reset") float valid_shares_nmc_since_reset,
+                  @JsonProperty("stale_shares_nmc_since_reset") float stale_shares_nmc_since_reset,
+                  @JsonProperty("dupe_shares_nmc_since_reset") float dupe_shares_nmc_since_reset,
+                  @JsonProperty("unknown_shares_nmc_since_reset") float unknown_shares_nmc_since_reset,
+                  @JsonProperty("last_share") float last_share) {
 
         this.worker_name = worker_name;
         this.hash_rate = hash_rate;

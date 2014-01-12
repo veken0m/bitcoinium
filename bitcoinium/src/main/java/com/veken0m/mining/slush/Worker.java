@@ -11,15 +11,15 @@ public class Worker {
     private final float shares;
 
     public Worker(@JsonProperty("alive")
-    Boolean alive,
-            @JsonProperty("hashrate")
-            float hashrate,
-            @JsonProperty("shares")
-            float shares,
-            @JsonProperty("score")
-            String score,
-            @JsonProperty("last_share")
-            long last_share) {
+                  Boolean alive,
+                  @JsonProperty("hashrate")
+                  float hashrate,
+                  @JsonProperty("shares")
+                  float shares,
+                  @JsonProperty("score")
+                  String score,
+                  @JsonProperty("last_share")
+                  long last_share) {
         this.alive = alive;
         this.hashrate = hashrate;
         this.last_share = last_share;

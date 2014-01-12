@@ -8,7 +8,7 @@ import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 
 /**
  * Draws a Bar Chart
- * 
+ *
  * @author Muhammad Shahab Hameed
  */
 public class BarGraphView extends GraphView {
@@ -18,9 +18,9 @@ public class BarGraphView extends GraphView {
 
     @Override
     public void drawSeries(Canvas canvas, GraphViewData[] values,
-            float graphwidth, float graphheight, float border, double minX,
-            double minY, double diffX, double diffY, float horstart,
-            GraphViewSeriesStyle style) {
+                           float graphwidth, float graphheight, float border, double minX,
+                           double minY, double diffX, double diffY, float horstart,
+                           GraphViewSeriesStyle style) {
         float colwidth = (graphwidth - (2 * border)) / values.length;
 
         paint.setStrokeWidth(style.thickness);
@@ -40,7 +40,7 @@ public class BarGraphView extends GraphView {
             canvas.drawRect((i * colwidth) + horstart, (border - y)
                     + graphheight,
                     ((i * colwidth) + horstart) + (colwidth - 1), graphheight
-                            + border - 1, paint);
+                    + border - 1, paint);
         }
     }
 }

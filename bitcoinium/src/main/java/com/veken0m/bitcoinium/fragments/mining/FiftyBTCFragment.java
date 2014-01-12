@@ -50,7 +50,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -58,8 +58,8 @@ public class FiftyBTCFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -74,7 +74,7 @@ public class FiftyBTCFragment extends SherlockFragment {
                     + pref_50BTCKey + "?text=1");
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
-            
+
             // Testing from raw resource
             //InputStream raw = getResources().openRawResource(R.raw.fiftybtc);
             //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
@@ -93,7 +93,7 @@ public class FiftyBTCFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
+        if (context != null)
             minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();

@@ -66,13 +66,13 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this,
                             appWidgetId);
 
-                   if(exchangePref == null) continue; // skip to next
+                    if (exchangePref == null) continue; // skip to next
                     Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String exchangeName = exchange.getExchangeName();
                     String exchangeKey = exchange.getIdentifier();
 
-                    if(exchange.getIdentifier().equals("bitfinex")){
+                    if (exchange.getIdentifier().equals("bitfinex")) {
                         try {
                             AuthHelper.trustAllCerts();
                         } catch (Exception e) {

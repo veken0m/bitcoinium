@@ -18,7 +18,7 @@ public class BTCEFragment extends BaseExchangeFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
         buildMenu(view, BTCE, true);

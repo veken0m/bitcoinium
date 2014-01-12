@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Exchange and Currency" 
+    <PreferenceCategory
+        android:title="Exchange and Currency"
         android:key="priceWidgetPreferences">
         <ListPreference
             android:defaultValue="MtGoxExchange"
@@ -9,77 +10,77 @@
             android:entryValues="@array/widgetexchangesvalues"
             android:key="widgetExchangesPref"
             android:summary="Select the exchange used for the widget"
-            android:title="Widget Exchange" />
+            android:title="Widget Exchange"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/mtgoxcurrencies"
             android:entryValues="@array/mtgoxcurrencies"
             android:key="mtgoxWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="MtGox Widget Currency" />
+            android:title="MtGox Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/CAD"
             android:entries="@array/virtexcurrencies"
             android:entryValues="@array/virtexcurrencies"
             android:key="virtexWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="VirtEx Widget Currency" />
+            android:title="VirtEx Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/btcecurrencies"
             android:entryValues="@array/btcecurrencies"
             android:key="btceWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="BTC-E Widget Currency" />
+            android:title="BTC-E Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/bitstampcurrencies"
             android:entryValues="@array/bitstampcurrencies"
             android:key="bitstampWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="Bitstamp Widget Currency" />
+            android:title="Bitstamp Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/campbxcurrencies"
             android:entryValues="@array/campbxcurrencies"
             android:key="campbxWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="CampBX Widget Currency" />
+            android:title="CampBX Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/CNY"
             android:entries="@array/btcchinacurrencies"
             android:entryValues="@array/btcchinacurrencies"
             android:key="btcchinaWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="BTCChina Widget Currency" />
+            android:title="BTCChina Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/PLN"
             android:entries="@array/bitcurexcurrencies"
             android:entryValues="@array/bitcurexcurrencies"
             android:key="bitcurexWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="Bitcurex Widget Currency" />
+            android:title="Bitcurex Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/EUR"
             android:entries="@array/krakencurrencies"
             android:entryValues="@array/krakencurrencies"
             android:key="krakenWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="Kraken Widget Currency" />
+            android:title="Kraken Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/bitfinexcurrencies"
             android:entryValues="@array/bitfinexcurrencies"
             android:key="bitfinexWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="Bitfinex Widget Currency" />
+            android:title="Bitfinex Widget Currency"/>
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/bitcoinaveragecurrencies"
             android:entryValues="@array/bitcoinaveragecurrencies"
             android:key="bitcoinaverageWidgetCurrencyPref"
             android:summary="Widget will be displayed in selected currency"
-            android:title="BitcoinAverage Widget Currency" />
+            android:title="BitcoinAverage Widget Currency"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

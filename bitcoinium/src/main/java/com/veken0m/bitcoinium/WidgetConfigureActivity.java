@@ -1,8 +1,6 @@
 
 package com.veken0m.bitcoinium;
 
-import java.util.HashMap;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +16,8 @@ import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+
+import java.util.HashMap;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
@@ -64,7 +64,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
             currencyPref.put("BitcoinAverage", findPreference("bitcoinaverageWidgetCurrencyPref"));
 
             // Disable all the currency pickers and enable the selected exchange
-            for (Preference value : currencyPref.values()){
+            for (Preference value : currencyPref.values()) {
                 prefCategory.removePreference(value);
             }
 
@@ -100,16 +100,16 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                             // Enable the selected exchange
                             prefCategory.addPreference(currencyPref.get(newValue
                                     .toString().replace("Exchange", "").replace("-", "")));
-                            
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return true;
                     }
                 });
-        
+
         Preference OKpref = findPreference("OKpref");
-        if(OKpref != null){
+        if (OKpref != null) {
             OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
@@ -185,7 +185,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

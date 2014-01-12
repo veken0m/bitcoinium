@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bitcoincharts_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp">
-    
+             android:id="@+id/bitcoincharts_layout"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:layout_marginLeft="2dp"
+             android:layout_marginRight="2dp">
+
     <LinearLayout
         android:id="@+id/currencyFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/currency_header"
@@ -19,13 +19,13 @@
             android:paddingRight="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/currencyPairFilter" />
+            android:text="@string/currencyPairFilter"/>
 
         <Spinner
             android:id="@+id/bitcoincharts_currency_spinner"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <TableRow>
@@ -37,7 +37,7 @@
             android:background="#101010"
             android:text="@string/symbol"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -46,7 +46,7 @@
             android:gravity="center_horizontal"
             android:text="@string/last"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
         <!--
         <TextView
             android:layout_weight="1"
@@ -64,7 +64,7 @@
             android:gravity="center_horizontal"
             android:text="@string/vol"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -73,7 +73,7 @@
             android:gravity="center_horizontal"
             android:text="@string/low"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -82,7 +82,7 @@
             android:gravity="center_horizontal"
             android:text="@string/high"
             android:textColor="#33B5E5"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <!--
         <TextView
@@ -111,37 +111,37 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp" >
+        android:layout_marginRight="2dp">
 
         <TableLayout
             android:id="@+id/bitcoincharts_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:showDividers="beginning"
-            android:stretchColumns="5" >
+            android:stretchColumns="5">
         </TableLayout>
     </ScrollView>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress3"
             style="?android:attr/progressBarStyleLarge"
             android:gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
         </ProgressBar>
     </LinearLayout>
-    
-<!--     <WebView
-        android:id="@+id/karma_ad"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_gravity="bottom|center_horizontal" /> -->
+
+    <!--     <WebView
+            android:id="@+id/karma_ad"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_gravity="bottom|center_horizontal" /> -->
 
 </TableLayout>

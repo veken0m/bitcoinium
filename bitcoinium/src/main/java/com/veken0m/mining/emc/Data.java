@@ -8,7 +8,7 @@ public class Data {
     private final User user;
 
     public Data(@JsonProperty("user")
-    User user) {
+                User user) {
         this.user = user;
     }
 

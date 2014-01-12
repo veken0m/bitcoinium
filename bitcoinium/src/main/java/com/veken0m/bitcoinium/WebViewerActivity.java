@@ -1,14 +1,14 @@
 
 package com.veken0m.bitcoinium;
 
-import android.preference.PreferenceManager;
-import android.view.ViewGroup.LayoutParams;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -29,9 +29,9 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         initTabbedActionBar();
         //KarmaAdsUtils.initAd(this);
     }
-    
-    private void initTabbedActionBar(){
-     // ActionBar gets initiated
+
+    private void initTabbedActionBar() {
+        // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -54,7 +54,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         actionbar.addTab(BitcoinityTab);
         actionbar.addTab(MtGoxLiveTab);
 
-        actionbar.show(); 
+        actionbar.show();
     }
 
     static public class BitcoiniumFragment extends WebViewSherlockFragment {
@@ -64,7 +64,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
 
             if (mWebView != null) {
                 mWebView.destroy();
@@ -92,7 +92,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
 
             if (mWebView != null) {
                 mWebView.destroy();
@@ -121,7 +121,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
 
             if (mWebView != null) {
                 mWebView.destroy();
@@ -167,7 +167,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

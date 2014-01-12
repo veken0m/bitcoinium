@@ -52,7 +52,7 @@ public class EligiusFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -60,8 +60,8 @@ public class EligiusFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -71,7 +71,7 @@ public class EligiusFragment extends SherlockFragment {
 
         try {
             HttpClient client = new DefaultHttpClient();
-            
+
             // Test key
             //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
 
@@ -81,17 +81,17 @@ public class EligiusFragment extends SherlockFragment {
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
             mapper.setSerializationInclusion(Include.NON_NULL);
-            
+
             data = mapper.readValue(new InputStreamReader(response.getEntity()
                     .getContent(), "UTF-8"), Eligius.class);
-            
-                post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
-                        + pref_eligiusKey);
-                
-                balanceData = mapper
-                        .readValue(new InputStreamReader(client.execute(post)
-                                .getEntity().getContent(), "UTF-8"),
-                                EligiusBalance.class);
+
+            post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
+                    + pref_eligiusKey);
+
+            balanceData = mapper
+                    .readValue(new InputStreamReader(client.execute(post)
+                            .getEntity().getContent(), "UTF-8"),
+                            EligiusBalance.class);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class EligiusFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
+        if (context != null)
             minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
@@ -134,9 +134,9 @@ public class EligiusFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            
+
             final Context context = getActivity();
-            
+
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "Eligius");
@@ -174,13 +174,13 @@ public class EligiusFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                
+
                 String confirmed_reward = "Confirmed Reward: ";
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 //if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                    confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit);
-                    estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit);
+                confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit);
+                estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit);
                 //} else {
                 //    confirmed_reward += "N/A";
                 //    estimated_reward += "N/A";

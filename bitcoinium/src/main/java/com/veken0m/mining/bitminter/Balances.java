@@ -9,9 +9,9 @@ public class Balances {
     private final float NMC;
 
     public Balances(@JsonProperty("BTC")
-    float BTC,
-            @JsonProperty("NMC")
-            float NMC) {
+                    float BTC,
+                    @JsonProperty("NMC")
+                    float NMC) {
 
         this.BTC = BTC;
         this.NMC = NMC;

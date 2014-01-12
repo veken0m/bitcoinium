@@ -13,17 +13,17 @@ public class Workers {
     private final String worker_name;
 
     public Workers(@JsonProperty("hash_rate")
-    String hash_rate,
-            @JsonProperty("last_activity")
-            String last_activity,
-            @JsonProperty("reset_shares")
-            float reset_shares,
-            @JsonProperty("round_shares")
-            float round_shares,
-            @JsonProperty("total_shares")
-            float total_shares,
-            @JsonProperty("worker_name")
-            String worker_name) {
+                   String hash_rate,
+                   @JsonProperty("last_activity")
+                   String last_activity,
+                   @JsonProperty("reset_shares")
+                   float reset_shares,
+                   @JsonProperty("round_shares")
+                   float round_shares,
+                   @JsonProperty("total_shares")
+                   float total_shares,
+                   @JsonProperty("worker_name")
+                   String worker_name) {
         this.hash_rate = hash_rate;
         this.last_activity = last_activity;
         this.reset_shares = reset_shares;

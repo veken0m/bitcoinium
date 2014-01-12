@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Pool {
-    
+
     private final float pool_speed;
     private final float pps_rate;
     private final float difficulty;
     private final float pps_rate_nmc;
     private final float difficulty_nmc;
 
-    public Pool(@JsonProperty("pool_speed") float pool_speed, 
-            @JsonProperty("pps_rate") float pps_rate, 
-            @JsonProperty("difficulty")  float difficulty, 
-            @JsonProperty("pps_rate_nmc")  float pps_rate_nmc,
-            @JsonProperty("difficulty_nmc")  float difficulty_nmc) {
+    public Pool(@JsonProperty("pool_speed") float pool_speed,
+                @JsonProperty("pps_rate") float pps_rate,
+                @JsonProperty("difficulty") float difficulty,
+                @JsonProperty("pps_rate_nmc") float pps_rate_nmc,
+                @JsonProperty("difficulty_nmc") float difficulty_nmc) {
 
         this.pool_speed = pool_speed;
         this.pps_rate = pps_rate;

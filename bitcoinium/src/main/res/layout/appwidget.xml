@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="140dp"
-    android:layout_height="82dp"
-    android:id="@+id/widget_layout"
-    android:background="#80000000"
-    android:padding="5dp" >
+                android:layout_width="140dp"
+                android:layout_height="82dp"
+                android:id="@+id/widget_layout"
+                android:background="#80000000"
+                android:padding="5dp">
 
     <TextView
         android:id="@+id/widgetExchange"
@@ -16,7 +16,7 @@
         android:paddingTop="1dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
-        android:textSize="11dp" >
+        android:textSize="11dp">
     </TextView>
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="@string/low"
-        android:textSize="11dp" >
+        android:textSize="11dp">
     </TextView>
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="@string/high"
-        android:textSize="11dp" >
+        android:textSize="11dp">
     </TextView>
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/last"
         android:textColor="#FDD017"
-        android:textSize="18dp" />
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/widgetVolText"
@@ -54,7 +54,7 @@
         android:layout_below="@id/widgetLastText"
         android:layout_centerHorizontal="true"
         android:text="@string/vol"
-        android:textSize="12dp" >
+        android:textSize="12dp">
     </TextView>
 
     <TextView
@@ -64,12 +64,12 @@
         android:layout_below="@id/widgetVolText"
         android:layout_centerHorizontal="true"
         android:text="@string/time"
-        android:textSize="10dp" />
+        android:textSize="10dp"/>
 
     <Button
         android:id="@+id/widgetButton"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#00000000" />
+        android:background="#00000000"/>
 
 </RelativeLayout>

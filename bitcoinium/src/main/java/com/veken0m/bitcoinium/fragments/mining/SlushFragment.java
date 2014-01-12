@@ -49,7 +49,7 @@ public class SlushFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -57,8 +57,8 @@ public class SlushFragment extends SherlockFragment {
         viewMinerStats(view);
         return view;
     }
-    
-    public void onPause(){
+
+    public void onPause() {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
@@ -74,12 +74,12 @@ public class SlushFragment extends SherlockFragment {
                             + pref_slushKey);
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
-            
+
             // Testing from raw resource
             //InputStream raw = getResources().openRawResource(R.raw.slush);
             //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
             //data = mapper.readValue(is, Slush.class);
-            
+
             data = mapper.readValue(new InputStreamReader(response.getEntity()
                     .getContent(), "UTF-8"), Slush.class);
 
@@ -95,7 +95,7 @@ public class SlushFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
+        if (context != null)
             minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
@@ -124,9 +124,9 @@ public class SlushFragment extends SherlockFragment {
             dialog.dismiss();
         }
         if (connectionFail) {
-            
+
             final Context context = getActivity();
-            
+
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "Slush");
@@ -145,7 +145,7 @@ public class SlushFragment extends SherlockFragment {
     }
 
     void drawMinerUI() {
-        
+
         View view = getView();
 
         if (view != null) {

@@ -27,7 +27,6 @@ import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-//import com.veken0m.utils.KarmaAdsUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -36,6 +35,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStreamReader;
 import java.util.List;
+
+//import com.veken0m.utils.KarmaAdsUtils;
 
 public class MinerWidgetProvider extends BaseWidgetProvider {
 
@@ -78,7 +79,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
                             appWidgetId);
 
-                    if(miningPool == null) continue; // skip to next widget
+                    if (miningPool == null) continue; // skip to next widget
 
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.minerappwidget);
                     setTapBehaviour(appWidgetId, miningPool, views);
@@ -109,7 +110,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                             views.setTextColor(R.id.refreshtime, Color.RED);
                         }
                     }
-                    if(widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
+                    if (widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
         }
@@ -272,7 +273,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     EligiusBalance.class);
 
                     btcBalance = data2.getConfirmed() / 100000000;
-                    
+
                     return true;
                 }
 

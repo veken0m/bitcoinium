@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 package com.veken0m.compatibility;
@@ -15,7 +15,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 /**
  * A fragment that displays a WebView. Modified to support SherlockActionBar
  * backwards compatibility
- * <p>
+ * <p/>
  * The WebView is automatically paused or resumed when the Fragment is paused or
  * resumed.
  */
@@ -31,7 +31,7 @@ public class WebViewSherlockFragment extends SherlockFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         if (mWebView != null) {
             mWebView.destroy();
         }

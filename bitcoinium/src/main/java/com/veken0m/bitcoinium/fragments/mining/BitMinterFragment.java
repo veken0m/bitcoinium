@@ -50,7 +50,7 @@ public class BitMinterFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -93,8 +93,8 @@ public class BitMinterFragment extends SherlockFragment {
             return;
 
         Context context = view.getContext();
-        if(context != null)
-        minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+        if (context != null)
+            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -125,21 +125,21 @@ public class BitMinterFragment extends SherlockFragment {
 
             final Context context = getActivity();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                Resources res = getResources();
-                String text = String.format(res.getString(R.string.minerConnectionError),
-                        "BitMinter");
-                builder.setMessage(text);
-                builder.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.minerConnectionError),
+                    "BitMinter");
+            builder.setMessage(text);
+            builder.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
 
-                AlertDialog alert = builder.create();
-                alert.show();
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 

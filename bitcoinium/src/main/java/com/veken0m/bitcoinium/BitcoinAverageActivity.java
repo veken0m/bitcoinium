@@ -40,7 +40,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     public BitcoinAverageActivity() {
         tickers = new ArrayList<Ticker>();
-        curr = new String[] {
+        curr = new String[]{
                 "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
                 "PLN", "RUB", "SEK", "USD", "ZAR"
         };
@@ -80,7 +80,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.bitcoinaverage);
-        if(tickers.size() > 0) drawBitcoinAverageUI();
+        if (tickers.size() > 0) drawBitcoinAverageUI();
     }
 
     /**
@@ -88,23 +88,23 @@ public class BitcoinAverageActivity extends SherlockActivity {
      */
     boolean getBitcoinAverage() {
 
-                tickers.clear();
-                PollingMarketDataService pollingService  = ExchangeFactory.INSTANCE
-                        .createExchange("com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange")
-                        .getPollingMarketDataService();
+        tickers.clear();
+        PollingMarketDataService pollingService = ExchangeFactory.INSTANCE
+                .createExchange("com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange")
+                .getPollingMarketDataService();
 
-            if(pollingService != null){
-                for (String currency : curr) {
+        if (pollingService != null) {
+            for (String currency : curr) {
 
-                        try {
-                            tickers.add(pollingService.getTicker("BTC",currency));
-                        } catch (IOException e) {
-                            // Skip ticker and keep looping
-                        }
-                 }
-            } else {
-                return false;
+                try {
+                    tickers.add(pollingService.getTicker("BTC", currency));
+                } catch (IOException e) {
+                    // Skip ticker and keep looping
+                }
             }
+        } else {
+            return false;
+        }
         return true;
     }
 
@@ -118,11 +118,11 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
         boolean bBackGroundColor = true;
 
-        if(tickers.size() > 0 && bitcoinAverageTable != null){
+        if (tickers.size() > 0 && bitcoinAverageTable != null) {
 
             // Clear table
             bitcoinAverageTable.removeAllViews();
-            
+
             // Sort Tickers by volume
             Collections.sort(tickers, new
                     Comparator<Ticker>() {
@@ -131,41 +131,41 @@ public class BitcoinAverageActivity extends SherlockActivity {
                             return entry2.getVolume().compareTo(entry1.getVolume());
                         }
                     });
-             
+
 
             for (Ticker ticker : tickers) {
 
-                    final TextView tvSymbol = new TextView(this);
-                    final TextView tvLast = new TextView(this);
-                    final TextView tvVolume = new TextView(this);
-                    final TextView tvBid = new TextView(this);
-                    final TextView tvAsk = new TextView(this);
-                    // final TextView tvAvg = new TextView(this);
+                final TextView tvSymbol = new TextView(this);
+                final TextView tvLast = new TextView(this);
+                final TextView tvVolume = new TextView(this);
+                final TextView tvBid = new TextView(this);
+                final TextView tvAsk = new TextView(this);
+                // final TextView tvAvg = new TextView(this);
 
-                    tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
-                    Utils.setTextViewParams(tvLast, ticker.getLast());
-                    Utils.setTextViewParams(tvVolume, ticker.getVolume());
-                    Utils.setTextViewParams(tvBid, ticker.getBid());
-                    Utils.setTextViewParams(tvAsk, ticker.getAsk());
-                    // Utils.setTextViewParams(tvAvg, avg);
+                tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
+                Utils.setTextViewParams(tvLast, ticker.getLast());
+                Utils.setTextViewParams(tvVolume, ticker.getVolume());
+                Utils.setTextViewParams(tvBid, ticker.getBid());
+                Utils.setTextViewParams(tvAsk, ticker.getAsk());
+                // Utils.setTextViewParams(tvAvg, avg);
 
-                    final TableRow newRow= new TableRow(this);
+                final TableRow newRow = new TableRow(this);
 
-                    // Toggle background color
-                    bBackGroundColor = !bBackGroundColor;
-                    if(bBackGroundColor)
-                        newRow.setBackgroundColor(Color.BLACK);
-                    else
-                        newRow.setBackgroundColor(Color.rgb(31, 31, 31));
+                // Toggle background color
+                bBackGroundColor = !bBackGroundColor;
+                if (bBackGroundColor)
+                    newRow.setBackgroundColor(Color.BLACK);
+                else
+                    newRow.setBackgroundColor(Color.rgb(31, 31, 31));
 
-                    newRow.addView(tvSymbol, Utils.symbolParams);
-                    newRow.addView(tvLast);
-                    newRow.addView(tvVolume);
-                    newRow.addView(tvBid);
-                    newRow.addView(tvAsk);
-                    // newRow.addView(tvAvg);
-                    newRow.setPadding(0, 3, 0, 3);
-                    bitcoinAverageTable.addView(newRow);
+                newRow.addView(tvSymbol, Utils.symbolParams);
+                newRow.addView(tvLast);
+                newRow.addView(tvVolume);
+                newRow.addView(tvBid);
+                newRow.addView(tvAsk);
+                // newRow.addView(tvAvg);
+                newRow.setPadding(0, 3, 0, 3);
+                bitcoinAverageTable.addView(newRow);
             }
         } else {
             failedToDrawUI();
@@ -174,7 +174,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     private void viewBitcoinAverage() {
 
-        if(Utils.isConnected(getApplicationContext())){
+        if (Utils.isConnected(getApplicationContext())) {
             (new bitcoinAverageThread()).start();
         } else {
             notConnected();
@@ -189,10 +189,10 @@ public class BitcoinAverageActivity extends SherlockActivity {
                 @Override
                 public void run() {
                     LinearLayout loadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-                    if(loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
+                    if (loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
                 }
             });
-            if(getBitcoinAverage())
+            if (getBitcoinAverage())
                 mOrderHandler.post(mGraphView);
             else
                 mOrderHandler.post(mError);
@@ -200,9 +200,9 @@ public class BitcoinAverageActivity extends SherlockActivity {
     }
 
     // Remove loading spinner
-    void removeLoadingSpinner(){
+    void removeLoadingSpinner() {
         LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-        if(bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
+        if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
     }
 
     private final Runnable mGraphView = new Runnable() {
@@ -223,7 +223,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
         removeLoadingSpinner();
 
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             Resources res = getResources();
             dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
@@ -234,7 +234,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
         removeLoadingSpinner();
 
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
         }
@@ -243,7 +243,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     private void failedToDrawUI() {
 
         removeLoadingSpinner();
-        if(dialog == null || !dialog.isShowing()){
+        if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
         }
@@ -252,7 +252,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }

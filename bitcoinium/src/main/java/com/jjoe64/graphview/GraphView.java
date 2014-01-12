@@ -24,7 +24,7 @@ import java.util.List;
  * {@link #drawSeries(Canvas, GraphViewData[], float, float, float, double, double, double, double, float)}
  * to display a custom graph. Use {@link LineGraphView} for creating a line
  * chart.
- * 
+ *
  * @author jjoe64 - jonas gehring - http://www.jjoe64.com Copyright (C) 2011
  *         Jonas Gehring Licensed under the GNU Lesser General Public License
  *         (LGPL) http://www.gnu.org/licenses/lgpl.html
@@ -268,7 +268,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * @param context
-     * @param title [optional]
+     * @param title   [optional]
      */
     public GraphView(Context context, String title) {
         super(context);
@@ -372,14 +372,14 @@ abstract public class GraphView extends LinearLayout {
     }
 
     abstract public void drawSeries(Canvas canvas, GraphViewData[] values,
-            float graphwidth, float graphheight, float border, double minX,
-            double minY, double diffX, double diffY, float horstart,
-            GraphViewSeriesStyle style);
+                                    float graphwidth, float graphheight, float border, double minX,
+                                    double minY, double diffX, double diffY, float horstart,
+                                    GraphViewSeriesStyle style);
 
     /**
      * formats the label can be overwritten
-     * 
-     * @param value x and y values
+     *
+     * @param value    x and y values
      * @param isValueX if false, value y wants to be formatted
      * @return value to display
      */
@@ -444,9 +444,9 @@ abstract public class GraphView extends LinearLayout {
     /**
      * returns the maximal X value of the current viewport (if viewport is set)
      * otherwise maximal X value of all data.
-     * 
+     *
      * @param ignoreViewport warning: only override this, if you really know
-     *            want you're doing!
+     *                       want you're doing!
      */
     protected double getMaxX(boolean ignoreViewport) {
         // if viewport is set, use this
@@ -497,9 +497,9 @@ abstract public class GraphView extends LinearLayout {
     /**
      * returns the minimal X value of the current viewport (if viewport is set)
      * otherwise minimal X value of all data.
-     * 
+     *
      * @param ignoreViewport warning: only override this, if you really know
-     *            want you're doing!
+     *                       want you're doing!
      */
     protected double getMinX(boolean ignoreViewport) {
         // if viewport is set, use this
@@ -585,7 +585,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * set's static horizontal labels (from left to right)
-     * 
+     *
      * @param horlabels if null, labels were generated automatically
      */
     public void setHorizontalLabels(String[] horlabels) {
@@ -604,7 +604,7 @@ abstract public class GraphView extends LinearLayout {
      * you have to set the bounds {@link #setManualYAxisBounds(double, double)}.
      * That automatically enables manualYAxis-flag. if you want to disable the
      * menual y axis, call this method with false.
-     * 
+     *
      * @param manualYAxis
      */
     public void setManualYAxis(boolean manualYAxis) {
@@ -613,7 +613,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * set manual Y axis limit
-     * 
+     *
      * @param max
      * @param min
      */
@@ -625,7 +625,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * this forces scrollable = true
-     * 
+     *
      * @param scalable
      */
     synchronized public void setScalable(boolean scalable) {
@@ -671,7 +671,7 @@ abstract public class GraphView extends LinearLayout {
      * the user can scroll (horizontal) the graph. This is only useful if you
      * use a viewport {@link #setViewPort(double, double)} which doesn't
      * displays all data.
-     * 
+     *
      * @param scrollable
      */
     public void setScrollable(boolean scrollable) {
@@ -684,7 +684,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * set's static vertical labels (from top to bottom)
-     * 
+     *
      * @param verlabels if null, labels were generated automatically
      */
     public void setVerticalLabels(String[] verlabels) {
@@ -693,7 +693,7 @@ abstract public class GraphView extends LinearLayout {
 
     /**
      * set's the viewport for the graph.
-     * 
+     *
      * @param start x-value
      * @param size
      */

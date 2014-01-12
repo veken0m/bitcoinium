@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/orderbooklayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+             android:id="@+id/orderbooklayout"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
 
     <LinearLayout
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/currency_header"
@@ -17,13 +17,13 @@
             android:paddingRight="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/currency_pair" />
+            android:text="@string/currency_pair"/>
 
         <Spinner
             android:id="@+id/orderbook_currency_spinner"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <TextView
@@ -33,7 +33,7 @@
         android:background="#101010"
         android:gravity="center_horizontal"
         android:textColor="#33B5E5"
-        android:textSize="15sp" />
+        android:textSize="15sp"/>
 
     <TableRow>
 
@@ -44,7 +44,7 @@
             android:padding="3dip"
             android:text="@string/bids"
             android:textColor="#33B5E5"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_weight="1"
@@ -53,7 +53,7 @@
             android:padding="3dip"
             android:text="@string/asks"
             android:textColor="#33B5E5"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
     </TableRow>
 
     <TableRow>
@@ -65,7 +65,7 @@
             android:gravity="center_horizontal"
             android:text="@string/price"
             android:textColor="#33B5E5"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -74,7 +74,7 @@
             android:gravity="center_horizontal"
             android:text="@string/amount"
             android:textColor="#33B5E5"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -83,7 +83,7 @@
             android:gravity="center_horizontal"
             android:text="@string/price"
             android:textColor="#33B5E5"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_height="fill_parent"
@@ -92,7 +92,7 @@
             android:gravity="center_horizontal"
             android:text="@string/amount"
             android:textColor="#33B5E5"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </TableRow>
 
     <ScrollView
@@ -101,13 +101,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp" >
+        android:layout_marginRight="2dp">
 
         <TableLayout
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="4" >
+            android:stretchColumns="4">
         </TableLayout>
     </ScrollView>
 
@@ -117,16 +117,16 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
         </ProgressBar>
     </LinearLayout>
-    
+
     <!-- <WebView
         android:id="@+id/karma_ad"
         android:layout_width="fill_parent"

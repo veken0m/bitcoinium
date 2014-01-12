@@ -18,7 +18,7 @@ public class Bitcoin24Fragment extends BaseExchangeFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
         buildMenu(view, BITCOIN24, false);

@@ -9,8 +9,8 @@ public class Work {
     private final NMC nMC;
 
     public Work(@JsonProperty("BTC")
-    BTC bTC, @JsonProperty("NMC")
-    NMC nMC) {
+                BTC bTC, @JsonProperty("NMC")
+                NMC nMC) {
 
         this.bTC = bTC;
         this.nMC = nMC;

@@ -64,7 +64,7 @@ dependencies {
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
     compile files('libs/libGoogleAnalyticsServices.jar')
 
-    if(useXChangeFromMaven){
+    if (useXChangeFromMaven) {
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-mtgox:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-cavirtex:$xchangeVersion"

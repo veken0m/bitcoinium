@@ -1,91 +1,91 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Miner Settings" >
+    <PreferenceCategory android:title="Miner Settings">
         <PreferenceScreen
             android:summary="Required to access your miner&apos;s information"
-            android:title="Miner API tokens" >
-            <PreferenceCategory android:title="Miner API Tokens" >
+            android:title="Miner API tokens">
+            <PreferenceCategory android:title="Miner API Tokens">
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="deepbitKey"
                     android:summary="Enter your Deepbit API token to use MinerStats"
-                    android:title="Deepbit API token" />
+                    android:title="Deepbit API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="bitminterKey"
                     android:summary="Enter your BitMinter API token to use MinerStats \n *NOTE* - Remember to enable API perk!"
-                    android:title="BitMinter API token" />
+                    android:title="BitMinter API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="emcKey"
                     android:summary="Enter your EclipseMC API token to use MinerStats"
-                    android:title="EclipseMC API token" />
+                    android:title="EclipseMC API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="slushKey"
                     android:summary="Enter your Slush API token to use MinerStats"
-                    android:title="Slush API token" />
+                    android:title="Slush API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="50BTCKey"
                     android:summary="Enter your 50BTC API token to use MinerStats"
-                    android:title="50BTC API token" />
+                    android:title="50BTC API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="btcguildKey"
                     android:summary="Enter your BTCGuild API token to use MinerStats"
-                    android:title="BTCGuild API token" />
+                    android:title="BTCGuild API token"/>
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="eligiusKey"
                     android:summary="Enter your Eligius BTC token to use MinerStats \n *NOTE* - The token is case sensitive!"
-                    android:title="Eligius API token (BTC Address)" />
+                    android:title="Eligius API token (BTC Address)"/>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceScreen
         android:summary="Enable notfications when total hashrate is below 0.01 Mh/s"
-        android:title="Bitcoin Miner Alert" >
-        <PreferenceCategory android:title="Miner Widget Settings" >
-            <Preference android:summary="Use Price Alarm settings to enable sound and vibration during notification" />
+        android:title="Bitcoin Miner Alert">
+        <PreferenceCategory android:title="Miner Widget Settings">
+            <Preference android:summary="Use Price Alarm settings to enable sound and vibration during notification"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="bitminterAlertPref"
-                android:title="BitMinter miner down alert" />
+                android:title="BitMinter miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="deepbitAlertPref"
-                android:title="DeepBit miner down alert" />
+                android:title="DeepBit miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="slushAlertPref"
-                android:title="Slush miner down alert" />
+                android:title="Slush miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="50btcAlertPref"
-                android:title="50BTC miner down alert" />
+                android:title="50BTC miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eclipsemcAlertPref"
-                android:title="EclipseMC miner down alert" />
+                android:title="EclipseMC miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="btcguildAlertPref"
-                android:title="BTC Guild alert miner down alert" />
+                android:title="BTC Guild alert miner down alert"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="eligiusAlertPref"
-                android:title="Eligius alert miner down alert" />
+                android:title="Eligius alert miner down alert"/>
         </PreferenceCategory>
     </PreferenceScreen>
 
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/payoutUnits"
-            android:entryValues="@array/payoutUnitsValues"
-            android:key="widgetMiningPayoutUnitPref"
-            android:summary="Select the units used to display payout"
-            android:title="Payout units" />
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/payoutUnits"
+        android:entryValues="@array/payoutUnitsValues"
+        android:key="widgetMiningPayoutUnitPref"
+        android:summary="Select the units used to display payout"
+        android:title="Payout units"/>
 
 </PreferenceScreen>
