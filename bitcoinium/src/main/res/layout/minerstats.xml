@@ -21,6 +21,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- <include layout="@xml/karma_ad"/> -->
+    <include layout="@xml/karma_ad"/>
 
 </LinearLayout>

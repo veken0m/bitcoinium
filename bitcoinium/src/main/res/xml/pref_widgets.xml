@@ -23,8 +23,9 @@
                     android:title="Refresh only on WiFi"/>
                 <CheckBoxPreference
                     android:defaultValue="false"
+                    android:enabled="false"
                     android:key="widgetTapUpdatePref"
-                    android:summary="Tapping the widget will update instead of opening app"
+                    android:summary="Tapping the widget will update instead of opening app \n*Bitcoinium Prime only*"
                     android:title="Tap to Update"/>
 
             </PreferenceCategory>

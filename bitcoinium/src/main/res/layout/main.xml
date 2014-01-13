@@ -12,6 +12,6 @@
         android:layout_height="0dip"
         />
 
-    <!-- <include layout="@xml/karma_ad"/> -->
+    <include layout="@xml/karma_ad"/>
 
 </LinearLayout>

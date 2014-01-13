@@ -11,6 +11,6 @@
         android:layout_weight="1">
     </WebView>
 
-    <!-- <include layout="@xml/karma_ad"/> -->
+    <include layout="@xml/karma_ad"/>
 
 </LinearLayout>

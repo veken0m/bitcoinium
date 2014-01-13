@@ -127,10 +127,10 @@
         </ProgressBar>
     </LinearLayout>
 
-    <!-- <WebView
+    <WebView
         android:id="@+id/karma_ad"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
-        android:layout_gravity="bottom|center_horizontal" /> -->
+        android:layout_gravity="bottom|center_horizontal" />
 
 </TableLayout>
