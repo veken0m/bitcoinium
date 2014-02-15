@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -67,7 +69,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.orderbook);
-        getSupportActionBar().show();
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.show();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -93,11 +98,18 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewOrderbook();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewOrderbook();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

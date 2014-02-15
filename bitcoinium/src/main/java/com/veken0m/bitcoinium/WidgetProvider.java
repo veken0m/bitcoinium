@@ -19,11 +19,11 @@ import android.widget.RemoteViews;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.AuthHelper;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
+import com.xeiam.xchange.utils.CertHelper;
 
 public class WidgetProvider extends BaseWidgetProvider {
 
@@ -74,7 +74,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                     if (exchange.getIdentifier().equals("bitfinex")) {
                         try {
-                            AuthHelper.trustAllCerts();
+                            CertHelper.trustAllCerts();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

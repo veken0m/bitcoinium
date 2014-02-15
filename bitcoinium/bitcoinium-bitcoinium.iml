@@ -30,10 +30,10 @@
       <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/rs/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/res/rs/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
@@ -78,6 +78,7 @@
     <orderEntry type="library" exported="" name="xchange-cavirtex-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoincharts-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="joda-money-0.9" level="project" />
+    <orderEntry type="library" exported="" name="actionbarsherlock-4.4.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-campbx-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-core-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.2.3" level="project" />
@@ -88,7 +89,6 @@
     <orderEntry type="library" exported="" name="rescu-1.5.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitstamp-2.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="ComActionbarsherlockActionbarsherlock440.aar" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
     <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />

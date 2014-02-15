@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
-import com.xeiam.xchange.AuthHelper;
+import com.xeiam.xchange.utils.CertHelper;
 
 public class BitfinexFragment extends BaseExchangeFragment {
 
@@ -24,7 +24,7 @@ public class BitfinexFragment extends BaseExchangeFragment {
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
         buildMenu(view, BITFINEX, true);
         try {
-            AuthHelper.trustAllCerts();
+            CertHelper.trustAllCerts();
         } catch (Exception e) {
             e.printStackTrace();
         }

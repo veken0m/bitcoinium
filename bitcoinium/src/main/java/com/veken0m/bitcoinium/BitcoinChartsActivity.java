@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -66,6 +67,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
         createCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
         //KarmaAdsUtils.initAd(this);
@@ -81,11 +83,18 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewBitcoinCharts();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewBitcoinCharts();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

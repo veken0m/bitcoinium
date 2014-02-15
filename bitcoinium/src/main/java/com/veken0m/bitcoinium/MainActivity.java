@@ -274,13 +274,18 @@ public class MainActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.price_alarm_preferences)
-            startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
+        switch (item.getItemId()) {
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_alarm_preferences:
+                startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

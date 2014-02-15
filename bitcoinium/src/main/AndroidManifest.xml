@@ -49,43 +49,75 @@
         </activity>
         <activity
             android:name=".OrderbookActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Orderbook">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".BitcoinChartsActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Bitcoin Charts"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".BitcoinAverageActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="BitcoinAverage.com"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".GraphActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="Price Graph">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".MinerStatsActivity"
+            android:parentActivityName=".MainActivity"
             android:label="Miner Stats"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".PreferencesActivity"
+            android:parentActivityName=".MainActivity"
             android:label="Preferences">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".PriceAlarmPreferencesActivity"
+            android:parentActivityName=".MainActivity"
             android:label="Price Alarm Settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".WebViewerActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="Web Charts">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
 
         <receiver

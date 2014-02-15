@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
         // ActionBar gets initiated and set to tabbed mode
         actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add the pools that have API keys
@@ -217,9 +219,19 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.preferences) {
-            startActivity(new Intent(this, PreferencesActivity.class));
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                // TODO: implement refresh mechanism
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

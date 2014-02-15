@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -70,6 +71,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         super.onCreate(savedInstanceState);
 
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
         Bundle extras = getIntent().getExtras();
@@ -107,14 +109,21 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences) {
-            startActivity(new Intent(this, PreferencesActivity.class));
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewGraph();
+                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+                graphLinearLayout.removeAllViews();
+                return true;
         }
-        if (item.getItemId() == R.id.action_refresh) {
-            viewGraph();
-            LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-            graphLinearLayout.removeAllViews();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

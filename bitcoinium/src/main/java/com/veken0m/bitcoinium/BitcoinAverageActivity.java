@@ -53,6 +53,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         setContentView(R.layout.bitcoinaverage);
 
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
         // KarmaAdsUtils.initAd(this);
