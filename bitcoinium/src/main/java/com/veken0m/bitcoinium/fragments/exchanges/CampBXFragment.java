@@ -8,20 +8,18 @@ import android.view.ViewGroup;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.veken0m.utils.Constants;
 
 public class CampBXFragment extends BaseExchangeFragment {
 
-    protected static final String CAMPBX = "CampBXExchange";
-
-    public CampBXFragment() {
-    }
+    public CampBXFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, CAMPBX, false);
+        buildMenu(view, Constants.CAMPBX, false);
         return view;
     }
 

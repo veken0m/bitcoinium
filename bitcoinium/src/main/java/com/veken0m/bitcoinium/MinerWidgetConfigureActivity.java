@@ -12,10 +12,10 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.utils.Constants;
 
 public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
-    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -108,7 +108,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     public void onStop() {
         super.onStop();
         Intent intent = new Intent(this, MinerWidgetProvider.class);
-        intent.setAction(REFRESH);
+        intent.setAction(Constants.REFRESH);
         this.sendBroadcast(intent);
 
         EasyTracker.getInstance(this).activityStop(this);

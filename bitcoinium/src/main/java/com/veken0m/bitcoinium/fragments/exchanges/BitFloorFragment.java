@@ -8,20 +8,18 @@ import android.view.ViewGroup;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.veken0m.utils.Constants;
 
 public class BitFloorFragment extends BaseExchangeFragment {
 
-    protected static final String BITFLOOR = "BitfloorExchange";
-
-    public BitFloorFragment() {
-    }
+    public BitFloorFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, BITFLOOR, true);
+        buildMenu(view, Constants.BITFLOOR, true);
         return view;
     }
 

@@ -8,20 +8,18 @@ import android.view.ViewGroup;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.veken0m.utils.Constants;
 
 public class BitcurexFragment extends BaseExchangeFragment {
 
-    protected static final String BITCUREX = "BitcurexExchange";
-
-    public BitcurexFragment() {
-    }
+    public BitcurexFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, BITCUREX, true);
+        buildMenu(view, Constants.BITCUREX, true);
         return view;
     }
 

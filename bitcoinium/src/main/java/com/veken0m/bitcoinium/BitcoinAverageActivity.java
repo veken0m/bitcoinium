@@ -22,6 +22,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 // import com.veken0m.utils.KarmaAdsUtils;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.dto.marketdata.Ticker;
@@ -36,15 +37,10 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     private final static Handler mOrderHandler = new Handler();
     final private ArrayList<Ticker> tickers;
-    private final String[] curr;
     private Dialog dialog = null;
 
     public BitcoinAverageActivity() {
         tickers = new ArrayList<Ticker>();
-        curr = new String[]{
-                "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
-                "PLN", "RUB", "SEK", "USD", "ZAR"
-        };
     }
 
     @Override
@@ -96,7 +92,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
                 .getPollingMarketDataService();
 
         if (pollingService != null) {
-            for (String currency : curr) {
+            for (String currency : Constants.BITCOINAVERAGE_CURRENCIES) {
 
                 try {
                     tickers.add(pollingService.getTicker("BTC", currency));

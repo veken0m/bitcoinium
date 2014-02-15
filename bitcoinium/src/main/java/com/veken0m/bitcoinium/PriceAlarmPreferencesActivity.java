@@ -7,9 +7,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.utils.Constants;
 
 public class PriceAlarmPreferencesActivity extends PreferenceActivity {
-    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class PriceAlarmPreferencesActivity extends PreferenceActivity {
 
         // Tell the widgets to update preferences
         sendBroadcast(new Intent(this,
-                WidgetProvider.class).setAction(REFRESH));
+                WidgetProvider.class).setAction(Constants.REFRESH));
 
         EasyTracker.getInstance(this).activityStop(this);
     }

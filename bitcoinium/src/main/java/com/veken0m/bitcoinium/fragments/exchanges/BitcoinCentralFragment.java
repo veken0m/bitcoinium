@@ -8,20 +8,18 @@ import android.view.ViewGroup;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.veken0m.utils.Constants;
 
 public class BitcoinCentralFragment extends BaseExchangeFragment {
 
-    protected static final String BITCOINCENTRAL = "BitcoinCentralExchange";
-
-    public BitcoinCentralFragment() {
-    }
+    public BitcoinCentralFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, BITCOINCENTRAL, true);
+        buildMenu(view, Constants.BITCOINCENTRAL, true);
         return view;
     }
 

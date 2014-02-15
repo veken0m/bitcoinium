@@ -17,16 +17,14 @@ import com.veken0m.bitcoinium.OrderbookActivity;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
+import com.veken0m.utils.Constants;
 
 public class BaseExchangeFragment extends SherlockFragment {
-
-    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
 
     // Attaches OnClickListeners to menu buttons
     protected void buildMenu(View view, final String exchange, final Boolean graph) {
 
-        final Button widgetRefreshButton = (Button) view
-                .findViewById(R.id.widgetrefresh);
+        final Button widgetRefreshButton = (Button) view.findViewById(R.id.widgetrefresh);
         widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,10 +33,10 @@ public class BaseExchangeFragment extends SherlockFragment {
 
                 Intent intent = new Intent(activity
                         .getApplicationContext(), WidgetProvider.class);
-                intent.setAction(REFRESH);
+                intent.setAction(Constants.REFRESH);
                 Intent intent2 = new Intent(activity
                         .getApplicationContext(), MinerWidgetProvider.class);
-                intent2.setAction(REFRESH);
+                intent2.setAction(Constants.REFRESH);
                 activity.sendBroadcast(intent);
                 activity.sendBroadcast(intent2);
                 activity.moveTaskToBack(true);

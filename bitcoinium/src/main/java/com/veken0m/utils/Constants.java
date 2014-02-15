@@ -16,5 +16,10 @@ public class Constants {
     public static final String CAMPBX = "CampBXExchange";
     public static final String MTGOX = "MtGoxExchange";
     public static final String VIRTEX = "VirtExExchange";
+    public static final String BTCCHINA = "BTCChinaExchange";
+
+    public static final String [] BITCOINAVERAGE_CURRENCIES = { "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK",
+            "NZD","PLN", "RUB", "SEK", "USD", "ZAR"};
+
 
 }

@@ -16,12 +16,12 @@ import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.utils.Constants;
 
 import java.util.HashMap;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
-    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
@@ -194,7 +194,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     public void onStop() {
         super.onStop();
         Intent intent = new Intent(this, WidgetProvider.class);
-        intent.setAction(REFRESH);
+        intent.setAction(Constants.REFRESH);
         this.sendBroadcast(intent);
 
         EasyTracker.getInstance(this).activityStop(this);
