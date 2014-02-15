@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="General">
+    <PreferenceCategory android:title="@string/general">
         <ListPreference
             android:defaultValue="mtgox"
             android:entries="@array/exchanges"
             android:entryValues="@array/exchangeID"
             android:key="favExchangePref"
-            android:summary="Automatically selected when Bitcoinium opens"
-            android:title="Favorite Exchange"/>
+            android:summary="@string/pref_default_exchange_summary"
+            android:title="@string/defaultExchange"/>
 
         <PreferenceScreen
-            android:summary="Default currency for OrderBook and Price Graph"
-            android:title="Default Exchange Currency">
+            android:summary="@string/pref_default_currency_summary"
+            android:title="@string/defaultExchangeCurrency">
             <ListPreference
                 android:defaultValue="BTC/USD"
                 android:entries="@array/mtgoxcurrencies"

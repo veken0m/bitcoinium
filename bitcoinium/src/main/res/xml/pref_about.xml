@@ -2,43 +2,43 @@
 
     <PreferenceCategory android:title="About">
         <PreferenceScreen
-            android:summary="Contact info, feedback and credits"
-            android:title="About Bitcoinium">
-            <PreferenceCategory android:title="About">
+            android:summary="@string/aboutSummary"
+            android:title="@string/aboutBitcoinium">
+            <PreferenceCategory android:title="@string/about">
                 <Preference
-                    android:summary="Michael Lagacé (veken0m)"
-                    android:title="Author"/>
+                    android:summary="@string/author"
+                    android:title="@string/authorText"/>
                 <Preference
                     android:key="donationAddressPref"
-                    android:summary="1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54"
-                    android:title="Bitcoin Donation Address"/>
+                    android:summary="@string/donationAddress"
+                    android:title="@string/donationAddresText"/>
                 <Preference
                     android:key="devEmailPref"
-                    android:summary="veken0m.apps@gmail.com"
-                    android:title="Email"/>
+                    android:summary="@string/emailAddress"
+                    android:title="@string/emailText"/>
                 <Preference
                     android:key="devTwitterPref"
                     android:summary=" @veken0m"
-                    android:title="Twitter"/>
+                    android:title="@string/twitterText"/>
                 <Preference
                     android:summary="@string/version_name"
-                    android:title="Version"/>
+                    android:title="@string/versionText"/>
                 <Preference
                     android:key="playstoreGithubPref"
-                    android:summary="Ratings, reviews and feedback are greatly appreciated!"
-                    android:title="Rate Bitcoinium on Play Store!"/>
+                    android:summary="@string/pref_rate_bitcoinium_summary"
+                    android:title="@string/rateBitcoinium"/>
                 <Preference
                     android:key="bitcoiniumGithubPref"
-                    android:summary="Please submit issues and feature requests here"
-                    android:title="Bitcoinium Github"/>
+                    android:summary="@string/submit_feature_request"
+                    android:title="@string/bitcoiniumGithubText"/>
                 <Preference
-                    android:key="@string/xchangeGithub"
-                    android:summary="A Financial Exchange Library for Java, with support for Bitcoin"
-                    android:title="XChange Github"/>
+                    android:key="xchangeGithubPref"
+                    android:summary="@string/xchangeSummary"
+                    android:title="@string/xchangeGithubText"/>
                 <CheckBoxPreference
                     android:key="googleAnalyticsPref"
-                    android:summary="Provide anonymous data in order to help the developers improve Bitcoinium"
-                    android:title="Opt-in Google Analytics"
+                    android:summary="@string/pref_google_analytics_summary"
+                    android:title="@string/optGoogleAnalytics"
                     android:defaultValue="false"/>
             </PreferenceCategory>
         </PreferenceScreen>

@@ -23,17 +23,6 @@
     <string name="hashrate">Hashrate</string>
     <string name="payout">Payout</string>
 
-    <!-- Miscellaneous -->
-    <string name="currency_pair">Currency Pair</string>
-    <string name="bids">Bids</string>
-    <string name="asks">Asks</string>
-    <string name="price">Price</string>
-    <string name="amount">Amount</string>
-    <string name="bid">Bid</string>
-    <string name="ask">Ask</string>
-    <string name="orderbook">Orderbook</string>
-    <string name="trades">Trades</string>
-
     <!-- Main Menu Button Strings -->
     <string name="refreshButton">Update Widget(s)</string>
     <string name="orderbookButton">OrderBook</string>
@@ -42,6 +31,7 @@
     <string name="minerstatsButton">Miner Stats</string>
     <string name="graphButton">Price Graph</string>
     <string name="exgraphButton">Web Charts</string>
+
 
     <!-- Error Messages -->
     <string name="connectionError">Could not retrieve %1$s from %2$s.\n\nIs %2$s down?</string>
@@ -64,11 +54,191 @@
     <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
     <string name="twitterAddress">http://twitter.com/veken0m</string>
     <string name="emailAddress">veken0m.apps@gmail.com</string>
+    <string name="author">Michael Lagacé (veken0m)</string>
+
+    <!-- Preferences -->
+    <string name="pref_currency_summary">Select the exchange used for the widget</string>
+    <string name="pref_exchange_summary">Widget will be displayed in selected currency</string>
+    <string name="pref_price_widget_title">Exchange and Currency</string>
+    <string name="pref_price_alarm_summary">Notifies when price crosses threshold \n*Note*: Respective widget needs to be active</string>
+    <string name="pref_price_alarm_title">Price Alarm Notifications</string>
+    <string name="pref_enable_alarm_summary">Enable notifications when price alarm is tripped (widget needs to be active)</string>
+    <string name="pref_enable_alarm_title">Enable Price Alarm</string>
+    <string name="pref_alarm_vibrate_summary">Vibrate when price alarm is tripped</string>
+    <string name="pref_alarm_sound_summary">Play a sound when price alarm is tripped</string>
+    <string name="pref_alarm_sound_pick_summary">Pick the sound to be played</string>
+    <string name="pref_alarm_hardcore_summary">Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing until shut off</string>
+    <string name="pref_orderbook_limit_title">OrderBook list length limit</string>
+    <string name="pref_orderbook_limit_summary">Limit values printed on screen to improve performance</string>
+    <string name="pref_liquidity_highlight_summary">Color of text depends on depth</string>
+    <string name="pref_highlight_green">Text will be colored GREEN if depth over this value</string>
+    <string name="pref_highlight_yellow">Text will be colored YELLOW if depth is in between</string>
+    <string name="pref_highlight_red">Text will be colored RED if depth under this value</string>
+    <string name="pref_orderbook_currency_symbol_summary">Display currency symbols in the orderbook. \nDisable if text does not fit.</string>
+    <string name="pref_notification_ticker_summary">Enable tickers in the notification drawer \n*Note*: Respective widget needs to be active</string>
+    <string name="pref_notification_ticker_enable_summary">Enables use of notification drawer tickers</string>
+    <string name="pref_miner_info_summary">Required to access your miner\'s information</string>
+    <string name="pref_hashrate_notification_summary">Enable notfications when total hashrate is below 0.01 Mh/s</string>
+    <string name="pref_update_time_color_fail_summary">Color of the update time if failed</string>
+    <string name="pref_update_time_color_success_summary">Color of the update time if successful</string>
+    <string name="pref_background_wiget_color_summary">Color for widget background</string>
+    <string name="pref_widget_second_color_summary">Color for High, Low and Volume text</string>
+    <string name="pref_widget_main_color_summary">Color for Exchange name and Last Price text</string>
+    <string name="pref_milli_btc_summary">Changes all BTC widget prices to mBTC. \nEx: $1010.00 will show as $1.010 \nDoes not affect other crypto-currencies</string>
+    <string name="pref_tap_refresh_summary">Tapping the widget will update instead of opening app</string>
+    <string name="pref_refresh_interval_summary">Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain</string>
+    <string name="pref_miner_widget_alarm_summary">Use Price Alarm settings to enable sound and vibration during notification</string>
+    <string name="pref_default_exchange_summary">Automatically selected when Bitcoinium opens</string>
+    <string name="pref_default_currency_summary">Default currency for OrderBook and Price Graph</string>
+    <string name="pref_google_analytics_summary">Provide anonymous data in order to help the developers improve Bitcoinium</string>
+    <string name="pref_graph_scale_summary">When the price graph is scrolled, max and min values will be readjusted to maximize viewing</string>
+    <string name="pref_battery_saving_mode_summary">Disable updates when device is sleeping</string>
+    <string name="pref_widget_config_summary">Various display and power saving settings</string>
+    <string name="pref_bid_ask_replace_summary">Replace High/Low with Bid/Ask if supported by exchange</string>
+    <string name="pref_rate_bitcoinium_summary">Ratings, reviews and feedback are greatly appreciated!</string>
+    <string name="pref_widget_theme_summary">Put the theme into effect</string>
+    <string name="pref_select_mining_pool_summary">Select the mining pool used for the widget</string>
+    <string name="pref_payout_unit_summary">Select the units used to display payout</string>
+
+    <string name="hardcoreMode">*Hardcore Mode*</string>
+    <string name="msgEnterUnscaledValues">Please enter UNSCALED values\nFor example, enter BTC not mBTC</string>
+    <string name="alarmSettings">Alarm Settings</string>
+    <string name="displayCurrencySymbols">Display Currency Symbols</string>
+    <string name="enableLiquidityHighlighting">Enable Liquidity Highlighting</string>
+    <string name="notificationAreaTickers">Notification Area Tickers</string>
+    <string name="notificationDrawerTickers">Notification Drawer Tickers</string>
+    <string name="enableTickers">Enable Tickers</string>
+    <string name="miningWidget">Mining Widget</string>
+    <string name="miningPool">Mining Pool</string>
+    <string name="payoutUnits">Payout units</string>
+    <string name="minerApiTokens">Miner API Tokens</string>
+    <string name="bitcoinMinerAlert">Bitcoin Miner Alert</string>
+    <string name="minerWidgetSettings">Miner Widget Settings</string>
+    <string name="general">General</string>
+    <string name="defaultExchange">Favorite Exchange</string>
+    <string name="defaultExchangeCurrency">Default Exchange Currency</string>
+    <string name="optGoogleAnalytics">Opt-in Google Analytics</string>
+    <string name="xchangeSummary">A Financial Exchange Library for Java, with support for Bitcoin</string>
+    <string name="xchangeGithubText">XChange Github</string>
+    <string name="bitcoiniumGithubText">Bitcoinium Github</string>
+    <string name="submit_feature_request">Please submit issues and feature requests here</string>
+    <string name="rateBitcoinium">Rate Bitcoinium on Play Store!</string>
+    <string name="aboutSummary">Contact info, feedback and repositories</string>
+    <string name="donationAddresText">Bitcoin Donation Address</string>
+    <string name="createWidget">Create Widget</string>
+    <string name="priceGraphSettings">Price Graph Settings</string>
+    <string name="viewWindowScaling">View Window Scaling</string>
+    <string name="widgetConfiguration">Widget Configuration (applies to all)</string>
+    <string name="widgetConfigurationText">Widget Configuration</string>
+    <string name="bidAskOnWidget">Bid/Ask on Widget</string>
+    <string name="displayMilliBtc">Display Bitcoin prices in mBTC</string>
+    <string name="disableUpdatesMobile">Disable updates on mobile connection</string>
+    <string name="refreshOnlyWifi">Refresh only on WiFi</string>
+    <string name="tapToUpdate">Tap to Update</string>
+    <string name="powerSaving">Power Saving</string>
+    <string name="widgetUpdateInterval">Widget Update Interval</string>
+    <string name="batterySavingMode">Battery Saving Mode</string>
+    <string name="customizeWidget">Customize Widget</string>
+    <string name="enableCustomization">Enable Customization</string>
+    <string name="mainWidgetColor">Main Text Color</string>
+    <string name="secondaryWidgetColor">Secondary Text Color</string>
+    <string name="backgroundWidgetColor">Background Color</string>
+    <string name="updateTimeColorSuccess">Update Time Color (Success)</string>
+    <string name="updateTimeColorFail">Update Time Color (Failed)</string>
+
+    <!-- Miscellaneous -->
+    <string name="currency_pair">Currency Pair</string>
+    <string name="bids">Bids</string>
+    <string name="asks">Asks</string>
+    <string name="price">Price</string>
+    <string name="amount">Amount</string>
+    <string name="bid">Bid</string>
+    <string name="ask">Ask</string>
+    <string name="orderbook">Orderbook</string>
+    <string name="trades">Trades</string>
+    <string name="OK">OK</string>
+    <string name="widgetCurrency">Widget Currency</string>
+
+    <string name="authorText">Author</string>
+    <string name="aboutBitcoinium">About Bitcoinium</string>
+    <string name="about">About</string>
+    <string name="emailText">Email</string>
+    <string name="twitterText">Twitter</string>
+    <string name="versionText">Version</string>
+    <string name="vibration">Vibration</string>
+    <string name="sound">Sound</string>
+    <string name="selectSound">Select Sound</string>
+    <string name="highDepth">High Depth</string>
+    <string name="mediumDepth">Medium Depth</string>
+    <string name="lowDepth">Low Depth</string>
+    <string name="liquidityHighlighting">Liquidity Highlighting</string>
     <string name="symbol">Symbol</string>
     <string name="priceAlarm">Price Alarms</string>
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>
     <string name="symbol_short">Sym.</string>
     <string name="currencyPairFilter">Currency Pair Filter</string>
+
+    <string name="pref_alarm_mtgox_over_summary">Notification will occur if MtGox price goes over this threshold</string>
+    <string name="pref_alarm_mtgox_under_summary">Notification will occur if MtGox price goes under this threshold</string>
+    <string name="pref_alarm_virtex_over_summary">Notification will occur if VirtEx price goes over this threshold</string>
+    <string name="pref_alarm_virtex_under_summary">Notification will occur if VirtEx price goes under this threshold</string>
+    <string name="pref_alarm_bitstamp_over_summary">Notification will occur if Bitstamp price goes over this threshold</string>
+    <string name="pref_alarm_bitstamp_under_summary">Notification will occur if Bitstamp price goes under this threshold</string>
+    <string name="pref_alarm_btce_over_summary">Notification will occur if BTC-E price goes over this threshold</string>
+    <string name="pref_alarm_btce_under_summary">Notification will occur if BTC-E price goes under this threshold</string>
+    <string name="pref_alarm_campbx_over_summary">Notification will occur if CampBx price goes over this threshold</string>
+    <string name="pref_alarm_campbx_under_summary">Notification will occur if CampBx price goes under this threshold</string>
+    <string name="pref_alarm_bitcurex_over_summary">Notification will occur if Bitcurex price goes over this threshold</string>
+    <string name="pref_alarm_bitcurex_under_summary">Notification will occur if Bitcurex price goes under this threshold</string>
+    <string name="pref_alarm_btcchina_over_summary">Notification will occur if BTCChina price goes over this threshold</string>
+    <string name="pref_alarm_btcchina_under_summary">Notification will occur if BTCChina price goes under this threshold</string>
+    <string name="pref_alarm_bitfinex_over_summary">Notification will occur if Bitfinex price goes over this threshold</string>
+    <string name="pref_alarm_bitfinex_under_summary">Notification will occur if Bitfinex price goes under this threshold</string>
+    <string name="pref_alarm_bitcoinaverage_over_summary">Notification will occur if BitcoinAverage price goes over this threshold</string>
+    <string name="pref_alarm_bitcoinaverage_under_summary">Notification will occur if BitcoinAverage price goes under this threshold</string>
+    <string name="pref_alarm_kraken_over_summary">Notification will occur if Kraken price goes over this threshold</string>
+    <string name="pref_alarm_kraken_under_summary">Notification will occur if Kraken price goes under this threshold</string>
+
+    <string name="mtgoxAlarmThresholds">MtGox alarm thresholds</string>
+    <string name="virtexAlarmThresholds">VirtEx alarm thresholds</string>
+    <string name="btceAlarmThresholds">BTC-E alarm thresholds</string>
+    <string name="bitstampAlarmThresholds">Bitstamp alarm thresholds</string>
+    <string name="campbxAlarmThresholds">CampBX alarm thresholds</string>
+    <string name="btcchinaAlarmThresholds">BTC China alarm thresholds</string>
+    <string name="bitcurexAlarmThresholds">Bitcurex alarm thresholds</string>
+    <string name="krakenAlarmThresholds">Kraken alarm thresholds</string>
+    <string name="bitfinexAlarmThresholds">Bitfinex alarm thresholds</string>
+    <string name="bitcoinaverageAlarmThresholds">BitcoinAverage alarm thresholds</string>
+
+    <string name="mtgoxTickers">MtGox Tickers</string>
+    <string name="btceTickers">BTC-E Tickers</string>
+    <string name="bitcurexTickers">Bitcurex Tickers</string>
+    <string name="krakenTickers">Kraken Tickers</string>
+    <string name="bitcoinaverageTickers">BitcoinAverage Tickers</string>
+    <string name="noInternetConnection">No internet connection available</string>
+    <string name="internetConnection">Internet Connection</string>
+    <string name="error">Error</string>
+    <string name="errBitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>
+    <string name="noTradesFound">No recent trades found for this currency. Please try again later.</string>
+    <string name="enterAPIToken">Please enter at least one API Token to use Miner Stats</string>
+    <string name="currentDifficulty">
+Current Difficulty: </string>
+    <string name="estimatedNextDifficulty">Estimated Next Difficulty: </string>
+    <string name="blockCount">Block count: </string>
+    <string name="nextRetarget">Next retarget in %1$s blocks\n</string>
+    <string name="updateShort">Upd. @ </string>
+    <string name="sendEmail">Send email</string>
+    <string name="feedback"> Feedback</string>
+    <string name="donationAddressText">Donation Address</string>
+    <string name="addressCopiedToClipboard">Address copied to clipboard</string>
+    <string name="milliBtcNotice">*NOTICE* - Widgets now display mBTC by default!</string>
+    <string name="millioBtcNoticeInfo">Change back to BTC in the Preferences</string>
+    <string name="mtcByDefault">Widgets in mBTC by default!</string>
+    <string name="updatedAt">Updated @ </string>
+    <string name="volume">Volume: </string>
+    <string name="notAvailable">N/A</string>
+    <string name="priceGraphNotSupported">This exchange does not currently support Price Graph</string>
+
 
 </resources>

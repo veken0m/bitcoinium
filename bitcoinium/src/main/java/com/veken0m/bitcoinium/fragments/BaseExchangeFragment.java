@@ -51,7 +51,7 @@ public class BaseExchangeFragment extends SherlockFragment {
                 if (!graph) {
                     Toast.makeText(
                             getActivity(),
-                            "This exchange does not currently support Price Graph",
+                            getString(R.string.priceGraphNotSupported),
                             Toast.LENGTH_LONG).show();
                 } else {
                     Intent graphActivity = new Intent(getActivity()

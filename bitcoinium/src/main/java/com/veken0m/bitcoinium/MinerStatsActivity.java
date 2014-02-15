@@ -77,7 +77,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
             // If not API token set, switch to Preferences and ask User to enter
             // one
             int duration = Toast.LENGTH_LONG;
-            CharSequence text = "Please enter at least one API Token to use Miner Stats";
+            CharSequence text = getString(R.string.enterAPIToken);
 
             Toast toast = Toast.makeText(this, text, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -296,21 +296,19 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 TextView tvNextRetarget = new TextView(getBaseContext());
 
                 try {
-                    tvCurrentDifficulty.setText("\nCurrent Difficulty: "
+                    tvCurrentDifficulty.setText(getString(R.string.currentDifficulty)
                             + Utils.formatDecimal(
                             Float.valueOf(CurrentDifficulty), 0, true));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tvNextDifficulty.setText("Estimated Next Difficulty: "
+                    tvNextDifficulty.setText(getString(R.string.estimatedNextDifficulty)
                             + Utils.formatDecimal(
                             Float.valueOf(NextDifficulty), 0, true));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                    tvBlockCount.setText("Block count: " + BlockCount);
+                    tvBlockCount.setText(getString(R.string.blockCount) + BlockCount);
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                    tvNextRetarget.setText("Next retarget in "
-                            + (Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount))
-                            + " blocks\n");
+                    tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount)));
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     if (Float.valueOf(NextDifficulty) < Float

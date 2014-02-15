@@ -157,7 +157,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 graphLinearLayout.addView(graphView);
 
             } else if (noTradesFound) {
-                createPopup("No recent trades found for this currency. Please try again later.");
+                createPopup(getString(R.string.noTradesFound));
             } else {
                 Resources res = getResources();
                 String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
@@ -335,7 +335,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     private void createPopup(String pMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(pMessage);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();

@@ -106,7 +106,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         String lastString = Utils.formatWidgetMoney(lastFloat, pair, true,
                                 pref_pricesInMilliBtc);
 
-                        String volumeString = "N/A";
+                        String volumeString = getString(R.string.notAvailable);
 
                         //TODO: Return null volume in XChange for Bitfinex
                         if (!(ticker.getVolume() == null) && !exchangeKey.equals("bitfinex"))
@@ -116,8 +116,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         views.setTextViewText(R.id.widgetExchange, exchangeName);
                         views.setTextViewText(R.id.widgetLastText, lastString);
-                        views.setTextViewText(R.id.widgetVolText, "Volume: " + volumeString);
-                        views.setTextViewText(R.id.label, "Updated @ " + Utils.getCurrentTime(this));
+                        views.setTextViewText(R.id.widgetVolText, getString(R.string.volume) + volumeString);
+                        views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
                         updateWidgetTheme(views);
 
                         checkAlarm(pair, pairId, lastFloat, exchangeName, exchangeKey);
@@ -322,14 +322,14 @@ public class WidgetProvider extends BaseWidgetProvider {
                         .getSystemService(Context.NOTIFICATION_SERVICE);
                 long when = System.currentTimeMillis();
                 //Resources res = getResources();
-                String tickerText = "*NOTICE* - Widgets now display mBTC by default!";
-                String notifText = "Change back to BTC in the Preferences";
+                String tickerText = ctxt.getString(R.string.milliBtcNotice);
+                String notifText = ctxt.getString(R.string.millioBtcNoticeInfo);
                 Notification notif = new Notification(R.drawable.bitcoin, tickerText, when);
 
                 Intent notifIntent = new Intent(ctxt, PreferencesActivity.class);
                 PendingIntent contentIntent = PendingIntent.getActivity(ctxt, 0, notifIntent, 0);
 
-                notif.setLatestEventInfo(ctxt, "Widgets in mBTC by default!", notifText,
+                notif.setLatestEventInfo(ctxt, ctxt.getString(R.string.mtcByDefault), notifText,
                         contentIntent);
                 notif.defaults |= Notification.DEFAULT_VIBRATE;
 

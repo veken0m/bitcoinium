@@ -14,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
+import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 
@@ -128,13 +129,7 @@ public class Utils {
 
     public static void setTextViewParams(TextView tv, BigMoney value) {
 
-        LayoutParams params = new TableRow.LayoutParams(
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-
-        tv.setText(Utils.formatDecimal(value.getAmount()));
-        tv.setLayoutParams(params);
-        tv.setGravity(1);
+        setTextViewParams(tv, value.getAmount());
     }
 
     public static String formatHashrate(float hashRate) {
@@ -151,7 +146,7 @@ public class Utils {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg).setTitle(title);
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton(R.string.OK, null);
         builder.show();
 
         return builder.create();
@@ -161,7 +156,7 @@ public class Utils {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg);
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton(R.string.OK, null);
         builder.show();
 
         return builder.create();

@@ -317,7 +317,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
-            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
+            dialog = Utils.errorDialog(this, getString(R.string.noInternetConnection), getString(R.string.internetConnection));
         }
     }
 
@@ -326,7 +326,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         removeLoadingSpinner();
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
-            dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
+            dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
         }
     }
 

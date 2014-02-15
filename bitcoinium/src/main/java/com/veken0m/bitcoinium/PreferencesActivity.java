@@ -63,8 +63,8 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
                             i.putExtra(Intent.EXTRA_EMAIL, res.getString(R.string.emailAddress));
-                            i.putExtra(Intent.EXTRA_SUBJECT, res.getString(R.string.app_name) + " Feedback");
-                            startActivity(Intent.createChooser(i, "Send email"));
+                            i.putExtra(Intent.EXTRA_SUBJECT, res.getString(R.string.app_name) + getString(R.string.feedback));
+                            startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
 
                             return true;
                         }
@@ -188,11 +188,11 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                         clipboard.setText(donationAddress);
                     } else {
                         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Donation Address", donationAddress));
+                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
                     }
                     Context context = getApplicationContext();
                     if (context != null)
-                        Toast.makeText(context, "Address copied to clipboard", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
 
                     return true;
                 }

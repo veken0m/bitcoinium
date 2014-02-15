@@ -1,10 +1,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Price Alarm">
+    <PreferenceCategory android:title="@string/priceAlarm">
         <Preference
             android:key="alarmSettingsPref"
-            android:summary="Notifies when price crosses threshold \n*Note*: Respective widget needs to be active"
-            android:title="Price Alarm Notifications">
+            android:summary="@string/pref_price_alarm_summary"
+            android:title="@string/pref_price_alarm_title">
         </Preference>
     </PreferenceCategory>
 
