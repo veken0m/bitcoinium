@@ -3,11 +3,11 @@
     <item
         android:id="@+id/action_alarm_preferences"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/action_alarms"
+        android:icon="@drawable/perm_group_device_alarms"
         android:title="@string/priceAlarm"/>
     <item
         android:id="@+id/action_preferences"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/action_settings"
+        android:icon="@drawable/perm_group_system_tools"
         android:title="@string/settings"/>
 </menu>

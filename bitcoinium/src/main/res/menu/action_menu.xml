@@ -4,12 +4,12 @@
     <!-- android:icon="@drawable/ic_menu_refresh" -->
     <item
         android:id="@+id/action_preferences"
-        android:icon="@drawable/action_settings"
+        android:icon="@drawable/perm_group_system_tools"
         android:showAsAction="ifRoom"
         android:title="@string/settings"/>
     <item
         android:id="@+id/action_refresh"
-        android:icon="@drawable/navigation_refresh"
+        android:icon="@drawable/perm_group_sync_settings"
         android:showAsAction="ifRoom"
         android:title="@string/refresh"/>
 
