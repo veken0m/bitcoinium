@@ -3,16 +3,16 @@
 
     <!-- Arrays for Prefered Exchange preferences -->
     <string-array name="exchanges">
-        <item>MtGox</item>
+        <item>BitcoinAverage</item>
+        <item>Bitstamp</item>
+        <item>Kraken</item>
         <item>VirtEx</item>
         <item>BTC-E</item>
-        <item>Bitstamp</item>
         <item>CampBX</item>
         <item>BTCChina</item>
         <item>Bitcurex</item>
-        <item>Kraken</item>
         <item>Bitfinex</item>
-        <item>BitcoinAverage</item>
+        <item>MtGox</item>
         <!--
         <item>BitcoinCentral</item> 
         <item>Bitfloor</item> 
@@ -20,16 +20,16 @@
         -->
     </string-array>
     <string-array name="exchangeID">
-        <item>mtgox</item>
+        <item>bitcoinaverage</item>
+        <item>bitstamp</item>
+        <item>kraken</item>
         <item>virtex</item>
         <item>btce</item>
-        <item>bitstamp</item>
         <item>campbx</item>
         <item>btcchina</item>
         <item>bitcurex</item>
-        <item>kraken</item>
         <item>bitfinex</item>
-        <item>bitcoinaverage</item>
+        <item>mtgox</item>
         <!-- <item>bitcoincentral</item>
         <item>bitfloor</item>
         <item>bitcoin24</item>-->
@@ -37,16 +37,16 @@
 
     <!-- Array for Widget Exchange preferences -->
     <string-array name="widgetexchangesvalues">
-        <item>MtGoxExchange</item>
+        <item>BitcoinAverageExchange</item>
+        <item>BitstampExchange</item>
+        <item>KrakenExchange</item>
         <item>VirtExExchange</item>
         <item>BTCEExchange</item>
-        <item>BitstampExchange</item>
         <item>CampBXExchange</item>
         <item>BTCChinaExchange</item>
         <item>BitcurexExchange</item>
-        <item>KrakenExchange</item>
         <item>BitfinexExchange</item>
-        <item>BitcoinAverageExchange</item>
+        <item>MtGoxExchange</item>
         <!--<item>BitcoinCentralExchange</item> 
          <item>BitfloorExchange</item> 
         <item>Bitcoin24Exchange</item> -->

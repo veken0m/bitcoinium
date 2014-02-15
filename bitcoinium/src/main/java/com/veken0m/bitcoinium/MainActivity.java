@@ -101,15 +101,15 @@ public class MainActivity extends SherlockFragmentActivity {
 
         // Create the actionbar tabs
         tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
+        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class, "bitstamp");
+        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
         addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class, "virtex");
         addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class, "btce");
-        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class, "bitstamp");
+        addTab(actionbar, tabsAdapter, R.drawable.bitfinexlogo, BitfinexFragment.class, "bitfinex");
         addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class, "campbx");
         addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class, "btcchina");
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
-        addTab(actionbar, tabsAdapter, R.drawable.bitfinexlogo, BitfinexFragment.class, "bitfinex");
-        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
+        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
 
         selectTab();
         actionbar.show();
@@ -125,7 +125,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 .getDefaultSharedPreferences(this);
 
         try {
-            String preferredExchange = prefs.getString("favExchangePref", "mtgox");
+            String preferredExchange = prefs.getString("favExchangePref", "bitstamp");
             //Check if moving from integer index
             if (preferredExchange.matches("\\d+")) {
                 int preferredExchangeNum = Integer.parseInt(preferredExchange);
@@ -142,7 +142,7 @@ public class MainActivity extends SherlockFragmentActivity {
         } catch (Exception e) {
             // If preference is not set a valid integer set to "0"
             Editor editor = prefs.edit();
-            editor.putString("favExchangePref", "mtgox");
+            editor.putString("favExchangePref", "bitstamp");
             editor.commit();
         }
     }
