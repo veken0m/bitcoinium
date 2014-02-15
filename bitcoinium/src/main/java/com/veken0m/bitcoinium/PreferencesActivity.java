@@ -9,16 +9,19 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.utils.Constants;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class PreferencesActivity extends PreferenceActivity {
-    private static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+public class PreferencesActivity extends SherlockPreferenceActivity {
 
     @SuppressWarnings("deprecation")
     @Override
@@ -43,6 +46,11 @@ public class PreferencesActivity extends PreferenceActivity {
         Preference alarmSettings = findPreference("alarmSettingsPref");
         Preference donationAddressPref = findPreference("donationAddressPref");
         Preference bitcoiniumGithubPref = findPreference("bitcoiniumGithubPref");
+        Preference playstoreGithubPref = findPreference("playstoreGithubPref");
+
+        ActionBar bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.show();
 
         final Resources res = getResources();
 
@@ -54,12 +62,8 @@ public class PreferencesActivity extends PreferenceActivity {
                         public boolean onPreferenceClick(Preference preference) {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL,
-                                    new String[]{
-                                            res.getString(R.string.emailAddress)
-                                    });
-                            i.putExtra(Intent.EXTRA_SUBJECT,
-                                    res.getString(R.string.app_name) + " Feedback");
+                            i.putExtra(Intent.EXTRA_EMAIL, res.getString(R.string.emailAddress));
+                            i.putExtra(Intent.EXTRA_SUBJECT, res.getString(R.string.app_name) + " Feedback");
                             startActivity(Intent.createChooser(i, "Send email"));
 
                             return true;
@@ -88,6 +92,17 @@ public class PreferencesActivity extends PreferenceActivity {
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri
                             .parse(res.getString(R.string.xchangeGithub))));
+                    return true;
+                }
+            });
+        }
+
+        if (playstoreGithubPref != null) {
+            playstoreGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
                     return true;
                 }
             });
@@ -187,15 +202,27 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
         // Tell the widgets to update preferences
         sendBroadcast(new Intent(this,
-                WidgetProvider.class).setAction(REFRESH));
+                WidgetProvider.class).setAction(Constants.REFRESH));
 
         sendBroadcast(new Intent(this,
-                MinerWidgetProvider.class).setAction(REFRESH));
+                MinerWidgetProvider.class).setAction(Constants.REFRESH));
 
         EasyTracker.getInstance(this).activityStop(this);
     }

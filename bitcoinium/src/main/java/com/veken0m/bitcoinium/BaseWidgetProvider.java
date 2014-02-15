@@ -28,8 +28,6 @@ import java.util.Calendar;
 
 class BaseWidgetProvider extends AppWidgetProvider {
 
-    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
-
     /**
      * List of preference variables
      */

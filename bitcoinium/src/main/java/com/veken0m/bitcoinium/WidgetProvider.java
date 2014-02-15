@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -30,7 +31,7 @@ public class WidgetProvider extends BaseWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (REFRESH.equals(intent.getAction()))
+        if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
 
         super.onReceive(context, intent);
@@ -166,7 +167,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {
                 Intent intent = new Intent(this, WidgetProvider.class);
-                intent.setAction(REFRESH);
+                intent.setAction(Constants.REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
             } else {
                 Intent intent = new Intent(this, MainActivity.class);

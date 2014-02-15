@@ -25,6 +25,7 @@ import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
@@ -46,7 +47,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (REFRESH.equals(intent.getAction()))
+        if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
 
         super.onReceive(context, intent);
@@ -288,7 +289,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {
                 Intent intent = new Intent(this, MinerWidgetProvider.class);
-                intent.setAction(REFRESH);
+                intent.setAction(Constants.REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
             } else {
                 Intent intent = new Intent(this, MinerStatsActivity.class);
