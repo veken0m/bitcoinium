@@ -37,9 +37,8 @@ public class BaseExchangeFragment extends SherlockFragment {
                              Bundle savedInstanceState) {
         activity = getActivity();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        String preferredExchange = prefs.getString("favExchangePref", "bitstamp");
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, preferredExchange, true);
+        buildMenu(view, prefs.getString("favExchangePref", "bitstamp"), true);
         return view;
     }
 

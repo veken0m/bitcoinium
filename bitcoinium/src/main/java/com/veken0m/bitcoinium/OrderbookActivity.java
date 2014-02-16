@@ -84,7 +84,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             exchange = new Exchange(this, extras.getString("exchange"));
         } else {
             // TODO: generation error message
-            exchange = new Exchange(this, "MtGoxExchange");
+            exchangeName = "bitstamp";
+            exchange = new Exchange(this, "bitstamp");
         }
         readPreferences(this);
         createExchangeDropdown();

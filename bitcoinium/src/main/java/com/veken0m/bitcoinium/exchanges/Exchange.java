@@ -15,8 +15,9 @@ public class Exchange {
 
     public Exchange(Context context, String exchangeName) {
 
+        // ToLower and Remove Exchange to keep compatibility with previous indexing system
         String[] exchangeProperties = context.getResources().getStringArray(
-                context.getResources().getIdentifier(exchangeName, "array",
+                context.getResources().getIdentifier(exchangeName.toLowerCase().replace("exchange",""), "array",
                         context.getPackageName()));
 
         exchange_name = exchangeProperties[0];

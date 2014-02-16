@@ -63,7 +63,7 @@
         <item>supports latest trades</item>
         <item>ticker supports bid/ask</item>
     -->
-    <string-array name="MtGoxExchange">
+    <string-array name="mtgox">
         <item>MtGox</item>
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>BTC/USD</item>
@@ -72,7 +72,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="VirtExExchange">
+    <string-array name="virtex">
         <item>VirtEx</item>
         <item>com.xeiam.xchange.virtex.VirtExExchange</item>
         <item>BTC/CAD</item>
@@ -81,7 +81,7 @@
         <item>true</item>
         <item>false</item>
     </string-array>
-    <string-array name="BTCEExchange">
+    <string-array name="btce">
         <item>BTC-E</item>
         <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
         <item>BTC/USD</item>
@@ -90,7 +90,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="BitstampExchange">
+    <string-array name="bitstamp">
         <item>Bitstamp</item>
         <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
         <item>BTC/USD</item>
@@ -99,7 +99,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="CampBXExchange">
+    <string-array name="campbx">
         <item>CampBX</item>
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
         <item>BTC/USD</item>
@@ -109,7 +109,7 @@
         <!-- Not implemented -->
         <item>true</item>
     </string-array>
-    <string-array name="BTCChinaExchange">
+    <string-array name="btcchina">
         <item>BTCChina</item>
         <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
         <item>BTC/CNY</item>
@@ -118,7 +118,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="BitcurexExchange">
+    <string-array name="bitcurex">
         <item>Bitcurex</item>
         <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
         <item>BTC/PLN</item>
@@ -127,7 +127,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="KrakenExchange">
+    <string-array name="kraken">
         <item>Kraken</item>
         <item>com.xeiam.xchange.kraken.KrakenExchange</item>
         <item>BTC/EUR</item>
@@ -136,7 +136,7 @@
         <item>true</item>
         <item>true</item>
     </string-array>
-    <string-array name="BitfinexExchange">
+    <string-array name="bitfinex">
         <item>Bitfinex</item>
         <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
         <item>BTC/USD</item>
@@ -147,7 +147,7 @@
     </string-array>
 
     <!-- Dead Exchanges -->
-    <string-array name="BitcoinCentralExchange">
+    <string-array name="bitcoincentral">
         <item>BitcoinCentral</item>
         <item>com.xeiam.xchange.bitcoincentral.BitcoinCentralExchange</item>
         <item>BTC/EUR</item>
@@ -157,7 +157,7 @@
         <!-- Error 404 -->
         <item>false</item>
     </string-array>
-    <string-array name="BitfloorExchange">
+    <string-array name="bitfloor">
         <item>Bitfloor</item>
         <item>com.xeiam.xchange.bitfloor.BitfloorExchange</item>
         <item>BTC/USD</item>
@@ -166,7 +166,7 @@
         <item>true</item>
         <item>false</item>
     </string-array>
-    <string-array name="Bitcoin24Exchange">
+    <string-array name="bitcoin24">
         <item>Bitcoin24</item>
         <item>com.xeiam.xchange.bitcoin24.Bitcoin24Exchange</item>
         <item>BTC/EUR</item>
@@ -176,7 +176,7 @@
         <!-- Too large (contains all trades...) -->
         <item>true</item>
     </string-array>
-    <string-array name="BitcoinAverageExchange">
+    <string-array name="bitcoinaverage">
         <item>BTCAvg</item>
         <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
         <item>BTC/USD</item>

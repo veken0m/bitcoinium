@@ -3,9 +3,6 @@ package com.veken0m.bitcoinium;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -21,15 +18,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.BTCChinaFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.BTCEFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.BitcurexFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.BitfinexFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.BitstampFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.CampBXFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.KrakenFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.MtGoxFragment;
-import com.veken0m.bitcoinium.fragments.exchanges.VirtExFragment;
 
 import java.util.ArrayList;
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -86,7 +74,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
     void selectTabViaBundle() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null) selectTab(extras.getString("exchangeKey"));
+        //if (extras != null) selectTab(extras.getString("exchangeKey"));
     }
 
     void initTabbedActionBar() {
@@ -96,36 +84,25 @@ public class MainActivity extends SherlockFragmentActivity {
         actionbar = getSupportActionBar();
 
         // Tell the ActionBar we want to use Tabs
-        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
+        //actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        //actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
         //actionbar.setBackgroundDrawable(color);
 
         // Create the actionbar tabs
+
         tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
 
-        addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class, "bitstamp");
-        addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
-        addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class, "virtex");
-        addTab(actionbar, tabsAdapter, R.drawable.btcelogo, BTCEFragment.class, "btce");
-        addTab(actionbar, tabsAdapter, R.drawable.bitfinexlogo, BitfinexFragment.class, "bitfinex");
-        addTab(actionbar, tabsAdapter, R.drawable.campbxlogo, CampBXFragment.class, "campbx");
-        addTab(actionbar, tabsAdapter, R.drawable.btcchinalogo, BTCChinaFragment.class, "btcchina");
-        addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
-        addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
-
-
-        selectTab();
-
-
-        //addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BaseExchangeFragment.class, "Home");
+        addTab(actionbar, tabsAdapter, 0, BaseExchangeFragment.class, "Home");
         actionbar.show();
     }
 
     private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment, String identity) {
-        ActionBar.Tab tab = actionbar.newTab().setIcon(logoResource);
+        ActionBar.Tab tab = actionbar.newTab().setText(identity);//.setIcon(logoResource);
+        //tab.setIcon(logoResource);
         tabsAdapter.addTab(tab, viewFragment, null, identity);
     }
 
+    /*
     private void selectTab() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -152,7 +129,9 @@ public class MainActivity extends SherlockFragmentActivity {
             editor.commit();
         }
     }
+    */
 
+    /*
     private void selectTab(String key) {
         try {
             int tabIndex = tabsAdapter.getIndexForIdentity(key);
@@ -164,6 +143,7 @@ public class MainActivity extends SherlockFragmentActivity {
             selectTab();
         }
     }
+    */
 
 
     /**

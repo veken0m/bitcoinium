@@ -64,8 +64,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                 for (int appWidgetId : widgetIds) {
 
                     // Load widget configuration
-                    String exchangePref = WidgetConfigureActivity.loadExchangePref(this,
-                            appWidgetId);
+                    String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
 
                     if (exchangePref == null) continue; // skip to next
                     Exchange exchange = getExchange(exchangePref);
