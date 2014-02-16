@@ -114,7 +114,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         TableLayout bitcoinAverageTable = (TableLayout) findViewById(R.id.bitcoinaverage_list);
         removeLoadingSpinner();
 
-        boolean bBackGroundColor = true;
+        boolean bBackGroundColor = false;
 
         if (tickers.size() > 0 && bitcoinAverageTable != null) {
 
@@ -141,6 +141,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
                 // final TextView tvAvg = new TextView(this);
 
                 tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
+                tvSymbol.setTextColor(Color.WHITE);
                 Utils.setTextViewParams(tvLast, ticker.getLast());
                 Utils.setTextViewParams(tvVolume, ticker.getVolume());
                 Utils.setTextViewParams(tvBid, ticker.getBid());
@@ -150,11 +151,8 @@ public class BitcoinAverageActivity extends SherlockActivity {
                 final TableRow newRow = new TableRow(this);
 
                 // Toggle background color
-                bBackGroundColor = !bBackGroundColor;
-                if (bBackGroundColor)
-                    newRow.setBackgroundColor(Color.BLACK);
-                else
-                    newRow.setBackgroundColor(Color.rgb(31, 31, 31));
+                if (bBackGroundColor = !bBackGroundColor)
+                    newRow.setBackgroundColor(Color.rgb(75, 75, 75));
 
                 newRow.addView(tvSymbol, Utils.symbolParams);
                 newRow.addView(tvLast);

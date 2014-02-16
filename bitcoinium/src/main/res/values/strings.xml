@@ -222,11 +222,10 @@
     <string name="errBitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>
     <string name="noTradesFound">No recent trades found for this currency. Please try again later.</string>
     <string name="enterAPIToken">Please enter at least one API Token to use Miner Stats</string>
-    <string name="currentDifficulty">
-Current Difficulty: </string>
-    <string name="estimatedNextDifficulty">Estimated Next Difficulty: </string>
-    <string name="blockCount">Block count: </string>
-    <string name="nextRetarget">Next retarget in %1$s blocks\n</string>
+    <string name="currentDifficulty">Current Difficulty: %1$s</string>
+    <string name="estimatedNextDifficulty">Estimated Next Difficulty: %1$s</string>
+    <string name="blockCount">Block count: %1$s</string>
+    <string name="nextRetarget">Next retarget in %1$s blocks</string>
     <string name="updateShort">Upd. @ </string>
     <string name="sendEmail">Send email</string>
     <string name="feedback"> Feedback</string>
@@ -239,6 +238,8 @@ Current Difficulty: </string>
     <string name="volume">Volume: </string>
     <string name="notAvailable">N/A</string>
     <string name="priceGraphNotSupported">This exchange does not currently support Price Graph</string>
+    <string name="working">Working...</string>
+    <string name="retreivingMinerStats">Retrieving Miner Stats</string>
 
 
 </resources>

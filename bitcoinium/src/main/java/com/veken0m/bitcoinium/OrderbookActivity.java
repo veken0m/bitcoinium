@@ -51,8 +51,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private List<LimitOrder> listAsks = null;
     private List<LimitOrder> listBids = null;
 
-    private static Exchange exchange = null;
-
     /**
      * List of preference variables
      */
@@ -63,6 +61,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private static Boolean pref_showCurrencySymbol = true;
 
     private static CurrencyPair currencyPair = null;
+    private static Exchange exchange = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,6 +73,9 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
+        readPreferences(this);
+        //createExchangeDropdown();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             exchange = new Exchange(this, extras.getString("exchange"));
@@ -82,7 +84,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             exchange = new Exchange(this, "MtGoxExchange");
         }
 
-        readPreferences(this);
         createCurrencyDropdown();
         viewOrderbook();
 
@@ -348,6 +349,18 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 + currencyPair.counterCurrency);
     }
 
+    void createExchangeDropdown() {
+        // Re-populate the dropdown menu
+        final String[] exchangeDropdownValues = getResources().getStringArray(R.array.exchanges);
+
+        Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchangeDropdownValues);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
     void createCurrencyDropdown() {
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(
@@ -377,10 +390,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 .getDefaultSharedPreferences(context);
 
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
-        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref",
-                "10"));
-        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref",
-                "1"));
+        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
+        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
         currencyPair = CurrencyUtils.stringToCurrencyPair(
                 prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
         pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",

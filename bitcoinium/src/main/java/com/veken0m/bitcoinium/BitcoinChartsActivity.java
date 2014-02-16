@@ -168,7 +168,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                 }
             });
 
-            boolean bBackGroundColor = true;
+            boolean bBackGroundColor = false;
             for (BitcoinChartsTicker data : marketData) {
 
                 // Only print active exchanges... vol > 0 or contains selected currency
@@ -186,6 +186,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     // final TextView tvAsk = new TextView(this);
 
                     tvSymbol.setText(data.getSymbol());
+                    tvSymbol.setTextColor(Color.WHITE);
                     Utils.setTextViewParams(tvLast, data.getClose());
                     Utils.setTextViewParams(tvVolume, data.getVolume());
                     Utils.setTextViewParams(tvLow, data.getLow());
@@ -197,11 +198,8 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     final TableRow newRow = new TableRow(this);
 
                     // Toggle background color
-                    bBackGroundColor = !bBackGroundColor;
-                    if (bBackGroundColor)
-                        newRow.setBackgroundColor(Color.BLACK);
-                    else
-                        newRow.setBackgroundColor(Color.rgb(31, 31, 31));
+                    if (bBackGroundColor = !bBackGroundColor)
+                        newRow.setBackgroundColor(Color.rgb(75, 75, 75));
 
                     newRow.addView(tvSymbol, Utils.symbolParams);
                     newRow.addView(tvLast);

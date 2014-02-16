@@ -2,15 +2,14 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/bitcoincharts_layout"
              android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:layout_marginLeft="2dp"
-             android:layout_marginRight="2dp">
+             android:layout_height="fill_parent">
 
     <LinearLayout
         android:id="@+id/currencyFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@color/actionbar_color"
         android:orientation="horizontal">
 
         <TextView
@@ -109,9 +108,8 @@
         android:id="@+id/bitcoincharts_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp">
+        android:background="#101010"
+        android:layout_weight="1">
 
         <TableLayout
             android:id="@+id/bitcoincharts_list"
@@ -126,13 +124,14 @@
         android:id="@+id/loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="#101010"
         android:gravity="center_vertical|center_horizontal"
         android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress3"
             style="?android:attr/progressBarStyleLarge"
-            android:gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ProgressBar>

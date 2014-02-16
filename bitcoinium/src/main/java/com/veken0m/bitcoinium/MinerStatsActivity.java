@@ -290,40 +290,42 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
-                TextView tvCurrentDifficulty = new TextView(getBaseContext());
-                TextView tvNextDifficulty = new TextView(getBaseContext());
-                TextView tvBlockCount = new TextView(getBaseContext());
-                TextView tvNextRetarget = new TextView(getBaseContext());
+                Context context = getBaseContext();
+                TextView tvCurrentDifficulty = new TextView(context);
+                TextView tvNextDifficulty = new TextView(context);
+                TextView tvBlockCount = new TextView(context);
+                TextView tvNextRetarget = new TextView(context);
 
                 try {
-                    tvCurrentDifficulty.setText(getString(R.string.currentDifficulty)
-                            + Utils.formatDecimal(
-                            Float.valueOf(CurrentDifficulty), 0, true));
+                    // TODO: move this to XML layout
+                    tvCurrentDifficulty.setText(String.format(getString(R.string.currentDifficulty), Utils.formatDecimal(
+                            Float.valueOf(CurrentDifficulty), 0, true)));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tvNextDifficulty.setText(getString(R.string.estimatedNextDifficulty)
-                            + Utils.formatDecimal(
-                            Float.valueOf(NextDifficulty), 0, true));
+                    tvCurrentDifficulty.setTextColor(Color.BLACK);
+                    tvNextDifficulty.setText(String.format(getString(R.string.estimatedNextDifficulty), Utils.formatDecimal(
+                            Float.valueOf(NextDifficulty), 0, true)));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvNextDifficulty.setTextColor(Color.BLACK);
 
-                    tvBlockCount.setText(getString(R.string.blockCount) + BlockCount);
+                    tvBlockCount.setText(String.format(getString(R.string.blockCount), BlockCount));
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvBlockCount.setTextColor(Color.BLACK);
 
                     tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount)));
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvNextRetarget.setTextColor(Color.BLACK);
 
-                    if (Float.valueOf(NextDifficulty) < Float
-                            .valueOf(CurrentDifficulty)) {
+                    if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty))
                         tvNextDifficulty.setTextColor(Color.GREEN);
-                    } else {
+                    else
                         tvNextDifficulty.setTextColor(Color.RED);
-                    }
 
                     view.addView(tvNextRetarget, 1);
                     view.addView(tvBlockCount, 1);
                     view.addView(tvNextDifficulty, 1);
                     view.addView(tvCurrentDifficulty, 1);
                 } catch (Exception e) {
-                    // Difficulty was NaN...
+                    // Difficulty was NaN... don't display anything
                 }
             }
         }

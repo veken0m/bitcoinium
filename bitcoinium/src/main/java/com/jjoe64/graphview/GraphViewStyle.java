@@ -13,8 +13,8 @@ public class GraphViewStyle {
     private int gridColor;
 
     public GraphViewStyle() {
-        vLabelsColor = Color.WHITE;
-        hLabelsColor = Color.WHITE;
+        vLabelsColor = Color.BLACK;
+        hLabelsColor = Color.BLACK;
         gridColor = Color.DKGRAY;
     }
 

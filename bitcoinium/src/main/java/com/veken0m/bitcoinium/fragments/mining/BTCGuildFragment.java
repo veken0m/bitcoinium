@@ -90,7 +90,7 @@ public class BTCGuildFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -126,7 +126,7 @@ public class BTCGuildFragment extends SherlockFragment {
             String text = String.format(res.getString(R.string.minerConnectionError), "BTCGuild");
             text += "\n\n*NOTE* BTC Guild limits calls to once every 15 seconds";
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {

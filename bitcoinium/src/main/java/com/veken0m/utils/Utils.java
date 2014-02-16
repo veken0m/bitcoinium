@@ -32,8 +32,7 @@ public class Utils {
 
     public static final LayoutParams symbolParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
-    public static String formatDecimal(float valueToFormat,
-                                       int numberOfDecimalPlaces, boolean useGroupings) {
+    public static String formatDecimal(float valueToFormat,int numberOfDecimalPlaces, boolean useGroupings) {
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
@@ -47,12 +46,18 @@ public class Utils {
     public static String formatDecimal(BigDecimal valueToFormat) {
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(2);
-        numberFormat.setMinimumFractionDigits(2);
+        double value = valueToFormat.doubleValue();
+        if(value >= 100000){
+            numberFormat.setMaximumFractionDigits(0);
+            numberFormat.setMinimumFractionDigits(0);
+        } else {
+            numberFormat.setMaximumFractionDigits(2);
+            numberFormat.setMinimumFractionDigits(2);
+        }
         numberFormat.setGroupingUsed(true);
 
         try {
-            return numberFormat.format(valueToFormat.doubleValue());
+            return numberFormat.format(value);
         } catch (Exception e) {
             return "N/A";
         }
@@ -124,6 +129,7 @@ public class Utils {
 
         tv.setText(Utils.formatDecimal(value));
         tv.setLayoutParams(params);
+        tv.setTextColor(Color.WHITE);
         tv.setGravity(1);
     }
 
