@@ -40,6 +40,8 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -59,9 +61,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private static int pref_orderbookLimiter = 0;
     private static Boolean pref_enableHighlight = true;
     private static Boolean pref_showCurrencySymbol = true;
+    private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
+    private static String exchangeName = "bitstamp";
     private static Exchange exchange = null;
+    Boolean exchangeChanged = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,19 +78,20 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        readPreferences(this);
-        //createExchangeDropdown();
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            exchangeName = extras.getString("exchange");
             exchange = new Exchange(this, extras.getString("exchange"));
         } else {
             // TODO: generation error message
             exchange = new Exchange(this, "MtGoxExchange");
         }
+        readPreferences(this);
+        createExchangeDropdown();
 
-        createCurrencyDropdown();
-        viewOrderbook();
+
+        //createCurrencyDropdown();
+        //viewOrderbook();
 
         // KarmaAdsUtils.initAd(this);
     }
@@ -289,14 +295,30 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
         CurrencyPair prevCurrencyPair = currencyPair;
-        currencyPair = CurrencyUtils.stringToCurrencyPair((String) parent.getItemAtPosition(pos));
-        if (prevCurrencyPair != null && currencyPair != null && !currencyPair.equals(prevCurrencyPair))
+        String prevExchangeName = exchangeName;
+
+        switch (parent.getId()){
+            case R.id.orderbook_exchange_spinner:
+                exchangeName = (String) parent.getItemAtPosition(pos);
+                exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
+                if (exchangeChanged){
+                    exchange = new Exchange(this, exchangeName.replace("-","") + "Exchange");
+                    currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+                    createCurrencyDropdown();
+                }
+                break;
+            case R.id.orderbook_currency_spinner:
+                currencyPair = CurrencyUtils.stringToCurrencyPair((String) parent.getItemAtPosition(pos));
+                break;
+        }
+
+        if (prevCurrencyPair != null && currencyPair != null && !currencyPair.equals(prevCurrencyPair) || exchangeChanged)
             viewOrderbook();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // Do nothing
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Do nothing...
     }
 
     private void errorOccured() {
@@ -351,7 +373,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     void createExchangeDropdown() {
         // Re-populate the dropdown menu
-        final String[] exchangeDropdownValues = getResources().getStringArray(R.array.exchanges);
+        List<String> exchangeDropdownValues = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchanges)));
+        exchangeDropdownValues.remove("BitcoinAverage"); // Remove BitcoinAverage, unsupported
 
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchangeDropdownValues);
@@ -359,13 +382,16 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
+        int index = exchangeDropdownValues.indexOf(exchangeName.replace("Exchange",""));
+        spinner.setSelection(index);
+
     }
 
     void createCurrencyDropdown() {
         // Re-populate the dropdown menu
-        final String[] dropdownValues = getResources().getStringArray(
+        List<String> dropdownValues = Arrays.asList(getResources().getStringArray(
                 getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array",
-                        this.getPackageName()));
+                        this.getPackageName())));
 
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dropdownValues);
@@ -373,6 +399,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
+
+        if(exchangeChanged){
+            int index = dropdownValues.indexOf(currencyPair.toString());
+            spinner.setSelection(index);
+        }
     }
 
     int depthColor(float amount) {
@@ -386,7 +417,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     private static void readPreferences(Context context) {
 
-        SharedPreferences prefs = PreferenceManager
+        prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);

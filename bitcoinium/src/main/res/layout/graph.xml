@@ -6,27 +6,40 @@
                 android:orientation="vertical"
                 android:stretchColumns="1">
 
-    <LinearLayout
-        android:id="@+id/spinner1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/currency_header"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/spinner1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:text="@string/currency_pair"/>
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <!--TextView
+                android:id="@+id/exchange_header"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exchange"/-->
 
-        <Spinner
-            android:id="@+id/graph_currency_spinner"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/graph_exchange_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <!--TextView
+                android:id="@+id/currency_header"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_pair"/-->
+
+            <Spinner
+                android:id="@+id/graph_currency_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/graphView"

@@ -63,6 +63,13 @@
 
     </TableRow>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.2dp"
+        android:id="@+id/separator"
+        android:visibility="visible"
+        android:background="#33B5E5"/>
+
     <ScrollView
         android:id="@+id/bitcoinaverage_tablescroll"
         android:layout_width="fill_parent"

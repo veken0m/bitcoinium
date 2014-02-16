@@ -3,7 +3,12 @@ package com.veken0m.bitcoinium.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,23 +24,38 @@ import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.utils.Constants;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class BaseExchangeFragment extends SherlockFragment {
+
+    Activity activity = null;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        activity = getActivity();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        String preferredExchange = prefs.getString("favExchangePref", "bitstamp");
+        View view = inflater.inflate(R.layout.menu_fragment, container, false);
+        buildMenu(view, preferredExchange, true);
+        return view;
+    }
 
     // Attaches OnClickListeners to menu buttons
     protected void buildMenu(View view, final String exchange, final Boolean graph) {
+
+        activity = getActivity();
 
         final Button widgetRefreshButton = (Button) view.findViewById(R.id.widgetrefresh);
         widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Activity activity = getActivity();
-
-                Intent intent = new Intent(activity
-                        .getApplicationContext(), WidgetProvider.class);
+                Intent intent = new Intent(activity.getApplicationContext(), WidgetProvider.class);
                 intent.setAction(Constants.REFRESH);
-                Intent intent2 = new Intent(activity
-                        .getApplicationContext(), MinerWidgetProvider.class);
+                Intent intent2 = new Intent(activity.getApplicationContext(), MinerWidgetProvider.class);
                 intent2.setAction(Constants.REFRESH);
                 activity.sendBroadcast(intent);
                 activity.sendBroadcast(intent2);
@@ -50,12 +70,11 @@ public class BaseExchangeFragment extends SherlockFragment {
             public void onClick(View v) {
                 if (!graph) {
                     Toast.makeText(
-                            getActivity(),
+                            activity,
                             getString(R.string.priceGraphNotSupported),
                             Toast.LENGTH_LONG).show();
                 } else {
-                    Intent graphActivity = new Intent(getActivity()
-                            .getBaseContext(), GraphActivity.class);
+                    Intent graphActivity = new Intent(activity.getBaseContext(), GraphActivity.class);
                     graphActivity.putExtra("exchange", exchange);
                     startActivity(graphActivity);
                 }
@@ -67,8 +86,7 @@ public class BaseExchangeFragment extends SherlockFragment {
         orderbookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent orderbookActivity = new Intent(getActivity()
-                        .getBaseContext(), OrderbookActivity.class);
+                Intent orderbookActivity = new Intent(activity.getBaseContext(), OrderbookActivity.class);
                 orderbookActivity.putExtra("exchange", exchange);
                 startActivity(orderbookActivity);
             }
@@ -79,8 +97,7 @@ public class BaseExchangeFragment extends SherlockFragment {
         bitcoinChartsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bitcoinChartsActivity = new Intent(getActivity()
-                        .getBaseContext(), BitcoinChartsActivity.class);
+                Intent bitcoinChartsActivity = new Intent(activity.getBaseContext(), BitcoinChartsActivity.class);
                 startActivity(bitcoinChartsActivity);
             }
         });
@@ -90,8 +107,7 @@ public class BaseExchangeFragment extends SherlockFragment {
         bitcoinAverageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bitcoinAverageActivity = new Intent(getActivity()
-                        .getBaseContext(), BitcoinAverageActivity.class);
+                Intent bitcoinAverageActivity = new Intent(activity.getBaseContext(), BitcoinAverageActivity.class);
                 startActivity(bitcoinAverageActivity);
             }
         });
@@ -101,8 +117,7 @@ public class BaseExchangeFragment extends SherlockFragment {
         minerStatsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent minerstatsActivity = new Intent(getActivity()
-                        .getBaseContext(), MinerStatsActivity.class);
+                Intent minerstatsActivity = new Intent(activity.getBaseContext(), MinerStatsActivity.class);
                 startActivity(minerstatsActivity);
             }
         });
@@ -111,8 +126,7 @@ public class BaseExchangeFragment extends SherlockFragment {
         marketDepth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getBaseContext(),
-                        WebViewerActivity.class);
+                Intent intent = new Intent(activity.getBaseContext(), WebViewerActivity.class);
                 startActivity(intent);
             }
         });

@@ -147,7 +147,7 @@
     <string name="updateTimeColorFail">Update Time Color (Failed)</string>
 
     <!-- Miscellaneous -->
-    <string name="currency_pair">Currency Pair</string>
+    <string name="currency_pair">Pair</string>
     <string name="bids">Bids</string>
     <string name="asks">Asks</string>
     <string name="price">Price</string>

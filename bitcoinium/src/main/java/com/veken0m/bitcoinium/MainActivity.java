@@ -20,6 +20,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCChinaFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BTCEFragment;
 import com.veken0m.bitcoinium.fragments.exchanges.BitcurexFragment;
@@ -101,6 +102,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
         // Create the actionbar tabs
         tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+
         addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BitstampFragment.class, "bitstamp");
         addTab(actionbar, tabsAdapter, R.drawable.krakenlogo, KrakenFragment.class, "kraken");
         addTab(actionbar, tabsAdapter, R.drawable.virtexlogo, VirtExFragment.class, "virtex");
@@ -111,7 +113,11 @@ public class MainActivity extends SherlockFragmentActivity {
         addTab(actionbar, tabsAdapter, R.drawable.bitcurexlogo, BitcurexFragment.class, "bitcurex");
         addTab(actionbar, tabsAdapter, R.drawable.mtgoxlogo, MtGoxFragment.class, "mtgox");
 
+
         selectTab();
+
+
+        //addTab(actionbar, tabsAdapter, R.drawable.bitstamplogo, BaseExchangeFragment.class, "Home");
         actionbar.show();
     }
 
