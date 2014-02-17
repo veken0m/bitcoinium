@@ -26,13 +26,14 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
-// import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
 import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+// import com.veken0m.utils.KarmaAdsUtils;
 
 public class BitcoinChartsActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -233,7 +234,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+                    LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.bitcoincharts_loadSpinner);
                     if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.VISIBLE);
                 }
             });
@@ -278,7 +279,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
     // Remove loading spinner
     void removeLoadingSpinner() {
-        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.bitcoincharts_loadSpinner);
         if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
     }
 

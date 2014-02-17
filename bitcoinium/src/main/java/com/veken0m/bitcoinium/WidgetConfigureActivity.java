@@ -98,8 +98,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                                 prefCategory.removePreference(value);
 
                             // Enable the selected exchange
-                            prefCategory.addPreference(currencyPref.get(newValue
-                                    .toString().replace("Exchange", "").replace("-", "")));
+                            prefCategory.addPreference(currencyPref.get(newValue.toString().replace("Exchange", "").replace("-", "")));
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -118,16 +117,15 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                     SharedPreferences prefs = PreferenceManager
                             .getDefaultSharedPreferences(context);
 
-                    String pref_widgetExchange = prefs.getString(
-                            "widgetExchangesPref", "MtGoxExchange");
+                    String pref_widgetExchange = prefs.getString("widgetExchangesPref", "bitstamp");
 
                     Exchange exchange;
                     try {
                         exchange = new Exchange(context, pref_widgetExchange);
                     } catch (Exception e) {
                         Editor editor = prefs.edit();
-                        editor.putString("widgetExchangesPref", "MtGoxExchange").commit();
-                        exchange = new Exchange(context, "MtGoxExchange");
+                        editor.putString("widgetExchangesPref", "bitstamp").commit();
+                        exchange = new Exchange(context, "bitstamp");
                     }
 
                     String sCurrency = prefs.getString(exchange.getIdentifier() + "WidgetCurrencyPref",
@@ -150,10 +148,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    private static void saveCurrencyPref(Context context, int appWidgetId,
-                                         String currency) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(
-                PREFS_NAME, 0).edit();
+    private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
         prefs.commit();
     }

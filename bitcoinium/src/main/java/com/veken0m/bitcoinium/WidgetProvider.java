@@ -160,8 +160,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         }
 
-        private void setTapBehaviour(int appWidgetId,
-                                     String exchangeKey, RemoteViews views) {
+        private void setTapBehaviour(int appWidgetId, String exchangeKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
             if (pref_tapToUpdate) {

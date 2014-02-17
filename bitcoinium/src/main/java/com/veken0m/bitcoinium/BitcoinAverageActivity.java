@@ -21,7 +21,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
-// import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -32,6 +31,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+// import com.veken0m.utils.KarmaAdsUtils;
 
 public class BitcoinAverageActivity extends SherlockActivity {
 
@@ -184,7 +185,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout loadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+                    LinearLayout loadSpinner = (LinearLayout) findViewById(R.id.bitcoinaverage_loadSpinner);
                     if (loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
                 }
             });
@@ -197,7 +198,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     // Remove loading spinner
     void removeLoadingSpinner() {
-        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
+        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.bitcoinaverage_loadSpinner);
         if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
     }
 

@@ -35,23 +35,6 @@
         <item>bitcoin24</item>-->
     </string-array>
 
-    <!-- Array for Widget Exchange preferences -->
-    <string-array name="widgetexchangesvalues">
-        <item>BitcoinAverageExchange</item>
-        <item>BitstampExchange</item>
-        <item>KrakenExchange</item>
-        <item>VirtExExchange</item>
-        <item>BTCEExchange</item>
-        <item>CampBXExchange</item>
-        <item>BTCChinaExchange</item>
-        <item>BitcurexExchange</item>
-        <item>BitfinexExchange</item>
-        <item>MtGoxExchange</item>
-        <!--<item>BitcoinCentralExchange</item> 
-         <item>BitfloorExchange</item> 
-        <item>Bitcoin24Exchange</item> -->
-    </string-array>
-
     <!-- Arrays that define properties of Exchanges -->
     <!--
         <string-array name="ExampleExchange">

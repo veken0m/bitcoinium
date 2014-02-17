@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -113,6 +114,17 @@ public class Utils {
         Date time = new Date();
 
         return DateFormat.format("E", time) + " " + DateFormat.getTimeFormat(ctxt).format(time);
+    }
+
+    // Returns current time in milliseconds
+    public static long getCurrentTime(){
+
+        final Calendar TIME = Calendar.getInstance();
+        TIME.set(Calendar.MINUTE, 0);
+        TIME.set(Calendar.SECOND, 0);
+        TIME.set(Calendar.MILLISECOND, 0);
+
+        return TIME.getTimeInMillis();
     }
 
     public static String dateFormat(Context ctxt, long date) {

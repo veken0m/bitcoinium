@@ -17,7 +17,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.veken0m.bitcoinium.fragments.BaseExchangeFragment;
+import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 
 import java.util.ArrayList;
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -28,8 +28,6 @@ import java.util.ArrayList;
  * @version 1.9.1 Jan 12 2014
  */
 public class MainActivity extends SherlockFragmentActivity {
-    private ActionBar actionbar;
-    private TabsAdapter tabsAdapter;
 
     /**
      * Called when the activity is first created.
@@ -81,7 +79,7 @@ public class MainActivity extends SherlockFragmentActivity {
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
-        actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
 
         // Tell the ActionBar we want to use Tabs
         //actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -90,9 +88,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
         // Create the actionbar tabs
 
-        tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
 
-        addTab(actionbar, tabsAdapter, 0, BaseExchangeFragment.class, "Home");
+        addTab(actionbar, tabsAdapter, 0, HomeMenuFragment.class, "Home");
         actionbar.show();
     }
 

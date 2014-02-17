@@ -18,37 +18,29 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
-import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
 import com.veken0m.utils.CurrencyUtils;
-// import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+// import com.veken0m.utils.KarmaAdsUtils;
 
 public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
 
@@ -61,7 +53,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "bitstamp";
     private static Exchange exchange = null;
-    Boolean exchangeChanged = false;
+    private static Boolean exchangeChanged = false;
 
     /**
      * Variables required for LineGraphView
@@ -131,7 +123,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                     linlaHeaderProgress.setVisibility(View.INVISIBLE);
                 }
             });
@@ -237,90 +229,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         }
     }
 
-    private void generateXHubPriceGraph() {
-
-        TickerHistory trades = null;
-
-        try {
-            HttpClient client = new DefaultHttpClient();
-            HttpGet post = new HttpGet(
-                    "http://bitcoinium.com:9090/service/tickerhistory?exchange=mtgox&pair=BTC_USD&timewindow=7d");
-            HttpResponse response = client.execute(post);
-            ObjectMapper mapper = new ObjectMapper();
-
-            trades = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), TickerHistory.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            int tradeListSize = 0;
-            long baseTime = 0;
-            if (trades != null) {
-                tradeListSize = trades.getPriceHistoryList().size();
-                baseTime = trades.getBaseTimestamp() * 1000;
-            }
-
-            float[] values = new float[tradeListSize];
-            long[] dates = new long[tradeListSize];
-            final GraphViewData[] data = new GraphViewData[tradeListSize];
-
-            float largest = Integer.MIN_VALUE;
-            float smallest = Integer.MAX_VALUE;
-
-            for (int i = 0; i < tradeListSize; i++) {
-                values[i] = trades.getPriceHistoryList().get(i).floatValue();
-                long delta = trades.getTimeStampOffsets().get(i).longValue() * 1000;
-                baseTime += delta;
-                dates[i] = baseTime;
-
-                if (values[i] > largest) {
-                    largest = values[i];
-                }
-                if (values[i] < smallest) {
-                    smallest = values[i];
-                }
-                data[i] = new GraphViewData(dates[i], values[i]);
-            }
-
-            graphView = new LineGraphView(this, exchangeName + ": "
-                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
-                @Override
-                protected String formatLabel(double value, boolean isValueX) {
-                    if (isValueX) {
-                        return Utils.dateFormat(getBaseContext(), (long) value);
-                    } else
-                        return super.formatLabel(value, false);
-                }
-            };
-
-            double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
-
-            // startValue enables graph window to be aligned with latest trades
-            final double startValue = dates[dates.length - 1] - windowSize;
-            graphView.addSeries(new GraphViewSeries(data));
-            graphView.setViewPort(startValue, windowSize);
-            graphView.setScrollable(true);
-            graphView.setScalable(true);
-
-            if (!pref_scaleMode) {
-                graphView.setManualYAxisBounds(largest, smallest);
-            }
-            connectionFail = false;
-            noTradesFound = false;
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            noTradesFound = true;
-
-        } catch (Exception e) {
-            connectionFail = true;
-            e.printStackTrace();
-        }
-    }
-
     private void createPopup(String pMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(pMessage);
@@ -351,7 +259,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+                LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                 linlaHeaderProgress.setVisibility(View.VISIBLE);
             }
         });

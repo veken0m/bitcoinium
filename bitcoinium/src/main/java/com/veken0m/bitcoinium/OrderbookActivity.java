@@ -66,7 +66,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "bitstamp";
     private static Exchange exchange = null;
-    Boolean exchangeChanged = false;
+    private static Boolean exchangeChanged = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,16 +81,15 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             exchangeName = extras.getString("exchange");
-            exchange = new Exchange(this, extras.getString("exchange"));
+            exchange = new Exchange(this, exchangeName);
         } else {
             // TODO: generation error message
             exchangeName = "bitstamp";
             exchange = new Exchange(this, "bitstamp");
         }
+
         readPreferences(this);
         createExchangeDropdown();
-
-
         //createCurrencyDropdown();
         //viewOrderbook();
 
@@ -357,12 +356,12 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     void startLoading() {
         TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
         if (t1 != null) t1.removeAllViews();
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.loadingSpinner);
+        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.orderbook_loadSpinner);
         loadingSpinner.setVisibility(View.VISIBLE);
     }
 
     void removeLoadingSpinner() {
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.loadingSpinner);
+        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.orderbook_loadSpinner);
         loadingSpinner.setVisibility(View.GONE);
     }
 
@@ -418,8 +417,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     private static void readPreferences(Context context) {
 
-        prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
         pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));

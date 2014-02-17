@@ -54,14 +54,14 @@
     <!-- android:paddingBottom="50dip" -->
 
     <LinearLayout
-        android:id="@+id/linlaHeaderProgress2"
+        android:id="@+id/graph_loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/pbHeaderProgress2"
+            android:id="@+id/graph_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

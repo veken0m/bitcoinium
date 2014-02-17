@@ -24,8 +24,6 @@ import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 
-import java.util.Calendar;
-
 class BaseWidgetProvider extends AppWidgetProvider {
 
     /**
@@ -103,7 +101,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
             widgetPriceWidgetRefreshService = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, getCurrentTime(), pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
+        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
     }
 
     static void setMinerWidgetAlarm(Context context) {
@@ -116,18 +114,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
             widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0,intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
-    }
-
-    // Returns current time in milliseconds
-    static long getCurrentTime(){
-
-        final Calendar TIME = Calendar.getInstance();
-        TIME.set(Calendar.MINUTE, 0);
-        TIME.set(Calendar.SECOND, 0);
-        TIME.set(Calendar.MILLISECOND, 0);
-
-        return TIME.getTimeInMillis();
+        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
     }
 
     static void setAlarmClock(Context context) {

@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:layout_weight="1"
-              android:background="@color/actionbar_color"
+              android:background="@color/light"
               android:orientation="vertical">
 
     <Button

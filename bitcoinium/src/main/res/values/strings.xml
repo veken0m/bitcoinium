@@ -238,7 +238,7 @@
     <string name="volume">Volume: </string>
     <string name="notAvailable">N/A</string>
     <string name="priceGraphNotSupported">This exchange does not currently support Price Graph</string>
-    <string name="working">Working...</string>
+    <string name="working">Working…</string>
     <string name="retreivingMinerStats">Retrieving Miner Stats</string>
 
 
