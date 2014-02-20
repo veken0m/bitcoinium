@@ -42,7 +42,7 @@ import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
+public class GraphActivity extends BaseActivity implements OnItemSelectedListener {
 
     private static final Handler mOrderHandler = new Handler();
     private static Boolean connectionFail = true;
@@ -51,7 +51,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
     private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
-    private static String exchangeName = "bitstamp";
+    private static String exchangeName = "Bitstamp";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
 
@@ -70,9 +70,8 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         actionbar.show();
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
             exchangeName = extras.getString("exchange");
-        }
 
         exchange = new Exchange(this, exchangeName);
 
@@ -194,8 +193,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 data[i] = new GraphViewData(dates[i], values[i]);
             }
 
-            graphView = new LineGraphView(this, exchangeName + ": "
-                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
+            graphView = new LineGraphView(this, exchangeName + ": " + currencyPair.toString()) {
                 @Override
                 protected String formatLabel(double value, boolean isValueX) {
                     if (isValueX) {
@@ -275,14 +273,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
     }
 
-/*    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        pref_currency = (String) parent.getItemAtPosition(pos);
-        viewGraph();
-        LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-        graphLinearLayout.removeAllViews();
-    }*/
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -313,21 +303,6 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         // Do nothing
     }
 
-/*    void createCurrencyDropdown() {
-        final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(prefix + "currencies", "array",
-                        this.getPackageName()));
-
-        Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, dropdownValues);
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
-        spinner.setOnItemSelectedListener(this);
-    }*/
-
     void createExchangeDropdown() {
         // Re-populate the dropdown menu
         List<String> exchangeDropdownValues = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchanges)));
@@ -341,17 +316,16 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
-        int index = exchangeDropdownValues.indexOf(exchangeName.replace("Exchange",""));
+        int index = exchangeDropdownValues.indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
     }
 
     void createCurrencyDropdown() {
         // Re-populate the dropdown menu
-        List<String> dropdownValues = Arrays.asList(getResources().getStringArray(
-                getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array",
-                        this.getPackageName())));
+        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
+        String[] currencies = getResources().getStringArray(arrayId);
+        List<String> dropdownValues = Arrays.asList(currencies);
 
-        //currencyPair = CurrencyUtils.stringToCurrencyPair(dropdownValues.get(0));
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dropdownValues);
 
@@ -364,19 +338,4 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             spinner.setSelection(index);
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }

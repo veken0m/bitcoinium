@@ -18,14 +18,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -46,7 +44,7 @@ import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
+public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener {
 
     private final static Handler mOrderHandler = new Handler();
     private Dialog dialog = null;
@@ -64,7 +62,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
-    private static String exchangeName = "bitstamp";
+    private static String exchangeName = "Bitstamp";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
 
@@ -84,7 +82,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             exchange = new Exchange(this, exchangeName);
         } else {
             // TODO: generation error message
-            exchangeName = "bitstamp";
+            exchangeName = "Bitstamp";
             exchange = new Exchange(this, "bitstamp");
         }
 
@@ -127,6 +125,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         setContentView(R.layout.orderbook);
 
         if (listAsks != null && listBids != null) {
+            createExchangeDropdown();
             createCurrencyDropdown();
             drawOrderbookUI();
         } else {
@@ -180,7 +179,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
             orderbookTable.removeAllViews();
 
-            removeLoadingSpinner();
+            removeLoadingSpinner(R.id.orderbook_loadSpinner);
             setOrderBookHeader();
 
             boolean bBackGroundColor = true;
@@ -193,7 +192,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             }
 
             for (int i = 0; i < listBids.size(); i++) {
-                final TableRow tr1 = new TableRow(this);
+                final TableRow newRow = new TableRow(this);
                 final TextView tvAskAmount = new TextView(this);
                 final TextView tvAskPrice = new TextView(this);
                 final TextView tvBidPrice = new TextView(this);
@@ -222,28 +221,24 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 tvAskPrice.setGravity(Gravity.CENTER);
 
                 // Text coloring for depth highlighting
-                if (pref_enableHighlight) {
-                    int bidTextColor = depthColor(bidAmount);
-                    int askTextColor = depthColor(askAmount);
-                    tvBidAmount.setTextColor(bidTextColor);
-                    tvBidPrice.setTextColor(bidTextColor);
-                    tvAskAmount.setTextColor(askTextColor);
-                    tvAskPrice.setTextColor(askTextColor);
-                }
+                int bidTextColor = (pref_enableHighlight) ? depthColor(bidAmount) : Color.WHITE;
+                int askTextColor = (pref_enableHighlight) ? depthColor(askAmount) : Color.WHITE;
+
+                tvBidAmount.setTextColor(bidTextColor);
+                tvBidPrice.setTextColor(bidTextColor);
+                tvAskAmount.setTextColor(askTextColor);
+                tvAskPrice.setTextColor(askTextColor);
 
                 // Toggle background color
-                bBackGroundColor = !bBackGroundColor;
-                if (bBackGroundColor)
-                    tr1.setBackgroundColor(Color.BLACK);
-                else
-                    tr1.setBackgroundColor(Color.rgb(31, 31, 31));
+                if (bBackGroundColor = !bBackGroundColor)
+                    newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
-                tr1.addView(tvBidPrice);
-                tr1.addView(tvBidAmount);
-                tr1.addView(tvAskPrice);
-                tr1.addView(tvAskAmount);
+                newRow.addView(tvBidPrice);
+                newRow.addView(tvBidAmount);
+                newRow.addView(tvAskPrice);
+                newRow.addView(tvAskAmount);
 
-                orderbookTable.addView(tr1);
+                orderbookTable.addView(newRow);
             }
         } else {
             failedToDrawUI();
@@ -255,7 +250,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         if (Utils.isConnected(getApplicationContext())) {
             (new OrderbookThread()).start();
         } else {
-            notConnected();
+            notConnected(R.id.bitcoincharts_loadSpinner);
         }
     }
 
@@ -266,7 +261,7 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    startLoading();
+                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
                 }
             });
 
@@ -276,20 +271,6 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
                 mOrderHandler.post(mError);
         }
     }
-
-    private final Runnable mOrderView = new Runnable() {
-        @Override
-        public void run() {
-            drawOrderbookUI();
-        }
-    };
-
-    private final Runnable mError = new Runnable() {
-        @Override
-        public void run() {
-            errorOccured();
-        }
-    };
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -321,9 +302,23 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         // Do nothing...
     }
 
+    private final Runnable mOrderView = new Runnable() {
+        @Override
+        public void run() {
+            drawOrderbookUI();
+        }
+    };
+
+    private final Runnable mError = new Runnable() {
+        @Override
+        public void run() {
+            errorOccured();
+        }
+    };
+
     private void errorOccured() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
@@ -334,41 +329,19 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         }
     }
 
-    private void notConnected() {
 
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, getString(R.string.noInternetConnection), getString(R.string.internetConnection));
-        }
-    }
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner();
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
+        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        // Display error Dialog
+        if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
-        }
-    }
-
-    void startLoading() {
-        TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-        if (t1 != null) t1.removeAllViews();
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.orderbook_loadSpinner);
-        loadingSpinner.setVisibility(View.VISIBLE);
-    }
-
-    void removeLoadingSpinner() {
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.orderbook_loadSpinner);
-        loadingSpinner.setVisibility(View.GONE);
     }
 
     void setOrderBookHeader() {
         TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
-        orderBookHeader.setText(exchange.getExchangeName() + " " + currencyPair.baseCurrency + "/"
-                + currencyPair.counterCurrency);
+        orderBookHeader.setText(exchange.getExchangeName() + " " + currencyPair.toString());
     }
 
     void createExchangeDropdown() {
@@ -382,16 +355,17 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
-        int index = exchangeDropdownValues.indexOf(exchangeName.replace("Exchange",""));
+
+        int index = exchangeDropdownValues.indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
 
     }
 
     void createCurrencyDropdown() {
         // Re-populate the dropdown menu
-        List<String> dropdownValues = Arrays.asList(getResources().getStringArray(
-                getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array",
-                        this.getPackageName())));
+        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
+        String[] currencies = getResources().getStringArray(arrayId);
+        List<String> dropdownValues = Arrays.asList(currencies);
 
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dropdownValues);
@@ -422,13 +396,11 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
         pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
         pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
-        currencyPair = CurrencyUtils.stringToCurrencyPair(
-                prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
         pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
                 true);
         try {
-            pref_orderbookLimiter = Integer.parseInt(prefs.getString(
-                    "orderbookLimiterPref", "100"));
+            pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref", "100"));
         } catch (Exception e) {
             pref_orderbookLimiter = 100;
             // If preference is not set a valid integer set to "100"

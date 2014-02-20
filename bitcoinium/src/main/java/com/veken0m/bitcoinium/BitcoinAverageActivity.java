@@ -1,26 +1,19 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.support.v4.app.NavUtils;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -34,11 +27,10 @@ import java.util.Comparator;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class BitcoinAverageActivity extends SherlockActivity {
+public class BitcoinAverageActivity extends BaseActivity {
 
     private final static Handler mOrderHandler = new Handler();
     final private ArrayList<Ticker> tickers;
-    private Dialog dialog = null;
 
     public BitcoinAverageActivity() {
         tickers = new ArrayList<Ticker>();
@@ -58,19 +50,19 @@ public class BitcoinAverageActivity extends SherlockActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewBitcoinAverage();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewBitcoinAverage();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -113,7 +105,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
     void drawBitcoinAverageUI() {
 
         TableLayout bitcoinAverageTable = (TableLayout) findViewById(R.id.bitcoinaverage_list);
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
         boolean bBackGroundColor = false;
 
@@ -153,7 +145,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
                 // Toggle background color
                 if (bBackGroundColor = !bBackGroundColor)
-                    newRow.setBackgroundColor(Color.rgb(75, 75, 75));
+                    newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
                 newRow.addView(tvSymbol, Utils.symbolParams);
                 newRow.addView(tvLast);
@@ -174,7 +166,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         if (Utils.isConnected(getApplicationContext())) {
             (new bitcoinAverageThread()).start();
         } else {
-            notConnected();
+            notConnected(R.id.bitcoinaverage_loadSpinner);
         }
     }
 
@@ -185,8 +177,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout loadSpinner = (LinearLayout) findViewById(R.id.bitcoinaverage_loadSpinner);
-                    if (loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
+                    startLoading(R.id.bitcoinaverage_list, R.id.bitcoinaverage_loadSpinner);
                 }
             });
             if (getBitcoinAverage())
@@ -194,12 +185,6 @@ public class BitcoinAverageActivity extends SherlockActivity {
             else
                 mOrderHandler.post(mError);
         }
-    }
-
-    // Remove loading spinner
-    void removeLoadingSpinner() {
-        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.bitcoinaverage_loadSpinner);
-        if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
     }
 
     private final Runnable mGraphView = new Runnable() {
@@ -218,7 +203,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     private void errorOccured() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
@@ -227,37 +212,11 @@ public class BitcoinAverageActivity extends SherlockActivity {
         }
     }
 
-    private void notConnected() {
-
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
-        }
-    }
-
     private void failedToDrawUI() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
         if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }

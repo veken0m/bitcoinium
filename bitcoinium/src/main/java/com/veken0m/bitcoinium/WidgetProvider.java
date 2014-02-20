@@ -51,22 +51,20 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
-            int[] widgetIds = new int[0];
-            if (widgetManager != null) {
-                widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
-            }
+            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             readGeneralPreferences(this);
-            notifyUserOfMilli(this);
+            //notifyUserOfMilli(this); //don't think this is needed anymore
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
                     // Load widget configuration
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
 
-                    if (exchangePref == null) continue; // skip to next
+                    if (exchangePref == null) continue; // skip to next widget
+
                     Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String exchangeName = exchange.getExchangeName();

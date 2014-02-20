@@ -37,8 +37,11 @@ public class HomeMenuFragment extends SherlockFragment {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
+        String exchange = getArguments().getString("exchange");
+        if(exchange == "") exchange = prefs.getString("favExchangePref", "bitstamp");
+
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, prefs.getString("favExchangePref", "bitstamp"));
+        buildMenu(view, exchange);
         return view;
     }
 
@@ -89,8 +92,7 @@ public class HomeMenuFragment extends SherlockFragment {
             }
         });
 
-        final Button bitcoinAverageButton = (Button) view
-                .findViewById(R.id.bitcoinaverage);
+        final Button bitcoinAverageButton = (Button) view.findViewById(R.id.bitcoinaverage);
         bitcoinAverageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +101,7 @@ public class HomeMenuFragment extends SherlockFragment {
             }
         });
 
-        final Button minerStatsButton = (Button) view
-                .findViewById(R.id.minerstats);
+        final Button minerStatsButton = (Button) view.findViewById(R.id.minerstats);
         minerStatsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,8 +114,8 @@ public class HomeMenuFragment extends SherlockFragment {
         marketDepth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WebViewerActivity.class);
-                startActivity(intent);
+                Intent webViewerActivity = new Intent(context, WebViewerActivity.class);
+                startActivity(webViewerActivity);
             }
         });
     }

@@ -66,19 +66,16 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         public void buildUpdate() {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, MinerWidgetProvider.class);
-            int[] widgetIds = new int[0];
-            if (widgetManager != null)
-                widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
                     // Load Widget configuration
-                    String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
-                            appWidgetId);
+                    String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this, appWidgetId);
 
                     if (miningPool == null) continue; // skip to next widget
 
@@ -287,21 +284,18 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         private void setTapBehaviour(int appWidgetId, String poolKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
+            Intent intent = new Intent(this, MinerStatsActivity.class);
             if (pref_tapToUpdate) {
-                Intent intent = new Intent(this, MinerWidgetProvider.class);
                 intent.setAction(Constants.REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
             } else {
-                Intent intent = new Intent(this, MinerStatsActivity.class);
                 Bundle tabSelection = new Bundle();
                 tabSelection.putString("poolKey", poolKey);
                 intent.putExtras(tabSelection);
-                pendingIntent = PendingIntent.getActivity(
-                        this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingIntent = PendingIntent.getActivity(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
 
-            views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                    pendingIntent);
+            views.setOnClickPendingIntent(R.id.widgetMinerButton, pendingIntent);
         }
 
         public void updateWidgetTheme(RemoteViews views) {

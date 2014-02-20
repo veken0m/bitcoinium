@@ -12,4 +12,6 @@
     <color name="dark">#101010</color>
     <color name="ics_blue">#33B5E5</color>
 
+    <color name="light_tableRow">#2D2D2D</color>
+
 </resources>   

@@ -3,6 +3,8 @@ package com.veken0m.bitcoinium;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -36,43 +38,12 @@ public class MainActivity extends SherlockFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         initTabbedActionBar();
         // Some hack to make widgets appear on devices without rebooting
         sendBroadcast(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
 
         // KarmaAdsUtils.initAd(this);
-    }
-
-    public void onStart() {
-        super.onStart();
-        selectTabViaBundle();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    public void onPause() {
-        super.onPause();
-        // clear the extra
-        getIntent().removeExtra("exchangeKey");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // getIntent() should always return the most recent
-        setIntent(intent);
-    }
-
-    void selectTabViaBundle() {
-        Bundle extras = getIntent().getExtras();
-        //if (extras != null) selectTab(extras.getString("exchangeKey"));
     }
 
     void initTabbedActionBar() {
@@ -81,68 +52,33 @@ public class MainActivity extends SherlockFragmentActivity {
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
 
-        // Tell the ActionBar we want to use Tabs
-        //actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        //actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_color)));
-        //actionbar.setBackgroundDrawable(color);
+        Bundle extras = getIntent().getExtras();
+        String exchange = (extras != null) ? extras.getString("exchangeKey") : "";
 
-        // Create the actionbar tabs
+        // Tell the ActionBar we want to use Tabs
+        if(!exchange.equals("")){
+            actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light)));
+        }
 
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
+        addTab(actionbar, tabsAdapter,exchange.toLowerCase().replace("exchange",""), HomeMenuFragment.class);
 
-        addTab(actionbar, tabsAdapter, 0, HomeMenuFragment.class, "Home");
         actionbar.show();
     }
 
-    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, int logoResource, Class<? extends Fragment> viewFragment, String identity) {
-        ActionBar.Tab tab = actionbar.newTab().setText(identity);//.setIcon(logoResource);
-        //tab.setIcon(logoResource);
-        tabsAdapter.addTab(tab, viewFragment, null, identity);
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, String identity, Class<? extends Fragment> viewFragment) {
+
+        ActionBar.Tab tab = actionbar.newTab();//.setText(identity);
+
+        int logoId = getResources().getIdentifier(identity + "logo", "drawable", getPackageName());
+        if(logoId != 0) tab.setIcon(logoId);
+
+        Bundle args = new Bundle();
+        args.putString("exchange", identity);
+
+        tabsAdapter.addTab(tab, viewFragment, args, identity);
     }
-
-    /*
-    private void selectTab() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        try {
-            String preferredExchange = prefs.getString("favExchangePref", "bitstamp");
-            //Check if moving from integer index
-            if (preferredExchange.matches("\\d+")) {
-                int preferredExchangeNum = Integer.parseInt(preferredExchange);
-                actionbar.setSelectedNavigationItem(preferredExchangeNum);
-
-                //Migrate to the newer tag index
-                String[] exchangeMap = getResources().getStringArray(R.array.exchangeMigration);
-                Editor editor = prefs.edit();
-                editor.putString("favExchangePref", exchangeMap[preferredExchangeNum]);
-                editor.commit();
-            } else {
-                selectTab(preferredExchange);
-            }
-        } catch (Exception e) {
-            // If preference is not set a valid integer set to "0"
-            Editor editor = prefs.edit();
-            editor.putString("favExchangePref", "bitstamp");
-            editor.commit();
-        }
-    }
-    */
-
-    /*
-    private void selectTab(String key) {
-        try {
-            int tabIndex = tabsAdapter.getIndexForIdentity(key);
-            if (tabIndex >= 0)
-                actionbar.setSelectedNavigationItem(tabIndex);
-            else
-                actionbar.setSelectedNavigationItem(0);
-        } catch (Exception e) {
-            selectTab();
-        }
-    }
-    */
-
 
     /**
      * Obtained from: https://gist.github.com/2424383 This is a helper class
@@ -155,8 +91,8 @@ public class MainActivity extends SherlockFragmentActivity {
      * listens to changes in tabs, and takes care of switch to the correct paged
      * in the ViewPager whenever the selected tab changes.
      */
-    public static class TabsAdapter extends FragmentPagerAdapter implements
-            ViewPager.OnPageChangeListener, ActionBar.TabListener {
+    public static class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
+
         private final Context mContext;
         private final ActionBar mBar;
         private final ViewPager mViewPager;
@@ -174,8 +110,8 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         }
 
-        public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar,
-                           ViewPager pager) {
+        public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar, ViewPager pager) {
+
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mBar = bar;
@@ -184,8 +120,7 @@ public class MainActivity extends SherlockFragmentActivity {
             mViewPager.setOnPageChangeListener(this);
         }
 
-        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,
-                           Bundle args, String ident) {
+        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,Bundle args, String ident) {
             TabInfo info = new TabInfo(clss, args, ident);
             tab.setTag(info);
             tab.setTabListener(this);
@@ -270,6 +205,75 @@ public class MainActivity extends SherlockFragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onStart() {
+        super.onStart();
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+            EasyTracker.getInstance(this).activityStart(this);
+        }
+    }
+
+    public void onPause() {
+        super.onPause();
+        // clear the extra
+        getIntent().removeExtra("exchangeKey");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // getIntent() should always return the most recent
+        setIntent(intent);
+    }
+
+        /*
+    private void selectTab() {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        try {
+            String preferredExchange = prefs.getString("favExchangePref", "bitstamp");
+            //Check if moving from integer index
+            if (preferredExchange.matches("\\d+")) {
+                int preferredExchangeNum = Integer.parseInt(preferredExchange);
+                actionbar.setSelectedNavigationItem(preferredExchangeNum);
+
+                //Migrate to the newer tag index
+                String[] exchangeMap = getResources().getStringArray(R.array.exchangeMigration);
+                Editor editor = prefs.edit();
+                editor.putString("favExchangePref", exchangeMap[preferredExchangeNum]);
+                editor.commit();
+            } else {
+                selectTab(preferredExchange);
+            }
+        } catch (Exception e) {
+            // If preference is not set a valid integer set to "0"
+            Editor editor = prefs.edit();
+            editor.putString("favExchangePref", "bitstamp");
+            editor.commit();
+        }
+    }
+    */
+
+    /*
+    private void selectTab(String key) {
+        try {
+            int tabIndex = tabsAdapter.getIndexForIdentity(key);
+            if (tabIndex >= 0)
+                actionbar.setSelectedNavigationItem(tabIndex);
+            else
+                actionbar.setSelectedNavigationItem(0);
+        } catch (Exception e) {
+            selectTab();
+        }
+    }
+    */
 
 
 }

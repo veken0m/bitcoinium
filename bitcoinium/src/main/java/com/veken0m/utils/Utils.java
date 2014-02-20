@@ -1,6 +1,7 @@
 
 package com.veken0m.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -195,6 +197,14 @@ public class Utils {
         divider.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
         divider.setBackgroundColor(Color.rgb(51, 51, 51));
         table.addView(divider);
+    }
+
+    public static Boolean checkWiFiConnected(Context context) {
+
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
     }
 
 }

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
@@ -18,13 +19,14 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
+import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 
-class BaseWidgetProvider extends AppWidgetProvider {
+public class BaseWidgetProvider extends AppWidgetProvider {
 
     /**
      * List of preference variables
@@ -139,14 +141,6 @@ class BaseWidgetProvider extends AppWidgetProvider {
         context.startActivity(i);
     }
 
-    static Boolean checkWiFiConnected(Context context) {
-
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == DetailedState.CONNECTED));
-    }
-
     static void createNotification(Context context, float last, String exchange, int NOTIFY_ID, CurrencyPair pair) {
 
         String baseCurrency = pair.baseCurrency;
@@ -215,4 +209,5 @@ class BaseWidgetProvider extends AppWidgetProvider {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
         mNotificationManager.cancel(100 + NOTIFY_ID);
     }
+
 }
