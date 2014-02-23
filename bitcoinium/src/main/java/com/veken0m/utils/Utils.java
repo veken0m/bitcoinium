@@ -1,7 +1,6 @@
 
 package com.veken0m.utils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,9 +8,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.format.DateFormat;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -135,6 +131,11 @@ public class Utils {
         return DateFormat.format("MMM dd", dateFormatted) + " @ " + DateFormat.getTimeFormat(ctxt).format(dateFormatted);
     }
 
+    public static void setTextViewParams(TextView tv, BigMoney value) {
+
+        setTextViewParams(tv, value.getAmount());
+    }
+
     public static void setTextViewParams(TextView tv, BigDecimal value) {
 
         LayoutParams params = new TableRow.LayoutParams(
@@ -145,11 +146,6 @@ public class Utils {
         tv.setLayoutParams(params);
         tv.setTextColor(Color.WHITE);
         tv.setGravity(1);
-    }
-
-    public static void setTextViewParams(TextView tv, BigMoney value) {
-
-        setTextViewParams(tv, value.getAmount());
     }
 
     public static String formatHashrate(float hashRate) {
@@ -188,15 +184,6 @@ public class Utils {
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
-    }
-
-    // Inserts a divider to separate rows in table
-    public static void insertDivider(Context context, TableLayout table) {
-
-        View divider = new View(context);
-        divider.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
-        divider.setBackgroundColor(Color.rgb(51, 51, 51));
-        table.addView(divider);
     }
 
     public static Boolean checkWiFiConnected(Context context) {
