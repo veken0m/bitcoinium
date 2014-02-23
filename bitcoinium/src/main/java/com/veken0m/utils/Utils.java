@@ -66,14 +66,14 @@ public class Utils {
         }
     }
 
-    public static String formatWidgetMoney(float amount, CurrencyPair pair,
-                                           boolean includeCurrencyCode, boolean displayInMilliBtc) {
+    public static String formatWidgetMoney(float amount, CurrencyPair pair, boolean includeCurrencyCode, boolean displayInMilliBtc) {
 
         String symbol = getCurrencySymbol(pair.counterCurrency);
         int numOfDecimals = 2;
 
         // If BTC and user wants price in mBTC
-        if (displayInMilliBtc && pair.baseCurrency.equalsIgnoreCase(Currencies.BTC)) {
+        boolean isBTC = pair.baseCurrency.equalsIgnoreCase(Currencies.BTC);
+        if (displayInMilliBtc && isBTC) {
             amount /= 1000;
             numOfDecimals = 3;
         }
@@ -85,7 +85,7 @@ public class Utils {
             numOfDecimals--;
 
         // If too small, scale the value
-        if (amount < 0.1) {
+        if (amount < 0.1 && !isBTC) {
             amount *= 1000;
             currencyCode = currencyCode.replace(" ", " m");
         }
