@@ -90,6 +90,7 @@
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitstamp-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />
     <orderEntry type="module" module-name="androidColorPickerPreference" exported="" />

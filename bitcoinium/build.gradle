@@ -73,7 +73,7 @@ dependencies {
         compile "com.xeiam.xchange:xchange-btcchina:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitstamp:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcurex:$xchangeVersion"
-        // compile "com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-kraken:$xchangeVersion"

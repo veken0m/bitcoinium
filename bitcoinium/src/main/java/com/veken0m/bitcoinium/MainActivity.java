@@ -55,12 +55,6 @@ public class MainActivity extends SherlockFragmentActivity {
         Bundle extras = getIntent().getExtras();
         String exchange = (extras != null) ? extras.getString("exchangeKey") : "";
 
-        // Tell the ActionBar we want to use Tabs
-        if(!exchange.equals("")){
-            actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light)));
-        }
-
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
         addTab(actionbar, tabsAdapter,exchange.toLowerCase().replace("exchange",""), HomeMenuFragment.class);
 
@@ -73,6 +67,12 @@ public class MainActivity extends SherlockFragmentActivity {
 
         int logoId = getResources().getIdentifier(identity + "logo", "drawable", getPackageName());
         if(logoId != 0) tab.setIcon(logoId);
+
+        // Tell the ActionBar we want to use Tabs
+        if(!identity.equals("") && !identity.equals("bitcoinaverage") ){
+            actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light)));
+        }
 
         Bundle args = new Bundle();
         args.putString("exchange", identity);

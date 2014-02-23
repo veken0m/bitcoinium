@@ -70,15 +70,19 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         actionbar.show();
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
+        if (extras != null ) {
             exchangeName = extras.getString("exchange");
-
-        exchange = new Exchange(this, exchangeName);
-
-        readPreferences(this);
+            exchange = new Exchange(this, exchangeName);
+        } else {
+            // TODO: generation error message
+            exchangeName = "Bitstamp";
+            exchange = new Exchange(this, "bitstamp");
+        }
 
         setContentView(R.layout.graph);
         createExchangeDropdown();
+        readPreferences(this);
+
         createCurrencyDropdown();
         viewGraph();
 
