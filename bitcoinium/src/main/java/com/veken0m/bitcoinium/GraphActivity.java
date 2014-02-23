@@ -20,11 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
@@ -288,7 +286,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged){
-                    exchange = new Exchange(this, exchangeName.replace("-","") + "Exchange");
+                    exchange = new Exchange(this, exchangeName.replace("-","").replace(".",""));
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
                 }
@@ -313,6 +311,10 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
         exchangeDropdownValues.remove("BitcoinAverage"); // Remove BitcoinAverage, unsupported
         exchangeDropdownValues.remove("CampBX"); // Remove CampBX, unsupported
+        exchangeDropdownValues.remove("Justcoin"); // Remove Justcoin, unsupported
+        exchangeDropdownValues.remove("VirCurEx"); // Remove VirCurEx, unsupported
+        exchangeDropdownValues.remove("BTER"); // Remove BTER, unsupported
+        exchangeDropdownValues.remove("Coinbase"); // Remove Coinbase, unsupported
 
         Spinner spinner = (Spinner) findViewById(R.id.graph_exchange_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchangeDropdownValues);

@@ -19,6 +19,7 @@ import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
@@ -52,23 +53,16 @@ public class WidgetConfigureActivity extends PreferenceActivity {
             widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
             prefCategory = (PreferenceCategory) findPreference("priceWidgetPreferences");
 
-            currencyPref.put("MtGox", findPreference("mtgoxWidgetCurrencyPref"));
-            currencyPref.put("VirtEx", findPreference("virtexWidgetCurrencyPref"));
-            currencyPref.put("BTCE", findPreference("btceWidgetCurrencyPref"));
-            currencyPref.put("Bitstamp", findPreference("bitstampWidgetCurrencyPref"));
-            currencyPref.put("CampBX", findPreference("campbxWidgetCurrencyPref"));
-            currencyPref.put("BTCChina", findPreference("btcchinaWidgetCurrencyPref"));
-            currencyPref.put("Bitcurex", findPreference("bitcurexWidgetCurrencyPref"));
-            currencyPref.put("Kraken", findPreference("krakenWidgetCurrencyPref"));
-            currencyPref.put("Bitfinex", findPreference("bitfinexWidgetCurrencyPref"));
-            currencyPref.put("BitcoinAverage", findPreference("bitcoinaverageWidgetCurrencyPref"));
+            String[] exchangeID = getResources().getStringArray(R.array.exchangeID);
 
             // Disable all the currency pickers and enable the selected exchange
-            for (Preference value : currencyPref.values()) {
-                prefCategory.removePreference(value);
+            for (int i = 0; i < exchangeID.length; i++) {
+                //if(exchangeID[i].equals("bter")) continue;
+                currencyPref.put(exchangeID[i], findPreference(exchangeID[i] + "WidgetCurrencyPref"));
+                prefCategory.removePreference(currencyPref.get(exchangeID[i]));
             }
 
-            String sExchange = (widgetExchangePref.getEntry() != null) ? widgetExchangePref.getEntry().toString().replace("Exchange", "").replace("-", "") : "";
+            String sExchange = (widgetExchangePref.getValue() != null) ? widgetExchangePref.getValue().toString() : "bitstamp";
             prefCategory.addPreference(currencyPref.get(sExchange));
 
         } catch (Exception e) {
@@ -98,7 +92,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                                 prefCategory.removePreference(value);
 
                             // Enable the selected exchange
-                            prefCategory.addPreference(currencyPref.get(newValue.toString().replace("Exchange", "").replace("-", "")));
+                            prefCategory.addPreference(currencyPref.get(newValue.toString()));
 
                         } catch (Exception e) {
                             e.printStackTrace();

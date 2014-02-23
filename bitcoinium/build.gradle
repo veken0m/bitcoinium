@@ -78,6 +78,13 @@ dependencies {
         compile "com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-kraken:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitfinex:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-justcoin:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-vircurex:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-bter:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-coinbase:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-cexio:$xchangeVersion"
+        //compile "com.xeiam.xchange:xchange-cryptsy:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"
     } else {
         // Used for testing self-compiled XChange jars

@@ -283,7 +283,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged){
-                    exchange = new Exchange(this, exchangeName.replace("-","") + "Exchange");
+                    exchange = new Exchange(this, exchangeName.replace("-","").replace(".",""));
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
                 }
@@ -348,6 +348,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         // Re-populate the dropdown menu
         List<String> exchangeDropdownValues = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchanges)));
         exchangeDropdownValues.remove("BitcoinAverage"); // Remove BitcoinAverage, unsupported
+        exchangeDropdownValues.remove("Coinbase"); // Remove Coinbase, unsupported
 
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchangeDropdownValues);

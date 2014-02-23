@@ -240,6 +240,7 @@
     <string name="priceGraphNotSupported">This exchange does not currently support Price Graph</string>
     <string name="working">Working…</string>
     <string name="retreivingMinerStats">Retrieving Miner Stats</string>
+    <string name="selectOtherExchange">Please select another exchange</string>
 
 
 </resources>
