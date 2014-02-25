@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.veken0m.bitcoinium"
-          android:versionCode="51"
+          android:versionCode="52"
           android:versionName="@string/version_name">
 
     <uses-sdk
@@ -16,7 +16,7 @@
 
     <application
         android:allowBackup="true"
-        android:debuggable="false"
+        android:debuggable="true"
         android:icon="@drawable/bitcoiniumlogo"
         android:label="@string/app_name"
         android:theme="@style/Theme.Bitcoinium">

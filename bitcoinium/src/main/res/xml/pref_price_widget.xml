@@ -89,18 +89,6 @@
             android:key="justcoinWidgetCurrencyPref"
             android:summary="@string/pref_currency_summary"
             android:title="Justcoin Widget Currency"/>
-        <!--Preference
-            android:key="cryptotradeWidgetCurrencyPref"
-            android:summary="@string/selectOtherExchange"
-            android:title="CryptoTrade Widget NOT SUPPORTED"/-->
-        <Preference
-            android:key="vircurexWidgetCurrencyPref"
-            android:summary="@string/selectOtherExchange"
-            android:title="VirCurEx Widget NOT SUPPORTED"/>
-        <Preference
-            android:key="bterWidgetCurrencyPref"
-            android:summary="@string/selectOtherExchange"
-            android:title="BTER Widget NOT SUPPORTED"/>
         <ListPreference
             android:defaultValue="LTC/BTC"
             android:entries="@array/cexiocurrencies"

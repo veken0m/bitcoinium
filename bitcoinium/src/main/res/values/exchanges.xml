@@ -1,52 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Arrays for Prefered Exchange preferences -->
+    <!-- Array for Exchanges with supported Ticker Marketdata API -->
     <string-array name="exchanges">
         <item>BitcoinAverage</item>
-        <item>Bitstamp</item>
-        <item>Kraken</item>
-        <item>VirtEx</item>
-        <item>BTC-e</item>
-        <item>CampBX</item>
-        <item>BTCChina</item>
         <item>Bitcurex</item>
         <item>Bitfinex</item>
-        <item>Justcoin</item>
-        <item>VirCurEx</item>
-        <!--item>Cryptotrade</item-->
-        <item>BTER</item>
-        <item>Coinbase</item>
+        <item>Bitstamp</item>
+        <item>BTC-e</item>
+        <item>BTCChina</item>
+        <item>CampBX</item>
         <item>CEX.IO</item>
-        <!--item>Cryptsy</item-->
+        <item>Coinbase</item>
+        <item>Justcoin</item>
+        <item>Kraken</item>
         <item>MtGox</item>
-        <!--
-        <item>BitcoinCentral</item> 
-        <item>Bitfloor</item> 
-        <item>Bitcoin24</item>
-        -->
+        <item>VirtEx</item>
+        <!--item>Cryptsy</item-->
+        <!--item>VirCurEx</item-->
+        <!--item>Cryptotrade</item-->
+        <!--item>BTER</item-->
     </string-array>
+
     <string-array name="exchangeID">
         <item>bitcoinaverage</item>
-        <item>bitstamp</item>
-        <item>kraken</item>
-        <item>virtex</item>
-        <item>btce</item>
-        <item>campbx</item>
-        <item>btcchina</item>
         <item>bitcurex</item>
         <item>bitfinex</item>
-        <item>justcoin</item>
-        <item>vircurex</item>
-        <!--item>cryptotrade</item-->
-        <item>bter</item>
-        <item>coinbase</item>
+        <item>bitstamp</item>
+        <item>btce</item>
+        <item>btcchina</item>
+        <item>campbx</item>
         <item>cexio</item>
-        <!--item>Cryptsy</item-->
+        <item>coinbase</item>
+        <item>justcoin</item>
+        <item>kraken</item>
         <item>mtgox</item>
-        <!-- <item>bitcoincentral</item>
-        <item>bitfloor</item>
-        <item>bitcoin24</item>-->
+        <item>virtex</item>
+        <!--item>Cryptsy</item-->
+        <!--item>vircurex</item-->
+        <!--item>cryptotrade</item-->
+        <!--item>bter</item-->
+    </string-array>
+
+    <!-- Array for Exchanges with supported Depth Marketdata API -->
+    <string-array name="exchangesOrderbook">
+        <item>Bitcurex</item>
+        <item>Bitfinex</item>
+        <item>Bitstamp</item>
+        <item>BTER</item>
+        <item>BTC-e</item>
+        <item>BTCChina</item>
+        <item>CampBX</item>
+        <item>CEX.IO</item>
+        <item>Kraken</item>
+        <item>Justcoin</item>
+        <item>MtGox</item>
+        <item>VirCurEx</item>
+        <item>VirtEx</item>
+        <!--item>BitcoinAverage</item-->
+        <!--item>Coinbase</item-->
+        <!--item>Cryptsy</item-->
+        <!--item>Cryptotrade</item-->
+    </string-array>
+
+    <!-- Array for Exchanges with supported Trade Marketdata API -->
+    <string-array name="exchangesTrades">
+        <item>Bitcurex</item>
+        <item>Bitfinex</item>
+        <item>Bitstamp</item>
+        <item>BTC-e</item>
+        <item>BTCChina</item>
+        <item>CEX.IO</item>
+        <item>Kraken</item>
+        <item>MtGox</item>
+        <item>VirtEx</item>
+        <!--item>BitcoinAverage</item-->
+        <!--item>CampBX</item-->
+        <!--item>Justcoin</item-->
+        <!--item>Coinbase</item-->
+        <!--item>Cryptsy</item-->
+        <!--item>VirCurEx</item-->
+        <!--item>Cryptotrade</item-->
+        <!--item>BTER</item-->
     </string-array>
 
     <!-- Arrays that define properties of Exchanges -->
@@ -55,18 +90,14 @@
         <item>ExchangeName</item>
         <item>xchangeClassName</item>
         <item>mainCurrency</item>
-        <item>logo</item>
         <item>identifier</item>
-        <item>supports latest trades</item>
         <item>ticker supports bid/ask</item>
     -->
     <string-array name="mtgox">
         <item>MtGox</item>
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>BTC/USD</item>
-        <item>mtgoxlogo</item>
         <item>mtgox</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -76,7 +107,6 @@
         <item>BTC/CAD</item>
         <item>virtexlogo</item>
         <item>virtex</item>
-        <item>true</item>
         <item>false</item>
     </string-array>
 
@@ -84,9 +114,7 @@
         <item>BTC-E</item>
         <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
         <item>BTC/USD</item>
-        <item>btcelogo</item>
         <item>btce</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -94,9 +122,7 @@
         <item>Bitstamp</item>
         <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
         <item>BTC/USD</item>
-        <item>bitstamplogo</item>
         <item>bitstamp</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -104,10 +130,7 @@
         <item>CampBX</item>
         <item>com.xeiam.xchange.campbx.CampBXExchange</item>
         <item>BTC/USD</item>
-        <item>campbxlogo</item>
         <item>campbx</item>
-        <item>false</item>
-        <!-- Not implemented -->
         <item>true</item>
     </string-array>
 
@@ -115,9 +138,7 @@
         <item>BTCChina</item>
         <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
         <item>BTC/CNY</item>
-        <item>btcchinalogo</item>
         <item>btcchina</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -125,9 +146,7 @@
         <item>Bitcurex</item>
         <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
         <item>BTC/PLN</item>
-        <item>bitcurexlogo</item>
         <item>bitcurex</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -135,9 +154,7 @@
         <item>Kraken</item>
         <item>com.xeiam.xchange.kraken.KrakenExchange</item>
         <item>BTC/EUR</item>
-        <item>krakenicon</item>
         <item>kraken</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -145,9 +162,7 @@
         <item>Bitfinex</item>
         <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
         <item>BTC/USD</item>
-        <item>bitfinexlogo</item>
         <item>bitfinex</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -155,9 +170,7 @@
         <item>BTCAvg</item>
         <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
         <item>BTC/USD</item>
-        <item>bitcoinicon</item>
         <item>bitcoinaverage</item>
-        <item>false</item>
         <item>true</item>
     </string-array>
 
@@ -165,9 +178,7 @@
         <item>VirCurEx</item>
         <item>com.xeiam.xchange.vircurex.VircurexExchange</item>
         <item>BTC/USD</item>
-        <item>vircurexicon</item>
         <item>vircurex</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -175,9 +186,7 @@
         <item>Cryptotrade</item>
         <item>com.xeiam.xchange.cryptotrade.CryptoTradeExchange</item>
         <item>NMC/BTC</item>
-        <item>cryptotradeicon</item>
         <item>cryptotrade</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -185,9 +194,7 @@
         <item>BTER</item>
         <item>com.xeiam.xchange.bter.BTERExchange</item>
         <item>BTC/CNY</item>
-        <item>btericon</item>
         <item>bter</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -195,9 +202,7 @@
         <item>Coinbase</item>
         <item>com.xeiam.xchange.coinbase.CoinbaseExchange</item>
         <item>BTC/USD</item>
-        <item>coinbaseicon</item>
         <item>coinbase</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -205,9 +210,7 @@
         <item>CEX.IO</item>
         <item>com.xeiam.xchange.cexio.CexIOExchange</item>
         <item>LTC/BTC</item>
-        <item>cexioicon</item>
         <item>cexio</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -215,9 +218,7 @@
         <item>Justcoin</item>
         <item>com.xeiam.xchange.justcoin.JustcoinExchange</item>
         <item>BTC/EUR</item>
-        <item>justcoinicon</item>
         <item>justcoin</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -225,9 +226,7 @@
         <item>Cryptsy</item>
         <item>com.xeiam.xchange.cryptsy.CryptsyExchange</item>
         <item>BTC/USD</item>
-        <item>cryptsyicon</item>
         <item>cryptsy</item>
-        <item>true</item>
         <item>true</item>
     </string-array>
 
@@ -413,12 +412,21 @@
     <!-- Too many currencies... add by request -->
     <string-array name="coinbasecurrencies">
         <item>BTC/USD</item>
-        <item>BTC/CAD</item>
-        <item>BTC/CNY</item>
         <item>BTC/EUR</item>
-        <item>BTC/GBP</item>
         <item>BTC/AUD</item>
+        <item>BTC/CNY</item>
+        <item>BTC/CAD</item>
+        <item>BTC/BRL</item>
+        <item>BTC/GBP</item>
+        <item>BTC/CZK</item>
+        <item>BTC/ILS</item>
+        <item>BTC/NOK</item>
+        <item>BTC/JPY</item>
+        <item>BTC/NZD</item>
+        <item>BTC/PLN</item>
         <item>BTC/RUB</item>
+        <item>BTC/SEK</item>
+        <item>BTC/ZAR</item>
     </string-array>
 
 

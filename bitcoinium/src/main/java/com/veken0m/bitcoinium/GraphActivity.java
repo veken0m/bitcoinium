@@ -306,23 +306,17 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     }
 
     void createExchangeDropdown() {
+
         // Re-populate the dropdown menu
-        List<String> exchangeDropdownValues = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchanges)));
-
-        exchangeDropdownValues.remove("BitcoinAverage"); // Remove BitcoinAverage, unsupported
-        exchangeDropdownValues.remove("CampBX"); // Remove CampBX, unsupported
-        exchangeDropdownValues.remove("Justcoin"); // Remove Justcoin, unsupported
-        exchangeDropdownValues.remove("VirCurEx"); // Remove VirCurEx, unsupported
-        exchangeDropdownValues.remove("BTER"); // Remove BTER, unsupported
-        exchangeDropdownValues.remove("Coinbase"); // Remove Coinbase, unsupported
-
+        String[] exchanges = getResources().getStringArray(R.array.exchangesTrades);
         Spinner spinner = (Spinner) findViewById(R.id.graph_exchange_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchangeDropdownValues);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
-        int index = exchangeDropdownValues.indexOf(exchange.getExchangeName());
+
+        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
     }
 
@@ -330,17 +324,16 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         // Re-populate the dropdown menu
         int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
         String[] currencies = getResources().getStringArray(arrayId);
-        List<String> dropdownValues = Arrays.asList(currencies);
 
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dropdownValues);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
         if(exchangeChanged){
-            int index = dropdownValues.indexOf(currencyPair.toString());
+            int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
             spinner.setSelection(index);
         }
     }
