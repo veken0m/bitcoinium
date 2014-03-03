@@ -20,10 +20,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class WidgetConfigureActivity extends SherlockPreferenceActivity {
 

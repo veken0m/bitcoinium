@@ -57,6 +57,33 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".preferences.OrderbookPreferenceActivity"
+            android:parentActivityName=".OrderbookActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Orderbook Preferences">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OrderbookActivity" />
+        </activity>
+        <activity
+            android:name=".preferences.GraphPreferenceActivity"
+            android:parentActivityName=".GraphActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Graph Preferences">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GraphActivity" />
+        </activity>
+        <activity
+            android:name=".preferences.MinerPreferenceActivity"
+            android:parentActivityName=".MinerStatsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Miner Preferences">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OrderbookActivity" />
+        </activity>
+        <activity
             android:name=".BitcoinChartsActivity"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -95,7 +122,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".PreferencesActivity"
+            android:name=".preferences.PreferencesActivity"
             android:parentActivityName=".MainActivity"
             android:label="Preferences">
             <meta-data
@@ -103,7 +130,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".PriceAlarmPreferencesActivity"
+            android:name=".preferences.PriceAlarmPreferencesActivity"
             android:parentActivityName=".MainActivity"
             android:label="Price Alarm Settings">
             <meta-data

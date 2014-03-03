@@ -27,6 +27,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.preferences.GraphPreferenceActivity;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -102,7 +103,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_preferences:
-                startActivity(new Intent(this, PreferencesActivity.class));
+                startActivity(new Intent(this, GraphPreferenceActivity.class));
                 return true;
             case R.id.action_refresh:
                 viewGraph();

@@ -17,6 +17,8 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
@@ -121,6 +123,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         createTickerNotif(pair, pairId, lastString, exchangeName, exchangeKey);
 
                     } catch (Exception e) {
+                        e.printStackTrace();
 
                         if (pref_enableWidgetCustomization)
                             views.setTextColor(R.id.label, pref_widgetRefreshFailedColor);

@@ -31,6 +31,8 @@ import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
 import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
+import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
 
 import org.apache.http.HttpResponse;
@@ -225,7 +227,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_preferences:
-                startActivity(new Intent(this, PreferencesActivity.class));
+                startActivity(new Intent(this, MinerPreferenceActivity.class));
                 return true;
             case R.id.action_refresh:
                 // TODO: implement refresh mechanism

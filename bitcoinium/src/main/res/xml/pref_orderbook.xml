@@ -1,9 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="OrderBook Settings">
-        <PreferenceScreen
-            android:summary="Adjust liquidity highlighting and rendering settings"
-            android:title="OrderBook Settings">
             <PreferenceCategory android:title="OrderBook Settings">
                 <CheckBoxPreference
                     android:defaultValue="true"
@@ -44,7 +40,5 @@
                     android:summary="@string/pref_highlight_red"
                     android:title="@string/lowDepth"/>
             </PreferenceCategory>
-        </PreferenceScreen>
-    </PreferenceCategory>
 
 </PreferenceScreen>

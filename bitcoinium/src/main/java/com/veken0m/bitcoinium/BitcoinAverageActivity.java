@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;

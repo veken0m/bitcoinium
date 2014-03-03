@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.bitcoinium.preferences;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.utils.Constants;
 
 public class PriceAlarmPreferencesActivity extends PreferenceActivity {

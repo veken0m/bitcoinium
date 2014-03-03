@@ -19,6 +19,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
 
 import java.util.ArrayList;
 // import com.veken0m.utils.KarmaAdsUtils;

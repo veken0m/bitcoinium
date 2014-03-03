@@ -29,6 +29,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -38,7 +39,6 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -109,7 +109,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_preferences:
-                startActivity(new Intent(this, PreferencesActivity.class));
+                startActivity(new Intent(this, OrderbookPreferenceActivity.class));
                 return true;
             case R.id.action_refresh:
                 viewOrderbook();
@@ -329,8 +329,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         }
     }
 
-
-
     private void failedToDrawUI() {
 
         removeLoadingSpinner(R.id.orderbook_loadSpinner);
@@ -413,6 +411,15 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        readPreferences(this);
+        createExchangeDropdown();
+        viewOrderbook();
     }
 
     @Override

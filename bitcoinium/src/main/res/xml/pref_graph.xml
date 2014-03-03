@@ -1,9 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/priceGraphSettings">
-        <PreferenceScreen
-            android:summary="@string/viewWindowScaling"
-            android:title="@string/priceGraphSettings">
             <PreferenceCategory android:title="@string/priceGraphSettings">
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -11,7 +8,6 @@
                     android:summary="@string/pref_graph_scale_summary"
                     android:title="@string/viewWindowScaling"/>
             </PreferenceCategory>
-        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

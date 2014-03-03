@@ -1,5 +1,5 @@
 
-package com.veken0m.bitcoinium;
+package com.veken0m.bitcoinium.preferences;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.veken0m.bitcoinium.MinerWidgetProvider;
+import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.utils.Constants;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
@@ -33,8 +36,6 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
         addPreferencesFromResource(R.xml.pref_price_alarm_category);
         addPreferencesFromResource(R.xml.pref_notfication_tickers);
         addPreferencesFromResource(R.xml.pref_miner);
-        addPreferencesFromResource(R.xml.pref_orderbook);
-        addPreferencesFromResource(R.xml.pref_graph);
         addPreferencesFromResource(R.xml.pref_about);
 
         Preference devEmailPref = findPreference("devEmailPref");
