@@ -105,7 +105,6 @@
         <item>VirtEx</item>
         <item>com.xeiam.xchange.virtex.VirtExExchange</item>
         <item>BTC/CAD</item>
-        <item>virtexlogo</item>
         <item>virtex</item>
         <item>false</item>
     </string-array>

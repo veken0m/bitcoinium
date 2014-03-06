@@ -40,6 +40,7 @@ import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -150,7 +151,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         OrderBook orderbook;
         try {
-            orderbook = marketData.getOrderBook(currencyPair.baseCurrency, currencyPair.counterCurrency);
+            orderbook = marketData.getOrderBook(currencyPair);
         } catch (IOException e) {
             return false;
         }
@@ -184,11 +185,24 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
             boolean bBackGroundColor = true;
 
-            String currencySymbolBTC, currencySymbol;
-            currencySymbolBTC = currencySymbol = "";
+            String currencySymbolBTC, currencySymbol, unitSymbol;
+            currencySymbolBTC = currencySymbol = unitSymbol = "";
+
+            //try{
+            //if(listBids.get(0).getLimitPrice().getAmount().floatValue() < 0.001
+             //       || listAsks.get(0).getLimitPrice().getAmount().floatValue() < 0.001){
+             //   bidPrice *= 1000;
+             //   askPrice *= 1000;
+             //   currencySymbolBTC = "m" + currencySymbolBTC;
+            //}
+            //} catch (Exception e){
+            //    unitSymbol = "";
+             //   e.printStackTrace();
+           // }
+
             if (pref_showCurrencySymbol) {
                 currencySymbolBTC = " " + currencyPair.baseCurrency;
-                currencySymbol = Utils.getCurrencySymbol(currencyPair.counterCurrency);
+                currencySymbol = CurrencyUtils.getSymbol(currencyPair.counterCurrency);
             }
 
             for (int i = 0; i < listBids.size(); i++) {
@@ -201,22 +215,22 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 final LimitOrder limitorderBid = listBids.get(i);
                 final LimitOrder limitorderAsk = listAsks.get(i);
 
-                float bidPrice = limitorderBid.getLimitPrice().getAmount().floatValue();
+                float bidPrice = limitorderBid.getLimitPrice().floatValue();
                 float bidAmount = limitorderBid.getTradableAmount().floatValue();
-                float askPrice = limitorderAsk.getLimitPrice().getAmount().floatValue();
+                float askPrice = limitorderAsk.getLimitPrice().floatValue();
                 float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, false) + currencySymbolBTC);
+                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, true) + currencySymbolBTC);
                 tvBidAmount.setLayoutParams(Utils.symbolParams);
                 tvBidAmount.setGravity(Gravity.CENTER);
-                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, false) + currencySymbolBTC);
+                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, true) + currencySymbolBTC);
                 tvAskAmount.setLayoutParams(Utils.symbolParams);
                 tvAskAmount.setGravity(Gravity.CENTER);
 
-                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, false));
+                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, true));
                 tvBidPrice.setLayoutParams(Utils.symbolParams);
                 tvBidPrice.setGravity(Gravity.CENTER);
-                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, false));
+                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, true));
                 tvAskPrice.setLayoutParams(Utils.symbolParams);
                 tvAskPrice.setGravity(Gravity.CENTER);
 

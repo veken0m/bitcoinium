@@ -18,6 +18,7 @@ import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
@@ -89,7 +90,7 @@ public class BitcoinAverageActivity extends BaseActivity {
             for (String currency : Constants.BITCOINAVERAGE_CURRENCIES) {
 
                 try {
-                    tickers.add(pollingService.getTicker("BTC", currency));
+                    tickers.add(pollingService.getTicker(new CurrencyPair("BTC", currency)));
                 } catch (IOException e) {
                     // Skip ticker and keep looping
                 }
@@ -134,7 +135,7 @@ public class BitcoinAverageActivity extends BaseActivity {
                 final TextView tvAsk = new TextView(this);
                 // final TextView tvAvg = new TextView(this);
 
-                tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
+                tvSymbol.setText(ticker.getCurrencyPair().counterCurrency);
                 tvSymbol.setTextColor(Color.WHITE);
                 Utils.setTextViewParams(tvLast, ticker.getLast());
                 Utils.setTextViewParams(tvVolume, ticker.getVolume());

@@ -98,10 +98,10 @@ public class WidgetProvider extends BaseWidgetProvider {
                         Ticker ticker = ExchangeFactory.INSTANCE
                                 .createExchange(exchange.getClassName())
                                 .getPollingMarketDataService()
-                                .getTicker(pair.baseCurrency, pair.counterCurrency);
+                                .getTicker(pair);
 
                         // Retrieve values from ticker
-                        float lastFloat = ticker.getLast().getAmount().floatValue();
+                        float lastFloat = ticker.getLast().floatValue();
                         String lastString = Utils.formatWidgetMoney(lastFloat, pair, true,
                                 pref_pricesInMilliBtc);
 
@@ -203,9 +203,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public void setBidAsk(Ticker ticker, RemoteViews views, CurrencyPair pair) {
 
-            String bidString = Utils.formatWidgetMoney(ticker.getBid().getAmount().floatValue(),
+            String bidString = Utils.formatWidgetMoney(ticker.getBid().floatValue(),
                     pair, false, pref_pricesInMilliBtc);
-            String askString = Utils.formatWidgetMoney(ticker.getAsk().getAmount().floatValue(),
+            String askString = Utils.formatWidgetMoney(ticker.getAsk().floatValue(),
                     pair, false, pref_pricesInMilliBtc);
 
             if (pref_enableWidgetCustomization) {
@@ -220,9 +220,9 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public void setHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair) {
 
-            String highString = Utils.formatWidgetMoney(ticker.getHigh().getAmount().floatValue(),
+            String highString = Utils.formatWidgetMoney(ticker.getHigh().floatValue(),
                     pair, false, pref_pricesInMilliBtc);
-            String lowString = Utils.formatWidgetMoney(ticker.getLow().getAmount().floatValue(),
+            String lowString = Utils.formatWidgetMoney(ticker.getLow().floatValue(),
                     pair, false, pref_pricesInMilliBtc);
 
             if (pref_enableWidgetCustomization) {

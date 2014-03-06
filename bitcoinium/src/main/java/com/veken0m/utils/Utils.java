@@ -16,16 +16,11 @@ import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 
-import org.joda.money.BigMoney;
-import org.joda.money.CurrencyUnit;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class Utils {
 
@@ -64,7 +59,7 @@ public class Utils {
 
     public static String formatWidgetMoney(float amount, CurrencyPair pair, boolean includeCurrencyCode, boolean displayInMilliBtc) {
 
-        String symbol = getCurrencySymbol(pair.counterCurrency);
+        String symbol = CurrencyUtils.getSymbol(pair.counterCurrency);
         int numOfDecimals = 2;
 
         // If BTC and user wants price in mBTC
@@ -87,20 +82,6 @@ public class Utils {
         }
 
         return symbol + formatDecimal(amount, numOfDecimals, false) + currencyCode;
-    }
-
-    public static String getCurrencySymbol(String currencyCode) {
-
-        String symbol = "";
-
-        List<String> ignoredCurrencies = Arrays.asList("DKK", "BTC", "LTC", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
-
-        if (!(ignoredCurrencies.contains(currencyCode))) {
-            symbol = CurrencyUnit.of(currencyCode).getSymbol();
-            symbol = symbol.substring(symbol.length() - 1);
-        }
-
-        return symbol;
     }
 
     public static boolean isBetween(float value, float min, float max) {
@@ -129,11 +110,6 @@ public class Utils {
         Date dateFormatted = new Date(date);
 
         return DateFormat.format("MMM dd", dateFormatted) + " @ " + DateFormat.getTimeFormat(ctxt).format(dateFormatted);
-    }
-
-    public static void setTextViewParams(TextView tv, BigMoney value) {
-
-        setTextViewParams(tv, value.getAmount());
     }
 
     public static void setTextViewParams(TextView tv, BigDecimal value) {
@@ -179,8 +155,8 @@ public class Utils {
     }
 
     public static boolean isConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
-                Context.CONNECTIVITY_SERVICE);
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();

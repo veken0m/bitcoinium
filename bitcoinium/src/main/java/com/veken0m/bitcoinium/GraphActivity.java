@@ -166,7 +166,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         try {
             trades = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName())
                     .getPollingMarketDataService()
-                    .getTrades(currencyPair.baseCurrency, currencyPair.counterCurrency);
+                    .getTrades(currencyPair);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -185,7 +185,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
             final int tradesListSize = tradesList.size();
             for (int i = 0; i < tradesListSize; i++) {
                 final Trade trade = tradesList.get(i);
-                values[i] = trade.getPrice().getAmount().floatValue();
+                values[i] = trade.getPrice().floatValue();
                 dates[i] = trade.getTimestamp().getTime();
                 if (values[i] > largest) {
                     largest = values[i];

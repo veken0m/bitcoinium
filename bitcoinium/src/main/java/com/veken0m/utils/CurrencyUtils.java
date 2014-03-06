@@ -5,8 +5,28 @@ import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Currency;
+import java.util.List;
 
 public class CurrencyUtils {
+
+    public static String getSymbol(String currencyCode) {
+
+        try{
+            List<String> ignoredCurrencies = Arrays.asList("DKK", "BTC", "LTC", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
+
+            if (!(ignoredCurrencies.contains(currencyCode))) {
+                String symbol = Currency.getInstance(currencyCode).getSymbol();
+                return symbol.substring(symbol.length() - 1);
+            }
+            return "";
+
+        } catch (Exception e){
+            return "";
+        }
+    }
+
 
     public static CurrencyPair stringToCurrencyPair(String currencyPair) {
         String baseCurrency;
