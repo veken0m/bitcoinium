@@ -10,99 +10,15 @@
             android:entryValues="@array/exchangeID"
             android:key="widgetExchangesPref"
             android:summary="@string/pref_exchange_summary"
-            android:title="Widget Exchange"/>
+            android:title="@string/pref_pickexchange"/>
+
         <ListPreference
             android:defaultValue="BTC/USD"
             android:entries="@array/bitstampcurrencies"
             android:entryValues="@array/bitstampcurrencies"
-            android:key="bitstampWidgetCurrencyPref"
+            android:key="widgetCurrencyPref"
             android:summary="@string/pref_currency_summary"
-            android:title="Bitstamp Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/CAD"
-            android:entries="@array/virtexcurrencies"
-            android:entryValues="@array/virtexcurrencies"
-            android:key="virtexWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="VirtEx Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/btcecurrencies"
-            android:entryValues="@array/btcecurrencies"
-            android:key="btceWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="BTC-E Widget Currency"/>
-
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/campbxcurrencies"
-            android:entryValues="@array/campbxcurrencies"
-            android:key="campbxWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="CampBX Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/CNY"
-            android:entries="@array/btcchinacurrencies"
-            android:entryValues="@array/btcchinacurrencies"
-            android:key="btcchinaWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="BTCChina Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/PLN"
-            android:entries="@array/bitcurexcurrencies"
-            android:entryValues="@array/bitcurexcurrencies"
-            android:key="bitcurexWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="Bitcurex Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/EUR"
-            android:entries="@array/krakencurrencies"
-            android:entryValues="@array/krakencurrencies"
-            android:key="krakenWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="Kraken Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/bitfinexcurrencies"
-            android:entryValues="@array/bitfinexcurrencies"
-            android:key="bitfinexWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="Bitfinex Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/bitcoinaveragecurrencies"
-            android:entryValues="@array/bitcoinaveragecurrencies"
-            android:key="bitcoinaverageWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="BitcoinAverage Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/mtgoxcurrencies"
-            android:entryValues="@array/mtgoxcurrencies"
-            android:key="mtgoxWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="MtGox Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/EUR"
-            android:entries="@array/justcoincurrencies"
-            android:entryValues="@array/justcoincurrencies"
-            android:key="justcoinWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="Justcoin Widget Currency"/>
-        <ListPreference
-            android:defaultValue="LTC/BTC"
-            android:entries="@array/cexiocurrencies"
-            android:entryValues="@array/cexiocurrencies"
-            android:key="cexioWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="CEX.IO Widget Currency"/>
-        <ListPreference
-            android:defaultValue="BTC/USD"
-            android:entries="@array/coinbasecurrencies"
-            android:entryValues="@array/coinbasecurrencies"
-            android:key="coinbaseWidgetCurrencyPref"
-            android:summary="@string/pref_currency_summary"
-            android:title="Coinbase Widget Currency"/>
+            android:title="@string/pref_pickcurrency"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

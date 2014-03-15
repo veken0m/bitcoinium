@@ -9,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
@@ -20,18 +19,12 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
-import java.util.HashMap;
-
 public class WidgetConfigureActivity extends SherlockPreferenceActivity {
 
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private ListPreference widgetExchangePref = null;
-    private PreferenceCategory prefCategory = null;
-
-    private final HashMap<String, Preference> currencyPref = new HashMap<String, Preference>();
 
     public WidgetConfigureActivity() {
         super();
@@ -50,19 +43,18 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
         if(item.getItemId() == R.id.action_widget_accept) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-            String pref_widgetExchange = prefs.getString("widgetExchangesPref", "bitstamp");
+            String pref_widgetExchange = prefs.getString("widgetExchangesPref", Constants.DEFAULT_EXCHANGE);
 
             Exchange exchange;
             try {
                 exchange = new Exchange(this, pref_widgetExchange);
             } catch (Exception e) {
                 Editor editor = prefs.edit();
-                editor.putString("widgetExchangesPref", "bitstamp").commit();
-                exchange = new Exchange(this, "bitstamp");
+                editor.putString("widgetExchangesPref", Constants.DEFAULT_EXCHANGE).commit();
+                exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
             }
 
-            String sCurrency = prefs.getString(exchange.getIdentifier() + "WidgetCurrencyPref", exchange.getDefaultCurrency());
+            String sCurrency = prefs.getString("widgetCurrencyPref", exchange.getDefaultCurrency());
 
             // Save widget configuration
             saveCurrencyPref(this, mAppWidgetId, sCurrency);
@@ -91,23 +83,15 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
         // out of the widget placement if they press the back button.
         setResult(RESULT_CANCELED);
 
-        try {
-            String[] exchangeID = getResources().getStringArray(R.array.exchangeID);
-            prefCategory = (PreferenceCategory) findPreference("priceWidgetPreferences");
+        ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
+        ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
-            // Disable all the currency pickers and enable the selected exchange
-            for (int i = 0; i < exchangeID.length; i++) {
-                currencyPref.put(exchangeID[i], findPreference(exchangeID[i] + "WidgetCurrencyPref"));
-                prefCategory.removePreference(currencyPref.get(exchangeID[i]));
-            }
+        // get the Resource ID for the currency array
+        String sExchange = (widgetExchangePref.getValue() != null) ? widgetExchangePref.getValue().toString() : Constants.DEFAULT_EXCHANGE;
+        int nCurrencyArrayId = getResources().getIdentifier(sExchange + "currencies", "array", this.getPackageName());
 
-            widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
-            String sExchange = (widgetExchangePref.getValue() != null) ? widgetExchangePref.getValue().toString() : "bitstamp";
-            prefCategory.addPreference(currencyPref.get(sExchange));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // populate the list with the Exchange's Currency Pairs
+        setCurrencyItems(pCurrency, nCurrencyArrayId);
 
         // Find the widget id from the intent.
         Bundle extras = getIntent().getExtras();
@@ -123,22 +107,21 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                        try {
-                            prefCategory = (PreferenceCategory) findPreference("priceWidgetPreferences");
+                        ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
+                        int nCurrencyArrayId = getResources().getIdentifier(newValue.toString() + "currencies", "array", getBaseContext().getPackageName());
 
-                            // Disable all the currency pickers
-                            for (Preference value : currencyPref.values())
-                                prefCategory.removePreference(value);
+                        setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-                            // Enable the selected exchange
-                            prefCategory.addPreference(currencyPref.get(newValue.toString()));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                         return true;
                     }
                 });
+    }
+
+    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId){
+
+        pCurrency.setEntries(nCurrencyArrayId);
+        pCurrency.setEntryValues(nCurrencyArrayId);
+        pCurrency.setValueIndex(0);
     }
 
     // Write the prefix to the SharedPreferences object for this widget

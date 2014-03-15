@@ -38,7 +38,7 @@ public class MinerWidgetConfigureActivity extends SherlockPreferenceActivity {
         if (item.getItemId() == R.id.action_widget_accept) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", getString(R.string.default_miningpool));
+            String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
 
             saveMiningPoolPref(this, mAppWidgetId, pref_widgetMiningPool);
 

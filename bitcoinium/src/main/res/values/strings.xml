@@ -57,8 +57,8 @@
     <string name="author">Michael Lagacé (veken0m)</string>
 
     <!-- Preferences -->
-    <string name="pref_currency_summary">Select the exchange used for the widget</string>
-    <string name="pref_exchange_summary">Widget will be displayed in selected currency</string>
+    <string name="pref_currency_summary">Select the currency pair displayed on the widget</string>
+    <string name="pref_exchange_summary">Select the exchange used for the widget</string>
     <string name="pref_price_widget_title">Exchange and Currency</string>
     <string name="pref_price_alarm_summary">Notifies when price crosses threshold \n*Note*: Respective widget needs to be active</string>
     <string name="pref_price_alarm_title">Price Alarm Notifications</string>
@@ -226,7 +226,7 @@
     <string name="estimatedNextDifficulty">Estimated Next Difficulty: %1$s</string>
     <string name="blockCount">Block count: %1$s</string>
     <string name="nextRetarget">Next retarget in %1$s blocks</string>
-    <string name="updateShort">Upd. @ </string>
+    <string name="updateShort">Upd. @\u0020</string>
     <string name="sendEmail">Send email</string>
     <string name="feedback"> Feedback</string>
     <string name="donationAddressText">Donation Address</string>
@@ -234,13 +234,15 @@
     <string name="milliBtcNotice">*NOTICE* - Widgets now display mBTC by default!</string>
     <string name="millioBtcNoticeInfo">Change back to BTC in the Preferences</string>
     <string name="mtcByDefault">Widgets in mBTC by default!</string>
-    <string name="updatedAt">Updated @ </string>
-    <string name="volume">Volume: </string>
+    <string name="updatedAt">Updated @\u0020</string>
+    <string name="volume">Volume:\u0020</string>
     <string name="notAvailable">N/A</string>
     <string name="priceGraphNotSupported">This exchange does not currently support Price Graph</string>
     <string name="working">Working…</string>
     <string name="retreivingMinerStats">Retrieving Miner Stats</string>
     <string name="selectOtherExchange">Please select another exchange</string>
+    <string name="pref_pickcurrency">Pick a Currency Pair</string>
+    <string name="pref_pickexchange">Pick an Exchange</string>
 
 
 </resources>

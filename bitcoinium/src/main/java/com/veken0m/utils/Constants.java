@@ -10,4 +10,9 @@ public class Constants {
             "NZD","PLN", "RUB", "SEK", "USD", "ZAR"};
 
     public static final String [] METRIC_UNITS = {"m","µ","n","p","f"};
+
+    public static final String DEFAULT_EXCHANGE = "bitstamp";
+    public static final String DEFAULT_CURRENCY_PAIR = "BTC/USD";
+
+    public static final String DEFAULT_MINING_POOL = "BitMinter";
 }
