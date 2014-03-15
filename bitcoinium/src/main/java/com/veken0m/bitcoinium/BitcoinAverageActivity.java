@@ -135,7 +135,7 @@ public class BitcoinAverageActivity extends BaseActivity {
                 final TextView tvAsk = new TextView(this);
                 // final TextView tvAvg = new TextView(this);
 
-                tvSymbol.setText(ticker.getCurrencyPair().counterCurrency);
+                tvSymbol.setText(ticker.getCurrencyPair().counterSymbol);
                 tvSymbol.setTextColor(Color.WHITE);
                 Utils.setTextViewParams(tvLast, ticker.getLast());
                 Utils.setTextViewParams(tvVolume, ticker.getVolume());
@@ -149,7 +149,7 @@ public class BitcoinAverageActivity extends BaseActivity {
                 if (bBackGroundColor = !bBackGroundColor)
                     newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
-                newRow.addView(tvSymbol, Utils.symbolParams);
+                newRow.addView(tvSymbol, Utils.adjustParams);
                 newRow.addView(tvLast);
                 newRow.addView(tvVolume);
                 newRow.addView(tvBid);

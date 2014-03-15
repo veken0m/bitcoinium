@@ -88,11 +88,11 @@ public class WidgetProvider extends BaseWidgetProvider {
                     try {
                         // if altcoin append baseCurrency
                         CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                        if (!pair.baseCurrency.equals(Currencies.BTC))
-                            exchangeName += " (" + pair.baseCurrency + ")";
+                        if (!pair.baseSymbol.equals(Currencies.BTC))
+                            exchangeName += "-" + pair.baseSymbol;
 
-                        String pairId = exchange.getIdentifier() + pair.baseCurrency
-                                + pair.counterCurrency;
+                        String pairId = exchange.getIdentifier() + pair.baseSymbol
+                                + pair.counterSymbol;
 
                         // Get ticker using XChange
                         Ticker ticker = ExchangeFactory.INSTANCE
@@ -109,7 +109,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         //TODO: Return null volume in XChange for Bitfinex
                         if (!(ticker.getVolume() == null) && !exchangeKey.equals("bitfinex"))
-                            volumeString = Utils.formatDecimal(ticker.getVolume());
+                            volumeString = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true);
 
                         setBidAskHighLow(ticker, views, pair, exchange.supportsTickerBidAsk());
 
@@ -149,10 +149,10 @@ public class WidgetProvider extends BaseWidgetProvider {
                 Resources res = getResources();
                 String msg = String.format(
                         res.getString(R.string.priceContentNotif),
-                        pair.baseCurrency, lastString, exchangeName);
+                        pair.baseSymbol, lastString, exchangeName);
                 String title = String.format(
                         res.getString(R.string.permPriceTitleNotif),
-                        exchangeKey, pair.baseCurrency, lastString);
+                        exchangeKey, pair.baseSymbol, lastString);
 
                 createPermanentNotification(this, title, msg, pairId.hashCode());
             } else {

@@ -198,13 +198,13 @@ public class BTCGuildFragment extends SherlockFragment {
 
                     tvMinerName.setText("Miner: " + worker.getWorker_name());
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(worker.getHash_rate(), 2, false)
+                            + Utils.formatDecimal(worker.getHash_rate(), 2, 0, false)
                             + " MH/s");
                     tvShares.setText("Shares: "
-                            + Utils.formatDecimal(worker.getValid_shares(), 0,
+                            + Utils.formatDecimal(worker.getValid_shares(), 0, 0,
                             true));
                     tvStales.setText("Stales: "
-                            + Utils.formatDecimal(worker.getStale_shares(), 0,
+                            + Utils.formatDecimal(worker.getStale_shares(), 0, 0,
                             true) + "\n");
 
                     tr8.addView(tvMinerName);

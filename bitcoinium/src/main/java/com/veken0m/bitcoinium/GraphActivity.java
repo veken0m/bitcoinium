@@ -318,7 +318,10 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         spinner.setOnItemSelectedListener(this);
 
         int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
-        spinner.setSelection(index);
+        if(index != -1)
+            spinner.setSelection(index);
+        else
+            spinner.setSelection(2);
     }
 
     void createCurrencyDropdown() {

@@ -209,14 +209,14 @@ public class BitMinterFragment extends SherlockFragment {
                     tvMinerName.setText("Miner: " + worker.getName());
                     float hashrate = worker.getHash_rate();
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
+                            + Utils.formatDecimal(hashrate, 2, 0, false) + " MH/s");
                     tvAlive.setText("Alive: " + (hashrate > 0.0));
                     tvShares.setText("Shares: "
                             + Utils.formatDecimal(worker.getWork().getBTC()
-                            .getTotal_accepted(), 0, true));
+                            .getTotal_accepted(), 0, 0, true));
                     tvStales.setText("Stales: "
                             + Utils.formatDecimal(worker.getWork().getBTC()
-                            .getTotal_rejected(), 0, true));
+                            .getTotal_rejected(), 0, 0, true));
 
                     if (hashrate > 0.0) {
                         tvMinerName.setTextColor(Color.GREEN);

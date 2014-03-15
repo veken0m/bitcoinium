@@ -30,6 +30,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -38,9 +39,7 @@ import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -66,6 +65,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static String exchangeName = "Bitstamp";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
+    private static Boolean threadRunning = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         OrderBook orderbook;
         try {
             orderbook = marketData.getOrderBook(currencyPair);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
 
@@ -181,29 +181,33 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             orderbookTable.removeAllViews();
 
             removeLoadingSpinner(R.id.orderbook_loadSpinner);
-            setOrderBookHeader();
 
             boolean bBackGroundColor = true;
 
-            String currencySymbolBTC, currencySymbol, unitSymbol;
-            currencySymbolBTC = currencySymbol = unitSymbol = "";
-
-            //try{
-            //if(listBids.get(0).getLimitPrice().getAmount().floatValue() < 0.001
-             //       || listAsks.get(0).getLimitPrice().getAmount().floatValue() < 0.001){
-             //   bidPrice *= 1000;
-             //   askPrice *= 1000;
-             //   currencySymbolBTC = "m" + currencySymbolBTC;
-            //}
-            //} catch (Exception e){
-            //    unitSymbol = "";
-             //   e.printStackTrace();
-           // }
-
+            String currencySymbol = "";
             if (pref_showCurrencySymbol) {
-                currencySymbolBTC = " " + currencyPair.baseCurrency;
-                currencySymbol = CurrencyUtils.getSymbol(currencyPair.counterCurrency);
+                currencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
             }
+
+            // if numbers are too small adjust the units. Use first bid to determine the units
+            int priceUnitIndex = Utils.getUnitIndex(listBids.get(0).getLimitPrice().floatValue());
+            String sCounterCurrency = currencyPair.counterSymbol;
+            if(priceUnitIndex >= 0)
+                sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
+            priceUnitIndex++; // increment to use a scale factor
+
+
+            TextView tvAskAmountHeader = (TextView) findViewById(R.id.askAmountHeader);
+            TextView tvAskPriceHeader  = (TextView) findViewById(R.id.askPriceHeader);
+            TextView tvBidPriceHeader  = (TextView) findViewById(R.id.bidPriceHeader);
+            TextView tvBidAmountHeader  = (TextView) findViewById(R.id.bidAmountHeader);
+
+
+
+            tvAskAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
+            tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
+            tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
+            tvBidAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
 
             for (int i = 0; i < listBids.size(); i++) {
                 final TableRow newRow = new TableRow(this);
@@ -220,17 +224,17 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 float askPrice = limitorderAsk.getLimitPrice().floatValue();
                 float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, true) + currencySymbolBTC);
+                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, 0, true));
                 tvBidAmount.setLayoutParams(Utils.symbolParams);
                 tvBidAmount.setGravity(Gravity.CENTER);
-                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, true) + currencySymbolBTC);
+                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, 0, true));
                 tvAskAmount.setLayoutParams(Utils.symbolParams);
                 tvAskAmount.setGravity(Gravity.CENTER);
 
-                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, true));
+                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
                 tvBidPrice.setLayoutParams(Utils.symbolParams);
                 tvBidPrice.setGravity(Gravity.CENTER);
-                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, true));
+                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
                 tvAskPrice.setLayoutParams(Utils.symbolParams);
                 tvAskPrice.setGravity(Gravity.CENTER);
 
@@ -262,7 +266,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
-            (new OrderbookThread()).start();
+            if(threadRunning == false) // if thread running don't start a another one
+                (new OrderbookThread()).start();
         } else {
             notConnected(R.id.bitcoincharts_loadSpinner);
         }
@@ -279,10 +284,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 }
             });
 
+            threadRunning = true;
             if (getOrderBook())
                 mOrderHandler.post(mOrderView);
             else
                 mOrderHandler.post(mError);
+            threadRunning = false;
         }
     }
 
@@ -351,11 +358,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
     }
 
-    void setOrderBookHeader() {
-        TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
-        orderBookHeader.setText(exchange.getExchangeName() + " " + currencyPair.toString());
-    }
-
     void createExchangeDropdown() {
 
         // Re-populate the dropdown menu
@@ -368,7 +370,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         spinner.setOnItemSelectedListener(this);
 
         int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
-        spinner.setSelection(index);
+        if(index != -1)
+            spinner.setSelection(index);
+        else
+            spinner.setSelection(2);
     }
 
     void createCurrencyDropdown() {

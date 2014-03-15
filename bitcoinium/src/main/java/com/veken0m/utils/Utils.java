@@ -24,34 +24,30 @@ import java.util.Date;
 
 public class Utils {
 
-    public static final LayoutParams symbolParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+    public static final LayoutParams symbolParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f);
+    public static final LayoutParams adjustParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
-    public static String formatDecimal(float valueToFormat,int numberOfDecimalPlaces, boolean useGroupings) {
+    public static String formatDecimal(float valueToFormat,int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings) {
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
-        numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
         // Remove grouping if commas cause errors when parsing to double/float
         numberFormat.setGroupingUsed(useGroupings);
 
-        return numberFormat.format(valueToFormat);
-    }
+        if(scaleFactor != 0)
+            valueToFormat *= Math.pow(1000,scaleFactor);
 
-    public static String formatDecimal(BigDecimal valueToFormat) {
-
-        final NumberFormat numberFormat = NumberFormat.getInstance();
-        double value = valueToFormat.doubleValue();
-        if(value >= 100000){
-            numberFormat.setMaximumFractionDigits(0);
-            numberFormat.setMinimumFractionDigits(0);
-        } else {
-            numberFormat.setMaximumFractionDigits(2);
-            numberFormat.setMinimumFractionDigits(2);
+        // If too large, remove a digits behind decimal
+        float tempAmount = valueToFormat;
+        while(tempAmount >= 1000 && numberOfDecimalPlaces >= 0){
+            numberOfDecimalPlaces--;
+            tempAmount /= 10;
         }
-        numberFormat.setGroupingUsed(true);
+
+        numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
+        numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
 
         try {
-            return numberFormat.format(value);
+            return numberFormat.format(valueToFormat);
         } catch (Exception e) {
             return "N/A";
         }
@@ -59,40 +55,50 @@ public class Utils {
 
     public static String formatWidgetMoney(float amount, CurrencyPair pair, boolean includeCurrencyCode, boolean displayInMilliBtc) {
 
-        String symbol = CurrencyUtils.getSymbol(pair.counterCurrency);
-        int numOfDecimals = 2;
+        int numOfDecimals = 3;
+        int unitIndex = 0;
+        String currencyCode = (includeCurrencyCode) ? " " + pair.counterSymbol : "";
 
         // If BTC and user wants price in mBTC
-        boolean isBTC = pair.baseCurrency.equalsIgnoreCase(Currencies.BTC);
-        if (displayInMilliBtc && isBTC) {
+        boolean isBTC = pair.baseSymbol.equalsIgnoreCase(Currencies.BTC);
+        if (displayInMilliBtc && isBTC){
             amount /= 1000;
-            numOfDecimals = 3;
+
+        //  adjust altcoin units
+        // at least one digit on the left side of decimal point
+        }else if(!isBTC && amount < 1){
+            unitIndex = getUnitIndex(amount);
+            if (!includeCurrencyCode) numOfDecimals = 2;
+            currencyCode = currencyCode.replace(" ", " " + Constants.METRIC_UNITS[unitIndex]);
+            unitIndex++;
+        } else {
+            numOfDecimals = 2;
         }
 
-        String currencyCode = (includeCurrencyCode) ? " " + pair.counterCurrency : "";
-
-        // If too large, remove a digit behind decimal
-        if (amount >= 1000 && !includeCurrencyCode)
-            numOfDecimals--;
-
-        // If too small, scale the value
-        if (amount < 0.1 && !isBTC) {
-            amount *= 1000;
-            currencyCode = currencyCode.replace(" ", " m");
-        }
-
-        return symbol + formatDecimal(amount, numOfDecimals, false) + currencyCode;
+        return CurrencyUtils.getSymbol(pair.counterSymbol) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
     }
+
+    // returns the index for the proper units in Contants.METRIC_UNITS
+    // is also used to scale the value to match units
+    public static int getUnitIndex(float price){
+        int unitIndex = -1;
+        while(price < 1 && unitIndex < 5){
+            price *= 1000;
+            unitIndex++;
+        }
+        return unitIndex;
+    }
+
 
     public static boolean isBetween(float value, float min, float max) {
 
         return ((value >= min) && (value <= max));
     }
 
-    public static String getCurrentTime(Context ctxt) {
+    public static String getCurrentTime(Context context) {
         Date time = new Date();
 
-        return DateFormat.format("E", time) + " " + DateFormat.getTimeFormat(ctxt).format(time);
+        return DateFormat.format("E", time) + " " + DateFormat.getTimeFormat(context).format(time);
     }
 
     // Returns current time in milliseconds
@@ -118,7 +124,7 @@ public class Utils {
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
-        tv.setText(Utils.formatDecimal(value));
+        tv.setText(Utils.formatDecimal(value.floatValue() ,2, 0, true));
         tv.setLayoutParams(params);
         tv.setTextColor(Color.WHITE);
         tv.setGravity(1);

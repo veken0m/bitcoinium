@@ -6,7 +6,7 @@
             android:defaultValue="bitstamp"
             android:entries="@array/exchanges"
             android:entryValues="@array/exchangeID"
-            android:key="favExchangePref"
+            android:key="defaultExchangePref"
             android:summary="@string/pref_default_exchange_summary"
             android:title="@string/defaultExchange"/>
 

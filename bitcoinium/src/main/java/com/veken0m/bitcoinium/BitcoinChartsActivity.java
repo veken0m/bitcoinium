@@ -191,7 +191,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
                     if (bBackGroundColor = !bBackGroundColor)
                         newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
-                    newRow.addView(tvSymbol, Utils.symbolParams);
+                    newRow.addView(tvSymbol, Utils.adjustParams);
                     newRow.addView(tvLast);
                     newRow.addView(tvVolume);
                     newRow.addView(tvLow);

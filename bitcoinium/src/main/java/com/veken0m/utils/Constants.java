@@ -9,4 +9,5 @@ public class Constants {
             "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK",
             "NZD","PLN", "RUB", "SEK", "USD", "ZAR"};
 
+    public static final String [] METRIC_UNITS = {"m","µ","n","p","f"};
 }

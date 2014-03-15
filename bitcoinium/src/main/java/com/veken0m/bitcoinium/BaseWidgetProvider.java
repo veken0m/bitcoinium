@@ -140,7 +140,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
     static void createNotification(Context context, float last, String exchange, int NOTIFY_ID, CurrencyPair pair) {
 
-        String baseCurrency = pair.baseCurrency;
+        String baseCurrency = pair.baseSymbol;
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();

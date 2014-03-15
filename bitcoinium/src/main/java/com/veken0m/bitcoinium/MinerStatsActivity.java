@@ -301,11 +301,11 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 try {
                     // TODO: move this to XML layout
                     tvCurrentDifficulty.setText(String.format(getString(R.string.currentDifficulty), Utils.formatDecimal(
-                            Float.valueOf(CurrentDifficulty), 0, true)));
+                            Float.valueOf(CurrentDifficulty), 0, 0, true)));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvCurrentDifficulty.setTextColor(Color.BLACK);
                     tvNextDifficulty.setText(String.format(getString(R.string.estimatedNextDifficulty), Utils.formatDecimal(
-                            Float.valueOf(NextDifficulty), 0, true)));
+                            Float.valueOf(NextDifficulty), 0, 0, true)));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextDifficulty.setTextColor(Color.BLACK);
 

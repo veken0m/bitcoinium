@@ -2,7 +2,8 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/orderbooklayout"
              android:layout_width="fill_parent"
-             android:layout_height="fill_parent">
+             android:layout_height="fill_parent"
+             android:stretchColumns="*">
 
     <LinearLayout
         android:id="@+id/spinner1"
@@ -40,14 +41,14 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <TextView
+    <!--TextView
         android:id="@+id/orderbook_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark"
         android:gravity="center_horizontal"
         android:textColor="@color/ics_blue"
-        android:textSize="15sp"/>
+        android:textSize="15sp"/-->
 
     <TableRow>
 
@@ -116,6 +117,45 @@
             android:textSize="16sp"/>
     </TableRow>
 
+    <TableRow>
+
+        <TextView
+            android:id="@+id/bidPriceHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/bidAmountHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/askPriceHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/askAmountHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp"/>
+    </TableRow>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
@@ -133,7 +173,7 @@
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="4">
+            android:stretchColumns="*">
         </TableLayout>
     </ScrollView>
 
