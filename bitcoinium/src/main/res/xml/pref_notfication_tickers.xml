@@ -15,7 +15,7 @@
                 android:summary="@string/pref_notification_ticker_enable_summary"
                 android:title="@string/enableTickers"/>
 
-            <PreferenceScreen android:title="@string/mtgoxTickers">
+            <!--PreferenceScreen android:title="@string/mtgoxTickers">
 
                 <CheckBoxPreference
                     android:defaultValue="false"
@@ -96,7 +96,7 @@
                     android:defaultValue="false"
                     android:key="mtgoxBTCTHBTickerPref"
                     android:title="MtGox BTC/THB Ticker"/>
-            </PreferenceScreen>
+            </PreferenceScreen-->
 
             <CheckBoxPreference
                 android:defaultValue="false"

@@ -35,7 +35,7 @@
     <PreferenceCategory
         android:title="@string/alarmSettings">
         <Preference android:summary="@string/msgEnterUnscaledValues"/>
-        <PreferenceScreen android:title="@string/mtgoxAlarmThresholds">
+        <!--PreferenceScreen android:title="@string/mtgoxAlarmThresholds">
             <PreferenceScreen android:title="BTC/USD">
                 <EditTextPreference
                     android:defaultValue="999999"
@@ -292,7 +292,7 @@
                     android:summary="@string/pref_alarm_mtgox_under_summary"
                     android:title="MtGox BTC/THB Lower Threshold"/>
             </PreferenceScreen>
-        </PreferenceScreen>
+        </PreferenceScreen-->
         <PreferenceScreen android:title="@string/virtexAlarmThresholds">
             <EditTextPreference
                 android:defaultValue="999999"

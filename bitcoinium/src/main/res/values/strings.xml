@@ -4,7 +4,7 @@
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
     <string name="version_name">1.9.1</string>
-    <string name="default_exchange">MtGoxExchange</string>
+    <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
 
