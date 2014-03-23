@@ -2,7 +2,6 @@
 package com.veken0m.bitcoinium;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -62,7 +61,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
-    private static String exchangeName = "Bitstamp";
+    private static String exchangeName = "";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean threadRunning = false;
@@ -77,20 +76,20 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            exchangeName = extras.getString("exchange");
-            exchange = new Exchange(this, exchangeName);
-        } else {
-            // TODO: generation error message
-            exchangeName = "Bitstamp";
-            exchange = new Exchange(this, "bitstamp");
-        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        readPreferences(this);
-        createExchangeDropdown();
-        //createCurrencyDropdown();
-        //viewOrderbook();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            exchange = new Exchange(this, extras.getString("exchange"));
+        else
+            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+
+        if(!exchange.supportsOrderbook())
+            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+
+        readPreferences();
+        populateExchangeDropdown();
+        populateCurrencyDropdown();
 
         // KarmaAdsUtils.initAd(this);
     }
@@ -126,8 +125,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         setContentView(R.layout.orderbook);
 
         if (listAsks != null && listBids != null) {
-            createExchangeDropdown();
-            createCurrencyDropdown();
+            populateExchangeDropdown();
+            populateCurrencyDropdown();
             drawOrderbookUI();
         } else {
             // Fetch data
@@ -153,6 +152,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         try {
             orderbook = marketData.getOrderBook(currencyPair);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
@@ -190,7 +190,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
-            int priceUnitIndex = Utils.getUnitIndex(listBids.get(0).getLimitPrice().floatValue());
+            int priceUnitIndex = Utils.getUnitIndex(listAsks.get(0).getLimitPrice().floatValue());
             String sCounterCurrency = currencyPair.counterSymbol;
             if(priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
@@ -201,8 +201,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             TextView tvAskPriceHeader  = (TextView) findViewById(R.id.askPriceHeader);
             TextView tvBidPriceHeader  = (TextView) findViewById(R.id.bidPriceHeader);
             TextView tvBidAmountHeader  = (TextView) findViewById(R.id.bidAmountHeader);
-
-
 
             tvAskAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
             tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
@@ -304,9 +302,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged){
-                    exchange = new Exchange(this, exchangeName.replace("-","").replace(".",""));
+                    exchange = new Exchange(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
-                    createCurrencyDropdown();
+                    populateCurrencyDropdown();
                 }
                 break;
             case R.id.orderbook_currency_spinner:
@@ -358,7 +356,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
     }
 
-    void createExchangeDropdown() {
+    void populateExchangeDropdown() {
 
         // Re-populate the dropdown menu
         String[] exchanges = getResources().getStringArray(R.array.exchangesOrderbook);
@@ -370,13 +368,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         spinner.setOnItemSelectedListener(this);
 
         int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
-        if(index != -1)
-            spinner.setSelection(index);
-        else
-            spinner.setSelection(2);
+        spinner.setSelection(index);
     }
 
-    void createCurrencyDropdown() {
+    void populateCurrencyDropdown() {
         // Re-populate the dropdown menu
         int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
         String[] currencies = getResources().getStringArray(arrayId);
@@ -403,9 +398,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             return Color.YELLOW;
     }
 
-    private static void readPreferences(Context context) {
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private static void readPreferences() {
 
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
         pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
@@ -436,9 +429,17 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     public void onResume() {
         super.onResume();
 
-        readPreferences(this);
-        createExchangeDropdown();
-        viewOrderbook();
+        readPreferences();
+        populateExchangeDropdown();
+
+        if (listAsks != null && listBids != null) {
+            populateExchangeDropdown();
+            populateCurrencyDropdown();
+            drawOrderbookUI();
+        } else {
+            // Fetch data
+            viewOrderbook();
+        }
     }
 
     @Override

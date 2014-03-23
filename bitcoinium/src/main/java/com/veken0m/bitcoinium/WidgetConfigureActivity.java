@@ -87,7 +87,7 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
         ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
         // get the Resource ID for the currency array
-        String sExchange = (widgetExchangePref.getValue() != null) ? widgetExchangePref.getValue().toString() : Constants.DEFAULT_EXCHANGE;
+        String sExchange = (widgetExchangePref != null) ? widgetExchangePref.getValue() : Constants.DEFAULT_EXCHANGE;
         int nCurrencyArrayId = getResources().getIdentifier(sExchange + "currencies", "array", this.getPackageName());
 
         // populate the list with the Exchange's Currency Pairs

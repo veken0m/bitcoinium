@@ -161,10 +161,9 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
             boolean bBackGroundColor = false;
             for (BitcoinChartsTicker data : marketData) {
 
-                // Only print active exchanges... vol > 0 or contains selected currency
+                // Only print active exchanges... vol != 0 or contains selected currency
                 if (data.getVolume().floatValue() != 0.0
-                        && (currencyFilter.equals("SHOW ALL")
-                        || data.getCurrency().contains(currencyFilter))) {
+                        && (currencyFilter.equals("SHOW ALL") || data.getCurrency().contains(currencyFilter))) {
 
                     final TextView tvSymbol = new TextView(this);
                     final TextView tvLast = new TextView(this);
@@ -209,11 +208,10 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     private void viewBitcoinCharts() {
-        if (Utils.isConnected(getApplicationContext())) {
+        if (Utils.isConnected(this))
             (new bitcoinChartsThread()).start();
-        } else {
+        else
             notConnected(R.id.bitcoincharts_loadSpinner);
-        }
     }
 
     private class bitcoinChartsThread extends Thread {
@@ -253,7 +251,5 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
             dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
         }
     }
-
-
-
 }
+

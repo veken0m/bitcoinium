@@ -54,9 +54,11 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     private static PendingIntent widgetPriceWidgetRefreshService = null;
     private static PendingIntent widgetMinerWidgetRefreshService = null;
 
+    public static SharedPreferences prefs = null;
+
     static void readGeneralPreferences(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
         readAlarmPreferences(context);
 
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
@@ -79,7 +81,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
     private static void readAlarmPreferences(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref", "1800"))*1000; // milliseconds
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
@@ -91,6 +93,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     }
 
     static void setPriceWidgetAlarm(Context context) {
+
         readAlarmPreferences(context);
 
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -104,6 +107,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     }
 
     static void setMinerWidgetAlarm(Context context) {
+
         readAlarmPreferences(context);
 
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -118,12 +122,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
     static void setAlarmClock(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Editor editor = prefs.edit();
         editor.putBoolean("alarmClockPref", false);
         editor.commit();
-        Time dtNow = (new Time());
+
+        Time dtNow = new Time();
         dtNow.setToNow();
         int hours = dtNow.hour;
         int minutes = dtNow.minute + 1;
@@ -184,9 +189,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         mNotificationManager.notify(sMiningPool.hashCode(), notification);
     }
 
-    static void createPermanentNotification(Context context,
-                                            CharSequence contentTitle, CharSequence contentText,
-                                            int NOTIFY_ID) {
+    static void createPermanentNotification(Context context, CharSequence contentTitle, CharSequence contentText, int NOTIFY_ID) {
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, null, System.currentTimeMillis());

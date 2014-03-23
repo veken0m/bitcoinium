@@ -75,18 +75,12 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         readPreferences(this);
 
         if (checkAtLeastOneKeySet()) {
-
-            // If not API token set, switch to Preferences and ask User to enter
-            // one
-            int duration = Toast.LENGTH_LONG;
-            CharSequence text = getString(R.string.enterAPIToken);
-
-            Toast toast = Toast.makeText(this, text, duration);
+            // If not API token set, switch to Preferences and ask User to enter one
+            Toast toast = Toast.makeText(this, getString(R.string.enterAPIToken), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
-            Intent settingsActivity = new Intent(this, PreferencesActivity.class);
-            startActivity(settingsActivity);
+            startActivity(new Intent(this, PreferencesActivity.class));
         }
 
         extras = getIntent().getExtras();
@@ -251,35 +245,30 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 HttpClient client = new DefaultHttpClient();
 
                 // Get current difficulty
-                HttpGet post = new HttpGet(
-                        "http://blockexplorer.com/q/getdifficulty");
+                HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
                 HttpResponse response;
                 response = client.execute(post);
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(
-                                response.getEntity().getContent(), "UTF-8"));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 CurrentDifficulty = reader.readLine();
 
                 // Get next difficulty
                 post = new HttpGet("http://blockexplorer.com/q/estimate");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextDifficulty = reader.readLine();
 
                 // Get block count
                 post = new HttpGet("http://blockexplorer.com/q/getblockcount");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 BlockCount = reader.readLine();
 
                 // Get next retarget
                 post = new HttpGet("http://blockexplorer.com/q/nextretarget");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextRetarget = reader.readLine();
+
                 reader.close();
                 return true;
             } catch (Exception e) {
@@ -313,7 +302,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvBlockCount.setTextColor(Color.BLACK);
 
-                    tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount)));
+                    int nNextRetarget = Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount);
+                    tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), nNextRetarget) + "\n");
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextRetarget.setTextColor(Color.BLACK);
 
@@ -335,8 +325,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     }
 
     private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_slushKey = prefs.getString("slushKey", "");
@@ -350,9 +340,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     @Override

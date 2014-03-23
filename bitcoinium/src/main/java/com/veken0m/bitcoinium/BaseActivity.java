@@ -17,15 +17,15 @@ import com.veken0m.utils.Utils;
 */
 public class BaseActivity extends SherlockFragmentActivity {
 
-    public Dialog dialog = null;
+    Dialog dialog = null;
 
-    public void removeLoadingSpinner(int spinnerId) {
+    void removeLoadingSpinner(int spinnerId) {
 
         LinearLayout loadingSpinner = (LinearLayout) findViewById(spinnerId);
         if(loadingSpinner != null) loadingSpinner.setVisibility(View.GONE);
     }
 
-    public void startLoading(int tableId, int spinnerId) {
+    void startLoading(int tableId, int spinnerId) {
 
         TableLayout t1 = (TableLayout) findViewById(tableId);
         if (t1 != null) t1.removeAllViews();
@@ -34,7 +34,7 @@ public class BaseActivity extends SherlockFragmentActivity {
         if(loadingSpinner != null) loadingSpinner.setVisibility(View.VISIBLE);
     }
 
-    public void notConnected(int spinnerId) {
+    void notConnected(int spinnerId) {
 
         removeLoadingSpinner(spinnerId);
         // Display error Dialog

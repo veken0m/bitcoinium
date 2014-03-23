@@ -4,9 +4,7 @@ package com.veken0m.bitcoinium.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,7 @@ import com.veken0m.bitcoinium.OrderbookActivity;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
+import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
 public class HomeMenuFragment extends SherlockFragment {
@@ -35,18 +34,15 @@ public class HomeMenuFragment extends SherlockFragment {
         activity = getActivity();
         context = activity.getApplicationContext();
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-
-        String exchange = getArguments().getString("exchange");
-        if(exchange == "") exchange = prefs.getString("favExchangePref", "bitstamp");
+        String exchangeName = getArguments().getString("exchange");
 
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
-        buildMenu(view, exchange);
+        buildMenu(view, exchangeName);
         return view;
     }
 
     // Attaches OnClickListeners to menu buttons
-    protected void buildMenu(View view, final String exchange) {
+    void buildMenu(View view, final String exchangeName) {
 
         final Button widgetRefreshButton = (Button) view.findViewById(R.id.widgetrefresh);
         widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +63,22 @@ public class HomeMenuFragment extends SherlockFragment {
         displayGraphButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent graphActivity = new Intent(context, GraphActivity.class);
-                    graphActivity.putExtra("exchange", exchange);
-                    startActivity(graphActivity);
+
+                Intent graphActivity = new Intent(context, GraphActivity.class);
+
+                Exchange exchange = null;
+                try {
+                    exchange = new Exchange(context, exchangeName);
+                } catch (Exception e) {
+                    // Do nothing
+                }
+
+                if(exchange != null && exchange.supportsOrderbook())
+                    graphActivity.putExtra("exchange", exchange.getIdentifier());
+                else
+                    graphActivity.removeExtra("exchange");
+
+                startActivity(graphActivity);
             }
         });
 
@@ -77,8 +86,21 @@ public class HomeMenuFragment extends SherlockFragment {
         orderbookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent orderbookActivity = new Intent(context, OrderbookActivity.class);
-                orderbookActivity.putExtra("exchange", exchange);
+
+                Exchange exchange = null;
+                try {
+                    exchange = new Exchange(context, exchangeName);
+                } catch (Exception e) {
+                    // Do nothing
+                }
+
+                if(exchange != null && exchange.supportsOrderbook())
+                    orderbookActivity.putExtra("exchange", exchange.getIdentifier());
+                else
+                    orderbookActivity.removeExtra("exchange");
+
                 startActivity(orderbookActivity);
             }
         });

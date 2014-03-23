@@ -88,17 +88,16 @@ public class BitcoinAverageActivity extends BaseActivity {
 
         if (pollingService != null) {
             for (String currency : Constants.BITCOINAVERAGE_CURRENCIES) {
-
                 try {
                     tickers.add(pollingService.getTicker(new CurrencyPair("BTC", currency)));
                 } catch (IOException e) {
                     // Skip ticker and keep looping
                 }
             }
+            return true;
         } else {
             return false;
         }
-        return true;
     }
 
     /**
@@ -165,11 +164,10 @@ public class BitcoinAverageActivity extends BaseActivity {
 
     private void viewBitcoinAverage() {
 
-        if (Utils.isConnected(getApplicationContext())) {
+        if (Utils.isConnected(this))
             (new bitcoinAverageThread()).start();
-        } else {
+        else
             notConnected(R.id.bitcoinaverage_loadSpinner);
-        }
     }
 
     private class bitcoinAverageThread extends Thread {
@@ -217,8 +215,7 @@ public class BitcoinAverageActivity extends BaseActivity {
     private void failedToDrawUI() {
 
         removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
-        if (dialog == null || !dialog.isShowing()) {
+        if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
-        }
     }
 }

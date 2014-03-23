@@ -10,9 +10,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.R;
 
-/**
- * Created by Michael on 24/02/14.
- */
 public class GraphPreferenceActivity extends SherlockPreferenceActivity {
 
 

@@ -2,7 +2,6 @@
 package com.veken0m.bitcoinium;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +27,7 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.preferences.GraphPreferenceActivity;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -50,7 +50,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
-    private static String exchangeName = "Bitstamp";
+    private static String exchangeName = "";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
 
@@ -68,20 +68,22 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null ) {
-            exchangeName = extras.getString("exchange");
-            exchange = new Exchange(this, exchangeName);
-        } else {
-            // TODO: generation error message
-            exchangeName = "Bitstamp";
-            exchange = new Exchange(this, "bitstamp");
-        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            exchange = new Exchange(this, extras.getString("exchange"));
+        else
+            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+
+        if(!exchange.supportsTrades())
+            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+
+        exchangeName = exchange.getExchangeName();
+
+        readPreferences();
         setContentView(R.layout.graph);
         createExchangeDropdown();
-        readPreferences(this);
-
         createCurrencyDropdown();
         viewGraph();
 
@@ -269,8 +271,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         gt.start();
     }
 
-    private static void readPreferences(Context context) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private static void readPreferences() {
 
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
         currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
@@ -287,7 +288,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged){
-                    exchange = new Exchange(this, exchangeName.replace("-","").replace(".",""));
+                    exchange = new Exchange(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
                 }
@@ -318,10 +319,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         spinner.setOnItemSelectedListener(this);
 
         int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
-        if(index != -1)
-            spinner.setSelection(index);
-        else
-            spinner.setSelection(2);
+        spinner.setSelection(index);
     }
 
     void createCurrencyDropdown() {

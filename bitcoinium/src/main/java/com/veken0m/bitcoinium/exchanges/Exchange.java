@@ -9,20 +9,24 @@ public class Exchange {
     private final String class_name;
     private final String main_currency;
     private final String identifier;
+    private final String shortName;
     private final boolean tickerSupportsBidAsk;
+    private Context context = null;
 
     public Exchange(Context context, String exchangeName) {
 
         // ToLower and Remove Exchange to keep compatibility with previous indexing system
-        String[] exchangeProperties = context.getResources().getStringArray(
-                context.getResources().getIdentifier(exchangeName.toLowerCase().replace("exchange","").replace(".","").replace("-",""), "array",
-                        context.getPackageName()));
+        exchangeName = exchangeName.toLowerCase().replace("exchange","").replaceAll("[ .-]","");
+        int resId = context.getResources().getIdentifier(exchangeName, "array", context.getPackageName());
+        String[] exchangeProperties = context.getResources().getStringArray(resId);
 
+        this.context = context;
         exchange_name = exchangeProperties[0];
         class_name = exchangeProperties[1];
         main_currency = exchangeProperties[2];
         identifier = exchangeProperties[3];
         tickerSupportsBidAsk = Boolean.parseBoolean(exchangeProperties[4]);
+        shortName = exchangeProperties[5];
     }
 
     public String getExchangeName() {
@@ -44,9 +48,51 @@ public class Exchange {
         return identifier;
     }
 
+    public String getShortName() {
+        return shortName;
+    }
+
     public Boolean supportsTickerBidAsk() {
 
         return tickerSupportsBidAsk;
     }
 
+    public Boolean supportsTicker() {
+
+        int resId = context.getResources().getIdentifier("exchangeID", "array", context.getPackageName());
+        String[] exchangesSupportTicker = context.getResources().getStringArray(resId);
+
+        for(String exchangeName:exchangesSupportTicker)
+        {
+            if(exchangeName.equals(identifier))
+                return true;
+        }
+        return false;
+    }
+
+    public Boolean supportsTrades() {
+
+        int resId = context.getResources().getIdentifier("exchangesTrades", "array", context.getPackageName());
+        String[] exchangesSupportGraph = context.getResources().getStringArray(resId);
+
+        for(String exchangeName:exchangesSupportGraph)
+        {
+            if(exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
+                return true;
+        }
+        return false;
+    }
+
+    public Boolean supportsOrderbook() {
+
+        int resId = context.getResources().getIdentifier("exchangesOrderbook","array", context.getPackageName());
+        String[] exchangesSupportOrderbook = context.getResources().getStringArray(resId);
+
+        for(String exchangeName:exchangesSupportOrderbook)
+        {
+            if(exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
+                return true;
+        }
+        return false;
+    }
 }

@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,6 @@ import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
 
 import java.util.ArrayList;
 // import com.veken0m.utils.KarmaAdsUtils;
-
 
 /**
  * @author Michael Lagacé a.k.a. veken0m
@@ -57,7 +55,7 @@ public class MainActivity extends SherlockFragmentActivity {
         String exchange = (extras != null) ? extras.getString("exchangeKey") : "";
 
         TabsAdapter tabsAdapter = new TabsAdapter(this, actionbar, mViewPager);
-        addTab(actionbar, tabsAdapter,exchange.toLowerCase().replace("exchange",""), HomeMenuFragment.class);
+        addTab(actionbar, tabsAdapter, exchange, HomeMenuFragment.class);
 
         actionbar.show();
     }
@@ -66,14 +64,8 @@ public class MainActivity extends SherlockFragmentActivity {
 
         ActionBar.Tab tab = actionbar.newTab();//.setText(identity);
 
-        int logoId = getResources().getIdentifier(identity + "logo", "drawable", getPackageName());
-        if(logoId != 0) tab.setIcon(logoId);
-
-        // Tell the ActionBar we want to use Tabs
-        if(!identity.equals("") && !identity.equals("bitcoinaverage") ){
-            actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            actionbar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light)));
-        }
+        //int logoId = getResources().getIdentifier(identity + "logo", "drawable", getPackageName());
+        //if(logoId != 0) tab.setIcon(logoId);
 
         Bundle args = new Bundle();
         args.putString("exchange", identity);
@@ -152,9 +144,7 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public void onPageScrolled(int position, float positionOffset,
-                                   int positionOffsetPixels) {
-        }
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
         @Override
         public void onPageSelected(int position) {
@@ -162,8 +152,7 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public void onPageScrollStateChanged(int state) {
-        }
+        public void onPageScrollStateChanged(int state) { }
 
         @Override
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -175,14 +164,10 @@ public class MainActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
-        }
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) { }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-
-        }
+        public void onTabReselected(Tab tab, FragmentTransaction ft) { }
     }
 
     @Override
@@ -209,9 +194,8 @@ public class MainActivity extends SherlockFragmentActivity {
 
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     public void onPause() {
@@ -229,7 +213,7 @@ public class MainActivity extends SherlockFragmentActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        // getIntent() should always return the most recent
+
         setIntent(intent);
     }
 
@@ -275,6 +259,4 @@ public class MainActivity extends SherlockFragmentActivity {
         }
     }
     */
-
-
 }

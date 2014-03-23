@@ -90,7 +90,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, miningPool);
                         views.setTextViewText(R.id.widgetBTCPayout,
-                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
+                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit, "BTC"));
 
                         if ((hashRate < 0.01) && pref_minerDownAlert)
                             createMinerDownNotification(this, miningPool);
@@ -101,10 +101,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         updateWidgetTheme(views);
 
                     } else {
-                        if (pref_enableWidgetCustomization)
-                            views.setTextColor(R.id.refreshtime, pref_widgetRefreshFailedColor);
-                        else
-                            views.setTextColor(R.id.refreshtime, Color.RED);
+                        views.setTextColor(R.id.refreshtime, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
                     }
                     if (widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
                 }
@@ -113,7 +110,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
         public Boolean getMinerInfo(String sMiningPool) {
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             HttpClient client = new DefaultHttpClient();
             ObjectMapper mapper = new ObjectMapper();

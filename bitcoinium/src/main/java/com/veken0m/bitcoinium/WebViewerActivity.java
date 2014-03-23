@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -23,6 +22,8 @@ import com.veken0m.compatibility.WebViewSherlockFragment;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class WebViewerActivity extends SherlockFragmentActivity {
+
+    final static LayoutParams MATCH_PARENT = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,24 +40,18 @@ public class WebViewerActivity extends SherlockFragmentActivity {
 
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab BitcoiniumTab = actionbar.newTab().setIcon(
-                R.drawable.bitcoiniumwebicon);
-        ActionBar.Tab MtGoxLiveTab = actionbar.newTab().setIcon(
-                R.drawable.mtgoxlogo);
+        ActionBar.Tab BitcoiniumTab = actionbar.newTab().setIcon(R.drawable.bitcoiniumwebicon);
+        //ActionBar.Tab MtGoxLiveTab = actionbar.newTab().setIcon(R.drawable.mtgoxlogo);
         ActionBar.Tab BitcoinityTab = actionbar.newTab().setText("Bitcoinity");
         BitcoiniumTab.setText("itcoinium");
 
-        WebViewSherlockFragment BitcoiniumFragment = new BitcoiniumFragment();
-        WebViewSherlockFragment BitcoinityFragment = new BitcoinityFragment();
-        WebViewSherlockFragment MtGoxLiveFragment = new MtGoxLiveFragment();
-
-        BitcoiniumTab.setTabListener(new WebTabsListener(BitcoiniumFragment));
-        BitcoinityTab.setTabListener(new WebTabsListener(BitcoinityFragment));
-        MtGoxLiveTab.setTabListener(new WebTabsListener(MtGoxLiveFragment));
+        BitcoiniumTab.setTabListener(new WebTabsListener(new BitcoiniumFragment()));
+        BitcoinityTab.setTabListener(new WebTabsListener(new BitcoinityFragment()));
+        //MtGoxLiveTab.setTabListener(new WebTabsListener(new MtGoxLiveFragment()));
 
         actionbar.addTab(BitcoiniumTab);
         actionbar.addTab(BitcoinityTab);
-        actionbar.addTab(MtGoxLiveTab);
+        //actionbar.addTab(MtGoxLiveTab);
 
         actionbar.show();
     }
@@ -67,18 +62,14 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            if (mWebView != null) {
+            if (mWebView != null)
                 mWebView.destroy();
-            }
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
-            LayoutParams p = new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            mWebView.setLayoutParams(p);
+            mWebView.setLayoutParams(MATCH_PARENT);
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setSupportZoom(true);
             mWebView.getSettings().setBuiltInZoomControls(true);
@@ -89,6 +80,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         }
     }
 
+    /*
     static public class MtGoxLiveFragment extends WebViewSherlockFragment {
 
         public MtGoxLiveFragment() {
@@ -117,6 +109,7 @@ public class WebViewerActivity extends SherlockFragmentActivity {
             return mWebView;
         }
     }
+   */
 
     static public class BitcoinityFragment extends WebViewSherlockFragment {
 
@@ -124,18 +117,14 @@ public class WebViewerActivity extends SherlockFragmentActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            if (mWebView != null) {
+            if (mWebView != null)
                 mWebView.destroy();
-            }
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
-            LayoutParams p = new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            mWebView.setLayoutParams(p);
+            mWebView.setLayoutParams(MATCH_PARENT);
             mWebView.getSettings().setJavaScriptEnabled(true);
             mIsWebViewAvailable = true;
             mWebView.loadUrl("https://bitcoinity.org/markets");
@@ -184,9 +173,8 @@ public class WebViewerActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     @Override
