@@ -21,7 +21,7 @@
         <item>Kraken</item>
         <!--item>MtGox</item-->
         <!--item>VirCurEx</item-->
-        <item>Vault Of Satoshi</item>
+        <item>Vault of Satoshi</item>
         <item>VirtEx</item>
     </string-array>
 
@@ -67,14 +67,14 @@
         <item>Justcoin</item>
         <item>Kraken</item>
         <!--item>MtGox</item-->
-        <item>Vault Of Satoshi</item>
+        <item>Vault of Satoshi</item>
         <!--item>VirCurEx</item-->
         <item>VirtEx</item>
     </string-array>
 
     <!-- Array for Exchanges with supported Trade Marketdata API -->
     <string-array name="exchangesTrades">
-        <item>ANX</item>
+        <!--item>ANX</item-->
         <!--item>BitcoinAverage</item-->
         <item>Bitcurex</item>
         <!--item>Bitfinex</item-->
@@ -91,7 +91,7 @@
         <!--item>Justcoin</item-->
         <item>Kraken</item>
         <!--item>MtGox</item-->
-        <item>Vault Of Satoshi</item>
+        <item>Vault of Satoshi</item>
         <!--item>VirCurEx</item-->
         <item>VirtEx</item>
     </string-array>
