@@ -163,9 +163,9 @@ public class BTCGuildFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards(), pref_widgetMiningPayoutUnit);
-                String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
-                        + " NMC";
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards(), pref_widgetMiningPayoutUnit, "BTC");
+                String RewardsNMC = "NMC Reward: "
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards_nmc(), pref_widgetMiningPayoutUnit, "NMC");
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvNMCRewards.setText(RewardsNMC);

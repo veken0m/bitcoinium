@@ -166,12 +166,9 @@ public class BitMinterFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getBalances().getBTC(), pref_widgetMiningPayoutUnit);
-                String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
-                        + " NMC";
-                String Hashrate = "Total Hashrate: "
-                        + data.getHash_rate() + " MH/s\n";
+                String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getBTC(), pref_widgetMiningPayoutUnit, "BTC");
+                String RewardsNMC = "NMC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getNMC(), pref_widgetMiningPayoutUnit, "NMC");
+                String Hashrate = "Total Hashrate: " + data.getHash_rate() + " MH/s\n";
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvNMCRewards.setText(RewardsNMC);

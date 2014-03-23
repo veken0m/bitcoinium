@@ -174,10 +174,10 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String Hashrate = "Total Hashrate: "
                         + data.getUser().getHash_rate() + " MH/s\n";
-                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts(), pref_widgetMiningPayoutUnit);
+                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts(), pref_widgetMiningPayoutUnit, "BTC");
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(Payout);

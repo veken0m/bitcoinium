@@ -185,15 +185,15 @@ public class SlushFragment extends SherlockFragment {
                 // USER INFO
                 String hashrate = "Total Hashrate: " + data.getHashrate() + " MH/s";
                 String confirmed_reward = "Confirmed: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String estimated_reward = "Estimated: "
-                        + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String confirmed_nmc_reward = "Confirmed: "
-                        + data.getConfirmed_nmc_reward() + " NMC";
+                    + CurrencyUtils.formatPayout(data.getConfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String unconfirmed_reward = "Unconfirmed: "
-                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String unconfirmed_nmc_reward = "Unconfirmed: "
-                        + data.getUnconfirmed_nmc_reward() + " NMC";
+                    + CurrencyUtils.formatPayout(data.getUnconfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String username = "Username: " + data.getUsername();
                 // String rating = "Rating: " + data.getRating();
                 // String nmc_send_threshold = "Send Threshold: " +

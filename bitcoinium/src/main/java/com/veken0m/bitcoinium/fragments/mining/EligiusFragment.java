@@ -160,8 +160,7 @@ public class EligiusFragment extends SherlockFragment {
 
         if (view != null) {
             try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 TableRow tr1 = new TableRow(getActivity());
                 TableRow tr2 = new TableRow(getActivity());
@@ -179,13 +178,12 @@ public class EligiusFragment extends SherlockFragment {
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 //if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit);
-                estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit);
+                confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit, "BTC");
+                estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit, "BTC");
                 //} else {
                 //    confirmed_reward += "N/A";
                 //    estimated_reward += "N/A";
                 //}
-
 
                 tvConfirmed_reward.setText(confirmed_reward);
                 tvEstimated_reward.setText(estimated_reward);

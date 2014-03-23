@@ -64,7 +64,7 @@ public class Utils {
         if (displayInMilliBtc && isBTC){
             amount /= 1000;
 
-        //  adjust altcoin units
+        // adjust altcoin units
         // at least one digit on the left side of decimal point
         }else if(!isBTC && amount < 1){
             unitIndex = getUnitIndex(amount);
@@ -82,13 +82,12 @@ public class Utils {
     // is also used to scale the value to match units
     public static int getUnitIndex(float price){
         int unitIndex = -1;
-        while(price < 1 && unitIndex < 5){
+        while(price < 0.5 && unitIndex < 4){
             price *= 1000;
             unitIndex++;
         }
         return unitIndex;
     }
-
 
     public static boolean isBetween(float value, float min, float max) {
 
@@ -168,7 +167,7 @@ public class Utils {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
-    public static Boolean checkWiFiConnected(Context context) {
+    public static boolean checkWiFiConnected(Context context) {
 
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

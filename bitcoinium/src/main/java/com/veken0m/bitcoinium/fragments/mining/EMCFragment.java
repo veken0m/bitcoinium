@@ -170,13 +170,13 @@ public class EMCFragment extends SherlockFragment {
                 // User Data
                 User userData = data.getData().getUser();
                 String ConfirmedRewardsBTC = "Confirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String UnconfirmedRewardsBTC = "Unconfirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String EstimatedRewardsBTC = "Estimated Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String TotalRewardsBTC = "Total Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getTotal_payout(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getTotal_payout(), pref_widgetMiningPayoutUnit, "BTC");
                 String BlocksFound = "Blocks Found: "
                         + userData.getBlocks_found();
 
