@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.format.DateFormat;
-import android.widget.TableRow;
+import android.view.Gravity;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
@@ -24,7 +24,6 @@ import java.util.Date;
 
 public class Utils {
 
-    public static final LayoutParams symbolParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f);
     public static final LayoutParams adjustParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
     public static String formatDecimal(float valueToFormat,int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings) {
@@ -119,14 +118,12 @@ public class Utils {
 
     public static void setTextViewParams(TextView tv, BigDecimal value) {
 
-        LayoutParams params = new TableRow.LayoutParams(
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
-        tv.setText(Utils.formatDecimal(value.floatValue() ,2, 0, true));
+        tv.setText(Utils.formatDecimal(value.floatValue(), 2, 0, true));
         tv.setLayoutParams(params);
         tv.setTextColor(Color.WHITE);
-        tv.setGravity(1);
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
     public static String formatHashrate(float hashRate) {

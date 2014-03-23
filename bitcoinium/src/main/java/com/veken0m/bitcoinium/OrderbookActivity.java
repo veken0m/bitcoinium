@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -196,7 +197,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
             priceUnitIndex++; // increment to use a scale factor
 
-
             TextView tvAskAmountHeader = (TextView) findViewById(R.id.askAmountHeader);
             TextView tvAskPriceHeader  = (TextView) findViewById(R.id.askPriceHeader);
             TextView tvBidPriceHeader  = (TextView) findViewById(R.id.bidPriceHeader);
@@ -207,12 +207,13 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
             tvBidAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
 
+            LayoutInflater mInflater = LayoutInflater.from(this);
             for (int i = 0; i < listBids.size(); i++) {
-                final TableRow newRow = new TableRow(this);
-                final TextView tvAskAmount = new TextView(this);
-                final TextView tvAskPrice = new TextView(this);
-                final TextView tvBidPrice = new TextView(this);
-                final TextView tvBidAmount = new TextView(this);
+
+                TextView tvAskAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvAskPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
 
                 final LimitOrder limitorderBid = listBids.get(i);
                 final LimitOrder limitorderAsk = listAsks.get(i);
@@ -223,27 +224,22 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
                 tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, 0, true));
-                tvBidAmount.setLayoutParams(Utils.symbolParams);
-                tvBidAmount.setGravity(Gravity.CENTER);
                 tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, 0, true));
-                tvAskAmount.setLayoutParams(Utils.symbolParams);
-                tvAskAmount.setGravity(Gravity.CENTER);
-
                 tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
-                tvBidPrice.setLayoutParams(Utils.symbolParams);
-                tvBidPrice.setGravity(Gravity.CENTER);
                 tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
-                tvAskPrice.setLayoutParams(Utils.symbolParams);
-                tvAskPrice.setGravity(Gravity.CENTER);
 
                 // Text coloring for depth highlighting
-                int bidTextColor = (pref_enableHighlight) ? depthColor(bidAmount) : Color.WHITE;
-                int askTextColor = (pref_enableHighlight) ? depthColor(askAmount) : Color.WHITE;
+                if(pref_enableHighlight) {
+                    int bidTextColor = depthColor(bidAmount);
+                    int askTextColor = depthColor(askAmount);
 
-                tvBidAmount.setTextColor(bidTextColor);
-                tvBidPrice.setTextColor(bidTextColor);
-                tvAskAmount.setTextColor(askTextColor);
-                tvAskPrice.setTextColor(askTextColor);
+                    tvBidAmount.setTextColor(bidTextColor);
+                    tvBidPrice.setTextColor(bidTextColor);
+                    tvAskAmount.setTextColor(askTextColor);
+                    tvAskPrice.setTextColor(askTextColor);
+                }
+
+                final TableRow newRow = new TableRow(this);
 
                 // Toggle background color
                 if (bBackGroundColor = !bBackGroundColor)

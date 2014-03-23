@@ -124,7 +124,6 @@ public class BitcoinAverageActivity extends BaseActivity {
                         }
                     });
 
-
             for (Ticker ticker : tickers) {
 
                 final TextView tvSymbol = new TextView(this);
