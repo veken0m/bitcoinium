@@ -43,14 +43,14 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
         if(item.getItemId() == R.id.action_widget_accept) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pref_widgetExchange = prefs.getString("widgetExchangesPref", Constants.DEFAULT_EXCHANGE);
+            String pref_widgetExchange = prefs.getString("widgetExchangePref", Constants.DEFAULT_EXCHANGE);
 
             Exchange exchange;
             try {
                 exchange = new Exchange(this, pref_widgetExchange);
             } catch (Exception e) {
                 Editor editor = prefs.edit();
-                editor.putString("widgetExchangesPref", Constants.DEFAULT_EXCHANGE).commit();
+                editor.putString("widgetExchangePref", Constants.DEFAULT_EXCHANGE).commit();
                 exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
             }
 
@@ -83,7 +83,7 @@ public class WidgetConfigureActivity extends SherlockPreferenceActivity {
         // out of the widget placement if they press the back button.
         setResult(RESULT_CANCELED);
 
-        ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
+        ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangePref");
         ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
         // get the Resource ID for the currency array
