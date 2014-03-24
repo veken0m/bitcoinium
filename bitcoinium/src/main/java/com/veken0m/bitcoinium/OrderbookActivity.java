@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -260,7 +259,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
-            if(threadRunning == false) // if thread running don't start a another one
+            if(!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
         } else {
             notConnected(R.id.bitcoincharts_loadSpinner);

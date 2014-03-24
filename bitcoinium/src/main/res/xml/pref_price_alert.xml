@@ -1262,6 +1262,114 @@
                     android:title="BitcoinAverage BTC/ZAR Lower Threshold"/>
             </PreferenceScreen>
         </PreferenceScreen>
+        <PreferenceScreen android:title="@string/vaultofsatoshiAlarmThresholds">
+
+            <PreferenceScreen android:title="BTC/USD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiBTCUSDUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi BTC/USD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiBTCUSDLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi BTC/USD Lower Threshold"/>
+            </PreferenceScreen>
+
+            <PreferenceScreen android:title="BTC/CAD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiBTCCADUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi BTC/CAD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiBTCCADLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi BTC/CAD Lower Threshold"/>
+            </PreferenceScreen>
+
+            <PreferenceScreen android:title="LTC/USD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiLTCUSDUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi LTC/USD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiLTCUSDLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi LTC/USD Lower Threshold"/>
+            </PreferenceScreen>
+
+            <PreferenceScreen android:title="LTC/CAD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiLTCCADUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi LTC/CAD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiLTCCADLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi LTC/CAD Lower Threshold"/>
+            </PreferenceScreen>
+
+            <PreferenceScreen android:title="DOGE/USD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiDOGEUSDUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi DOGE/USD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiDOGEUSDLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi DOGE/USD Lower Threshold"/>
+            </PreferenceScreen>
+
+            <PreferenceScreen android:title="DOGE/CAD">
+                <EditTextPreference
+                    android:defaultValue="999999"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiDOGECADUpper"
+                    android:summary="@string/pref_alarm_vos_over_summary"
+                    android:title="Vault of Satoshi DOGE/CAD Upper Threshold"/>
+                <EditTextPreference
+                    android:defaultValue="0"
+                    android:digits="01234567890."
+                    android:inputType="numberDecimal"
+                    android:key="vaultofsatoshiDOGECADLower"
+                    android:summary="@string/pref_alarm_vos_under_summary"
+                    android:title="Vault of Satoshi DOGE/CAD Lower Threshold"/>
+            </PreferenceScreen>
+
+        </PreferenceScreen>
+        <Preference
+            android:summary="Due to large number of exchanges and currency pairs supported it has become very tedious to manage Price Alarm settings. For this reason, missing Price Alarms will only be added by request until a better solution is implemented."
+            android:key="alertRequestPref"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

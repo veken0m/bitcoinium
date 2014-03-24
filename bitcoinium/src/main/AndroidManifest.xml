@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.veken0m.bitcoinium"
-          android:versionCode="52"
+          android:versionCode="53"
           android:versionName="@string/version_name">
 
     <uses-sdk
@@ -16,7 +16,6 @@
 
     <application
         android:allowBackup="true"
-        android:debuggable="true"
         android:icon="@drawable/bitcoiniumlogo"
         android:label="@string/app_name"
         android:theme="@style/Theme.Bitcoinium">
@@ -87,8 +86,7 @@
             android:name=".BitcoinChartsActivity"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Bitcoin Charts"
-            android:screenOrientation="portrait">
+            android:label="Bitcoin Charts">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -97,8 +95,7 @@
             android:name=".BitcoinAverageActivity"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="BitcoinAverage.com"
-            android:screenOrientation="portrait">
+            android:label="BitcoinAverage.com">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -130,7 +127,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".preferences.PriceAlarmPreferencesActivity"
+            android:name=".preferences.PriceAlertPreferencesActivity"
             android:parentActivityName=".MainActivity"
             android:label="Price Alarm Settings">
             <meta-data

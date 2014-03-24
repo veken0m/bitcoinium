@@ -17,7 +17,7 @@ import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
@@ -64,6 +64,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                     // Load widget configuration
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
                     if (exchangePref == null) continue; // skip to next widget
+
+                    if(exchangePref.toLowerCase().contains("mtgox")) exchangePref = "bitcoinaverage";
 
                     Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
@@ -263,7 +265,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             String notifText = getString(R.string.priceAlarmUpgrade2);
             Notification notif = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
 
-            Intent notifIntent = new Intent(context, PriceAlarmPreferencesActivity.class);
+            Intent notifIntent = new Intent(context, PriceAlertPreferencesActivity.class);
             PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifIntent, 0);
 
             notif.setLatestEventInfo(context, "Price Alarm upgraded", notifText, contentIntent);

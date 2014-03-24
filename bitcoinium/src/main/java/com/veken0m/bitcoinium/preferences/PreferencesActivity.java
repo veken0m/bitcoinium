@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium.preferences;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -33,7 +32,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
 
         addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_widgets);
-        addPreferencesFromResource(R.xml.pref_price_alarm_category);
+        addPreferencesFromResource(R.xml.pref_price_alert_category);
         addPreferencesFromResource(R.xml.pref_notfication_tickers);
         addPreferencesFromResource(R.xml.pref_miner);
         addPreferencesFromResource(R.xml.pref_about);
@@ -45,15 +44,15 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
         Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
         Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
         Preference alarmSettings = findPreference("alarmSettingsPref");
-        Preference donationAddressPref = findPreference("donationAddressPref");
+        Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
+        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
+        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
         Preference bitcoiniumGithubPref = findPreference("bitcoiniumGithubPref");
         Preference playstoreGithubPref = findPreference("playstoreGithubPref");
 
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
         bar.show();
-
-        final Resources res = getResources();
 
         if (devEmailPref != null) {
             devEmailPref
@@ -63,8 +62,26 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                         public boolean onPreferenceClick(Preference preference) {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, res.getString(R.string.emailAddress));
-                            i.putExtra(Intent.EXTRA_SUBJECT, res.getString(R.string.app_name) + getString(R.string.feedback));
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
+                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + getString(R.string.feedback));
+                            startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
+
+                            return true;
+                        }
+                    });
+        }
+
+        Preference notificationRequestPref = findPreference("notificationRequestPref");
+        if (notificationRequestPref != null) {
+            notificationRequestPref
+                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("message/rfc822");
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
+                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - Notification Ticker Request");
                             startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
 
                             return true;
@@ -79,7 +96,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(res.getString(R.string.twitterAddress))));
+                                    .parse(getString(R.string.twitterAddress))));
                             return true;
                         }
                     });
@@ -92,7 +109,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(res.getString(R.string.xchangeGithub))));
+                            .parse(getString(R.string.xchangeGithub))));
                     return true;
                 }
             });
@@ -114,7 +131,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(res.getString(R.string.bitcoiniumGithub))));
+                            .parse(getString(R.string.bitcoiniumGithub))));
                     return true;
                 }
             });
@@ -171,19 +188,65 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    startActivity(new Intent(getApplicationContext(), PriceAlarmPreferencesActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PriceAlertPreferencesActivity.class));
                     return true;
                 }
             });
         }
 
-        if (donationAddressPref != null) {
-            donationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        if (bitcoinDonationAddressPref != null) {
+            bitcoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    String donationAddress = getResources().getString(R.string.donationAddress);
+                    String donationAddress = getResources().getString(R.string.bitcoinDonationAddress);
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setText(donationAddress);
+                    } else {
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
+                    }
+                    Context context = getApplicationContext();
+                    if (context != null)
+                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+            });
+        }
+
+        if (litecoinDonationAddressPref != null) {
+            litecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    String donationAddress = getResources().getString(R.string.litecoinDonationAddress);
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setText(donationAddress);
+                    } else {
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
+                    }
+                    Context context = getApplicationContext();
+                    if (context != null)
+                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+            });
+        }
+
+        if (dogecoinDonationAddressPref != null) {
+            dogecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    String donationAddress = getResources().getString(R.string.dogecoinDonationAddress);
                     if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                         android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                         clipboard.setText(donationAddress);

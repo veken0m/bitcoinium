@@ -4,5 +4,5 @@
         android:id="@+id/action_widget_accept"
         android:showAsAction="always|withText"
         android:icon="@drawable/ic_cab_done_holo_dark"
-        android:title="Accept"/>
+        android:title="@string/accept"/>
 </menu>

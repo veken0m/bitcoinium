@@ -19,7 +19,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 
 import java.util.ArrayList;
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -185,7 +185,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 startActivity(new Intent(this, PreferencesActivity.class));
                 return true;
             case R.id.action_alarm_preferences:
-                startActivity(new Intent(this, PriceAlarmPreferencesActivity.class));
+                startActivity(new Intent(this, PriceAlertPreferencesActivity.class));
                 return true;
         }
 

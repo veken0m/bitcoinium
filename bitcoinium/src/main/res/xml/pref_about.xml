@@ -9,10 +9,6 @@
                     android:summary="@string/author"
                     android:title="@string/authorText"/>
                 <Preference
-                    android:key="donationAddressPref"
-                    android:summary="@string/donationAddress"
-                    android:title="@string/donationAddresText"/>
-                <Preference
                     android:key="devEmailPref"
                     android:summary="@string/emailAddress"
                     android:title="@string/emailText"/>
@@ -41,7 +37,20 @@
                     android:title="@string/optGoogleAnalytics"
                     android:defaultValue="false"/>
             </PreferenceCategory>
+            <PreferenceCategory android:title="@string/donations">
+                <Preference
+                    android:key="bitcoinDonationAddressPref"
+                    android:summary="@string/bitcoinDonationAddress"
+                    android:title="@string/bitcoinDonationAddressText"/>
+                <Preference
+                    android:key="litecoinDonationAddressPref"
+                    android:summary="@string/litecoinDonationAddress"
+                    android:title="@string/litecoinDonationAddressText"/>
+                <Preference
+                    android:key="dogecoinDonationAddressPref"
+                    android:summary="@string/dogecoinDonationAddress"
+                    android:title="@string/dogecoinDonationAddressText"/>
+            </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-
 </PreferenceScreen>

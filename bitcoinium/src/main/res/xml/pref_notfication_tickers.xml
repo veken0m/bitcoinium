@@ -414,6 +414,9 @@
                     android:key="bitcoinaverageBTCZARTickerPref"
                     android:title="BitcoinAverage BTC/ZAR Ticker"/>
             </PreferenceScreen>
+            <Preference
+                android:summary="Due to large number of exchanges and currency pairs supported it has become very tedious to manage Notification Area Ticker settings. For this reason, missing Notification Area Tickers will only be added by request until a better solution is implemented."
+                android:key="notificationRequestPref"/>
         </PreferenceScreen>
     </PreferenceCategory>
 

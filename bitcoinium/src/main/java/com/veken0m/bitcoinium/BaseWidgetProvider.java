@@ -19,7 +19,7 @@ import android.text.format.Time;
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.bitcoinium.preferences.PriceAlarmPreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 
@@ -156,7 +156,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
 
-        Intent notificationIntent = new Intent(context, PriceAlarmPreferencesActivity.class);
+        Intent notificationIntent = new Intent(context, PriceAlertPreferencesActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
