@@ -177,6 +177,7 @@
         <item>BTC/CNY</item>
         <item>bter</item>
         <item>true</item>
+        <item>BTER</item>
     </string-array>
 
     <string-array name="campbx">
@@ -203,6 +204,7 @@
         <item>BTC/USD</item>
         <item>coinbase</item>
         <item>true</item>
+        <item>Coinbase</item>
     </string-array>
 
     <!-- Streaming API only -->
