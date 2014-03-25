@@ -4,44 +4,44 @@ Bitcoinium is an Android application used to monitor Bitcoin price on various ex
 
 Currently supported exchanges include:
 
-    - [Canadian Virtex](https://www.cavirtex.com)
-    - [BTC-E](https://btc-e.com)
-    - [Bitstamp](https://www.bitstamp.net)
-    - [CampBX](https://campbx.com)
-    - [Bitcurex](https://eur.bitcurex.com)
-    - [BTC China](https://btcchina.com)
-    - [Kraken](https://www.kraken.com)
-    - [Bitfinex](https://bitfinex.com.com)
-    - [Justcoin](https://justcoin.com/en)
-    - [Crypto-Trade](https://crypto-trade.com)
-    - [VirCurEx](https://vircurex.com)
-    - [BTER](https://bter.com)
-    - [CEX.IO](https://cex.io)
-    - [Coinbase](https://coinbase.com)
-    - [Vault of Satoshi](https://www.vaultofsatoshi.com)
-    - [ANX](https://anxbtc.com)
+  - [Canadian Virtex](https://www.cavirtex.com)
+  - [BTC-E](https://btc-e.com)
+  - [Bitstamp](https://www.bitstamp.net)
+  - [CampBX](https://campbx.com)
+  - [Bitcurex](https://eur.bitcurex.com)
+  - [BTC China](https://btcchina.com)
+  - [Kraken](https://www.kraken.com)
+  - [Bitfinex](https://bitfinex.com.com)
+  - [Justcoin](https://justcoin.com/en)
+  - [Crypto-Trade](https://crypto-trade.com)
+  - [VirCurEx](https://vircurex.com)
+  - [BTER](https://bter.com)
+  - [CEX.IO](https://cex.io)
+  - [Coinbase](https://coinbase.com)
+  - [Vault of Satoshi](https://www.vaultofsatoshi.com)
+  - [ANX](https://anxbtc.com)
 
 	
 Removed Exchanges (closed down or temporarily unavailable):
 
-	- [MtGox](http://mtgox.com)
-	- [Bitcoin-Central](http://bitcoin-central.net)
-	- [Bitfloor](https://bitfloor.com)
-	- [Bitcoin-24](https://bitcoin-24.com)
+  - [MtGox](http://mtgox.com)
+  - [Bitcoin-Central](http://bitcoin-central.net)
+  - [Bitfloor](https://bitfloor.com)
+  - [Bitcoin-24](https://bitcoin-24.com)
 		
 Additional Information from:	
-	- [Bitcoin Charts](http://bitcoincharts.com/markets)
-	- [Bitcoin Average](https://bitcoinaverage.com)
+  - [Bitcoin Charts](http://bitcoincharts.com/markets)
+  - [Bitcoin Average](https://bitcoinaverage.com)
 
 Supported Mining Pools:
 
-	- [Deepbit](http://deepbit.net)
-	- [BitMinter](http://bitminter.com)
-	- [EclipseMC](https://eclipsemc.com)
-	- [Slush](http://mining.bitcoin.cz)
-	- [50BTC](https://50btc.com/en)
-	- [BTC Guild](https://www.btcguild.com)
-	- [Eligius.st](http://eligius.st)
+  - [Deepbit](http://deepbit.net)
+  - [BitMinter](http://bitminter.com)
+  - [EclipseMC](https://eclipsemc.com)
+  - [Slush](http://mining.bitcoin.cz)
+  - [50BTC](https://50btc.com/en)
+  - [BTC Guild](https://www.btcguild.com)
+  - [Eligius.st](http://eligius.st)
 
 Features
 ===============
@@ -82,6 +82,6 @@ Bitcoinium Prime (Ad-Free/Paid)	: https://play.google.com/store/apps/details?id=
 
 Donations
 ===============
-Bitcoin: 1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54
-Litecoin: LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp
-Dogecoin: D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y
+- Bitcoin: 1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54
+- Litecoin: LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp
+- Dogecoin: D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y
