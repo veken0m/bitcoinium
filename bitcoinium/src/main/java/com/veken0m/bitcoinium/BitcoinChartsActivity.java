@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -235,11 +236,14 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     private void errorOccured() {
 
         removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 

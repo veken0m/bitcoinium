@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -184,9 +185,11 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
             boolean bBackGroundColor = true;
 
-            String currencySymbol = "";
+            String baseCurrencySymbol = "";
+            String counterCurrencySymbol = "";
             if (pref_showCurrencySymbol) {
-                currencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
+                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
+                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.baseSymbol);
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
@@ -222,10 +225,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 float askPrice = limitorderAsk.getLimitPrice().floatValue();
                 float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, 0, true));
-                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, 0, true));
-                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
-                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
+                tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
+                tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
+                tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
+                tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
 
                 // Text coloring for depth highlighting
                 if(pref_enableHighlight) {
@@ -334,12 +337,16 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            String text = String.format(res.getString(R.string.connectionError),
-                    res.getString(R.string.orderbook), exchange.getExchangeName());
-            dialog = Utils.errorDialog(this, text);
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                String text = String.format(res.getString(R.string.connectionError),
+                        res.getString(R.string.orderbook), exchange.getExchangeName());
+                dialog = Utils.errorDialog(this, text);
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 

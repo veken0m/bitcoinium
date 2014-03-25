@@ -107,7 +107,11 @@ public class DeepBitFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };

@@ -74,6 +74,8 @@ public class Utils {
             numOfDecimals = 2;
         }
 
+        if(amount >= 1000 && !includeCurrencyCode) numOfDecimals = 0;
+
         return CurrencyUtils.getSymbol(pair.counterSymbol) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
     }
 

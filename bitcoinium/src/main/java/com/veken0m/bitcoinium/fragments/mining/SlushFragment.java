@@ -114,7 +114,11 @@ public class SlushFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -150,8 +154,7 @@ public class SlushFragment extends SherlockFragment {
 
         if (view != null) {
             try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 TableRow tr1 = new TableRow(getActivity());
                 TableRow tr2 = new TableRow(getActivity());

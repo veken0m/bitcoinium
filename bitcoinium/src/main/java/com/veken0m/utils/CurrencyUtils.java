@@ -14,15 +14,21 @@ public class CurrencyUtils {
     public static String getSymbol(String currencyCode) {
 
         try{
-            List<String> ignoredCurrencies = Arrays.asList("DKK", "BTC", "LTC", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
+            List<String> ignoredCurrencies = Arrays.asList("DKK", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
 
             if (!(ignoredCurrencies.contains(currencyCode))) {
-                String symbol = Currency.getInstance(currencyCode).getSymbol();
-                return symbol.substring(symbol.length() - 1);
+                if(Constants.CRYPTO_SYMBOLS.containsKey(currencyCode)){
+                    return Constants.CRYPTO_SYMBOLS.get(currencyCode);
+                } else {
+                    String symbol = Currency.getInstance(currencyCode).getSymbol();
+                    return symbol.substring(symbol.length() - 1);
+                }
             }
             return "";
 
+
         } catch (Exception e){
+            e.printStackTrace();
             return "";
         }
     }

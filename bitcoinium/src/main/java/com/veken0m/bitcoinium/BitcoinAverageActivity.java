@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.view.WindowManager;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -204,10 +205,14 @@ public class BitcoinAverageActivity extends BaseActivity {
 
         removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
