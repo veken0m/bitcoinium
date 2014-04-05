@@ -37,7 +37,7 @@ android {
 }
 
 ext {
-    xchangeVersion = "2.0.0-SNAPSHOT"
+    xchangeVersion = "2.0.0"
     useXChangeFromMaven = true
 }
 
