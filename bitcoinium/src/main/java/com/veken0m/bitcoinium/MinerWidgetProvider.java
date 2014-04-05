@@ -280,11 +280,13 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         private void setTapBehaviour(int appWidgetId, String poolKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
-            Intent intent = new Intent(this, MinerStatsActivity.class);
+
             if (pref_tapToUpdate) {
+                Intent intent = new Intent(this, MinerWidgetProvider.class);
                 intent.setAction(Constants.REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
             } else {
+                Intent intent = new Intent(this, MinerStatsActivity.class);
                 Bundle tabSelection = new Bundle();
                 tabSelection.putString("poolKey", poolKey);
                 intent.putExtras(tabSelection);
