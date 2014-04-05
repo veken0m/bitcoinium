@@ -22,7 +22,6 @@ public class GraphPreferenceActivity extends SherlockPreferenceActivity {
         bar.show();
 
         addPreferencesFromResource(R.xml.pref_graph);
-
     }
 
     @Override

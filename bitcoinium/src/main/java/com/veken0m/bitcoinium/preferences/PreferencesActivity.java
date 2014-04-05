@@ -63,7 +63,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
                             i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
-                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + getString(R.string.feedback));
+                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - " + getString(R.string.feedback));
                             startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
 
                             return true;

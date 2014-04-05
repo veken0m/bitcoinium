@@ -235,20 +235,15 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
     private void createPopup(String pMessage) {
         try {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(pMessage);
-            builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
-
-            AlertDialog alert = builder.create();
-            alert.show();
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, pMessage);
+            }
         } catch (WindowManager.BadTokenException e){
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
+
     }
 
     @Override
