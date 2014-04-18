@@ -16,27 +16,30 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
+import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
+import com.xeiam.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
+import com.xeiam.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
 public class BitcoinAverageActivity extends BaseActivity {
 
     private final static Handler mOrderHandler = new Handler();
-    final private ArrayList<Ticker> tickers;
+    private Map<String, BitcoinAverageTicker> tickers = new HashMap<String, BitcoinAverageTicker>();
 
     public BitcoinAverageActivity() {
-        tickers = new ArrayList<Ticker>();
+
     }
 
     @Override
@@ -83,18 +86,16 @@ public class BitcoinAverageActivity extends BaseActivity {
     boolean getBitcoinAverage() {
 
         tickers.clear();
-        PollingMarketDataService pollingService = ExchangeFactory.INSTANCE
-                .createExchange("com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange")
-                .getPollingMarketDataService();
+        Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
+        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getPollingMarketDataService();
 
         if (pollingService != null) {
-            for (String currency : Constants.BITCOINAVERAGE_CURRENCIES) {
                 try {
-                    tickers.add(pollingService.getTicker(new CurrencyPair("BTC", currency)));
+                    tickers = pollingService.getBitcoinAverageAllTickers().getTickers();
                 } catch (IOException e) {
                     // Skip ticker and keep looping
+                    return false;
                 }
-            }
             return true;
         } else {
             return false;
@@ -116,46 +117,53 @@ public class BitcoinAverageActivity extends BaseActivity {
             // Clear table
             bitcoinAverageTable.removeAllViews();
 
+            List<Map.Entry<String,BitcoinAverageTicker>> entries = new LinkedList<Map.Entry<String,BitcoinAverageTicker>>(tickers.entrySet());
+
             // Sort Tickers by volume
-            Collections.sort(tickers, new
-                    Comparator<Ticker>() {
-                        @Override
-                        public int compare(Ticker entry1, Ticker entry2) {
-                            return entry2.getVolume().compareTo(entry1.getVolume());
-                        }
-                    });
+            Collections.sort(entries, new Comparator<Map.Entry<String,BitcoinAverageTicker>>() {
 
-            for (Ticker ticker : tickers) {
+                @Override
+                public int compare(Map.Entry<String,BitcoinAverageTicker> o1, Map.Entry<String,BitcoinAverageTicker> o2) {
+                    return o2.getValue().getVolume().compareTo(o1.getValue().getVolume());
+                }
+            });
 
-                final TextView tvSymbol = new TextView(this);
-                final TextView tvLast = new TextView(this);
-                final TextView tvVolume = new TextView(this);
-                final TextView tvBid = new TextView(this);
-                final TextView tvAsk = new TextView(this);
-                // final TextView tvAvg = new TextView(this);
+            for (Map.Entry<String,BitcoinAverageTicker> tickerEntry : entries) {
 
-                tvSymbol.setText(ticker.getCurrencyPair().counterSymbol);
-                tvSymbol.setTextColor(Color.WHITE);
-                Utils.setTextViewParams(tvLast, ticker.getLast());
-                Utils.setTextViewParams(tvVolume, ticker.getVolume());
-                Utils.setTextViewParams(tvBid, ticker.getBid());
-                Utils.setTextViewParams(tvAsk, ticker.getAsk());
-                // Utils.setTextViewParams(tvAvg, avg);
+                BitcoinAverageTicker ticker = tickerEntry.getValue();
+                if(ticker.getVolume().floatValue() > 0.0) {
 
-                final TableRow newRow = new TableRow(this);
+                    final TextView tvSymbol = new TextView(this);
+                    final TextView tvLast = new TextView(this);
+                    final TextView tvVolume = new TextView(this);
+                    final TextView tvBid = new TextView(this);
+                    final TextView tvAsk = new TextView(this);
+                    // final TextView tvAvg = new TextView(this);
 
-                // Toggle background color
-                if (bBackGroundColor = !bBackGroundColor)
-                    newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+                    tvSymbol.setText(tickerEntry.getKey().toString());
+                    tvSymbol.setTextColor(Color.WHITE);
 
-                newRow.addView(tvSymbol, Utils.adjustParams);
-                newRow.addView(tvLast);
-                newRow.addView(tvVolume);
-                newRow.addView(tvBid);
-                newRow.addView(tvAsk);
-                // newRow.addView(tvAvg);
-                newRow.setPadding(0, 3, 0, 3);
-                bitcoinAverageTable.addView(newRow);
+                    Utils.setTextViewParams(tvLast, ticker.getLast());
+                    Utils.setTextViewParams(tvVolume, ticker.getVolume());
+                    Utils.setTextViewParams(tvBid, ticker.getBid());
+                    Utils.setTextViewParams(tvAsk, ticker.getAsk());
+                    // Utils.setTextViewParams(tvAvg, avg);
+
+                    final TableRow newRow = new TableRow(this);
+
+                    // Toggle background color
+                    if (bBackGroundColor = !bBackGroundColor)
+                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+
+                    newRow.addView(tvSymbol, Utils.adjustParams);
+                    newRow.addView(tvLast);
+                    newRow.addView(tvVolume);
+                    newRow.addView(tvBid);
+                    newRow.addView(tvAsk);
+                    // newRow.addView(tvAvg);
+                    newRow.setPadding(0, 3, 0, 3);
+                    bitcoinAverageTable.addView(newRow);
+                }
             }
         } else {
             failedToDrawUI();
