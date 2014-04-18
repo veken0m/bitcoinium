@@ -399,6 +399,8 @@
     <!-- Arrays for CampBX Currencies -->
     <string-array name="btcchinacurrencies">
         <item>BTC/CNY</item>
+        <item>LTC/CNY</item>
+        <item>LTC/BTC</item>
     </string-array>
 
     <!-- Arrays for BTER Currencies -->
@@ -633,12 +635,18 @@
     <string-array name="vaultofsatoshicurrencies">
         <item>BTC/USD</item>
         <item>BTC/CAD</item>
+        <item>BTC/LTC</item>
+        <item>BTC/DOGE</item>
         <item>LTC/USD</item>
         <item>LTC/CAD</item>
+        <item>LTC/BTC</item>
+        <item>LTC/DOGE</item>
         <item>PPC/USD</item>
         <item>PPC/CAD</item>
         <item>DOGE/USD</item>
         <item>DOGE/CAD</item>
+        <item>DOGE/LTC</item>
+        <item>DOGE/BTC</item>
         <item>FTC/USD</item>
         <item>FTC/CAD</item>
         <item>XPM/USD</item>
