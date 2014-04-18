@@ -205,20 +205,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 } else if (sMiningPool.equalsIgnoreCase("50BTC")) {
                     String pref_apiKey = prefs.getString("50BTCKey", "");
 
-                    HttpGet post = new HttpGet("https://50btc.com/en/api/"
-                            + pref_apiKey + "?text=1");
+                    HttpGet post = new HttpGet("https://50btc.com/api/" + pref_apiKey);
                     HttpResponse response = client.execute(post);
-                    FiftyBTC data = mapper
-                            .readValue(new InputStreamReader(response
+                    FiftyBTC data = mapper.readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     FiftyBTC.class);
                     btcBalance = data.getUser().getConfirmed_rewards();
-                    hashRate = 0.0f;
+                    hashRate = data.getUser().getHash_rate();
 
-                    List<Worker> workers = data.getWorkers().getWorkers();
-                    for (Worker worker : workers) {
-                        hashRate += Float.parseFloat(worker.getHash_rate());
-                    }
                     return true;
 
                 } else if (sMiningPool.equalsIgnoreCase("BTCGuild")) {
