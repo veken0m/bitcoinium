@@ -16,8 +16,8 @@ public class Constants {
     static
     {
         CRYPTO_SYMBOLS = new HashMap<String, String>();
-        CRYPTO_SYMBOLS.put("BTC", "Ƀ");
-        CRYPTO_SYMBOLS.put("XBT", "Ƀ");
+        CRYPTO_SYMBOLS.put("BTC", "฿");
+        CRYPTO_SYMBOLS.put("XBT", "฿");
         CRYPTO_SYMBOLS.put("LTC", "Ł");
         CRYPTO_SYMBOLS.put("DOGE", "Ð");
         CRYPTO_SYMBOLS.put("XDG", "Ð");
