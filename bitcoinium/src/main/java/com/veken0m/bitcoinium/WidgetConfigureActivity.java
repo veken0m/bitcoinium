@@ -9,30 +9,67 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.utils.Constants;
 
-import java.util.HashMap;
+public class WidgetConfigureActivity extends SherlockPreferenceActivity {
 
-public class WidgetConfigureActivity extends PreferenceActivity {
-
-    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private ListPreference widgetExchangePref = null;
-    private PreferenceCategory prefCategory = null;
-
-    private final HashMap<String, Preference> currencyPref = new HashMap<String, Preference>();
 
     public WidgetConfigureActivity() {
         super();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.widget_accept_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.action_widget_accept) {
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String pref_widgetExchange = prefs.getString("widgetExchangePref", Constants.DEFAULT_EXCHANGE);
+
+            Exchange exchange;
+            try {
+                exchange = new Exchange(this, pref_widgetExchange);
+            } catch (Exception e) {
+                Editor editor = prefs.edit();
+                editor.putString("widgetExchangePref", Constants.DEFAULT_EXCHANGE).commit();
+                exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+            }
+
+            String sCurrency = prefs.getString("widgetCurrencyPref", exchange.getDefaultCurrency());
+
+            // Save widget configuration
+            saveCurrencyPref(this, mAppWidgetId, sCurrency);
+            saveExchangePref(this, mAppWidgetId, pref_widgetExchange);
+
+            // Make sure we pass back the original appWidgetId
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("deprecation")
@@ -41,45 +78,25 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_price_widget);
         addPreferencesFromResource(R.xml.pref_widgets);
-        addPreferencesFromResource(R.xml.ok_button);
 
         // Set the result to CANCELED. This will cause the widget host to cancel
         // out of the widget placement if they press the back button.
         setResult(RESULT_CANCELED);
 
-        try {
+        ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangePref");
+        ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
-            widgetExchangePref = (ListPreference) findPreference("widgetExchangesPref");
-            prefCategory = (PreferenceCategory) findPreference("priceWidgetPreferences");
+        // get the Resource ID for the currency array
+        String sExchange = (widgetExchangePref != null) ? widgetExchangePref.getValue() : Constants.DEFAULT_EXCHANGE;
+        int nCurrencyArrayId = getResources().getIdentifier(sExchange + "currencies", "array", this.getPackageName());
 
-            currencyPref.put("MtGox", findPreference("mtgoxWidgetCurrencyPref"));
-            currencyPref.put("VirtEx", findPreference("virtexWidgetCurrencyPref"));
-            currencyPref.put("BTCE", findPreference("btceWidgetCurrencyPref"));
-            currencyPref.put("Bitstamp", findPreference("bitstampWidgetCurrencyPref"));
-            currencyPref.put("CampBX", findPreference("campbxWidgetCurrencyPref"));
-            currencyPref.put("BTCChina", findPreference("btcchinaWidgetCurrencyPref"));
-            currencyPref.put("Bitcurex", findPreference("bitcurexWidgetCurrencyPref"));
-            currencyPref.put("Kraken", findPreference("krakenWidgetCurrencyPref"));
-            currencyPref.put("Bitfinex", findPreference("bitfinexWidgetCurrencyPref"));
-            currencyPref.put("BitcoinAverage", findPreference("bitcoinaverageWidgetCurrencyPref"));
-
-            // Disable all the currency pickers and enable the selected exchange
-            for (Preference value : currencyPref.values()) {
-                prefCategory.removePreference(value);
-            }
-
-            String sExchange = (widgetExchangePref.getEntry() != null) ? widgetExchangePref.getEntry().toString().replace("Exchange", "").replace("-", "") : "";
-            prefCategory.addPreference(currencyPref.get(sExchange));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // populate the list with the Exchange's Currency Pairs
+        setCurrencyItems(pCurrency, nCurrencyArrayId);
 
         // Find the widget id from the intent.
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
         // If they gave us an intent without the widget id, just bail.
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -90,70 +107,27 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                        try {
-                            prefCategory = (PreferenceCategory) findPreference("priceWidgetPreferences");
+                        ListPreference  pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
+                        int nCurrencyArrayId = getResources().getIdentifier(newValue.toString() + "currencies", "array", getBaseContext().getPackageName());
 
-                            // Disable all the currency pickers
-                            for (Preference value : currencyPref.values())
-                                prefCategory.removePreference(value);
+                        setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-                            // Enable the selected exchange
-                            prefCategory.addPreference(currencyPref.get(newValue
-                                    .toString().replace("Exchange", "").replace("-", "")));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                         return true;
                     }
                 });
+    }
 
-        Preference OKpref = findPreference("OKpref");
-        if (OKpref != null) {
-            OKpref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId){
 
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Context context = WidgetConfigureActivity.this;
-                    SharedPreferences prefs = PreferenceManager
-                            .getDefaultSharedPreferences(context);
-
-                    String pref_widgetExchange = prefs.getString(
-                            "widgetExchangesPref", "MtGoxExchange");
-
-                    Exchange exchange;
-                    try {
-                        exchange = new Exchange(context, pref_widgetExchange);
-                    } catch (Exception e) {
-                        Editor editor = prefs.edit();
-                        editor.putString("widgetExchangesPref", "MtGoxExchange").commit();
-                        exchange = new Exchange(context, "MtGoxExchange");
-                    }
-
-                    String sCurrency = prefs.getString(exchange.getIdentifier() + "WidgetCurrencyPref",
-                            exchange.getDefaultCurrency());
-
-                    // Save widget configuration
-                    saveCurrencyPref(context, mAppWidgetId, sCurrency);
-                    saveExchangePref(context, mAppWidgetId, pref_widgetExchange);
-
-                    // Make sure we pass back the original appWidgetId
-                    Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                    setResult(RESULT_OK, resultValue);
-
-                    finish();
-                    return true;
-                }
-            });
-        }
+        pCurrency.setEntries(nCurrencyArrayId);
+        pCurrency.setEntryValues(nCurrencyArrayId);
+        pCurrency.setValueIndex(0);
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    private static void saveCurrencyPref(Context context, int appWidgetId,
-                                         String currency) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(
-                PREFS_NAME, 0).edit();
+    private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
         prefs.commit();
     }
@@ -161,8 +135,8 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
     static String loadCurrencyPref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
 
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
     }
 
@@ -177,24 +151,25 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
     static String loadExchangePref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
 
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
         Intent intent = new Intent(this, WidgetProvider.class);
-        intent.setAction(REFRESH);
+        intent.setAction(Constants.REFRESH);
         this.sendBroadcast(intent);
 
         EasyTracker.getInstance(this).activityStop(this);

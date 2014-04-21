@@ -90,7 +90,7 @@ public class BTCGuildFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -108,7 +108,11 @@ public class BTCGuildFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -126,7 +130,7 @@ public class BTCGuildFragment extends SherlockFragment {
             String text = String.format(res.getString(R.string.minerConnectionError), "BTCGuild");
             text += "\n\n*NOTE* BTC Guild limits calls to once every 15 seconds";
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -163,9 +167,9 @@ public class BTCGuildFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards(), pref_widgetMiningPayoutUnit);
-                String RewardsNMC = "NMC Reward: " + data.getUser().getUnpaid_rewards_nmc()
-                        + " NMC";
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards(), pref_widgetMiningPayoutUnit, "BTC");
+                String RewardsNMC = "NMC Reward: "
+                        + CurrencyUtils.formatPayout(data.getUser().getUnpaid_rewards_nmc(), pref_widgetMiningPayoutUnit, "NMC");
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvNMCRewards.setText(RewardsNMC);
@@ -198,13 +202,13 @@ public class BTCGuildFragment extends SherlockFragment {
 
                     tvMinerName.setText("Miner: " + worker.getWorker_name());
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(worker.getHash_rate(), 2, false)
+                            + Utils.formatDecimal(worker.getHash_rate(), 2, 0, false)
                             + " MH/s");
                     tvShares.setText("Shares: "
-                            + Utils.formatDecimal(worker.getValid_shares(), 0,
+                            + Utils.formatDecimal(worker.getValid_shares(), 0, 0,
                             true));
                     tvStales.setText("Stales: "
-                            + Utils.formatDecimal(worker.getStale_shares(), 0,
+                            + Utils.formatDecimal(worker.getStale_shares(), 0, 0,
                             true) + "\n");
 
                     tr8.addView(tvMinerName);

@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/priceAlarm">
+        <Preference
+            android:key="alarmSettingsPref"
+            android:summary="@string/pref_price_alarm_summary"
+            android:title="@string/pref_price_alarm_title">
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

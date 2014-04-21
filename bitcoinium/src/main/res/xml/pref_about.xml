@@ -2,46 +2,55 @@
 
     <PreferenceCategory android:title="About">
         <PreferenceScreen
-            android:summary="Contact info, feedback and credits"
-            android:title="About Bitcoinium">
-            <PreferenceCategory android:title="About">
+            android:summary="@string/aboutSummary"
+            android:title="@string/aboutBitcoinium">
+            <PreferenceCategory android:title="@string/about">
                 <Preference
-                    android:summary="Michael Lagacé (veken0m)"
-                    android:title="Author"/>
-                <Preference
-                    android:key="donationAddressPref"
-                    android:summary="1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54"
-                    android:title="Bitcoin Donation Address"/>
+                    android:summary="@string/author"
+                    android:title="@string/authorText"/>
                 <Preference
                     android:key="devEmailPref"
-                    android:summary="veken0m.apps@gmail.com"
-                    android:title="Email"/>
+                    android:summary="@string/emailAddress"
+                    android:title="@string/emailText"/>
                 <Preference
                     android:key="devTwitterPref"
                     android:summary=" @veken0m"
-                    android:title="Twitter"/>
+                    android:title="@string/twitterText"/>
                 <Preference
                     android:summary="@string/version_name"
-                    android:title="Version"/>
+                    android:title="@string/versionText"/>
+                <Preference
+                    android:key="playstoreGithubPref"
+                    android:summary="@string/pref_rate_bitcoinium_summary"
+                    android:title="@string/rateBitcoinium"/>
                 <Preference
                     android:key="bitcoiniumGithubPref"
-                    android:summary="Please submit issues and feature requests here"
-                    android:title="Bitcoinium Github"/>
+                    android:summary="@string/submit_feature_request"
+                    android:title="@string/bitcoiniumGithubText"/>
                 <Preference
                     android:key="xchangeGithubPref"
-                    android:summary="A Financial Exchange Library for Java, with support for Bitcoin"
-                    android:title="XChange Github"/>
+                    android:summary="@string/xchangeSummary"
+                    android:title="@string/xchangeGithubText"/>
                 <CheckBoxPreference
                     android:key="googleAnalyticsPref"
-                    android:summary="Provide anonymous data in order to help the developers improve Bitcoinium"
-                    android:title="Opt-in Google Analytics"
+                    android:summary="@string/pref_google_analytics_summary"
+                    android:title="@string/optGoogleAnalytics"
                     android:defaultValue="false"/>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/donations">
                 <Preference
-                    android:summary="Tim Molter - XChange Library\nMatija Mazi - XChange Library\nDest Romano - Bitcoin Alert \nArno Den Hond - GraphView library \nJonas Gehring - GraphView library \nSergey Margaritov - ColorPickerPreference library \nDaniel Nilsson - ColorPickerPreference library"
-                    android:title="Credits"/>
+                    android:key="bitcoinDonationAddressPref"
+                    android:summary="@string/bitcoinDonationAddress"
+                    android:title="@string/bitcoinDonationAddressText"/>
+                <Preference
+                    android:key="litecoinDonationAddressPref"
+                    android:summary="@string/litecoinDonationAddress"
+                    android:title="@string/litecoinDonationAddressText"/>
+                <Preference
+                    android:key="dogecoinDonationAddressPref"
+                    android:summary="@string/dogecoinDonationAddress"
+                    android:title="@string/dogecoinDonationAddressText"/>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-
-
 </PreferenceScreen>

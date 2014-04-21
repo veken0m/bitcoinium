@@ -2,9 +2,9 @@
 
     <PreferenceCategory android:title="Miner Settings">
         <PreferenceScreen
-            android:summary="Required to access your miner&apos;s information"
-            android:title="Miner API tokens">
-            <PreferenceCategory android:title="Miner API Tokens">
+            android:summary="@string/pref_miner_info_summary"
+            android:title="@string/minerApiTokens">
+            <PreferenceCategory android:title="@string/minerApiTokens">
                 <EditTextPreference
                     android:defaultValue=""
                     android:key="deepbitKey"
@@ -45,10 +45,10 @@
     </PreferenceCategory>
 
     <PreferenceScreen
-        android:summary="Enable notfications when total hashrate is below 0.01 Mh/s"
-        android:title="Bitcoin Miner Alert">
-        <PreferenceCategory android:title="Miner Widget Settings">
-            <Preference android:summary="Use Price Alarm settings to enable sound and vibration during notification"/>
+        android:summary="@string/pref_hashrate_notification_summary"
+        android:title="@string/bitcoinMinerAlert">
+        <PreferenceCategory android:title="@string/minerWidgetSettings">
+            <Preference android:summary="@string/pref_miner_widget_alarm_summary"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="bitminterAlertPref"
@@ -85,7 +85,7 @@
         android:entries="@array/payoutUnits"
         android:entryValues="@array/payoutUnitsValues"
         android:key="widgetMiningPayoutUnitPref"
-        android:summary="Select the units used to display payout"
-        android:title="Payout units"/>
+        android:summary="@string/pref_payout_unit_summary"
+        android:title="@string/payoutUnits"/>
 
 </PreferenceScreen>

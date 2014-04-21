@@ -11,9 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.DetailedState;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
@@ -21,14 +18,12 @@ import android.text.format.Time;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
+import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 
-import java.util.Calendar;
-
-class BaseWidgetProvider extends AppWidgetProvider {
-
-    static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
+public class BaseWidgetProvider extends AppWidgetProvider {
 
     /**
      * List of preference variables
@@ -59,9 +54,11 @@ class BaseWidgetProvider extends AppWidgetProvider {
     private static PendingIntent widgetPriceWidgetRefreshService = null;
     private static PendingIntent widgetMinerWidgetRefreshService = null;
 
+    public static SharedPreferences prefs = null;
+
     static void readGeneralPreferences(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
         readAlarmPreferences(context);
 
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
@@ -84,7 +81,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
 
     private static void readAlarmPreferences(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref", "1800"))*1000; // milliseconds
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
@@ -96,6 +93,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
     }
 
     static void setPriceWidgetAlarm(Context context) {
+
         readAlarmPreferences(context);
 
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -105,10 +103,11 @@ class BaseWidgetProvider extends AppWidgetProvider {
             widgetPriceWidgetRefreshService = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, getCurrentTime(), pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
+        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
     }
 
     static void setMinerWidgetAlarm(Context context) {
+
         readAlarmPreferences(context);
 
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -118,28 +117,18 @@ class BaseWidgetProvider extends AppWidgetProvider {
             widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0,intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
-    }
-
-    // Returns current time in milliseconds
-    static long getCurrentTime(){
-
-        final Calendar TIME = Calendar.getInstance();
-        TIME.set(Calendar.MINUTE, 0);
-        TIME.set(Calendar.SECOND, 0);
-        TIME.set(Calendar.MILLISECOND, 0);
-
-        return TIME.getTimeInMillis();
+        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
     }
 
     static void setAlarmClock(Context context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Editor editor = prefs.edit();
         editor.putBoolean("alarmClockPref", false);
         editor.commit();
-        Time dtNow = (new Time());
+
+        Time dtNow = new Time();
         dtNow.setToNow();
         int hours = dtNow.hour;
         int minutes = dtNow.minute + 1;
@@ -154,17 +143,9 @@ class BaseWidgetProvider extends AppWidgetProvider {
         context.startActivity(i);
     }
 
-    static Boolean checkWiFiConnected(Context context) {
-
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == DetailedState.CONNECTED));
-    }
-
     static void createNotification(Context context, float last, String exchange, int NOTIFY_ID, CurrencyPair pair) {
 
-        String baseCurrency = pair.baseCurrency;
+        String baseCurrency = pair.baseSymbol;
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();
@@ -175,7 +156,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
 
-        Intent notificationIntent = new Intent(context, PriceAlarmPreferencesActivity.class);
+        Intent notificationIntent = new Intent(context, PriceAlertPreferencesActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
@@ -208,9 +189,7 @@ class BaseWidgetProvider extends AppWidgetProvider {
         mNotificationManager.notify(sMiningPool.hashCode(), notification);
     }
 
-    static void createPermanentNotification(Context context,
-                                            CharSequence contentTitle, CharSequence contentText,
-                                            int NOTIFY_ID) {
+    static void createPermanentNotification(Context context, CharSequence contentTitle, CharSequence contentText, int NOTIFY_ID) {
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, null, System.currentTimeMillis());
@@ -230,4 +209,5 @@ class BaseWidgetProvider extends AppWidgetProvider {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
         mNotificationManager.cancel(100 + NOTIFY_ID);
     }
+
 }

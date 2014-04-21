@@ -2,15 +2,14 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/bitcoincharts_layout"
              android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:layout_marginLeft="2dp"
-             android:layout_marginRight="2dp">
+             android:layout_height="fill_parent">
 
     <LinearLayout
         android:id="@+id/currencyFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@color/light"
         android:orientation="horizontal">
 
         <TextView
@@ -34,18 +33,18 @@
             android:id="@+id/bitcoincharts_symbol"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#101010"
+            android:background="@color/dark"
             android:text="@string/symbol"
-            android:textColor="#33B5E5"
+            android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#101010"
+            android:background="@color/dark"
             android:gravity="center_horizontal"
             android:text="@string/last"
-            android:textColor="#33B5E5"
+            android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
         <!--
         <TextView
@@ -60,28 +59,28 @@
         <TextView
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#101010"
+            android:background="@color/dark"
             android:gravity="center_horizontal"
             android:text="@string/vol"
-            android:textColor="#33B5E5"
+            android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#101010"
+            android:background="@color/dark"
             android:gravity="center_horizontal"
             android:text="@string/low"
-            android:textColor="#33B5E5"
+            android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
         <TextView
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#101010"
+            android:background="@color/dark"
             android:gravity="center_horizontal"
             android:text="@string/high"
-            android:textColor="#33B5E5"
+            android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
         <!--
@@ -105,13 +104,19 @@
         -->
     </TableRow>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.2dp"
+        android:id="@+id/separator"
+        android:visibility="visible"
+        android:background="#33B5E5"/>
+
     <ScrollView
         android:id="@+id/bitcoincharts_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp">
+        android:background="@color/dark"
+        android:layout_weight="1">
 
         <TableLayout
             android:id="@+id/bitcoincharts_list"
@@ -123,16 +128,17 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/loadSpinner"
+        android:id="@+id/bitcoincharts_loadSpinner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@color/dark"
         android:gravity="center_vertical|center_horizontal"
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/pbHeaderProgress3"
+            android:id="@+id/bitcoincharts_progress"
             style="?android:attr/progressBarStyleLarge"
-            android:gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ProgressBar>

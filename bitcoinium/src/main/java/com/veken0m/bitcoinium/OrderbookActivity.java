@@ -2,7 +2,6 @@
 package com.veken0m.bitcoinium;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -12,23 +11,26 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
+import android.support.v4.app.NavUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
@@ -37,19 +39,17 @@ import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class OrderbookActivity extends SherlockActivity implements OnItemSelectedListener {
+public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener {
 
     private final static Handler mOrderHandler = new Handler();
     private Dialog dialog = null;
     private List<LimitOrder> listAsks = null;
     private List<LimitOrder> listBids = null;
-
-    private static Exchange exchange = null;
 
     /**
      * List of preference variables
@@ -59,27 +59,38 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
     private static int pref_orderbookLimiter = 0;
     private static Boolean pref_enableHighlight = true;
     private static Boolean pref_showCurrencySymbol = true;
+    private static SharedPreferences prefs = null;
 
     private static CurrencyPair currencyPair = null;
+    private static String exchangeName = "";
+    private static Exchange exchange = null;
+    private static Boolean exchangeChanged = false;
+    private static Boolean threadRunning = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.orderbook);
-        getSupportActionBar().show();
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.show();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
             exchange = new Exchange(this, extras.getString("exchange"));
-        } else {
-            // TODO: generation error message
-            exchange = new Exchange(this, "MtGoxExchange");
-        }
+        else
+            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
-        readPreferences(this);
-        createCurrencyDropdown();
-        viewOrderbook();
+        if(!exchange.supportsOrderbook())
+            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+
+        readPreferences();
+        populateExchangeDropdown();
+        populateCurrencyDropdown();
 
         // KarmaAdsUtils.initAd(this);
     }
@@ -93,11 +104,18 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewOrderbook();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, OrderbookPreferenceActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewOrderbook();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -108,7 +126,8 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         setContentView(R.layout.orderbook);
 
         if (listAsks != null && listBids != null) {
-            createCurrencyDropdown();
+            populateExchangeDropdown();
+            populateCurrencyDropdown();
             drawOrderbookUI();
         } else {
             // Fetch data
@@ -132,8 +151,9 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
         OrderBook orderbook;
         try {
-            orderbook = marketData.getOrderBook(currencyPair.baseCurrency, currencyPair.counterCurrency);
-        } catch (IOException e) {
+            orderbook = marketData.getOrderBook(currencyPair);
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
@@ -161,70 +181,78 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
             orderbookTable.removeAllViews();
 
-            removeLoadingSpinner();
-            setOrderBookHeader();
+            removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
             boolean bBackGroundColor = true;
 
-            String currencySymbolBTC, currencySymbol;
-            currencySymbolBTC = currencySymbol = "";
+            String baseCurrencySymbol = "";
+            String counterCurrencySymbol = "";
             if (pref_showCurrencySymbol) {
-                currencySymbolBTC = " " + currencyPair.baseCurrency;
-                currencySymbol = Utils.getCurrencySymbol(currencyPair.counterCurrency);
+                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
+                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.baseSymbol);
             }
 
+            // if numbers are too small adjust the units. Use first bid to determine the units
+            int priceUnitIndex = Utils.getUnitIndex(listAsks.get(0).getLimitPrice().floatValue());
+            String sCounterCurrency = currencyPair.counterSymbol;
+            if(priceUnitIndex >= 0)
+                sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
+            priceUnitIndex++; // increment to use a scale factor
+
+            TextView tvAskAmountHeader = (TextView) findViewById(R.id.askAmountHeader);
+            TextView tvAskPriceHeader  = (TextView) findViewById(R.id.askPriceHeader);
+            TextView tvBidPriceHeader  = (TextView) findViewById(R.id.bidPriceHeader);
+            TextView tvBidAmountHeader  = (TextView) findViewById(R.id.bidAmountHeader);
+
+            tvAskAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
+            tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
+            tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
+            tvBidAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
+
+            LayoutInflater mInflater = LayoutInflater.from(this);
             for (int i = 0; i < listBids.size(); i++) {
-                final TableRow tr1 = new TableRow(this);
-                final TextView tvAskAmount = new TextView(this);
-                final TextView tvAskPrice = new TextView(this);
-                final TextView tvBidPrice = new TextView(this);
-                final TextView tvBidAmount = new TextView(this);
+
+                TextView tvAskAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvAskPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
+                TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
 
                 final LimitOrder limitorderBid = listBids.get(i);
                 final LimitOrder limitorderAsk = listAsks.get(i);
 
-                float bidPrice = limitorderBid.getLimitPrice().getAmount().floatValue();
+                float bidPrice = limitorderBid.getLimitPrice().floatValue();
                 float bidAmount = limitorderBid.getTradableAmount().floatValue();
-                float askPrice = limitorderAsk.getLimitPrice().getAmount().floatValue();
+                float askPrice = limitorderAsk.getLimitPrice().floatValue();
                 float askAmount = limitorderAsk.getTradableAmount().floatValue();
 
-                tvBidAmount.setText(Utils.formatDecimal(bidAmount, 4, false) + currencySymbolBTC);
-                tvBidAmount.setLayoutParams(Utils.symbolParams);
-                tvBidAmount.setGravity(Gravity.CENTER);
-                tvAskAmount.setText(Utils.formatDecimal(askAmount, 4, false) + currencySymbolBTC);
-                tvAskAmount.setLayoutParams(Utils.symbolParams);
-                tvAskAmount.setGravity(Gravity.CENTER);
-
-                tvBidPrice.setText(currencySymbol + Utils.formatDecimal(bidPrice, 3, false));
-                tvBidPrice.setLayoutParams(Utils.symbolParams);
-                tvBidPrice.setGravity(Gravity.CENTER);
-                tvAskPrice.setText(currencySymbol + Utils.formatDecimal(askPrice, 3, false));
-                tvAskPrice.setLayoutParams(Utils.symbolParams);
-                tvAskPrice.setGravity(Gravity.CENTER);
+                tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
+                tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
+                tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
+                tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
 
                 // Text coloring for depth highlighting
-                if (pref_enableHighlight) {
+                if(pref_enableHighlight) {
                     int bidTextColor = depthColor(bidAmount);
                     int askTextColor = depthColor(askAmount);
+
                     tvBidAmount.setTextColor(bidTextColor);
                     tvBidPrice.setTextColor(bidTextColor);
                     tvAskAmount.setTextColor(askTextColor);
                     tvAskPrice.setTextColor(askTextColor);
                 }
 
+                final TableRow newRow = new TableRow(this);
+
                 // Toggle background color
-                bBackGroundColor = !bBackGroundColor;
-                if (bBackGroundColor)
-                    tr1.setBackgroundColor(Color.BLACK);
-                else
-                    tr1.setBackgroundColor(Color.rgb(31, 31, 31));
+                if (bBackGroundColor = !bBackGroundColor)
+                    newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
-                tr1.addView(tvBidPrice);
-                tr1.addView(tvBidAmount);
-                tr1.addView(tvAskPrice);
-                tr1.addView(tvAskAmount);
+                newRow.addView(tvBidPrice);
+                newRow.addView(tvBidAmount);
+                newRow.addView(tvAskPrice);
+                newRow.addView(tvAskAmount);
 
-                orderbookTable.addView(tr1);
+                orderbookTable.addView(newRow);
             }
         } else {
             failedToDrawUI();
@@ -234,9 +262,10 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
-            (new OrderbookThread()).start();
+            if(!threadRunning) // if thread running don't start a another one
+                (new OrderbookThread()).start();
         } else {
-            notConnected();
+            notConnected(R.id.bitcoincharts_loadSpinner);
         }
     }
 
@@ -247,15 +276,47 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    startLoading();
+                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
                 }
             });
 
+            threadRunning = true;
             if (getOrderBook())
                 mOrderHandler.post(mOrderView);
             else
                 mOrderHandler.post(mError);
+            threadRunning = false;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        CurrencyPair prevCurrencyPair = currencyPair;
+        String prevExchangeName = exchangeName;
+
+        switch (parent.getId()){
+            case R.id.orderbook_exchange_spinner:
+                exchangeName = (String) parent.getItemAtPosition(pos);
+                exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
+                if (exchangeChanged){
+                    exchange = new Exchange(this, exchangeName);
+                    currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+                    populateCurrencyDropdown();
+                }
+                break;
+            case R.id.orderbook_currency_spinner:
+                currencyPair = CurrencyUtils.stringToCurrencyPair((String) parent.getItemAtPosition(pos));
+                break;
+        }
+
+        if (prevCurrencyPair != null && currencyPair != null && !currencyPair.equals(prevCurrencyPair) || exchangeChanged)
+            viewOrderbook();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Do nothing...
     }
 
     private final Runnable mOrderView = new Runnable() {
@@ -272,82 +333,62 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         }
     };
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-        CurrencyPair prevCurrencyPair = currencyPair;
-        currencyPair = CurrencyUtils.stringToCurrencyPair((String) parent.getItemAtPosition(pos));
-        if (prevCurrencyPair != null && currencyPair != null && !currencyPair.equals(prevCurrencyPair))
-            viewOrderbook();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // Do nothing
-    }
-
     private void errorOccured() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            String text = String.format(res.getString(R.string.connectionError),
-                    res.getString(R.string.orderbook), exchange.getExchangeName());
-            dialog = Utils.errorDialog(this, text);
-        }
-    }
-
-    private void notConnected() {
-
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                String text = String.format(res.getString(R.string.connectionError),
+                        res.getString(R.string.orderbook), exchange.getExchangeName());
+                dialog = Utils.errorDialog(this, text);
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner();
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
-        }
+        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        // Display error Dialog
+        if (dialog == null || !dialog.isShowing())
+            dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
     }
 
-    void startLoading() {
-        TableLayout t1 = (TableLayout) findViewById(R.id.orderlist);
-        if (t1 != null) t1.removeAllViews();
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.loadingSpinner);
-        loadingSpinner.setVisibility(View.VISIBLE);
-    }
+    void populateExchangeDropdown() {
 
-    void removeLoadingSpinner() {
-        LinearLayout loadingSpinner = (LinearLayout) findViewById(R.id.loadingSpinner);
-        loadingSpinner.setVisibility(View.GONE);
-    }
-
-    void setOrderBookHeader() {
-        TextView orderBookHeader = (TextView) findViewById(R.id.orderbook_header);
-        orderBookHeader.setText(exchange.getExchangeName() + " " + currencyPair.baseCurrency + "/"
-                + currencyPair.counterCurrency);
-    }
-
-    void createCurrencyDropdown() {
         // Re-populate the dropdown menu
-        final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array",
-                        this.getPackageName()));
-
-        Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dropdownValues);
+        String[] exchanges = getResources().getStringArray(R.array.exchangesOrderbook);
+        Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
+
+        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
+        spinner.setSelection(index);
+    }
+
+    void populateCurrencyDropdown() {
+        // Re-populate the dropdown menu
+        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
+        String[] currencies = getResources().getStringArray(arrayId);
+
+        Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+        if(exchangeChanged){
+            int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
+            spinner.setSelection(index);
+        }
     }
 
     int depthColor(float amount) {
@@ -359,23 +400,16 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
             return Color.YELLOW;
     }
 
-    private static void readPreferences(Context context) {
-
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private static void readPreferences() {
 
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
-        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref",
-                "10"));
-        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref",
-                "1"));
-        currencyPair = CurrencyUtils.stringToCurrencyPair(
-                prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
+        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
+        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
         pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
                 true);
         try {
-            pref_orderbookLimiter = Integer.parseInt(prefs.getString(
-                    "orderbookLimiterPref", "100"));
+            pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref", "100"));
         } catch (Exception e) {
             pref_orderbookLimiter = 100;
             // If preference is not set a valid integer set to "100"
@@ -390,6 +424,23 @@ public class OrderbookActivity extends SherlockActivity implements OnItemSelecte
         super.onStart();
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        readPreferences();
+        populateExchangeDropdown();
+
+        if (listAsks != null && listBids != null) {
+            populateExchangeDropdown();
+            populateCurrencyDropdown();
+            drawOrderbookUI();
+        } else {
+            // Fetch data
+            viewOrderbook();
         }
     }
 

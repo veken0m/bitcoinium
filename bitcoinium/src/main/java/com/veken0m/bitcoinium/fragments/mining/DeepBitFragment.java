@@ -89,7 +89,7 @@ public class DeepBitFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -107,7 +107,11 @@ public class DeepBitFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -122,7 +126,7 @@ public class DeepBitFragment extends SherlockFragment {
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "DeepBit");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -158,11 +162,11 @@ public class DeepBitFragment extends SherlockFragment {
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String TotalHashrate = "Total Hashrate: "
                         + data.getHashrate() + " MH/s";
                 String TotalPayout = "Total Payout: "
-                        + CurrencyUtils.formatPayout(data.getPayout_history(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getPayout_history(), pref_widgetMiningPayoutUnit, "BTC");
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(TotalPayout);

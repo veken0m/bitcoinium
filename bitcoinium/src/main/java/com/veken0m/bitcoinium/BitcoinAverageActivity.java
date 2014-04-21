@@ -1,50 +1,45 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.support.v4.app.NavUtils;
+import android.view.WindowManager;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.analytics.tracking.android.EasyTracker;
-// import com.veken0m.utils.KarmaAdsUtils;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
+import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
+import com.xeiam.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
+import com.xeiam.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-public class BitcoinAverageActivity extends SherlockActivity {
+// import com.veken0m.utils.KarmaAdsUtils;
+
+public class BitcoinAverageActivity extends BaseActivity {
 
     private final static Handler mOrderHandler = new Handler();
-    final private ArrayList<Ticker> tickers;
-    private final String[] curr;
-    private Dialog dialog = null;
+    private Map<String, BitcoinAverageTicker> tickers = new HashMap<String, BitcoinAverageTicker>();
 
     public BitcoinAverageActivity() {
-        tickers = new ArrayList<Ticker>();
-        curr = new String[]{
-                "AUD", "BRL", "CAD", "CNY", "CZK", "EUR", "GBP", "ILS", "JPY", "NOK", "NZD",
-                "PLN", "RUB", "SEK", "USD", "ZAR"
-        };
+
     }
 
     @Override
@@ -53,6 +48,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
         setContentView(R.layout.bitcoinaverage);
 
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
         // KarmaAdsUtils.initAd(this);
@@ -60,19 +56,19 @@ public class BitcoinAverageActivity extends SherlockActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewBitcoinAverage();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewBitcoinAverage();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -90,23 +86,20 @@ public class BitcoinAverageActivity extends SherlockActivity {
     boolean getBitcoinAverage() {
 
         tickers.clear();
-        PollingMarketDataService pollingService = ExchangeFactory.INSTANCE
-                .createExchange("com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange")
-                .getPollingMarketDataService();
+        Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
+        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getPollingMarketDataService();
 
         if (pollingService != null) {
-            for (String currency : curr) {
-
                 try {
-                    tickers.add(pollingService.getTicker("BTC", currency));
+                    tickers = pollingService.getBitcoinAverageAllTickers().getTickers();
                 } catch (IOException e) {
                     // Skip ticker and keep looping
+                    return false;
                 }
-            }
+            return true;
         } else {
             return false;
         }
-        return true;
     }
 
     /**
@@ -115,58 +108,62 @@ public class BitcoinAverageActivity extends SherlockActivity {
     void drawBitcoinAverageUI() {
 
         TableLayout bitcoinAverageTable = (TableLayout) findViewById(R.id.bitcoinaverage_list);
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
-        boolean bBackGroundColor = true;
+        boolean bBackGroundColor = false;
 
         if (tickers.size() > 0 && bitcoinAverageTable != null) {
 
             // Clear table
             bitcoinAverageTable.removeAllViews();
 
+            List<Map.Entry<String,BitcoinAverageTicker>> entries = new LinkedList<Map.Entry<String,BitcoinAverageTicker>>(tickers.entrySet());
+
             // Sort Tickers by volume
-            Collections.sort(tickers, new
-                    Comparator<Ticker>() {
-                        @Override
-                        public int compare(Ticker entry1, Ticker entry2) {
-                            return entry2.getVolume().compareTo(entry1.getVolume());
-                        }
-                    });
+            Collections.sort(entries, new Comparator<Map.Entry<String,BitcoinAverageTicker>>() {
 
+                @Override
+                public int compare(Map.Entry<String,BitcoinAverageTicker> o1, Map.Entry<String,BitcoinAverageTicker> o2) {
+                    return o2.getValue().getVolume().compareTo(o1.getValue().getVolume());
+                }
+            });
 
-            for (Ticker ticker : tickers) {
+            for (Map.Entry<String,BitcoinAverageTicker> tickerEntry : entries) {
 
-                final TextView tvSymbol = new TextView(this);
-                final TextView tvLast = new TextView(this);
-                final TextView tvVolume = new TextView(this);
-                final TextView tvBid = new TextView(this);
-                final TextView tvAsk = new TextView(this);
-                // final TextView tvAvg = new TextView(this);
+                BitcoinAverageTicker ticker = tickerEntry.getValue();
+                if(ticker.getVolume().floatValue() > 0.0) {
 
-                tvSymbol.setText(ticker.getLast().getCurrencyUnit().getCurrencyCode());
-                Utils.setTextViewParams(tvLast, ticker.getLast());
-                Utils.setTextViewParams(tvVolume, ticker.getVolume());
-                Utils.setTextViewParams(tvBid, ticker.getBid());
-                Utils.setTextViewParams(tvAsk, ticker.getAsk());
-                // Utils.setTextViewParams(tvAvg, avg);
+                    final TextView tvSymbol = new TextView(this);
+                    final TextView tvLast = new TextView(this);
+                    final TextView tvVolume = new TextView(this);
+                    final TextView tvBid = new TextView(this);
+                    final TextView tvAsk = new TextView(this);
+                    // final TextView tvAvg = new TextView(this);
 
-                final TableRow newRow = new TableRow(this);
+                    tvSymbol.setText(tickerEntry.getKey().toString());
+                    tvSymbol.setTextColor(Color.WHITE);
 
-                // Toggle background color
-                bBackGroundColor = !bBackGroundColor;
-                if (bBackGroundColor)
-                    newRow.setBackgroundColor(Color.BLACK);
-                else
-                    newRow.setBackgroundColor(Color.rgb(31, 31, 31));
+                    Utils.setTextViewParams(tvLast, ticker.getLast());
+                    Utils.setTextViewParams(tvVolume, ticker.getVolume());
+                    Utils.setTextViewParams(tvBid, ticker.getBid());
+                    Utils.setTextViewParams(tvAsk, ticker.getAsk());
+                    // Utils.setTextViewParams(tvAvg, avg);
 
-                newRow.addView(tvSymbol, Utils.symbolParams);
-                newRow.addView(tvLast);
-                newRow.addView(tvVolume);
-                newRow.addView(tvBid);
-                newRow.addView(tvAsk);
-                // newRow.addView(tvAvg);
-                newRow.setPadding(0, 3, 0, 3);
-                bitcoinAverageTable.addView(newRow);
+                    final TableRow newRow = new TableRow(this);
+
+                    // Toggle background color
+                    if (bBackGroundColor = !bBackGroundColor)
+                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+
+                    newRow.addView(tvSymbol, Utils.adjustParams);
+                    newRow.addView(tvLast);
+                    newRow.addView(tvVolume);
+                    newRow.addView(tvBid);
+                    newRow.addView(tvAsk);
+                    // newRow.addView(tvAvg);
+                    newRow.setPadding(0, 3, 0, 3);
+                    bitcoinAverageTable.addView(newRow);
+                }
             }
         } else {
             failedToDrawUI();
@@ -175,11 +172,10 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     private void viewBitcoinAverage() {
 
-        if (Utils.isConnected(getApplicationContext())) {
+        if (Utils.isConnected(this))
             (new bitcoinAverageThread()).start();
-        } else {
-            notConnected();
-        }
+        else
+            notConnected(R.id.bitcoinaverage_loadSpinner);
     }
 
     private class bitcoinAverageThread extends Thread {
@@ -189,8 +185,7 @@ public class BitcoinAverageActivity extends SherlockActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout loadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-                    if (loadSpinner != null) loadSpinner.setVisibility(View.VISIBLE);
+                    startLoading(R.id.bitcoinaverage_list, R.id.bitcoinaverage_loadSpinner);
                 }
             });
             if (getBitcoinAverage())
@@ -198,12 +193,6 @@ public class BitcoinAverageActivity extends SherlockActivity {
             else
                 mOrderHandler.post(mError);
         }
-    }
-
-    // Remove loading spinner
-    void removeLoadingSpinner() {
-        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-        if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
     }
 
     private final Runnable mGraphView = new Runnable() {
@@ -222,46 +211,23 @@ public class BitcoinAverageActivity extends SherlockActivity {
 
     private void errorOccured() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
-        }
-    }
-
-    private void notConnected() {
-
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner();
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
+        if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
-        }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }

@@ -1,31 +1,26 @@
 
 package com.veken0m.bitcoinium;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.analytics.tracking.android.EasyTracker;
-// import com.veken0m.utils.KarmaAdsUtils;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
 import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
@@ -33,14 +28,17 @@ import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BitcoinChartsActivity extends SherlockActivity implements OnItemSelectedListener {
+// import com.veken0m.utils.KarmaAdsUtils;
 
-    private final static Handler mOrderHandler = new Handler();
+public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener {
+
+
     private BitcoinChartsTicker[] marketData = null;
     private final Runnable mBitcoinChartsView;
     private final Runnable mError;
     private String currencyFilter;
-    private Dialog dialog = null;
+
+    private final static Handler mOrderHandler = new Handler();
 
     public BitcoinChartsActivity() {
         currencyFilter = "SHOW ALL";
@@ -66,26 +64,28 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
 
         createCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
         //KarmaAdsUtils.initAd(this);
         viewBitcoinCharts();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences)
-            startActivity(new Intent(this, PreferencesActivity.class));
 
-        if (item.getItemId() == R.id.action_refresh)
-            viewBitcoinCharts();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, PreferencesActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewBitcoinCharts();
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -143,7 +143,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     void drawBitcoinChartsUI() {
 
         TableLayout bitcoinChartsTable = (TableLayout) findViewById(R.id.bitcoincharts_list);
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
 
         if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null) {
 
@@ -159,13 +159,12 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                 }
             });
 
-            boolean bBackGroundColor = true;
+            boolean bBackGroundColor = false;
             for (BitcoinChartsTicker data : marketData) {
 
-                // Only print active exchanges... vol > 0 or contains selected currency
+                // Only print active exchanges... vol != 0 or contains selected currency
                 if (data.getVolume().floatValue() != 0.0
-                        && (currencyFilter.equals("SHOW ALL")
-                        || data.getCurrency().contains(currencyFilter))) {
+                        && (currencyFilter.equals("SHOW ALL") || data.getCurrency().contains(currencyFilter))) {
 
                     final TextView tvSymbol = new TextView(this);
                     final TextView tvLast = new TextView(this);
@@ -177,6 +176,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     // final TextView tvAsk = new TextView(this);
 
                     tvSymbol.setText(data.getSymbol());
+                    tvSymbol.setTextColor(Color.WHITE);
                     Utils.setTextViewParams(tvLast, data.getClose());
                     Utils.setTextViewParams(tvVolume, data.getVolume());
                     Utils.setTextViewParams(tvLow, data.getLow());
@@ -188,13 +188,10 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
                     final TableRow newRow = new TableRow(this);
 
                     // Toggle background color
-                    bBackGroundColor = !bBackGroundColor;
-                    if (bBackGroundColor)
-                        newRow.setBackgroundColor(Color.BLACK);
-                    else
-                        newRow.setBackgroundColor(Color.rgb(31, 31, 31));
+                    if (bBackGroundColor = !bBackGroundColor)
+                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
 
-                    newRow.addView(tvSymbol, Utils.symbolParams);
+                    newRow.addView(tvSymbol, Utils.adjustParams);
                     newRow.addView(tvLast);
                     newRow.addView(tvVolume);
                     newRow.addView(tvLow);
@@ -212,11 +209,10 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
     }
 
     private void viewBitcoinCharts() {
-        if (Utils.isConnected(getApplicationContext())) {
+        if (Utils.isConnected(this))
             (new bitcoinChartsThread()).start();
-        } else {
-            notConnected();
-        }
+        else
+            notConnected(R.id.bitcoincharts_loadSpinner);
     }
 
     private class bitcoinChartsThread extends Thread {
@@ -226,8 +222,7 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-                    if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.VISIBLE);
+                    startLoading(R.id.bitcoincharts_list, R.id.bitcoincharts_loadSpinner);
                 }
             });
 
@@ -238,55 +233,27 @@ public class BitcoinChartsActivity extends SherlockActivity implements OnItemSel
         }
     }
 
-
     private void errorOccured() {
 
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            Resources res = getResources();
-            dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
-        }
-    }
-
-    private void notConnected() {
-
-        removeLoadingSpinner();
-
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "No internet connection available", "Internet Connection");
+        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+            }
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner();
+        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
         }
     }
-
-    // Remove loading spinner
-    void removeLoadingSpinner() {
-        LinearLayout bitcoinChartsLoadSpinner = (LinearLayout) findViewById(R.id.loadSpinner);
-        if (bitcoinChartsLoadSpinner != null) bitcoinChartsLoadSpinner.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }
+

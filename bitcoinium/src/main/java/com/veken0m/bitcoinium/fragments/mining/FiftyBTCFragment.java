@@ -70,8 +70,7 @@ public class FiftyBTCFragment extends SherlockFragment {
         try {
             HttpClient client = new DefaultHttpClient();
 
-            HttpGet post = new HttpGet("https://50btc.com/en/api/"
-                    + pref_50BTCKey + "?text=1");
+            HttpGet post = new HttpGet("https://50btc.com/api/" + pref_50BTCKey);
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
 
@@ -94,7 +93,7 @@ public class FiftyBTCFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -112,7 +111,11 @@ public class FiftyBTCFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -127,7 +130,7 @@ public class FiftyBTCFragment extends SherlockFragment {
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "50BTC");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -154,11 +157,6 @@ public class FiftyBTCFragment extends SherlockFragment {
                 TableRow tr1 = new TableRow(activity);
                 TableRow tr2 = new TableRow(activity);
                 TableRow tr3 = new TableRow(activity);
-                TableRow tr4 = new TableRow(activity);
-                TableRow tr5 = new TableRow(activity);
-                TableRow tr6 = new TableRow(activity);
-                TableRow tr7 = new TableRow(activity);
-                TableRow tr9 = new TableRow(activity);
 
                 TextView tvBTCRewards = new TextView(activity);
                 TextView tvBTCPayout = new TextView(activity);
@@ -167,17 +165,12 @@ public class FiftyBTCFragment extends SherlockFragment {
                 tr1.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr4.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr5.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr6.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr7.setGravity(Gravity.CENTER_HORIZONTAL);
-                tr9.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 String RewardsBTC = "Reward: "
-                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getUser().getConfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String Hashrate = "Total Hashrate: "
-                        + data.getUser().getHash_rate() + " MH/s\n";
-                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts(), pref_widgetMiningPayoutUnit);
+                        + data.getUser().getHash_rate() + " MH/s";
+                String Payout = "Total Payout: " + CurrencyUtils.formatPayout(data.getUser().getPayouts(), pref_widgetMiningPayoutUnit, "BTC");
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvBTCPayout.setText(Payout);
@@ -194,60 +187,32 @@ public class FiftyBTCFragment extends SherlockFragment {
                 // WORKER INFO
                 List<Worker> workers = data.getWorkers().getWorkers();
                 for (Worker worker : workers) {
-                    String name = "Miner: " + worker.getWorker_name();
-                    String alive = "Alive: " + worker.getAlive();
-                    String minerHashrate = "Hashrate: " + worker.getHash_rate()
-                            + " MH/s";
-                    String shares = "Shares: " + worker.getShares();
-                    String lastShare = "Last Share: "
-                            + Utils.dateFormat(activity,
-                            worker.getLast_share() * 1000);
-                    String totalShares = "Total Shares: "
-                            + worker.getTotal_shares();
 
-                    TableRow tr10 = new TableRow(activity);
-                    TableRow tr11 = new TableRow(activity);
+                    String name = "\nMiner: " + worker.getWorker_name();
+                    String lastShare = "Last Share: " + Utils.dateFormat(activity, worker.getLast_share() * 1000);
+                    String totalShares = "Total Shares: " + worker.getTotal_shares();
+
+                    TableRow tr9 = new TableRow(activity);
                     TableRow tr12 = new TableRow(activity);
                     TableRow tr13 = new TableRow(activity);
-                    TableRow tr14 = new TableRow(activity);
 
                     TextView tvMinerName = new TextView(activity);
-                    TextView tvAlive = new TextView(activity);
-                    TextView tvMinerHashrate = new TextView(activity);
-                    TextView tvShares = new TextView(activity);
                     TextView tvLastShare = new TextView(activity);
                     TextView tvTotalShares = new TextView(activity);
 
-                    tr10.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tr11.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tr9.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr12.setGravity(Gravity.CENTER_HORIZONTAL);
                     tr13.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tr14.setGravity(Gravity.CENTER_HORIZONTAL);
 
                     tvMinerName.setText(name);
-                    tvAlive.setText(alive);
-                    tvMinerHashrate.setText(minerHashrate);
-                    tvShares.setText(shares);
                     tvLastShare.setText(lastShare);
                     tvTotalShares.setText(totalShares);
 
-                    if (worker.getAlive()) {
-                        tvMinerName.setTextColor(Color.GREEN);
-                    } else {
-                        tvMinerName.setTextColor(Color.RED);
-                    }
-
                     tr9.addView(tvMinerName);
-                    tr10.addView(tvMinerHashrate);
-                    tr11.addView(tvShares);
                     tr12.addView(tvLastShare);
                     tr13.addView(tvTotalShares);
-                    tr14.addView(tvAlive);
 
                     t1.addView(tr9);
-                    t1.addView(tr14);
-                    t1.addView(tr10);
-                    t1.addView(tr11);
                     t1.addView(tr12);
                     t1.addView(tr13);
                 }

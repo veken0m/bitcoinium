@@ -106,7 +106,7 @@ public class EligiusFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -124,7 +124,11 @@ public class EligiusFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -141,7 +145,7 @@ public class EligiusFragment extends SherlockFragment {
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "Eligius");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -160,8 +164,7 @@ public class EligiusFragment extends SherlockFragment {
 
         if (view != null) {
             try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 TableRow tr1 = new TableRow(getActivity());
                 TableRow tr2 = new TableRow(getActivity());
@@ -179,13 +182,12 @@ public class EligiusFragment extends SherlockFragment {
                 String estimated_reward = "\nEstimated Reward: ";
                 // USER INFO
                 //if(balanceData.getConfirmed() != null && balanceData.getExpected() != null){
-                confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit);
-                estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit);
+                confirmed_reward += CurrencyUtils.formatPayout(balanceData.getConfirmed() / 100000000, pref_widgetMiningPayoutUnit, "BTC");
+                estimated_reward += CurrencyUtils.formatPayout(balanceData.getExpected() / 100000000, pref_widgetMiningPayoutUnit, "BTC");
                 //} else {
                 //    confirmed_reward += "N/A";
                 //    estimated_reward += "N/A";
                 //}
-
 
                 tvConfirmed_reward.setText(confirmed_reward);
                 tvEstimated_reward.setText(estimated_reward);

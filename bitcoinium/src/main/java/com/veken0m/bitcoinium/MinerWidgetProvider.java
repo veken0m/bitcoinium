@@ -7,7 +7,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,6 +24,7 @@ import com.veken0m.mining.fiftybtc.FiftyBTC;
 import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
@@ -46,7 +46,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (REFRESH.equals(intent.getAction()))
+        if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
 
         super.onReceive(context, intent);
@@ -65,19 +65,16 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         public void buildUpdate() {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, MinerWidgetProvider.class);
-            int[] widgetIds = new int[0];
-            if (widgetManager != null)
-                widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
                     // Load Widget configuration
-                    String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this,
-                            appWidgetId);
+                    String miningPool = MinerWidgetConfigureActivity.loadMiningPoolPref(this, appWidgetId);
 
                     if (miningPool == null) continue; // skip to next widget
 
@@ -92,21 +89,18 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, miningPool);
                         views.setTextViewText(R.id.widgetBTCPayout,
-                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit));
+                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit, "BTC"));
 
                         if ((hashRate < 0.01) && pref_minerDownAlert)
                             createMinerDownNotification(this, miningPool);
 
-                        String refreshedTime = "Upd. @ " + Utils.getCurrentTime(this);
+                        String refreshedTime = getString(R.string.updateShort) + Utils.getCurrentTime(this);
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
 
                         updateWidgetTheme(views);
 
                     } else {
-                        if (pref_enableWidgetCustomization)
-                            views.setTextColor(R.id.refreshtime, pref_widgetRefreshFailedColor);
-                        else
-                            views.setTextColor(R.id.refreshtime, Color.RED);
+                        views.setTextColor(R.id.refreshtime, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
                     }
                     if (widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
                 }
@@ -115,7 +109,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
         public Boolean getMinerInfo(String sMiningPool) {
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             HttpClient client = new DefaultHttpClient();
             ObjectMapper mapper = new ObjectMapper();
@@ -211,20 +205,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 } else if (sMiningPool.equalsIgnoreCase("50BTC")) {
                     String pref_apiKey = prefs.getString("50BTCKey", "");
 
-                    HttpGet post = new HttpGet("https://50btc.com/en/api/"
-                            + pref_apiKey + "?text=1");
+                    HttpGet post = new HttpGet("https://50btc.com/api/" + pref_apiKey);
                     HttpResponse response = client.execute(post);
-                    FiftyBTC data = mapper
-                            .readValue(new InputStreamReader(response
+                    FiftyBTC data = mapper.readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
                                     FiftyBTC.class);
                     btcBalance = data.getUser().getConfirmed_rewards();
-                    hashRate = 0.0f;
+                    hashRate = data.getUser().getHash_rate();
 
-                    List<Worker> workers = data.getWorkers().getWorkers();
-                    for (Worker worker : workers) {
-                        hashRate += Float.parseFloat(worker.getHash_rate());
-                    }
                     return true;
 
                 } else if (sMiningPool.equalsIgnoreCase("BTCGuild")) {
@@ -286,21 +274,20 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
         private void setTapBehaviour(int appWidgetId, String poolKey, RemoteViews views) {
 
             PendingIntent pendingIntent;
+
             if (pref_tapToUpdate) {
                 Intent intent = new Intent(this, MinerWidgetProvider.class);
-                intent.setAction(REFRESH);
+                intent.setAction(Constants.REFRESH);
                 pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, 0);
             } else {
                 Intent intent = new Intent(this, MinerStatsActivity.class);
                 Bundle tabSelection = new Bundle();
                 tabSelection.putString("poolKey", poolKey);
                 intent.putExtras(tabSelection);
-                pendingIntent = PendingIntent.getActivity(
-                        this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingIntent = PendingIntent.getActivity(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
 
-            views.setOnClickPendingIntent(R.id.widgetMinerButton,
-                    pendingIntent);
+            views.setOnClickPendingIntent(R.id.widgetMinerButton, pendingIntent);
         }
 
         public void updateWidgetTheme(RemoteViews views) {

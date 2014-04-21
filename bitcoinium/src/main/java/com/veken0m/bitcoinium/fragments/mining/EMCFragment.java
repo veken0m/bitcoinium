@@ -89,7 +89,8 @@ public class EMCFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
+
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -107,7 +108,11 @@ public class EMCFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -124,7 +129,7 @@ public class EMCFragment extends SherlockFragment {
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "EclipseMC");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -169,13 +174,13 @@ public class EMCFragment extends SherlockFragment {
                 // User Data
                 User userData = data.getData().getUser();
                 String ConfirmedRewardsBTC = "Confirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getConfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String UnconfirmedRewardsBTC = "Unconfirmed Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getUnconfirmed_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String EstimatedRewardsBTC = "Estimated Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getEstimated_rewards(), pref_widgetMiningPayoutUnit, "BTC");
                 String TotalRewardsBTC = "Total Rewards: "
-                        + CurrencyUtils.formatPayout(userData.getTotal_payout(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(userData.getTotal_payout(), pref_widgetMiningPayoutUnit, "BTC");
                 String BlocksFound = "Blocks Found: "
                         + userData.getBlocks_found();
 

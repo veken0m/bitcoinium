@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Widget Configuration (applies to all)">
+    <PreferenceCategory android:title="@string/widgetConfiguration">
         <PreferenceScreen
-            android:summary="Various display and power saving settings"
-            android:title="Widget Configuration">
-            <PreferenceCategory android:title="General">
+            android:summary="@string/pref_widget_config_summary"
+            android:title="@string/widgetConfigurationText">
+            <PreferenceCategory android:title="@string/general">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="bidasktogglePref"
-                    android:summary="Replace High/Low with Bid/Ask if supported by exchange"
-                    android:title="Bid/Ask on Widget"/>
+                    android:summary="@string/pref_bid_ask_replace_summary"
+                    android:title="@string/bidAskOnWidget"/>
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:key="displayPricesInMilliBtcPref"
-                    android:summary="Changes all BTC widget prices to mBTC. \nEx: $1010.00 will show as $1.010 \nDoes not affect other crypto-currencies"
-                    android:title="Display Bitcoin prices in mBTC"/>
+                    android:summary="@string/pref_milli_btc_summary"
+                    android:title="@string/displayMilliBtc"/>
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wifiRefreshOnlyPref"
-                    android:summary="Disable updates on mobile connection"
-                    android:title="Refresh only on WiFi"/>
+                    android:summary="@string/disableUpdatesMobile"
+                    android:title="@string/refreshOnlyWifi"/>
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="widgetTapUpdatePref"
-                    android:summary="Tapping the widget will update instead of opening app"
-                    android:title="Tap to Update"/>
+                    android:summary="@string/pref_tap_refresh_summary"
+                    android:title="@string/tapToUpdate"/>
 
             </PreferenceCategory>
-            <PreferenceCategory android:title="Power Saving">
+            <PreferenceCategory android:title="@string/powerSaving">
                 <ListPreference
                     android:defaultValue="1800"
                     android:entries="@array/interval"
                     android:entryValues="@array/intervalvalues"
                     android:key="refreshPref"
-                    android:summary="Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain"
-                    android:title="Widget Update Interval"/>
+                    android:summary="@string/pref_refresh_interval_summary"
+                    android:title="@string/widgetUpdateInterval"/>
 
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="wakeupPref"
-                    android:summary="Disable updates when screen is off"
-                    android:title="Battery Saving Mode"/>
+                    android:summary="@string/pref_battery_saving_mode_summary"
+                    android:title="@string/batterySavingMode"/>
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="Customize Widget">
+            <PreferenceCategory android:title="@string/customizeWidget">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="enableWidgetCustomizationPref"
-                    android:summary="Put the theme into effect"
-                    android:title="Enable Customization"/>
+                    android:summary="@string/pref_widget_theme_summary"
+                    android:title="@string/enableCustomization"/>
 
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     android:defaultValue="@color/widgetMainTextColor"
                     android:key="widgetMainTextColorPref"
-                    android:summary="Color for Exchange name and Last Price text"
-                    android:title="Main Text Color"/>
+                    android:summary="@string/pref_widget_main_color_summary"
+                    android:title="@string/mainWidgetColor"/>
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     android:defaultValue="@color/widgetSecondaryTextColor"
                     android:key="widgetSecondaryTextColorPref"
-                    android:summary="Color for High, Low and Volume text"
-                    android:title="Secondary Text Color"/>
+                    android:summary="@string/pref_widget_second_color_summary"
+                    android:title="@string/secondaryWidgetColor"/>
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     alphaSlider="true"
                     android:defaultValue="@color/widgetBackgroundColor"
                     android:key="widgetBackgroundColorPref"
-                    android:summary="Color for widget background"
-                    android:title="Background Color"/>
+                    android:summary="@string/pref_background_wiget_color_summary"
+                    android:title="@string/backgroundWidgetColor"/>
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     alphaSlider="true"
                     android:defaultValue="@color/widgetRefreshSuccessColor"
                     android:key="widgetRefreshSuccessColorPref"
-                    android:summary="Color of the update time if successful"
-                    android:title="Update Time Color (Success)"/>
+                    android:summary="@string/pref_update_time_color_success_summary"
+                    android:title="@string/updateTimeColorSuccess"/>
                 <net.margaritov.preference.colorpicker.ColorPickerPreference
                     alphaSlider="true"
                     android:defaultValue="@color/widgetRefreshFailedColor"
                     android:key="widgetRefreshFailedColorPref"
-                    android:summary="Color of the update time if failed"
-                    android:title="Update Time Color (Failed)"/>
+                    android:summary="@string/pref_update_time_color_fail_summary"
+                    android:title="@string/updateTimeColorFail"/>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

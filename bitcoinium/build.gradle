@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.3'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 
@@ -20,7 +20,7 @@ android {
     }
 
     compileSdkVersion 19
-    buildToolsVersion '19.0.0'
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 8
@@ -37,7 +37,7 @@ android {
 }
 
 ext {
-    xchangeVersion = "2.0.0-SNAPSHOT"
+    xchangeVersion = "2.0.1-SNAPSHOT"
     useXChangeFromMaven = true
 }
 
@@ -58,7 +58,6 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.3'
-    compile 'org.joda:joda-money:0.9'
     compile 'javax.ws.rs:jsr311-api:1.1.1'
     compile 'com.github.mmazi:rescu:1.5.0'
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
@@ -66,19 +65,29 @@ dependencies {
 
     if (useXChangeFromMaven) {
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"
-        compile "com.xeiam.xchange:xchange-mtgox:$xchangeVersion"
+        //compile "com.xeiam.xchange:xchange-mtgox:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-cavirtex:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-campbx:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-btce:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-btcchina:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitstamp:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcurex:$xchangeVersion"
-        // compile "com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-kraken:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-bitfinex:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-justcoin:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-vircurex:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-bter:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-coinbase:$xchangeVersion"
+        //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-cexio:$xchangeVersion"
+        //compile "com.xeiam.xchange:xchange-cryptsy:$xchangeVersion"
         compile "com.xeiam.xchange:xchange-core:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion"
+        compile "com.xeiam.xchange:xchange-anx:$xchangeVersion"
     } else {
         // Used for testing self-compiled XChange jars
         compile files("libs/xchange-bitcoinaverage-$xchangeVersion.jar")
@@ -92,6 +101,6 @@ dependencies {
         compile files("libs/xchange-cavirtex-$xchangeVersion.jar")
         compile files("libs/xchange-core-$xchangeVersion.jar")
         compile files("libs/xchange-kraken-$xchangeVersion.jar")
-        compile files("libs/xchange-mtgox-$xchangeVersion.jar")
+        //compile files("libs/xchange-mtgox-$xchangeVersion.jar")
     }
 }

@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
 import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
+import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
+import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
 
 import org.apache.http.HttpResponse;
@@ -65,24 +68,19 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
         // ActionBar gets initiated and set to tabbed mode
         actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add the pools that have API keys
         readPreferences(this);
 
         if (checkAtLeastOneKeySet()) {
-
-            // If not API token set, switch to Preferences and ask User to enter
-            // one
-            int duration = Toast.LENGTH_LONG;
-            CharSequence text = "Please enter at least one API Token to use Miner Stats";
-
-            Toast toast = Toast.makeText(this, text, duration);
+            // If not API token set, switch to Preferences and ask User to enter one
+            Toast toast = Toast.makeText(this, getString(R.string.enterAPIToken), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
-            Intent settingsActivity = new Intent(this, PreferencesActivity.class);
-            startActivity(settingsActivity);
+            startActivity(new Intent(this, PreferencesActivity.class));
         }
 
         extras = getIntent().getExtras();
@@ -217,9 +215,19 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.preferences) {
-            startActivity(new Intent(this, PreferencesActivity.class));
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, MinerPreferenceActivity.class));
+                return true;
+            case R.id.action_refresh:
+                // TODO: implement refresh mechanism
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,35 +245,30 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
                 HttpClient client = new DefaultHttpClient();
 
                 // Get current difficulty
-                HttpGet post = new HttpGet(
-                        "http://blockexplorer.com/q/getdifficulty");
+                HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
                 HttpResponse response;
                 response = client.execute(post);
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(
-                                response.getEntity().getContent(), "UTF-8"));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 CurrentDifficulty = reader.readLine();
 
                 // Get next difficulty
                 post = new HttpGet("http://blockexplorer.com/q/estimate");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextDifficulty = reader.readLine();
 
                 // Get block count
                 post = new HttpGet("http://blockexplorer.com/q/getblockcount");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 BlockCount = reader.readLine();
 
                 // Get next retarget
                 post = new HttpGet("http://blockexplorer.com/q/nextretarget");
                 response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response
-                        .getEntity().getContent(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextRetarget = reader.readLine();
+
                 reader.close();
                 return true;
             } catch (Exception e) {
@@ -278,42 +281,43 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
-                TextView tvCurrentDifficulty = new TextView(getBaseContext());
-                TextView tvNextDifficulty = new TextView(getBaseContext());
-                TextView tvBlockCount = new TextView(getBaseContext());
-                TextView tvNextRetarget = new TextView(getBaseContext());
+                Context context = getBaseContext();
+                TextView tvCurrentDifficulty = new TextView(context);
+                TextView tvNextDifficulty = new TextView(context);
+                TextView tvBlockCount = new TextView(context);
+                TextView tvNextRetarget = new TextView(context);
 
                 try {
-                    tvCurrentDifficulty.setText("\nCurrent Difficulty: "
-                            + Utils.formatDecimal(
-                            Float.valueOf(CurrentDifficulty), 0, true));
+                    // TODO: move this to XML layout
+                    tvCurrentDifficulty.setText(String.format(getString(R.string.currentDifficulty), Utils.formatDecimal(
+                            Float.valueOf(CurrentDifficulty), 0, 0, true)));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
-                    tvNextDifficulty.setText("Estimated Next Difficulty: "
-                            + Utils.formatDecimal(
-                            Float.valueOf(NextDifficulty), 0, true));
+                    tvCurrentDifficulty.setTextColor(Color.BLACK);
+                    tvNextDifficulty.setText(String.format(getString(R.string.estimatedNextDifficulty), Utils.formatDecimal(
+                            Float.valueOf(NextDifficulty), 0, 0, true)));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvNextDifficulty.setTextColor(Color.BLACK);
 
-                    tvBlockCount.setText("Block count: " + BlockCount);
+                    tvBlockCount.setText(String.format(getString(R.string.blockCount), BlockCount));
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvBlockCount.setTextColor(Color.BLACK);
 
-                    tvNextRetarget.setText("Next retarget in "
-                            + (Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount))
-                            + " blocks\n");
+                    int nNextRetarget = Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount);
+                    tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), nNextRetarget) + "\n");
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
+                    tvNextRetarget.setTextColor(Color.BLACK);
 
-                    if (Float.valueOf(NextDifficulty) < Float
-                            .valueOf(CurrentDifficulty)) {
+                    if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty))
                         tvNextDifficulty.setTextColor(Color.GREEN);
-                    } else {
+                    else
                         tvNextDifficulty.setTextColor(Color.RED);
-                    }
 
                     view.addView(tvNextRetarget, 1);
                     view.addView(tvBlockCount, 1);
                     view.addView(tvNextDifficulty, 1);
                     view.addView(tvCurrentDifficulty, 1);
                 } catch (Exception e) {
-                    // Difficulty was NaN...
+                    // Difficulty was NaN... don't display anything
                 }
             }
         }
@@ -321,8 +325,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     }
 
     private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_slushKey = prefs.getString("slushKey", "");
@@ -336,9 +340,8 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     @Override

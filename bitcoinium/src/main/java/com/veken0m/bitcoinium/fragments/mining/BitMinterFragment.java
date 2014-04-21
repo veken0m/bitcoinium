@@ -94,7 +94,7 @@ public class BitMinterFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -112,7 +112,11 @@ public class BitMinterFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);         
+            } catch(Exception e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -130,7 +134,7 @@ public class BitMinterFragment extends SherlockFragment {
             String text = String.format(res.getString(R.string.minerConnectionError),
                     "BitMinter");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -166,12 +170,9 @@ public class BitMinterFragment extends SherlockFragment {
                 tr2.setGravity(Gravity.CENTER_HORIZONTAL);
                 tr3.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                String RewardsBTC = "BTC Reward: "
-                        + CurrencyUtils.formatPayout(data.getBalances().getBTC(), pref_widgetMiningPayoutUnit);
-                String RewardsNMC = "NMC Reward: " + data.getBalances().getNMC()
-                        + " NMC";
-                String Hashrate = "Total Hashrate: "
-                        + data.getHash_rate() + " MH/s\n";
+                String RewardsBTC = "BTC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getBTC(), pref_widgetMiningPayoutUnit, "BTC");
+                String RewardsNMC = "NMC Reward: " + CurrencyUtils.formatPayout(data.getBalances().getNMC(), pref_widgetMiningPayoutUnit, "NMC");
+                String Hashrate = "Total Hashrate: " + data.getHash_rate() + " MH/s\n";
 
                 tvBTCRewards.setText(RewardsBTC);
                 tvNMCRewards.setText(RewardsNMC);
@@ -209,14 +210,14 @@ public class BitMinterFragment extends SherlockFragment {
                     tvMinerName.setText("Miner: " + worker.getName());
                     float hashrate = worker.getHash_rate();
                     tvHashrate.setText("Hashrate: "
-                            + Utils.formatDecimal(hashrate, 2, false) + " MH/s");
+                            + Utils.formatDecimal(hashrate, 2, 0, false) + " MH/s");
                     tvAlive.setText("Alive: " + (hashrate > 0.0));
                     tvShares.setText("Shares: "
                             + Utils.formatDecimal(worker.getWork().getBTC()
-                            .getTotal_accepted(), 0, true));
+                            .getTotal_accepted(), 0, 0, true));
                     tvStales.setText("Stales: "
                             + Utils.formatDecimal(worker.getWork().getBTC()
-                            .getTotal_rejected(), 0, true));
+                            .getTotal_rejected(), 0, 0, true));
 
                     if (hashrate > 0.0) {
                         tvMinerName.setTextColor(Color.GREEN);

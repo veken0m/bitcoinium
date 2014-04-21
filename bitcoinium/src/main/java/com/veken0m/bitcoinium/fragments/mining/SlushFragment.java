@@ -96,7 +96,7 @@ public class SlushFragment extends SherlockFragment {
 
         Context context = view.getContext();
         if (context != null)
-            minerProgressDialog = ProgressDialog.show(context, "Working...", "Retrieving Miner Stats", true, false);
+            minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
@@ -114,7 +114,11 @@ public class SlushFragment extends SherlockFragment {
     private final Runnable mGraphView = new Runnable() {
         @Override
         public void run() {
-            safelyDismiss(minerProgressDialog);
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch(Exception e){
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
             drawMinerUI();
         }
     };
@@ -131,7 +135,7 @@ public class SlushFragment extends SherlockFragment {
             Resources res = getResources();
             String text = String.format(res.getString(R.string.minerConnectionError), "Slush");
             builder.setMessage(text);
-            builder.setPositiveButton("Ok",
+            builder.setPositiveButton(R.string.OK,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -150,8 +154,7 @@ public class SlushFragment extends SherlockFragment {
 
         if (view != null) {
             try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 TableRow tr1 = new TableRow(getActivity());
                 TableRow tr2 = new TableRow(getActivity());
@@ -185,15 +188,15 @@ public class SlushFragment extends SherlockFragment {
                 // USER INFO
                 String hashrate = "Total Hashrate: " + data.getHashrate() + " MH/s";
                 String confirmed_reward = "Confirmed: "
-                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getConfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String estimated_reward = "Estimated: "
-                        + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String confirmed_nmc_reward = "Confirmed: "
-                        + data.getConfirmed_nmc_reward() + " NMC";
+                    + CurrencyUtils.formatPayout(data.getConfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String unconfirmed_reward = "Unconfirmed: "
-                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit);
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String unconfirmed_nmc_reward = "Unconfirmed: "
-                        + data.getUnconfirmed_nmc_reward() + " NMC";
+                    + CurrencyUtils.formatPayout(data.getUnconfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String username = "Username: " + data.getUsername();
                 // String rating = "Rating: " + data.getRating();
                 // String nmc_send_threshold = "Send Threshold: " +

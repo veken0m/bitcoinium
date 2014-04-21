@@ -2,7 +2,6 @@
 package com.veken0m.bitcoinium;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,53 +10,50 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 import com.veken0m.bitcoinium.exchanges.Exchange;
-import com.veken0m.bitcoinium.webservice.dto.TickerHistory;
+import com.veken0m.bitcoinium.preferences.GraphPreferenceActivity;
+import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
-// import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GraphActivity extends SherlockActivity implements OnItemSelectedListener {
+// import com.veken0m.utils.KarmaAdsUtils;
+
+public class GraphActivity extends BaseActivity implements OnItemSelectedListener {
 
     private static final Handler mOrderHandler = new Handler();
-    private static String exchangeName = null;
     private static Boolean connectionFail = true;
     private static Boolean noTradesFound = false;
-    private String sExchangeClassName = null;
-    private static String pref_currency = null;
-    private String prefix = "mtgox";
+
+    private static SharedPreferences prefs = null;
+
+    private static CurrencyPair currencyPair = null;
+    private static String exchangeName = "";
+    private static Exchange exchange = null;
+    private static Boolean exchangeChanged = false;
 
     /**
      * Variables required for LineGraphView
@@ -70,31 +66,28 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         super.onCreate(savedInstanceState);
 
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            exchangeName = extras.getString("exchange");
-        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        Exchange exchange = new Exchange(this, exchangeName);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            exchange = new Exchange(this, extras.getString("exchange"));
+        else
+            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+
+        if(!exchange.supportsTrades())
+            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
 
         exchangeName = exchange.getExchangeName();
-        sExchangeClassName = exchange.getClassName();
-        String defaultCurrency = exchange.getDefaultCurrency();
-        prefix = exchange.getIdentifier();
 
-        readPreferences(getApplicationContext(), prefix, defaultCurrency);
+        readPreferences();
+        setContentView(R.layout.graph);
+        createExchangeDropdown();
+        createCurrencyDropdown();
+        viewGraph();
 
-        if (exchange.supportsPriceGraph()) {
-            setContentView(R.layout.graph);
-            createCurrencyDropdown();
-            viewGraph();
-        } else {
-            Toast.makeText(this,
-                    exchangeName + " does not currently support Price Graph",
-                    Toast.LENGTH_LONG).show();
-        }
         // KarmaAdsUtils.initAd(this);
     }
 
@@ -107,14 +100,21 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_preferences) {
-            startActivity(new Intent(this, PreferencesActivity.class));
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_preferences:
+                startActivity(new Intent(this, GraphPreferenceActivity.class));
+                return true;
+            case R.id.action_refresh:
+                viewGraph();
+                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+                graphLinearLayout.removeAllViews();
+                return true;
         }
-        if (item.getItemId() == R.id.action_refresh) {
-            viewGraph();
-            LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-            graphLinearLayout.removeAllViews();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -128,7 +128,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                     linlaHeaderProgress.setVisibility(View.INVISIBLE);
                 }
             });
@@ -148,7 +148,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 graphLinearLayout.addView(graphView);
 
             } else if (noTradesFound) {
-                createPopup("No recent trades found for this currency. Please try again later.");
+                createPopup(getString(R.string.noTradesFound));
             } else {
                 Resources res = getResources();
                 String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
@@ -164,15 +164,12 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
      */
     private void generatePriceGraph() {
 
-        String graphExchange = sExchangeClassName;
         Trades trades = null;
 
-        CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
-
         try {
-            trades = ExchangeFactory.INSTANCE.createExchange(graphExchange)
+            trades = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName())
                     .getPollingMarketDataService()
-                    .getTrades(currencyPair.baseCurrency, currencyPair.counterCurrency);
+                    .getTrades(currencyPair);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,7 +188,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
             final int tradesListSize = tradesList.size();
             for (int i = 0; i < tradesListSize; i++) {
                 final Trade trade = tradesList.get(i);
-                values[i] = trade.getPrice().getAmount().floatValue();
+                values[i] = trade.getPrice().floatValue();
                 dates[i] = trade.getTimestamp().getTime();
                 if (values[i] > largest) {
                     largest = values[i];
@@ -202,8 +199,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
                 data[i] = new GraphViewData(dates[i], values[i]);
             }
 
-            graphView = new LineGraphView(this, exchangeName + ": "
-                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
+            graphView = new LineGraphView(this, exchangeName + ": " + currencyPair.toString()) {
                 @Override
                 protected String formatLabel(double value, boolean isValueX) {
                     if (isValueX) {
@@ -237,104 +233,17 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         }
     }
 
-    private void generateXHubPriceGraph() {
-
-        TickerHistory trades = null;
-
-        CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(pref_currency);
-
-        try {
-            HttpClient client = new DefaultHttpClient();
-            HttpGet post = new HttpGet(
-                    "http://bitcoinium.com:9090/service/tickerhistory?exchange=mtgox&pair=BTC_USD&timewindow=7d");
-            HttpResponse response = client.execute(post);
-            ObjectMapper mapper = new ObjectMapper();
-
-            trades = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), TickerHistory.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            int tradeListSize = 0;
-            long baseTime = 0;
-            if (trades != null) {
-                tradeListSize = trades.getPriceHistoryList().size();
-                baseTime = trades.getBaseTimestamp() * 1000;
-            }
-
-            float[] values = new float[tradeListSize];
-            long[] dates = new long[tradeListSize];
-            final GraphViewData[] data = new GraphViewData[tradeListSize];
-
-            float largest = Integer.MIN_VALUE;
-            float smallest = Integer.MAX_VALUE;
-
-            for (int i = 0; i < tradeListSize; i++) {
-                values[i] = trades.getPriceHistoryList().get(i).floatValue();
-                long delta = trades.getTimeStampOffsets().get(i).longValue() * 1000;
-                baseTime += delta;
-                dates[i] = baseTime;
-
-                if (values[i] > largest) {
-                    largest = values[i];
-                }
-                if (values[i] < smallest) {
-                    smallest = values[i];
-                }
-                data[i] = new GraphViewData(dates[i], values[i]);
-            }
-
-            graphView = new LineGraphView(this, exchangeName + ": "
-                    + currencyPair.baseCurrency + "/" + currencyPair.counterCurrency) {
-                @Override
-                protected String formatLabel(double value, boolean isValueX) {
-                    if (isValueX) {
-                        return Utils.dateFormat(getBaseContext(), (long) value);
-                    } else
-                        return super.formatLabel(value, false);
-                }
-            };
-
-            double windowSize = (dates[dates.length - 1] - dates[0]) / 2;
-
-            // startValue enables graph window to be aligned with latest trades
-            final double startValue = dates[dates.length - 1] - windowSize;
-            graphView.addSeries(new GraphViewSeries(data));
-            graphView.setViewPort(startValue, windowSize);
-            graphView.setScrollable(true);
-            graphView.setScalable(true);
-
-            if (!pref_scaleMode) {
-                graphView.setManualYAxisBounds(largest, smallest);
-            }
-            connectionFail = false;
-            noTradesFound = false;
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            noTradesFound = true;
-
-        } catch (Exception e) {
-            connectionFail = true;
-            e.printStackTrace();
-        }
-    }
-
     private void createPopup(String pMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(pMessage);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, pMessage);
             }
-        });
+        } catch (WindowManager.BadTokenException e){
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+        }
 
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     @Override
@@ -353,7 +262,7 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress2);
+                LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                 linlaHeaderProgress.setVisibility(View.VISIBLE);
             }
         });
@@ -362,22 +271,35 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         gt.start();
     }
 
-    private static void readPreferences(Context context, String prefix,
-                                        String defaultCurrency) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private static void readPreferences() {
 
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
-        pref_currency = prefs.getString(prefix + "CurrencyPref",
-                defaultCurrency);
+        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        pref_currency = (String) parent.getItemAtPosition(pos);
-        viewGraph();
-        LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-        graphLinearLayout.removeAllViews();
+
+        CurrencyPair prevCurrencyPair = currencyPair;
+        String prevExchangeName = exchangeName;
+
+        switch (parent.getId()){
+            case R.id.graph_exchange_spinner:
+                exchangeName = (String) parent.getItemAtPosition(pos);
+                exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
+                if (exchangeChanged){
+                    exchange = new Exchange(this, exchangeName);
+                    currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+                    createCurrencyDropdown();
+                }
+                break;
+            case R.id.graph_currency_spinner:
+                currencyPair = CurrencyUtils.stringToCurrencyPair((String) parent.getItemAtPosition(pos));
+                break;
+        }
+
+        if (prevCurrencyPair != null && currencyPair != null && !currencyPair.equals(prevCurrencyPair) || exchangeChanged)
+            viewGraph();
     }
 
     @Override
@@ -385,33 +307,36 @@ public class GraphActivity extends SherlockActivity implements OnItemSelectedLis
         // Do nothing
     }
 
+    void createExchangeDropdown() {
+
+        // Re-populate the dropdown menu
+        String[] exchanges = getResources().getStringArray(R.array.exchangesTrades);
+        Spinner spinner = (Spinner) findViewById(R.id.graph_exchange_spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
+        spinner.setSelection(index);
+    }
+
     void createCurrencyDropdown() {
-        final String[] dropdownValues = getResources().getStringArray(
-                getResources().getIdentifier(prefix + "currencies", "array",
-                        this.getPackageName()));
+        // Re-populate the dropdown menu
+        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
+        String[] currencies = getResources().getStringArray(arrayId);
 
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, dropdownValues);
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(Arrays.asList(dropdownValues).indexOf(pref_currency));
-        spinner.setOnItemSelectedListener(this);
-    }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+        if(exchangeChanged){
+            int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
+            spinner.setSelection(index);
         }
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }
