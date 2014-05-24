@@ -131,11 +131,12 @@ public class Utils {
     public static String formatHashrate(float hashRate) {
 
         DecimalFormat df = new DecimalFormat("#0.00");
-        if (hashRate > 999) {
+        if(hashRate >= 1000000)
+            return df.format((hashRate / 1000000)) + " TH/s";
+        else if (hashRate >= 1000)
             return df.format((hashRate / 1000)) + " GH/s";
-        } else {
+        else
             return df.format((hashRate)) + " MH/s";
-        }
     }
 
     public static Dialog errorDialog(Context context, String msg, String title) {
