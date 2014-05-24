@@ -282,7 +282,7 @@
 
     <string-array name="virtex">
         <item>VirtEx</item>
-        <item>com.xeiam.xchange.virtex.VirtExExchange</item>
+        <item>com.xeiam.xchange.virtex.v2.VirtExExchange</item>
         <item>BTC/CAD</item>
         <item>virtex</item>
         <item>false</item>
@@ -683,8 +683,8 @@
     <!-- Arrays for VirtEx Currencies -->
     <string-array name="virtexcurrencies">
         <item>BTC/CAD</item>
-        <!--item>LTC/CAD</item>
-        <item>BTC/LTC</item-->
+        <item>LTC/CAD</item>
+        <item>BTC/LTC</item>
     </string-array>
 
 </resources>
