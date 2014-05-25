@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
@@ -37,7 +37,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class EligiusFragment extends SherlockFragment {
+public class EligiusFragment extends Fragment {
 
     private static String pref_eligiusKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;

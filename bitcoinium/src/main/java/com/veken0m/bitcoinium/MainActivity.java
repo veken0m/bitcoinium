@@ -9,13 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author Michael Lagacé a.k.a. veken0m
  * @version 1.9.1 Jan 12 2014
  */
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
     /**
      * Called when the activity is first created.
@@ -103,7 +103,7 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         }
 
-        public TabsAdapter(SherlockFragmentActivity activity, ActionBar bar, ViewPager pager) {
+        public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager) {
 
             super(activity.getSupportFragmentManager());
             mContext = activity;
@@ -172,7 +172,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }

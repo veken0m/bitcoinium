@@ -2,20 +2,20 @@ package com.veken0m.bitcoinium;
 
 import android.app.Dialog;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Utils;
 
 /**
  * Created by Michael on 18/02/14.
 */
-public class BaseActivity extends SherlockFragmentActivity {
+public class BaseActivity extends ActionBarActivity {
 
     Dialog dialog = null;
 
@@ -44,7 +44,7 @@ public class BaseActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_menu, menu);
         return true;
     }

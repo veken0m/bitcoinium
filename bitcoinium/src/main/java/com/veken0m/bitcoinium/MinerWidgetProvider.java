@@ -21,7 +21,6 @@ import com.veken0m.mining.eligius.Eligius;
 import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.emc.EMC;
 import com.veken0m.mining.fiftybtc.FiftyBTC;
-import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.mining.slush.Slush;
 import com.veken0m.mining.slush.Workers;
 import com.veken0m.utils.Constants;

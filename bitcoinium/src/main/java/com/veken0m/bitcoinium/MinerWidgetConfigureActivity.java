@@ -6,16 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 
-public class MinerWidgetConfigureActivity extends SherlockPreferenceActivity {
+public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
     private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
@@ -26,55 +24,50 @@ public class MinerWidgetConfigureActivity extends SherlockPreferenceActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
-        inflater.inflate(R.menu.widget_accept_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_widget_accept) {
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
-
-            saveMiningPoolPref(this, mAppWidgetId, pref_widgetMiningPool);
-
-            // Make sure we pass back the original appWidgetId
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-            setResult(RESULT_OK, resultValue);
-
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_miner_widget);
         addPreferencesFromResource(R.xml.pref_miner);
         addPreferencesFromResource(R.xml.pref_widgets);
+        addPreferencesFromResource(R.xml.pref_create_widget);
 
         // Set the result to CANCELED. This will cause the widget host to cancel
         // out of the widget placement if they press the back button.
         setResult(RESULT_CANCELED);
 
         // Find the widget id from the intent.
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null)
-            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
         // If they gave us an intent without the widget id, just bail.
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
             finish();
+
+        Preference OKpref = findPreference("OKpref");
+        if (OKpref != null) {
+            OKpref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    Context context = MinerWidgetConfigureActivity.this;
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
+
+                    saveMiningPoolPref(context, mAppWidgetId, pref_widgetMiningPool);
+
+                    // Make sure we pass back the original appWidgetId
+                    Intent resultValue = new Intent();
+                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+                    setResult(RESULT_OK, resultValue);
+
+                    finish();
+                    return true;
+                }
+            });
+        }
     }
 
     // Write the prefix to the SharedPreferences object for this widget
@@ -96,9 +89,8 @@ public class MinerWidgetConfigureActivity extends SherlockPreferenceActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
-        }
     }
 
     @Override

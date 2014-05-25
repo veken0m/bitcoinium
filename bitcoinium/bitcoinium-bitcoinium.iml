@@ -74,7 +74,6 @@
     <orderEntry type="library" exported="" name="xchange-justcoin-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-coinbase-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="rescu-1.6.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="actionbarsherlock-4.4.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-btcchina-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.2.3" level="project" />
     <orderEntry type="library" exported="" name="xchange-cavirtex-2.0.1-SNAPSHOT" level="project" />
@@ -86,6 +85,7 @@
     <orderEntry type="library" exported="" name="xchange-bitcoinaverage-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoincharts-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cexio-2.0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.2.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />

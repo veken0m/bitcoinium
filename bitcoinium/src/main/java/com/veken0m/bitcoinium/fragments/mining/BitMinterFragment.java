@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.mining.bitminter.BitMinterData;
@@ -36,7 +36,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class BitMinterFragment extends SherlockFragment {
+public class BitMinterFragment extends Fragment {
 
     private static String pref_bitminterKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;

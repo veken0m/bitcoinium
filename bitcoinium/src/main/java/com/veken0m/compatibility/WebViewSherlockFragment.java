@@ -5,12 +5,11 @@
 package com.veken0m.compatibility;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-
-import com.actionbarsherlock.app.SherlockFragment;
 
 /**
  * A fragment that displays a WebView. Modified to support SherlockActionBar
@@ -19,7 +18,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  * The WebView is automatically paused or resumed when the Fragment is paused or
  * resumed.
  */
-public class WebViewSherlockFragment extends SherlockFragment {
+public class WebViewSherlockFragment extends Fragment {
     protected WebView mWebView = null;
     protected boolean mIsWebViewAvailable = false;
 

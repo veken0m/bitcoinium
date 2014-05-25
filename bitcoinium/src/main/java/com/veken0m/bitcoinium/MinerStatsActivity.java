@@ -9,20 +9,20 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
@@ -44,7 +44,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 //import com.veken0m.utils.KarmaAdsUtils;
 
-public class MinerStatsActivity extends SherlockFragmentActivity {
+public class MinerStatsActivity extends ActionBarActivity {
 
     private static String pref_emcKey = null;
     private static String pref_slushKey = null;
@@ -145,14 +145,14 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
         }
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment, boolean selectedTab) {
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment, boolean selectedTab) {
 
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab, selectedTab);
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, SherlockFragment viewFragment) {
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment) {
 
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
@@ -184,9 +184,9 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
     }
 
     class MyTabsListener implements ActionBar.TabListener {
-        public final SherlockFragment fragment;
+        public final Fragment fragment;
 
-        public MyTabsListener(SherlockFragment fragment) {
+        public MyTabsListener(Fragment fragment) {
             this.fragment = fragment;
         }
 
@@ -208,7 +208,7 @@ public class MinerStatsActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getSupportMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
         return true;
     }

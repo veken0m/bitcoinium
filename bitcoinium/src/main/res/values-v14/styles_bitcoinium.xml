@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Bitcoinium" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.Bitcoinium" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_bitcoinium</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Bitcoinium</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Bitcoinium</item>
@@ -35,20 +35,20 @@
 
     </style>
 
-    <style name="ActionBar.Solid.Bitcoinium" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Solid.Bitcoinium" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_background_textured_bitcoinium</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_bitcoinium</item>
         <item name="android:backgroundSplit">@drawable/ab_background_textured_bitcoinium</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Bitcoinium</item>
     </style>
 
-    <style name="ActionBar.Transparent.Bitcoinium" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="ActionBar.Transparent.Bitcoinium" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent_bitcoinium</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Bitcoinium</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Bitcoinium.Widget" parent="@style/Theme.Sherlock">
+    <style name="Theme.Bitcoinium.Widget" parent="@style/Theme.AppCompat">
         <item name="android:popupMenuStyle">@style/PopupMenu.Bitcoinium</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Bitcoinium</item>
     </style>

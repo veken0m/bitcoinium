@@ -5,12 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.veken0m.bitcoinium.BitcoinAverageActivity;
 import com.veken0m.bitcoinium.BitcoinChartsActivity;
 import com.veken0m.bitcoinium.GraphActivity;
@@ -23,7 +23,7 @@ import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
-public class HomeMenuFragment extends SherlockFragment {
+public class HomeMenuFragment extends Fragment {
 
     private Activity activity = null;
     private Context context = null;

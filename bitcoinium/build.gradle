@@ -47,9 +47,7 @@ repositories {
 dependencies {
 
     compile project(':androidColorPickerPreference')
-
-    //compile 'com.android.support:appcompat-v7:19.0.+'
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'com.android.support:appcompat-v7:19.0.+'
     compile 'com.android.support:support-v4:+'
     compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'

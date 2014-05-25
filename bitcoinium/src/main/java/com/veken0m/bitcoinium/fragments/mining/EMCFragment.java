@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.mining.emc.EMC;
@@ -35,7 +35,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class EMCFragment extends SherlockFragment {
+public class EMCFragment extends Fragment {
 
     private static String pref_emcKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
