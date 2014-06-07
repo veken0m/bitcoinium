@@ -40,6 +40,22 @@
                     android:key="eligiusKey"
                     android:summary="Enter your Eligius BTC token to use MinerStats \n *NOTE* - The token is case sensitive!"
                     android:title="Eligius API token (BTC Address)"/>
+                <PreferenceScreen
+                    android:summary="Fill out your GHash.IO account info to use MinerStats"
+                    android:title="GHash.IO Account Information">
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioUsername"
+                        android:title="GHash.IO Username"/>
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioAPIKey"
+                        android:title="GHash.IO API key"/>
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioSecretKey"
+                        android:title="GHash.IO Secret key"/>
+                </PreferenceScreen>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

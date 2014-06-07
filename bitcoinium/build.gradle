@@ -37,7 +37,7 @@ android {
 }
 
 ext {
-    xchangeVersion = "2.0.1-SNAPSHOT"
+    xchangeVersion = "2.1.0-SNAPSHOT"
 }
 
 repositories {
@@ -56,7 +56,7 @@ dependencies {
     compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT'){
         transitive = false
     }
-    compile 'org.slf4j:slf4j-android:1.7.7'
+    compile 'org.slf4j:slf4j-android:1.6.1-RC1'
     compile files('libs/libGoogleAnalyticsServices.jar')
 
     compile("com.xeiam.xchange:xchange-anx:$xchangeVersion"){
@@ -114,6 +114,7 @@ dependencies {
         transitive = false
     }
     compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion"){
+    //compile files('libs/xchange-cexio-2.0.1-SNAPSHOT.jar'){
         transitive = false
     }
     compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion"){

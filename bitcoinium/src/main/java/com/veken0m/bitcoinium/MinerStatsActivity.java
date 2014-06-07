@@ -30,6 +30,7 @@ import com.veken0m.bitcoinium.fragments.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
 import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
+import com.veken0m.bitcoinium.fragments.mining.GHashIOFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
@@ -53,6 +54,9 @@ public class MinerStatsActivity extends ActionBarActivity {
     private static String pref_50BTCKey = null;
     private static String pref_btcguildKey = null;
     private static String pref_eligiusKey = null;
+    private static String pref_ghashioUsername = null;
+    private static String pref_ghashioAPIKey = null;
+    private static String pref_ghashioSecretKey = null;
 
     private static final int MIN_KEY_LENGTH = 20;
 
@@ -113,6 +117,8 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "BTC Guild", new BTCGuildFragment(), poolkey.equalsIgnoreCase("btcguild"));
         if (pref_eligiusKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Eligius", new EligiusFragment(), poolkey.equalsIgnoreCase("eligius"));
+        if (pref_ghashioAPIKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "GHash.IO", new GHashIOFragment(), poolkey.equalsIgnoreCase("ghashio"));
     }
 
     private void addTabs(ActionBar actionbar) {
@@ -133,6 +139,8 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "BTC Guild", new BTCGuildFragment());
         if (pref_eligiusKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Eligius", new EligiusFragment());
+        if (pref_ghashioAPIKey.length() > MIN_KEY_LENGTH)
+            addTab(actionbar, "GHash.IO", new GHashIOFragment());
     }
 
     public void onResume() {
@@ -174,7 +182,8 @@ public class MinerStatsActivity extends ActionBarActivity {
                 && pref_50BTCKey.length() <= MIN_KEY_LENGTH
                 && pref_slushKey.length() <= MIN_KEY_LENGTH
                 && pref_btcguildKey.length() <= MIN_KEY_LENGTH
-                && pref_eligiusKey.length() <= MIN_KEY_LENGTH);
+                && pref_eligiusKey.length() <= MIN_KEY_LENGTH
+                && pref_ghashioAPIKey.length() <= MIN_KEY_LENGTH);
     }
 
     @Override
@@ -335,6 +344,10 @@ public class MinerStatsActivity extends ActionBarActivity {
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
         pref_eligiusKey = prefs.getString("eligiusKey", "");
+
+        pref_ghashioUsername = prefs.getString("ghashioUsername", "");
+        pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
+        pref_ghashioSecretKey = prefs.getString("ghashioSecretKey", "");
     }
 
     @Override

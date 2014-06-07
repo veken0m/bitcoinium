@@ -26,6 +26,14 @@ import com.veken0m.mining.slush.Workers;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
+import com.xeiam.xchange.Exchange;
+import com.xeiam.xchange.ExchangeFactory;
+import com.xeiam.xchange.ExchangeSpecification;
+import com.xeiam.xchange.cexio.CexIOExchange;
+import com.xeiam.xchange.cexio.dto.account.CexIOBalance;
+import com.xeiam.xchange.cexio.dto.account.CexIOBalanceInfo;
+import com.xeiam.xchange.cexio.dto.account.GHashIOHashrate;
+import com.xeiam.xchange.cexio.service.polling.CexIOAccountServiceRaw;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -259,6 +267,32 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                                     EligiusBalance.class);
 
                     btcBalance = data2.getConfirmed() / 100000000;
+
+                    return true;
+                } else if (sMiningPool.equalsIgnoreCase("GHash.IO")){
+
+                    Exchange cexioExchange = ExchangeFactory.INSTANCE.createExchange(CexIOExchange.class.getName());
+
+                    ExchangeSpecification specs = new ExchangeSpecification(CexIOExchange.class.getName());
+
+                    String pref_ghashioUsername = prefs.getString("ghashioUsername", "");
+                    String pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
+                    String pref_ghashioSecretKey = prefs.getString("ghashioSecretKey", "");
+
+                    specs.setApiKey(pref_ghashioAPIKey);
+                    specs.setSecretKey(pref_ghashioSecretKey);
+                    specs.setUserName(pref_ghashioUsername);
+                    cexioExchange.applySpecification(specs);
+
+                    CexIOAccountServiceRaw pollingService = (CexIOAccountServiceRaw) cexioExchange.getPollingAccountService();
+                    CexIOBalanceInfo account = pollingService.getCexIOAccountInfo();
+                    GHashIOHashrate hashrate = pollingService.getHashrate();
+
+                    CexIOBalance balanceBTC = account.getBalanceBTC();
+                    if(balanceBTC != null)
+                        btcBalance = balanceBTC.getAvailable().floatValue();
+
+                    hashRate = hashrate.getLast15m().floatValue();
 
                     return true;
                 }
