@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
@@ -20,7 +20,7 @@ android {
     }
 
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 8
@@ -46,87 +46,56 @@ repositories {
 
 dependencies {
 
+    configurations.all {
+        transitive = false
+    }
+
     compile project(':androidColorPickerPreference')
-    compile 'com.android.support:appcompat-v7:19.0.+'
+    compile files('libs/libGoogleAnalyticsServices.jar')
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.android.support:support-v4:+'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.3'
     compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.3'
+    compile 'com.github.mmazi:rescu:1.6.1-SNAPSHOT'
     compile 'javax.ws.rs:jsr311-api:1.1.1'
-    compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT'){
-        transitive = false
-    }
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
-    compile files('libs/libGoogleAnalyticsServices.jar')
 
-    compile("com.xeiam.xchange:xchange-anx:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-core:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-cavirtex:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-campbx:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-btce:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-btcchina:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitstamp:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-bter:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-coinbase:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion"){
-    //compile files('libs/xchange-cexio-2.0.1-SNAPSHOT.jar'){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-core:$xchangeVersion"){
-        transitive = false
-    }
-    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion"){
-        transitive = false
-    }
+    // XChange Core
+    compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
+
+    // XChange Exchange Modules
+    compile("com.xeiam.xchange:xchange-anx:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitbay:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitmarket:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitstamp:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btccentral:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btcchina:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btce:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bter:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-campbx:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cavirtex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-coinbase:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-hitbtc:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
+
+    // Available module but not used
+    //compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-atlasats:2.0.0-SNAPSHOT")
 
     // Streaming only
     //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
+    // Authenticated API...
+    //compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion")
 }
