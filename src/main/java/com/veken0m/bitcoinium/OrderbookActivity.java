@@ -158,13 +158,17 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         }
 
         if (orderbook != null) {
-            // Limit OrderbookActivity orders drawn to improve performance
-            int length = (orderbook.getAsks().size() < orderbook.getBids().size()) ? orderbook.getAsks().size() : orderbook.getBids().size();
-            if (pref_orderbookLimiter != 0 && pref_orderbookLimiter < length)
-                length = pref_orderbookLimiter;
+            listAsks = orderbook.getAsks();
+            listBids = orderbook.getBids();
 
-            listAsks = orderbook.getAsks().subList(0, length);
-            listBids = orderbook.getBids().subList(0, length);
+            // Limit OrderbookActivity orders drawn to improve performance
+            if (pref_orderbookLimiter != 0) {
+                if(listAsks.size() > pref_orderbookLimiter)
+                    listAsks = listAsks.subList(0, pref_orderbookLimiter);
+
+                if(listBids.size() > pref_orderbookLimiter)
+                    listBids = listBids.subList(0, pref_orderbookLimiter);
+            }
             return true;
         } else {
             return false;
@@ -210,35 +214,44 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             tvBidAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
 
             LayoutInflater mInflater = LayoutInflater.from(this);
-            for (int i = 0; i < listBids.size(); i++) {
+
+            int askSize = listAsks.size();
+            int bidSize = listBids.size();
+
+            int length = Math.max(askSize, bidSize);
+            for (int i = 0; i < length; i++) {
 
                 TextView tvAskAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvAskPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
 
-                final LimitOrder limitorderBid = listBids.get(i);
-                final LimitOrder limitorderAsk = listAsks.get(i);
+                if (bidSize >= i){
+                    LimitOrder limitorderBid = listBids.get(i);
+                    float bidPrice = limitorderBid.getLimitPrice().floatValue();
+                    float bidAmount = limitorderBid.getTradableAmount().floatValue();
+                    tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
+                    tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
 
-                float bidPrice = limitorderBid.getLimitPrice().floatValue();
-                float bidAmount = limitorderBid.getTradableAmount().floatValue();
-                float askPrice = limitorderAsk.getLimitPrice().floatValue();
-                float askAmount = limitorderAsk.getTradableAmount().floatValue();
+                    if(pref_enableHighlight) {
+                        int bidTextColor = depthColor(bidAmount);
+                        tvBidAmount.setTextColor(bidTextColor);
+                        tvBidPrice.setTextColor(bidTextColor);
+                    }
+                }
 
-                tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
-                tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
-                tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
-                tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
+                if (askSize >= i){
+                    LimitOrder limitorderAsk = listAsks.get(i);
+                    float askPrice = limitorderAsk.getLimitPrice().floatValue();
+                    float askAmount = limitorderAsk.getTradableAmount().floatValue();
+                    tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
+                    tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
 
-                // Text coloring for depth highlighting
-                if(pref_enableHighlight) {
-                    int bidTextColor = depthColor(bidAmount);
-                    int askTextColor = depthColor(askAmount);
-
-                    tvBidAmount.setTextColor(bidTextColor);
-                    tvBidPrice.setTextColor(bidTextColor);
-                    tvAskAmount.setTextColor(askTextColor);
-                    tvAskPrice.setTextColor(askTextColor);
+                    if(pref_enableHighlight) {
+                        int askTextColor = depthColor(askAmount);
+                        tvAskAmount.setTextColor(askTextColor);
+                        tvAskPrice.setTextColor(askTextColor);
+                    }
                 }
 
                 final TableRow newRow = new TableRow(this);
