@@ -56,22 +56,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/build/apk" />
-      <excludeFolder url="file://$MODULE_DIR$/build/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/build/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/build/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/dex" />
-      <excludeFolder url="file://$MODULE_DIR$/build/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates" />
-      <excludeFolder url="file://$MODULE_DIR$/build/libs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/manifests" />
-      <excludeFolder url="file://$MODULE_DIR$/build/ndk" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/pre-dexed" />
-      <excludeFolder url="file://$MODULE_DIR$/build/res" />
-      <excludeFolder url="file://$MODULE_DIR$/build/rs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/source" />
-      <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -103,10 +89,9 @@
     <orderEntry type="library" exported="" name="xchange-bitcoinaverage-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-anx-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
-    <orderEntry type="library" exported="" name="xchange-coinbase-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitstamp-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-coinbase-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
     <orderEntry type="module" module-name="androidColorPickerPreference" exported="" />
   </component>

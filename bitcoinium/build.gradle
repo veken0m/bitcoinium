@@ -69,7 +69,6 @@ dependencies {
     compile("com.xeiam.xchange:xchange-bitbay:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitmarket:$xchangeVersion")
@@ -90,6 +89,7 @@ dependencies {
     compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
 
     // Available module but not used
+    //compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-atlasats:2.0.0-SNAPSHOT")

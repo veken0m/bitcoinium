@@ -140,7 +140,7 @@ public class BitcoinAverageActivity extends BaseActivity {
                     final TextView tvAsk = new TextView(this);
                     // final TextView tvAvg = new TextView(this);
 
-                    tvSymbol.setText(tickerEntry.getKey().toString());
+                    tvSymbol.setText(tickerEntry.getKey());
                     tvSymbol.setTextColor(Color.WHITE);
 
                     Utils.setTextViewParams(tvLast, ticker.getLast());

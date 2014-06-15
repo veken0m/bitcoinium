@@ -64,9 +64,6 @@ public class MainActivity extends ActionBarActivity {
 
         ActionBar.Tab tab = actionbar.newTab();//.setText(identity);
 
-        //int logoId = getResources().getIdentifier(identity + "logo", "drawable", getPackageName());
-        //if(logoId != 0) tab.setIcon(logoId);
-
         Bundle args = new Bundle();
         args.putString("exchange", identity);
 

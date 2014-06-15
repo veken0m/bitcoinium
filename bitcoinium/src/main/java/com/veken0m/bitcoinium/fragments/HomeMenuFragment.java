@@ -73,7 +73,7 @@ public class HomeMenuFragment extends Fragment {
                     // Do nothing
                 }
 
-                if(exchange != null && exchange.supportsOrderbook())
+                if(exchange != null && exchange.supportsTrades())
                     graphActivity.putExtra("exchange", exchange.getIdentifier());
                 else
                     graphActivity.removeExtra("exchange");

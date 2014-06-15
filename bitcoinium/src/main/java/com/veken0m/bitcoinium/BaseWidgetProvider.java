@@ -54,7 +54,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     private static PendingIntent widgetPriceWidgetRefreshService = null;
     private static PendingIntent widgetMinerWidgetRefreshService = null;
 
-    public static SharedPreferences prefs = null;
+    static SharedPreferences prefs = null;
 
     static void readGeneralPreferences(Context context) {
 

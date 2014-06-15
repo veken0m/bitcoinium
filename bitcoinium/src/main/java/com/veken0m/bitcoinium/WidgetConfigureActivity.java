@@ -18,7 +18,6 @@ import com.veken0m.utils.Constants;
 
 public class WidgetConfigureActivity extends PreferenceActivity {
 
-    private static final String PREFS_NAME = "com.veken0m.bitcoinium.WidgetProvider";
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -59,20 +58,22 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         // populate the list with the Exchange's Currency Pairs
         setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-        widgetExchangePref.setOnPreferenceChangeListener(
-                new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if(widgetExchangePref != null) {
+            widgetExchangePref.setOnPreferenceChangeListener(
+                    new Preference.OnPreferenceChangeListener() {
+                        @Override
+                        public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                        ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
-                        int nCurrencyArrayId = getResources().getIdentifier(newValue.toString() + "currencies", "array", getBaseContext().getPackageName());
+                            ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
+                            int nCurrencyArrayId = getResources().getIdentifier(newValue.toString() + "currencies", "array", getBaseContext().getPackageName());
 
-                        setCurrencyItems(pCurrency, nCurrencyArrayId);
+                            setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-                        return true;
+                            return true;
+                        }
                     }
-                }
-        );
+            );
+        }
 
         Preference OKpref = findPreference("OKpref");
         if (OKpref != null) {
@@ -122,7 +123,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // Write the prefix to the SharedPreferences object for this widget
     private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
 
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
         prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
         prefs.commit();
     }
@@ -131,14 +132,14 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadCurrencyPref(Context context, int appWidgetId) {
 
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
     }
 
     // Write the prefix to the SharedPreferences object for this widget
     private static void saveExchangePref(Context context, int appWidgetId, String exchange) {
 
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
         prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, exchange);
         prefs.commit();
     }
@@ -147,7 +148,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadExchangePref(Context context, int appWidgetId) {
 
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
     }
 
@@ -163,10 +164,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
     public void onStop() {
         super.onStop();
 
-        Intent intent = new Intent(this, WidgetProvider.class);
-        intent.setAction(Constants.REFRESH);
-        this.sendBroadcast(intent);
-
+        sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         EasyTracker.getInstance(this).activityStop(this);
     }
 

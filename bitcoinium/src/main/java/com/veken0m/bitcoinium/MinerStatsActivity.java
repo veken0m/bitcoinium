@@ -54,9 +54,7 @@ public class MinerStatsActivity extends ActionBarActivity {
     private static String pref_50BTCKey = null;
     private static String pref_btcguildKey = null;
     private static String pref_eligiusKey = null;
-    private static String pref_ghashioUsername = null;
     private static String pref_ghashioAPIKey = null;
-    private static String pref_ghashioSecretKey = null;
 
     private static final int MIN_KEY_LENGTH = 20;
 
@@ -344,10 +342,7 @@ public class MinerStatsActivity extends ActionBarActivity {
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
         pref_eligiusKey = prefs.getString("eligiusKey", "");
-
-        pref_ghashioUsername = prefs.getString("ghashioUsername", "");
         pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
-        pref_ghashioSecretKey = prefs.getString("ghashioSecretKey", "");
     }
 
     @Override

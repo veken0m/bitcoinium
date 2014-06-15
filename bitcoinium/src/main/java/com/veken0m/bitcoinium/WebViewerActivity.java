@@ -3,12 +3,10 @@ package com.veken0m.bitcoinium;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +14,11 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.compatibility.WebViewSherlockFragment;
 // import com.veken0m.utils.KarmaAdsUtils;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class WebViewerActivity extends ActionBarActivity {
+public class WebViewerActivity extends BaseActivity {
 
     final static LayoutParams MATCH_PARENT = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -41,17 +38,14 @@ public class WebViewerActivity extends ActionBarActivity {
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab BitcoiniumTab = actionbar.newTab().setIcon(R.drawable.bitcoiniumwebicon);
-        //ActionBar.Tab MtGoxLiveTab = actionbar.newTab().setIcon(R.drawable.mtgoxlogo);
         ActionBar.Tab BitcoinityTab = actionbar.newTab().setText("Bitcoinity");
         BitcoiniumTab.setText("itcoinium");
 
         BitcoiniumTab.setTabListener(new WebTabsListener(new BitcoiniumFragment()));
         BitcoinityTab.setTabListener(new WebTabsListener(new BitcoinityFragment()));
-        //MtGoxLiveTab.setTabListener(new WebTabsListener(new MtGoxLiveFragment()));
 
         actionbar.addTab(BitcoiniumTab);
         actionbar.addTab(BitcoinityTab);
-        //actionbar.addTab(MtGoxLiveTab);
 
         actionbar.show();
     }
@@ -79,37 +73,6 @@ public class WebViewerActivity extends ActionBarActivity {
             return mWebView;
         }
     }
-
-    /*
-    static public class MtGoxLiveFragment extends WebViewSherlockFragment {
-
-        public MtGoxLiveFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            if (mWebView != null) {
-                mWebView.destroy();
-            }
-
-            mWebView = new WebView(getActivity());
-            mWebView.setInitialScale(100);
-            LayoutParams p = new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            mWebView.setLayoutParams(p);
-            WebSettings webSettings = mWebView.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setSupportZoom(true);
-            webSettings.setBuiltInZoomControls(true);
-            mIsWebViewAvailable = true;
-            mWebView.loadUrl("http://mtgoxlive.com/orders");
-
-            return mWebView;
-        }
-    }
-   */
 
     static public class BitcoinityFragment extends WebViewSherlockFragment {
 
@@ -170,16 +133,4 @@ public class WebViewerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
 }

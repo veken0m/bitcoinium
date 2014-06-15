@@ -15,7 +15,6 @@ import com.veken0m.utils.Constants;
 
 public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
-    private static final String PREFS_NAME = "com.veken0m.bitcoinium.MinerWidgetProvider";
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -73,7 +72,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     // Write the prefix to the SharedPreferences object for this widget
     private static void saveMiningPoolPref(Context context, int appWidgetId,String miningPool) {
 
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0).edit();
         prefs.putString(PREF_MININGPOOL_KEY + appWidgetId, miningPool);
         prefs.commit();
     }
@@ -82,7 +81,7 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     // If there is no preference saved, get the default from a resource
     static String loadMiningPoolPref(Context context, int appWidgetId) {
 
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0);
         return prefs.getString(PREF_MININGPOOL_KEY + appWidgetId, null);
     }
 
@@ -96,10 +95,8 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
     @Override
     public void onStop() {
         super.onStop();
-        Intent intent = new Intent(this, MinerWidgetProvider.class);
-        intent.setAction(Constants.REFRESH);
-        this.sendBroadcast(intent);
 
+        sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         EasyTracker.getInstance(this).activityStop(this);
     }
 
