@@ -11,7 +11,7 @@ import android.preference.PreferenceScreen;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.R;
 
-public class BasePreferenceActivity extends PreferenceActivity{
+public class BasePreferenceActivity extends PreferenceActivity {
 
     // Generate Mining Pool miner alerts preferences screen
     void generateMinerDownAlertPreferences() {
@@ -21,7 +21,7 @@ public class BasePreferenceActivity extends PreferenceActivity{
         String[] sPiscines = getResources().getStringArray(getResources().getIdentifier("miningpools", "array", getPackageName()));
         PreferenceCategory minerDownAlertPref = (PreferenceCategory) findPreference("minerDownAlertPref");
 
-        if(minerDownAlertPref != null) {
+        if (minerDownAlertPref != null) {
             for (String sPiscine : sPiscines) {
                 CheckBoxPreference alertCheckbox = new CheckBoxPreference(this);
                 alertCheckbox.setKey(sPiscine.toLowerCase().replaceAll("[ .-]", "") + "AlertPref");

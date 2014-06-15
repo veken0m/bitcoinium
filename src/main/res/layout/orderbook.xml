@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/orderbooklayout"
+<TableLayout android:id="@+id/orderbooklayout"
+             xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent"
              android:stretchColumns="*">
@@ -75,8 +75,8 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
-        android:visibility="visible"
-        android:background="@color/ics_blue"/>
+        android:background="@color/ics_blue"
+        android:visibility="visible"/>
 
     <TableRow>
 
@@ -159,15 +159,15 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
-        android:visibility="visible"
-        android:background="@color/ics_blue"/>
+        android:background="@color/ics_blue"
+        android:visibility="visible"/>
 
     <ScrollView
         android:id="@+id/table_scroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/dark">
 
         <TableLayout
             android:id="@+id/orderlist"

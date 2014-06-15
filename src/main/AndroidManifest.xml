@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.veken0m.bitcoinium"
+<manifest package="com.veken0m.bitcoinium"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="59"
           android:versionName="@string/version_name">
 
@@ -48,105 +48,105 @@
         </activity>
         <activity
             android:name=".OrderbookActivity"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/orderbook">
+            android:label="@string/orderbook"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".preferences.OrderbookPreferenceActivity"
-            android:parentActivityName=".OrderbookActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/orderbookPreferences">
+            android:label="@string/orderbookPreferences"
+            android:parentActivityName=".OrderbookActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".OrderbookActivity" />
+                android:value=".OrderbookActivity"/>
         </activity>
         <activity
             android:name=".preferences.GraphPreferenceActivity"
-            android:parentActivityName=".GraphActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/graphPreferences">
+            android:label="@string/graphPreferences"
+            android:parentActivityName=".GraphActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GraphActivity" />
+                android:value=".GraphActivity"/>
         </activity>
         <activity
             android:name=".preferences.MinerPreferenceActivity"
-            android:parentActivityName=".MinerStatsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/minerPreferences">
+            android:label="@string/minerPreferences"
+            android:parentActivityName=".MinerStatsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".BitcoinChartsActivity"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/bitcoinCharts">
+            android:label="@string/bitcoinCharts"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".BitcoinAverageActivity"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/bitcoinAverage">
+            android:label="@string/bitcoinAverage"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".GraphActivity"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/priceGraph">
+            android:label="@string/priceGraph"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".MinerStatsActivity"
-            android:parentActivityName=".MainActivity"
             android:label="@string/minerStats"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".preferences.PreferencesActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/preferences">
+            android:label="@string/preferences"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".preferences.PriceAlertPreferencesActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/priceAlertSettings">
+            android:label="@string/priceAlertSettings"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
         <activity
             android:name=".WebViewerActivity"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:label="@string/webCharts">
+            android:label="@string/webCharts"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainActivity"/>
         </activity>
 
         <receiver
-            android:exported="false"
             android:name=".WidgetProvider"
+            android:exported="false"
             android:label="@string/price_widget_name">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_RECEIVER"/>
@@ -163,8 +163,8 @@
         <service android:name=".WidgetProvider$UpdateService"/>
 
         <receiver
-            android:exported="false"
             android:name=".MinerWidgetProvider"
+            android:exported="false"
             android:label="@string/mining_widget_name">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_RECEIVER"/>

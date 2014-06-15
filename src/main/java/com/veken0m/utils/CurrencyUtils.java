@@ -1,4 +1,3 @@
-
 package com.veken0m.utils;
 
 import com.xeiam.xchange.currency.Currencies;
@@ -13,11 +12,11 @@ public class CurrencyUtils {
 
     public static String getSymbol(String currencyCode) {
 
-        try{
+        try {
             List<String> ignoredCurrencies = Arrays.asList("DKK", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
 
             if (!(ignoredCurrencies.contains(currencyCode))) {
-                if(Constants.CRYPTO_SYMBOLS.containsKey(currencyCode)){
+                if (Constants.CRYPTO_SYMBOLS.containsKey(currencyCode)) {
                     return Constants.CRYPTO_SYMBOLS.get(currencyCode);
                 } else {
                     String symbol = Currency.getInstance(currencyCode).getSymbol();
@@ -27,7 +26,7 @@ public class CurrencyUtils {
             return "";
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }

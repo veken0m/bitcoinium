@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
@@ -69,6 +68,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
      */
     public static class MinerUpdateService extends IntentService {
 
+        public MinerUpdateService() {
+            super("MinerWidgetProvider$MinerUpdateService");
+        }
+
         public void buildUpdate() {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, MinerWidgetProvider.class);
@@ -116,7 +119,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
         public Boolean getMinerInfo(String sMiningPool) {
 
-            if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             HttpClient client = new DefaultHttpClient();
             ObjectMapper mapper = new ObjectMapper();
@@ -135,8 +138,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpResponse response = client.execute(post);
                     DeepBitData data = mapper.readValue(new InputStreamReader(response
-                            .getEntity().getContent(), "UTF-8"),
-                            DeepBitData.class);
+                                    .getEntity().getContent(), "UTF-8"),
+                            DeepBitData.class
+                    );
                     btcBalance = data.getConfirmed_reward();
                     hashRate = data.getHashrate();
 
@@ -147,12 +151,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpGet post = new HttpGet(
                             "https://bitminter.com/api/users" + "?key="
-                                    + pref_apiKey);
+                                    + pref_apiKey
+                    );
 
                     HttpResponse response = client.execute(post);
                     BitMinterData data = mapper.readValue(new InputStreamReader(response
-                            .getEntity().getContent(), "UTF-8"),
-                            BitMinterData.class);
+                                    .getEntity().getContent(), "UTF-8"),
+                            BitMinterData.class
+                    );
                     btcBalance = data.getBalances().getBTC();
                     hashRate = data.getHash_rate();
                     return true;
@@ -162,7 +168,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     String pref_apiKey = prefs.getString("emcKey", "");
                     HttpGet post = new HttpGet(
                             "https://eclipsemc.com/api.php?key=" + pref_apiKey
-                                    + "&action=userstats");
+                                    + "&action=userstats"
+                    );
 
                     HttpResponse response = client.execute(post);
                     EMC data = mapper.readValue(new InputStreamReader(response
@@ -195,7 +202,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpGet post = new HttpGet(
                             "https://mining.bitcoin.cz/accounts/profile/json/"
-                                    + pref_apiKey);
+                                    + pref_apiKey
+                    );
 
                     HttpResponse response = client.execute(post);
                     Slush data = mapper.readValue(new InputStreamReader(response
@@ -216,7 +224,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     HttpResponse response = client.execute(post);
                     FiftyBTC data = mapper.readValue(new InputStreamReader(response
                                     .getEntity().getContent(), "UTF-8"),
-                                    FiftyBTC.class);
+                            FiftyBTC.class
+                    );
                     btcBalance = data.getUser().getConfirmed_rewards();
                     hashRate = data.getUser().getHash_rate();
 
@@ -230,8 +239,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     HttpResponse response = client.execute(post);
                     BTCGuild data = mapper
                             .readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                                    BTCGuild.class);
+                                            .getEntity().getContent(), "UTF-8"),
+                                    BTCGuild.class
+                            );
                     btcBalance = data.getUser().getUnpaid_rewards();
                     hashRate = 0.0f;
 
@@ -247,14 +257,16 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     HttpGet post = new HttpGet(
                             "http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
-                                    + pref_apiKey);
+                                    + pref_apiKey
+                    );
                     HttpResponse response = client.execute(post);
                     mapper.setSerializationInclusion(Include.NON_NULL);
 
                     Eligius data = mapper
                             .readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                                    Eligius.class);
+                                            .getEntity().getContent(), "UTF-8"),
+                                    Eligius.class
+                            );
 
                     hashRate = data.get256().getHashrate() / 1000000;
 
@@ -263,13 +275,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     EligiusBalance data2 = mapper
                             .readValue(new InputStreamReader(client.execute(post)
-                                    .getEntity().getContent(), "UTF-8"),
-                                    EligiusBalance.class);
+                                            .getEntity().getContent(), "UTF-8"),
+                                    EligiusBalance.class
+                            );
 
                     btcBalance = data2.getConfirmed() / 100000000;
 
                     return true;
-                } else if (sMiningPool.equalsIgnoreCase("GHash.IO")){
+                } else if (sMiningPool.equalsIgnoreCase("GHash.IO")) {
 
                     Exchange cexioExchange = ExchangeFactory.INSTANCE.createExchange(CexIOExchange.class.getName());
 
@@ -289,7 +302,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                     GHashIOHashrate hashrate = pollingService.getHashrate();
 
                     CexIOBalance balanceBTC = account.getBalanceBTC();
-                    if(balanceBTC != null)
+                    if (balanceBTC != null)
                         btcBalance = balanceBTC.getAvailable().floatValue();
 
                     hashRate = hashrate.getLast15m().floatValue();
@@ -332,16 +345,12 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                 views.setTextColor(R.id.refreshtime, pref_widgetRefreshSuccessColor);
                 views.setTextColor(R.id.widgetBTCPayout, pref_secondaryWidgetTextColor);
             } else {
-                views.setInt(R.id.minerwidget_layout,"setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
+                views.setInt(R.id.minerwidget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
                 views.setTextColor(R.id.widgetMinerHashrate, getResources().getColor(R.color.widgetMainTextColor));
                 views.setTextColor(R.id.widgetMiner, getResources().getColor(R.color.widgetMainTextColor));
                 views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
                 views.setTextColor(R.id.refreshtime, Color.GREEN);
             }
-        }
-
-        public MinerUpdateService() {
-            super("MinerWidgetProvider$MinerUpdateService");
         }
 
         @Override

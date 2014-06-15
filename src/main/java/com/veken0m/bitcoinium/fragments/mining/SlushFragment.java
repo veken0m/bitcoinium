@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.AlertDialog;
@@ -40,11 +39,30 @@ public class SlushFragment extends Fragment {
     private static String pref_slushKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
     private static Slush data = null;
+    private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Handler mMinerHandler = new Handler();
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch (Exception e) {
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
+            drawMinerUI();
+        }
+    };
 
     public SlushFragment() {
+    }
+
+    private static void readPreferences(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        pref_slushKey = prefs.getString("slushKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
@@ -71,7 +89,8 @@ public class SlushFragment extends Fragment {
 
             HttpGet post = new HttpGet(
                     "https://mining.bitcoin.cz/accounts/profile/json/"
-                            + pref_slushKey);
+                            + pref_slushKey
+            );
             HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
 
@@ -102,27 +121,6 @@ public class SlushFragment extends Fragment {
         gt.start();
     }
 
-    private class MinerStatsThread extends Thread {
-
-        @Override
-        public void run() {
-            getMinerStats();
-            mMinerHandler.post(mGraphView);
-        }
-    }
-
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                safelyDismiss(minerProgressDialog);
-            } catch(Exception e){
-                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-            }
-            drawMinerUI();
-        }
-    };
-
     private void safelyDismiss(ProgressDialog dialog) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -141,7 +139,8 @@ public class SlushFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
-                    });
+                    }
+            );
 
             AlertDialog alert = builder.create();
             alert.show();
@@ -192,11 +191,11 @@ public class SlushFragment extends Fragment {
                 String estimated_reward = "Estimated: "
                         + CurrencyUtils.formatPayout(data.getEstimated_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String confirmed_nmc_reward = "Confirmed: "
-                    + CurrencyUtils.formatPayout(data.getConfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
+                        + CurrencyUtils.formatPayout(data.getConfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String unconfirmed_reward = "Unconfirmed: "
                         + CurrencyUtils.formatPayout(data.getUnconfirmed_reward(), pref_widgetMiningPayoutUnit, "BTC");
                 String unconfirmed_nmc_reward = "Unconfirmed: "
-                    + CurrencyUtils.formatPayout(data.getUnconfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
+                        + CurrencyUtils.formatPayout(data.getUnconfirmed_nmc_reward(), pref_widgetMiningPayoutUnit, "NMC");
                 String username = "Username: " + data.getUsername();
                 // String rating = "Rating: " + data.getRating();
                 // String nmc_send_threshold = "Send Threshold: " +
@@ -305,12 +304,13 @@ public class SlushFragment extends Fragment {
         }
     }
 
-    private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private class MinerStatsThread extends Thread {
 
-        pref_slushKey = prefs.getString("slushKey", "");
-        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
+        @Override
+        public void run() {
+            getMinerStats();
+            mMinerHandler.post(mGraphView);
+        }
     }
 
 }

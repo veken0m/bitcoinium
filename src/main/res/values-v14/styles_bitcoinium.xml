@@ -29,8 +29,8 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_bitcoinium</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_bitcoinium</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Bitcoinium</item>
-        
-                <!-- Light.DarkActionBar specific -->
+
+        <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Bitcoinium.Widget</item>
 
     </style>
@@ -46,7 +46,7 @@
         <item name="android:background">@drawable/ab_transparent_bitcoinium</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Bitcoinium</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Bitcoinium.Widget" parent="@style/Theme.AppCompat">
         <item name="android:popupMenuStyle">@style/PopupMenu.Bitcoinium</item>

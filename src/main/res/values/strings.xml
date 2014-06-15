@@ -4,7 +4,6 @@
     <!-- Widget Strings -->
     <string name="price_widget_name">Bitcoinium Price</string>
     <string name="mining_widget_name">Bitcoinium Mining</string>
-    <string name="widgetCurrency">Widget Currency</string>
     <string name="pref_pickcurrency">Pick a Currency Pair</string>
     <string name="pref_pickexchange">Pick an Exchange</string>
     <string name="createWidget">Create Widget</string>
@@ -12,7 +11,6 @@
     <!-- Common -->
     <string name="about">About</string>
     <string name="aboutBitcoinium">About Bitcoinium</string>
-    <string name="accept">Accept</string>
     <string name="amount">Amount</string>
     <string name="ask">Ask</string>
     <string name="asks">Asks</string>
@@ -20,7 +18,6 @@
     <string name="bid">Bid</string>
     <string name="bids">Bids</string>
     <string name="currency">Currency</string>
-    <string name="currency_pair">Pair</string>
     <string name="donations">Donations</string>
     <string name="emailText">Email</string>
     <string name="exchange">Exchange</string>
@@ -94,7 +91,7 @@
     <string name="pref_default_currency_summary">Default currency for OrderBook and Price Graph</string>
     <string name="pref_default_exchange_summary">Automatically selected when Bitcoinium opens</string>
     <string name="pref_enable_alert_summary">Enable notifications when price alert is tripped (widget needs to be active)</string>
-    <string name="pref_enable_alert_title">Enable Price Alert</string>
+    <string name="pref_enable_alert_title">Enable Price Alerts</string>
     <string name="pref_exchange_summary">Select the exchange used for the widget</string>
     <string name="pref_google_analytics_summary">Provide anonymous data in order to help the developers improve Bitcoinium</string>
     <string name="pref_graph_scale_summary">When the price graph is scrolled, max and min values will be readjusted to maximize viewing</string>
@@ -107,12 +104,12 @@
     <string name="pref_miner_info_summary">Required to access your miner\'s information</string>
     <string name="pref_miner_widget_alert_summary">Use Price Alert settings to enable sound and vibration during notification</string>
     <string name="pref_notification_ticker_enable_summary">Enables use of notification drawer tickers</string>
-    <string name="pref_notification_ticker_summary">Enable tickers in the notification drawer \n*Note*: Respective widget needs to be active</string>
+    <string name="pref_notification_ticker_summary">Enable tickers in the notification drawer</string>
     <string name="pref_orderbook_currency_symbol_summary">Display currency symbols in the orderbook. \nDisable if text does not fit.</string>
     <string name="pref_orderbook_limit_summary">Limit values printed on screen to improve performance</string>
     <string name="pref_orderbook_limit_title">OrderBook list length limit</string>
     <string name="pref_payout_unit_summary">Select the units used to display payout</string>
-    <string name="pref_price_alert_summary">Notifies when price crosses threshold \n*Note*: Respective widget needs to be active</string>
+    <string name="pref_price_alert_summary">Notifies when price crosses the alert limit</string>
     <string name="pref_price_alert_title">Price Alert Notifications</string>
     <string name="pref_price_widget_title">Exchange and Currency</string>
     <string name="pref_rate_bitcoinium_summary">Ratings, reviews and feedback are greatly appreciated!</string>
@@ -132,6 +129,9 @@
     <string name="pref_alert_over_summary">Notification will occur price goes over this value</string>
     <string name="pref_alert_under_summary">Notification will occur if price goes below this value</string>
 
+    <string name="pref_requires_widget">*Note*: This feature requires the price widget associated with the exchange and currency pair to be active</string>
+
+
     <!-- Activity Labels -->
     <string name="orderbookPreferences">Orderbook Preferences</string>
     <string name="graphPreferences">Graph Preferences</string>
@@ -142,7 +142,7 @@
     <string name="priceAlertSettings">Price Alert Settings</string>
     <string name="webCharts">Web Charts</string>
 
-    <string name="alarmMode">Alarm Mode</string>
+    <string name="alarmMode">Alarm Clock Mode</string>
     <string name="msgEnterUnscaledValues">Please enter UNSCALED values\nFor example, enter BTC not mBTC</string>
     <string name="alertSettings">Alert Limits</string>
     <string name="displayCurrencySymbols">Display Currency Symbols</string>
@@ -200,7 +200,6 @@
     <string name="updatedAt">Updated @\u0020</string>
     <string name="volume">Volume:\u0020</string>
 
-
     <!-- Miner Stats -->
     <string name="currentDifficulty">Current Difficulty: %1$s</string>
     <string name="estimatedNextDifficulty">Estimated Next Difficulty: %1$s</string>
@@ -210,16 +209,6 @@
     <!-- Color Picker -->
     <string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on Color to apply</string>
-    <string name="pref_category">Category</string>
-    <string name="color1_title">Color 1</string>
-    <string name="color1_summary">black color by default, set by reference</string>
-    <string name="color2_title">Color 2</string>
-    <string name="color2_summary">not persistent color\nalpha slider added via code</string>
-    <string name="color3_title">Color 3</string>
-    <string name="color3_summary">picker with alpha slider</string>
-    <string name="color4_title">Color 4</string>
-    <string name="color4_summary">color set with HEX code in xml</string>
-
 
     <!-- Translation not required below this line -->
 

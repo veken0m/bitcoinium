@@ -14,7 +14,4 @@
 
     <color name="light_tableRow">#2D2D2D</color>
 
-    <integer name="COLOR_BLACK">0xff000000</integer>
-    <integer name="COLOR_GREEN">0xff00ff00</integer>
-
 </resources>   

@@ -6,12 +6,12 @@
     <item
         android:id="@+id/action_preferences"
         android:icon="@drawable/perm_group_system_tools"
-        app:showAsAction="ifRoom"
-        android:title="@string/settings"/>
+        android:title="@string/settings"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/perm_group_sync_settings"
-        app:showAsAction="ifRoom"
-        android:title="@string/refresh"/>
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom"/>
 
 </menu>

@@ -184,7 +184,7 @@
     </string-array>
 
     <string-array name="bitcoincentral">
-        <item>BitBay</item>
+        <item>Bitcoin-Central</item>
         <item>com.xeiam.xchange.btccentral.BTCCentralExchange</item>
         <item>BTC/EUR</item>
         <item>bitcoincentral</item>

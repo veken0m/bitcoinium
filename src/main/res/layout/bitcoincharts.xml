@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/bitcoincharts_layout"
+<TableLayout android:id="@+id/bitcoincharts_layout"
+             xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent">
 
@@ -14,10 +14,10 @@
 
         <TextView
             android:id="@+id/currency_header"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             android:text="@string/currencyPairFilter"/>
 
         <Spinner
@@ -105,18 +105,18 @@
     </TableRow>
 
     <View
+        android:id="@+id/separator"
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
-        android:id="@+id/separator"
-        android:visibility="visible"
-        android:background="#33B5E5"/>
+        android:background="#33B5E5"
+        android:visibility="visible"/>
 
     <ScrollView
         android:id="@+id/bitcoincharts_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/dark">
 
         <TableLayout
             android:id="@+id/bitcoincharts_list"

@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.Activity;
@@ -42,14 +41,34 @@ public class GHashIOFragment extends Fragment {
     private static String pref_ghashioAPIKey = "";
     private static String pref_ghashioSecretKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
-    private static GHashIOHashrate hashrate  = null;
-    private static Map<String, GHashIOWorker> workers  = null;
+    private static GHashIOHashrate hashrate = null;
+    private static Map<String, GHashIOWorker> workers = null;
     private static CexIOBalanceInfo account = null;
+    private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Handler mMinerHandler = new Handler();
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch (Exception e) {
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
+            drawMinerUI();
+        }
+    };
 
     public GHashIOFragment() {
+    }
+
+    private static void readPreferences(Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        pref_ghashioUsername = prefs.getString("ghashioUsername", "");
+        pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
+        pref_ghashioSecretKey = prefs.getString("ghashioSecretKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
@@ -85,9 +104,9 @@ public class GHashIOFragment extends Fragment {
             account = pollingService.getCexIOAccountInfo();
             hashrate = pollingService.getHashrate();
 
-            try{
+            try {
                 workers = pollingService.getWorkers();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 // no workers... suppress
             }
@@ -111,27 +130,6 @@ public class GHashIOFragment extends Fragment {
         gt.start();
     }
 
-    private class MinerStatsThread extends Thread {
-
-        @Override
-        public void run() {
-            getMinerStats();
-            mMinerHandler.post(mGraphView);
-        }
-    }
-
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                safelyDismiss(minerProgressDialog);
-            } catch(Exception e){
-                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-            }
-            drawMinerUI();
-        }
-    };
-
     private void safelyDismiss(ProgressDialog dialog) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -150,7 +148,8 @@ public class GHashIOFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
-                    });
+                    }
+            );
 
             AlertDialog alert = builder.create();
             alert.show();
@@ -197,25 +196,25 @@ public class GHashIOFragment extends Fragment {
 
                 float hashRate = hashrate.getLast15m().floatValue();
 
-                if(balanceBTC != null) {
+                if (balanceBTC != null) {
                     RewardsBTC += CurrencyUtils.formatPayout(account.getBalanceBTC().getAvailable().floatValue(), pref_widgetMiningPayoutUnit, "BTC");
                     tvBTCRewards.setText(RewardsBTC);
                     tr1.addView(tvBTCRewards);
                     t1.addView(tr1);
                 }
-                if(balanceLTC != null) {
+                if (balanceLTC != null) {
                     RewardsLTC += CurrencyUtils.formatPayout(account.getBalanceLTC().getAvailable().floatValue(), pref_widgetMiningPayoutUnit, "LTC");
                     tvLTCRewards.setText(RewardsLTC);
                     tr2.addView(tvLTCRewards);
                     t1.addView(tr2);
                 }
-                if(balanceGHS != null) {
+                if (balanceGHS != null) {
                     RewardsGHS += CurrencyUtils.formatPayout(account.getBalanceGHS().getAvailable().floatValue(), pref_widgetMiningPayoutUnit, "GHS");
                     tvGHSRewards.setText(RewardsGHS);
                     tr4.addView(tvGHSRewards);
                     t1.addView(tr4);
                 }
-                if(balanceNMC != null) {
+                if (balanceNMC != null) {
                     RewardsNMC += CurrencyUtils.formatPayout(account.getBalanceNMC().getAvailable().floatValue(), pref_widgetMiningPayoutUnit, "NMC");
                     tvNMCRewards.setText(RewardsNMC);
                     tr5.addView(tvNMCRewards);
@@ -226,7 +225,7 @@ public class GHashIOFragment extends Fragment {
                 tr3.addView(tvTotalHashrate);
                 t1.addView(tr3);
 
-                if(workers != null) {
+                if (workers != null) {
                     // End of Non-worker data
                     for (Map.Entry<String, GHashIOWorker> worker : workers.entrySet()) {
                         TableRow tr8 = new TableRow(activity);
@@ -271,13 +270,13 @@ public class GHashIOFragment extends Fragment {
         }
     }
 
-    private static void readPreferences(Context context) {
+    private class MinerStatsThread extends Thread {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        pref_ghashioUsername = prefs.getString("ghashioUsername", "");
-        pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
-        pref_ghashioSecretKey = prefs.getString("ghashioSecretKey", "");
-        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
+        @Override
+        public void run() {
+            getMinerStats();
+            mMinerHandler.post(mGraphView);
+        }
     }
 
 }

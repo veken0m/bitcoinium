@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/mainLayout"
+<LinearLayout android:id="@+id/mainLayout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:layout_weight="1"
@@ -11,9 +11,9 @@
         android:id="@+id/widgetrefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/refreshButton"/>
     <!--  android:drawableLeft="@drawable/bitcoiniumlogo" -->
 
@@ -21,54 +21,54 @@
         android:id="@+id/orderbook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/orderbookButton"/>
 
     <Button
         android:id="@+id/bitcoincharts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/bitcoinChartsButton"/>
 
     <Button
         android:id="@+id/bitcoinaverage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/bitcoinAverageButton"/>
 
     <Button
         android:id="@+id/minerstats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/minerstatsButton"/>
 
     <Button
         android:id="@+id/displaygraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/graphButton"/>
 
     <Button
         android:id="@+id/marketdepth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:layout_margin="5dp"
         android:text="@string/exgraphButton"/>
 
 </LinearLayout>

@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.bitminter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

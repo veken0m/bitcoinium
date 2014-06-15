@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.exchanges;
 
 import android.content.Context;
@@ -15,7 +14,7 @@ public class Exchange {
     public Exchange(Context context, String exchangeName) {
 
         // ToLower and Remove Exchange to keep compatibility with previous indexing system
-        exchangeName = exchangeName.toLowerCase().replace("exchange","").replaceAll("[ .-]","");
+        exchangeName = exchangeName.toLowerCase().replace("exchange", "").replaceAll("[ .-]", "");
         int resId = context.getResources().getIdentifier(exchangeName, "array", context.getPackageName());
         String[] exchangeProperties = context.getResources().getStringArray(resId);
 
@@ -55,9 +54,8 @@ public class Exchange {
         int resId = context.getResources().getIdentifier("exchangeID", "array", context.getPackageName());
         String[] exchangesSupportTicker = context.getResources().getStringArray(resId);
 
-        for(String exchangeName:exchangesSupportTicker)
-        {
-            if(exchangeName.equals(identifier))
+        for (String exchangeName : exchangesSupportTicker) {
+            if (exchangeName.equals(identifier))
                 return true;
         }
         return false;
@@ -68,9 +66,8 @@ public class Exchange {
         int resId = context.getResources().getIdentifier("exchangesTrades", "array", context.getPackageName());
         String[] exchangesSupportGraph = context.getResources().getStringArray(resId);
 
-        for(String exchangeName:exchangesSupportGraph)
-        {
-            if(exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
+        for (String exchangeName : exchangesSupportGraph) {
+            if (exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
                 return true;
         }
         return false;
@@ -78,12 +75,11 @@ public class Exchange {
 
     public Boolean supportsOrderbook() {
 
-        int resId = context.getResources().getIdentifier("exchangesOrderbook","array", context.getPackageName());
+        int resId = context.getResources().getIdentifier("exchangesOrderbook", "array", context.getPackageName());
         String[] exchangesSupportOrderbook = context.getResources().getStringArray(resId);
 
-        for(String exchangeName:exchangesSupportOrderbook)
-        {
-            if(exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
+        for (String exchangeName : exchangesSupportOrderbook) {
+            if (exchangeName.replaceAll("[ .-]", "").equalsIgnoreCase(identifier))
                 return true;
         }
         return false;

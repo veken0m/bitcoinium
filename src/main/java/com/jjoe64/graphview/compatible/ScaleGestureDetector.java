@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview.compatible;
 
 import android.content.Context;
@@ -13,15 +12,10 @@ import java.lang.reflect.Method;
  * License (LGPL) http://www.gnu.org/licenses/lgpl.html
  */
 public class ScaleGestureDetector {
-    public interface SimpleOnScaleGestureListener {
-        boolean onScale(ScaleGestureDetector detector);
-    }
-
     private Object realScaleGestureDetector;
     private Method method_getScaleFactor;
     private Method method_isInProgress;
     private Method method_onTouchEvent;
-
     /**
      * @param context
      * @param simpleOnScaleGestureListener
@@ -90,5 +84,9 @@ public class ScaleGestureDetector {
                 e.printStackTrace();
             }
         }
+    }
+
+    public interface SimpleOnScaleGestureListener {
+        boolean onScale(ScaleGestureDetector detector);
     }
 }

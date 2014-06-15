@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.app.Dialog;
@@ -47,10 +46,6 @@ import java.util.List;
 public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener {
 
     private final static Handler mOrderHandler = new Handler();
-    private Dialog dialog = null;
-    private List<LimitOrder> listAsks = null;
-    private List<LimitOrder> listBids = null;
-
     /**
      * List of preference variables
      */
@@ -60,12 +55,45 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static Boolean pref_enableHighlight = true;
     private static Boolean pref_showCurrencySymbol = true;
     private static SharedPreferences prefs = null;
-
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean threadRunning = false;
+    private final Runnable mOrderView = new Runnable() {
+        @Override
+        public void run() {
+            drawOrderbookUI();
+        }
+    };
+    private final Runnable mError = new Runnable() {
+        @Override
+        public void run() {
+            errorOccured();
+        }
+    };
+    private Dialog dialog = null;
+    private List<LimitOrder> listAsks = null;
+    private List<LimitOrder> listBids = null;
+
+    private static void readPreferences() {
+
+        pref_enableHighlight = prefs.getBoolean("highlightPref", true);
+        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
+        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
+        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+        pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
+                true);
+        try {
+            pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref", "100"));
+        } catch (Exception e) {
+            pref_orderbookLimiter = 100;
+            // If preference is not set a valid integer set to "100"
+            Editor editor = prefs.edit();
+            editor.putString("orderbookLimiterPref", "100");
+            editor.commit();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +113,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         else
             exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
-        if(!exchange.supportsOrderbook())
+        if (!exchange.supportsOrderbook())
             exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
 
         readPreferences();
@@ -163,10 +191,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
             // Limit OrderbookActivity orders drawn to improve performance
             if (pref_orderbookLimiter != 0) {
-                if(listAsks.size() > pref_orderbookLimiter)
+                if (listAsks.size() > pref_orderbookLimiter)
                     listAsks = listAsks.subList(0, pref_orderbookLimiter);
 
-                if(listBids.size() > pref_orderbookLimiter)
+                if (listBids.size() > pref_orderbookLimiter)
                     listBids = listBids.subList(0, pref_orderbookLimiter);
             }
             return true;
@@ -199,14 +227,14 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             // if numbers are too small adjust the units. Use first bid to determine the units
             int priceUnitIndex = Utils.getUnitIndex(listAsks.get(0).getLimitPrice().floatValue());
             String sCounterCurrency = currencyPair.counterSymbol;
-            if(priceUnitIndex >= 0)
+            if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
             priceUnitIndex++; // increment to use a scale factor
 
             TextView tvAskAmountHeader = (TextView) findViewById(R.id.askAmountHeader);
-            TextView tvAskPriceHeader  = (TextView) findViewById(R.id.askPriceHeader);
-            TextView tvBidPriceHeader  = (TextView) findViewById(R.id.bidPriceHeader);
-            TextView tvBidAmountHeader  = (TextView) findViewById(R.id.bidAmountHeader);
+            TextView tvAskPriceHeader = (TextView) findViewById(R.id.askPriceHeader);
+            TextView tvBidPriceHeader = (TextView) findViewById(R.id.bidPriceHeader);
+            TextView tvBidAmountHeader = (TextView) findViewById(R.id.bidAmountHeader);
 
             tvAskAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
             tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
@@ -226,28 +254,28 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
 
-                if (bidSize >= i){
+                if (bidSize > i) {
                     LimitOrder limitorderBid = listBids.get(i);
                     float bidPrice = limitorderBid.getLimitPrice().floatValue();
                     float bidAmount = limitorderBid.getTradableAmount().floatValue();
                     tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
                     tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
 
-                    if(pref_enableHighlight) {
+                    if (pref_enableHighlight) {
                         int bidTextColor = depthColor(bidAmount);
                         tvBidAmount.setTextColor(bidTextColor);
                         tvBidPrice.setTextColor(bidTextColor);
                     }
                 }
 
-                if (askSize >= i){
+                if (askSize > i) {
                     LimitOrder limitorderAsk = listAsks.get(i);
                     float askPrice = limitorderAsk.getLimitPrice().floatValue();
                     float askAmount = limitorderAsk.getTradableAmount().floatValue();
                     tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
                     tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
 
-                    if(pref_enableHighlight) {
+                    if (pref_enableHighlight) {
                         int askTextColor = depthColor(askAmount);
                         tvAskAmount.setTextColor(askTextColor);
                         tvAskPrice.setTextColor(askTextColor);
@@ -275,30 +303,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
-            if(!threadRunning) // if thread running don't start a another one
+            if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
         } else {
             notConnected(R.id.bitcoincharts_loadSpinner);
-        }
-    }
-
-    private class OrderbookThread extends Thread {
-
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
-                }
-            });
-
-            threadRunning = true;
-            if (getOrderBook())
-                mOrderHandler.post(mOrderView);
-            else
-                mOrderHandler.post(mError);
-            threadRunning = false;
         }
     }
 
@@ -308,11 +316,11 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         CurrencyPair prevCurrencyPair = currencyPair;
         String prevExchangeName = exchangeName;
 
-        switch (parent.getId()){
+        switch (parent.getId()) {
             case R.id.orderbook_exchange_spinner:
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
-                if (exchangeChanged){
+                if (exchangeChanged) {
                     exchange = new Exchange(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     populateCurrencyDropdown();
@@ -332,20 +340,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         // Do nothing...
     }
 
-    private final Runnable mOrderView = new Runnable() {
-        @Override
-        public void run() {
-            drawOrderbookUI();
-        }
-    };
-
-    private final Runnable mError = new Runnable() {
-        @Override
-        public void run() {
-            errorOccured();
-        }
-    };
-
     private void errorOccured() {
 
         removeLoadingSpinner(R.id.orderbook_loadSpinner);
@@ -358,7 +352,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                         res.getString(R.string.orderbook), exchange.getExchangeName());
                 dialog = Utils.errorDialog(this, text);
             }
-        } catch (WindowManager.BadTokenException e){
+        } catch (WindowManager.BadTokenException e) {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
@@ -397,7 +391,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        if(exchangeChanged){
+        if (exchangeChanged) {
             int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
             spinner.setSelection(index);
         }
@@ -410,25 +404,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             return Color.RED;
         else
             return Color.YELLOW;
-    }
-
-    private static void readPreferences() {
-
-        pref_enableHighlight = prefs.getBoolean("highlightPref", true);
-        pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
-        pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
-        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
-        pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
-                true);
-        try {
-            pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref", "100"));
-        } catch (Exception e) {
-            pref_orderbookLimiter = 100;
-            // If preference is not set a valid integer set to "100"
-            Editor editor = prefs.edit();
-            editor.putString("orderbookLimiterPref", "100");
-            editor.commit();
-        }
     }
 
     @Override
@@ -460,6 +435,26 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     public void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+    }
+
+    private class OrderbookThread extends Thread {
+
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
+                }
+            });
+
+            threadRunning = true;
+            if (getOrderBook())
+                mOrderHandler.post(mOrderView);
+            else
+                mOrderHandler.post(mError);
+            threadRunning = false;
+        }
     }
 
 }

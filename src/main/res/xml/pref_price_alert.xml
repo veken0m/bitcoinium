@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/priceAlerts">
+    <PreferenceCategory android:title="@string/general">
+        <Preference android:summary="@string/pref_requires_widget"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmPref"
@@ -23,7 +24,7 @@
             android:ringtoneType="ringtone|alarm|notification"
             android:showDefault="true"
             android:summary="@string/pref_alert_sound_pick_summary"
-            android:title="@string/selectSound" />
+            android:title="@string/selectSound"/>
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -32,8 +33,8 @@
             android:title="@string/alarmMode"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/alertSettings"
-        android:key="alertSettingsPref">
+        android:key="alertSettingsPref"
+        android:title="@string/alertSettings">
         <Preference android:summary="@string/msgEnterUnscaledValues"/>
     </PreferenceCategory>
 

@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.deepbit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,10 +10,10 @@ public class DeepBitData {
 
     private final float confirmed_reward;
     private final float hashrate;
-    @JsonIgnore
-    private boolean ipa;
     private final float payout_history;
     private final Workers workers;
+    @JsonIgnore
+    private boolean ipa;
 
     public DeepBitData(
             @JsonProperty("confirmed_reward")

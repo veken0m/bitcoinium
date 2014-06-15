@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.content.Context;
@@ -47,6 +46,7 @@ import java.io.InputStreamReader;
 
 public class MinerStatsActivity extends ActionBarActivity {
 
+    private static final int MIN_KEY_LENGTH = 20;
     private static String pref_emcKey = null;
     private static String pref_slushKey = null;
     private static String pref_bitminterKey = null;
@@ -55,11 +55,22 @@ public class MinerStatsActivity extends ActionBarActivity {
     private static String pref_btcguildKey = null;
     private static String pref_eligiusKey = null;
     private static String pref_ghashioAPIKey = null;
-
-    private static final int MIN_KEY_LENGTH = 20;
-
     private ActionBar actionbar = null;
     private Bundle extras = null;
+
+    private static void readPreferences(Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        pref_emcKey = prefs.getString("emcKey", "");
+        pref_slushKey = prefs.getString("slushKey", "");
+        pref_bitminterKey = prefs.getString("bitminterKey", "");
+        pref_deepbitKey = prefs.getString("deepbitKey", "");
+        pref_50BTCKey = prefs.getString("50BTCKey", "");
+        pref_btcguildKey = prefs.getString("btcguildKey", "");
+        pref_eligiusKey = prefs.getString("eligiusKey", "");
+        pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
+    }
 
     /**
      * Called when the activity is first created.
@@ -165,7 +176,6 @@ public class MinerStatsActivity extends ActionBarActivity {
         actionbar.addTab(tab);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -188,29 +198,6 @@ public class MinerStatsActivity extends ActionBarActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.minerstats);
-    }
-
-    class MyTabsListener implements ActionBar.TabListener {
-        public final Fragment fragment;
-
-        public MyTabsListener(Fragment fragment) {
-            this.fragment = fragment;
-        }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-        }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            ft.replace(R.id.table_fragment, fragment);
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            ft.remove(fragment);
-        }
-
     }
 
     @Override
@@ -236,6 +223,42 @@ public class MinerStatsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
+            EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
+    class MyTabsListener implements ActionBar.TabListener {
+        public final Fragment fragment;
+
+        public MyTabsListener(Fragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            ft.replace(R.id.table_fragment, fragment);
+        }
+
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+            ft.remove(fragment);
+        }
+
     }
 
     private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean> {
@@ -329,33 +352,6 @@ public class MinerStatsActivity extends ActionBarActivity {
             }
         }
 
-    }
-
-    private static void readPreferences(Context context) {
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        pref_emcKey = prefs.getString("emcKey", "");
-        pref_slushKey = prefs.getString("slushKey", "");
-        pref_bitminterKey = prefs.getString("bitminterKey", "");
-        pref_deepbitKey = prefs.getString("deepbitKey", "");
-        pref_50BTCKey = prefs.getString("50BTCKey", "");
-        pref_btcguildKey = prefs.getString("btcguildKey", "");
-        pref_eligiusKey = prefs.getString("eligiusKey", "");
-        pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

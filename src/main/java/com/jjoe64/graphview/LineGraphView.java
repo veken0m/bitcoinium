@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview;
 
 import android.content.Context;

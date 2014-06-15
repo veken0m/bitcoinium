@@ -2,8 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/pref_price_widget_title"
-        android:key="priceWidgetPreferences">
+        android:key="priceWidgetPreferences"
+        android:title="@string/pref_price_widget_title">
         <ListPreference
             android:defaultValue="bitstamp"
             android:entries="@array/exchanges"

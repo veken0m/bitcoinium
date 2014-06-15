@@ -70,7 +70,7 @@ dependencies {
     compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT')
     compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-    compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compile 'javax.ws.rs:jsr311-api:1.1.1'
     compile("org.slf4j:slf4j-android:$slf4jVersion")
     compile("org.slf4j:slf4j-api:$slf4jVersion")

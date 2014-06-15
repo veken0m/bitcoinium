@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.Activity;
@@ -40,11 +39,30 @@ public class FiftyBTCFragment extends Fragment {
     private static String pref_50BTCKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
     private static FiftyBTC data = null;
+    private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Handler mMinerHandler = new Handler();
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch (Exception e) {
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
+            drawMinerUI();
+        }
+    };
 
     public FiftyBTCFragment() {
+    }
+
+    private static void readPreferences(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        pref_50BTCKey = prefs.getString("50BTCKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
@@ -98,27 +116,6 @@ public class FiftyBTCFragment extends Fragment {
         gt.start();
     }
 
-    private class MinerStatsThread extends Thread {
-
-        @Override
-        public void run() {
-            getMinerStats();
-            mMinerHandler.post(mGraphView);
-        }
-    }
-
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                safelyDismiss(minerProgressDialog);
-            } catch(Exception e){
-                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-            }
-            drawMinerUI();
-        }
-    };
-
     private void safelyDismiss(ProgressDialog dialog) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -135,7 +132,8 @@ public class FiftyBTCFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
-                    });
+                    }
+            );
 
             AlertDialog alert = builder.create();
             alert.show();
@@ -223,12 +221,13 @@ public class FiftyBTCFragment extends Fragment {
         }
     }
 
-    private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private class MinerStatsThread extends Thread {
 
-        pref_50BTCKey = prefs.getString("50BTCKey", "");
-        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
+        @Override
+        public void run() {
+            getMinerStats();
+            mMinerHandler.post(mGraphView);
+        }
     }
 
 }

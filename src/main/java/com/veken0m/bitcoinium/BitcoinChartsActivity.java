@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.content.Intent;
@@ -33,12 +32,11 @@ import java.util.Comparator;
 public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener {
 
 
-    private BitcoinChartsTicker[] marketData = null;
+    private final static Handler mOrderHandler = new Handler();
     private final Runnable mBitcoinChartsView;
     private final Runnable mError;
+    private BitcoinChartsTicker[] marketData = null;
     private String currencyFilter;
-
-    private final static Handler mOrderHandler = new Handler();
 
     public BitcoinChartsActivity() {
         currencyFilter = "SHOW ALL";
@@ -215,6 +213,29 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
             notConnected(R.id.bitcoincharts_loadSpinner);
     }
 
+    private void errorOccured() {
+
+        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+            }
+        } catch (WindowManager.BadTokenException e) {
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+        }
+    }
+
+    private void failedToDrawUI() {
+
+        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
+        if (dialog == null || !dialog.isShowing()) {
+            // Display error Dialog
+            dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
+        }
+    }
+
     private class bitcoinChartsThread extends Thread {
 
         @Override
@@ -230,29 +251,6 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
                 mOrderHandler.post(mBitcoinChartsView);
             else
                 mOrderHandler.post(mError);
-        }
-    }
-
-    private void errorOccured() {
-
-        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
-        try {
-            if (dialog == null || !dialog.isShowing()) {
-                // Display error Dialog
-                Resources res = getResources();
-                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
-            }
-        } catch (WindowManager.BadTokenException e){
-            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-        }
-    }
-
-    private void failedToDrawUI() {
-
-        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
-        if (dialog == null || !dialog.isShowing()) {
-            // Display error Dialog
-            dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
         }
     }
 }

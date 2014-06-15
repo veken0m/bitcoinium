@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.fragments;
 
 import android.app.Activity;
@@ -73,7 +72,7 @@ public class HomeMenuFragment extends Fragment {
                     // Do nothing
                 }
 
-                if(exchange != null && exchange.supportsTrades())
+                if (exchange != null && exchange.supportsTrades())
                     graphActivity.putExtra("exchange", exchange.getIdentifier());
                 else
                     graphActivity.removeExtra("exchange");
@@ -96,7 +95,7 @@ public class HomeMenuFragment extends Fragment {
                     // Do nothing
                 }
 
-                if(exchange != null && exchange.supportsOrderbook())
+                if (exchange != null && exchange.supportsOrderbook())
                     orderbookActivity.putExtra("exchange", exchange.getIdentifier());
                 else
                     orderbookActivity.removeExtra("exchange");

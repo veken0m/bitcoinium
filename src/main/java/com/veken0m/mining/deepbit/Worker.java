@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.deepbit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

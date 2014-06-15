@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.bitminter;
 
 import java.util.List;

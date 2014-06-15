@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.btcguild;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;

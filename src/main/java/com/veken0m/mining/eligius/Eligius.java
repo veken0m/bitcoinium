@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.eligius;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

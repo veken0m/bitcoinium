@@ -11,10 +11,10 @@
             android:title="@string/defaultExchange"/>
 
         <PreferenceScreen
+            android:key="defaultCurrencyPref"
             android:summary="@string/pref_default_currency_summary"
-            android:title="@string/defaultExchangeCurrency"
-            android:key="defaultCurrencyPref">
-        <!-- Dynamically generated -->
+            android:title="@string/defaultExchangeCurrency">
+            <!-- Dynamically generated -->
         </PreferenceScreen>
     </PreferenceCategory>
 

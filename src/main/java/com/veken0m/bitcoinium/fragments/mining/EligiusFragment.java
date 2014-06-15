@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.fragments.mining;
 
 import android.app.AlertDialog;
@@ -43,11 +42,30 @@ public class EligiusFragment extends Fragment {
     private static int pref_widgetMiningPayoutUnit = 0;
     private static Eligius data = null;
     private static EligiusBalance balanceData = null;
+    private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Handler mMinerHandler = new Handler();
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                safelyDismiss(minerProgressDialog);
+            } catch (Exception e) {
+                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+            }
+            drawMinerUI();
+        }
+    };
 
     public EligiusFragment() {
+    }
+
+    private static void readPreferences(Context context) {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        pref_eligiusKey = prefs.getString("eligiusKey", "");
+        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
@@ -90,8 +108,9 @@ public class EligiusFragment extends Fragment {
 
             balanceData = mapper
                     .readValue(new InputStreamReader(client.execute(post)
-                            .getEntity().getContent(), "UTF-8"),
-                            EligiusBalance.class);
+                                    .getEntity().getContent(), "UTF-8"),
+                            EligiusBalance.class
+                    );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,27 +131,6 @@ public class EligiusFragment extends Fragment {
         gt.start();
     }
 
-    private class MinerStatsThread extends Thread {
-
-        @Override
-        public void run() {
-            getMinerStats();
-            mMinerHandler.post(mGraphView);
-        }
-    }
-
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                safelyDismiss(minerProgressDialog);
-            } catch(Exception e){
-                // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-            }
-            drawMinerUI();
-        }
-    };
-
     private void safelyDismiss(ProgressDialog dialog) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -151,7 +149,8 @@ public class EligiusFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
-                    });
+                    }
+            );
 
             AlertDialog alert = builder.create();
             alert.show();
@@ -253,12 +252,13 @@ public class EligiusFragment extends Fragment {
         }
     }
 
-    private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private class MinerStatsThread extends Thread {
 
-        pref_eligiusKey = prefs.getString("eligiusKey", "");
-        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
+        @Override
+        public void run() {
+            getMinerStats();
+            mMinerHandler.post(mGraphView);
+        }
     }
 
 }

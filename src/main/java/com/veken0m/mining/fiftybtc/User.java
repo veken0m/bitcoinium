@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.fiftybtc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

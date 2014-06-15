@@ -12,9 +12,6 @@ import android.widget.TableLayout;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Utils;
 
-/**
- * Created by Michael on 18/02/14.
-*/
 public class BaseActivity extends ActionBarActivity {
 
     Dialog dialog = null;
@@ -22,7 +19,7 @@ public class BaseActivity extends ActionBarActivity {
     void removeLoadingSpinner(int spinnerId) {
 
         LinearLayout loadingSpinner = (LinearLayout) findViewById(spinnerId);
-        if(loadingSpinner != null) loadingSpinner.setVisibility(View.GONE);
+        if (loadingSpinner != null) loadingSpinner.setVisibility(View.GONE);
     }
 
     void startLoading(int tableId, int spinnerId) {
@@ -31,7 +28,7 @@ public class BaseActivity extends ActionBarActivity {
         if (t1 != null) t1.removeAllViews();
 
         LinearLayout loadingSpinner = (LinearLayout) findViewById(spinnerId);
-        if(loadingSpinner != null) loadingSpinner.setVisibility(View.VISIBLE);
+        if (loadingSpinner != null) loadingSpinner.setVisibility(View.VISIBLE);
     }
 
     void notConnected(int spinnerId) {

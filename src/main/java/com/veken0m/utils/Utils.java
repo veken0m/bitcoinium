@@ -1,4 +1,3 @@
-
 package com.veken0m.utils;
 
 import android.app.AlertDialog;
@@ -27,18 +26,18 @@ public class Utils {
 
     public static final LayoutParams adjustParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
-    public static String formatDecimal(float valueToFormat,int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings) {
+    public static String formatDecimal(float valueToFormat, int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings) {
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
         // Remove grouping if commas cause errors when parsing to double/float
         numberFormat.setGroupingUsed(useGroupings);
 
-        if(scaleFactor != 0)
-            valueToFormat *= Math.pow(1000,scaleFactor);
+        if (scaleFactor != 0)
+            valueToFormat *= Math.pow(1000, scaleFactor);
 
         // If too large, remove a digits behind decimal
         float tempAmount = valueToFormat;
-        while(tempAmount >= 1000 && numberOfDecimalPlaces >= 0){
+        while (tempAmount >= 1000 && numberOfDecimalPlaces >= 0) {
             numberOfDecimalPlaces--;
             tempAmount /= 10;
         }
@@ -61,12 +60,12 @@ public class Utils {
 
         // If BTC and user wants price in mBTC
         boolean isBTC = pair.baseSymbol.equalsIgnoreCase(Currencies.BTC);
-        if (displayInMilliBtc && isBTC){
+        if (displayInMilliBtc && isBTC) {
             amount /= 1000;
 
-        // adjust altcoin units
-        // at least one digit on the left side of decimal point
-        }else if(!isBTC && amount < 1){
+            // adjust altcoin units
+            // at least one digit on the left side of decimal point
+        } else if (!isBTC && amount < 1) {
             unitIndex = getUnitIndex(amount);
             if (!includeCurrencyCode) numOfDecimals = 2;
             currencyCode = currencyCode.replace(" ", " " + Constants.METRIC_UNITS[unitIndex]);
@@ -75,16 +74,16 @@ public class Utils {
             numOfDecimals = 2;
         }
 
-        if(amount >= 1000 && !includeCurrencyCode) numOfDecimals = 0;
+        if (amount >= 1000 && !includeCurrencyCode) numOfDecimals = 0;
 
         return CurrencyUtils.getSymbol(pair.counterSymbol) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
     }
 
     // returns the index for the proper units in Contants.METRIC_UNITS
     // is also used to scale the value to match units
-    public static int getUnitIndex(float price){
+    public static int getUnitIndex(float price) {
         int unitIndex = -1;
-        while(price < 0.5 && unitIndex < 4){
+        while (price < 0.5 && unitIndex < 4) {
             price *= 1000;
             unitIndex++;
         }
@@ -103,7 +102,7 @@ public class Utils {
     }
 
     // Returns current time in milliseconds
-    public static long getCurrentTime(){
+    public static long getCurrentTime() {
 
         final Calendar TIME = Calendar.getInstance();
         TIME.set(Calendar.MINUTE, 0);
@@ -132,7 +131,7 @@ public class Utils {
     public static String formatHashrate(float hashRate) {
 
         DecimalFormat df = new DecimalFormat("#0.00");
-        if(hashRate >= 1000000)
+        if (hashRate >= 1000000)
             return df.format((hashRate / 1000000)) + " TH/s";
         else if (hashRate >= 1000)
             return df.format((hashRate / 1000)) + " GH/s";

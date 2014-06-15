@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.slush;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +11,9 @@ public class Slush {
     private final float confirmed_reward;
     private final float estimated_reward;
     private final float hashrate;
+    private final float unconfirmed_reward;
+    private final String username;
+    private final Workers workers;
     @JsonIgnore
     private float nmc_send_threshold;
     @JsonIgnore
@@ -19,11 +21,8 @@ public class Slush {
     @JsonIgnore
     private float send_threshold;
     private float unconfirmed_nmc_reward;
-    private final float unconfirmed_reward;
-    private final String username;
     @JsonIgnore
     private String wallet;
-    private final Workers workers;
 
     public Slush(
             @JsonProperty("confirmed_nmc_reward")

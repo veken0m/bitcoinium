@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview;
 
 import android.content.Context;
@@ -38,9 +37,10 @@ public class BarGraphView extends GraphView {
             }
 
             canvas.drawRect((i * colwidth) + horstart, (border - y)
-                    + graphheight,
+                            + graphheight,
                     ((i * colwidth) + horstart) + (colwidth - 1), graphheight
-                    + border - 1, paint);
+                            + border - 1, paint
+            );
         }
     }
 }

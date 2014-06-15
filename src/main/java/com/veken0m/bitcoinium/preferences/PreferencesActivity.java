@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.preferences;
 
 import android.content.Intent;
@@ -21,7 +20,7 @@ import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 
-import net.margaritov.preference.colorpicker.colorpicker.ColorPickerPreference;
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class PreferencesActivity extends BasePreferenceActivity {
 
@@ -32,8 +31,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
 
         addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_widgets);
-        addPreferencesFromResource(R.xml.pref_price_alert_category);
-        addPreferencesFromResource(R.xml.pref_notfication_tickers);
+        addPreferencesFromResource(R.xml.pref_price_wigdet_extensions);
         generateMinerDownAlertPreferences();
         addPreferencesFromResource(R.xml.pref_about);
 
@@ -80,7 +78,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                         public boolean onPreferenceClick(Preference preference) {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.emailAddress)});
                             i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - " + getString(R.string.feedback));
                             startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
 
@@ -259,7 +257,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
         super.onStop();
 
         // Tell the widgets to update preferences
-        sendBroadcast(new Intent(this,WidgetProvider.class).setAction(Constants.REFRESH));
+        sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
     }
 }

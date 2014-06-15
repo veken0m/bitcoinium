@@ -30,7 +30,7 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_bitcoinium</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Bitcoinium</item>
 
-                <!-- Light.DarkActionBar specific -->
+        <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Bitcoinium.Widget</item>
 
     </style>
@@ -46,11 +46,11 @@
         <item name="background">@drawable/ab_transparent_bitcoinium</item>
         <item name="progressBarStyle">@style/ProgressBar.Bitcoinium</item>
     </style>
-	
+
     <style name="PopupMenu.Bitcoinium" parent="@style/Widget.AppCompat.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_bitcoinium</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_bitcoinium</item>
     </style>
-	
+
     <style name="DropDownListView.Bitcoinium" parent="@style/Widget.AppCompat.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_bitcoinium</item>
     </style>
@@ -58,21 +58,21 @@
     <style name="ActionBarTabStyle.Bitcoinium" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_bitcoinium</item>
     </style>
-	
+
     <style name="DropDownNav.Bitcoinium" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_bitcoinium</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_bitcoinium</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_bitcoinium</item>
     </style>
-    
+
     <style name="ProgressBar.Bitcoinium" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_bitcoinium</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Bitcoinium" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_bitcoinium</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Bitcoinium.Widget" parent="@style/Theme.AppCompat">
         <item name="popupMenuStyle">@style/PopupMenu.Bitcoinium</item>

@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.content.Intent;
@@ -36,6 +35,18 @@ import java.util.Map;
 public class BitcoinAverageActivity extends BaseActivity {
 
     private final static Handler mOrderHandler = new Handler();
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            drawBitcoinAverageUI();
+        }
+    };
+    private final Runnable mError = new Runnable() {
+        @Override
+        public void run() {
+            errorOccured();
+        }
+    };
     private Map<String, BitcoinAverageTicker> tickers = new HashMap<String, BitcoinAverageTicker>();
 
     public BitcoinAverageActivity() {
@@ -90,12 +101,12 @@ public class BitcoinAverageActivity extends BaseActivity {
         BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getPollingMarketDataService();
 
         if (pollingService != null) {
-                try {
-                    tickers = pollingService.getBitcoinAverageAllTickers().getTickers();
-                } catch (IOException e) {
-                    // Skip ticker and keep looping
-                    return false;
-                }
+            try {
+                tickers = pollingService.getBitcoinAverageAllTickers().getTickers();
+            } catch (IOException e) {
+                // Skip ticker and keep looping
+                return false;
+            }
             return true;
         } else {
             return false;
@@ -117,21 +128,21 @@ public class BitcoinAverageActivity extends BaseActivity {
             // Clear table
             bitcoinAverageTable.removeAllViews();
 
-            List<Map.Entry<String,BitcoinAverageTicker>> entries = new LinkedList<Map.Entry<String,BitcoinAverageTicker>>(tickers.entrySet());
+            List<Map.Entry<String, BitcoinAverageTicker>> entries = new LinkedList<Map.Entry<String, BitcoinAverageTicker>>(tickers.entrySet());
 
             // Sort Tickers by volume
-            Collections.sort(entries, new Comparator<Map.Entry<String,BitcoinAverageTicker>>() {
+            Collections.sort(entries, new Comparator<Map.Entry<String, BitcoinAverageTicker>>() {
 
                 @Override
-                public int compare(Map.Entry<String,BitcoinAverageTicker> o1, Map.Entry<String,BitcoinAverageTicker> o2) {
+                public int compare(Map.Entry<String, BitcoinAverageTicker> o1, Map.Entry<String, BitcoinAverageTicker> o2) {
                     return o2.getValue().getVolume().compareTo(o1.getValue().getVolume());
                 }
             });
 
-            for (Map.Entry<String,BitcoinAverageTicker> tickerEntry : entries) {
+            for (Map.Entry<String, BitcoinAverageTicker> tickerEntry : entries) {
 
                 BitcoinAverageTicker ticker = tickerEntry.getValue();
-                if(ticker.getVolume().floatValue() > 0.0) {
+                if (ticker.getVolume().floatValue() > 0.0) {
 
                     final TextView tvSymbol = new TextView(this);
                     final TextView tvLast = new TextView(this);
@@ -178,6 +189,28 @@ public class BitcoinAverageActivity extends BaseActivity {
             notConnected(R.id.bitcoinaverage_loadSpinner);
     }
 
+    private void errorOccured() {
+
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
+
+        try {
+            if (dialog == null || !dialog.isShowing()) {
+                // Display error Dialog
+                Resources res = getResources();
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
+            }
+        } catch (WindowManager.BadTokenException e) {
+            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
+        }
+    }
+
+    private void failedToDrawUI() {
+
+        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
+        if (dialog == null || !dialog.isShowing())
+            dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
+    }
+
     private class bitcoinAverageThread extends Thread {
 
         @Override
@@ -193,41 +226,5 @@ public class BitcoinAverageActivity extends BaseActivity {
             else
                 mOrderHandler.post(mError);
         }
-    }
-
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            drawBitcoinAverageUI();
-        }
-    };
-
-    private final Runnable mError = new Runnable() {
-        @Override
-        public void run() {
-            errorOccured();
-        }
-    };
-
-    private void errorOccured() {
-
-        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
-
-        try {
-            if (dialog == null || !dialog.isShowing()) {
-                // Display error Dialog
-                Resources res = getResources();
-                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
-            }
-        } catch (WindowManager.BadTokenException e){
-            // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
-        }
-    }
-
-    private void failedToDrawUI() {
-
-        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
-        if (dialog == null || !dialog.isShowing())
-            dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
     }
 }

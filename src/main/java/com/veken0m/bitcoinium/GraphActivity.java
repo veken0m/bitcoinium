@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.content.Intent;
@@ -52,12 +51,37 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     private static String exchangeName = "";
     private static Exchange exchange = null;
     private static Boolean exchangeChanged = false;
-
+    private static Boolean pref_scaleMode = null;
     /**
      * Variables required for LineGraphView
      */
     private LineGraphView graphView = null;
-    private static Boolean pref_scaleMode = null;
+    /**
+     * mGraphView run() is called when our GraphThread is finished
+     */
+    private final Runnable mGraphView = new Runnable() {
+        @Override
+        public void run() {
+            if (graphView != null && !connectionFail && !noTradesFound) {
+                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+                graphLinearLayout.removeAllViews(); // make sure layout has no child
+                graphLinearLayout.addView(graphView);
+
+            } else if (noTradesFound) {
+                createPopup(getString(R.string.noTradesFound));
+            } else {
+                Resources res = getResources();
+                String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
+                createPopup(text);
+            }
+        }
+    };
+
+    private static void readPreferences() {
+
+        pref_scaleMode = prefs.getBoolean("graphscalePref", false);
+        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +99,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         else
             exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
-        if(!exchange.supportsTrades())
+        if (!exchange.supportsTrades())
             exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
 
         exchangeName = exchange.getExchangeName();
@@ -115,45 +139,6 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
         return super.onOptionsItemSelected(item);
     }
-
-    private class GraphThread extends Thread {
-
-        @Override
-        public void run() {
-
-            generatePriceGraph();
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
-                    linlaHeaderProgress.setVisibility(View.INVISIBLE);
-                }
-            });
-            mOrderHandler.post(mGraphView);
-        }
-    }
-
-    /**
-     * mGraphView run() is called when our GraphThread is finished
-     */
-    private final Runnable mGraphView = new Runnable() {
-        @Override
-        public void run() {
-            if (graphView != null && !connectionFail && !noTradesFound) {
-                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-                graphLinearLayout.removeAllViews(); // make sure layout has no child
-                graphLinearLayout.addView(graphView);
-
-            } else if (noTradesFound) {
-                createPopup(getString(R.string.noTradesFound));
-            } else {
-                Resources res = getResources();
-                String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
-                createPopup(text);
-            }
-        }
-    };
 
     /**
      * generatePriceGraph prepares price graph of all the values available from
@@ -237,7 +222,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 // Display error Dialog
                 dialog = Utils.errorDialog(this, pMessage);
             }
-        } catch (WindowManager.BadTokenException e){
+        } catch (WindowManager.BadTokenException e) {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
 
@@ -268,23 +253,17 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         gt.start();
     }
 
-    private static void readPreferences() {
-
-        pref_scaleMode = prefs.getBoolean("graphscalePref", false);
-        currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
         CurrencyPair prevCurrencyPair = currencyPair;
         String prevExchangeName = exchangeName;
 
-        switch (parent.getId()){
+        switch (parent.getId()) {
             case R.id.graph_exchange_spinner:
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
-                if (exchangeChanged){
+                if (exchangeChanged) {
                     exchange = new Exchange(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
@@ -329,9 +308,27 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        if(exchangeChanged){
+        if (exchangeChanged) {
             int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
             spinner.setSelection(index);
+        }
+    }
+
+    private class GraphThread extends Thread {
+
+        @Override
+        public void run() {
+
+            generatePriceGraph();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
+                    linlaHeaderProgress.setVisibility(View.INVISIBLE);
+                }
+            });
+            mOrderHandler.post(mGraphView);
         }
     }
 }

@@ -1,4 +1,3 @@
-
 package com.veken0m.mining.slush;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;

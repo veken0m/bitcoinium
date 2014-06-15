@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.appwidget.AppWidgetManager;
@@ -24,6 +23,45 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
     public WidgetConfigureActivity() {
         super();
+    }
+
+    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId) {
+
+        pCurrency.setEntries(nCurrencyArrayId);
+        pCurrency.setEntryValues(nCurrencyArrayId);
+        pCurrency.setValueIndex(0);
+    }
+
+    // Write the prefix to the SharedPreferences object for this widget
+    private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
+        prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
+        prefs.commit();
+    }
+
+    // Read the prefix from the SharedPreferences object for this widget.
+    // If there is no preference saved, get the default from a resource
+    static String loadCurrencyPref(Context context, int appWidgetId) {
+
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
+        return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
+    }
+
+    // Write the prefix to the SharedPreferences object for this widget
+    private static void saveExchangePref(Context context, int appWidgetId, String exchange) {
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
+        prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, exchange);
+        prefs.commit();
+    }
+
+    // Read the prefix from the SharedPreferences object for this widget.
+    // If there is no preference saved, get the default from a resource
+    static String loadExchangePref(Context context, int appWidgetId) {
+
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
+        return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
     }
 
     @SuppressWarnings("deprecation")
@@ -58,7 +96,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
         // populate the list with the Exchange's Currency Pairs
         setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-        if(widgetExchangePref != null) {
+        if (widgetExchangePref != null) {
             widgetExchangePref.setOnPreferenceChangeListener(
                     new Preference.OnPreferenceChangeListener() {
                         @Override
@@ -111,45 +149,6 @@ public class WidgetConfigureActivity extends PreferenceActivity {
                 }
             });
         }
-    }
-
-    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId){
-
-        pCurrency.setEntries(nCurrencyArrayId);
-        pCurrency.setEntryValues(nCurrencyArrayId);
-        pCurrency.setValueIndex(0);
-    }
-
-    // Write the prefix to the SharedPreferences object for this widget
-    private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
-
-        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
-        prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
-        prefs.commit();
-    }
-
-    // Read the prefix from the SharedPreferences object for this widget.
-    // If there is no preference saved, get the default from a resource
-    static String loadCurrencyPref(Context context, int appWidgetId) {
-
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
-        return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
-    }
-
-    // Write the prefix to the SharedPreferences object for this widget
-    private static void saveExchangePref(Context context, int appWidgetId, String exchange) {
-
-        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
-        prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, exchange);
-        prefs.commit();
-    }
-
-    // Read the prefix from the SharedPreferences object for this widget.
-    // If there is no preference saved, get the default from a resource
-    static String loadExchangePref(Context context, int appWidgetId) {
-
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
-        return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
     }
 
     @Override

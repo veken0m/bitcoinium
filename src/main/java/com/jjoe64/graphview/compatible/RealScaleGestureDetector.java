@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview.compatible;
 
 import android.content.Context;
@@ -20,6 +19,7 @@ public class RealScaleGestureDetector extends ScaleGestureDetector {
                     public boolean onScale(ScaleGestureDetector detector) {
                         return fakeListener.onScale(fakeScaleGestureDetector);
                     }
-                });
+                }
+        );
     }
 }

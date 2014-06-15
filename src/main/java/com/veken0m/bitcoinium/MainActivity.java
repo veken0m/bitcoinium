@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.content.Context;
@@ -70,103 +69,6 @@ public class MainActivity extends ActionBarActivity {
         tabsAdapter.addTab(tab, viewFragment, args, identity);
     }
 
-    /**
-     * Obtained from: https://gist.github.com/2424383 This is a helper class
-     * that implements the management of tabs and all details of connecting a
-     * ViewPager with associated TabHost. It relies on a trick. Normally a tab
-     * host has a simple API for supplying a View or Intent that each tab will
-     * show. This is not sufficient for switching between pages. So instead we
-     * make the content part of the tab host 0dp high (it is not shown) and the
-     * TabsAdapter supplies its own dummy view to show as the tab content. It
-     * listens to changes in tabs, and takes care of switch to the correct paged
-     * in the ViewPager whenever the selected tab changes.
-     */
-    public static class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
-
-        private final Context mContext;
-        private final ActionBar mBar;
-        private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-
-        static final class TabInfo {
-            private final Class<?> clss;
-            private final Bundle args;
-            private final String ident;
-
-            TabInfo(Class<?> _class, Bundle _args, String _ident) {
-                clss = _class;
-                args = _args;
-                ident = _ident;
-            }
-        }
-
-        public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager) {
-
-            super(activity.getSupportFragmentManager());
-            mContext = activity;
-            mBar = bar;
-            mViewPager = pager;
-            mViewPager.setAdapter(this);
-            mViewPager.setOnPageChangeListener(this);
-        }
-
-        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss,Bundle args, String ident) {
-            TabInfo info = new TabInfo(clss, args, ident);
-            tab.setTag(info);
-            tab.setTabListener(this);
-            mTabs.add(info);
-            mBar.addTab(tab);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return mTabs.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(mContext, info.clss.getName(),
-                    info.args);
-        }
-
-        public int getIndexForIdentity(String identity) {
-            for (int i = 0; i < mTabs.size(); i++) {
-                TabInfo info = mTabs.get(i);
-                if (identity.equals(info.ident))
-                    return i;
-            }
-            return -1;
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-
-        @Override
-        public void onPageSelected(int position) {
-            mBar.setSelectedNavigationItem(position);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) { }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            Object tag = tab.getTag();
-            for (int i = 0; i < mTabs.size(); i++) {
-                if (mTabs.get(i) == tag)
-                    mViewPager.setCurrentItem(i);
-            }
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) { }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) { }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -212,6 +114,107 @@ public class MainActivity extends ActionBarActivity {
         super.onNewIntent(intent);
 
         setIntent(intent);
+    }
+
+    /**
+     * Obtained from: https://gist.github.com/2424383 This is a helper class
+     * that implements the management of tabs and all details of connecting a
+     * ViewPager with associated TabHost. It relies on a trick. Normally a tab
+     * host has a simple API for supplying a View or Intent that each tab will
+     * show. This is not sufficient for switching between pages. So instead we
+     * make the content part of the tab host 0dp high (it is not shown) and the
+     * TabsAdapter supplies its own dummy view to show as the tab content. It
+     * listens to changes in tabs, and takes care of switch to the correct paged
+     * in the ViewPager whenever the selected tab changes.
+     */
+    public static class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
+
+        private final Context mContext;
+        private final ActionBar mBar;
+        private final ViewPager mViewPager;
+        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+
+        public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager) {
+
+            super(activity.getSupportFragmentManager());
+            mContext = activity;
+            mBar = bar;
+            mViewPager = pager;
+            mViewPager.setAdapter(this);
+            mViewPager.setOnPageChangeListener(this);
+        }
+
+        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss, Bundle args, String ident) {
+            TabInfo info = new TabInfo(clss, args, ident);
+            tab.setTag(info);
+            tab.setTabListener(this);
+            mTabs.add(info);
+            mBar.addTab(tab);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mTabs.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(mContext, info.clss.getName(),
+                    info.args);
+        }
+
+        public int getIndexForIdentity(String identity) {
+            for (int i = 0; i < mTabs.size(); i++) {
+                TabInfo info = mTabs.get(i);
+                if (identity.equals(info.ident))
+                    return i;
+            }
+            return -1;
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            mBar.setSelectedNavigationItem(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            Object tag = tab.getTag();
+            for (int i = 0; i < mTabs.size(); i++) {
+                if (mTabs.get(i) == tag)
+                    mViewPager.setCurrentItem(i);
+            }
+        }
+
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        }
+
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        }
+
+        static final class TabInfo {
+            private final Class<?> clss;
+            private final Bundle args;
+            private final String ident;
+
+            TabInfo(Class<?> _class, Bundle _args, String _ident) {
+                clss = _class;
+                args = _args;
+                ident = _ident;
+            }
+        }
     }
 
         /*

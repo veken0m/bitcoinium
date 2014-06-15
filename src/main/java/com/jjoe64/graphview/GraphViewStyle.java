@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview;
 
 import android.graphics.Color;
@@ -28,20 +27,20 @@ public class GraphViewStyle {
         return vLabelsColor;
     }
 
-    public int getHorizontalLabelsColor() {
-        return hLabelsColor;
-    }
-
-    public int getGridColor() {
-        return gridColor;
-    }
-
     public void setVerticalLabelsColor(int c) {
         vLabelsColor = c;
     }
 
+    public int getHorizontalLabelsColor() {
+        return hLabelsColor;
+    }
+
     public void setHorizontalLabelsColor(int c) {
         hLabelsColor = c;
+    }
+
+    public int getGridColor() {
+        return gridColor;
     }
 
     public void setGridColor(int c) {

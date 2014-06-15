@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/bitcoinaverage_layout"
+<TableLayout android:id="@+id/bitcoinaverage_layout"
+             xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent"
              android:stretchColumns="5">
@@ -20,8 +20,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="5"
             android:background="@color/dark"
-            android:text="@string/last"
             android:gravity="center_horizontal"
+            android:text="@string/last"
             android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
         <!--
@@ -38,8 +38,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="5"
             android:background="@color/dark"
-            android:text="@string/vol"
             android:gravity="center_horizontal"
+            android:text="@string/vol"
             android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
@@ -47,8 +47,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="5"
             android:background="@color/dark"
-            android:text="@string/bid"
             android:gravity="center_horizontal"
+            android:text="@string/bid"
             android:textColor="@color/ics_blue"
             android:textSize="18sp"/>
 
@@ -66,15 +66,15 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
-        android:visibility="visible"
-        android:background="@color/ics_blue"/>
+        android:background="@color/ics_blue"
+        android:visibility="visible"/>
 
     <ScrollView
         android:id="@+id/bitcoinaverage_tablescroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/dark">
 
         <TableLayout
             android:id="@+id/bitcoinaverage_list"

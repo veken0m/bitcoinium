@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.app.AlarmManager;
@@ -25,22 +24,12 @@ import com.xeiam.xchange.currency.CurrencyPair;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
-    /**
-     * List of preference variables
-     */
-    private static int pref_widgetRefreshFreq = 0;
-    private static boolean pref_batterySavingMode = false;
-    private static boolean pref_alarmSound = false;
-    private static boolean pref_alarmVibrate = false;
-    private static String pref_notificationSound = null;
-
     static boolean pref_priceAlarm = false;
     static boolean pref_enableTicker = false;
     static boolean pref_widgetBidAsk = false;
     static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
     static boolean pref_tapToUpdate = false;
-
     static int pref_mainWidgetTextColor = R.color.widgetMainTextColor;
     static int pref_secondaryWidgetTextColor = R.color.widgetSecondaryTextColor;
     static int pref_backgroundWidgetColor = R.color.widgetBackgroundColor;
@@ -49,16 +38,22 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static boolean pref_enableWidgetCustomization = false;
     static boolean pref_pricesInMilliBtc = false;
     static int pref_widgetMiningPayoutUnit = 0;
-
+    static SharedPreferences prefs = null;
+    /**
+     * List of preference variables
+     */
+    private static int pref_widgetRefreshFreq = 0;
+    private static boolean pref_batterySavingMode = false;
+    private static boolean pref_alarmSound = false;
+    private static boolean pref_alarmVibrate = false;
+    private static String pref_notificationSound = null;
     // Service used to refresh widget
     private static PendingIntent widgetPriceWidgetRefreshService = null;
     private static PendingIntent widgetMinerWidgetRefreshService = null;
 
-    static SharedPreferences prefs = null;
-
     static void readGeneralPreferences(Context context) {
 
-        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
         readAlarmPreferences(context);
 
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
@@ -70,9 +65,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         // Theming preferences
         pref_enableWidgetCustomization = prefs.getBoolean("enableWidgetCustomizationPref", false);
-        if(pref_enableWidgetCustomization){
+        if (pref_enableWidgetCustomization) {
             pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref", R.color.widgetMainTextColor);
-            pref_secondaryWidgetTextColor = prefs.getInt( "widgetSecondaryTextColorPref", R.color.widgetSecondaryTextColor);
+            pref_secondaryWidgetTextColor = prefs.getInt("widgetSecondaryTextColorPref", R.color.widgetSecondaryTextColor);
             pref_backgroundWidgetColor = prefs.getInt("widgetBackgroundColorPref", R.color.widgetBackgroundColor);
             pref_widgetRefreshSuccessColor = prefs.getInt("widgetRefreshSuccessColorPref", R.color.widgetRefreshSuccessColor);
             pref_widgetRefreshFailedColor = prefs.getInt("widgetRefreshFailedColorPref", R.color.widgetRefreshFailedColor);
@@ -81,14 +76,14 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
     private static void readAlarmPreferences(Context context) {
 
-        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref", "1800"))*1000; // milliseconds
+        pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref", "1800")) * 1000; // milliseconds
         pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
         pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
-        pref_notificationSound = prefs.getString("notificationSoundPref","DEFAULT_RINGTONE_URI");
+        pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
     }
 
@@ -114,7 +109,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         final Intent intentMiner = new Intent(context, MinerUpdateService.class);
 
         if (widgetMinerWidgetRefreshService == null)
-            widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0,intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
+            widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0, intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
         alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
@@ -122,7 +117,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
     static void setAlarmClock(Context context) {
 
-        if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Editor editor = prefs.edit();
         editor.putBoolean("alarmClockPref", false);

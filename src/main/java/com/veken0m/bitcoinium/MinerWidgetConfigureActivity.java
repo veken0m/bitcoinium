@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.appwidget.AppWidgetManager;
@@ -20,6 +19,22 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
     public MinerWidgetConfigureActivity() {
         super();
+    }
+
+    // Write the prefix to the SharedPreferences object for this widget
+    private static void saveMiningPoolPref(Context context, int appWidgetId, String miningPool) {
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0).edit();
+        prefs.putString(PREF_MININGPOOL_KEY + appWidgetId, miningPool);
+        prefs.commit();
+    }
+
+    // Read the prefix from the SharedPreferences object for this widget.
+    // If there is no preference saved, get the default from a resource
+    static String loadMiningPoolPref(Context context, int appWidgetId) {
+
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0);
+        return prefs.getString(PREF_MININGPOOL_KEY + appWidgetId, null);
     }
 
     @Override
@@ -67,22 +82,6 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
                 }
             });
         }
-    }
-
-    // Write the prefix to the SharedPreferences object for this widget
-    private static void saveMiningPoolPref(Context context, int appWidgetId,String miningPool) {
-
-        SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0).edit();
-        prefs.putString(PREF_MININGPOOL_KEY + appWidgetId, miningPool);
-        prefs.commit();
-    }
-
-    // Read the prefix from the SharedPreferences object for this widget.
-    // If there is no preference saved, get the default from a resource
-    static String loadMiningPoolPref(Context context, int appWidgetId) {
-
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0);
-        return prefs.getString(PREF_MININGPOOL_KEY + appWidgetId, null);
     }
 
     @Override

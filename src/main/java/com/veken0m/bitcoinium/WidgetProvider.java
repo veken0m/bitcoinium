@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
@@ -48,6 +47,10 @@ public class WidgetProvider extends BaseWidgetProvider {
      */
     public static class UpdateService extends IntentService {
 
+        public UpdateService() {
+            super("WidgetProvider$UpdateService");
+        }
+
         public void buildUpdate() {
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
@@ -65,7 +68,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
                     if (exchangePref == null) continue; // skip to next widget
 
-                    if(exchangePref.toLowerCase().contains("mtgox")) exchangePref = "bitcoinaverage";
+                    if (exchangePref.toLowerCase().contains("mtgox")) exchangePref = "bitcoinaverage";
 
                     Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
@@ -111,7 +114,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
                         updateWidgetTheme(views);
 
-                        if(pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
+                        if (pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
                         createTickerNotif(pair, lastString, exchange);
 
                     } catch (Exception e) {
@@ -245,7 +248,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public void removeOldAlarmKeys(Context context, String exchangeKey) {
 
-            if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             if (prefs.contains(exchangeKey + "Upper") || prefs.contains(exchangeKey + "Lower")) {
 
@@ -276,7 +279,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public void notifyUserOfMilli(Context context) {
 
-            if(prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             if (prefs.getBoolean("warnUnitChangePref", true)) {
 
@@ -298,10 +301,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                 editor.putBoolean("warnUnitChangePref", false);
                 editor.commit();
             }
-        }
-
-        public UpdateService() {
-            super("WidgetProvider$UpdateService");
         }
 
         @Override

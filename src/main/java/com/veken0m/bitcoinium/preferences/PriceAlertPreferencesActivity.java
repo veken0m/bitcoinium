@@ -1,4 +1,3 @@
-
 package com.veken0m.bitcoinium.preferences;
 
 import android.content.Intent;
@@ -22,7 +21,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
 
         // Generate the alarm preferences
         PreferenceCategory alertSettingsPref = (PreferenceCategory) findPreference("alertSettingsPref");
-        if(alertSettingsPref != null) {
+        if (alertSettingsPref != null) {
 
             int numberWithDecimal = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
             String sAlertOverLimit = getString(R.string.pref_alert_over_summary);

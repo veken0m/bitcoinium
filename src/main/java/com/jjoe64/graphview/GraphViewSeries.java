@@ -1,4 +1,3 @@
-
 package com.jjoe64.graphview;
 
 import android.graphics.Color;
@@ -9,39 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GraphViewSeries {
-    /**
-     * graph series style: color and thickness
-     */
-    static public class GraphViewSeriesStyle {
-        public int color = Color.GREEN;
-        public int thickness = 3;
-        private ValueDependentColor valueDependentColor;
-
-        public GraphViewSeriesStyle() {
-            super();
-        }
-
-        public GraphViewSeriesStyle(int color, int thickness) {
-            super();
-            this.color = color;
-            this.thickness = thickness;
-        }
-
-        public void setValueDependentColor(
-                ValueDependentColor valueDependentColor) {
-            this.valueDependentColor = valueDependentColor;
-        }
-
-        public ValueDependentColor getValueDependentColor() {
-            return valueDependentColor;
-        }
-    }
-
     final String description;
     final GraphViewSeriesStyle style;
-    GraphViewData[] values;
     private final List<GraphView> graphViews = new ArrayList<GraphView>();
-
+    GraphViewData[] values;
     public GraphViewSeries(GraphViewData[] values) {
         description = null;
         style = new GraphViewSeriesStyle();
@@ -97,6 +67,34 @@ public class GraphViewSeries {
         this.values = values;
         for (GraphView g : graphViews) {
             g.redrawAll();
+        }
+    }
+
+    /**
+     * graph series style: color and thickness
+     */
+    static public class GraphViewSeriesStyle {
+        public int color = Color.GREEN;
+        public int thickness = 3;
+        private ValueDependentColor valueDependentColor;
+
+        public GraphViewSeriesStyle() {
+            super();
+        }
+
+        public GraphViewSeriesStyle(int color, int thickness) {
+            super();
+            this.color = color;
+            this.thickness = thickness;
+        }
+
+        public ValueDependentColor getValueDependentColor() {
+            return valueDependentColor;
+        }
+
+        public void setValueDependentColor(
+                ValueDependentColor valueDependentColor) {
+            this.valueDependentColor = valueDependentColor;
         }
     }
 }

@@ -32,10 +32,10 @@
                     android:summary="@string/xchangeSummary"
                     android:title="@string/xchangeGithubText"/>
                 <CheckBoxPreference
+                    android:defaultValue="false"
                     android:key="googleAnalyticsPref"
                     android:summary="@string/pref_google_analytics_summary"
-                    android:title="@string/optGoogleAnalytics"
-                    android:defaultValue="false"/>
+                    android:title="@string/optGoogleAnalytics"/>
             </PreferenceCategory>
             <PreferenceCategory android:title="@string/donations">
                 <Preference
