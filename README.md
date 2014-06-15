@@ -4,44 +4,49 @@ Bitcoinium is an Android application used to monitor Bitcoin price on various ex
 
 Currently supported exchanges include:
 
-  - [Canadian Virtex](https://www.cavirtex.com)
-  - [BTC-E](https://btc-e.com)
-  - [Bitstamp](https://www.bitstamp.net)
-  - [CampBX](https://campbx.com)
+  - [ANX](https://anxbtc.com)
+  - [BitBay](https://bitbay.pl)
+  - [Bitcoin-Central](http://bitcoin-central.net)
   - [Bitcurex](https://eur.bitcurex.com)
-  - [BTC China](https://btcchina.com)
-  - [Kraken](https://www.kraken.com)
   - [Bitfinex](https://bitfinex.com.com)
-  - [Justcoin](https://justcoin.com/en)
-  - [Crypto-Trade](https://crypto-trade.com)
-  - [VirCurEx](https://vircurex.com)
+  - [BitMarket.pl] (https://bitmarket.pl)
+  - [Bitstamp](https://www.bitstamp.net)
+  - [BTC-E](https://btc-e.com)
+  - [BTC China](https://btcchina.com)
   - [BTER](https://bter.com)
+  - [CampBX](https://campbx.com)
+  - [Canadian Virtex](https://www.cavirtex.com)
   - [CEX.IO](https://cex.io)
   - [Coinbase](https://coinbase.com)
+  - [Crypto-Trade](https://crypto-trade.com)
+  - [HitBtc] (https://hitbtc.com)
+  - [Justcoin](https://justcoin.com/en)
+  - [Kraken](https://www.kraken.com)
+  - [LakeBTC] (https://lakebtc.com)
   - [Vault of Satoshi](https://www.vaultofsatoshi.com)
-  - [ANX](https://anxbtc.com)
-
+  - [VirCurEx](https://vircurex.com)
 	
 Removed Exchanges (closed down or temporarily unavailable):
 
   - [MtGox](http://mtgox.com)
-  - [Bitcoin-Central](http://bitcoin-central.net)
   - [Bitfloor](https://bitfloor.com)
   - [Bitcoin-24](https://bitcoin-24.com)
 		
-Additional Information from:	
+Additional Information from:
+
   - [Bitcoin Charts](http://bitcoincharts.com/markets)
   - [Bitcoin Average](https://bitcoinaverage.com)
 
 Supported Mining Pools:
 
-  - [Deepbit](http://deepbit.net)
-  - [BitMinter](http://bitminter.com)
-  - [EclipseMC](https://eclipsemc.com)
-  - [Slush](http://mining.bitcoin.cz)
   - [50BTC](https://50btc.com/en)
+  - [BitMinter](http://bitminter.com)
   - [BTC Guild](https://www.btcguild.com)
+  - [Deepbit](http://deepbit.net)
+  - [EclipseMC](https://eclipsemc.com)
   - [Eligius.st](http://eligius.st)
+  - [GHash.IO](https://ghash.io/)
+  - [Slush](http://mining.bitcoin.cz)
 
 Features
 ===============
