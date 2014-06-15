@@ -30,14 +30,22 @@ android {
     buildTypes {
         release {
             debuggable false
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            runProguard true
+            proguardFiles 'proguard.cfg'
+        }
+
+        debug {
+            debuggable true
+            runProguard true
+            proguardFiles 'proguard.cfg'
         }
     }
 }
 
 ext {
     xchangeVersion = "2.1.0-SNAPSHOT"
+    jacksonVersion = "2.3.2"
+    slf4jVersion = "1.7.7"
 }
 
 repositories {
@@ -54,15 +62,18 @@ dependencies {
     compile files('libs/libGoogleAnalyticsServices.jar')
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.android.support:support-v4:+'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.3'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
-    compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT')
-    compile 'javax.ws.rs:jsr311-api:1.1.1'
-    compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 
     // XChange Core
     compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
+
+    // XChange dependencies
+    compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT')
+    compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+    compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+    compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    compile 'javax.ws.rs:jsr311-api:1.1.1'
+    compile("org.slf4j:slf4j-android:$slf4jVersion")
+    compile("org.slf4j:slf4j-api:$slf4jVersion")
 
     // XChange Exchange Modules
     compile("com.xeiam.xchange:xchange-anx:$xchangeVersion")
