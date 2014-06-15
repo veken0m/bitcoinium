@@ -25,8 +25,8 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
         if(alertSettingsPref != null) {
 
             int numberWithDecimal = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
-            String sAlertOverLimit = getString(R.string.pref_alarm_over_summary);
-            String sAlertUnderLimit = getString(R.string.pref_alarm_under_summary);
+            String sAlertOverLimit = getString(R.string.pref_alert_over_summary);
+            String sAlertUnderLimit = getString(R.string.pref_alert_under_summary);
 
             String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
             for (String sExchange : sExchanges) {
@@ -46,7 +46,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     sHighInput.setDefaultValue("999999");
                     sHighInput.getEditText().setInputType(numberWithDecimal);
                     sHighInput.setKey(prefix + "Upper");
-                    sHighInput.setTitle(getString(R.string.pref_alarm_upper_threshold, sExchange, sCurrency));
+                    sHighInput.setTitle(getString(R.string.pref_alert_upper_limit, sExchange, sCurrency));
                     sHighInput.setSummary(sAlertOverLimit);
                     alertLimits.addPreference(sHighInput);
 
@@ -55,7 +55,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     sLowInput.setDefaultValue("0");
                     sLowInput.getEditText().setInputType(numberWithDecimal);
                     sLowInput.setKey(prefix + "Lower");
-                    sLowInput.setTitle(getString(R.string.pref_alarm_lower_threshold, sExchange, sCurrency));
+                    sLowInput.setTitle(getString(R.string.pref_alert_lower_threshold, sExchange, sCurrency));
                     sLowInput.setSummary(sAlertUnderLimit);
                     alertLimits.addPreference(sLowInput);
 

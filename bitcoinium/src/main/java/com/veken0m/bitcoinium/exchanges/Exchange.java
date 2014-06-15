@@ -10,7 +10,6 @@ public class Exchange {
     private final String main_currency;
     private final String identifier;
     private final String shortName;
-    private final boolean tickerSupportsBidAsk;
     private Context context = null;
 
     public Exchange(Context context, String exchangeName) {
@@ -25,8 +24,7 @@ public class Exchange {
         class_name = exchangeProperties[1];
         main_currency = exchangeProperties[2];
         identifier = exchangeProperties[3];
-        tickerSupportsBidAsk = Boolean.parseBoolean(exchangeProperties[4]);
-        shortName = exchangeProperties[5];
+        shortName = exchangeProperties[4];
     }
 
     public String getExchangeName() {
@@ -50,11 +48,6 @@ public class Exchange {
 
     public String getShortName() {
         return shortName;
-    }
-
-    public Boolean supportsTickerBidAsk() {
-
-        return tickerSupportsBidAsk;
     }
 
     public Boolean supportsTicker() {
@@ -94,5 +87,12 @@ public class Exchange {
                 return true;
         }
         return false;
+    }
+
+    public String[] getCurrencies() {
+
+        int resId = context.getResources().getIdentifier(identifier + "currencies", "array", context.getPackageName());
+
+        return context.getResources().getStringArray(resId);
     }
 }

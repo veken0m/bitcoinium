@@ -374,10 +374,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     void populateCurrencyDropdown() {
-        // Re-populate the dropdown menu
-        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
-        String[] currencies = getResources().getStringArray(arrayId);
 
+        // Re-populate the dropdown menu
+        String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
 

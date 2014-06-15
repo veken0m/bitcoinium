@@ -103,7 +103,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                         String volumeString = (ticker.getVolume() != null) ?
                                 Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true) : getString(R.string.notAvailable);
 
-                        setBidAskHighLow(ticker, views, pair, exchange.supportsTickerBidAsk());
+                        setBidAskHighLow(ticker, views, pair);
 
                         views.setTextViewText(R.id.widgetExchange, shortName);
                         views.setTextViewText(R.id.widgetLastText, lastString);
@@ -174,9 +174,9 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setTextColor(R.id.widgetVolText, color);
         }
 
-        private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair, boolean bidAskSupported) {
+        private void setBidAskHighLow(Ticker ticker, RemoteViews views, CurrencyPair pair) {
 
-            if (((ticker.getHigh() == null) || pref_widgetBidAsk) && bidAskSupported)
+            if (((pref_widgetBidAsk || ticker.getHigh() == null)) && ticker.getBid() != null)
                 setBidAsk(ticker, views, pair);
             else
                 setHighLow(ticker, views, pair);

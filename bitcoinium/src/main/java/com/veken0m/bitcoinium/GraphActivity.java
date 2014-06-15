@@ -235,7 +235,6 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         try {
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
-                Resources res = getResources();
                 dialog = Utils.errorDialog(this, pMessage);
             }
         } catch (WindowManager.BadTokenException e){
@@ -322,9 +321,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
     void createCurrencyDropdown() {
         // Re-populate the dropdown menu
-        int arrayId = getResources().getIdentifier(exchange.getIdentifier() + "currencies", "array", this.getPackageName());
-        String[] currencies = getResources().getStringArray(arrayId);
-
+        String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
 

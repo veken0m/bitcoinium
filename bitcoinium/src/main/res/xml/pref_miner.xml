@@ -65,7 +65,7 @@
         android:title="@string/bitcoinMinerAlert">
         <PreferenceCategory android:title="@string/minerWidgetSettings"
             android:key="minerDownAlertPref">
-            <Preference android:summary="@string/pref_miner_widget_alarm_summary"/>
+            <Preference android:summary="@string/pref_miner_widget_alert_summary"/>
         </PreferenceCategory>
     </PreferenceScreen>
 

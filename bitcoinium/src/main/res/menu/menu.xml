@@ -5,7 +5,7 @@
         android:id="@+id/action_alarm_preferences"
         app:showAsAction="ifRoom"
         android:icon="@drawable/perm_group_device_alarms"
-        android:title="@string/priceAlarm"/>
+        android:title="@string/priceAlerts"/>
     <item
         android:id="@+id/action_preferences"
         app:showAsAction="ifRoom"

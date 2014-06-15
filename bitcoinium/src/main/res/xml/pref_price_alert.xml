@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/priceAlarm">
+    <PreferenceCategory android:title="@string/priceAlerts">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmPref"
-            android:summary="@string/pref_enable_alarm_summary"
-            android:title="@string/pref_enable_alarm_title"/>
+            android:summary="@string/pref_enable_alert_summary"
+            android:title="@string/pref_enable_alert_title"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmVibratePref"
-            android:summary="@string/pref_alarm_vibrate_summary"
+            android:summary="@string/pref_alert_vibrate_summary"
             android:title="@string/vibration"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmSoundPref"
-            android:summary="@string/pref_alarm_sound_summary"
+            android:summary="@string/pref_alert_sound_summary"
             android:title="@string/sound"/>
 
         <RingtonePreference
             android:key="notificationSoundPref"
             android:ringtoneType="ringtone|alarm|notification"
             android:showDefault="true"
-            android:summary="@string/pref_alarm_sound_pick_summary"
+            android:summary="@string/pref_alert_sound_pick_summary"
             android:title="@string/selectSound" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmClockPref"
-            android:summary="@string/pref_alarm_hardcore_summary"
-            android:title="@string/hardcoreMode"/>
+            android:summary="@string/pref_alert_alarm_summary"
+            android:title="@string/alarmMode"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/alarmSettings"
+        android:title="@string/alertSettings"
         android:key="alertSettingsPref">
         <Preference android:summary="@string/msgEnterUnscaledValues"/>
     </PreferenceCategory>
