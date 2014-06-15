@@ -63,36 +63,9 @@
     <PreferenceScreen
         android:summary="@string/pref_hashrate_notification_summary"
         android:title="@string/bitcoinMinerAlert">
-        <PreferenceCategory android:title="@string/minerWidgetSettings">
+        <PreferenceCategory android:title="@string/minerWidgetSettings"
+            android:key="minerDownAlertPref">
             <Preference android:summary="@string/pref_miner_widget_alarm_summary"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="bitminterAlertPref"
-                android:title="BitMinter miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="deepbitAlertPref"
-                android:title="DeepBit miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="slushAlertPref"
-                android:title="Slush miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="50btcAlertPref"
-                android:title="50BTC miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="eclipsemcAlertPref"
-                android:title="EclipseMC miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="btcguildAlertPref"
-                android:title="BTC Guild alert miner down alert"/>
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="eligiusAlertPref"
-                android:title="Eligius alert miner down alert"/>
         </PreferenceCategory>
     </PreferenceScreen>
 

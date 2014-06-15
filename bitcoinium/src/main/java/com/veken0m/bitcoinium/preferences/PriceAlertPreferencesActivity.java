@@ -2,75 +2,76 @@
 package com.veken0m.bitcoinium.preferences;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.preference.EditTextPreference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.text.InputType;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetProvider;
+import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
 
-public class PriceAlertPreferencesActivity extends PreferenceActivity {
+public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_price_alert);
 
-        Preference notificationRequestPref = findPreference("alertRequestPref");
-        if (notificationRequestPref != null) {
-            notificationRequestPref
-                    .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        // Generate the alarm preferences
+        PreferenceCategory alertSettingsPref = (PreferenceCategory) findPreference("alertSettingsPref");
+        if(alertSettingsPref != null) {
 
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            Intent i = new Intent(Intent.ACTION_SEND);
-                            i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
-                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - Price Alert Request");
-                            startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
+            int numberWithDecimal = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+            String sAlertOverLimit = getString(R.string.pref_alarm_over_summary);
+            String sAlertUnderLimit = getString(R.string.pref_alarm_under_summary);
 
-                            return true;
-                        }
-                    });
+            String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
+            for (String sExchange : sExchanges) {
+                Exchange exchange = new Exchange(this, sExchange);
+
+                PreferenceScreen alertThresholds = getPreferenceManager().createPreferenceScreen(this);
+                alertThresholds.setTitle(getString(R.string.pref_alert_limits, sExchange));
+
+                for (String sCurrency : exchange.getCurrencies()) {
+
+                    PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
+                    alertLimits.setTitle(sCurrency);
+                    String prefix = exchange.getIdentifier() + sCurrency.replace("/", "");
+
+                    // Upper limit
+                    EditTextPreference sHighInput = new EditTextPreference(this);
+                    sHighInput.setDefaultValue("999999");
+                    sHighInput.getEditText().setInputType(numberWithDecimal);
+                    sHighInput.setKey(prefix + "Upper");
+                    sHighInput.setTitle(getString(R.string.pref_alarm_upper_threshold, sExchange, sCurrency));
+                    sHighInput.setSummary(sAlertOverLimit);
+                    alertLimits.addPreference(sHighInput);
+
+                    // Lower limit
+                    EditTextPreference sLowInput = new EditTextPreference(this);
+                    sLowInput.setDefaultValue("0");
+                    sLowInput.getEditText().setInputType(numberWithDecimal);
+                    sLowInput.setKey(prefix + "Lower");
+                    sLowInput.setTitle(getString(R.string.pref_alarm_lower_threshold, sExchange, sCurrency));
+                    sLowInput.setSummary(sAlertUnderLimit);
+                    alertLimits.addPreference(sLowInput);
+
+                    alertThresholds.addPreference(alertLimits);
+                }
+
+                alertSettingsPref.addPreference(alertThresholds);
+            }
         }
     }
 
-    /* A nasty hack to fix a bug with PreferenceScreen background color on pre-Honeycomb devices with light themes */
-    @SuppressWarnings("deprecation")
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        super.onPreferenceTreeClick(preferenceScreen, preference);
-
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            if (preference != null)
-                if (preference instanceof PreferenceScreen)
-                    if (((PreferenceScreen) preference).getDialog() != null)
-                        ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
-        }
-        return false;
-    }
-
-    @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
         // Tell the widgets to update preferences
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
-
-        EasyTracker.getInstance(this).activityStop(this);
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
 }

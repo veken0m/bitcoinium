@@ -1,30 +1,29 @@
 
 package com.veken0m.bitcoinium.preferences;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetProvider;
+import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
+import com.veken0m.utils.Utils;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class PreferencesActivity extends PreferenceActivity {
+public class PreferencesActivity extends BasePreferenceActivity {
 
     @SuppressWarnings("deprecation")
     @Override
@@ -35,33 +34,44 @@ public class PreferencesActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_widgets);
         addPreferencesFromResource(R.xml.pref_price_alert_category);
         addPreferencesFromResource(R.xml.pref_notfication_tickers);
-        addPreferencesFromResource(R.xml.pref_miner);
+        generateMinerDownAlertPreferences();
         addPreferencesFromResource(R.xml.pref_about);
 
-        Preference devEmailPref = findPreference("devEmailPref");
-        Preference devTwitterPref = findPreference("devTwitterPref");
-        Preference xchangeGithubPref = findPreference("xchangeGithubPref");
-        Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
-        Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
-        Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
-        Preference alarmSettings = findPreference("alarmSettingsPref");
-        Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
-        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
-        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
-        Preference bitcoiniumGithubPref = findPreference("bitcoiniumGithubPref");
-        Preference playstoreGithubPref = findPreference("playstoreGithubPref");
+        String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
+        PreferenceScreen defaultCurrencyPref = (PreferenceScreen) findPreference("defaultCurrencyPref");
+        PreferenceCategory notificationSettingsPref = (PreferenceCategory) findPreference("notificationSettingsPref");
 
-        //ActionBar bar = getSupportActionBar();
-        //bar.setDisplayHomeAsUpEnabled(true);
-        //bar.show();
+        for (String sExchange : sExchanges) {
+            Exchange exchange = new Exchange(this, sExchange);
+            String[] sCurrencies = exchange.getCurrencies();
 
-        if (android.os.Build.VERSION.SDK_INT <= 11) {
-            // there's a display bug in 2.1, 2.2, 2.3 (unsure about 2.0)
-            // which causes PreferenceScreens to have a black background.
-            // https://code.google.com/p/android/issues/detail?id=4611
-            setTheme(android.R.style.Theme_Light);
+            PreferenceScreen prefScreen = getPreferenceManager().createPreferenceScreen(this);
+            prefScreen.setTitle(getString(R.string.pref_notif_tickers, sExchange));
+
+            // Default Currency List
+            ListPreference currencies = new ListPreference(this);
+            currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
+            currencies.setEntries(sCurrencies);
+            currencies.setEntryValues(sCurrencies);
+            currencies.setTitle(sExchange + " " + getString(R.string.currency));
+            currencies.setSummary(getString(R.string.pref_currency_displayed, sExchange));
+            currencies.setDefaultValue(exchange.getDefaultCurrency());
+
+            defaultCurrencyPref.addPreference(currencies);
+
+            // Notification Drawer Ticker
+            for (String sCurrency : sCurrencies) {
+
+                CheckBoxPreference tickerCheckBox = new CheckBoxPreference(this);
+                tickerCheckBox.setDefaultValue(false);
+                tickerCheckBox.setKey(exchange.getIdentifier() + sCurrency.replace("/", "") + "TickerPref");
+                tickerCheckBox.setTitle(sCurrency);
+                prefScreen.addPreference(tickerCheckBox);
+            }
+            notificationSettingsPref.addPreference(prefScreen);
         }
 
+        Preference devEmailPref = findPreference("devEmailPref");
         if (devEmailPref != null) {
             devEmailPref
                     .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -79,24 +89,7 @@ public class PreferencesActivity extends PreferenceActivity {
                     });
         }
 
-        Preference notificationRequestPref = findPreference("notificationRequestPref");
-        if (notificationRequestPref != null) {
-            notificationRequestPref
-                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            Intent i = new Intent(Intent.ACTION_SEND);
-                            i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.emailAddress)});
-                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - Notification Ticker Request");
-                            startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
-
-                            return true;
-                        }
-                    });
-        }
-
+        Preference devTwitterPref = findPreference("devTwitterPref");
         if (devTwitterPref != null) {
             devTwitterPref
                     .setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -110,7 +103,7 @@ public class PreferencesActivity extends PreferenceActivity {
                     });
         }
 
-
+        Preference xchangeGithubPref = findPreference("xchangeGithubPref");
         if (xchangeGithubPref != null) {
             xchangeGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -123,6 +116,7 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference playstoreGithubPref = findPreference("playstoreGithubPref");
         if (playstoreGithubPref != null) {
             playstoreGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -134,6 +128,7 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference bitcoiniumGithubPref = findPreference("bitcoiniumGithubPref");
         if (bitcoiniumGithubPref != null) {
             bitcoiniumGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
@@ -146,6 +141,7 @@ public class PreferencesActivity extends PreferenceActivity {
         }
 
         // Widget Customization
+        Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
         if (widgetBackgroundColorPref != null) {
             widgetBackgroundColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -160,6 +156,7 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
         if (widgetMainTextColorPref != null) {
             widgetMainTextColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -175,6 +172,7 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
         if (widgetSecondaryTextColorPref != null) {
             widgetSecondaryTextColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -190,6 +188,7 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference alarmSettings = findPreference("alarmSettingsPref");
         if (alarmSettings != null) {
             alarmSettings.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -202,90 +201,45 @@ public class PreferencesActivity extends PreferenceActivity {
             });
         }
 
+        Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
         if (bitcoinDonationAddressPref != null) {
             bitcoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    String donationAddress = getResources().getString(R.string.bitcoinDonationAddress);
-                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setText(donationAddress);
-                    } else {
-                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
-                    }
-                    Context context = getApplicationContext();
-                    if (context != null)
-                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
-
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.bitcoinDonationAddress);
                     return true;
                 }
             });
         }
 
+        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
         if (litecoinDonationAddressPref != null) {
             litecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    String donationAddress = getResources().getString(R.string.litecoinDonationAddress);
-                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setText(donationAddress);
-                    } else {
-                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
-                    }
-                    Context context = getApplicationContext();
-                    if (context != null)
-                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
-
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.litecoinDonationAddress);
                     return true;
                 }
             });
         }
 
+        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
         if (dogecoinDonationAddressPref != null) {
             dogecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    String donationAddress = getResources().getString(R.string.dogecoinDonationAddress);
-                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setText(donationAddress);
-                    } else {
-                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(getString(R.string.donationAddressText), donationAddress));
-                    }
-                    Context context = getApplicationContext();
-                    if (context != null)
-                        Toast.makeText(context, getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
-
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.dogecoinDonationAddress);
                     return true;
                 }
             });
         }
 
-    }
-
-    /* A nasty hack to fix a bug with PreferenceScreen background color on pre-Honeycomb devices with light themes */
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        super.onPreferenceTreeClick(preferenceScreen, preference);
-
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            if (preference != null)
-                if (preference instanceof PreferenceScreen)
-                    if (((PreferenceScreen) preference).getDialog() != null)
-                        ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
-        }
-        return false;
     }
 
     @Override
@@ -301,25 +255,11 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
         // Tell the widgets to update preferences
-        sendBroadcast(new Intent(this,
-                WidgetProvider.class).setAction(Constants.REFRESH));
-
-        sendBroadcast(new Intent(this,
-                MinerWidgetProvider.class).setAction(Constants.REFRESH));
-
-        EasyTracker.getInstance(this).activityStop(this);
+        sendBroadcast(new Intent(this,WidgetProvider.class).setAction(Constants.REFRESH));
+        sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
 }

@@ -11,6 +11,7 @@ import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.xchange.currency.Currencies;
@@ -173,6 +174,20 @@ public class Utils {
         NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
+    }
+
+    public static void copyDonationAddressToClipboard(Context context, int addressResourceId) {
+
+        String donationAddress = context.getResources().getString(addressResourceId);
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(donationAddress);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddressText), donationAddress));
+        }
+
+        Toast.makeText(context, context.getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
     }
 
 }
