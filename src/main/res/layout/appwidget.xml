@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/widgetLastText"
         android:layout_centerHorizontal="true"
-        android:text="@string/vol"
+        android:text="@string/volume"
         android:textSize="12dp">
     </TextView>
 

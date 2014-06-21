@@ -42,7 +42,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    static String loadCurrencyPref(Context context, int appWidgetId) {
+    public static String loadCurrencyPref(Context context, int appWidgetId) {
 
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
@@ -58,7 +58,7 @@ public class WidgetConfigureActivity extends PreferenceActivity {
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    static String loadExchangePref(Context context, int appWidgetId) {
+    public static String loadExchangePref(Context context, int appWidgetId) {
 
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);

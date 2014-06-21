@@ -12,8 +12,7 @@
             android:summary="@string/pref_notification_ticker_summary"
             android:title="@string/notificationDrawerTickers">
 
-            <PreferenceCategory android:title="@string/general">
-                <Preference android:summary="@string/pref_requires_widget"/>
+            <PreferenceCategory android:title="@string/enable">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="enableTickerPref"

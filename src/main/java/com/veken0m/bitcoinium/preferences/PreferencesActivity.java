@@ -1,5 +1,7 @@
 package com.veken0m.bitcoinium.preferences;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
@@ -31,7 +34,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
 
         addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_widgets);
-        addPreferencesFromResource(R.xml.pref_price_wigdet_extensions);
+        addPreferencesFromResource(R.xml.pref_price_widget_extensions);
         generateMinerDownAlertPreferences();
         addPreferencesFromResource(R.xml.pref_about);
 
@@ -43,9 +46,6 @@ public class PreferencesActivity extends BasePreferenceActivity {
             Exchange exchange = new Exchange(this, sExchange);
             String[] sCurrencies = exchange.getCurrencies();
 
-            PreferenceScreen prefScreen = getPreferenceManager().createPreferenceScreen(this);
-            prefScreen.setTitle(getString(R.string.pref_notif_tickers, sExchange));
-
             // Default Currency List
             ListPreference currencies = new ListPreference(this);
             currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
@@ -56,17 +56,38 @@ public class PreferencesActivity extends BasePreferenceActivity {
             currencies.setDefaultValue(exchange.getDefaultCurrency());
 
             defaultCurrencyPref.addPreference(currencies);
+        }
 
-            // Notification Drawer Ticker
-            for (String sCurrency : sCurrencies) {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
+        ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
+        int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
+        if (widgetIds.length > 0) {
+
+            for(int appWidgetId : widgetIds) {
+
+                // Obtain Widget configuration
+                String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
+                String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
+                Exchange exchange = new Exchange(this, widgetExchange);
+
+                // Create Checkbox
                 CheckBoxPreference tickerCheckBox = new CheckBoxPreference(this);
                 tickerCheckBox.setDefaultValue(false);
-                tickerCheckBox.setKey(exchange.getIdentifier() + sCurrency.replace("/", "") + "TickerPref");
-                tickerCheckBox.setTitle(sCurrency);
-                prefScreen.addPreference(tickerCheckBox);
+                tickerCheckBox.setKey(widgetExchange + widgetCurrency.replace("/", "") + "TickerPref");
+                tickerCheckBox.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);
+
+                // Add to screen
+                notificationSettingsPref.addPreference(tickerCheckBox);
             }
-            notificationSettingsPref.addPreference(prefScreen);
+
+        } else {
+            Preference pref = new Preference(this);
+            pref.setLayoutResource(R.layout.red_preference);
+            pref.setTitle(getString(R.string.noWidgetFound));
+            pref.setSummary(getString(R.string.pref_requires_widget));
+
+            notificationSettingsPref.addPreference(pref);
         }
 
         Preference devEmailPref = findPreference("devEmailPref");

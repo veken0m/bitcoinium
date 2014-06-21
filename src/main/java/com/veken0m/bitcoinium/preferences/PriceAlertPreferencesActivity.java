@@ -1,13 +1,17 @@
 package com.veken0m.bitcoinium.preferences;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 
 import com.veken0m.bitcoinium.R;
+import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
@@ -27,25 +31,29 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
             String sAlertOverLimit = getString(R.string.pref_alert_over_summary);
             String sAlertUnderLimit = getString(R.string.pref_alert_under_summary);
 
-            String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
-            for (String sExchange : sExchanges) {
-                Exchange exchange = new Exchange(this, sExchange);
+            AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
+            ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
+            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
-                PreferenceScreen alertThresholds = getPreferenceManager().createPreferenceScreen(this);
-                alertThresholds.setTitle(getString(R.string.pref_alert_limits, sExchange));
+            if (widgetIds.length > 0) {
 
-                for (String sCurrency : exchange.getCurrencies()) {
+                for(int appWidgetId : widgetIds) {
+
+                    // Obtain Widget configuration
+                    String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
+                    String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
+                    Exchange exchange = new Exchange(this, widgetExchange);
 
                     PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
-                    alertLimits.setTitle(sCurrency);
-                    String prefix = exchange.getIdentifier() + sCurrency.replace("/", "");
+                    alertLimits.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);
+                    String prefix = exchange.getIdentifier() + widgetCurrency.replace("/", "");
 
                     // Upper limit
                     EditTextPreference sHighInput = new EditTextPreference(this);
                     sHighInput.setDefaultValue("999999");
                     sHighInput.getEditText().setInputType(numberWithDecimal);
                     sHighInput.setKey(prefix + "Upper");
-                    sHighInput.setTitle(getString(R.string.pref_alert_upper_limit, sExchange, sCurrency));
+                    sHighInput.setTitle(getString(R.string.pref_alert_upper_limit, exchange.getExchangeName(), widgetCurrency));
                     sHighInput.setSummary(sAlertOverLimit);
                     alertLimits.addPreference(sHighInput);
 
@@ -54,14 +62,19 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     sLowInput.setDefaultValue("0");
                     sLowInput.getEditText().setInputType(numberWithDecimal);
                     sLowInput.setKey(prefix + "Lower");
-                    sLowInput.setTitle(getString(R.string.pref_alert_lower_threshold, sExchange, sCurrency));
+                    sLowInput.setTitle(getString(R.string.pref_alert_lower_threshold, exchange.getExchangeName(), widgetCurrency));
                     sLowInput.setSummary(sAlertUnderLimit);
                     alertLimits.addPreference(sLowInput);
 
-                    alertThresholds.addPreference(alertLimits);
+                    alertSettingsPref.addPreference(alertLimits);
                 }
+            } else {
+                Preference pref = new Preference(this);
+                pref.setLayoutResource(R.layout.red_preference);
+                pref.setTitle(getString(R.string.noWidgetFound));
+                pref.setSummary(getString(R.string.pref_requires_widget));
 
-                alertSettingsPref.addPreference(alertThresholds);
+                alertSettingsPref.addPreference(pref);
             }
         }
     }

@@ -58,7 +58,6 @@ public class WidgetProvider extends BaseWidgetProvider {
             int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             readGeneralPreferences(this);
-            //notifyUserOfMilli(this); //don't think this is needed anymore
 
             if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
 
@@ -105,12 +104,13 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         String volumeString = (ticker.getVolume() != null) ?
                                 Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true) : getString(R.string.notAvailable);
+                        volumeString += " " + pair.baseSymbol;
 
                         setBidAskHighLow(ticker, views, pair);
 
                         views.setTextViewText(R.id.widgetExchange, shortName);
                         views.setTextViewText(R.id.widgetLastText, lastString);
-                        views.setTextViewText(R.id.widgetVolText, getString(R.string.volume) + volumeString);
+                        views.setTextViewText(R.id.widgetVolText, getString(R.string.vol) + ": " + volumeString);
                         views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
                         updateWidgetTheme(views);
 
@@ -223,8 +223,6 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         public void checkAlarm(CurrencyPair pair, float lastFloat, Exchange exchange) {
 
-            removeOldAlarmKeys(this, exchange.getIdentifier());
-
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
 
@@ -243,63 +241,6 @@ public class WidgetProvider extends BaseWidgetProvider {
                 // String text = exchangeName +
                 // "notification alarm thresholds are invalid";
                 // Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-            }
-        }
-
-        public void removeOldAlarmKeys(Context context, String exchangeKey) {
-
-            if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-            if (prefs.contains(exchangeKey + "Upper") || prefs.contains(exchangeKey + "Lower")) {
-
-                prefs.edit().remove(exchangeKey + "Upper").commit();
-                prefs.edit().remove(exchangeKey + "Lower").commit();
-                prefs.edit().remove(exchangeKey + "TickerPref").commit();
-
-                notifyUserOfAlarmUpgrade(context);
-            }
-        }
-
-        public void notifyUserOfAlarmUpgrade(Context context) {
-
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-            String tickerText = getString(R.string.priceAlarmUpgrade);
-            String notifText = getString(R.string.priceAlarmUpgrade2);
-            Notification notif = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
-
-            Intent notifIntent = new Intent(context, PriceAlertPreferencesActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifIntent, 0);
-
-            notif.setLatestEventInfo(context, "Price Alarm upgraded", notifText, contentIntent);
-            notif.defaults |= Notification.DEFAULT_VIBRATE;
-
-            mNotificationManager.notify(1337, notif);
-        }
-
-        public void notifyUserOfMilli(Context context) {
-
-            if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-            if (prefs.getBoolean("warnUnitChangePref", true)) {
-
-                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-                String tickerText = getString(R.string.milliBtcNotice);
-                String notifText = getString(R.string.millioBtcNoticeInfo);
-                Notification notif = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
-
-                Intent notifIntent = new Intent(context, PreferencesActivity.class);
-                PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notifIntent, 0);
-
-                notif.setLatestEventInfo(context, getString(R.string.mtcByDefault), notifText, contentIntent);
-                notif.defaults |= Notification.DEFAULT_VIBRATE;
-
-                mNotificationManager.notify(817, notif);
-
-                Editor editor = prefs.edit();
-                editor.putBoolean("warnUnitChangePref", false);
-                editor.commit();
             }
         }
 
