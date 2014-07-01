@@ -71,4 +71,13 @@
         android:background="@drawable/ab_stacked_solid_bitcoinium"
         android:text="@string/exgraphButton"/>
 
+    <Button
+        android:id="@+id/xtrader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/ab_stacked_solid_bitcoinium"
+        android:text="@string/xtrader"/>
+
 </LinearLayout>
