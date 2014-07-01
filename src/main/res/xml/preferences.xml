@@ -6,36 +6,28 @@
         android:summary="Chart Scale"
         android:title="Display Settings">
 
-        <!--ListPreference
-            android:entries="@array/exchangesBitcoiniumWS"
-            android:entryValues="@array/exchangesBitcoiniumWS"
-            android:key="exchangeXTrader"
-            android:summary="Exchange symbol used for XTrader"
-            android:title="Trading Symbol"
-            android:defaultValue="BITSTAMP_USD"/-->
-
         <ListPreference
+            android:defaultValue="24h"
             android:entries="@array/timewindow"
             android:entryValues="@array/timewindow_values"
             android:key="timewindow"
             android:summary="Chart Time Scale"
-            android:title="Chart Time Scale"
-            android:defaultValue="24h"/>
+            android:title="Chart Time Scale" />
 
         <ListPreference
+            android:defaultValue="5p"
             android:entries="@array/pricewindow"
             android:entryValues="@array/pricewindow_values"
             android:key="pricewindow"
             android:summary="Chart Price Scale"
-            android:title="Chart Price Scale"
-            android:defaultValue="5p"/>
+            android:title="Chart Price Scale" />
 
         <EditTextPreference
+            android:defaultValue=".5"
+            android:inputType="numberDecimal"
             android:key="ordergridsize"
             android:summary="Set the grid to multiples of this value."
-            android:title="Order Grid Size (BTC)"
-            android:inputType="numberDecimal"
-            android:defaultValue=".5"/>
+            android:title="Order Grid Size (BTC)" />
 
     </PreferenceCategory>
 
@@ -46,109 +38,109 @@
         <CheckBoxPreference
             android:key="enableTradingKey"
             android:summary="Unhides the Buy and Sell buttons"
-            android:title="Show trading buttons"/>
+            android:title="Show trading buttons" />
         <PreferenceScreen
-            android:summary="Account credentials"
             android:enabled="false"
+            android:summary="Account credentials"
             android:title="Bitstamp Account">
             <EditTextPreference
                 android:key="bitstampUsername"
                 android:summary="Enter your Bitstamp Username"
-                android:title="Username"/>
+                android:title="Username" />
             <EditTextPreference
                 android:key="bitstampPassword"
                 android:summary="Enter your Bitstamp Password"
-                android:title="Password"/>
+                android:title="Password" />
             <EditTextPreference
                 android:key="bitstampApiKey"
                 android:summary="Enter your Bitstamp API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="bitstampSecretKey"
                 android:summary="Enter your Bitstamp Secret Key"
-                android:title="Secret Key"/>
+                android:title="Secret Key" />
             <PreferenceCategory
                 android:summary="Trading Settings"
                 android:title="Settings">
-            <ListPreference
-                android:entries="@array/bitstampcurrencies"
-                android:entryValues="@array/bitstampcurrencies"
-                android:key="bitstampTradeCurrency"
-                android:summary="Set your main trading currency"
-                android:title="Trade Currency"
-                android:defaultValue="BTC/USD"/>
+                <ListPreference
+                    android:defaultValue="BTC/USD"
+                    android:entries="@array/bitstampcurrencies"
+                    android:entryValues="@array/bitstampcurrencies"
+                    android:key="bitstampTradeCurrency"
+                    android:summary="Set your main trading currency"
+                    android:title="Trade Currency" />
             </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen
-            android:summary="Account credentials"
             android:enabled="false"
+            android:summary="Account credentials"
             android:title="BTC-E Account">
             <EditTextPreference
                 android:key="btceApiKey"
                 android:summary="Enter your BTC-E API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="btceSecretKey"
                 android:summary="Enter your BTC-E Secret Key"
-                android:title="Secret Key"/>
+                android:title="Secret Key" />
             <PreferenceCategory
                 android:summary="Trading Settings"
                 android:title="Settings">
-            <ListPreference
-                android:entries="@array/btcecurrencies"
-                android:entryValues="@array/btcecurrencies"
-                android:key="btceTradeCurrency"
-                android:summary="Set your main trading currency"
-                android:title="Trade Currency"
-                android:defaultValue="BTC/USD"/>
+                <ListPreference
+                    android:defaultValue="BTC/USD"
+                    android:entries="@array/btcecurrencies"
+                    android:entryValues="@array/btcecurrencies"
+                    android:key="btceTradeCurrency"
+                    android:summary="Set your main trading currency"
+                    android:title="Trade Currency" />
             </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen
-            android:summary="Account credentials"
             android:enabled="false"
+            android:summary="Account credentials"
             android:title="BTC China Account">
             <EditTextPreference
                 android:key="btcchinaApiKey"
                 android:summary="Enter your BTC China API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="btcchinaSecretKey"
                 android:summary="Enter your BTC China Secret Key"
-                android:title="Secret Key"/>
+                android:title="Secret Key" />
             <PreferenceCategory
-            android:summary="Trading Settings"
-            android:title="Settings">
-            <ListPreference
-                android:entries="@array/btcchinacurrencies"
-                android:entryValues="@array/btcchinacurrencies"
-                android:key="btcchinaTradeCurrency"
-                android:summary="Set your main trading currency"
-                android:title="Trade Currency"
-                android:defaultValue="BTC/CNY"/>
-        </PreferenceCategory>
+                android:summary="Trading Settings"
+                android:title="Settings">
+                <ListPreference
+                    android:defaultValue="BTC/CNY"
+                    android:entries="@array/btcchinacurrencies"
+                    android:entryValues="@array/btcchinacurrencies"
+                    android:key="btcchinaTradeCurrency"
+                    android:summary="Set your main trading currency"
+                    android:title="Trade Currency" />
+            </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen
-            android:summary="Account credentials"
             android:enabled="false"
+            android:summary="Account credentials"
             android:title="Kraken Account">
             <EditTextPreference
                 android:key="krakenApiKey"
                 android:summary="Enter your Kraken API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="krakenSecretKey"
                 android:summary="Enter your Kraken Secret Key"
-                android:title="Secret Key"/>
+                android:title="Secret Key" />
             <PreferenceCategory
                 android:summary="Trading Settings"
                 android:title="Settings">
-            <ListPreference
-                android:entries="@array/krakencurrencies"
-                android:entryValues="@array/krakencurrencies"
-                android:key="krakenTradeCurrency"
-                android:summary="Set your main trading currency"
-                android:title="Trade Currency"
-                android:defaultValue="BTC/EUR"/>
+                <ListPreference
+                    android:defaultValue="BTC/EUR"
+                    android:entries="@array/krakencurrencies"
+                    android:entryValues="@array/krakencurrencies"
+                    android:key="krakenTradeCurrency"
+                    android:summary="Set your main trading currency"
+                    android:title="Trade Currency" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

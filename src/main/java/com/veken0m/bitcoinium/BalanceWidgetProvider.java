@@ -80,7 +80,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
                         BitcoinAddress bitcoinAddress = blockchain.getBitcoinAddress(walletAddress);
 
                         // If no nickname chosen, use 20 first characters of address
-                        if(walletNickname.length() == 0)
+                        if (walletNickname.length() == 0)
                             walletNickname = bitcoinAddress.getAddress().substring(0, 20);
 
                         views.setTextViewText(R.id.widgetAddress, walletNickname);
@@ -95,13 +95,13 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
                             float value = ticker.getLast().floatValue();
 
                             views.setTextViewText(R.id.widgetLastTransaction, Utils.formatWidgetMoney(bitcoinAddress.getFinalBalanceDecimal().floatValue() * value, currencyPair, true, false));
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             views.setTextViewText(R.id.widgetLastTransaction, getString(R.string.notAvailable));
                         }
 
                         updateWidgetTheme(views);
 
-                       // if (pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
+                        // if (pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
                         //createTickerNotif(pair, lastString, exchange);
 
                     } catch (Exception e) {

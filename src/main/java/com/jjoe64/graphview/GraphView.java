@@ -48,6 +48,7 @@ abstract public class GraphView extends LinearLayout {
     private double manualMaxYValue;
     private double manualMinYValue;
     private GraphViewStyle graphViewStyle;
+
     /**
      * @param context
      * @param title   [optional]

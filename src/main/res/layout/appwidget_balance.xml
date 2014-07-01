@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout android:id="@+id/widget_layout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="140dp"
-                android:layout_height="82dp"
-                android:background="#80000000"
-                android:padding="5dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
+    android:layout_width="140dp"
+    android:layout_height="82dp"
+    android:background="#80000000"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/widgetAddress"
@@ -16,8 +17,7 @@
         android:paddingTop="1dp"
         android:text="@string/address"
         android:textColor="#FDD017"
-        android:textSize="11dp">
-    </TextView>
+        android:textSize="11dp"></TextView>
 
     <TextView
         android:id="@+id/widgetBalance"
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/balance"
         android:textColor="#FDD017"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/widgetLastTransaction"
@@ -36,8 +36,7 @@
         android:layout_below="@id/widgetBalance"
         android:layout_centerHorizontal="true"
         android:text="@string/balanceValue"
-        android:textSize="12dp">
-    </TextView>
+        android:textSize="12dp"></TextView>
 
     <TextView
         android:id="@+id/label"
@@ -46,12 +45,12 @@
         android:layout_below="@id/widgetLastTransaction"
         android:layout_centerHorizontal="true"
         android:text="@string/time"
-        android:textSize="10dp"/>
+        android:textSize="10dp" />
 
     <Button
         android:id="@+id/widgetButton"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#00000000"/>
+        android:background="#00000000" />
 
 </RelativeLayout>

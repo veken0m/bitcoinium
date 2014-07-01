@@ -16,6 +16,7 @@ public class ScaleGestureDetector {
     private Method method_getScaleFactor;
     private Method method_isInProgress;
     private Method method_onTouchEvent;
+
     /**
      * @param context
      * @param simpleOnScaleGestureListener

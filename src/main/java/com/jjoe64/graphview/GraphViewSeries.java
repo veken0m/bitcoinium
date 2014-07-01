@@ -12,6 +12,7 @@ public class GraphViewSeries {
     final GraphViewSeriesStyle style;
     private final List<GraphView> graphViews = new ArrayList<GraphView>();
     GraphViewData[] values;
+
     public GraphViewSeries(GraphViewData[] values) {
         description = null;
         style = new GraphViewSeriesStyle();

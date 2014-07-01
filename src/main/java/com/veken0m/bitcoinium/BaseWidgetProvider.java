@@ -15,8 +15,8 @@ import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
 
-import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.BalanceWidgetProvider.BalanceUpdateService;
+import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;

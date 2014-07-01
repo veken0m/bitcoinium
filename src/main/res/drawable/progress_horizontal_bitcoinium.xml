@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -21,18 +20,18 @@
 
     <item
         android:id="@android:id/background"
-        android:drawable="@drawable/progress_bg_bitcoinium"/>
+        android:drawable="@drawable/progress_bg_bitcoinium" />
 
     <item android:id="@android:id/secondaryProgress">
         <scale
             android:drawable="@drawable/progress_secondary_bitcoinium"
-            android:scaleWidth="100%"/>
+            android:scaleWidth="100%" />
     </item>
 
     <item android:id="@android:id/progress">
         <scale
             android:drawable="@drawable/progress_primary_bitcoinium"
-            android:scaleWidth="100%"/>
+            android:scaleWidth="100%" />
     </item>
 
 </layer-list>

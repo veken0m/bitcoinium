@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout android:id="@+id/minerwidget_layout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="120dp"
-                android:layout_height="82dp"
-                android:background="#80000000"
-                android:padding="5dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/minerwidget_layout"
+    android:layout_width="120dp"
+    android:layout_height="82dp"
+    android:background="#80000000"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/widgetMiner"
@@ -16,8 +17,7 @@
         android:paddingTop="1dp"
         android:text="@string/miner"
         android:textColor="#FDD017"
-        android:textSize="12dp">
-    </TextView>
+        android:textSize="12dp"></TextView>
 
     <TextView
         android:id="@+id/widgetMinerHashrate"
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/hashrate"
         android:textColor="#FDD017"
-        android:textSize="17dp"/>
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/widgetBTCPayout"
@@ -36,8 +36,7 @@
         android:layout_below="@id/widgetMinerHashrate"
         android:layout_centerHorizontal="true"
         android:text="@string/payout"
-        android:textSize="12dp">
-    </TextView>
+        android:textSize="12dp"></TextView>
 
     <TextView
         android:id="@+id/refreshtime"
@@ -46,12 +45,12 @@
         android:layout_below="@id/widgetBTCPayout"
         android:layout_centerHorizontal="true"
         android:text="@string/time"
-        android:textSize="10dp"/>
+        android:textSize="10dp" />
 
     <Button
         android:id="@+id/widgetMinerButton"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#00000000"/>
+        android:background="#00000000" />
 
 </RelativeLayout>

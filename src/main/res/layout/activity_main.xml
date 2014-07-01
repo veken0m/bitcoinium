@@ -1,118 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#000000">
+    android:background="#000000"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/tradingBalances"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
-        <View android:layout_width="0dp" android:layout_height="18dp" android:layout_weight="1"> </View>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_weight="1"></View>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Balances: "
-            android:textIsSelectable="true"
-            android:textSize="13sp"
             android:textColor="@color/white"
-            />
-  <TextView
+            android:textIsSelectable="true"
+            android:textSize="13sp" />
+
+        <TextView
             android:id="@+id/balance_btc"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="*****"
-            android:textIsSelectable="true"
-            android:textSize="13sp"
             android:textColor="@color/white"
-            >
+            android:textIsSelectable="true"
+            android:textSize="13sp">
 
-    </TextView>
-<View android:layout_width="0dp" android:layout_height="18dp" android:layout_weight="1"> </View>
-    <TextView
-        android:id="@+id/balance_fiat"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="*****"
-        android:textIsSelectable="true"
-        android:textSize="13sp" 
-        android:textColor="@color/white"
-        >
+        </TextView>
 
-    </TextView>
-<View android:layout_width="0dp" android:layout_height="18dp" android:layout_weight="1"> </View>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_weight="1"></View>
+
+        <TextView
+            android:id="@+id/balance_fiat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="*****"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="13sp">
+
+        </TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_weight="1"></View>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Market Value: "
-            android:textIsSelectable="true"
-            android:textSize="13sp"
             android:textColor="@color/white"
-            />
-    <TextView
-        android:id="@+id/account_value"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="*****"
-        android:textIsSelectable="true"
-        android:textSize="13sp"
-        android:textColor="@color/white"
-       >
+            android:textIsSelectable="true"
+            android:textSize="13sp" />
 
-    </TextView>   
-      <View android:layout_width="0dp" android:layout_height="18dp" android:layout_weight="1"> </View>  
+        <TextView
+            android:id="@+id/account_value"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="*****"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="13sp">
+
+        </TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_weight="1"></View>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tradingButtons"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-	<View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"> </View>
-     <Button
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></View>
+
+        <Button
             android:id="@+id/buy_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/buy" 
-            android:onClick="buy"/>
-    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"> </View>
+            android:onClick="buy"
+            android:text="@string/buy" />
 
-	<TextView
-	    android:id="@+id/order_coords"
-	    android:layout_width="134dp"
-	    android:layout_height="match_parent"
-	    android:layout_weight="1.76"
-	    android:gravity="center"
-	    android:text=""
-	    android:textIsSelectable="true"
-	    android:textSize="18sp" 
-	    android:textColor="@color/white" >
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></View>
 
-    </TextView>
-	<View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"> </View>
-    <Button
+        <TextView
+            android:id="@+id/order_coords"
+            android:layout_width="134dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.76"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="18sp">
+
+        </TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></View>
+
+        <Button
             android:id="@+id/sell_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sell" 
-            android:onClick="sell"/>
-	<View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"> </View>
+            android:onClick="sell"
+            android:text="@string/sell" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></View>
     </LinearLayout>
 
-    
+
     <com.xeiam.xbtctrader.MainView
-            android:id="@+id/main_view"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"/>
+        android:id="@+id/main_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </LinearLayout>

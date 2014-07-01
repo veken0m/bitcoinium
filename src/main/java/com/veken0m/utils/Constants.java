@@ -9,7 +9,7 @@ public class Constants {
     public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     public static final String PREFS_NAME_MINER = "com.veken0m.bitcoinium.MinerWidgetProvider";
     public static final String PREFS_NAME_PRICE = "com.veken0m.bitcoinium.WidgetProvider";
-    public static final String PREFS_WALLET_ADDRESS= "com.veken0m.bitcoinium.BalanceWidgetProvider";
+    public static final String PREFS_WALLET_ADDRESS = "com.veken0m.bitcoinium.BalanceWidgetProvider";
     public static final String[] METRIC_UNITS = {"m", "µ", "n", "p", "f"};
 
     // Defaults
@@ -17,6 +17,7 @@ public class Constants {
     public static final String DEFAULT_CURRENCY_PAIR = "BTC/USD";
     public static final String DEFAULT_MINING_POOL = "BitMinter";
     public static Map<String, String> CRYPTO_SYMBOLS = new HashMap<String, String>();
+
     static {
         CRYPTO_SYMBOLS = new HashMap<String, String>();
         CRYPTO_SYMBOLS.put("BTC", "฿");

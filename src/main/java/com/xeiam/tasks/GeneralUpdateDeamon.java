@@ -1,64 +1,62 @@
 package com.xeiam.tasks;
 
-import com.xeiam.xbtctrader.XTraderActivity;
-
 import android.os.AsyncTask;
 
-public class GeneralUpdateDeamon extends AsyncTask<String,Void,Boolean>{
+import com.xeiam.xbtctrader.XTraderActivity;
 
-	private boolean isActive=true;
+public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean> {
 
-	public static final int PERIOD=2500;
-	public static String[] updateOrder={"ticker","orderbook","ticker","account","ticker","orders"};
+    public static final int PERIOD = 2500;
+    public static String[] updateOrder = {"ticker", "orderbook", "ticker", "account", "ticker", "orders"};
+    XTraderActivity a;
+    private boolean isActive = true;
 
-	XTraderActivity a;
-	
-	public GeneralUpdateDeamon(XTraderActivity mainActivity){
-		this.a=mainActivity;
-	}
+    public GeneralUpdateDeamon(XTraderActivity mainActivity) {
+        this.a = mainActivity;
+    }
 
-	@Override
-	protected Boolean doInBackground(String... params) {
+    @Override
+    protected Boolean doInBackground(String... params) {
 
-		int idx=0;
-		while(isActive){
+        int idx = 0;
+        while (isActive) {
 
-				String query=updateOrder[idx%updateOrder.length];
-			
-				if(query.equalsIgnoreCase("ticker")){
-					XTraderActivity.exchangeAccount.queryLastTicker();
-				}else if(query.equalsIgnoreCase("orderbook")){
-					XTraderActivity.exchangeAccount.queryOrderBook();
-				}else if(query.equalsIgnoreCase("account")){
-					XTraderActivity.exchangeAccount.queryRemoteAccountInfo();
-				}else if(query.equalsIgnoreCase("orders")){
-					XTraderActivity.exchangeAccount.queryOpenOrders();
-				}
+            String query = updateOrder[idx % updateOrder.length];
 
-				sleep();
-				idx++;
-			}
+            if (query.equalsIgnoreCase("ticker")) {
+                XTraderActivity.exchangeAccount.queryLastTicker();
+            } else if (query.equalsIgnoreCase("orderbook")) {
+                XTraderActivity.exchangeAccount.queryOrderBook();
+            } else if (query.equalsIgnoreCase("account")) {
+                XTraderActivity.exchangeAccount.queryRemoteAccountInfo();
+            } else if (query.equalsIgnoreCase("orders")) {
+                XTraderActivity.exchangeAccount.queryOpenOrders();
+            }
 
-		return true;	
-}
+            sleep();
+            idx++;
+        }
+
+        return true;
+    }
 
 
-	public boolean isActive() {
-		return isActive;
-	}
+    public boolean isActive() {
+        return isActive;
+    }
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 
-	private void sleep(){
-		try {
-			Thread.sleep(PERIOD);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
+    private void sleep() {
+        try {
+            Thread.sleep(PERIOD);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
 }

@@ -65,7 +65,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
 
         if (widgetIds.length > 0) {
 
-            for(int appWidgetId : widgetIds) {
+            for (int appWidgetId : widgetIds) {
 
                 // Obtain Widget configuration
                 String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);

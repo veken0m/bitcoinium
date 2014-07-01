@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout android:id="@+id/orderbooklayout"
-             xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:stretchColumns="*">
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/orderbooklayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="*">
 
     <LinearLayout
         android:id="@+id/spinner1"
@@ -24,7 +25,7 @@
             android:id="@+id/orderbook_exchange_spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <!--TextView
             android:id="@+id/currency_header"
@@ -38,7 +39,7 @@
             android:id="@+id/orderbook_currency_spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <!--TextView
@@ -59,7 +60,7 @@
             android:padding="3dip"
             android:text="@string/bids"
             android:textColor="@color/ics_blue"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
 
         <TextView
@@ -69,14 +70,14 @@
             android:padding="3dip"
             android:text="@string/asks"
             android:textColor="@color/ics_blue"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </TableRow>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
         android:background="@color/ics_blue"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <TableRow>
 
@@ -87,7 +88,7 @@
             android:gravity="center_horizontal"
             android:text="@string/price"
             android:textColor="@color/ics_blue"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:layout_height="fill_parent"
@@ -96,7 +97,7 @@
             android:gravity="center_horizontal"
             android:text="@string/amount"
             android:textColor="@color/ics_blue"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:layout_height="fill_parent"
@@ -105,7 +106,7 @@
             android:gravity="center_horizontal"
             android:text="@string/price"
             android:textColor="@color/ics_blue"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:layout_height="fill_parent"
@@ -114,7 +115,7 @@
             android:gravity="center_horizontal"
             android:text="@string/amount"
             android:textColor="@color/ics_blue"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </TableRow>
 
     <TableRow>
@@ -126,7 +127,7 @@
             android:background="@color/dark"
             android:gravity="center_horizontal"
             android:textColor="@color/ics_blue"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/bidAmountHeader"
@@ -135,7 +136,7 @@
             android:background="@color/dark"
             android:gravity="center_horizontal"
             android:textColor="@color/ics_blue"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/askPriceHeader"
@@ -144,7 +145,7 @@
             android:background="@color/dark"
             android:gravity="center_horizontal"
             android:textColor="@color/ics_blue"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/askAmountHeader"
@@ -153,14 +154,14 @@
             android:background="@color/dark"
             android:gravity="center_horizontal"
             android:textColor="@color/ics_blue"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
     </TableRow>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.2dp"
         android:background="@color/ics_blue"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <ScrollView
         android:id="@+id/table_scroll"
@@ -173,8 +174,7 @@
             android:id="@+id/orderlist"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
-        </TableLayout>
+            android:stretchColumns="*"></TableLayout>
     </ScrollView>
 
     <LinearLayout
@@ -190,8 +190,7 @@
             android:id="@+id/orderbook_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ProgressBar>
+            android:layout_height="wrap_content"></ProgressBar>
     </LinearLayout>
 
     <!-- <WebView

@@ -16,7 +16,6 @@ import com.veken0m.bitcoinium.BalanceWidgetProvider;
 import com.veken0m.bitcoinium.BitcoinAverageActivity;
 import com.veken0m.bitcoinium.BitcoinChartsActivity;
 import com.veken0m.bitcoinium.GraphActivity;
-import com.veken0m.bitcoinium.MainActivity;
 import com.veken0m.bitcoinium.MinerStatsActivity;
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.OrderbookActivity;
@@ -111,8 +110,7 @@ public class HomeMenuFragment extends Fragment {
         bitcoinChartsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bitcoinChartsActivity = new Intent(context, BitcoinChartsActivity.class);
-                startActivity(bitcoinChartsActivity);
+                startActivity(new Intent(context, BitcoinChartsActivity.class));
             }
         });
 
@@ -120,8 +118,7 @@ public class HomeMenuFragment extends Fragment {
         bitcoinAverageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bitcoinAverageActivity = new Intent(context, BitcoinAverageActivity.class);
-                startActivity(bitcoinAverageActivity);
+                startActivity(new Intent(context, BitcoinAverageActivity.class));
             }
         });
 
@@ -129,8 +126,7 @@ public class HomeMenuFragment extends Fragment {
         minerStatsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent minerstatsActivity = new Intent(context, MinerStatsActivity.class);
-                startActivity(minerstatsActivity);
+                startActivity(new Intent(context, MinerStatsActivity.class));
             }
         });
 
@@ -138,8 +134,7 @@ public class HomeMenuFragment extends Fragment {
         marketDepth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent webViewerActivity = new Intent(context, WebViewerActivity.class);
-                startActivity(webViewerActivity);
+                startActivity(new Intent(context, WebViewerActivity.class));
             }
         });
 
@@ -151,7 +146,7 @@ public class HomeMenuFragment extends Fragment {
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
                     // TODO: externalize
-                    final CharSequence items[] = new CharSequence[] {"bitstampUSD", "btcchinaCNY", "krakenUSD", "krakenEUR", "btceUSD", "btceRUR", "btceEUR"};
+                    final CharSequence items[] = new CharSequence[]{"bitstampUSD", "btcchinaCNY", "krakenUSD", "krakenEUR", "btceUSD", "btceRUR", "btceEUR"};
                     adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
 
                         @Override

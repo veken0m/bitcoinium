@@ -41,7 +41,7 @@
     <string name="OK">OK</string>
     <string name="orderbook">Orderbook</string>
     <string name="payout">Payout</string>
-    <string name="payoutUnits">Payout units</string>
+    <string name="payoutUnits">Balance units</string>
     <string name="price">Price</string>
     <string name="refresh">Refresh</string>
     <string name="sell">Sell</string>
@@ -228,7 +228,7 @@
     <string name="minerWidgetSettings">Miner Widget Settings</string>
     <string name="pref_hashrate_notification_summary">Enable notifications when total hashrate is below 0.01 Mh/s</string>
     <string name="pref_miner_info_summary">Required to access your miner\'s information</string>
-    <string name="pref_payout_unit_summary">Select the units used to display payout</string>
+    <string name="pref_payout_unit_summary">Select units used to display balances</string>
     <string name="pref_select_mining_pool_summary">Select the mining pool used for the widget</string>
 
     <!-- Translation not required below this line -->

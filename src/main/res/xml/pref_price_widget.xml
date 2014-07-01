@@ -10,7 +10,7 @@
             android:entryValues="@array/exchangeID"
             android:key="widgetExchangePref"
             android:summary="@string/pref_exchange_summary"
-            android:title="@string/pref_pickexchange"/>
+            android:title="@string/pref_pickexchange" />
 
         <ListPreference
             android:defaultValue="BTC/USD"
@@ -18,7 +18,7 @@
             android:entryValues="@array/bitstampcurrencies"
             android:key="widgetCurrencyPref"
             android:summary="@string/pref_currency_summary"
-            android:title="@string/pref_pickcurrency"/>
+            android:title="@string/pref_pickcurrency" />
     </PreferenceCategory>
 
 </PreferenceScreen>

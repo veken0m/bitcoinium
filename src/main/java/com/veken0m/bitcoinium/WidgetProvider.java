@@ -1,22 +1,17 @@
 package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.Exchange;
-import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
@@ -67,7 +62,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
                     if (exchangePref == null) continue; // skip to next widget
 
-                    if (exchangePref.toLowerCase().contains("mtgox")) exchangePref = "bitcoinaverage";
+                    if (exchangePref.toLowerCase().contains("mtgox"))
+                        exchangePref = "bitcoinaverage";
 
                     Exchange exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);

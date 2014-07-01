@@ -3,25 +3,25 @@ package com.xeiam.tasks;
 import com.xeiam.business.ExchangeAccount;
 
 
-public class GetHistoricalDataTask implements Runnable{
+public class GetHistoricalDataTask implements Runnable {
 
-	private final ExchangeAccount exchangeAccount;
-	
+    private final ExchangeAccount exchangeAccount;
 
-	public GetHistoricalDataTask(ExchangeAccount exchangeAccount){
-		this.exchangeAccount=exchangeAccount;
-	}
 
-	public void go(){
-		
-		Thread t=new Thread(this);
-		t.start();
-	}
+    public GetHistoricalDataTask(ExchangeAccount exchangeAccount) {
+        this.exchangeAccount = exchangeAccount;
+    }
 
-	@Override
-	public void run() {
-		exchangeAccount.queryTradeHistory();
-		exchangeAccount.queryOrderBook();
-	}
+    public void go() {
+
+        Thread t = new Thread(this);
+        t.start();
+    }
+
+    @Override
+    public void run() {
+        exchangeAccount.queryTradeHistory();
+        exchangeAccount.queryOrderBook();
+    }
 
 }

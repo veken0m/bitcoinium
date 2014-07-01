@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/graphlayout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:stretchColumns="1">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/graphlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:stretchColumns="1">
 
     <LinearLayout
         android:id="@+id/spinner1"
@@ -24,7 +25,7 @@
             android:id="@+id/graph_exchange_spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <!--TextView
             android:id="@+id/currency_header"
@@ -38,7 +39,7 @@
             android:id="@+id/graph_currency_spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,8 +48,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="35dip">
-    </LinearLayout>
+        android:paddingTop="35dip"></LinearLayout>
 
     <!-- Padding needed on graphView for Karma-Ad -->
     <!-- android:paddingBottom="50dip" -->
@@ -64,8 +64,7 @@
             android:id="@+id/graph_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ProgressBar>
+            android:layout_height="wrap_content"></ProgressBar>
     </LinearLayout>
 
     <!--     <WebView

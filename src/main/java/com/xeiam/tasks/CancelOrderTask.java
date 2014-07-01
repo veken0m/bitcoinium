@@ -5,25 +5,25 @@ import com.xeiam.xchange.service.polling.PollingTradeService;
 
 import java.io.IOException;
 
-public class CancelOrderTask  implements Runnable{
+public class CancelOrderTask implements Runnable {
 
-	private final ExchangeAccount exchangeAccount;
-	private final String orderId;
+    private final ExchangeAccount exchangeAccount;
+    private final String orderId;
 
-	public CancelOrderTask(String orderId,ExchangeAccount exchangeAccount){
-		this.orderId=orderId;
-		this.exchangeAccount=exchangeAccount;
-	}
-	
-	public void go(){
-		
-		Thread t=new Thread(this);
-		t.start();
-	}
+    public CancelOrderTask(String orderId, ExchangeAccount exchangeAccount) {
+        this.orderId = orderId;
+        this.exchangeAccount = exchangeAccount;
+    }
 
-	@Override
-	public void run() {
-		PollingTradeService tradeService=exchangeAccount.getTradeService();
+    public void go() {
+
+        Thread t = new Thread(this);
+        t.start();
+    }
+
+    @Override
+    public void run() {
+        PollingTradeService tradeService = exchangeAccount.getTradeService();
 
         try {
             tradeService.cancelOrder(orderId);
@@ -32,11 +32,7 @@ public class CancelOrderTask  implements Runnable{
         }
         exchangeAccount.queryOpenOrders();
 
-	}
-	
+    }
 
-	
-	
-	
 
 }

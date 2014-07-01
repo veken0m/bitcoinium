@@ -109,4 +109,5 @@ dependencies {
     //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
     // Authenticated API...
     //compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion")
+    //compile 'com.google.code.findbugs:jsr305:1.3.9'
 }

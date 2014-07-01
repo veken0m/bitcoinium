@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -20,15 +19,18 @@
 <resources>
 
     <style name="Theme.Bitcoinium" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_bitcoinium</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_bitcoinium
+        </item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Bitcoinium</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Bitcoinium</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Bitcoinium</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Bitcoinium</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Bitcoinium</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_bitcoinium</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_bitcoinium</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Bitcoinium</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_bitcoinium
+        </item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Bitcoinium
+        </item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Bitcoinium.Widget</item>
