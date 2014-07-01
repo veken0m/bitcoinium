@@ -42,6 +42,9 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     // Obtain Widget configuration
                     String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
+                    if(widgetCurrency == null || widgetExchange == null)
+                        continue;
+
                     Exchange exchange = new Exchange(this, widgetExchange);
 
                     PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
