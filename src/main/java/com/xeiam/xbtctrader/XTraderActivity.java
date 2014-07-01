@@ -86,10 +86,10 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
 
         //try to initialize the exchange
         if (exchangeAccount.isConnectionGood()) {
-            //startAccountDeamon();
+            startAccountDeamon();
             queryHistoricalData();
         } else if (exchangeAccount.init()) {
-            //startAccountDeamon();
+            startAccountDeamon();
             queryHistoricalData();
         } else {
             showAlert(DIALOG_EXCHANGE_CONNECTION_FAIL);
