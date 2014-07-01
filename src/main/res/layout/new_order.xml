@@ -59,7 +59,6 @@
             android:inputType="numberDecimal" />
 
         <TextView
-            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BTC" />
@@ -80,7 +79,6 @@
             android:layout_weight="1"></View>
 
         <TextView
-            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FOR:"
@@ -95,7 +93,6 @@
             android:inputType="numberDecimal" />
 
         <TextView
-            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="USD" />
