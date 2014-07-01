@@ -18,6 +18,7 @@
         <item>CEX.IO</item>
         <item>Coinbase</item>
         <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
         <item>Crypto-Trade</item>
         <!--item>Cryptsy</item-->
         <item>HitBTC</item>
@@ -46,6 +47,7 @@
         <item>cexio</item>
         <item>coinbase</item>
         <!--item>coinfloor</item-->
+        <item>cryptonit</item>
         <item>cryptotrade</item>
         <!--item>cryptsy</item-->
         <item>hitbtc</item>
@@ -75,6 +77,7 @@
         <item>CEX.IO</item>
         <!--item>Coinbase</item-->
         <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
         <item>Crypto-Trade</item>
         <!--item>Cryptsy</item-->
         <item>HitBTC</item>
@@ -104,6 +107,7 @@
         <item>CEX.IO</item>
         <!--item>Coinbase</item-->
         <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
         <!--item>Cryptotrade</item-->
         <!--item>Cryptsy</item-->
         <!--item>HitBTC</item-->
@@ -115,6 +119,18 @@
         <!--item>VirCurEx</item-->
         <item>VirtEx</item>
     </string-array>
+
+    <!-- Array for Exchanges supported by BitcoiniumWS -->
+    <string-array name="exchangesBitcoiniumWS">
+        <item>BITSTAMP_USD</item>
+        <item>BTCCHINA_CNY</item>
+        <item>BTCE_EUR</item>
+        <item>BTCE_RUR</item>
+        <item>BTCE_USD</item>
+        <item>KRAKEN_EUR</item>
+        <item>KRAKEN_USD</item>
+    </string-array>
+
 
 
     <!-- Arrays that define properties of Exchanges -->
@@ -248,12 +264,19 @@
         <item>Coinfloor</item>
     </string-array>
 
+    <string-array name="cryptonit">
+        <item>Cryptonit</item>
+        <item>com.xeiam.xchange.cryptonit.v2.CryptonitExchange</item>
+        <item>BTC/USD</item>
+        <item>cryptonit</item>
+        <item>Cryptonit</item>
+    </string-array>
+
     <string-array name="cryptotrade">
         <item>Crypto-Trade</item>
         <item>com.xeiam.xchange.cryptotrade.CryptoTradeExchange</item>
         <item>LTC/BTC</item>
         <item>cryptotrade</item>
-        <item>true</item>
         <item>Crypto-T</item>
     </string-array>
 

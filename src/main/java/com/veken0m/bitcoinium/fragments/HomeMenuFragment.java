@@ -1,7 +1,9 @@
 package com.veken0m.bitcoinium.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.veken0m.bitcoinium.BalanceWidgetProvider;
 import com.veken0m.bitcoinium.BitcoinAverageActivity;
 import com.veken0m.bitcoinium.BitcoinChartsActivity;
 import com.veken0m.bitcoinium.GraphActivity;
+import com.veken0m.bitcoinium.MainActivity;
 import com.veken0m.bitcoinium.MinerStatsActivity;
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.OrderbookActivity;
@@ -21,6 +25,7 @@ import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.Exchange;
 import com.veken0m.utils.Constants;
+import com.xeiam.xbtctrader.XTraderActivity;
 
 public class HomeMenuFragment extends Fragment {
 
@@ -48,12 +53,10 @@ public class HomeMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, WidgetProvider.class);
-                intent.setAction(Constants.REFRESH);
-                Intent intent2 = new Intent(context, MinerWidgetProvider.class);
-                intent2.setAction(Constants.REFRESH);
-                activity.sendBroadcast(intent);
-                activity.sendBroadcast(intent2);
+                activity.sendBroadcast(new Intent(context, WidgetProvider.class).setAction(Constants.REFRESH));
+                activity.sendBroadcast(new Intent(context, MinerWidgetProvider.class).setAction(Constants.REFRESH));
+                activity.sendBroadcast(new Intent(context, BalanceWidgetProvider.class).setAction(Constants.REFRESH));
+
                 activity.moveTaskToBack(true);
             }
         });
@@ -139,6 +142,32 @@ public class HomeMenuFragment extends Fragment {
                 startActivity(webViewerActivity);
             }
         });
+
+        final Button xTrader = (Button) view.findViewById(R.id.xtrader);
+        if (xTrader != null) {
+            xTrader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder adb = new AlertDialog.Builder(activity);
+                    // TODO: externalize
+                    final CharSequence items[] = new CharSequence[] {"bitstampUSD", "btcchinaCNY", "krakenUSD", "krakenEUR", "btceUSD", "btceRUR", "btceEUR"};
+                    adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface d, int n) {
+                            Intent intent = new Intent(getActivity().getApplicationContext(), XTraderActivity.class);
+                            intent.putExtra("exchange", items[n]);
+                            startActivity(intent);
+                        }
+
+                    });
+                    adb.setNegativeButton("Cancel", null);
+                    adb.setTitle("Select a market symbol");
+                    adb.show();
+                }
+            });
+        }
     }
 
 }

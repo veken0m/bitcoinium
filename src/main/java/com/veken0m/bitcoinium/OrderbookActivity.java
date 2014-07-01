@@ -225,7 +225,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
-            int priceUnitIndex = Utils.getUnitIndex(listAsks.get(0).getLimitPrice().floatValue());
+            int priceUnitIndex = Utils.getUnitIndex(listBids.get(0).getLimitPrice().floatValue());
             String sCounterCurrency = currencyPair.counterSymbol;
             if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;

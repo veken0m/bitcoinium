@@ -15,6 +15,7 @@ import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.veken0m.bitcoinium.BalanceWidgetProvider;
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetConfigureActivity;
@@ -280,5 +281,6 @@ public class PreferencesActivity extends BasePreferenceActivity {
         // Tell the widgets to update preferences
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
+        sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));
     }
 }

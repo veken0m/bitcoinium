@@ -51,11 +51,11 @@ public class CurrencyUtils {
 
     public static String formatPayout(float amount, int payoutUnits, String symbol) {
 
-        DecimalFormat df = new DecimalFormat("#.########");
+        DecimalFormat df = new DecimalFormat("#.#######");
 
         switch (payoutUnits) {
             case 0:
-                df = new DecimalFormat("#.#####");
+                df = new DecimalFormat("#.####");
                 if (amount < 0.0001) {
                     return df.format(amount * 1000000) + " µ" + symbol;
                 } else if (amount < 0.1) {
@@ -64,15 +64,16 @@ public class CurrencyUtils {
                     return df.format(amount) + " " + symbol;
                 }
             case 1:
-                df = new DecimalFormat("#.########");
+                df = new DecimalFormat("#.#######");
                 return df.format(amount) + " " + symbol;
             case 2:
-                df = new DecimalFormat("#.#####");
+                df = new DecimalFormat("#.####");
                 return df.format(amount * 1000) + " m" + symbol;
             case 3:
-                df = new DecimalFormat("#.#####");
+                df = new DecimalFormat("#.####");
                 return df.format(amount * 1000000) + " µ" + symbol;
         }
         return df.format(amount) + " " + symbol;
     }
+
 }

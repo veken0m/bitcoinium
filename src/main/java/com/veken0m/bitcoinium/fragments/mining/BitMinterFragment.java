@@ -91,8 +91,7 @@ public class BitMinterFragment extends Fragment {
             // Test Key
             // pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
 
-            HttpGet post = new HttpGet("https://bitminter.com/api/users"
-                    + "?key=" + pref_bitminterKey);
+            HttpGet post = new HttpGet("https://bitminter.com/api/users?key=" + pref_bitminterKey);
             HttpResponse response = client.execute(post);
 
             ObjectMapper mapper = new ObjectMapper();

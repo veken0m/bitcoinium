@@ -60,7 +60,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bitcoincharts);
 
-        createCurrencyDropdown();
+        populateCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
@@ -92,6 +92,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.bitcoincharts);
+        populateCurrencyDropdown();
+
         if (marketData != null) drawBitcoinChartsUI();
     }
 
@@ -109,7 +111,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         // Do nothing
     }
 
-    void createCurrencyDropdown() {
+    void populateCurrencyDropdown() {
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
 

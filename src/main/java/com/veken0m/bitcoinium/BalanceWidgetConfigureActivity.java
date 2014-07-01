@@ -108,7 +108,7 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity {
 
                     String sAddress = prefs.getString("widgetAddressPref", "INVALID ADDRESS");
                     String sAddressNickname = prefs.getString("widgetAddressNicknamePref", "");
-                    String sBalanceValue = prefs.getString("widgetBalanceValuePref", "BTC/USD");
+                    String sBalanceValue = prefs.getString("widgetBalanceValuePref", Constants.DEFAULT_CURRENCY_PAIR);
 
                     // Save widget configuration
                     saveAddressPref(context, mAppWidgetId, sAddress);

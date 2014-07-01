@@ -249,6 +249,22 @@
         <item>BTC/GBP</item>
     </string-array>
 
+    <string-array name="cryptonitcurrencies">
+        <item>BTC/USD</item>
+        <item>LTC/USD</item>
+        <item>NMC/USD</item>
+        <item>PPC/USD</item>
+        <item>BTC/EUR</item>
+        <item>LTC/EUR</item>
+        <item>NMC/EUR</item>
+        <item>PPC/EUR</item>
+        <item>LTC/BTC</item>
+        <item>NMC/BTC</item>
+        <item>PPC/BTC</item>
+        <item>FTC/BTC</item>
+        <item>TRC/BTC</item>
+    </string-array>
+
     <!-- Arrays for Cryptotrade Currencies -->
     <string-array name="cryptotradecurrencies">
         <item>BTC/USD</item>
