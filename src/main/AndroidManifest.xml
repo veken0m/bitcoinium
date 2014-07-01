@@ -34,22 +34,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WidgetConfigureActivity"
-            android:screenOrientation="portrait">
+            android:name=".WidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MinerWidgetConfigureActivity"
-            android:screenOrientation="portrait">
+            android:name=".MinerWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".BalanceWidgetConfigureActivity"
-            android:screenOrientation="portrait">
+            android:name=".BalanceWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
