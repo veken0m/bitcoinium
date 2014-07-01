@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="priceWidgetPreferences"
+        android:title="@string/pref_price_widget_title">
+        <ListPreference
+            android:defaultValue="bitstamp"
+            android:entries="@array/exchanges"
+            android:entryValues="@array/exchangeID"
+            android:key="widgetExchangePref"
+            android:summary="@string/pref_exchange_summary"
+            android:title="@string/pref_pickexchange" />
+
+        <ListPreference
+            android:defaultValue="BTC/USD"
+            android:entries="@array/bitstampcurrencies"
+            android:entryValues="@array/bitstampcurrencies"
+            android:key="widgetCurrencyPref"
+            android:summary="@string/pref_currency_summary"
+            android:title="@string/pref_pickcurrency" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

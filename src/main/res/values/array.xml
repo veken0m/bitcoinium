@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listThemeOptions">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+    <string-array name="listThemeValues">
+        <item>darkThemeSelected</item>
+        <item>lightThemeSelected</item>
+    </string-array>
+
+    <string-array name="timewindow">
+        <item>10 Minutes</item>
+        <item>1 Hour</item>
+        <item>3 Hours</item>
+        <item>12 Hours</item>
+        <item>24 Hours</item>
+        <item>3 Days</item>
+        <item>7 Days</item>
+        <item>30 Days</item>
+        <item>6 Months</item>
+    </string-array>
+    <string-array name="timewindow_values">
+        <item>10m</item>
+        <item>1h</item>
+        <item>3h</item>
+        <item>12h</item>
+        <item>24h</item>
+        <item>3d</item>
+        <item>7d</item>
+        <item>30d</item>
+        <item>6m</item>
+    </string-array>
+
+
+    <string-array name="pricewindow">
+        <item>1%</item>
+        <item>2%</item>
+        <item>5%</item>
+        <item>10%</item>
+        <item>20%</item>
+        <item>50%</item>
+        <item>100%</item>
+    </string-array>
+    <string-array name="pricewindow_values">
+        <item>1p</item>
+        <item>2p</item>
+        <item>5p</item>
+        <item>10p</item>
+        <item>20p</item>
+        <item>50p</item>
+        <item>100p</item>
+    </string-array>
+
+    <string-array name="listCurrencyOptions">
+        <item>USD</item>
+        <!--      <item>EUR</item> -->
+        <!--      <item>JPY</item> -->
+        <!--      <item>CAD</item> -->
+        <!--      <item>GBP</item> -->
+        <!--      <item>CHF</item> -->
+        <!--      <item>RUB</item> -->
+        <!--      <item>AUD</item> -->
+        <!--      <item>SEK</item> -->
+        <!--      <item>DKK</item> -->
+        <!--      <item>HKD</item> -->
+        <!--      <item>PLN</item> -->
+        <!--      <item>CNY</item> -->
+        <!--      <item>SGD</item> -->
+        <!--      <item>THB</item> -->
+        <!--      <item>NZD</item> -->
+        <!--      <item>NOK</item>     -->
+    </string-array>
+    <string-array name="listCurrencyValues">
+        <item>USD</item>
+        <!--      <item>EUR</item> -->
+        <!--      <item>JPY</item> -->
+        <!--      <item>CAD</item> -->
+        <!--      <item>GBP</item> -->
+        <!--      <item>CHF</item> -->
+        <!--      <item>RUB</item> -->
+        <!--      <item>AUD</item> -->
+        <!--      <item>SEK</item> -->
+        <!--      <item>DKK</item> -->
+        <!--      <item>HKD</item> -->
+        <!--      <item>PLN</item> -->
+        <!--      <item>CNY</item> -->
+        <!--      <item>SGD</item> -->
+        <!--      <item>THB</item> -->
+        <!--      <item>NZD</item> -->
+        <!--      <item>NOK</item>   -->
+    </string-array>
+</resources>

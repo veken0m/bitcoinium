@@ -1,0 +1,73 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Miner Settings">
+        <PreferenceScreen
+            android:summary="@string/pref_miner_info_summary"
+            android:title="@string/minerApiTokens">
+            <PreferenceCategory android:title="@string/minerApiTokens">
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="deepbitKey"
+                    android:summary="Enter your Deepbit API token to use MinerStats"
+                    android:title="Deepbit API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="bitminterKey"
+                    android:summary="Enter your BitMinter API token to use MinerStats \n *NOTE* - Remember to enable API perk!"
+                    android:title="BitMinter API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="emcKey"
+                    android:summary="Enter your EclipseMC API token to use MinerStats"
+                    android:title="EclipseMC API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="slushKey"
+                    android:summary="Enter your Slush API token to use MinerStats"
+                    android:title="Slush API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="50BTCKey"
+                    android:summary="Enter your 50BTC API token to use MinerStats"
+                    android:title="50BTC API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="btcguildKey"
+                    android:summary="Enter your BTCGuild API token to use MinerStats"
+                    android:title="BTCGuild API token" />
+                <EditTextPreference
+                    android:defaultValue=""
+                    android:key="eligiusKey"
+                    android:summary="Enter your Eligius BTC token to use MinerStats \n *NOTE* - The token is case sensitive!"
+                    android:title="Eligius API token (BTC Address)" />
+                <PreferenceScreen
+                    android:summary="Fill out your GHash.IO account info to use MinerStats"
+                    android:title="GHash.IO Account Information">
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioUsername"
+                        android:title="GHash.IO Username" />
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioAPIKey"
+                        android:title="GHash.IO API key" />
+                    <EditTextPreference
+                        android:defaultValue=""
+                        android:key="ghashioSecretKey"
+                        android:title="GHash.IO Secret key" />
+                </PreferenceScreen>
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceScreen
+        android:summary="@string/pref_hashrate_notification_summary"
+        android:title="@string/bitcoinMinerAlert">
+        <PreferenceCategory
+            android:key="minerDownAlertPref"
+            android:title="@string/minerWidgetSettings">
+            <Preference android:summary="@string/pref_miner_widget_alert_summary" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+</PreferenceScreen>

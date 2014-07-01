@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Price Widget Extensions">
+        <Preference
+            android:key="alarmSettingsPref"
+            android:summary="@string/pref_price_alert_summary"
+            android:title="@string/pref_price_alert_title"></Preference>
+
+        <PreferenceScreen
+            android:summary="@string/pref_notification_ticker_summary"
+            android:title="@string/notificationDrawerTickers">
+
+            <PreferenceCategory android:title="@string/enable">
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="enableTickerPref"
+                    android:summary="@string/pref_notification_ticker_enable_summary"
+                    android:title="@string/enableTickers" />
+            </PreferenceCategory>
+
+            <PreferenceCategory
+                android:key="notificationSettingsPref"
+                android:title="@string/notificationDrawerTickers" />
+
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

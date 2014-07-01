@@ -1,0 +1,56 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="About">
+        <PreferenceScreen
+            android:summary="@string/aboutSummary"
+            android:title="@string/aboutBitcoinium">
+            <PreferenceCategory android:title="@string/about">
+                <Preference
+                    android:summary="@string/author"
+                    android:title="@string/authorText" />
+                <Preference
+                    android:key="devEmailPref"
+                    android:summary="@string/emailAddress"
+                    android:title="@string/emailText" />
+                <Preference
+                    android:key="devTwitterPref"
+                    android:summary=" @veken0m"
+                    android:title="@string/twitterText" />
+                <Preference
+                    android:summary="@string/version_name"
+                    android:title="@string/versionText" />
+                <Preference
+                    android:key="playstoreGithubPref"
+                    android:summary="@string/pref_rate_bitcoinium_summary"
+                    android:title="@string/rateBitcoinium" />
+                <Preference
+                    android:key="bitcoiniumGithubPref"
+                    android:summary="@string/submit_feature_request"
+                    android:title="@string/bitcoiniumGithubText" />
+                <Preference
+                    android:key="xchangeGithubPref"
+                    android:summary="@string/xchangeSummary"
+                    android:title="@string/xchangeGithubText" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="googleAnalyticsPref"
+                    android:summary="@string/pref_google_analytics_summary"
+                    android:title="@string/optGoogleAnalytics" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/donations">
+                <Preference
+                    android:key="bitcoinDonationAddressPref"
+                    android:summary="@string/bitcoinDonationAddress"
+                    android:title="@string/bitcoinDonationAddressText" />
+                <Preference
+                    android:key="litecoinDonationAddressPref"
+                    android:summary="@string/litecoinDonationAddress"
+                    android:title="@string/litecoinDonationAddressText" />
+                <Preference
+                    android:key="dogecoinDonationAddressPref"
+                    android:summary="@string/dogecoinDonationAddress"
+                    android:title="@string/dogecoinDonationAddressText" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

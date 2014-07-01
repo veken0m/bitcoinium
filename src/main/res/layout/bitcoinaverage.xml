@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bitcoinaverage_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="5">
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/bitcoinaverage_symbol"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:text="@string/symbol_short"
+            android:textColor="@color/ics_blue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/last"
+            android:textColor="@color/ics_blue"
+            android:textSize="18sp" />
+        <!--
+        <TextView
+            android:layout_weight="1"
+            android:background="#101010"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_height="fill_parent"
+            android:text="Avg"
+            android:textColor="#33B5E5" />-->
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/vol"
+            android:textColor="@color/ics_blue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/bid"
+            android:textColor="@color/ics_blue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/ask"
+            android:textColor="@color/ics_blue"
+            android:textSize="18sp" />
+
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/ics_blue"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:id="@+id/bitcoinaverage_tablescroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/dark">
+
+        <TableLayout
+            android:id="@+id/bitcoinaverage_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="beginning"
+            android:stretchColumns="5"></TableLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bitcoinaverage_loadSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@color/dark"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/bitcoinaverage_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ProgressBar>
+    </LinearLayout>
+
+    <!--     <WebView
+            android:id="@+id/karma_ad"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_gravity="bottom|center_horizontal" /> -->
+
+</TableLayout>

@@ -1,15 +1,113 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
+apply plugin: 'android'
+
+android {
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
+
+    compileSdkVersion 20
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 20
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            runProguard true
+            proguardFiles 'proguard.cfg'
+        }
+
+        debug {
+            debuggable true
+            runProguard true
+            proguardFiles 'proguard.cfg'
+        }
+    }
+}
+
+ext {
+    xchangeVersion = "2.1.0-SNAPSHOT"
+    jacksonVersion = "2.3.2"
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/groups/public' }
+}
+
+dependencies {
+
+    configurations.all {
+        transitive = false
+    }
+
+    compile files('libs/libGoogleAnalyticsServices.jar')
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-v4:+'
+
+    // XChange Core
+    compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
+
+    // XChange dependencies
+    compile('com.github.mmazi:rescu:1.6.1-SNAPSHOT')
+    compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+    compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+    compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    compile 'javax.ws.rs:jsr311-api:1.1.1'
+    compile("org.slf4j:slf4j-android:1.6.1-RC1")
+
+    // XChange Exchange Modules
+    compile("com.xeiam.xchange:xchange-anx:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitbay:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitmarket:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitstamp:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btccentral:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btcchina:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-btce:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bter:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-campbx:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cavirtex:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-coinbase:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cryptonit:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-hitbtc:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
+
+    // Available module but not used
+    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-blockchain:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-atlasats:2.0.0-SNAPSHOT")
+
+    // Streaming only
+    //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
+    // Authenticated API...
+    //compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion")
+    //compile 'com.google.code.findbugs:jsr305:1.3.9'
 }

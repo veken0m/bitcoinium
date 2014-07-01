@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/general">
+        <ListPreference
+            android:defaultValue="bitstamp"
+            android:entries="@array/exchanges"
+            android:entryValues="@array/exchangeID"
+            android:key="defaultExchangePref"
+            android:summary="@string/pref_default_exchange_summary"
+            android:title="@string/defaultExchange" />
+
+        <PreferenceScreen
+            android:key="defaultCurrencyPref"
+            android:summary="@string/pref_default_currency_summary"
+            android:title="@string/defaultExchangeCurrency">
+            <!-- Dynamically generated -->
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

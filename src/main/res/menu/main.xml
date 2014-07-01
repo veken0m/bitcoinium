@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/preferences"
+        android:icon="@drawable/perm_group_system_tools"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/preferences" />
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/perm_group_sync_settings"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/refresh" />
+</menu>
