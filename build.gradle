@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.11.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
@@ -19,12 +19,12 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    compileSdkVersion 19
+    compileSdkVersion 20
     buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 19
+        targetSdkVersion 20
     }
 
     buildTypes {
@@ -45,7 +45,6 @@ android {
 ext {
     xchangeVersion = "2.1.0-SNAPSHOT"
     jacksonVersion = "2.3.2"
-    slf4jVersion = "1.7.7"
 }
 
 repositories {
@@ -72,8 +71,7 @@ dependencies {
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compile 'javax.ws.rs:jsr311-api:1.1.1'
-    compile("org.slf4j:slf4j-android:$slf4jVersion")
-    compile("org.slf4j:slf4j-api:$slf4jVersion")
+    compile("org.slf4j:slf4j-android:1.6.1-RC1")
 
     // XChange Exchange Modules
     compile("com.xeiam.xchange:xchange-anx:$xchangeVersion")
@@ -93,6 +91,7 @@ dependencies {
     compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-coinbase:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-cryptonit:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-hitbtc:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
@@ -100,7 +99,8 @@ dependencies {
     compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
 
     // Available module but not used
-    //compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-blockchain:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
     //compile("com.xeiam.xchange:xchange-atlasats:2.0.0-SNAPSHOT")

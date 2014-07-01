@@ -19,6 +19,7 @@ Currently supported exchanges include:
   - [CEX.IO](https://cex.io)
   - [Coinbase](https://coinbase.com)
   - [Crypto-Trade](https://crypto-trade.com)
+  - [Cryptonit](https://cryptonit.net)
   - [HitBtc] (https://hitbtc.com)
   - [Justcoin](https://justcoin.com/en)
   - [Kraken](https://www.kraken.com)
