@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="walletWidgetPreferences"
+        android:title="@string/bitcoinAddress">
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="widgetAddressPref"
+            android:summary="@string/pref_address_summary"
+            android:title="@string/pref_input_address"/>
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="widgetAddressNicknamePref"
+            android:summary="@string/pref_address_nickname_summary"
+            android:title="@string/addressNickname"/>
+
+        <ListPreference
+            android:defaultValue="@string/default_currency"
+            android:entries="@array/bitcoinaveragecurrencies"
+            android:entryValues="@array/bitcoinaveragecurrencies"
+            android:key="widgetBalanceValuePref"
+            android:summary="@string/pref_balance_value_summary"
+            android:title="@string/localCurrency"/>
+    </PreferenceCategory>
+
+    </PreferenceScreen>

@@ -47,6 +47,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".BalanceWidgetConfigureActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".OrderbookActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/orderbook"
@@ -144,6 +151,26 @@
                 android:value=".MainActivity"/>
         </activity>
 
+        <activity
+            android:name="com.xeiam.xbtctrader.XTraderActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:label="XTrader PREVIEW"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
+        <activity
+            android:name="com.xeiam.xbtctrader.PreferenceActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:label="XTrader"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <receiver
             android:name=".WidgetProvider"
             android:exported="false"
@@ -159,7 +186,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info"/>
         </receiver>
-
         <service android:name=".WidgetProvider$UpdateService"/>
 
         <receiver
@@ -177,8 +203,25 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/miner_appwidget_info"/>
         </receiver>
-
         <service android:name=".MinerWidgetProvider$MinerUpdateService"/>
+
+        <receiver
+            android:name=".BalanceWidgetProvider"
+            android:exported="false"
+            android:label="@string/balance_widget_name">
+            <intent-filter>
+                <action android:name="com.veken0m.bitcoinium.BalanceWidgetProvider.ACTION_WIDGET_RECEIVER"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info_balance"/>
+        </receiver>
+
+        <service android:name=".BalanceWidgetProvider$BalanceUpdateService"/>
     </application>
 
 </manifest>

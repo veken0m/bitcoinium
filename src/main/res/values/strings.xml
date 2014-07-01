@@ -60,6 +60,9 @@
     <string name="updateShort">Upd. @\u0020</string>
     <string name="updatedAt">Updated @\u0020</string>
     <string name="currencyPairFilter">Currency Pair Filter</string>
+    <string name="balance">Balance</string>
+    <string name="balanceValue">Balance Value</string>
+    <string name="address">Address</string>
 
     <!-- Main Menu Button Strings -->
     <string name="refreshButton">Update Widget(s)</string>
@@ -158,6 +161,7 @@
     <string name="pref_widget_config_summary">Various display and power saving settings</string>
     <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active</string>
     <string name="pref_milli_btc_summary">Changes all BTC widget prices to mBTC. \nEx: $1010.00 will show as $1.010 \nDoes not affect other crypto-currencies</string>
+    <string name="noWidgetFound">No Widget Found</string>
 
     <!-- Price Alert -->
     <string name="selectSound">Select Sound</string>
@@ -165,7 +169,7 @@
     <string name="alarmMode">Alarm Clock Mode</string>
     <string name="msgEnterUnscaledValues">Please enter UNSCALED values\nFor example, enter BTC not mBTC</string>
     <string name="alertSettings">Alert Limits</string>
-    <string name="pref_alert_alarm_summary">Uses android built-in Alarm Clock. *Caution*: Will override silent/vibration modes and keep ringing until shut off</string>
+    <string name="pref_alert_alarm_summary">Uses android built-in Alarm Clock. *Caution* Will override silent/vibration modes and keep ringing until shut off</string>
     <string name="pref_alert_sound_pick_summary">Pick the sound to be played</string>
     <string name="pref_alert_sound_summary">Play a sound when alert is triggered</string>
     <string name="pref_alert_vibrate_summary">Vibrate when alert is triggered</string>
@@ -179,6 +183,16 @@
     <string name="pref_enable_alert_summary">Enable notifications when alert is triggered</string>
     <string name="pref_enable_alert_title">Enable Price Alerts</string>
     <string name="pref_miner_widget_alert_summary">Use Price Alert settings to enable sound and vibration during notification</string>
+
+    <!-- Balance Widget -->
+    <string name="bitcoinAddress">Address to watch</string>
+    <string name="pref_address_summary">Input the BTC address to be tracked by the widget</string>
+    <string name="pref_input_address">Bitcoin Address</string>
+    <string name="balance_widget_name">Bitcoinium Balance</string>
+    <string name="localCurrency">Local Currency</string>
+    <string name="addressNickname">Address Nickname</string>
+    <string name="pref_address_nickname_summary">Address nickname to be displayed on widget</string>
+    <string name="pref_balance_value_summary">Pick a local currency to display value in below balance</string>
 
     <!-- Notification Tickers -->
     <string name="notificationDrawerTickers">Notification Drawer Tickers</string>
@@ -221,7 +235,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.0.0-DEV_BUILD</string>
+    <string name="version_name">2.0.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
@@ -239,13 +253,9 @@
     <string name="emailAddress">veken0m.apps@gmail.com</string>
     <string name="litecoinDonationAddress">LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp</string>
     <string name="litecoinDonationAddressText">Litecoin</string>
-    <string name="twitterAddress">http://twitter.com/veken0m</string>
+    <string name="twitterAddress">https://twitter.com/veken0m</string>
     <string name="twitterText">Twitter</string>
     <string name="xchangeGithub">https://github.com/timmolter/xchange</string>
     <string name="xchangeGithubText">XChange Github</string>
-
-    <string name="noWidgetFound">No Widget Found</string>
-    <string name="widgetsRequiredAlerts">Alerts require widgets to be placed on home screen</string>
-    <string name="widgetsRequiredNotif">Notification Drawer Tickers require widgets to be placed on home screen</string>
 
 </resources>

@@ -16,6 +16,7 @@ import android.provider.AlarmClock;
 import android.text.format.Time;
 
 import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
+import com.veken0m.bitcoinium.BalanceWidgetProvider.BalanceUpdateService;
 import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
@@ -50,6 +51,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     // Service used to refresh widget
     private static PendingIntent widgetPriceWidgetRefreshService = null;
     private static PendingIntent widgetMinerWidgetRefreshService = null;
+    private static PendingIntent widgetWalletWidgetRefreshService = null;
 
     static void readGeneralPreferences(Context context) {
 
@@ -113,6 +115,20 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
         alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
+    }
+
+    static void setBalanceWidgetAlarm(Context context) {
+
+        readAlarmPreferences(context);
+
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final Intent intentBalance = new Intent(context, BalanceUpdateService.class);
+
+        if (widgetWalletWidgetRefreshService == null)
+            widgetWalletWidgetRefreshService = PendingIntent.getService(context, 0, intentBalance, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
+        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetWalletWidgetRefreshService);
     }
 
     static void setAlarmClock(Context context) {
