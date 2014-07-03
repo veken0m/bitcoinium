@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/graphlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:stretchColumns="1">
+
+    <LinearLayout
+        android:id="@+id/spinner1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+        <!--TextView
+            android:id="@+id/exchange_header"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exchange"/-->
+
+        <Spinner
+            android:id="@+id/graph_exchange_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!--TextView
+            android:id="@+id/currency_header"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_pair"/-->
+
+        <Spinner
+            android:id="@+id/graph_currency_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/graphView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="35dip"
+        android:paddingBottom="50dip"></LinearLayout>
+
+    <!-- Padding needed on graphView for Karma-Ad -->
+    <!-- android:paddingBottom="50dip" -->
+
+    <LinearLayout
+        android:id="@+id/graph_loadSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/graph_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ProgressBar>
+    </LinearLayout>
+
+    <WebView
+            android:id="@+id/karma_ad"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

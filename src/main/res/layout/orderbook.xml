@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/orderbooklayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="*">
+
+    <LinearLayout
+        android:id="@+id/spinner1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/light"
+        android:orientation="horizontal">
+        <!--TextView
+            android:id="@+id/exchange_header"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exchange"/-->
+
+        <Spinner
+            android:id="@+id/orderbook_exchange_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!--TextView
+            android:id="@+id/currency_header"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_pair"/-->
+
+        <Spinner
+            android:id="@+id/orderbook_currency_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!--TextView
+        android:id="@+id/orderbook_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark"
+        android:gravity="center_horizontal"
+        android:textColor="@color/ics_blue"
+        android:textSize="15sp"/-->
+
+    <TableRow>
+
+        <TextView
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:padding="3dip"
+            android:text="@string/bids"
+            android:textColor="@color/ics_blue"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:padding="3dip"
+            android:text="@string/asks"
+            android:textColor="@color/ics_blue"
+            android:textSize="20sp" />
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/ics_blue"
+        android:visibility="visible" />
+
+    <TableRow>
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/price"
+            android:textColor="@color/ics_blue"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/amount"
+            android:textColor="@color/ics_blue"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/price"
+            android:textColor="@color/ics_blue"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:text="@string/amount"
+            android:textColor="@color/ics_blue"
+            android:textSize="16sp" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/bidPriceHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/bidAmountHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/askPriceHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/askAmountHeader"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ics_blue"
+            android:textSize="12sp" />
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/ics_blue"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:id="@+id/table_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/dark">
+
+        <TableLayout
+            android:id="@+id/orderlist"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"></TableLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/orderbook_loadSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@color/dark"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/orderbook_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ProgressBar>
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/karma_ad"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_gravity="bottom|center_horizontal" />
+
+</TableLayout>

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Array for Exchanges with supported Ticker Marketdata API -->
+    <string-array name="exchanges">
+        <item>ANX</item>
+        <item>Bitbay</item>
+        <item>BitcoinAverage</item>
+        <item>Bitcoin-Central</item>
+        <item>Bitcurex</item>
+        <item>Bitfinex</item>
+        <item>Bitmarket</item>
+        <item>Bitstamp</item>
+        <item>BTC-e</item>
+        <item>BTC China</item>
+        <item>BTER</item>
+        <item>CampBX</item>
+        <item>CEX.IO</item>
+        <item>Coinbase</item>
+        <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
+        <item>Crypto-Trade</item>
+        <!--item>Cryptsy</item-->
+        <item>HitBTC</item>
+        <!--item>ItBit</item-->
+        <item>Justcoin</item>
+        <item>Kraken</item>
+        <item>LakeBTC</item>
+        <!--item>VirCurEx</item-->
+        <item>Vault of Satoshi</item>
+        <item>VirtEx</item>
+    </string-array>
+
+    <string-array name="exchangeID">
+        <item>anx</item>
+        <item>bitbay</item>
+        <item>bitcoinaverage</item>
+        <item>bitcoincentral</item>
+        <item>bitcurex</item>
+        <item>bitfinex</item>
+        <item>bitmarket</item>
+        <item>bitstamp</item>
+        <item>btce</item>
+        <item>btcchina</item>
+        <item>bter</item>
+        <item>campbx</item>
+        <item>cexio</item>
+        <item>coinbase</item>
+        <!--item>coinfloor</item-->
+        <item>cryptonit</item>
+        <item>cryptotrade</item>
+        <!--item>cryptsy</item-->
+        <item>hitbtc</item>
+        <!--item>itbit</item-->
+        <item>justcoin</item>
+        <item>kraken</item>
+        <item>lakebtc</item>
+        <!--item>vircurex</item-->
+        <item>vaultofsatoshi</item>
+        <item>virtex</item>
+    </string-array>
+
+    <!-- Array for Exchanges with supported Depth Marketdata API -->
+    <string-array name="exchangesOrderbook">
+        <item>ANX</item>
+        <item>Bitbay</item>
+        <item>Bitcurex</item>
+        <!--item>BitcoinAverage</item-->
+        <item>Bitcoin-Central</item>
+        <item>Bitfinex</item>
+        <item>Bitmarket</item>
+        <item>Bitstamp</item>
+        <item>BTC-e</item>
+        <item>BTC China</item>
+        <item>BTER</item>
+        <item>CampBX</item>
+        <item>CEX.IO</item>
+        <!--item>Coinbase</item-->
+        <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
+        <item>Crypto-Trade</item>
+        <!--item>Cryptsy</item-->
+        <item>HitBTC</item>
+        <!--item>ItBit</item-->
+        <item>Justcoin</item>
+        <item>Kraken</item>
+        <item>LakeBTC</item>
+        <item>Vault of Satoshi</item>
+        <!--item>VirCurEx</item-->
+        <item>VirtEx</item>
+    </string-array>
+
+    <!-- Array for Exchanges with supported Trade Marketdata API -->
+    <string-array name="exchangesTrades">
+        <!--item>ANX</item-->
+        <!--item>Bitbay</item-->
+        <!--item>BitcoinAverage</item-->
+        <!--item>Bitcoin-Central</item-->
+        <item>Bitcurex</item>
+        <item>Bitmarket</item>
+        <item>Bitfinex</item>
+        <item>Bitstamp</item>
+        <item>BTC-e</item>
+        <item>BTC China</item>
+        <!--item>BTER</item-->
+        <!--item>CampBX</item-->
+        <item>CEX.IO</item>
+        <!--item>Coinbase</item-->
+        <!--item>Coinfloor</item-->
+        <item>Cryptonit</item>
+        <!--item>Cryptotrade</item-->
+        <!--item>Cryptsy</item-->
+        <!--item>HitBTC</item-->
+        <!--item>ItBit</item-->
+        <!--item>Justcoin</item-->
+        <item>Kraken</item>
+        <!--item>LakeBTC</item-->
+        <item>Vault of Satoshi</item>
+        <!--item>VirCurEx</item-->
+        <item>VirtEx</item>
+    </string-array>
+
+    <!-- Array for Exchanges supported by BitcoiniumWS -->
+    <string-array name="exchangesBitcoiniumWS">
+        <item>BITSTAMP_USD</item>
+        <item>BTCCHINA_CNY</item>
+        <item>BTCE_EUR</item>
+        <item>BTCE_RUR</item>
+        <item>BTCE_USD</item>
+        <item>KRAKEN_EUR</item>
+        <item>KRAKEN_USD</item>
+    </string-array>
+
+
+    <!-- Arrays that define properties of Exchanges -->
+    <!--
+        <string-array name="ExampleExchange">
+        <item>ExchangeName</item>
+        <item>xchangeClassName</item>
+        <item>mainCurrency</item>
+        <item>identifier</item>
+        <item>short name</item>
+    -->
+
+    <string-array name="anx">
+        <item>ANX</item>
+        <item>com.xeiam.xchange.anx.v2.ANXExchange</item>
+        <item>BTC/USD</item>
+        <item>anx</item>
+        <item>ANX</item>
+    </string-array>
+
+    <string-array name="bitbay">
+        <item>BitBay</item>
+        <item>com.xeiam.xchange.bitbay.BitbayExchange</item>
+        <item>BTC/PLN</item>
+        <item>bitbay</item>
+        <item>BitBay</item>
+    </string-array>
+
+    <string-array name="bitcoinaverage">
+        <item>Bitcoin Average</item>
+        <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
+        <item>BTC/USD</item>
+        <item>bitcoinaverage</item>
+        <item>BTCAvg</item>
+    </string-array>
+
+    <string-array name="bitcurex">
+        <item>Bitcurex</item>
+        <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
+        <item>BTC/PLN</item>
+        <item>bitcurex</item>
+        <item>Bitcurex</item>
+    </string-array>
+
+    <string-array name="bitfinex">
+        <item>Bitfinex</item>
+        <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
+        <item>BTC/USD</item>
+        <item>bitfinex</item>
+        <item>Bitfinex</item>
+    </string-array>
+
+    <string-array name="bitmarket">
+        <item>BitMarket</item>
+        <item>com.xeiam.xchange.bitmarket.BitMarketExchange</item>
+        <item>BTC/PLN</item>
+        <item>bitmarket</item>
+        <item>BitMarket</item>
+    </string-array>
+
+    <string-array name="bitstamp">
+        <item>Bitstamp</item>
+        <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
+        <item>BTC/USD</item>
+        <item>bitstamp</item>
+        <item>Bitstamp</item>
+    </string-array>
+
+    <string-array name="bitcoincentral">
+        <item>Bitcoin-Central</item>
+        <item>com.xeiam.xchange.btccentral.BTCCentralExchange</item>
+        <item>BTC/EUR</item>
+        <item>bitcoincentral</item>
+        <item>BTCCentral</item>
+    </string-array>
+
+    <string-array name="btce">
+        <item>BTC-e</item>
+        <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
+        <item>BTC/USD</item>
+        <item>btce</item>
+        <item>BTC-e</item>
+    </string-array>
+
+    <string-array name="btcchina">
+        <item>BTC China</item>
+        <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
+        <item>BTC/CNY</item>
+        <item>btcchina</item>
+        <item>BTCChina</item>
+    </string-array>
+
+    <string-array name="bter">
+        <item>BTER</item>
+        <item>com.xeiam.xchange.bter.BTERExchange</item>
+        <item>BTC/CNY</item>
+        <item>bter</item>
+        <item>BTER</item>
+    </string-array>
+
+    <string-array name="campbx">
+        <item>CampBX</item>
+        <item>com.xeiam.xchange.campbx.CampBXExchange</item>
+        <item>BTC/USD</item>
+        <item>campbx</item>
+        <item>CampBX</item>
+    </string-array>
+
+    <string-array name="cexio">
+        <item>CEX.IO</item>
+        <item>com.xeiam.xchange.cexio.CexIOExchange</item>
+        <item>LTC/BTC</item>
+        <item>cexio</item>
+        <item>CEX.IO</item>
+    </string-array>
+
+    <string-array name="coinbase">
+        <item>Coinbase</item>
+        <item>com.xeiam.xchange.coinbase.CoinbaseExchange</item>
+        <item>BTC/USD</item>
+        <item>coinbase</item>
+        <item>Coinbase</item>
+    </string-array>
+
+    <!-- Streaming API only -->
+    <string-array name="coinfloor">
+        <item>Coinfloor</item>
+        <item>com.xeiam.xchange.coinfloor.CoinfloorExchange</item>
+        <item>BTC/GBP</item>
+        <item>coinfloor</item>
+        <item>Coinfloor</item>
+    </string-array>
+
+    <string-array name="cryptonit">
+        <item>Cryptonit</item>
+        <item>com.xeiam.xchange.cryptonit.v2.CryptonitExchange</item>
+        <item>BTC/USD</item>
+        <item>cryptonit</item>
+        <item>Cryptonit</item>
+    </string-array>
+
+    <string-array name="cryptotrade">
+        <item>Crypto-Trade</item>
+        <item>com.xeiam.xchange.cryptotrade.CryptoTradeExchange</item>
+        <item>LTC/BTC</item>
+        <item>cryptotrade</item>
+        <item>Crypto-T</item>
+    </string-array>
+
+    <string-array name="cryptsy">
+        <item>Cryptsy</item>
+        <item>com.xeiam.xchange.cryptsy.CryptsyExchange</item>
+        <item>BTC/USD</item>
+        <item>cryptsy</item>
+        <item>Cryptsy</item>
+    </string-array>
+
+    <string-array name="hitbtc">
+        <item>HitBTC</item>
+        <item>com.xeiam.xchange.hitbtc.HitbtcExchange</item>
+        <item>BTC/USD</item>
+        <item>hitbtc</item>
+        <item>HitBTC</item>
+    </string-array>
+
+    <string-array name="itbit">
+        <item>ItBit</item>
+        <item>com.xeiam.xchange.itbit.v1.ItBitExchange</item>
+        <item>BTC/USD</item>
+        <item>itbit</item>
+        <item>ItBit</item>
+    </string-array>
+
+    <string-array name="justcoin">
+        <item>Justcoin</item>
+        <item>com.xeiam.xchange.justcoin.JustcoinExchange</item>
+        <item>BTC/EUR</item>
+        <item>justcoin</item>
+        <item>Justcoin</item>
+    </string-array>
+
+    <string-array name="kraken">
+        <item>Kraken</item>
+        <item>com.xeiam.xchange.kraken.KrakenExchange</item>
+        <item>BTC/EUR</item>
+        <item>kraken</item>
+        <item>Kraken</item>
+    </string-array>
+
+    <string-array name="lakebtc">
+        <item>LakeBTC</item>
+        <item>com.xeiam.xchange.lakebtc.LakeBTCExchange</item>
+        <item>BTC/USD</item>
+        <item>lakebtc</item>
+        <item>LakeBTC</item>
+    </string-array>
+
+    <string-array name="mtgox">
+        <item>MtGox</item>
+        <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
+        <item>BTC/USD</item>
+        <item>mtgox</item>
+        <item>MtGox</item>
+    </string-array>
+
+    <string-array name="vaultofsatoshi">
+        <item>Vault of Satoshi</item>
+        <item>com.xeiam.xchange.vaultofsatoshi.VaultOfSatoshiExchange</item>
+        <item>BTC/USD</item>
+        <item>vaultofsatoshi</item>
+        <item>VoS</item>
+    </string-array>
+
+    <string-array name="vircurex">
+        <item>VirCurEx</item>
+        <item>com.xeiam.xchange.vircurex.VircurexExchange</item>
+        <item>BTC/USD</item>
+        <item>vircurex</item>
+        <item>VirCurEx</item>
+    </string-array>
+
+    <string-array name="virtex">
+        <item>VirtEx</item>
+        <item>com.xeiam.xchange.virtex.v2.VirtExExchange</item>
+        <item>BTC/CAD</item>
+        <item>virtex</item>
+        <item>VirtEx</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Widget Default Colors -->
+    <color name="widgetBackgroundColor">#80000000</color>
+    <color name="widgetMainTextColor">#FDD017</color>
+    <color name="widgetSecondaryTextColor">#ffcccccc</color>
+    <color name="widgetRefreshSuccessColor">#ff00ff00</color>
+    <color name="widgetRefreshFailedColor">#ffff0000</color>
+
+    <!--  Miscellaneous Colors -->
+    <color name="light">#64A0A0A0</color>
+    <color name="dark">#101010</color>
+    <color name="ics_blue">#33B5E5</color>
+
+    <color name="light_tableRow">#2D2D2D</color>
+
+</resources>   
