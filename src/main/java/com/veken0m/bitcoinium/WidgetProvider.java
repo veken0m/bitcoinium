@@ -25,16 +25,17 @@ public class WidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
 
         if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
-
-        super.onReceive(context, intent);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        setPriceWidgetAlarm(context);
+
+        // onUpdate called upon create or when forced refresh by user. Use this to create a set refresh service.
+        setRefreshServiceAlarm(context, UpdateService.class);
     }
 
     /**
@@ -133,8 +134,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             if (pref_enableTicker && prefs.getBoolean(pairId + "TickerPref", false)) {
 
-                String msg = String.format(getString(R.string.priceContentNotif), pair.baseSymbol, lastString, exchange.getExchangeName());
-                String title = String.format(getString(R.string.permPriceTitleNotif), exchange.getIdentifier(), pair.baseSymbol, lastString);
+                String msg = getString(R.string.priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
+                String title = getString(R.string.permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
 
                 createPermanentNotification(this, title, msg, pairId.hashCode());
             } else {
