@@ -62,7 +62,7 @@ public class SubmitOrderDialog extends DialogFragment {
                 try {
                     float amount = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_btc)).getText().toString());
                     float price = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_price)).getText().toString());
-                    XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType);
+                    XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
                 } catch (Exception e) {
                     // TODO: handle exception
                 }

@@ -13,6 +13,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +39,7 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class XTraderActivity extends FragmentActivity implements OnSharedPreferenceChangeListener {
+public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener {
     private static final String TAG = "XTraderActivity";
     public static ExchangeAccount exchangeAccount;
     public static MainView mainView;
@@ -102,7 +103,7 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
         View tradingBalances = findViewById(R.id.tradingBalances);
         View tradingButtons = findViewById(R.id.tradingButtons);
         if (showTrading) {
-            tradingBalances.setVisibility(View.GONE);
+            tradingBalances.setVisibility(View.VISIBLE);
             tradingButtons.setVisibility(View.VISIBLE);
         } else {
             tradingBalances.setVisibility(View.GONE);
@@ -229,11 +230,11 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
         boolean needToUpdate = false;
         if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password")) {
 
-            String id = XTraderActivity.exchangeInfo.getIdentifier();
-            String sCurrencyPair = XTraderActivity.preferences.getString(id + "TradeCurrency", "");
-            CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-            tradableIdentifier = currencyPair.baseSymbol;
-            transactionCurrency = currencyPair.counterSymbol;
+            //String id = XTraderActivity.exchangeInfo.getIdentifier();
+            //String sCurrencyPair = XTraderActivity.preferences.getString(id + "TradeCurrency", "");
+            //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
+            //tradableIdentifier = currencyPair.baseSymbol;
+            //transactionCurrency = currencyPair.counterSymbol;
 
             needToUpdate = true;
         }

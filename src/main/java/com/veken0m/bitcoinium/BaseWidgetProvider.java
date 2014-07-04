@@ -20,8 +20,6 @@ import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 
-import java.util.Calendar;
-
 public class BaseWidgetProvider extends AppWidgetProvider {
 
     static boolean pref_priceAlarm = false;
@@ -30,14 +28,16 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
     static boolean pref_tapToUpdate = false;
+    static boolean pref_enableWidgetCustomization = false;
+    static boolean pref_pricesInMilliBtc = false;
+
     static int pref_mainWidgetTextColor = R.color.widgetMainTextColor;
     static int pref_secondaryWidgetTextColor = R.color.widgetSecondaryTextColor;
     static int pref_backgroundWidgetColor = R.color.widgetBackgroundColor;
     static int pref_widgetRefreshSuccessColor = R.color.widgetRefreshSuccessColor;
     static int pref_widgetRefreshFailedColor = R.color.widgetRefreshFailedColor;
-    static boolean pref_enableWidgetCustomization = false;
-    static boolean pref_pricesInMilliBtc = false;
     static int pref_widgetPayoutUnits = 0;
+
     static SharedPreferences prefs = null;
     /**
      * List of preference variables

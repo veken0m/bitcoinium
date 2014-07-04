@@ -1,10 +1,12 @@
 package com.xeiam.business;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.xeiam.tasks.CancelOrderTask;
+import com.xeiam.tasks.SubmitOrderTask;
 import com.xeiam.xbtctrader.XTraderActivity;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
@@ -87,7 +89,7 @@ public class ExchangeAccount {
         generateToast("Cancelation order sent to exchange.", Toast.LENGTH_SHORT);
     }
 
-    public void placeLimitOrder(float price, float amount, OrderType orderType) {
+    public void placeLimitOrder(float price, float amount, OrderType orderType, Activity activity) {
 
         BigDecimal tradeableAmount = new BigDecimal(amount).setScale(5, BigDecimal.ROUND_HALF_UP);
         BigDecimal limitPrice = new BigDecimal(XTraderActivity.fiveDecimalFormatter.format(price));
@@ -95,9 +97,9 @@ public class ExchangeAccount {
         LimitOrder limitOrder = new LimitOrder(orderType, tradeableAmount, new CurrencyPair(XTraderActivity.tradableIdentifier, XTraderActivity.transactionCurrency), null, null, limitPrice);
         Log.v(TAG, "Placing Order: " + limitOrder);
 
-        generateToast("Trading is currently disabled. \nPlease contact developer to become a tester", Toast.LENGTH_LONG);
-        //SubmitOrderTask submitOrderTask=new SubmitOrderTask(limitOrder, this); // execute network task on another thread.
-        //submitOrderTask.go();
+        //generateToast("Trading is currently disabled. \nPlease contact developer to become a tester", Toast.LENGTH_LONG);
+        SubmitOrderTask submitOrderTask=new SubmitOrderTask(limitOrder, this, activity); // execute network task on another thread.
+        submitOrderTask.go();
     }
 
     public boolean init() {
@@ -114,16 +116,24 @@ public class ExchangeAccount {
             // Use the factory to get the version 2 MtGox exchange API using default settings
             exchangeSpecification = new ExchangeSpecification(XTraderActivity.exchangeInfo.getClassName());
 
-            //String username = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "Username", "");
-            //String password = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "Password", "");
-            //String apiKey = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "ApiKey", "");
-            //String secretKey = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "SecretKey", "");
+            String exchangeId = XTraderActivity.exchangeInfo.getIdentifier();
+            String username = XTraderActivity.preferences.getString(exchangeId + "Username", "");
+            String password = XTraderActivity.preferences.getString(exchangeId + "Password", "");
+            String apiKey = XTraderActivity.preferences.getString(exchangeId + "ApiKey", "");
+            String secretKey = XTraderActivity.preferences.getString(exchangeId + "SecretKey", "");
 
+            // If use settings are not null, set them in exchange specifications
+            if(!(username).equals(""))
+                exchangeSpecification.setUserName(username);
 
-            //exchangeSpecification.setUserName(username);
-            //exchangeSpecification.setPassword(password);
-            //exchangeSpecification.setSecretKey(secretKey);
-            //exchangeSpecification.setApiKey(apiKey);
+            if(!(password).equals(""))
+                exchangeSpecification.setPassword(password);
+
+            if(!(apiKey).equals(""))
+                exchangeSpecification.setApiKey(apiKey);
+
+            if(!(secretKey).equals(""))
+                exchangeSpecification.setSecretKey(secretKey);
 
             exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
             // Interested in the private account functionality (authentication)
@@ -131,9 +141,10 @@ public class ExchangeAccount {
             tradeService = exchange.getPollingTradeService();
 
             connectionGood = true;
-            //return true;
-            return false;
+            return true;
+            //return false;
         } catch (Exception e) {//check the keys if a problem. trigger a dialog
+            e.printStackTrace();
             return false;
         }
     }
