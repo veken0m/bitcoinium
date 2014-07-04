@@ -324,9 +324,9 @@ public class ExchangeAccount {
 
         List<Wallet> wallets = accountInfo.getWallets();
 
-        for (int i = 0; i < wallets.size(); i++) {
-            if (wallets.get(i).getCurrency().equals("BTC")) {
-                totalBTC += wallets.get(i).getBalance().floatValue();
+        for (Wallet wallet : wallets) {
+            if (wallet.getCurrency().equals("BTC")) {
+                totalBTC += wallet.getBalance().floatValue();
             }
         }
         return totalBTC;

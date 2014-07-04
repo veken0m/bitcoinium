@@ -8,7 +8,7 @@
         android:id="@+id/webfragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"></WebView>
+        android:layout_weight="1"/>
 
     <!-- <include layout="@xml/karma_ad"/> -->
 

@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="35dip"></LinearLayout>
+        android:paddingTop="35dip"/>
 
     <!-- Padding needed on graphView for Karma-Ad -->
     <!-- android:paddingBottom="50dip" -->
@@ -64,7 +64,7 @@
             android:id="@+id/graph_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ProgressBar>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <!--     <WebView

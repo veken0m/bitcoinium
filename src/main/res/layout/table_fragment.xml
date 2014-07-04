@@ -11,6 +11,6 @@
         android:id="@+id/minerStatlist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:stretchColumns="1"></TableLayout>
+        android:stretchColumns="1"/>
 
 </LinearLayout>

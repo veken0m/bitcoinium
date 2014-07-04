@@ -5,7 +5,7 @@
         <Preference
             android:key="alarmSettingsPref"
             android:summary="@string/pref_price_alert_summary"
-            android:title="@string/pref_price_alert_title"></Preference>
+            android:title="@string/pref_price_alert_title"/>
 
         <PreferenceScreen
             android:summary="@string/pref_notification_ticker_summary"
