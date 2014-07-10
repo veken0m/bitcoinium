@@ -23,6 +23,4 @@ before_install:
     - echo $ANDROID_HOME
     - ln -sf $ANDROID_HOME/extras/android/support/v7/appcompat appcompat
     - android update project -p . --subprojects --target android-19
-
-before_install:
     - chmod +x gradlew
