@@ -1,13 +1,9 @@
 package com.xeiam.tasks;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.widget.Toast;
 
 import com.xeiam.business.ExchangeAccount;
-import com.xeiam.xbtctrader.XTraderActivity;
 import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingTradeService;
