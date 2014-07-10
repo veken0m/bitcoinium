@@ -7,12 +7,12 @@ branches:
     
 env:
   matrix:
-    - ANDROID_TARGET=android-20
+    - ANDROID_TARGET=android-19
 
 android:
   components:
     - build-tools-19.1.0
-    - android-20                    
+    - android-19                 
     - extra-android-support
 
 before_install:
