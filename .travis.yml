@@ -12,6 +12,8 @@ env:
 android:
   components:
     - build-tools-19.1.0
-    
+    - android-20                    
+    - extra-android-support
+
 before_install:
     - chmod +x gradlew
