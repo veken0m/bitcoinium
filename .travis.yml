@@ -1,0 +1,5 @@
+language: android
+
+branches:
+  only:
+    - develop
