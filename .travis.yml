@@ -5,7 +5,6 @@ branches:
   only:
     - develop
     
-    
 env:
   matrix:
     - ANDROID_TARGET=android-20
@@ -13,3 +12,6 @@ env:
 android:
   components:
     - build-tools-19.1.0
+    
+before_install:
+    - chmod +x gradlew
