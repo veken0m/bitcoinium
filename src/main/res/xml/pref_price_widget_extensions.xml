@@ -5,7 +5,10 @@
         <Preference
             android:key="alarmSettingsPref"
             android:summary="@string/pref_price_alert_summary"
-            android:title="@string/pref_price_alert_title"/>
+            android:title="@string/pref_price_alert_title">
+            <intent android:action="com.veken0m.bitcoinium.PriceAlertPreferencesActivity" />
+        </Preference>
+
 
         <PreferenceScreen
             android:summary="@string/pref_notification_ticker_summary"

@@ -11,26 +11,46 @@
                 <Preference
                     android:key="devEmailPref"
                     android:summary="@string/email_author"
-                    android:title="@string/email"/>
+                    android:title="@string/email">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_email_author"/>
+                </Preference>
                 <Preference
                     android:key="devTwitterPref"
                     android:summary=" @veken0m"
-                    android:title="@string/twitter"/>
+                    android:title="@string/twitter">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_twitter"/>
+                </Preference>
                 <Preference
                     android:summary="@string/version_name"
                     android:title="@string/version"/>
                 <Preference
                     android:key="playstoreGithubPref"
                     android:summary="@string/pref_rate_bitcoinium_summary"
-                    android:title="@string/msg_rateBitcoinium"/>
+                    android:title="@string/msg_rateBitcoinium">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_bitcoiniumPlayStore"/>
+                </Preference>
                 <Preference
                     android:key="bitcoiniumGithubPref"
                     android:summary="@string/pref_submitFeatureRequest"
-                    android:title="@string/bitcoiniumGithub"/>
+                    android:title="@string/bitcoiniumGithub">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_bitcoiniumGithub"/>
+                </Preference>
                 <Preference
                     android:key="xchangeGithubPref"
                     android:summary="@string/pref_xchange_summary"
-                    android:title="@string/xchangeGithub"/>
+                    android:title="@string/xchangeGithub">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_xchangeGithub"/>
+                </Preference>
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="googleAnalyticsPref"

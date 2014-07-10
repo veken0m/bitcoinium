@@ -94,75 +94,6 @@ public class PreferencesActivity extends BasePreferenceActivity {
             notificationSettingsPref.addPreference(pref);
         }
 
-        Preference devEmailPref = findPreference("devEmailPref");
-        if (devEmailPref != null) {
-            devEmailPref
-                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            Intent i = new Intent(Intent.ACTION_SEND);
-                            i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_author)});
-                            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - " + getString(R.string.feedback));
-                            startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
-
-                            return true;
-                        }
-                    });
-        }
-
-        Preference devTwitterPref = findPreference("devTwitterPref");
-        if (devTwitterPref != null) {
-            devTwitterPref
-                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(getString(R.string.link_twitter))));
-                            return true;
-                        }
-                    });
-        }
-
-        Preference xchangeGithubPref = findPreference("xchangeGithubPref");
-        if (xchangeGithubPref != null) {
-            xchangeGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(getString(R.string.link_xchangeGithub))));
-                    return true;
-                }
-            });
-        }
-
-        Preference playstoreGithubPref = findPreference("playstoreGithubPref");
-        if (playstoreGithubPref != null) {
-            playstoreGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                    return true;
-                }
-            });
-        }
-
-        Preference bitcoiniumGithubPref = findPreference("bitcoiniumGithubPref");
-        if (bitcoiniumGithubPref != null) {
-            bitcoiniumGithubPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(getString(R.string.link_bitcoiniumGithub))));
-                    return true;
-                }
-            });
-        }
-
         // Widget Customization
         Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
         if (widgetBackgroundColorPref != null) {
@@ -208,19 +139,6 @@ public class PreferencesActivity extends BasePreferenceActivity {
                     return true;
                 }
 
-            });
-        }
-
-        Preference alarmSettings = findPreference("alarmSettingsPref");
-        if (alarmSettings != null) {
-            alarmSettings.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    startActivity(new Intent(getApplicationContext(), PriceAlertPreferencesActivity.class));
-                    return true;
-                }
             });
         }
 

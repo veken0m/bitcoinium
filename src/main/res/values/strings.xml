@@ -245,12 +245,14 @@
     <!-- About Links -->
     <string name="about_author">Michael Lagacé (veken0m)</string>
     <string name="email_author">veken0m.apps@gmail.com</string>
+    <string name="link_email_author">mailto:veken0m.apps@gmail.com?subject=Bitcoinium Prime Feedback</string>
     <string name="address_donation_bitcoin">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
     <string name="address_donation_dogecoin">D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y</string>
     <string name="address_donation_litecoin">LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp</string>
     <string name="link_twitter">https://twitter.com/veken0m</string>
     <string name="link_bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="link_xchangeGithub">https://github.com/timmolter/xchange</string>
+    <string name="link_bitcoiniumPlayStore">market://details?id=com.veken0m.bitcoinium</string>
     <string name="msg_cancelOrder">CANCEL THIS ORDER?</string>
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
