@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium.preferences;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -26,7 +25,7 @@ import com.veken0m.utils.Utils;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class PreferencesActivity extends BasePreferenceActivity {
+public class PreferencesActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
     @SuppressWarnings("deprecation")
     @Override
@@ -96,90 +95,19 @@ public class PreferencesActivity extends BasePreferenceActivity {
 
         // Widget Customization
         Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
-        if (widgetBackgroundColorPref != null) {
-            widgetBackgroundColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-                @Override
-                public boolean onPreferenceChange(Preference preference,
-                                                  Object newValue) {
-                    preference.setSummary(ColorPickerPreference
-                            .convertToARGB(Integer.valueOf(String
-                                    .valueOf(newValue))));
-                    return true;
-                }
-            });
-        }
-
+        widgetBackgroundColorPref.setOnPreferenceChangeListener(this);
         Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
-        if (widgetMainTextColorPref != null) {
-            widgetMainTextColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-                    preference.setSummary(ColorPickerPreference
-                            .convertToARGB(Integer.valueOf(String
-                                    .valueOf(newValue))));
-                    return true;
-                }
-
-            });
-        }
-
+        widgetMainTextColorPref.setOnPreferenceChangeListener(this);
         Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
-        if (widgetSecondaryTextColorPref != null) {
-            widgetSecondaryTextColorPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        widgetSecondaryTextColorPref.setOnPreferenceChangeListener(this);
 
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-                    preference.setSummary(ColorPickerPreference
-                            .convertToARGB(Integer.valueOf(String
-                                    .valueOf(newValue))));
-                    return true;
-                }
-
-            });
-        }
-
+        // Donation addresses
         Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
-        if (bitcoinDonationAddressPref != null) {
-            bitcoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_bitcoin);
-                    return true;
-                }
-            });
-        }
-
+        bitcoinDonationAddressPref.setOnPreferenceClickListener(this);
         Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
-        if (litecoinDonationAddressPref != null) {
-            litecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_litecoin);
-                    return true;
-                }
-            });
-        }
-
+        litecoinDonationAddressPref.setOnPreferenceClickListener(this);
         Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
-        if (dogecoinDonationAddressPref != null) {
-            dogecoinDonationAddressPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_dogecoin);
-                    return true;
-                }
-            });
-        }
+        dogecoinDonationAddressPref.setOnPreferenceClickListener(this);
 
     }
 
@@ -203,5 +131,20 @@ public class PreferencesActivity extends BasePreferenceActivity {
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));
+    }
+
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+
+        Utils.copyDonationAddressToClipboard(getApplication(), preference.getSummary().toString());
+        return true;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object o) {
+
+        preference.setSummary(ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(o))));
+        return true;
     }
 }

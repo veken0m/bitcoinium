@@ -163,9 +163,8 @@ public class Utils {
         return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
     }
 
-    public static void copyDonationAddressToClipboard(Context context, int addressResourceId) {
+    public static void copyDonationAddressToClipboard(Context context, String donationAddress) {
 
-        String donationAddress = context.getResources().getString(addressResourceId);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(donationAddress);
