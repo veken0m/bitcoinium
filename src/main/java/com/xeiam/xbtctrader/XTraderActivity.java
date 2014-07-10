@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -138,7 +137,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_xtrader_main);
 
         Bundle extras = getIntent().getExtras();
         String sCurrencyPair = Constants.DEFAULT_CURRENCY_PAIR;
@@ -157,7 +156,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_xtrader, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
 
@@ -184,9 +183,9 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.action, menu);
 
-        //String fiat=preferences.getString("listCurrency", "USD");
+        //String fiat=pref_xtrader.getString("listCurrency", "USD");
         fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(XTraderActivity.transactionCurrency) + "#.##");
 
         //init the view variables.
@@ -201,10 +200,10 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.preferences:
+            case R.id.action_preferences:
                 openPrefs();
                 return true;
-            case R.id.refresh:
+            case R.id.action_refresh:
                 refresh();
                 return true;
             default:
@@ -231,7 +230,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password")) {
 
             //String id = XTraderActivity.exchangeInfo.getIdentifier();
-            //String sCurrencyPair = XTraderActivity.preferences.getString(id + "TradeCurrency", "");
+            //String sCurrencyPair = XTraderActivity.pref_xtrader.getString(id + "TradeCurrency", "");
             //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
             //tradableIdentifier = currencyPair.baseSymbol;
             //transactionCurrency = currencyPair.counterSymbol;

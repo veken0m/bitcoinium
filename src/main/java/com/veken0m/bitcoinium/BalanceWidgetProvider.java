@@ -88,7 +88,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
 
                         views.setTextViewText(R.id.widgetAddress, walletNickname);
                         views.setTextViewText(R.id.widgetBalance, CurrencyUtils.formatPayout(balance, pref_widgetPayoutUnits, "BTC"));
-                        views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
+                        views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
 
                         try {
                             // Interested in the public polling market data feed (no authentication)

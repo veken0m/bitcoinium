@@ -63,7 +63,7 @@
         <activity
             android:name=".preferences.OrderbookPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/orderbookPreferences"
+            android:label="@string/label_orderbookPreferences"
             android:parentActivityName=".OrderbookActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -72,7 +72,7 @@
         <activity
             android:name=".preferences.GraphPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/graphPreferences"
+            android:label="@string/label_graphPreferences"
             android:parentActivityName=".GraphActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -81,7 +81,7 @@
         <activity
             android:name=".preferences.MinerPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/minerPreferences"
+            android:label="@string/label_minerPreferences"
             android:parentActivityName=".MinerStatsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -108,7 +108,7 @@
         <activity
             android:name=".GraphActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/priceGraph"
+            android:label="@string/label_priceGraph"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -116,7 +116,7 @@
         </activity>
         <activity
             android:name=".MinerStatsActivity"
-            android:label="@string/minerStats"
+            android:label="@string/label_minerStats"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -125,7 +125,7 @@
         </activity>
         <activity
             android:name=".preferences.PreferencesActivity"
-            android:label="@string/preferences"
+            android:label="@string/label_preferences"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -133,7 +133,7 @@
         </activity>
         <activity
             android:name=".preferences.PriceAlertPreferencesActivity"
-            android:label="@string/priceAlertSettings"
+            android:label="@string/label_priceAlertSettings"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -142,7 +142,7 @@
         <activity
             android:name=".WebViewerActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:label="@string/webCharts"
+            android:label="@string/label_webCharts"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -172,7 +172,7 @@
         <receiver
             android:name=".WidgetProvider"
             android:exported="false"
-            android:label="@string/price_widget_name">
+            android:label="@string/widget_price">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_RECEIVER" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
@@ -189,7 +189,7 @@
         <receiver
             android:name=".MinerWidgetProvider"
             android:exported="false"
-            android:label="@string/mining_widget_name">
+            android:label="@string/widget_mining">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_RECEIVER" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />

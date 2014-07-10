@@ -5,7 +5,7 @@
             android:defaultValue="true"
             android:key="showCurrencySymbolPref"
             android:summary="@string/pref_orderbook_currency_symbol_summary"
-            android:title="@string/displayCurrencySymbols" />
+            android:title="@string/displayCurrencySymbols"/>
 
         <EditTextPreference
             android:defaultValue="100"
@@ -13,14 +13,14 @@
             android:inputType="numberDecimal"
             android:key="orderbookLimiterPref"
             android:summary="@string/pref_orderbook_limit_summary"
-            android:title="@string/pref_orderbook_limit_title" />
+            android:title="@string/pref_orderbook_limit_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/liquidityHighlighting">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="highlightPref"
             android:summary="@string/pref_liquidity_highlight_summary"
-            android:title="@string/enableLiquidityHighlighting" />
+            android:title="@string/enableLiquidityHighlighting"/>
 
         <EditTextPreference
             android:defaultValue="10"
@@ -28,17 +28,17 @@
             android:inputType="numberDecimal"
             android:key="depthHighlightUpperPref"
             android:summary="@string/pref_highlight_green"
-            android:title="@string/highDepth" />
+            android:title="@string/highDepth"/>
         <EditTextPreference
             android:summary="@string/pref_highlight_yellow"
-            android:title="@string/mediumDepth" />
+            android:title="@string/mediumDepth"/>
         <EditTextPreference
             android:defaultValue="1"
             android:digits="01234567890"
             android:inputType="numberDecimal"
             android:key="depthHighlightLowerPref"
             android:summary="@string/pref_highlight_red"
-            android:title="@string/lowDepth" />
+            android:title="@string/lowDepth"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

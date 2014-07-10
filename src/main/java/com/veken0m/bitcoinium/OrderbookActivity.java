@@ -99,7 +99,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.orderbook);
+        setContentView(R.layout.activity_orderbook);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -126,7 +126,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
+        inflater.inflate(R.menu.action, menu);
         return true;
     }
 
@@ -151,7 +151,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.orderbook);
+        setContentView(R.layout.activity_orderbook);
 
         if (listAsks != null && listBids != null) {
             populateExchangeDropdown();
@@ -348,7 +348,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
                 Resources res = getResources();
-                String text = String.format(res.getString(R.string.connectionError),
+                String text = String.format(res.getString(R.string.error_exchangeConnection),
                         res.getString(R.string.orderbook), exchange.getExchangeName());
                 dialog = Utils.errorDialog(this, text);
             }
@@ -362,7 +362,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         removeLoadingSpinner(R.id.orderbook_loadSpinner);
         // Display error Dialog
         if (dialog == null || !dialog.isShowing())
-            dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
+            dialog = Utils.errorDialog(this, getString(R.string.error_BitcoinAverageTable), getString(R.string.error));
     }
 
     void populateExchangeDropdown() {

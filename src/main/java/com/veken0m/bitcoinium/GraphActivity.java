@@ -68,10 +68,10 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 graphLinearLayout.addView(graphView);
 
             } else if (noTradesFound) {
-                createPopup(getString(R.string.noTradesFound));
+                createPopup(getString(R.string.msg_noTradesFound));
             } else {
                 Resources res = getResources();
-                String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
+                String text = String.format(res.getString(R.string.error_exchangeConnection), res.getString(R.string.trades), exchangeName);
                 createPopup(text);
             }
         }
@@ -105,7 +105,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         exchangeName = exchange.getExchangeName();
 
         readPreferences();
-        setContentView(R.layout.graph);
+        setContentView(R.layout.activity_graph);
         createExchangeDropdown();
         createCurrencyDropdown();
         viewGraph();
@@ -116,7 +116,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
+        inflater.inflate(R.menu.action, menu);
         return true;
     }
 

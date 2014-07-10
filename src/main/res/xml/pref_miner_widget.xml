@@ -8,7 +8,7 @@
             android:entryValues="@array/miningpools"
             android:key="widgetMiningPoolPref"
             android:summary="@string/pref_select_mining_pool_summary"
-            android:title="@string/miningWidget" />
+            android:title="@string/miningWidget"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

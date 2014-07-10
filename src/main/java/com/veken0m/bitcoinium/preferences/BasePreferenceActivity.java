@@ -13,7 +13,7 @@ import com.veken0m.bitcoinium.R;
 
 public class BasePreferenceActivity extends PreferenceActivity {
 
-    // Generate Mining Pool miner alerts preferences screen
+    // Generate Mining Pool miner alerts pref_xtrader screen
     void generateMinerDownAlertPreferences() {
 
         addPreferencesFromResource(R.xml.pref_miner);
@@ -25,7 +25,7 @@ public class BasePreferenceActivity extends PreferenceActivity {
             for (String sPiscine : sPiscines) {
                 CheckBoxPreference alertCheckbox = new CheckBoxPreference(this);
                 alertCheckbox.setKey(sPiscine.toLowerCase().replaceAll("[ .-]", "") + "AlertPref");
-                alertCheckbox.setTitle(getString(R.string.minerDownAlert, sPiscine));
+                alertCheckbox.setTitle(getString(R.string.msg_minerDownAlert, sPiscine));
                 alertCheckbox.setDefaultValue(false);
 
                 minerDownAlertPref.addPreference(alertCheckbox);

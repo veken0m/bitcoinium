@@ -1,6 +1,7 @@
 package com.veken0m.bitcoinium;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -58,7 +59,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
         pref_widgetPayoutUnits = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
 
-        // Theming preferences
+        // Theming pref_xtrader
         pref_enableWidgetCustomization = prefs.getBoolean("enableWidgetCustomizationPref", false);
         if (pref_enableWidgetCustomization) {
             pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref", R.color.widgetMainTextColor);
@@ -80,8 +81,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
     }
 
-    // Sets a repeating alarm for a class that extends IntentService
-    static void setRefreshServiceAlarm(Context context, Class<?> cls) {
+    // Sets a repeating alarm on a class that extends IntentService
+    static void setRefreshServiceAlarm(Context context, Class<? extends IntentService> cls) {
 
         // Get refresh settings
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -125,9 +126,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();
-        String tickerText = res.getString(R.string.priceTickerNotif, baseCurrency, lastPrice, exchange);
-        String contentTitle = res.getString(R.string.priceTitleNotif, baseCurrency, lastPrice);
-        String contentText = res.getString(R.string.priceContentNotif, baseCurrency, lastPrice, exchange);
+        String tickerText = res.getString(R.string.msg_priceTickerNotif, baseCurrency, lastPrice, exchange);
+        String contentTitle = res.getString(R.string.msg_priceTitleNotif, baseCurrency, lastPrice);
+        String contentText = res.getString(R.string.msg_priceContentNotif, baseCurrency, lastPrice, exchange);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
@@ -147,9 +148,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static void createMinerDownNotification(Context context, String sMiningPool) {
 
         Resources res = context.getResources();
-        String tickerText = res.getString(R.string.minerDownTickerNotif);
-        String contentTitle = res.getString(R.string.minerDownTitleNotif);
-        String contentText = res.getString(R.string.minerDownContentNotif, sMiningPool);
+        String tickerText = res.getString(R.string.msg_minerDownTicker);
+        String contentTitle = res.getString(R.string.msg_minerDownTitle);
+        String contentText = res.getString(R.string.msg_minerDownContent, sMiningPool);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());

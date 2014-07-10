@@ -17,20 +17,18 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+            android:layout_height="18dp"/>
 
         <TextView
             android:id="@+id/cancelOrderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CANCEL THIS ORDER?"
+            android:text="@string/msg_cancelOrder"
             android:textSize="20sp" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+            android:layout_height="18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -111,14 +109,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID:"
+            android:text="@string/label_id"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/cancel_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="orderId"
+            android:text="@string/label_orderId"
             android:textSize="12sp"
             android:textStyle="italic" />
 

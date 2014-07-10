@@ -107,8 +107,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                         views.setTextViewText(R.id.widgetExchange, shortName);
                         views.setTextViewText(R.id.widgetLastText, lastString);
-                        views.setTextViewText(R.id.widgetVolText, getString(R.string.vol) + ": " + volumeString);
-                        views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
+                        views.setTextViewText(R.id.widgetVolText, getString(R.string.volume_short) + ": " + volumeString);
+                        views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
                         updateWidgetTheme(views);
 
                         if (pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
@@ -134,8 +134,8 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             if (pref_enableTicker && prefs.getBoolean(pairId + "TickerPref", false)) {
 
-                String msg = getString(R.string.priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
-                String title = getString(R.string.permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
+                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
+                String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
 
                 createPermanentNotification(this, title, msg, pairId.hashCode());
             } else {

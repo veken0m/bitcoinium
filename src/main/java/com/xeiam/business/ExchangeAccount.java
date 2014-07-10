@@ -176,7 +176,7 @@ public class ExchangeAccount {
                     if (dtInSec >= getTargetTimeIntervalFromPrefsInSec()) {//need to add this to the array and chop off the front.
                         trades.add(bitcoiniumTicker);
                         if (trades.size() > XTraderActivity.CHART_TARGET_RESOLUTION) {
-                            trades.remove(0);
+                            trades.removeFirst();
                         }
                         System.out.println("adding to trade array and removing the first.");
                     } else {//just replace the last ticker but keep the time the same.
@@ -194,12 +194,14 @@ public class ExchangeAccount {
     }
 
     public long getExchangeDelay() {
-        return (System.currentTimeMillis() - lastTicker.getTimestamp()) / 1000;
+        if(orderBook == null) return 0;
+
+        return (System.currentTimeMillis() - orderBook.getTimestamp()) / 1000;
     }
 
     public long getTimeFromLastUpdate() {
 
-        return (System.currentTimeMillis() - trades.get(trades.size() - 1).getTimestamp()) / 1000;
+        return (System.currentTimeMillis() - trades.getLast().getTimestamp()) / 1000;
 
     }
 
@@ -263,12 +265,13 @@ public class ExchangeAccount {
             long timeLast = tickerHistory.getBaseTimestamp() * 1000;
             System.out.println("TIME LAST=" + timeLast);
             for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
-                BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast + (long) tickerHistory.getTimeStampOffsets().get(i) * 1000, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
+
+                timeLast += (long) tickerHistory.getTimeStampOffsets().get(i) * 1000;
+                BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
                 trades.add(ticker);
-                timeLast = ticker.getTimestamp();
             }
 
-            this.lastTicker = trades.get(trades.size() - 1);
+            this.lastTicker = trades.getLast();
             this.lastOrderBook = null;
             setReferenceTicker();
             mainActivity.getPainter().setTradeHistoryPath();

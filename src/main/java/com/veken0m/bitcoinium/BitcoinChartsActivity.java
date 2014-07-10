@@ -58,7 +58,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bitcoincharts);
+        setContentView(R.layout.activity_bitcoincharts);
 
         populateCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
@@ -91,7 +91,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.bitcoincharts);
+        setContentView(R.layout.activity_bitcoincharts);
         populateCurrencyDropdown();
 
         if (marketData != null) drawBitcoinChartsUI();
@@ -222,7 +222,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
                 Resources res = getResources();
-                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.error_exchangeConnection), "tickers", "Bitcoin Charts"));
             }
         } catch (WindowManager.BadTokenException e) {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now

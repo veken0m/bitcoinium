@@ -60,6 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/new_order_tradable_identifier"
             android:text="BTC" />
 
         <View
@@ -92,6 +93,7 @@
             android:inputType="numberDecimal" />
 
         <TextView
+            android:id="@+id/new_order_transaction_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="USD" />

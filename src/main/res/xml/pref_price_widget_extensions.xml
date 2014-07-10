@@ -16,12 +16,12 @@
                     android:defaultValue="false"
                     android:key="enableTickerPref"
                     android:summary="@string/pref_notification_ticker_enable_summary"
-                    android:title="@string/enableTickers" />
+                    android:title="@string/enableTickers"/>
             </PreferenceCategory>
 
             <PreferenceCategory
                 android:key="notificationSettingsPref"
-                android:title="@string/notificationDrawerTickers" />
+                android:title="@string/notificationDrawerTickers"/>
 
         </PreferenceScreen>
     </PreferenceCategory>

@@ -87,7 +87,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
 
         } else {
             Preference pref = new Preference(this);
-            pref.setLayoutResource(R.layout.red_preference);
+            pref.setLayoutResource(R.layout.custom_red_preference);
             pref.setTitle(getString(R.string.noWidgetFound));
             pref.setSummary(getString(R.string.pref_requires_widget));
 
@@ -103,7 +103,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                         public boolean onPreferenceClick(Preference preference) {
                             Intent i = new Intent(Intent.ACTION_SEND);
                             i.setType("message/rfc822");
-                            i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.emailAddress)});
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_author)});
                             i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - " + getString(R.string.feedback));
                             startActivity(Intent.createChooser(i, getString(R.string.sendEmail)));
 
@@ -120,7 +120,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(getString(R.string.twitterAddress))));
+                                    .parse(getString(R.string.link_twitter))));
                             return true;
                         }
                     });
@@ -133,7 +133,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(getString(R.string.xchangeGithub))));
+                            .parse(getString(R.string.link_xchangeGithub))));
                     return true;
                 }
             });
@@ -157,7 +157,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse(getString(R.string.bitcoiniumGithub))));
+                            .parse(getString(R.string.link_bitcoiniumGithub))));
                     return true;
                 }
             });
@@ -231,7 +231,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.bitcoinDonationAddress);
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_bitcoin);
                     return true;
                 }
             });
@@ -244,7 +244,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.litecoinDonationAddress);
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_litecoin);
                     return true;
                 }
             });
@@ -257,7 +257,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.dogecoinDonationAddress);
+                    Utils.copyDonationAddressToClipboard(getApplication(), R.string.address_donation_dogecoin);
                     return true;
                 }
             });
@@ -281,7 +281,7 @@ public class PreferencesActivity extends BasePreferenceActivity {
     public void onStop() {
         super.onStop();
 
-        // Tell the widgets to update preferences
+        // Tell the widgets to update pref_xtrader
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));

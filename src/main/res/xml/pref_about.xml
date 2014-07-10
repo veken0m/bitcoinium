@@ -2,54 +2,54 @@
 
     <PreferenceCategory android:title="About">
         <PreferenceScreen
-            android:summary="@string/aboutSummary"
+            android:summary="@string/pref_about_summary"
             android:title="@string/aboutBitcoinium">
             <PreferenceCategory android:title="@string/about">
                 <Preference
-                    android:summary="@string/author"
-                    android:title="@string/authorText" />
+                    android:summary="@string/about_author"
+                    android:title="@string/authorText"/>
                 <Preference
                     android:key="devEmailPref"
-                    android:summary="@string/emailAddress"
-                    android:title="@string/emailText" />
+                    android:summary="@string/email_author"
+                    android:title="@string/email"/>
                 <Preference
                     android:key="devTwitterPref"
                     android:summary=" @veken0m"
-                    android:title="@string/twitterText" />
+                    android:title="@string/twitter"/>
                 <Preference
                     android:summary="@string/version_name"
-                    android:title="@string/versionText" />
+                    android:title="@string/version"/>
                 <Preference
                     android:key="playstoreGithubPref"
                     android:summary="@string/pref_rate_bitcoinium_summary"
-                    android:title="@string/rateBitcoinium" />
+                    android:title="@string/msg_rateBitcoinium"/>
                 <Preference
                     android:key="bitcoiniumGithubPref"
-                    android:summary="@string/submit_feature_request"
-                    android:title="@string/bitcoiniumGithubText" />
+                    android:summary="@string/pref_submitFeatureRequest"
+                    android:title="@string/bitcoiniumGithub"/>
                 <Preference
                     android:key="xchangeGithubPref"
-                    android:summary="@string/xchangeSummary"
-                    android:title="@string/xchangeGithubText" />
+                    android:summary="@string/pref_xchange_summary"
+                    android:title="@string/xchangeGithub"/>
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="googleAnalyticsPref"
                     android:summary="@string/pref_google_analytics_summary"
-                    android:title="@string/optGoogleAnalytics" />
+                    android:title="@string/googleAnalytics"/>
             </PreferenceCategory>
             <PreferenceCategory android:title="@string/donations">
                 <Preference
                     android:key="bitcoinDonationAddressPref"
-                    android:summary="@string/bitcoinDonationAddress"
-                    android:title="@string/bitcoinDonationAddressText" />
+                    android:summary="@string/address_donation_bitcoin"
+                    android:title="@string/bitcoin"/>
                 <Preference
                     android:key="litecoinDonationAddressPref"
-                    android:summary="@string/litecoinDonationAddress"
-                    android:title="@string/litecoinDonationAddressText" />
+                    android:summary="@string/address_donation_litecoin"
+                    android:title="@string/litecoin"/>
                 <Preference
                     android:key="dogecoinDonationAddressPref"
-                    android:summary="@string/dogecoinDonationAddress"
-                    android:title="@string/dogecoinDonationAddressText" />
+                    android:summary="@string/address_donation_dogecoin"
+                    android:title="@string/dogecoin"/>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

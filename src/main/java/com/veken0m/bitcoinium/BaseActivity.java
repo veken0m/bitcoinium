@@ -36,13 +36,13 @@ public class BaseActivity extends ActionBarActivity {
         removeLoadingSpinner(spinnerId);
         // Display error Dialog
         if (dialog == null || !dialog.isShowing())
-            dialog = Utils.errorDialog(this, getString(R.string.noInternetConnection), getString(R.string.internetConnection));
+            dialog = Utils.errorDialog(this, getString(R.string.error_noInternetConnection), getString(R.string.internetConnection));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
+        inflater.inflate(R.menu.action, menu);
         return true;
     }
 

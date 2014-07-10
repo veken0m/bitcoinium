@@ -105,7 +105,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         if ((hashRate < 0.01) && pref_minerDownAlert)
                             createMinerDownNotification(this, miningPool);
 
-                        String refreshedTime = getString(R.string.updateShort) + Utils.getCurrentTime(this);
+                        String refreshedTime = getString(R.string.update_short) + Utils.getCurrentTime(this);
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
 
                         updateWidgetTheme(views);

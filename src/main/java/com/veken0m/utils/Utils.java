@@ -19,7 +19,6 @@ import com.xeiam.xchange.currency.CurrencyPair;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
@@ -132,7 +131,7 @@ public class Utils {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg).setTitle(title);
-        builder.setPositiveButton(R.string.OK, null);
+        builder.setPositiveButton(R.string.ok, null);
         builder.show();
 
         return builder.create();
@@ -142,7 +141,7 @@ public class Utils {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg);
-        builder.setPositiveButton(R.string.OK, null);
+        builder.setPositiveButton(R.string.ok, null);
         builder.show();
 
         return builder.create();
@@ -172,10 +171,10 @@ public class Utils {
             clipboard.setText(donationAddress);
         } else {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddressText), donationAddress));
+            clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
         }
 
-        Toast.makeText(context, context.getString(R.string.addressCopiedToClipboard), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.msg_copiedClipboard), Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -56,7 +56,7 @@ public class BitcoinAverageActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bitcoinaverage);
+        setContentView(R.layout.activity_bitcoinaverage);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -87,7 +87,7 @@ public class BitcoinAverageActivity extends BaseActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.bitcoinaverage);
+        setContentView(R.layout.activity_bitcoinaverage);
         if (tickers.size() > 0) drawBitcoinAverageUI();
     }
 
@@ -197,7 +197,7 @@ public class BitcoinAverageActivity extends BaseActivity {
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
                 Resources res = getResources();
-                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "data", "BitcoinAverage.com"));
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.error_exchangeConnection), "data", "BitcoinAverage.com"));
             }
         } catch (WindowManager.BadTokenException e) {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now

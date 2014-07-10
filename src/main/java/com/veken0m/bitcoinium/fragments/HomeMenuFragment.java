@@ -39,7 +39,7 @@ public class HomeMenuFragment extends Fragment {
 
         String exchangeName = getArguments().getString("exchange");
 
-        View view = inflater.inflate(R.layout.menu_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
         buildMenu(view, exchangeName);
         return view;
     }

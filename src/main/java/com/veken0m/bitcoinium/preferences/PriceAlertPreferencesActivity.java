@@ -23,7 +23,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_price_alert);
 
-        // Generate the alarm preferences
+        // Generate the alarm pref_xtrader
         PreferenceCategory alertSettingsPref = (PreferenceCategory) findPreference("alertSettingsPref");
         if (alertSettingsPref != null) {
 
@@ -73,7 +73,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                 }
             } else {
                 Preference pref = new Preference(this);
-                pref.setLayoutResource(R.layout.red_preference);
+                pref.setLayoutResource(R.layout.custom_red_preference);
                 pref.setTitle(getString(R.string.noWidgetFound));
                 pref.setSummary(getString(R.string.pref_requires_widget));
 
@@ -86,7 +86,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
     public void onStop() {
         super.onStop();
 
-        // Tell the widgets to update preferences
+        // Tell the widgets to update pref_xtrader
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
     }
 }

@@ -67,12 +67,14 @@
     <orderEntry type="library" exported="" name="xchange-cryptonit-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-btcchina-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="rescu-1.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="xchange-btccentral-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cavirtex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-btce-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-core-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-vaultofsatoshi-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitfinex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />
     <orderEntry type="library" exported="" name="xchange-cryptotrade-2.1.0-SNAPSHOT" level="project" />
@@ -80,9 +82,7 @@
     <orderEntry type="library" exported="" name="xchange-lakebtc-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-kraken-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-campbx-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitbay-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoincharts-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bter-2.1.0-SNAPSHOT" level="project" />
