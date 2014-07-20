@@ -57,6 +57,9 @@ public class ExchangeAccount {
     private BitcoiniumOrderbook lastOrderBook;
     private BitcoiniumTicker lastTicker;
 
+    //private final Object orderbookLock = new Object();
+    private final Object tradesLock = new Object();
+
     public ExchangeAccount(XTraderActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -170,22 +173,26 @@ public class ExchangeAccount {
                 //create a new ticker with the current time.
                 this.lastTicker = bitcoiniumTicker;
 
-                if (trades != null && trades.size() > 0) {
-                    long dtInSec = getTimeFromLastUpdate();
-                    System.out.println("TIME FROM LAST TICKER IN ARRAY: " + dtInSec + ", targetInterval=" + getTargetTimeIntervalFromPrefsInSec());
-                    if (dtInSec >= getTargetTimeIntervalFromPrefsInSec()) {//need to add this to the array and chop off the front.
-                        trades.add(bitcoiniumTicker);
-                        if (trades.size() > XTraderActivity.CHART_TARGET_RESOLUTION) {
-                            trades.removeFirst();
+                synchronized(tradesLock) {
+                    if (trades != null && trades.size() > 0) {
+
+                        long dtInSec = getTimeFromLastUpdate();
+                        System.out.println("TIME FROM LAST TICKER IN ARRAY: " + dtInSec + ", targetInterval=" + getTargetTimeIntervalFromPrefsInSec());
+                        if (dtInSec >= getTargetTimeIntervalFromPrefsInSec()) {//need to add this to the array and chop off the front.
+                            trades.add(bitcoiniumTicker);
+                            if (trades.size() > XTraderActivity.CHART_TARGET_RESOLUTION) {
+                                trades.removeFirst();
+                            }
+                            System.out.println("adding to trade array and removing the first.");
+                        } else {//just replace the last ticker but keep the time the same.
+                            trades.set(trades.size() - 1, bitcoiniumTicker);
                         }
-                        System.out.println("adding to trade array and removing the first.");
-                    } else {//just replace the last ticker but keep the time the same.
-                        trades.set(trades.size() - 1, bitcoiniumTicker);
                     }
 
                     mainActivity.getPainter().setTradeHistoryPath();
                     mainActivity.onAccountInfoUpdate();
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,13 +245,17 @@ public class ExchangeAccount {
             BitcoiniumOrderbook bitcoiniumOrderbook = bitcoiniumMarketDataService.getBitcoiniumOrderbook(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.pricewindow);
 
             if (bitcoiniumOrderbook != null) {
-                this.lastOrderBook = orderBook;
-                this.orderBook = bitcoiniumOrderbook;
-                //this.lastTicker=newOrderBook.getTicker();
+
+                //synchronized(orderbookLock) {
+                    this.lastOrderBook = orderBook;
+                    this.orderBook = bitcoiniumOrderbook;
+                    //this.lastTicker=newOrderBook.getTicker();
+                //}
             }
 
             mainActivity.getPainter().setBidAskPaths();//triggers the painter
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             connectionGood = false;
@@ -256,25 +267,27 @@ public class ExchangeAccount {
     public boolean queryTradeHistory() {
         System.out.println("queryTradeHistory");
         try {
-            //get the data. It comes pre-sorted.
-            this.trades = new LinkedList<BitcoiniumTicker>();
-            this.timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
-            // Use the factory to get Bitcoinium exchange API using default settings
-            BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
+            synchronized(tradesLock) {
+                //get the data. It comes pre-sorted.
+                this.trades = new LinkedList<BitcoiniumTicker>();
+                this.timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
+                // Use the factory to get Bitcoinium exchange API using default settings
+                BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
 
-            long timeLast = tickerHistory.getBaseTimestamp() * 1000;
-            System.out.println("TIME LAST=" + timeLast);
-            for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
+                long timeLast = tickerHistory.getBaseTimestamp() * 1000;
+                System.out.println("TIME LAST=" + timeLast);
+                for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
 
-                timeLast += (long) tickerHistory.getTimeStampOffsets().get(i) * 1000;
-                BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
-                trades.add(ticker);
-            }
+                    timeLast += (long) tickerHistory.getTimeStampOffsets().get(i) * 1000;
+                    BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
+                    trades.add(ticker);
+                }
 
             this.lastTicker = trades.getLast();
             this.lastOrderBook = null;
             setReferenceTicker();
             mainActivity.getPainter().setTradeHistoryPath();
+            }
 
             return true;
         } catch (Exception e) {
