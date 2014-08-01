@@ -185,11 +185,15 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         // And convert all GH/s to MH/s
                         float temp_hashRate;
                         if (!hashRateString.contentEquals(" ")) {
+
                             String hash_rate[] = hashRateString.split(" ");
                             temp_hashRate = Float.parseFloat(hash_rate[0]);
-                            if (hash_rate[1].contains("G")) {
+
+                            if (hash_rate[1].contains("G"))
                                 temp_hashRate *= 1000;
-                            }
+                            else if(hash_rate[1].contains("T"))
+                                temp_hashRate *= 1000000;
+
                         } else {
                             // empty hashrate, set to 0;
                             temp_hashRate = 0;
