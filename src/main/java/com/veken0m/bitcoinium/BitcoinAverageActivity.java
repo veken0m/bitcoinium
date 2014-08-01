@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class BitcoinAverageActivity extends BaseActivity {
+public class BitcoinAverageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private final static Handler mOrderHandler = new Handler();
     private final Runnable mGraphView = new Runnable() {
@@ -57,6 +58,13 @@ public class BitcoinAverageActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitcoinaverage);
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoinaverage_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(R.color.holo_blue_light,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -119,7 +127,6 @@ public class BitcoinAverageActivity extends BaseActivity {
     void drawBitcoinAverageUI() {
 
         TableLayout bitcoinAverageTable = (TableLayout) findViewById(R.id.bitcoinaverage_list);
-        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
 
         boolean bBackGroundColor = false;
 
@@ -179,19 +186,20 @@ public class BitcoinAverageActivity extends BaseActivity {
         } else {
             failedToDrawUI();
         }
+        swipeLayout.setRefreshing(false);
     }
 
     private void viewBitcoinAverage() {
-
+        swipeLayout.setRefreshing(true);
         if (Utils.isConnected(this))
             (new bitcoinAverageThread()).start();
         else
-            notConnected(R.id.bitcoinaverage_loadSpinner);
+            notConnected();
     }
 
     private void errorOccured() {
 
-        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
+        swipeLayout.setRefreshing(false);
 
         try {
             if (dialog == null || !dialog.isShowing()) {
@@ -206,21 +214,20 @@ public class BitcoinAverageActivity extends BaseActivity {
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner(R.id.bitcoinaverage_loadSpinner);
+        swipeLayout.setRefreshing(false);
         if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
+    }
+
+    @Override
+    public void onRefresh() {
+        viewBitcoinAverage();
     }
 
     private class bitcoinAverageThread extends Thread {
 
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading(R.id.bitcoinaverage_list, R.id.bitcoinaverage_loadSpinner);
-                }
-            });
             if (getBitcoinAverage())
                 mOrderHandler.post(mGraphView);
             else

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +44,7 @@ import java.util.List;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener {
+public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final static Handler mOrderHandler = new Handler();
     /**
@@ -101,6 +102,13 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         setContentView(R.layout.activity_orderbook);
 
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.orderbook_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(R.color.holo_blue_light,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
+
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
@@ -121,6 +129,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         populateCurrencyDropdown();
 
         // KarmaAdsUtils.initAd(this);
+    }
+
+    @Override public void onRefresh() {
+        viewOrderbook();
     }
 
     @Override
@@ -167,7 +179,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
     boolean getOrderBook() {
-
+        swipeLayout.setRefreshing(true);
         if (listAsks != null && listBids != null) {
             listAsks.clear();
             listBids.clear();
@@ -207,13 +219,11 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Draw the Orders to the screen in a table
      */
     void drawOrderbookUI() {
-
+        swipeLayout.setRefreshing(true);
         final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
         if (orderbookTable != null) {
 
             orderbookTable.removeAllViews();
-
-            removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
             boolean bBackGroundColor = true;
 
@@ -298,15 +308,15 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         } else {
             failedToDrawUI();
         }
-
-    }
+        swipeLayout.setRefreshing(false);
+}
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
             if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
         } else {
-            notConnected(R.id.bitcoincharts_loadSpinner);
+            notConnected();
         }
     }
 
@@ -342,7 +352,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void errorOccured() {
 
-        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        swipeLayout.setRefreshing(false);
 
         try {
             if (dialog == null || !dialog.isShowing()) {
@@ -359,7 +369,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        swipeLayout.setRefreshing(false);
         // Display error Dialog
         if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, getString(R.string.error_BitcoinAverageTable), getString(R.string.error));
@@ -441,12 +451,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
-                }
-            });
 
             threadRunning = true;
             if (getOrderBook())
@@ -454,6 +458,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             else
                 mOrderHandler.post(mError);
             threadRunning = false;
+            swipeLayout.setRefreshing(false);
         }
     }
 
