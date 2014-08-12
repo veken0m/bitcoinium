@@ -22,7 +22,7 @@ import com.veken0m.bitcoinium.OrderbookActivity;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.xeiam.xbtctrader.XTraderActivity;
 
@@ -67,9 +67,9 @@ public class HomeMenuFragment extends Fragment {
 
                 Intent graphActivity = new Intent(context, GraphActivity.class);
 
-                Exchange exchange = null;
+                ExchangeProperties exchange = null;
                 try {
-                    exchange = new Exchange(context, exchangeName);
+                    exchange = new ExchangeProperties(context, exchangeName);
                 } catch (Exception e) {
                     // Do nothing
                 }
@@ -90,9 +90,9 @@ public class HomeMenuFragment extends Fragment {
 
                 Intent orderbookActivity = new Intent(context, OrderbookActivity.class);
 
-                Exchange exchange = null;
+                ExchangeProperties exchange = null;
                 try {
-                    exchange = new Exchange(context, exchangeName);
+                    exchange = new ExchangeProperties(context, exchangeName);
                 } catch (Exception e) {
                     // Do nothing
                 }

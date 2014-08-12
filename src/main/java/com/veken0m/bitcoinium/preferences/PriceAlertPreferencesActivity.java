@@ -13,7 +13,7 @@ import android.text.InputType;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 
 public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
@@ -45,7 +45,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     if(widgetCurrency == null || widgetExchange == null)
                         continue;
 
-                    Exchange exchange = new Exchange(this, widgetExchange);
+                    ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
 
                     PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
                     alertLimits.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);

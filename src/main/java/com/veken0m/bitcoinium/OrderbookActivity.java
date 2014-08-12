@@ -28,12 +28,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
@@ -58,7 +58,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static SharedPreferences prefs = null;
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "";
-    private static Exchange exchange = null;
+    private static ExchangeProperties exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean threadRunning = false;
     private final Runnable mOrderView = new Runnable() {
@@ -117,12 +117,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            exchange = new Exchange(this, extras.getString("exchange"));
+            exchange = new ExchangeProperties(this, extras.getString("exchange"));
         else
-            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+            exchange = new ExchangeProperties(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
         if (!exchange.supportsOrderbook())
-            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+            exchange = new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
 
         readPreferences();
         populateExchangeDropdown();
@@ -185,11 +185,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             listBids.clear();
         }
 
-        final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
-                .createExchange(exchange.getClassName())
-                .getPollingMarketDataService();
-
+        PollingMarketDataService marketData = ExchangeUtils.getMarketData(exchange, currencyPair);
         OrderBook orderbook;
+
         try {
             orderbook = marketData.getOrderBook(currencyPair);
         } catch (Exception e) {
@@ -331,7 +329,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged) {
-                    exchange = new Exchange(this, exchangeName);
+                    exchange = new ExchangeProperties(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     populateCurrencyDropdown();
                 }

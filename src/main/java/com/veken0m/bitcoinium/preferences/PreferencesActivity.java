@@ -19,7 +19,7 @@ import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 
@@ -43,7 +43,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         PreferenceCategory notificationSettingsPref = (PreferenceCategory) findPreference("notificationSettingsPref");
 
         for (String sExchange : sExchanges) {
-            Exchange exchange = new Exchange(this, sExchange);
+            ExchangeProperties exchange = new ExchangeProperties(this, sExchange);
             String[] sCurrencies = exchange.getCurrencies();
 
             // Default Currency List
@@ -72,7 +72,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
                 if(widgetCurrency == null || widgetExchange == null)
                     continue;
 
-                Exchange exchange = new Exchange(this, widgetExchange);
+                ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
 
                 // Create Checkbox
                 CheckBoxPreference tickerCheckBox = new CheckBoxPreference(this);

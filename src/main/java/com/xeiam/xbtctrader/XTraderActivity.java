@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.xeiam.business.ExchangeAccount;
@@ -49,7 +49,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     public static DecimalFormat fiveDecimalFormatter = new DecimalFormat("#.#####");
     public static DecimalFormat btcFormatter = new DecimalFormat("#.###BTC");
     public static DecimalFormat fiatFormatter;
-    public static Exchange exchangeInfo;
+    public static ExchangeProperties exchangeInfo;
     public static String tradableIdentifier = "BTC";
     public static String transactionCurrency = "USD";
     public static String currencyPair;
@@ -149,7 +149,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
                 currencyPosition -= 3;
 
             String exchangeSymbol = symbol.substring(0, currencyPosition);
-            exchangeInfo = new Exchange(this, exchangeSymbol);
+            exchangeInfo = new ExchangeProperties(this, exchangeSymbol);
             sCurrencyPair = "BTC/" + symbol.substring(currencyPosition);
             //exchangeInfo = new Exchange(this, "bitstamp");
         }

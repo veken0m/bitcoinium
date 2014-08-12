@@ -12,7 +12,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import com.google.analytics.tracking.android.EasyTracker;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 
 public class WidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener{
@@ -126,13 +126,13 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String pref_widgetExchange = prefs.getString("widgetExchangePref", Constants.DEFAULT_EXCHANGE);
 
-        Exchange exchange;
+        ExchangeProperties exchange;
         try {
-            exchange = new Exchange(this, pref_widgetExchange);
+            exchange = new ExchangeProperties(this, pref_widgetExchange);
         } catch (Exception e) {
             Editor editor = prefs.edit();
             editor.putString("widgetExchangePref", Constants.DEFAULT_EXCHANGE).commit();
-            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+            exchange = new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
         }
 
         String sCurrency = prefs.getString("widgetCurrencyPref", exchange.getDefaultCurrency());

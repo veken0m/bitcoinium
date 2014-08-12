@@ -11,15 +11,14 @@ import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.utils.CertHelper;
 
 public class WidgetProvider extends BaseWidgetProvider {
 
@@ -66,19 +65,10 @@ public class WidgetProvider extends BaseWidgetProvider {
                     if (exchangePref.toLowerCase().contains("mtgox"))
                         exchangePref = "bitcoinaverage";
 
-                    Exchange exchange = getExchange(exchangePref);
+                    ExchangeProperties exchange = getExchange(exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String shortName = exchange.getShortName();
                     String exchangeKey = exchange.getIdentifier();
-
-                    // TODO: find way to import required certificates
-                    if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade")) {
-                        try {
-                            CertHelper.trustAllCerts();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
 
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
                     setTapBehaviour(appWidgetId, exchangeKey, views);
@@ -90,10 +80,7 @@ public class WidgetProvider extends BaseWidgetProvider {
                             shortName += " " + pair.baseSymbol;
 
                         // Get ticker using XChange
-                        Ticker ticker = ExchangeFactory.INSTANCE
-                                .createExchange(exchange.getClassName())
-                                .getPollingMarketDataService()
-                                .getTicker(pair);
+                        Ticker ticker = ExchangeUtils.getMarketData(exchange, pair).getTicker(pair);
 
                         // Retrieve values from ticker
                         float lastFloat = ticker.getLast().floatValue();
@@ -127,7 +114,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             }
         }
 
-        private void createTickerNotif(CurrencyPair pair, String lastString, Exchange exchange) {
+        private void createTickerNotif(CurrencyPair pair, String lastString, ExchangeProperties exchange) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
@@ -160,11 +147,11 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
         }
 
-        public Exchange getExchange(String exchange) {
+        public ExchangeProperties getExchange(String exchange) {
             try {
-                return new Exchange(this, exchange);
+                return new ExchangeProperties(this, exchange);
             } catch (Exception e) {
-                return new Exchange(this, Constants.DEFAULT_EXCHANGE);
+                return new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
             }
         }
 
@@ -218,7 +205,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             }
         }
 
-        public void checkAlarm(CurrencyPair pair, float lastFloat, Exchange exchange) {
+        public void checkAlarm(CurrencyPair pair, float lastFloat, ExchangeProperties exchange) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
