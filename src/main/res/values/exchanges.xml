@@ -10,23 +10,27 @@
         <item>Bitcurex</item>
         <item>Bitfinex</item>
         <item>Bitmarket</item>
+        <item>Bittrex</item>
         <item>Bitstamp</item>
         <item>BTC-e</item>
         <item>BTC China</item>
+        <item>BtcTrade</item>
         <item>BTER</item>
         <item>CampBX</item>
         <item>CEX.IO</item>
         <item>Coinbase</item>
-        <!--item>Coinfloor</item-->
+        <!--item>Coinfloor</item--> <!-- streaming only -->
         <item>Cryptonit</item>
         <item>Crypto-Trade</item>
-        <!--item>Cryptsy</item-->
+        <item>Cryptsy</item>
         <item>HitBTC</item>
-        <!--item>ItBit</item-->
+        <item>ItBit</item>
         <item>Justcoin</item>
         <item>Kraken</item>
         <item>LakeBTC</item>
-        <!--item>VirCurEx</item-->
+        <item>MintPal</item>
+        <item>Poloniex</item>
+        <!--item>VirCurEx</item--> <!-- not implemented -->
         <item>Vault of Satoshi</item>
         <item>VirtEx</item>
     </string-array>
@@ -39,23 +43,27 @@
         <item>bitcurex</item>
         <item>bitfinex</item>
         <item>bitmarket</item>
+        <item>bittrex</item>
         <item>bitstamp</item>
         <item>btce</item>
         <item>btcchina</item>
+        <item>btctrade</item>
         <item>bter</item>
         <item>campbx</item>
         <item>cexio</item>
         <item>coinbase</item>
-        <!--item>coinfloor</item-->
+        <!--item>coinfloor</item--> <!-- streaming only -->
         <item>cryptonit</item>
         <item>cryptotrade</item>
-        <!--item>cryptsy</item-->
+        <item>cryptsy</item>
         <item>hitbtc</item>
-        <!--item>itbit</item-->
+        <item>itbit</item>
         <item>justcoin</item>
         <item>kraken</item>
         <item>lakebtc</item>
-        <!--item>vircurex</item-->
+        <item>mintpal</item>
+        <item>poloniex</item>
+        <!--item>vircurex</item--> <!-- not implemented -->
         <item>vaultofsatoshi</item>
         <item>virtex</item>
     </string-array>
@@ -70,8 +78,10 @@
         <item>Bitfinex</item>
         <item>Bitmarket</item>
         <item>Bitstamp</item>
+        <item>Bittrex</item>
         <item>BTC-e</item>
         <item>BTC China</item>
+        <item>BtcTrade</item>
         <item>BTER</item>
         <item>CampBX</item>
         <item>CEX.IO</item>
@@ -79,14 +89,16 @@
         <!--item>Coinfloor</item-->
         <item>Cryptonit</item>
         <item>Crypto-Trade</item>
-        <!--item>Cryptsy</item-->
+        <item>Cryptsy</item>
         <item>HitBTC</item>
-        <!--item>ItBit</item-->
+        <item>ItBit</item>
         <item>Justcoin</item>
         <item>Kraken</item>
         <item>LakeBTC</item>
+        <item>MintPal</item>
+        <item>Poloniex</item>
         <item>Vault of Satoshi</item>
-        <!--item>VirCurEx</item-->
+        <item>VirCurEx</item>
         <item>VirtEx</item>
     </string-array>
 
@@ -102,6 +114,7 @@
         <item>Bitstamp</item>
         <item>BTC-e</item>
         <item>BTC China</item>
+        <item>BtcTrade</item>
         <!--item>BTER</item-->
         <!--item>CampBX</item-->
         <item>CEX.IO</item>
@@ -109,12 +122,14 @@
         <!--item>Coinfloor</item-->
         <item>Cryptonit</item>
         <!--item>Cryptotrade</item-->
-        <!--item>Cryptsy</item-->
+        <item>Cryptsy</item>
         <!--item>HitBTC</item-->
-        <!--item>ItBit</item-->
+        <item>ItBit</item>
         <!--item>Justcoin</item-->
         <item>Kraken</item>
         <!--item>LakeBTC</item-->
+        <item>MintPal</item>
+        <item>Poloniex</item>
         <item>Vault of Satoshi</item>
         <!--item>VirCurEx</item-->
         <item>VirtEx</item>
@@ -198,6 +213,14 @@
         <item>Bitstamp</item>
     </string-array>
 
+    <string-array name="bittrex">
+        <item>Bittrex</item>
+        <item>com.xeiam.xchange.bittrex.v1.BittrexExchange</item>
+        <item>VRC/BTC</item>
+        <item>bittrex</item>
+        <item>Bittrex</item>
+    </string-array>
+
     <string-array name="bitcoincentral">
         <item>Bitcoin-Central</item>
         <item>com.xeiam.xchange.btccentral.BTCCentralExchange</item>
@@ -220,6 +243,14 @@
         <item>BTC/CNY</item>
         <item>btcchina</item>
         <item>BTCChina</item>
+    </string-array>
+
+    <string-array name="btctrade">
+        <item>BtcTrade</item>
+        <item>com.xeiam.xchange.btctrade.BTCTradeExchange</item>
+        <item>BTC/CHY</item>
+        <item>btctrade</item>
+        <item>BtcTrade</item>
     </string-array>
 
     <string-array name="bter">
@@ -298,7 +329,7 @@
     <string-array name="itbit">
         <item>ItBit</item>
         <item>com.xeiam.xchange.itbit.v1.ItBitExchange</item>
-        <item>BTC/USD</item>
+        <item>XBT/USD</item>
         <item>itbit</item>
         <item>ItBit</item>
     </string-array>
@@ -327,12 +358,28 @@
         <item>LakeBTC</item>
     </string-array>
 
+    <string-array name="mintpal">
+        <item>MintPal</item>
+        <item>com.xeiam.xchange.mintpal.MintPalExchange</item>
+        <item>LTC/BTC</item>
+        <item>mintpal</item>
+        <item>MintPal</item>
+    </string-array>
+
     <string-array name="mtgox">
         <item>MtGox</item>
         <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
         <item>BTC/USD</item>
         <item>mtgox</item>
         <item>MtGox</item>
+    </string-array>
+
+    <string-array name="poloniex">
+        <item>Poloniex</item>
+        <item>com.xeiam.xchange.poloniex.PoloniexExchange</item>
+        <item>LTC/BTC</item>
+        <item>poloniex</item>
+        <item>Poloniex</item>
     </string-array>
 
     <string-array name="vaultofsatoshi">

@@ -61,6 +61,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static ExchangeProperties exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean threadRunning = false;
+    private static Boolean noOrdersFound = false;
+
     private final Runnable mOrderView = new Runnable() {
         @Override
         public void run() {
@@ -184,6 +186,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             listAsks.clear();
             listBids.clear();
         }
+        noOrdersFound = false;
 
         PollingMarketDataService marketData = ExchangeUtils.getMarketData(exchange, currencyPair);
         OrderBook orderbook;
@@ -198,6 +201,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         if (orderbook != null) {
             listAsks = orderbook.getAsks();
             listBids = orderbook.getBids();
+
+            if(listAsks.isEmpty() && listBids.isEmpty())
+                noOrdersFound = true;
 
             // Limit OrderbookActivity orders drawn to improve performance
             if (pref_orderbookLimiter != 0) {
@@ -233,7 +239,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
-            int priceUnitIndex = Utils.getUnitIndex(listBids.get(0).getLimitPrice().floatValue());
+            int priceUnitIndex = 0;
+            if (!listBids.isEmpty() || !listAsks.isEmpty()){
+                LimitOrder tempOrder = listBids.isEmpty() ? listAsks.get(0) : listBids.get(0);
+                priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
+            }
+
             String sCounterCurrency = currencyPair.counterSymbol;
             if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;

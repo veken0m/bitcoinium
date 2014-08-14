@@ -3,50 +3,61 @@
     <!-- Arrays for ANX Currencies -->
     <string-array name="anxcurrencies">
         <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-        <item>BTC/GBP</item>
-        <item>BTC/AUD</item>
-        <item>BTC/CAD</item>
-        <item>BTC/CHF</item>
-        <item>BTC/JPY</item>
-        <item>BTC/CNY</item>
-        <!--item>BTC/DKK</item-->
         <item>BTC/HKD</item>
-        <item>BTC/NZD</item>
-        <!--item>BTC/PLN</item-->
-        <!--item>BTC/RUB</item-->
-        <!--item>BTC/SEK</item-->
+        <item>BTC/EUR</item>
+        <item>BTC/CAD</item>
+        <item>BTC/AUD</item>
         <item>BTC/SGD</item>
-        <!--item>BTC/THB</item-->
-        <!--item>BTC/NOK</item-->
-        <item>BTC/LTC</item>
-        <!--item>BTC/DOGE</item-->
-        <!--item>BTC/NMC</item-->
-        <item>BTC/PPC</item>
-        <item>LTC/HKD</item>
+        <item>BTC/JPY</item>
+        <item>BTC/CHF</item>
+        <item>BTC/GBP</item>
+        <item>BTC/NZD</item>
         <item>LTC/BTC</item>
-        <!--item>LTC/DOGE</item>
-        <item>LTC/NMC</item>
-        <item>LTC/PPC</item-->
         <item>LTC/USD</item>
-        <item>DOGE/HKD</item>
-        <item>DOGE/BTC</item>
-        <!--item>DOGE/LTC</item-->
-        <!--item>DOGE/NMC</item-->
-        <!--item>DOGE/PPC</item-->
-        <item>DOGE/USD</item>
-        <item>NMC/HKD</item>
-        <!--item>NMC/LTC</item-->
-        <!--item>NMC/BTC</item-->
-        <!--item>NMC/DOGE</item>
-        <item>NMC/PPC</item-->
-        <item>NMC/USD</item>
-        <!--item>PPC/HKD</item-->
-        <!--item>PPC/LTC</item-->
+        <item>LTC/HKD</item>
+        <item>LTC/EUR</item>
+        <item>LTC/CAD</item>
+        <item>LTC/AUD</item>
+        <item>LTC/SGD</item>
+        <item>LTC/JPY</item>
+        <item>LTC/CHF</item>
+        <item>LTC/GBP</item>
+        <item>LTC/NZD</item>
         <item>PPC/BTC</item>
-        <!--item>PPC/DOGE</item>
-        <item>PPC/NMC</item-->
-        <!--item>PPC/USD</item-->
+        <item>PPC/LTC</item>
+        <item>PPC/USD</item>
+        <item>PPC/HKD</item>
+        <item>PPC/EUR</item>
+        <item>PPC/CAD</item>
+        <item>PPC/AUD</item>
+        <item>PPC/SGD</item>
+        <item>PPC/JPY</item>
+        <item>PPC/CHF</item>
+        <item>PPC/GBP</item>
+        <item>PPC/NZD</item>
+        <item>NMC/BTC</item>
+        <item>NMC/LTC</item>
+        <item>NMC/USD</item>
+        <item>NMC/HKD</item>
+        <item>NMC/EUR</item>
+        <item>NMC/CAD</item>
+        <item>NMC/AUD</item>
+        <item>NMC/SGD</item>
+        <item>NMC/JPY</item>
+        <item>NMC/CHF</item>
+        <item>NMC/GBP</item>
+        <item>NMC/NZD</item>
+        <item>DOGE/BTC</item>
+        <item>DOGE/USD</item>
+        <item>DOGE/HKD</item>
+        <item>DOGE/EUR</item>
+        <item>DOGE/CAD</item>
+        <item>DOGE/AUD</item>
+        <item>DOGE/SGD</item>
+        <item>DOGE/JPY</item>
+        <item>DOGE/CHF</item>
+        <item>DOGE/GBP</item>
+        <item>DOGE/NZD</item>
     </string-array>
 
     <!-- Arrays for BitcoinAverage Currencies -->
@@ -84,6 +95,11 @@
         <item>BTC/USD</item>
     </string-array>
 
+    <!-- Arrays for Bittrex Currencies -->
+    <string-array name="bittrexcurrencies">
+        <item>VRC/BTC</item>
+    </string-array>
+
     <!-- Arrays for BTC-E Currencies -->
     <string-array name="btcecurrencies">
         <item>BTC/USD</item>
@@ -107,11 +123,16 @@
         <item>XPM/BTC</item>
     </string-array>
 
-    <!-- Arrays for CampBX Currencies -->
+    <!-- Arrays for BTC China Currencies -->
     <string-array name="btcchinacurrencies">
         <item>BTC/CNY</item>
         <item>LTC/CNY</item>
         <item>LTC/BTC</item>
+    </string-array>
+
+    <!-- Arrays for BTCTrade Currencies -->
+    <string-array name="btctradecurrencies">
+        <item>BTC/CNY</item>
     </string-array>
 
     <!-- Arrays for BTER Currencies -->
@@ -515,9 +536,9 @@
     </string-array>
 
     <string-array name="itbitcurrencies">
-        <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-        <item>BTC/SGD</item>
+        <item>XBT/USD</item>
+        <item>XBT/EUR</item>
+        <item>XBT/SGD</item>
     </string-array>
 
     <string-array name="krakencurrencies">
@@ -574,6 +595,251 @@
         <item>BTC/THB</item>
     </string-array>
 
+    <!-- Arrays for MintPal Currencies -->
+    <string-array name="mintpalcurrencies">
+        <item>LTC/BTC</item>
+        <item>CLOAK/BTC</item>
+        <item>DRK/BTC</item>
+        <item>XC/BTC</item>
+        <item>BC/BTC</item>
+        <item>VRC/BTC</item>
+        <item>XMR/BTC</item>
+        <item>DOGE/BTC</item>
+        <item>CYC/BTC</item>
+        <item>KARM/BTC</item>
+        <item>VTC/BTC</item>
+        <item>CRYPT/BTC</item>
+        <item>WC/BTC</item>
+        <item>JPC/BTC</item>
+        <item>TOR/BTC</item>
+        <item>SYNC/BTC</item>
+        <item>NAUT/BTC</item>
+        <item>KARM/LTC</item>
+        <item>ZET/BTC</item>
+        <item>DGB/BTC</item>
+        <item>CINNI/BTC</item>
+        <item>URO/BTC</item>
+        <item>POT/BTC</item>
+        <item>USDe/BTC</item>
+        <item>RZR/BTC</item>
+        <item>FLT/BTC</item>
+        <item>BC/LTC</item>
+        <item>TES/BTC</item>
+        <item>UNO/BTC</item>
+        <item>SILK/BTC</item>
+        <item>MYR/BTC</item>
+        <item>SUPER/BTC</item>
+        <item>NOBL/BTC</item>
+        <item>AC/BTC</item>
+        <item>MIN/BTC</item>
+        <item>DRK/BTC</item>
+        <item>N5K/BTC</item>
+        <item>AUR/BTC</item>
+        <item>PND/BTC</item>
+        <item>ZED/BTC</item>
+        <item>MINT/BTC</item>
+    </string-array>
+
+    <!-- Arrays for Poloniex Currencies -->
+    <string-array name="poloniexcurrencies">
+        <item>1CR/BTC</item>
+        <item>ABY/BTC</item>
+        <item>AC/BTC</item>
+        <item>ADN/BTC</item>
+        <item>AEON/BTC</item>
+        <item>AERO/BTC</item>
+        <item>AIR/BTC</item>
+        <item>APH/BTC</item>
+        <item>AUR/BTC</item>
+        <item>AXIS/BTC</item>
+        <item>BANK/BTC</item>
+        <item>BBL/BTC</item>
+        <item>BBR/BTC</item>
+        <item>BC/BTC</item>
+        <item>BCC/BTC</item>
+        <item>BCN/BTC</item>
+        <item>BDC/BTC</item>
+        <item>BDG/BTC</item>
+        <item>BELA/BTC</item>
+        <item>BITS/BTC</item>
+        <item>BLU/BTC</item>
+        <item>BNS/BTC</item>
+        <item>BONES/BTC</item>
+        <item>BOST/BTC</item>
+        <item>BTCD/BTC</item>
+        <item>BTCS/BTC</item>
+        <item>BTM/BTC</item>
+        <item>BURN/BTC</item>
+        <item>CACH/BTC</item>
+        <item>CAI/BTC</item>
+        <item>CC/BTC</item>
+        <item>CGA/BTC</item>
+        <item>CHA/BTC</item>
+        <item>CINNI/BTC</item>
+        <item>CLAM/BTC</item>
+        <item>CNL/BTC</item>
+        <item>CNOTE/BTC</item>
+        <item>COMM/BTC</item>
+        <item>CON/BTC</item>
+        <item>CORG/BTC</item>
+        <item>CRYPT/BTC</item>
+        <item>CURE/BTC</item>
+        <item>CYC/BTC</item>
+        <item>DIEM/BTC</item>
+        <item>DIME/BTC</item>
+        <item>DIS/BTC</item>
+        <item>DOGE/BTC</item>
+        <item>DRK/BTC</item>
+        <item>DRKC/BTC</item>
+        <item>DRM/BTC</item>
+        <item>DVK/BTC</item>
+        <item>EAC/BTC</item>
+        <item>EBT/BTC</item>
+        <item>ECC/BTC</item>
+        <item>EFL/BTC</item>
+        <item>EMC2/BTC</item>
+        <item>EMO/BTC</item>
+        <item>ENC/BTC</item>
+        <item>EXE/BTC</item>
+        <item>FAC/BTC</item>
+        <item>FCN/BTC</item>
+        <item>FLAP/BTC</item>
+        <item>FLT/BTC</item>
+        <item>FOX/BTC</item>
+        <item>FRAC/BTC</item>
+        <item>FRK/BTC</item>
+        <item>FVZ/BTC</item>
+        <item>FZ/BTC</item>
+        <item>GDN/BTC</item>
+        <item>GIAR/BTC</item>
+        <item>GLB/BTC</item>
+        <item>GML/BTC</item>
+        <item>GNS/BTC</item>
+        <item>GOLD/BTC</item>
+        <item>GPC/BTC</item>
+        <item>GPUC/BTC</item>
+        <item>GRC/BTC</item>
+        <item>GRS/BTC</item>
+        <item>GUE/BTC</item>
+        <item>H2O/BTC</item>
+        <item>HIRO/BTC</item>
+        <item>HOT/BTC</item>
+        <item>HUC/BTC</item>
+        <item>HVC/BTC</item>
+        <item>IFC/BTC</item>
+        <item>ITC/BTC</item>
+        <item>IXC/BTC</item>
+        <item>JLH/BTC</item>
+        <item>JPC/BTC</item>
+        <item>JUG/BTC</item>
+        <item>KDC/BTC</item>
+        <item>KEY/BTC</item>
+        <item>LC/BTC</item>
+        <item>LCL/BTC</item>
+        <item>LEAF/BTC</item>
+        <item>LGC/BTC</item>
+        <item>LOL/BTC</item>
+        <item>LOVE/BTC</item>
+        <item>LTC/BTC</item>
+        <item>LTCX/BTC</item>
+        <item>MAID/BTC</item>
+        <item>MAST/BTC</item>
+        <item>MAX/BTC</item>
+        <item>MCN/BTC</item>
+        <item>MEC/BTC</item>
+        <item>METH/BTC</item>
+        <item>MIL/BTC</item>
+        <item>MIN/BTC</item>
+        <item>MINT/BTC</item>
+        <item>MMC/BTC</item>
+        <item>MON/BTC</item>
+        <item>MRC/BTC</item>
+        <item>MRS/BTC</item>
+        <item>MSC/BTC</item>
+        <item>MTS/BTC</item>
+        <item>MUN/BTC</item>
+        <item>MYR/BTC</item>
+        <item>MZC/BTC</item>
+        <item>N5X/BTC</item>
+        <item>NAS/BTC</item>
+        <item>NAUT/BTC</item>
+        <item>NAV/BTC</item>
+        <item>NC2/BTC</item>
+        <item>NHZ/BTC</item>
+        <item>NL/BTC</item>
+        <item>NMC/BTC</item>
+        <item>NOBL/BTC</item>
+        <item>NOTE/BTC</item>
+        <item>NRS/BTC</item>
+        <item>NTX/BTC</item>
+        <item>NXT/BTC</item>
+        <item>PAND/BTC</item>
+        <item>PAWN/BTC</item>
+        <item>PC/BTC</item>
+        <item>PIGGY/BTC</item>
+        <item>PLX/BTC</item>
+        <item>PMC/BTC</item>
+        <item>POT/BTC</item>
+        <item>PPC/BTC</item>
+        <item>PRC/BTC</item>
+        <item>PRT/BTC</item>
+        <item>PTS/BTC</item>
+        <item>Q2C/BTC</item>
+        <item>QBK/BTC</item>
+        <item>QCN/BTC</item>
+        <item>QORA/BTC</item>
+        <item>RBY/BTC</item>
+        <item>REDD/BTC</item>
+        <item>RIC/BTC</item>
+        <item>RZR/BTC</item>
+        <item>SHIBE/BTC</item>
+        <item>SHOPX/BTC</item>
+        <item>SILK/BTC</item>
+        <item>SLR/BTC</item>
+        <item>SMC/BTC</item>
+        <item>SOC/BTC</item>
+        <item>SPA/BTC</item>
+        <item>SRCC/BTC</item>
+        <item>SRG/BTC</item>
+        <item>STR/BTC</item>
+        <item>SUM/BTC</item>
+        <item>SUN/BTC</item>
+        <item>SXC/BTC</item>
+        <item>SYNC/BTC</item>
+        <item>TAC/BTC</item>
+        <item>TOR/BTC</item>
+        <item>TRUST/BTC</item>
+        <item>TWE/BTC</item>
+        <item>URO/BTC</item>
+        <item>USDE/BTC</item>
+        <item>UTC/BTC</item>
+        <item>UVC/BTC</item>
+        <item>VIA/BTC</item>
+        <item>VOOT/BTC</item>
+        <item>VRC/BTC</item>
+        <item>VTC/BTC</item>
+        <item>WC/BTC</item>
+        <item>WDC/BTC</item>
+        <item>WIKI/BTC</item>
+        <item>WOLF/BTC</item>
+        <item>X13/BTC</item>
+        <item>XAP/BTC</item>
+        <item>XBC/BTC</item>
+        <item>XC/BTC</item>
+        <item>XCP/BTC</item>
+        <item>XDN/BTC</item>
+        <item>XHC/BTC</item>
+        <item>XLB/BTC</item>
+        <item>XMR/BTC</item>
+        <item>XPM/BTC</item>
+        <item>XSI/BTC</item>
+        <item>XSV/BTC</item>
+        <item>YACC/BTC</item>
+        <item>YANG/BTC</item>
+        <item>YC/BTC</item>
+        <item>YIN/BTC</item>
+    </string-array>
+
     <string-array name="vaultofsatoshicurrencies">
         <item>BTC/USD</item>
         <item>BTC/CAD</item>
@@ -597,10 +863,11 @@
         <item>QRK/CAD</item>
     </string-array>
 
-    <!-- not working properly -->
     <string-array name="vircurexcurrencies">
         <item>BTC/EUR</item>
         <item>BTC/USD</item>
+        <item>AUR/BTC</item>
+        <item>BC/BTC</item>
         <item>ANC/BTC</item>
         <item>DGC/BTC</item>
         <item>DOGE/BTC</item>
@@ -617,8 +884,10 @@
         <item>QRK/BTC</item>
         <item>TRC/BTC</item>
         <item>VTC/BTC</item>
+        <item>WC/BTC</item>
         <item>WDC/BTC</item>
         <item>XPM/BTC</item>
+        <item>ZET/BTC</item>
     </string-array>
 
     <!-- Arrays for VirtEx Currencies -->

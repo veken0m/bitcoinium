@@ -135,6 +135,7 @@
     <string name="error_noInternetConnection">No internet connection available</string>
     <string name="msg_enterAPIToken">Please enter at least one API Token to use Miner Stats</string>
     <string name="msg_noTradesFound">No recent trades found for this currency. Please try again later.</string>
+    <string name="msg_noOrdersFound">There are no orders in this Order Book. Please try again later.</string>
 
     <!-- Notifications -->
     <string name="msg_minerDownAlert">%1$s miner down alert</string>
