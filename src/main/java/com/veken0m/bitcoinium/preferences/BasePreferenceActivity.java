@@ -33,6 +33,16 @@ public class BasePreferenceActivity extends PreferenceActivity {
         }
     }
 
+    public Preference noWidgetFound(){
+
+        Preference pref = new Preference(this);
+        pref.setLayoutResource(R.layout.custom_red_preference);
+        pref.setTitle(getString(R.string.noWidgetFound));
+        pref.setSummary(getString(R.string.pref_requires_widget));
+
+        return pref;
+    }
+
     @Override
     public void onStart() {
         super.onStart();

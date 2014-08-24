@@ -23,8 +23,6 @@ import com.xeiam.xchange.currency.CurrencyPair;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
-    static boolean pref_priceAlarm = false;
-    static boolean pref_enableTicker = false;
     static boolean pref_widgetBidAsk = false;
     static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
@@ -56,7 +54,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_wifiOnly = prefs.getBoolean("wifiRefreshOnlyPref", false);
         pref_pricesInMilliBtc = prefs.getBoolean("displayPricesInMilliBtcPref", true);
         pref_widgetBidAsk = prefs.getBoolean("bidasktogglePref", false);
-        pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
         pref_widgetPayoutUnits = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
 
         // Theming pref_xtrader
@@ -74,7 +71,6 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
         pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");

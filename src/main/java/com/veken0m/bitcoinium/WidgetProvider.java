@@ -2,16 +2,19 @@ package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
+import com.veken0m.utils.CompatUtil;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.ExchangeUtils;
@@ -37,6 +40,42 @@ public class WidgetProvider extends BaseWidgetProvider {
         setRefreshServiceAlarm(context, UpdateService.class);
     }
 
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Clean up
+        for (int appWidgetId : appWidgetIds) {
+            String currencyPair = WidgetConfigureActivity.loadCurrencyPref(context, appWidgetId);
+            String exchangePref = WidgetConfigureActivity.loadExchangePref(context, appWidgetId);
+            CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
+            ExchangeProperties exchange = UpdateService.getExchange(context, exchangePref);
+
+            String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+
+            removePermanentNotification(context, pairId.hashCode());
+            // Reset the preference for this combo
+            prefs.edit().putBoolean(pairId + "TickerPref", false).commit();
+            prefs.edit().putBoolean(pairId + "AlarmPref", false).commit();
+        }
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        // This is called when the first widget is created
+        // TODO enable update service here
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+        // This is called when the last widget is deleted
+        // TODO disable update service here
+    }
+
     /**
      * This class lets us refresh the widget whenever we want to
      */
@@ -56,16 +95,15 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
 
+                CompatUtil.convertAlarmPrefs(this);
+
                 for (int appWidgetId : widgetIds) {
 
                     // Load widget configuration
                     String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
                     if (exchangePref == null) continue; // skip to next widget
 
-                    if (exchangePref.toLowerCase().contains("mtgox"))
-                        exchangePref = "bitcoinaverage";
-
-                    ExchangeProperties exchange = getExchange(exchangePref);
+                    ExchangeProperties exchange = getExchange(this, exchangePref);
                     String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String shortName = exchange.getShortName();
                     String exchangeKey = exchange.getIdentifier();
@@ -98,7 +136,8 @@ public class WidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
                         updateWidgetTheme(views);
 
-                        if (pref_priceAlarm) checkAlarm(pair, lastFloat, exchange);
+                        prefs.edit().remove("alarmPref").commit();
+                        checkAlarm(pair, lastFloat, exchange);
                         createTickerNotif(pair, lastString, exchange);
 
                     } catch (Exception e) {
@@ -119,7 +158,7 @@ public class WidgetProvider extends BaseWidgetProvider {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
 
-            if (pref_enableTicker && prefs.getBoolean(pairId + "TickerPref", false)) {
+            if (prefs.getBoolean(pairId + "TickerPref", false)) {
 
                 String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
                 String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
@@ -128,7 +167,6 @@ public class WidgetProvider extends BaseWidgetProvider {
             } else {
                 removePermanentNotification(this, pairId.hashCode());
             }
-
         }
 
         private void setTapBehaviour(int appWidgetId, String exchangeKey, RemoteViews views) {
@@ -147,11 +185,11 @@ public class WidgetProvider extends BaseWidgetProvider {
             views.setOnClickPendingIntent(R.id.widgetButton, pendingIntent);
         }
 
-        public ExchangeProperties getExchange(String exchange) {
+        public static ExchangeProperties getExchange(Context context, String exchange) {
             try {
-                return new ExchangeProperties(this, exchange);
+                return new ExchangeProperties(context, exchange);
             } catch (Exception e) {
-                return new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
+                return new ExchangeProperties(context, Constants.DEFAULT_EXCHANGE);
             }
         }
 
@@ -209,12 +247,13 @@ public class WidgetProvider extends BaseWidgetProvider {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
-
-            float notifLimitUpper = Float.valueOf(prefs.getString(pairId + "Upper", "999999"));
-            float notifLimitLower = Float.valueOf(prefs.getString(pairId + "Lower", "0"));
+            if(!prefs.getBoolean(pairId + "AlarmPref", false))
+                return; // Alarm not enabled
 
             try {
-                if (!Utils.isBetween(lastFloat, notifLimitLower, notifLimitUpper)) {
+                float notifLimitUpper = Float.valueOf(prefs.getString(pairId + "Upper", "999999"));
+                float notifLimitLower = Float.valueOf(prefs.getString(pairId + "Lower", "0"));
+                if (lastFloat != 0 && !Utils.isBetween(lastFloat, notifLimitLower, notifLimitUpper)) {
                     createNotification(this, lastFloat, exchange.getExchangeName(), pairId.hashCode(), pair);
                     if (pref_alarmClock)
                         setAlarmClock(this);

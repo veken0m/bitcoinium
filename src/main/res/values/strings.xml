@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.0.0</string>
+    <string name="version_name">2.1.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
@@ -182,7 +182,7 @@
     <string name="disableUpdatesMobile">Disable updates on mobile connection</string>
     <string name="pref_bid_ask_replace_summary">Replace High/Low with Bid/Ask if supported by exchange</string>
     <string name="pref_battery_saving_mode_summary">Disable updates when device is sleeping</string>
-    <string name="pref_refresh_interval_summary">Time interval between widget updates \n *WARNING* \nUpdating the widget more often will increase battery drain</string>
+    <string name="pref_refresh_interval_summary">Time interval between widget updates. Shorter intervals increase battery drain.</string>
     <string name="pref_tap_refresh_summary">Tapping the widget will update instead of opening app</string>
     <string name="pref_widget_config_summary">Various display and power saving settings</string>
     <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active</string>
@@ -201,7 +201,7 @@
     <string name="pref_price_alert_summary">Notifies when price crosses the alert limit</string>
     <string name="pref_price_alert_title">Price Alert Notifications</string>
     <string name="pref_alert_limits">%1$s alert limits"</string>
-    <string name="pref_enable_alert_summary">Enable notifications when alert is triggered</string>
+    <string name="pref_enable_alert_summary">Enable notifications when alert is triggered for %1$s %2$s</string>
     <string name="pref_enable_alert_title">Enable Price Alerts</string>
     <string name="pref_miner_widget_alert_summary">Use Price Alert settings to enable sound and vibration during notification</string>
 
@@ -257,6 +257,12 @@
     <string name="msg_cancelOrder">CANCEL THIS ORDER?</string>
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
+    <string name="pref_widget_deactivate">Force Deactivate Widget</string>
+    <string name="pref_widget_deactivate_summary">Android has a bug that sometimes leaves invisible widgets. If this widget doesn\'t exist, deactivate it.</string>
+    <string name="please_delete">PLEASE DELETE</string>
+    <string name="deactivated">DEACTIVATED</string>
+    <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>
+    <string name="phantom_widget_removal">Phantom Widget Removal</string>
 
 
 </resources>

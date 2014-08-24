@@ -61,7 +61,13 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
     public static String loadExchangePref(Context context, int appWidgetId) {
 
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
-        return prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
+        String exchangePref = prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
+
+        // Replace MtGox to BitcoinAverage
+        if (exchangePref != null && exchangePref.toLowerCase().contains("mtgox"))
+            exchangePref = "bitcoinaverage";
+
+        return exchangePref;
     }
 
     @SuppressWarnings("deprecation")

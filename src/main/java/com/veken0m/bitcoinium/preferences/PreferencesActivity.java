@@ -39,31 +39,36 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         addPreferencesFromResource(R.xml.pref_about);
 
         String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
-        PreferenceScreen defaultCurrencyPref = (PreferenceScreen) findPreference("defaultCurrencyPref");
+        populateDefaultCurrenciesScreen(sExchanges);
+        populateNotificationSettingsScreen();
+
+        // Widget Customization
+        Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
+        widgetBackgroundColorPref.setOnPreferenceChangeListener(this);
+        Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
+        widgetMainTextColorPref.setOnPreferenceChangeListener(this);
+        Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
+        widgetSecondaryTextColorPref.setOnPreferenceChangeListener(this);
+
+        // Donation addresses
+        Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
+        bitcoinDonationAddressPref.setOnPreferenceClickListener(this);
+        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
+        litecoinDonationAddressPref.setOnPreferenceClickListener(this);
+        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
+        dogecoinDonationAddressPref.setOnPreferenceClickListener(this);
+
+    }
+
+    public void populateNotificationSettingsScreen(){
+
         PreferenceCategory notificationSettingsPref = (PreferenceCategory) findPreference("notificationSettingsPref");
-
-        for (String sExchange : sExchanges) {
-            ExchangeProperties exchange = new ExchangeProperties(this, sExchange);
-            String[] sCurrencies = exchange.getCurrencies();
-
-            // Default Currency List
-            ListPreference currencies = new ListPreference(this);
-            currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
-            currencies.setEntries(sCurrencies);
-            currencies.setEntryValues(sCurrencies);
-            currencies.setTitle(sExchange + " " + getString(R.string.currency));
-            currencies.setSummary(getString(R.string.pref_currency_displayed, sExchange));
-            currencies.setDefaultValue(exchange.getDefaultCurrency());
-
-            defaultCurrencyPref.addPreference(currencies);
-        }
 
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
         ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
         int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
         if (widgetIds.length > 0) {
-
             for (int appWidgetId : widgetIds) {
 
                 // Obtain Widget configuration
@@ -83,32 +88,30 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
                 // Add to screen
                 notificationSettingsPref.addPreference(tickerCheckBox);
             }
-
         } else {
-            Preference pref = new Preference(this);
-            pref.setLayoutResource(R.layout.custom_red_preference);
-            pref.setTitle(getString(R.string.noWidgetFound));
-            pref.setSummary(getString(R.string.pref_requires_widget));
-
-            notificationSettingsPref.addPreference(pref);
+            notificationSettingsPref.addPreference(noWidgetFound());
         }
+    }
 
-        // Widget Customization
-        Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
-        widgetBackgroundColorPref.setOnPreferenceChangeListener(this);
-        Preference widgetMainTextColorPref = findPreference("widgetMainTextColorPref");
-        widgetMainTextColorPref.setOnPreferenceChangeListener(this);
-        Preference widgetSecondaryTextColorPref = findPreference("widgetSecondaryTextColorPref");
-        widgetSecondaryTextColorPref.setOnPreferenceChangeListener(this);
+    public void populateDefaultCurrenciesScreen(String[] sExchanges){
 
-        // Donation addresses
-        Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
-        bitcoinDonationAddressPref.setOnPreferenceClickListener(this);
-        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
-        litecoinDonationAddressPref.setOnPreferenceClickListener(this);
-        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
-        dogecoinDonationAddressPref.setOnPreferenceClickListener(this);
+        PreferenceScreen defaultCurrencyPref = (PreferenceScreen) findPreference("defaultCurrencyPref");
 
+        for (String sExchange : sExchanges) {
+            ExchangeProperties exchange = new ExchangeProperties(this, sExchange);
+            String[] sCurrencies = exchange.getCurrencies();
+
+            // Default Currency List
+            ListPreference currencies = new ListPreference(this);
+            currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
+            currencies.setEntries(sCurrencies);
+            currencies.setEntryValues(sCurrencies);
+            currencies.setTitle(sExchange + " " + getString(R.string.currency));
+            currencies.setSummary(getString(R.string.pref_currency_displayed, sExchange));
+            currencies.setDefaultValue(exchange.getDefaultCurrency());
+
+            defaultCurrencyPref.addPreference(currencies);
+        }
     }
 
     @Override
