@@ -15,32 +15,20 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.09">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
-
         <TextView
             android:id="@+id/text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PLEASE CONFIRM ORDER:"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:gravity="center_horizontal"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/order_type"
@@ -52,7 +40,7 @@
 
         <EditText
             android:id="@+id/order_btc"
-            android:layout_width="99dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberDecimal" />
@@ -63,32 +51,24 @@
             android:id="@+id/new_order_tradable_identifier"
             android:text="BTC" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FOR:"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
 
         <EditText
             android:id="@+id/order_price"
-            android:layout_width="86dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.19"
             android:ems="10"
             android:inputType="numberDecimal" />
 
@@ -98,30 +78,6 @@
             android:layout_height="wrap_content"
             android:text="USD" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <View
