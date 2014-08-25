@@ -71,7 +71,7 @@ dependencies {
     compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
 
     // XChange dependencies
-    compile('com.github.mmazi:rescu:1.7.0-SNAPSHOT')
+    compile('com.github.mmazi:rescu:1.7.0')
     compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
