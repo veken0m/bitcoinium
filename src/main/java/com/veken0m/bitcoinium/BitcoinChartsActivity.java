@@ -149,8 +149,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
      * Draw the Tickers to the screen in a table
      */
     void drawBitcoinChartsUI() {
-
-        swipeLayout.setRefreshing(true);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         TableLayout bitcoinChartsTable = (TableLayout) findViewById(R.id.bitcoincharts_list);
 
         if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null) {
@@ -214,11 +214,13 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         } else {
             failedToDrawUI();
         }
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
     }
 
     private void viewBitcoinCharts() {
-        swipeLayout.setRefreshing(true);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         if (Utils.isConnected(this))
             (new bitcoinChartsThread()).start();
         else
@@ -226,8 +228,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     private void errorOccured() {
-
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
         try {
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
@@ -240,8 +242,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     private void failedToDrawUI() {
-
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");

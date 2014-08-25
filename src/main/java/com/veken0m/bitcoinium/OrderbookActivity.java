@@ -181,7 +181,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
     boolean getOrderBook() {
-        swipeLayout.setRefreshing(true);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
+
         if (listAsks != null && listBids != null) {
             listAsks.clear();
             listBids.clear();
@@ -223,7 +225,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Draw the Orders to the screen in a table
      */
     void drawOrderbookUI() {
-        swipeLayout.setRefreshing(true);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
         if (orderbookTable != null) {
 
@@ -317,7 +320,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         } else {
             failedToDrawUI();
         }
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
 }
 
     private void viewOrderbook() {

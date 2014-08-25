@@ -186,7 +186,8 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
         } else {
             failedToDrawUI();
         }
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
     }
 
     private void viewBitcoinAverage() {
@@ -198,8 +199,8 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     }
 
     private void errorOccured() {
-
-        swipeLayout.setRefreshing(false);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
 
         try {
             if (dialog == null || !dialog.isShowing()) {
@@ -213,8 +214,9 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     }
 
     private void failedToDrawUI() {
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
 
-        swipeLayout.setRefreshing(false);
         if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, "A problem occurred when generating BitcoinAverage table", "Error");
     }
