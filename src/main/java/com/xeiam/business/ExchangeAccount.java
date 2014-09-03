@@ -27,6 +27,7 @@ import com.xeiam.xchange.service.polling.PollingTradeService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -113,6 +114,8 @@ public class ExchangeAccount {
 
             // TODO: input BitcoiniumWS API key before release!
             bitcoiniumExchangeSpec.setApiKey("INSERT_KEY_HERE");
+            bitcoiniumExchangeSpec.setPlainTextUri("http://173.10.241.154:9090");
+
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
             bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getPollingMarketDataService();
 
@@ -167,7 +170,7 @@ public class ExchangeAccount {
     public void queryLastTicker() {
         try {
             // Use the factory to get Bitcoinium exchange API using default settings
-            BitcoiniumTicker bitcoiniumTicker = bitcoiniumMarketDataService.getBitcoiniumTicker(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency);
+            BitcoiniumTicker bitcoiniumTicker = bitcoiniumMarketDataService.getBitcoiniumTicker(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getShortName().toUpperCase() + "_" + XTraderActivity.transactionCurrency);
 
             if (bitcoiniumTicker != null && bitcoiniumTicker.getLast().floatValue() != 0) {
                 //create a new ticker with the current time.
@@ -203,7 +206,7 @@ public class ExchangeAccount {
     public long getExchangeDelay() {
         if(orderBook == null) return 0;
 
-        return (System.currentTimeMillis() - orderBook.getTimestamp()) / 1000;
+        return (System.currentTimeMillis() - orderBook.getBitcoiniumTicker().getTimestamp()) / 1000;
     }
 
     public long getTimeFromLastUpdate() {
@@ -213,25 +216,23 @@ public class ExchangeAccount {
     }
 
     public float getTargetTimeIntervalFromPrefsInSec() {
-        String timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
-        if (timewindow.equalsIgnoreCase("10m")) {
-            return (float) TimeUnit.MINUTES.toSeconds(10l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("1h")) {
+        String timewindow = XTraderActivity.preferences.getString("time_window", "TWENTY_FOUR_HOURS");
+        if (timewindow.equalsIgnoreCase("ONE_HOUR")) {
             return (float) TimeUnit.MINUTES.toSeconds(60l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("3h")) {
+        } else if (timewindow.equalsIgnoreCase("THREE_HOURS")) {
             return (float) TimeUnit.HOURS.toSeconds(3l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("12h")) {
+        } else if (timewindow.equalsIgnoreCase("TWELVE_HOURS")) {
             return (float) TimeUnit.HOURS.toSeconds(12l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("24h")) {
+        } else if (timewindow.equalsIgnoreCase("TWENTY_FOUR_HOURS")) {
             return (float) TimeUnit.HOURS.toSeconds(24l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("3d")) {
+        } else if (timewindow.equalsIgnoreCase("THREE_DAYS")) {
             return (float) TimeUnit.DAYS.toSeconds(3l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("7d")) {
+        } else if (timewindow.equalsIgnoreCase("SEVEN_DAYS")) {
             return (float) TimeUnit.DAYS.toSeconds(7l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("30d")) {
+        } else if (timewindow.equalsIgnoreCase("THIRTY_DAYS")) {
             return (float) TimeUnit.DAYS.toSeconds(30l) / XTraderActivity.CHART_TARGET_RESOLUTION;
-        } else if (timewindow.equalsIgnoreCase("6m")) {
-            return (float) TimeUnit.DAYS.toSeconds(30l) * 6l / XTraderActivity.CHART_TARGET_RESOLUTION;
+        } else if (timewindow.equalsIgnoreCase("TWO_MONTHS")) {
+            return (float) TimeUnit.DAYS.toSeconds(30l) * 2l / XTraderActivity.CHART_TARGET_RESOLUTION;
         }
         return 0;
 
@@ -239,18 +240,14 @@ public class ExchangeAccount {
 
     public boolean queryOrderBook() {
 
-        this.pricewindow = XTraderActivity.preferences.getString("pricewindow", "5p");
+        this.pricewindow = XTraderActivity.preferences.getString("price_window", "FIVE_PERCENT");
         try {
             // Use the factory to get Bitcoinium exchange API using default settings
-            BitcoiniumOrderbook bitcoiniumOrderbook = bitcoiniumMarketDataService.getBitcoiniumOrderbook(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.pricewindow);
+            BitcoiniumOrderbook bitcoiniumOrderbook = bitcoiniumMarketDataService.getBitcoiniumOrderbook(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getShortName().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.pricewindow);
 
             if (bitcoiniumOrderbook != null) {
-
-                //synchronized(orderbookLock) {
-                    this.lastOrderBook = orderBook;
-                    this.orderBook = bitcoiniumOrderbook;
-                    //this.lastTicker=newOrderBook.getTicker();
-                //}
+                this.lastOrderBook = orderBook;
+                this.orderBook = bitcoiniumOrderbook;
             }
 
             mainActivity.getPainter().setBidAskPaths();//triggers the painter
@@ -270,23 +267,17 @@ public class ExchangeAccount {
             synchronized(tradesLock) {
                 //get the data. It comes pre-sorted.
                 this.trades = new LinkedList<BitcoiniumTicker>();
-                this.timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
+                this.timewindow = XTraderActivity.preferences.getString("time_window", "TWENTY_PERCENT");
                 // Use the factory to get Bitcoinium exchange API using default settings
-                BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
+                BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getShortName().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
 
-                long timeLast = tickerHistory.getBaseTimestamp() * 1000;
-                System.out.println("TIME LAST=" + timeLast);
-                for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
+                System.out.println("TIME LAST=" + tickerHistory.getBitcoiniumTicker().getTimestamp());
+                trades = new LinkedList<BitcoiniumTicker>(Arrays.asList(tickerHistory.getCondensedTickers()));
 
-                    timeLast += (long) tickerHistory.getTimeStampOffsets().get(i) * 1000;
-                    BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
-                    trades.add(ticker);
-                }
-
-            this.lastTicker = trades.getLast();
-            this.lastOrderBook = null;
-            setReferenceTicker();
-            mainActivity.getPainter().setTradeHistoryPath();
+                this.lastTicker = trades.getLast();
+                this.lastOrderBook = null;
+                setReferenceTicker();
+                mainActivity.getPainter().setTradeHistoryPath();
             }
 
             return true;

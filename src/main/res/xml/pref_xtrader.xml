@@ -7,18 +7,18 @@
         android:title="Display Settings">
 
         <ListPreference
-            android:defaultValue="24h"
+            android:defaultValue="TWENTY_FOUR_HOURS"
             android:entries="@array/timewindow"
             android:entryValues="@array/timewindow_values"
-            android:key="timewindow"
+            android:key="time_window"
             android:summary="Chart Time Scale"
             android:title="Chart Time Scale"/>
 
         <ListPreference
-            android:defaultValue="5p"
+            android:defaultValue="FIVE_PERCENT"
             android:entries="@array/pricewindow"
             android:entryValues="@array/pricewindow_values"
-            android:key="pricewindow"
+            android:key="price_window"
             android:summary="Chart Price Scale"
             android:title="Chart Price Scale"/>
 
@@ -143,6 +143,32 @@
             <!--android:summary="Set your main trading currency"-->
             <!--android:title="Trade Currency" />-->
             <!--</PreferenceCategory>-->
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:enabled="true"
+            android:summary="Account credentials"
+            android:title="Bitfinex Account">
+            <EditTextPreference
+                android:key="bitfinexApiKey"
+                android:summary="Enter your Bitfinex API Key"
+                android:title="API Key"/>
+            <EditTextPreference
+                android:key="bitfinexSecretKey"
+                android:summary="Enter your Bitfinex Secret Key"
+                android:title="Secret Key"/>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:enabled="true"
+            android:summary="Account credentials"
+            android:title="VoS Account">
+            <EditTextPreference
+                android:key="vaultofsatoshiApiKey"
+                android:summary="Enter your VoS API Key"
+                android:title="API Key"/>
+            <EditTextPreference
+                android:key="vaultofsatoshiSecretKey"
+                android:summary="Enter your VoS Secret Key"
+                android:title="Secret Key"/>
         </PreferenceScreen>
     </PreferenceCategory>
 
