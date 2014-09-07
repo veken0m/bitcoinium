@@ -23,6 +23,5 @@ before_install:
     - echo $ANDROID_HOME
     - ln -sf $ANDROID_HOME/extras/android/support/v7/appcompat appcompat
     - chmod +x gradlew
-    
 
 script: ./gradlew assembleDebug

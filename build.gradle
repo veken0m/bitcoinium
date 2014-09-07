@@ -116,5 +116,4 @@ dependencies {
     //compile("com.xeiam.xchange:xchange-openexchangerates:$xchangeVersion")
     // Streaming only
     //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
-    //compile("com.xeiam.xchange:xchange-atlasats:$xchangeVersion")
 }
