@@ -9,7 +9,7 @@ Currently supported exchanges include:
   - [Bitcoin-Central](http://bitcoin-central.net)
   - [Bitcurex](https://eur.bitcurex.com)
   - [Bitfinex](https://bitfinex.com.com)
-  - [BitMarket.pl] (https://bitmarket.pl)
+  - [BitMarket.pl](https://bitmarket.pl)
   - [Bitstamp](https://www.bitstamp.net)
   - [BTC-E](https://btc-e.com)
   - [BTC China](https://btcchina.com)
@@ -20,10 +20,10 @@ Currently supported exchanges include:
   - [Coinbase](https://coinbase.com)
   - [Crypto-Trade](https://crypto-trade.com)
   - [Cryptonit](https://cryptonit.net)
-  - [HitBtc] (https://hitbtc.com)
+  - [HitBtc](https://hitbtc.com)
   - [Justcoin](https://justcoin.com/en)
   - [Kraken](https://www.kraken.com)
-  - [LakeBTC] (https://lakebtc.com)
+  - [LakeBTC](https://lakebtc.com)
   - [Vault of Satoshi](https://www.vaultofsatoshi.com)
   - [VirCurEx](https://vircurex.com)
 	
@@ -66,9 +66,11 @@ Features
 - In-app Orderbook with with liquidity highlighting
 - Charts from multiple sources and current orderbook view-able within the application
 
-Building
+Building 
 ===============
-To build Bitcoinium, prefered environment is Eclipse with ADT (Android Development Tools) plugin. 
+Travis CI build status: [![Build Status](https://travis-ci.org/veken0m/bitcoinium.svg?branch=develop)](https://travis-ci.org/veken0m/bitcoinium)
+
+To build Bitcoinium, prefered environment is Android Studio with latest SDK installed.
 
 What you will need to build Bitcoinium:
 
@@ -76,14 +78,14 @@ Android Studio							: http://developer.android.com/sdk/installing/studio.html
 
 Android SDK								: http://developer.android.com/sdk/index.html
 
-Android Development Tools (ADT) plugin	: http://developer.android.com/sdk/installing/installing-adt.html
+There are no more 'android library' dependencies required. All external dependencies are fetched at build time using Maven.
 
 
 Google Play
 ===============
-Bitcoinium (Ad-Supported/Free)	: https://play.google.com/store/apps/details?id=com.veken0m.cavirtex
+[Bitcoinium (Ad-Supported/Free)](https://play.google.com/store/apps/details?id=com.veken0m.cavirtex)
 
-Bitcoinium Prime (Ad-Free/Paid)	: https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium
+[Bitcoinium Prime (Ad-Free/Paid)](https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium)
 
 
 Donations

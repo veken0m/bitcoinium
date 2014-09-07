@@ -25,7 +25,7 @@ public class WebViewerActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.webview);
+        setContentView(R.layout.activity_webview);
         initTabbedActionBar();
         // KarmaAdsUtils.initAd(this);
     }

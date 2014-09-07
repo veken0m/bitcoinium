@@ -17,7 +17,7 @@
         android:paddingTop="1dp"
         android:text="@string/exchange"
         android:textColor="#FDD017"
-        android:textSize="11dp"></TextView>
+        android:textSize="11dp"/>
 
     <TextView
         android:id="@+id/widgetLowText"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="@string/low"
-        android:textSize="11dp"></TextView>
+        android:textSize="11dp"/>
 
     <TextView
         android:id="@+id/widgetHighText"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="@string/high"
-        android:textSize="11dp"></TextView>
+        android:textSize="11dp"/>
 
     <TextView
         android:id="@+id/widgetLastText"
@@ -52,7 +52,7 @@
         android:layout_below="@id/widgetLastText"
         android:layout_centerHorizontal="true"
         android:text="@string/volume"
-        android:textSize="12dp"></TextView>
+        android:textSize="12dp"/>
 
     <TextView
         android:id="@+id/label"

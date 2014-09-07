@@ -17,7 +17,7 @@
         android:paddingTop="1dp"
         android:text="@string/address"
         android:textColor="#FDD017"
-        android:textSize="11dp"></TextView>
+        android:textSize="11dp"/>
 
     <TextView
         android:id="@+id/widgetBalance"
@@ -36,7 +36,7 @@
         android:layout_below="@id/widgetBalance"
         android:layout_centerHorizontal="true"
         android:text="@string/balanceValue"
-        android:textSize="12dp"></TextView>
+        android:textSize="12dp"/>
 
     <TextView
         android:id="@+id/label"

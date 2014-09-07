@@ -1,0 +1,28 @@
+language: android
+jdk: oraclejdk7
+
+branches:
+  only:
+    - develop
+    
+env:
+  matrix:
+    - ANDROID_TARGET=android-20
+
+android:
+  components:
+    - build-tools-20.0.0
+    - android-20                
+    - extra-android-support
+    
+licenses:
+    - android-sdk-license-*
+    - '.*intel.+'
+    
+before_install:
+    - echo $ANDROID_HOME
+    - ln -sf $ANDROID_HOME/extras/android/support/v7/appcompat appcompat
+    - chmod +x gradlew
+    
+
+script: ./gradlew assembleDebug

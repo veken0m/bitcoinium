@@ -71,7 +71,7 @@ public class DeepBitFragment extends Fragment {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
-        View view = inflater.inflate(R.layout.table_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_table, container, false);
         viewMinerStats(view);
         return view;
     }
@@ -121,9 +121,9 @@ public class DeepBitFragment extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             Resources res = getResources();
-            String text = String.format(res.getString(R.string.minerConnectionError), "DeepBit");
+            String text = String.format(res.getString(R.string.error_minerConnection), "DeepBit");
             builder.setMessage(text);
-            builder.setPositiveButton(R.string.OK,
+            builder.setPositiveButton(R.string.ok,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {

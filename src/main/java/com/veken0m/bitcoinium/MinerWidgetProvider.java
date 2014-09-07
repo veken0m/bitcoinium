@@ -51,16 +51,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
 
         if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
-
-        super.onReceive(context, intent);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        setMinerWidgetAlarm(context);
+
+        // onUpdate called upon create or when forced refresh by user. Use this to create a set refresh service.
+        setRefreshServiceAlarm(context, MinerUpdateService.class);
     }
 
     /**
@@ -99,12 +100,12 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         views.setTextViewText(R.id.widgetMinerHashrate, Utils.formatHashrate(hashRate));
                         views.setTextViewText(R.id.widgetMiner, miningPool);
                         views.setTextViewText(R.id.widgetBTCPayout,
-                                CurrencyUtils.formatPayout(btcBalance, pref_widgetMiningPayoutUnit, "BTC"));
+                                CurrencyUtils.formatPayout(btcBalance, pref_widgetPayoutUnits, "BTC"));
 
                         if ((hashRate < 0.01) && pref_minerDownAlert)
                             createMinerDownNotification(this, miningPool);
 
-                        String refreshedTime = getString(R.string.updateShort) + Utils.getCurrentTime(this);
+                        String refreshedTime = getString(R.string.update_short) + Utils.getCurrentTime(this);
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
 
                         updateWidgetTheme(views);
@@ -184,11 +185,15 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
                         // And convert all GH/s to MH/s
                         float temp_hashRate;
                         if (!hashRateString.contentEquals(" ")) {
+
                             String hash_rate[] = hashRateString.split(" ");
                             temp_hashRate = Float.parseFloat(hash_rate[0]);
-                            if (hash_rate[1].contains("G")) {
+
+                            if (hash_rate[1].contains("G"))
                                 temp_hashRate *= 1000;
-                            }
+                            else if(hash_rate[1].contains("T"))
+                                temp_hashRate *= 1000000;
+
                         } else {
                             // empty hashrate, set to 0;
                             temp_hashRate = 0;

@@ -1,10 +1,12 @@
 package com.xeiam.business;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.xeiam.tasks.CancelOrderTask;
+import com.xeiam.tasks.SubmitOrderTask;
 import com.xeiam.xbtctrader.XTraderActivity;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
@@ -55,6 +57,9 @@ public class ExchangeAccount {
     private BitcoiniumOrderbook lastOrderBook;
     private BitcoiniumTicker lastTicker;
 
+    //private final Object orderbookLock = new Object();
+    private final Object tradesLock = new Object();
+
     public ExchangeAccount(XTraderActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -87,7 +92,7 @@ public class ExchangeAccount {
         generateToast("Cancelation order sent to exchange.", Toast.LENGTH_SHORT);
     }
 
-    public void placeLimitOrder(float price, float amount, OrderType orderType) {
+    public void placeLimitOrder(float price, float amount, OrderType orderType, Activity activity) {
 
         BigDecimal tradeableAmount = new BigDecimal(amount).setScale(5, BigDecimal.ROUND_HALF_UP);
         BigDecimal limitPrice = new BigDecimal(XTraderActivity.fiveDecimalFormatter.format(price));
@@ -95,9 +100,9 @@ public class ExchangeAccount {
         LimitOrder limitOrder = new LimitOrder(orderType, tradeableAmount, new CurrencyPair(XTraderActivity.tradableIdentifier, XTraderActivity.transactionCurrency), null, null, limitPrice);
         Log.v(TAG, "Placing Order: " + limitOrder);
 
-        generateToast("Trading is currently disabled. \nPlease contact developer to become a tester", Toast.LENGTH_LONG);
-        //SubmitOrderTask submitOrderTask=new SubmitOrderTask(limitOrder, this); // execute network task on another thread.
-        //submitOrderTask.go();
+        //generateToast("Trading is currently disabled. \nPlease contact developer to become a tester", Toast.LENGTH_LONG);
+        SubmitOrderTask submitOrderTask=new SubmitOrderTask(limitOrder, this, activity); // execute network task on another thread.
+        submitOrderTask.go();
     }
 
     public boolean init() {
@@ -108,22 +113,31 @@ public class ExchangeAccount {
 
             // TODO: input BitcoiniumWS API key before release!
             bitcoiniumExchangeSpec.setApiKey("INSERT_KEY_HERE");
+            // SSL issues on Android 2.2, works on Android 2.3.3
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
             bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getPollingMarketDataService();
 
             // Use the factory to get the version 2 MtGox exchange API using default settings
             exchangeSpecification = new ExchangeSpecification(XTraderActivity.exchangeInfo.getClassName());
 
-            //String username = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "Username", "");
-            //String password = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "Password", "");
-            //String apiKey = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "ApiKey", "");
-            //String secretKey = XTraderActivity.preferences.getString(XTraderActivity.exchangeInfo.getIdentifier() + "SecretKey", "");
+            String exchangeId = XTraderActivity.exchangeInfo.getIdentifier();
+            String username = XTraderActivity.preferences.getString(exchangeId + "Username", "");
+            String password = XTraderActivity.preferences.getString(exchangeId + "Password", "");
+            String apiKey = XTraderActivity.preferences.getString(exchangeId + "ApiKey", "");
+            String secretKey = XTraderActivity.preferences.getString(exchangeId + "SecretKey", "");
 
+            // If use settings are not null, set them in exchange specifications
+            if(!(username).equals(""))
+                exchangeSpecification.setUserName(username);
 
-            //exchangeSpecification.setUserName(username);
-            //exchangeSpecification.setPassword(password);
-            //exchangeSpecification.setSecretKey(secretKey);
-            //exchangeSpecification.setApiKey(apiKey);
+            if(!(password).equals(""))
+                exchangeSpecification.setPassword(password);
+
+            if(!(apiKey).equals(""))
+                exchangeSpecification.setApiKey(apiKey);
+
+            if(!(secretKey).equals(""))
+                exchangeSpecification.setSecretKey(secretKey);
 
             exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
             // Interested in the private account functionality (authentication)
@@ -131,9 +145,10 @@ public class ExchangeAccount {
             tradeService = exchange.getPollingTradeService();
 
             connectionGood = true;
-            //return true;
-            return false;
+            return true;
+            //return false;
         } catch (Exception e) {//check the keys if a problem. trigger a dialog
+            e.printStackTrace();
             return false;
         }
     }
@@ -159,22 +174,26 @@ public class ExchangeAccount {
                 //create a new ticker with the current time.
                 this.lastTicker = bitcoiniumTicker;
 
-                if (trades != null && trades.size() > 0) {
-                    long dtInSec = getTimeFromLastUpdate();
-                    System.out.println("TIME FROM LAST TICKER IN ARRAY: " + dtInSec + ", targetInterval=" + getTargetTimeIntervalFromPrefsInSec());
-                    if (dtInSec >= getTargetTimeIntervalFromPrefsInSec()) {//need to add this to the array and chop off the front.
-                        trades.add(bitcoiniumTicker);
-                        if (trades.size() > XTraderActivity.CHART_TARGET_RESOLUTION) {
-                            trades.remove(0);
+                synchronized(tradesLock) {
+                    if (trades != null && trades.size() > 0) {
+
+                        long dtInSec = getTimeFromLastUpdate();
+                        System.out.println("TIME FROM LAST TICKER IN ARRAY: " + dtInSec + ", targetInterval=" + getTargetTimeIntervalFromPrefsInSec());
+                        if (dtInSec >= getTargetTimeIntervalFromPrefsInSec()) {//need to add this to the array and chop off the front.
+                            trades.add(bitcoiniumTicker);
+                            if (trades.size() > XTraderActivity.CHART_TARGET_RESOLUTION) {
+                                trades.removeFirst();
+                            }
+                            System.out.println("adding to trade array and removing the first.");
+                        } else {//just replace the last ticker but keep the time the same.
+                            trades.set(trades.size() - 1, bitcoiniumTicker);
                         }
-                        System.out.println("adding to trade array and removing the first.");
-                    } else {//just replace the last ticker but keep the time the same.
-                        trades.set(trades.size() - 1, bitcoiniumTicker);
                     }
 
                     mainActivity.getPainter().setTradeHistoryPath();
                     mainActivity.onAccountInfoUpdate();
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,12 +202,14 @@ public class ExchangeAccount {
     }
 
     public long getExchangeDelay() {
-        return (System.currentTimeMillis() - lastTicker.getTimestamp()) / 1000;
+        if(orderBook == null) return 0;
+
+        return (System.currentTimeMillis() - orderBook.getTimestamp()) / 1000;
     }
 
     public long getTimeFromLastUpdate() {
 
-        return (System.currentTimeMillis() - trades.get(trades.size() - 1).getTimestamp()) / 1000;
+        return (System.currentTimeMillis() - trades.getLast().getTimestamp()) / 1000;
 
     }
 
@@ -225,13 +246,17 @@ public class ExchangeAccount {
             BitcoiniumOrderbook bitcoiniumOrderbook = bitcoiniumMarketDataService.getBitcoiniumOrderbook(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.pricewindow);
 
             if (bitcoiniumOrderbook != null) {
-                this.lastOrderBook = orderBook;
-                this.orderBook = bitcoiniumOrderbook;
-                //this.lastTicker=newOrderBook.getTicker();
+
+                //synchronized(orderbookLock) {
+                    this.lastOrderBook = orderBook;
+                    this.orderBook = bitcoiniumOrderbook;
+                    //this.lastTicker=newOrderBook.getTicker();
+                //}
             }
 
             mainActivity.getPainter().setBidAskPaths();//triggers the painter
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             connectionGood = false;
@@ -243,24 +268,27 @@ public class ExchangeAccount {
     public boolean queryTradeHistory() {
         System.out.println("queryTradeHistory");
         try {
-            //get the data. It comes pre-sorted.
-            this.trades = new LinkedList<BitcoiniumTicker>();
-            this.timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
-            // Use the factory to get Bitcoinium exchange API using default settings
-            BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
+            synchronized(tradesLock) {
+                //get the data. It comes pre-sorted.
+                this.trades = new LinkedList<BitcoiniumTicker>();
+                this.timewindow = XTraderActivity.preferences.getString("timewindow", "24h");
+                // Use the factory to get Bitcoinium exchange API using default settings
+                BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getIdentifier().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
 
-            long timeLast = tickerHistory.getBaseTimestamp() * 1000;
-            System.out.println("TIME LAST=" + timeLast);
-            for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
-                BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast + (long) tickerHistory.getTimeStampOffsets().get(i) * 1000, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
-                trades.add(ticker);
-                timeLast = ticker.getTimestamp();
-            }
+                long timeLast = tickerHistory.getBaseTimestamp() * 1000;
+                System.out.println("TIME LAST=" + timeLast);
+                for (int i = 0; i < tickerHistory.getPriceHistoryList().size(); i++) {
 
-            this.lastTicker = trades.get(trades.size() - 1);
+                    timeLast += (long) tickerHistory.getTimeStampOffsets().get(i) * 1000;
+                    BitcoiniumTicker ticker = new BitcoiniumTicker(tickerHistory.getPriceHistoryList().get(i), timeLast, new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), "N");
+                    trades.add(ticker);
+                }
+
+            this.lastTicker = trades.getLast();
             this.lastOrderBook = null;
             setReferenceTicker();
             mainActivity.getPainter().setTradeHistoryPath();
+            }
 
             return true;
         } catch (Exception e) {
@@ -324,9 +352,9 @@ public class ExchangeAccount {
 
         List<Wallet> wallets = accountInfo.getWallets();
 
-        for (int i = 0; i < wallets.size(); i++) {
-            if (wallets.get(i).getCurrency().equals("BTC")) {
-                totalBTC += wallets.get(i).getBalance().floatValue();
+        for (Wallet wallet : wallets) {
+            if (wallet.getCurrency().equals("BTC")) {
+                totalBTC += wallet.getBalance().floatValue();
             }
         }
         return totalBTC;

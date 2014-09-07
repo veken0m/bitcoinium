@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 
-public class BalanceWidgetConfigureActivity extends PreferenceActivity {
+public class BalanceWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener {
 
     private static final String PREF_ADDRESS_KEY = "address_";
     private static final String PREF_NICKNAME_KEY = "nickname_";
@@ -97,38 +97,7 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity {
             finish();
 
         Preference OKpref = findPreference("OKpref");
-        if (OKpref != null) {
-            OKpref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    Context context = BalanceWidgetConfigureActivity.this;
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-                    String sAddress = prefs.getString("widgetAddressPref", "INVALID ADDRESS");
-                    String sAddressNickname = prefs.getString("widgetAddressNicknamePref", "");
-                    String sBalanceValue = prefs.getString("widgetBalanceValuePref", Constants.DEFAULT_CURRENCY_PAIR);
-
-                    // Save widget configuration
-                    saveAddressPref(context, mAppWidgetId, sAddress);
-                    saveNicknamePref(context, mAppWidgetId, sAddressNickname);
-                    saveCurrencyPref(context, mAppWidgetId, sBalanceValue);
-
-                    // Clear potentially sensitive information
-                    prefs.edit().remove("widgetAddressPref").commit();
-                    prefs.edit().remove("widgetAddressNicknamePref").commit();
-
-                    // Make sure we pass back the original appWidgetId
-                    Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                    setResult(RESULT_OK, resultValue);
-
-                    finish();
-                    return true;
-                }
-            });
-        }
+        OKpref.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -147,4 +116,30 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity {
         EasyTracker.getInstance(this).activityStop(this);
     }
 
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String sAddress = prefs.getString("widgetAddressPref", "INVALID ADDRESS");
+        String sAddressNickname = prefs.getString("widgetAddressNicknamePref", "");
+        String sBalanceValue = prefs.getString("widgetBalanceValuePref", Constants.DEFAULT_CURRENCY_PAIR);
+
+        // Save widget configuration
+        saveAddressPref(this, mAppWidgetId, sAddress);
+        saveNicknamePref(this, mAppWidgetId, sAddressNickname);
+        saveCurrencyPref(this, mAppWidgetId, sBalanceValue);
+
+        // Clear potentially sensitive information
+        prefs.edit().remove("widgetAddressPref").commit();
+        prefs.edit().remove("widgetAddressNicknamePref").commit();
+
+        // Make sure we pass back the original appWidgetId
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        setResult(RESULT_OK, resultValue);
+
+        finish();
+        return true;
+    }
 }

@@ -1,43 +1,49 @@
 package com.veken0m.bitcoinium.preferences;
 
+import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
+import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
-import com.veken0m.bitcoinium.exchanges.Exchange;
+import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 
 public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
 
+    final int NUMBER_WITH_DECIMAL = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.pref_price_alert);
 
-        // Generate the alarm preferences
-        PreferenceCategory alertSettingsPref = (PreferenceCategory) findPreference("alertSettingsPref");
+        generatePriceAlarmPreferenceScreen();
+    }
+
+    public void generatePriceAlarmPreferenceScreen(){
+        addPreferencesFromResource(R.xml.pref_price_alert);
+        // Generate the alarm
+        final PreferenceCategory alertSettingsPref = (PreferenceCategory) findPreference("alertSettingsPref");
         if (alertSettingsPref != null) {
 
-            int numberWithDecimal = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
-            String sAlertOverLimit = getString(R.string.pref_alert_over_summary);
-            String sAlertUnderLimit = getString(R.string.pref_alert_under_summary);
-
-            AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
+            final AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
             int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             if (widgetIds.length > 0) {
 
-                for (int appWidgetId : widgetIds) {
+                for (final int appWidgetId : widgetIds) {
 
                     // Obtain Widget configuration
                     String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
@@ -45,48 +51,122 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
                     if(widgetCurrency == null || widgetExchange == null)
                         continue;
 
-                    Exchange exchange = new Exchange(this, widgetExchange);
+                    ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
+                    String exchangeName = exchange.getExchangeName();
 
-                    PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
+                    final PreferenceScreen alertLimits = getPreferenceManager().createPreferenceScreen(this);
                     alertLimits.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);
                     String prefix = exchange.getIdentifier() + widgetCurrency.replace("/", "");
 
+                    // Enable
+                    alertLimits.addPreference(createEnablePref(prefix, exchangeName, widgetCurrency));
                     // Upper limit
-                    EditTextPreference sHighInput = new EditTextPreference(this);
-                    sHighInput.setDefaultValue("999999");
-                    sHighInput.getEditText().setInputType(numberWithDecimal);
-                    sHighInput.setKey(prefix + "Upper");
-                    sHighInput.setTitle(getString(R.string.pref_alert_upper_limit, exchange.getExchangeName(), widgetCurrency));
-                    sHighInput.setSummary(sAlertOverLimit);
-                    alertLimits.addPreference(sHighInput);
-
+                    alertLimits.addPreference(createAlarmLimitPref(prefix, exchangeName, widgetCurrency, true));
                     // Lower limit
-                    EditTextPreference sLowInput = new EditTextPreference(this);
-                    sLowInput.setDefaultValue("0");
-                    sLowInput.getEditText().setInputType(numberWithDecimal);
-                    sLowInput.setKey(prefix + "Lower");
-                    sLowInput.setTitle(getString(R.string.pref_alert_lower_threshold, exchange.getExchangeName(), widgetCurrency));
-                    sLowInput.setSummary(sAlertUnderLimit);
-                    alertLimits.addPreference(sLowInput);
+                    alertLimits.addPreference(createAlarmLimitPref(prefix, exchangeName, widgetCurrency, false));
+
+                    // Add category
+                    PreferenceCategory prefCat = new PreferenceCategory(this);
+                    prefCat.setTitle(getString(R.string.phantom_widget_removal));
+                    alertLimits.addPreference(prefCat);
+
+                    // Preference that allows user to deactivate a widget
+                    Preference deactivateWidget = createDeactivateWidgetPref();
+                    deactivateWidget.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+
+                            // Update the widget so the user doesn't think it's still active
+                            RemoteViews views = populateWidgetView();
+                            if(widgetManager != null)
+                                widgetManager.updateAppWidget(appWidgetId, views);
+
+                            // Delete the widget Id
+                            AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);
+                            host.deleteAppWidgetId(appWidgetId);
+
+                            // Remove preference, back out and notify user
+                            alertSettingsPref.removePreference(alertLimits);
+                            Toast.makeText(getBaseContext(), getString(R.string.toast_widget_deactivated), Toast.LENGTH_LONG).show();
+                            alertLimits.getDialog().dismiss();
+
+                            return false;
+                        }
+                    });
+                    alertLimits.addPreference(deactivateWidget);
 
                     alertSettingsPref.addPreference(alertLimits);
                 }
             } else {
-                Preference pref = new Preference(this);
-                pref.setLayoutResource(R.layout.red_preference);
-                pref.setTitle(getString(R.string.noWidgetFound));
-                pref.setSummary(getString(R.string.pref_requires_widget));
-
-                alertSettingsPref.addPreference(pref);
+                alertSettingsPref.addPreference(noWidgetFound());
             }
         }
+    }
+
+    public Preference createDeactivateWidgetPref(){
+
+        Preference deactivateWidget = new Preference(this);
+        deactivateWidget.setTitle(getString(R.string.pref_widget_deactivate));
+        deactivateWidget.setLayoutResource(R.layout.custom_red_preference);
+        deactivateWidget.setSummary(getString(R.string.pref_widget_deactivate_summary));
+
+        return deactivateWidget;
+    }
+
+    public RemoteViews populateWidgetView(){
+
+        RemoteViews views = new RemoteViews(getPackageName(), R.layout.appwidget);
+        views.setTextViewText(R.id.widgetHighText, "");
+        views.setTextViewText(R.id.widgetLowText, "");
+        views.setTextViewText(R.id.widgetLastText, getString(R.string.deactivated));
+        views.setTextViewText(R.id.widgetVolText, getString(R.string.please_delete));
+
+        return views;
+    }
+
+    /**
+     *
+     * @param prefPrefix the prefix prepended to the key
+     * @param exchangeName exchange name
+     * @param widgetCurrency the currency pair
+     * @return checkbox preference used to enabled the notifications
+     */
+    public CheckBoxPreference createEnablePref(String prefPrefix, String exchangeName, String widgetCurrency) {
+
+        CheckBoxPreference enableCheckbox = new CheckBoxPreference(this);
+        enableCheckbox.setDefaultValue(false);
+        enableCheckbox.setKey(prefPrefix + "AlarmPref");
+        enableCheckbox.setTitle(getString(R.string.pref_enable_alert_title, exchangeName, widgetCurrency));
+        enableCheckbox.setSummary(getString(R.string.pref_enable_alert_summary, exchangeName, widgetCurrency));
+
+        return enableCheckbox;
+    }
+
+    /**
+     *
+     * @param prefPrefix the prefix prepended to the key
+     * @param exchangeName exchange name
+     * @param widgetCurrency the currency pair
+     * @param upper flag that determine if this is upper or lower alert limit
+     * @return edittext preference used to input alert limits
+     */
+    public EditTextPreference createAlarmLimitPref(String prefPrefix, String exchangeName, String widgetCurrency, Boolean upper){
+
+        EditTextPreference editText = new EditTextPreference(this);
+        editText.setDefaultValue((upper) ? "999999" : "0");
+        editText.getEditText().setInputType(NUMBER_WITH_DECIMAL);
+        editText.setKey(prefPrefix + ((upper) ? "Upper" :"Lower"));
+        editText.setTitle(getString((upper) ? R.string.pref_alert_lower_threshold:  R.string.pref_alert_lower_threshold, exchangeName, widgetCurrency));
+        editText.setSummary(getString((upper) ? R.string.pref_alert_over_summary : R.string.pref_alert_under_summary));
+
+        return editText;
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // Tell the widgets to update preferences
+        // Tell the widgets to update
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
     }
 }

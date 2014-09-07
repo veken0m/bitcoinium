@@ -23,13 +23,13 @@ public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean> {
 
             String query = updateOrder[idx % updateOrder.length];
 
-            if (query.equalsIgnoreCase("ticker")) {
+            if (query.equals("ticker")) {
                 XTraderActivity.exchangeAccount.queryLastTicker();
-            } else if (query.equalsIgnoreCase("orderbook")) {
+            } else if (query.equals("orderbook")) {
                 XTraderActivity.exchangeAccount.queryOrderBook();
-            } else if (query.equalsIgnoreCase("account")) {
+            } else if (query.equals("account")) {
                 XTraderActivity.exchangeAccount.queryRemoteAccountInfo();
-            } else if (query.equalsIgnoreCase("orders")) {
+            } else if (query.equals("orders")) {
                 XTraderActivity.exchangeAccount.queryOpenOrders();
             }
 

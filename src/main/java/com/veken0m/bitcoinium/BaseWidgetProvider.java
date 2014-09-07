@@ -1,6 +1,7 @@
 package com.veken0m.bitcoinium;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,9 +16,6 @@ import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.text.format.Time;
 
-import com.veken0m.bitcoinium.BalanceWidgetProvider.BalanceUpdateService;
-import com.veken0m.bitcoinium.MinerWidgetProvider.MinerUpdateService;
-import com.veken0m.bitcoinium.WidgetProvider.UpdateService;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
@@ -25,33 +23,27 @@ import com.xeiam.xchange.currency.CurrencyPair;
 
 public class BaseWidgetProvider extends AppWidgetProvider {
 
-    static boolean pref_priceAlarm = false;
-    static boolean pref_enableTicker = false;
     static boolean pref_widgetBidAsk = false;
     static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
     static boolean pref_tapToUpdate = false;
+    static boolean pref_enableWidgetCustomization = false;
+    static boolean pref_pricesInMilliBtc = false;
+
     static int pref_mainWidgetTextColor = R.color.widgetMainTextColor;
     static int pref_secondaryWidgetTextColor = R.color.widgetSecondaryTextColor;
     static int pref_backgroundWidgetColor = R.color.widgetBackgroundColor;
     static int pref_widgetRefreshSuccessColor = R.color.widgetRefreshSuccessColor;
     static int pref_widgetRefreshFailedColor = R.color.widgetRefreshFailedColor;
-    static boolean pref_enableWidgetCustomization = false;
-    static boolean pref_pricesInMilliBtc = false;
-    static int pref_widgetMiningPayoutUnit = 0;
+    static int pref_widgetPayoutUnits = 0;
+
     static SharedPreferences prefs = null;
     /**
      * List of preference variables
      */
-    private static int pref_widgetRefreshFreq = 0;
-    private static boolean pref_batterySavingMode = false;
     private static boolean pref_alarmSound = false;
     private static boolean pref_alarmVibrate = false;
     private static String pref_notificationSound = null;
-    // Service used to refresh widget
-    private static PendingIntent widgetPriceWidgetRefreshService = null;
-    private static PendingIntent widgetMinerWidgetRefreshService = null;
-    private static PendingIntent widgetWalletWidgetRefreshService = null;
 
     static void readGeneralPreferences(Context context) {
 
@@ -62,10 +54,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         pref_wifiOnly = prefs.getBoolean("wifiRefreshOnlyPref", false);
         pref_pricesInMilliBtc = prefs.getBoolean("displayPricesInMilliBtcPref", true);
         pref_widgetBidAsk = prefs.getBoolean("bidasktogglePref", false);
-        pref_enableTicker = prefs.getBoolean("enableTickerPref", false);
-        pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
+        pref_widgetPayoutUnits = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
 
-        // Theming preferences
+        // Theming pref_xtrader
         pref_enableWidgetCustomization = prefs.getBoolean("enableWidgetCustomizationPref", false);
         if (pref_enableWidgetCustomization) {
             pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref", R.color.widgetMainTextColor);
@@ -80,55 +71,26 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        pref_widgetRefreshFreq = Integer.parseInt(prefs.getString("refreshPref", "1800")) * 1000; // milliseconds
-        pref_batterySavingMode = prefs.getBoolean("wakeupPref", true);
-        pref_priceAlarm = prefs.getBoolean("alarmPref", false);
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
         pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
         pref_alarmClock = prefs.getBoolean("alarmClockPref", false);
     }
 
-    static void setPriceWidgetAlarm(Context context) {
+    // Sets a repeating alarm on a class that extends IntentService
+    static void setRefreshServiceAlarm(Context context, Class<? extends IntentService> cls) {
 
-        readAlarmPreferences(context);
+        // Get refresh settings
+        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int alarmType = prefs.getBoolean("wakeupPref", true) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
+        int refreshInterval = Integer.parseInt(prefs.getString("refreshPref", "1800")) * 1000; // milliseconds
 
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final Intent intent = new Intent(context, UpdateService.class);
+        Intent intent = new Intent(context, cls);
+        PendingIntent refreshIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (widgetPriceWidgetRefreshService == null)
-            widgetPriceWidgetRefreshService = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetPriceWidgetRefreshService);
-    }
-
-    static void setMinerWidgetAlarm(Context context) {
-
-        readAlarmPreferences(context);
-
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final Intent intentMiner = new Intent(context, MinerUpdateService.class);
-
-        if (widgetMinerWidgetRefreshService == null)
-            widgetMinerWidgetRefreshService = PendingIntent.getService(context, 0, intentMiner, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetMinerWidgetRefreshService);
-    }
-
-    static void setBalanceWidgetAlarm(Context context) {
-
-        readAlarmPreferences(context);
-
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final Intent intentBalance = new Intent(context, BalanceUpdateService.class);
-
-        if (widgetWalletWidgetRefreshService == null)
-            widgetWalletWidgetRefreshService = PendingIntent.getService(context, 0, intentBalance, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        int alarmType = (pref_batterySavingMode) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
-        alarmManager.setRepeating(alarmType, Utils.getCurrentTime(), pref_widgetRefreshFreq, widgetWalletWidgetRefreshService);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(alarmType, System.currentTimeMillis(), refreshInterval, refreshIntent);
+        //alarmManager.setInexactRepeating(alarmType, System.currentTimeMillis(), refreshInterval, refreshIntent);
     }
 
     static void setAlarmClock(Context context) {
@@ -160,9 +122,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();
-        String tickerText = String.format(res.getString(R.string.priceTickerNotif), baseCurrency, lastPrice, exchange);
-        String contentTitle = String.format(res.getString(R.string.priceTitleNotif), baseCurrency, lastPrice);
-        String contentText = String.format(res.getString(R.string.priceContentNotif), baseCurrency, lastPrice, exchange);
+        String tickerText = res.getString(R.string.msg_priceTickerNotif, baseCurrency, lastPrice, exchange);
+        String contentTitle = res.getString(R.string.msg_priceTitleNotif, baseCurrency, lastPrice);
+        String contentText = res.getString(R.string.msg_priceContentNotif, baseCurrency, lastPrice, exchange);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());
@@ -182,9 +144,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     static void createMinerDownNotification(Context context, String sMiningPool) {
 
         Resources res = context.getResources();
-        String tickerText = res.getString(R.string.minerDownTickerNotif);
-        String contentTitle = res.getString(R.string.minerDownTitleNotif);
-        String contentText = String.format(res.getString(R.string.minerDownContentNotif), sMiningPool);
+        String tickerText = res.getString(R.string.msg_minerDownTicker);
+        String contentTitle = res.getString(R.string.msg_minerDownTitle);
+        String contentText = res.getString(R.string.msg_minerDownContent, sMiningPool);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(R.drawable.bitcoin, tickerText, System.currentTimeMillis());

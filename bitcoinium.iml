@@ -56,7 +56,25 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/coverage-instrumented-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/libs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/ndk" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
@@ -64,38 +82,45 @@
     <orderEntry type="library" exported="" name="xchange-hitbtc-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-justcoin-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.3.2" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bittrex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cryptonit-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-btcchina-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="rescu-1.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="xchange-btccentral-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cavirtex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-btce-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-cryptsy-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-core-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-vaultofsatoshi-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitfinex-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />
     <orderEntry type="library" exported="" name="xchange-cryptotrade-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitmarket-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-lakebtc-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-kraken-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-campbx-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitbay-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="xchange-itbit-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoincharts-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-bter-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-vircurex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cexio-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bter-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-poloniex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoinaverage-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-anx-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-mintpal-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
-    <orderEntry type="library" exported="" name="xchange-bitstamp-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-coinbase-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-blockchain-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bitstamp-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-btctrade-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="rescu-1.7.0" level="project" />
+    <orderEntry type="library" exported="" name="xchange-blockchain-2.1.0-SNAPSHOT" level="project" />
   </component>
 </module>
 
