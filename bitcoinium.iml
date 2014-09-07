@@ -95,6 +95,7 @@
     <orderEntry type="library" exported="" name="xchange-vaultofsatoshi-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitfinex-2.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />
     <orderEntry type="library" exported="" name="xchange-cryptotrade-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitmarket-2.1.0-SNAPSHOT" level="project" />
@@ -111,7 +112,6 @@
     <orderEntry type="library" exported="" name="xchange-poloniex-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoinaverage-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcurex-2.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-bitcoinium-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-anx-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-mintpal-2.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />

@@ -113,6 +113,7 @@ public class ExchangeAccount {
 
             // TODO: input BitcoiniumWS API key before release!
             bitcoiniumExchangeSpec.setApiKey("INSERT_KEY_HERE");
+            // SSL issues on Android 2.2, works on Android 2.3.3
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
             bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getPollingMarketDataService();
 
