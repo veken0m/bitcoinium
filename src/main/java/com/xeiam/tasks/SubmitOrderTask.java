@@ -1,6 +1,10 @@
 package com.xeiam.tasks;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import com.xeiam.business.ExchangeAccount;
+import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.service.polling.PollingTradeService;
 
@@ -11,10 +15,12 @@ public class SubmitOrderTask implements Runnable {
 
     private final ExchangeAccount exchangeAccount;
     private final LimitOrder limitOrder;
+    private final Activity activity;
 
-    public SubmitOrderTask(LimitOrder limitOrder, ExchangeAccount exchangeAccount) {
+    public SubmitOrderTask(LimitOrder limitOrder, ExchangeAccount exchangeAccount, Activity activity) {
         this.limitOrder = limitOrder;
         this.exchangeAccount = exchangeAccount;
+        this.activity = activity;
     }
 
     public void go() {
@@ -33,6 +39,15 @@ public class SubmitOrderTask implements Runnable {
             orderID = tradeService.placeLimitOrder(limitOrder);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ExchangeException e){
+            e.printStackTrace();
+            final String message = e.getMessage();
+            activity.runOnUiThread(
+                    new Runnable() {
+                       public void run() {
+                           Toast.makeText(activity.getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                       }
+                    });
         }
         System.out.println("order placed. OrderID=" + orderID);
         exchangeAccount.queryOpenOrders();

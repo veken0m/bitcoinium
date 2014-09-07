@@ -56,7 +56,7 @@ public class Pallet {
         axisTitlePaint.setTextAlign(Paint.Align.CENTER);
 
         axisTextPaint.setARGB(255, 255, 255, 255);
-        axisTextPaint.setTextSize(16);
+        axisTextPaint.setTextSize(18);
 
         bidOrderPaint.setARGB(255, 255, 128, 0);
         bidOrderPaint.setStyle(Style.FILL);

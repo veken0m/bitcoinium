@@ -33,7 +33,7 @@
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
         android:gravity="left"
-        android:text="@string/press_color_to_apply"
+        android:text="@string/msg_pressColorToApply"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout

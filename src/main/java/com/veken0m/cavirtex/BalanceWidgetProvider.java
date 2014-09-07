@@ -28,16 +28,17 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
 
         if (Constants.REFRESH.equals(intent.getAction()))
             onUpdate(context, null, null);
-
-        super.onReceive(context, intent);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        setBalanceWidgetAlarm(context);
+
+        // onUpdate called upon create or when forced refresh by user. Use this to create a set refresh service.
+        setRefreshServiceAlarm(context, BalanceUpdateService.class);
     }
 
     /**
@@ -83,9 +84,11 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
                         if (walletNickname.length() == 0)
                             walletNickname = bitcoinAddress.getAddress().substring(0, 20);
 
+                        float balance = bitcoinAddress.getFinalBalanceDecimal().floatValue();
+
                         views.setTextViewText(R.id.widgetAddress, walletNickname);
-                        views.setTextViewText(R.id.widgetBalance, CurrencyUtils.formatPayout(bitcoinAddress.getFinalBalanceDecimal().floatValue(), pref_widgetMiningPayoutUnit, "BTC"));
-                        views.setTextViewText(R.id.label, getString(R.string.updatedAt) + Utils.getCurrentTime(this));
+                        views.setTextViewText(R.id.widgetBalance, CurrencyUtils.formatPayout(balance, pref_widgetPayoutUnits, "BTC"));
+                        views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
 
                         try {
                             // Interested in the public polling market data feed (no authentication)

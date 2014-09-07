@@ -39,10 +39,14 @@ public class SubmitOrderDialog extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        orderView = inflater.inflate(R.layout.new_order, null);
+        orderView = inflater.inflate(R.layout.dialog_new_order, null);
 
         //set the amount
         ((TextView) orderView.findViewById(R.id.order_btc)).setText(XTraderActivity.fiveDecimalFormatter.format(amount));
+
+        // Set currencies
+        ((TextView) orderView.findViewById(R.id.new_order_transaction_currency)).setText(XTraderActivity.transactionCurrency.toUpperCase());
+        ((TextView) orderView.findViewById(R.id.new_order_tradable_identifier)).setText(XTraderActivity.tradableIdentifier.toUpperCase());
 
         //set the price
         ((TextView) orderView.findViewById(R.id.order_price)).setText(XTraderActivity.twoDecimalFormatter.format(price));
@@ -62,7 +66,7 @@ public class SubmitOrderDialog extends DialogFragment {
                 try {
                     float amount = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_btc)).getText().toString());
                     float price = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_price)).getText().toString());
-                    XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType);
+                    XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
                 } catch (Exception e) {
                     // TODO: handle exception
                 }

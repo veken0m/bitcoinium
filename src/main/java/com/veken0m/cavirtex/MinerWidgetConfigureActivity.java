@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 
-public class MinerWidgetConfigureActivity extends PreferenceActivity {
+public class MinerWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener{
 
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -60,34 +60,13 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
             finish();
 
         Preference OKpref = findPreference("OKpref");
-        if (OKpref != null) {
-            OKpref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    Context context = MinerWidgetConfigureActivity.this;
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
-
-                    saveMiningPoolPref(context, mAppWidgetId, pref_widgetMiningPool);
-
-                    // Make sure we pass back the original appWidgetId
-                    Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                    setResult(RESULT_OK, resultValue);
-
-                    finish();
-                    return true;
-                }
-            });
-        }
+        OKpref.setOnPreferenceClickListener(this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", true))
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
     }
 
@@ -97,6 +76,22 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity {
 
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         EasyTracker.getInstance(this).activityStop(this);
+    }
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
+
+        saveMiningPoolPref(this, mAppWidgetId, pref_widgetMiningPool);
+
+        // Make sure we pass back the original appWidgetId
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        setResult(RESULT_OK, resultValue);
+
+        finish();
+        return true;
     }
 
 }

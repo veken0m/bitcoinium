@@ -3,6 +3,7 @@ package com.xeiam.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class CancelOrderDialog extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        orderView = inflater.inflate(R.layout.cancel_order, null);
+        orderView = inflater.inflate(R.layout.dialog_cancel_order, null);
 
 
         //set the amount
@@ -46,6 +47,7 @@ public class CancelOrderDialog extends DialogFragment {
         if (limitOrder.getType() == OrderType.BID) {
             ((TextView) orderView.findViewById(R.id.cancel_order_type)).setText("BUY");
         } else {
+            orderView.setBackgroundColor(Color.CYAN);
             ((TextView) orderView.findViewById(R.id.cancel_order_type)).setText("SELL");
         }
 

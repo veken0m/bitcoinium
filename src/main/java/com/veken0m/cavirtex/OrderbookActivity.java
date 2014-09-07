@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,12 +28,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
-import com.veken0m.cavirtex.exchanges.Exchange;
+import com.veken0m.cavirtex.exchanges.ExchangeProperties;
 import com.veken0m.cavirtex.preferences.OrderbookPreferenceActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
@@ -43,7 +44,7 @@ import java.util.List;
 
 import com.veken0m.utils.KarmaAdsUtils;
 
-public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener {
+public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final static Handler mOrderHandler = new Handler();
     /**
@@ -57,9 +58,11 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static SharedPreferences prefs = null;
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "";
-    private static Exchange exchange = null;
+    private static ExchangeProperties exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean threadRunning = false;
+    private static Boolean noOrdersFound = false;
+
     private final Runnable mOrderView = new Runnable() {
         @Override
         public void run() {
@@ -99,7 +102,14 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.orderbook);
+        setContentView(R.layout.activity_orderbook);
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.orderbook_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(R.color.holo_blue_light,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -109,12 +119,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            exchange = new Exchange(this, extras.getString("exchange"));
+            exchange = new ExchangeProperties(this, extras.getString("exchange"));
         else
-            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+            exchange = new ExchangeProperties(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
         if (!exchange.supportsOrderbook())
-            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+            exchange = new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
 
         readPreferences();
         populateExchangeDropdown();
@@ -123,10 +133,14 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         KarmaAdsUtils.initAd(this);
     }
 
+    @Override public void onRefresh() {
+        viewOrderbook();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
+        inflater.inflate(R.menu.action, menu);
         return true;
     }
 
@@ -151,8 +165,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.orderbook);
-        KarmaAdsUtils.initAd(this);
+        setContentView(R.layout.activity_orderbook);
 
         if (listAsks != null && listBids != null) {
             populateExchangeDropdown();
@@ -168,17 +181,18 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
     boolean getOrderBook() {
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
 
         if (listAsks != null && listBids != null) {
             listAsks.clear();
             listBids.clear();
         }
+        noOrdersFound = false;
 
-        final PollingMarketDataService marketData = ExchangeFactory.INSTANCE
-                .createExchange(exchange.getClassName())
-                .getPollingMarketDataService();
-
+        PollingMarketDataService marketData = ExchangeUtils.getMarketData(exchange, currencyPair);
         OrderBook orderbook;
+
         try {
             orderbook = marketData.getOrderBook(currencyPair);
         } catch (Exception e) {
@@ -189,6 +203,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         if (orderbook != null) {
             listAsks = orderbook.getAsks();
             listBids = orderbook.getBids();
+
+            if(listAsks.isEmpty() && listBids.isEmpty())
+                noOrdersFound = true;
 
             // Limit OrderbookActivity orders drawn to improve performance
             if (pref_orderbookLimiter != 0) {
@@ -208,13 +225,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Draw the Orders to the screen in a table
      */
     void drawOrderbookUI() {
-
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
         if (orderbookTable != null) {
 
             orderbookTable.removeAllViews();
-
-            removeLoadingSpinner(R.id.orderbook_loadSpinner);
 
             boolean bBackGroundColor = true;
 
@@ -226,7 +242,12 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
-            int priceUnitIndex = Utils.getUnitIndex(listBids.get(0).getLimitPrice().floatValue());
+            int priceUnitIndex = 0;
+            if (!listBids.isEmpty() || !listAsks.isEmpty()){
+                LimitOrder tempOrder = listBids.isEmpty() ? listAsks.get(0) : listBids.get(0);
+                priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
+            }
+
             String sCounterCurrency = currencyPair.counterSymbol;
             if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
@@ -299,15 +320,16 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         } else {
             failedToDrawUI();
         }
-
-    }
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
+}
 
     private void viewOrderbook() {
         if (Utils.isConnected(getApplicationContext())) {
             if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
         } else {
-            notConnected(R.id.bitcoincharts_loadSpinner);
+            notConnected();
         }
     }
 
@@ -322,7 +344,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged) {
-                    exchange = new Exchange(this, exchangeName);
+                    exchange = new ExchangeProperties(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     populateCurrencyDropdown();
                 }
@@ -343,13 +365,13 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void errorOccured() {
 
-        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        swipeLayout.setRefreshing(false);
 
         try {
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
                 Resources res = getResources();
-                String text = String.format(res.getString(R.string.connectionError),
+                String text = String.format(res.getString(R.string.error_exchangeConnection),
                         res.getString(R.string.orderbook), exchange.getExchangeName());
                 dialog = Utils.errorDialog(this, text);
             }
@@ -360,10 +382,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
     private void failedToDrawUI() {
 
-        removeLoadingSpinner(R.id.orderbook_loadSpinner);
+        swipeLayout.setRefreshing(false);
         // Display error Dialog
         if (dialog == null || !dialog.isShowing())
-            dialog = Utils.errorDialog(this, getString(R.string.errBitcoinAverageTable), getString(R.string.error));
+            dialog = Utils.errorDialog(this, getString(R.string.error_BitcoinAverageTable), getString(R.string.error));
     }
 
     void populateExchangeDropdown() {
@@ -410,7 +432,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", true)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
             EasyTracker.getInstance(this).activityStart(this);
         }
     }
@@ -442,12 +464,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading(R.id.orderlist, R.id.orderbook_loadSpinner);
-                }
-            });
 
             threadRunning = true;
             if (getOrderBook())
@@ -455,6 +471,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             else
                 mOrderHandler.post(mError);
             threadRunning = false;
+            swipeLayout.setRefreshing(false);
         }
     }
 

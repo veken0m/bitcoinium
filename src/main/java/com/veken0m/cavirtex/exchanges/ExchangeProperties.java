@@ -2,7 +2,7 @@ package com.veken0m.cavirtex.exchanges;
 
 import android.content.Context;
 
-public class Exchange {
+public class ExchangeProperties {
 
     private final String exchange_name;
     private final String class_name;
@@ -11,7 +11,7 @@ public class Exchange {
     private final String shortName;
     private Context context = null;
 
-    public Exchange(Context context, String exchangeName) {
+    public ExchangeProperties(Context context, String exchangeName) {
 
         // ToLower and Remove Exchange to keep compatibility with previous indexing system
         exchangeName = exchangeName.toLowerCase().replace("exchange", "").replaceAll("[ .-]", "");

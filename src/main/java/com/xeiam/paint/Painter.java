@@ -85,7 +85,7 @@ public class Painter {
         Path p = new Path();
         //start on the y=axis.
         x = (int) ((price.get(0).floatValue() - priceLowBound) * priceScalar);
-        y = (int) (mainView.getHeight());
+        y = mainView.getHeight();
         p.moveTo(x, y);
 
         //now plot the line
@@ -111,11 +111,11 @@ public class Painter {
         //now drop down
         //x is the same
         y = mainView.getHeight();//drop to bottom
-        p.lineTo(x, (int) (mainView.getHeight()));
+        p.lineTo(x, mainView.getHeight());
 
         //and return to start
         x = (int) ((price.get(0).floatValue() - priceLowBound) * priceScalar);
-        y = (int) (mainView.getHeight());
+        y = mainView.getHeight();
         p.moveTo(x, y);
 
         return p;
@@ -134,7 +134,7 @@ public class Painter {
 
 
         this.tOffSet = trades.get(0).getTimestamp();
-        this.tScalar = (float) mainView.getHeight() / (float) (trades.get(trades.size() - 1).getTimestamp() - tOffSet);
+        this.tScalar = (float) mainView.getHeight() / (trades.get(trades.size() - 1).getTimestamp() - tOffSet);
         tradePath = new Path();
         int x = (int) ((trades.get(0).getLast().floatValue() - priceLowBound) * priceScalar);
         int y = (int) ((trades.get(0).getTimestamp() - tOffSet) * tScalar);
@@ -292,16 +292,16 @@ public class Painter {
             return;
         }
         orderCollider = new OrderCollider();
-        for (int i = 0; i < orders.size(); i++) {
-            float price = orders.get(i).getLimitPrice().floatValue();
-            float amount = orders.get(i).getTradableAmount().floatValue();
+        for (LimitOrder order : orders) {
+            float price = order.getLimitPrice().floatValue();
+            float amount = order.getTradableAmount().floatValue();
 
             int x = (int) ((price - priceLowBound) * priceScalar);
             int y = mainView.getHeight() - (int) ((amount * mainView.getHeight()) / (numGridTicks * ordergridsize));
 
-            orderCollider.put(x, y, orders.get(i));
+            orderCollider.put(x, y, order);
 
-            if (orders.get(i).getType() == OrderType.ASK) {//SELL
+            if (order.getType() == OrderType.ASK) {//SELL
                 c.drawCircle(x, y, orderRadius, pallet.askOrderPaint);
             } else {//BUY
                 c.drawCircle(x, y, orderRadius, pallet.bidOrderPaint);

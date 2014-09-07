@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ import java.util.Comparator;
 
 import com.veken0m.utils.KarmaAdsUtils;
 
-public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener {
+public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private final static Handler mOrderHandler = new Handler();
@@ -58,7 +59,14 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bitcoincharts);
+        setContentView(R.layout.activity_bitcoincharts);
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoincharts_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(R.color.holo_blue_light,
+                R.color.holo_green_light,
+                R.color.holo_orange_light,
+                R.color.holo_red_light);
 
         populateCurrencyDropdown();
         ActionBar actionbar = getSupportActionBar();
@@ -91,9 +99,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.bitcoincharts);
+        setContentView(R.layout.activity_bitcoincharts);
         populateCurrencyDropdown();
-        KarmaAdsUtils.initAd(this);
 
         if (marketData != null) drawBitcoinChartsUI();
     }
@@ -142,9 +149,9 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
      * Draw the Tickers to the screen in a table
      */
     void drawBitcoinChartsUI() {
-
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         TableLayout bitcoinChartsTable = (TableLayout) findViewById(R.id.bitcoincharts_list);
-        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
 
         if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null) {
 
@@ -207,23 +214,27 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         } else {
             failedToDrawUI();
         }
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
     }
 
     private void viewBitcoinCharts() {
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(true);
         if (Utils.isConnected(this))
             (new bitcoinChartsThread()).start();
         else
-            notConnected(R.id.bitcoincharts_loadSpinner);
+            notConnected();
     }
 
     private void errorOccured() {
-
-        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
         try {
             if (dialog == null || !dialog.isShowing()) {
                 // Display error Dialog
                 Resources res = getResources();
-                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.connectionError), "tickers", "Bitcoin Charts"));
+                dialog = Utils.errorDialog(this, String.format(res.getString(R.string.error_exchangeConnection), "tickers", "Bitcoin Charts"));
             }
         } catch (WindowManager.BadTokenException e) {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
@@ -231,25 +242,23 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     private void failedToDrawUI() {
-
-        removeLoadingSpinner(R.id.bitcoincharts_loadSpinner);
+        if(swipeLayout != null)
+            swipeLayout.setRefreshing(false);
         if (dialog == null || !dialog.isShowing()) {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
         }
     }
 
+    @Override
+    public void onRefresh() {
+        viewBitcoinCharts();
+    }
+
     private class bitcoinChartsThread extends Thread {
 
         @Override
         public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLoading(R.id.bitcoincharts_list, R.id.bitcoincharts_loadSpinner);
-                }
-            });
-
             if (getBitcoinCharts())
                 mOrderHandler.post(mBitcoinChartsView);
             else

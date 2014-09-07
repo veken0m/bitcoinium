@@ -11,8 +11,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veken0m.cavirtex.R;
-import com.veken0m.cavirtex.exchanges.Exchange;
+import com.veken0m.cavirtex.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.xeiam.business.ExchangeAccount;
@@ -38,7 +38,7 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class XTraderActivity extends FragmentActivity implements OnSharedPreferenceChangeListener {
+public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener {
     private static final String TAG = "XTraderActivity";
     public static ExchangeAccount exchangeAccount;
     public static MainView mainView;
@@ -49,7 +49,7 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
     public static DecimalFormat fiveDecimalFormatter = new DecimalFormat("#.#####");
     public static DecimalFormat btcFormatter = new DecimalFormat("#.###BTC");
     public static DecimalFormat fiatFormatter;
-    public static Exchange exchangeInfo;
+    public static ExchangeProperties exchangeInfo;
     public static String tradableIdentifier = "BTC";
     public static String transactionCurrency = "USD";
     public static String currencyPair;
@@ -102,7 +102,7 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
         View tradingBalances = findViewById(R.id.tradingBalances);
         View tradingButtons = findViewById(R.id.tradingButtons);
         if (showTrading) {
-            tradingBalances.setVisibility(View.GONE);
+            tradingBalances.setVisibility(View.VISIBLE);
             tradingButtons.setVisibility(View.VISIBLE);
         } else {
             tradingBalances.setVisibility(View.GONE);
@@ -137,7 +137,7 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_xtrader_main);
 
         Bundle extras = getIntent().getExtras();
         String sCurrencyPair = Constants.DEFAULT_CURRENCY_PAIR;
@@ -149,14 +149,14 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
                 currencyPosition -= 3;
 
             String exchangeSymbol = symbol.substring(0, currencyPosition);
-            exchangeInfo = new Exchange(this, exchangeSymbol);
+            exchangeInfo = new ExchangeProperties(this, exchangeSymbol);
             sCurrencyPair = "BTC/" + symbol.substring(currencyPosition);
             //exchangeInfo = new Exchange(this, "bitstamp");
         }
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_xtrader, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
 
@@ -183,9 +183,9 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.action, menu);
 
-        //String fiat=preferences.getString("listCurrency", "USD");
+        //String fiat=pref_xtrader.getString("listCurrency", "USD");
         fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(XTraderActivity.transactionCurrency) + "#.##");
 
         //init the view variables.
@@ -200,10 +200,10 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.preferences:
+            case R.id.action_preferences:
                 openPrefs();
                 return true;
-            case R.id.refresh:
+            case R.id.action_refresh:
                 refresh();
                 return true;
             default:
@@ -229,11 +229,11 @@ public class XTraderActivity extends FragmentActivity implements OnSharedPrefere
         boolean needToUpdate = false;
         if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password")) {
 
-            String id = XTraderActivity.exchangeInfo.getIdentifier();
-            String sCurrencyPair = XTraderActivity.preferences.getString(id + "TradeCurrency", "");
-            CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-            tradableIdentifier = currencyPair.baseSymbol;
-            transactionCurrency = currencyPair.counterSymbol;
+            //String id = XTraderActivity.exchangeInfo.getIdentifier();
+            //String sCurrencyPair = XTraderActivity.pref_xtrader.getString(id + "TradeCurrency", "");
+            //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
+            //tradableIdentifier = currencyPair.baseSymbol;
+            //transactionCurrency = currencyPair.counterSymbol;
 
             needToUpdate = true;
         }

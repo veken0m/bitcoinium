@@ -8,7 +8,7 @@
             android:entryValues="@array/exchangeID"
             android:key="defaultExchangePref"
             android:summary="@string/pref_default_exchange_summary"
-            android:title="@string/defaultExchange" />
+            android:title="@string/defaultExchange"/>
 
         <PreferenceScreen
             android:key="defaultCurrencyPref"

@@ -11,26 +11,27 @@
         android:layout_weight="1" />
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.09">
 
         <View
             android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+            android:layout_height="18dp"/>
 
         <TextView
             android:id="@+id/cancelOrderText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CANCEL THIS ORDER?"
-            android:textSize="20sp" />
+            android:text="@string/msg_cancelOrder"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"/>
 
         <View
             android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
+            android:layout_height="18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -100,32 +101,24 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID:"
+            android:text="@string/label_id"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/cancel_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="orderId"
+            android:text="@string/label_orderId"
             android:textSize="12sp"
             android:textStyle="italic" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="18dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
 

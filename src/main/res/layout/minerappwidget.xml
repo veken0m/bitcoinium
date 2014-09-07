@@ -17,7 +17,7 @@
         android:paddingTop="1dp"
         android:text="@string/miner"
         android:textColor="#FDD017"
-        android:textSize="12dp"></TextView>
+        android:textSize="12dp"/>
 
     <TextView
         android:id="@+id/widgetMinerHashrate"
@@ -36,7 +36,7 @@
         android:layout_below="@id/widgetMinerHashrate"
         android:layout_centerHorizontal="true"
         android:text="@string/payout"
-        android:textSize="12dp"></TextView>
+        android:textSize="12dp"/>
 
     <TextView
         android:id="@+id/refreshtime"

@@ -23,12 +23,12 @@ import android.widget.Spinner;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
-import com.veken0m.cavirtex.exchanges.Exchange;
+import com.veken0m.cavirtex.exchanges.ExchangeProperties;
 import com.veken0m.cavirtex.preferences.GraphPreferenceActivity;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
@@ -49,7 +49,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
     private static CurrencyPair currencyPair = null;
     private static String exchangeName = "";
-    private static Exchange exchange = null;
+    private static ExchangeProperties exchange = null;
     private static Boolean exchangeChanged = false;
     private static Boolean pref_scaleMode = null;
     /**
@@ -68,10 +68,10 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 graphLinearLayout.addView(graphView);
 
             } else if (noTradesFound) {
-                createPopup(getString(R.string.noTradesFound));
+                createPopup(getString(R.string.msg_noTradesFound));
             } else {
                 Resources res = getResources();
-                String text = String.format(res.getString(R.string.connectionError), res.getString(R.string.trades), exchangeName);
+                String text = String.format(res.getString(R.string.error_exchangeConnection), res.getString(R.string.trades), exchangeName);
                 createPopup(text);
             }
         }
@@ -95,17 +95,17 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            exchange = new Exchange(this, extras.getString("exchange"));
+            exchange = new ExchangeProperties(this, extras.getString("exchange"));
         else
-            exchange = new Exchange(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
+            exchange = new ExchangeProperties(this, prefs.getString("defaultExchangePref", Constants.DEFAULT_EXCHANGE));
 
         if (!exchange.supportsTrades())
-            exchange = new Exchange(this, Constants.DEFAULT_EXCHANGE);
+            exchange = new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
 
         exchangeName = exchange.getExchangeName();
 
         readPreferences();
-        setContentView(R.layout.graph);
+        setContentView(R.layout.activity_graph);
         createExchangeDropdown();
         createCurrencyDropdown();
         viewGraph();
@@ -116,7 +116,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_menu, menu);
+        inflater.inflate(R.menu.action, menu);
         return true;
     }
 
@@ -150,9 +150,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         Trades trades = null;
 
         try {
-            trades = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName())
-                    .getPollingMarketDataService()
-                    .getTrades(currencyPair);
+            trades = ExchangeUtils.getMarketData(exchange, currencyPair).getTrades(currencyPair);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -264,7 +262,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
                 if (exchangeChanged) {
-                    exchange = new Exchange(this, exchangeName);
+                    exchange = new ExchangeProperties(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
                 }

@@ -5,7 +5,7 @@
         <Preference
             android:key="OKpref"
             android:layout="@layout/green_preference_button"
-            android:title="@string/createWidget" />
+            android:title="@string/createWidget"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

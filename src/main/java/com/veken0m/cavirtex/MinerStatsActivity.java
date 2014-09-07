@@ -89,7 +89,7 @@ public class MinerStatsActivity extends ActionBarActivity {
 
         if (checkAtLeastOneKeySet()) {
             // If not API token set, switch to Preferences and ask User to enter one
-            Toast toast = Toast.makeText(this, getString(R.string.enterAPIToken), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, getString(R.string.msg_enterAPIToken), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
@@ -102,7 +102,7 @@ public class MinerStatsActivity extends ActionBarActivity {
         if (extras == null)
             addTabs(actionbar);
 
-        setContentView(R.layout.minerstats);
+        setContentView(R.layout.activity_minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
         KarmaAdsUtils.initAd(this);
@@ -197,13 +197,13 @@ public class MinerStatsActivity extends ActionBarActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.minerstats);
+        setContentView(R.layout.activity_minerstats);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
+        inflater.inflate(R.menu.settings, menu);
         return true;
     }
 
@@ -228,7 +228,7 @@ public class MinerStatsActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", true))
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
             EasyTracker.getInstance(this).activityStart(this);
     }
 
@@ -319,21 +319,21 @@ public class MinerStatsActivity extends ActionBarActivity {
 
                 try {
                     // TODO: move this to XML layout
-                    tvCurrentDifficulty.setText(String.format(getString(R.string.currentDifficulty), Utils.formatDecimal(
-                            Float.valueOf(CurrentDifficulty), 0, 0, true)));
+                    tvCurrentDifficulty.setText(getString(R.string.currentDifficulty) + ": " + Utils.formatDecimal(
+                            Float.valueOf(CurrentDifficulty), 0, 0, true));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvCurrentDifficulty.setTextColor(Color.BLACK);
-                    tvNextDifficulty.setText(String.format(getString(R.string.estimatedNextDifficulty), Utils.formatDecimal(
-                            Float.valueOf(NextDifficulty), 0, 0, true)));
+                    tvNextDifficulty.setText(getString(R.string.estimatedNextDifficulty) + ": " + Utils.formatDecimal(
+                            Float.valueOf(NextDifficulty), 0, 0, true));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextDifficulty.setTextColor(Color.BLACK);
 
-                    tvBlockCount.setText(String.format(getString(R.string.blockCount), BlockCount));
+                    tvBlockCount.setText(getString(R.string.blockCount) + ": " + BlockCount);
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvBlockCount.setTextColor(Color.BLACK);
 
                     int nNextRetarget = Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount);
-                    tvNextRetarget.setText(String.format(getString(R.string.nextRetarget), nNextRetarget) + "\n");
+                    tvNextRetarget.setText(String.format(getString(R.string.msg_nextRetarget), nNextRetarget) + "\n");
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextRetarget.setTextColor(Color.BLACK);
 
