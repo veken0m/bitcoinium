@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium</string>
-    <string name="version_name">2.1.0</string>
+    <string name="version_name">2.1.1</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
@@ -195,7 +195,7 @@
     <string name="pref_alert_sound_summary">Play a sound when alert is triggered</string>
     <string name="pref_alert_vibrate_summary">Vibrate when alert is triggered</string>
     <string name="pref_alert_upper_limit">%1$s %2$s upper limit</string>
-    <string name="pref_alert_lower_threshold">%1$s %2$s lower limit</string>
+    <string name="pref_alert_lower_limit">%1$s %2$s lower limit</string>
     <string name="pref_alert_over_summary">Notification will occur price goes over this value</string>
     <string name="pref_alert_under_summary">Notification will occur if price goes below this value</string>
     <string name="pref_price_alert_summary">Notifies when price crosses the alert limit</string>

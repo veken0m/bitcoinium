@@ -44,19 +44,23 @@ public class WidgetProvider extends BaseWidgetProvider {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        // Clean up
-        for (int appWidgetId : appWidgetIds) {
-            String currencyPair = WidgetConfigureActivity.loadCurrencyPref(context, appWidgetId);
-            String exchangePref = WidgetConfigureActivity.loadExchangePref(context, appWidgetId);
-            CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-            ExchangeProperties exchange = UpdateService.getExchange(context, exchangePref);
+        try {
+            // Clean up
+            for (int appWidgetId : appWidgetIds) {
+                String currencyPair = WidgetConfigureActivity.loadCurrencyPref(context, appWidgetId);
+                String exchangePref = WidgetConfigureActivity.loadExchangePref(context, appWidgetId);
+                CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
+                ExchangeProperties exchange = UpdateService.getExchange(context, exchangePref);
 
-            String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+                String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
 
-            removePermanentNotification(context, pairId.hashCode());
-            // Reset the preference for this combo
-            prefs.edit().putBoolean(pairId + "TickerPref", false).commit();
-            prefs.edit().putBoolean(pairId + "AlarmPref", false).commit();
+                removePermanentNotification(context, pairId.hashCode());
+                // Reset the preference for this combo
+                prefs.edit().putBoolean(pairId + "TickerPref", false).commit();
+                prefs.edit().putBoolean(pairId + "AlarmPref", false).commit();
+            }
+        } catch (Exception e){
+            // if anything is invalid during clean-up, suppress it
         }
     }
 

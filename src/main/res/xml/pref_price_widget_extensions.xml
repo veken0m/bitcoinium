@@ -6,7 +6,7 @@
             android:key="alarmSettingsPref"
             android:summary="@string/pref_price_alert_summary"
             android:title="@string/pref_price_alert_title">
-            <intent android:action="com.veken0m.bitcoinium.PriceAlertPreferencesActivity" />
+            <intent android:action="com.veken0m.cavirtex.PriceAlertPreferencesActivity" />
         </Preference>
 
 
