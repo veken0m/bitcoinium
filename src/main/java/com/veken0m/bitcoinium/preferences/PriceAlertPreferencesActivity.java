@@ -156,7 +156,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
         editText.setDefaultValue((upper) ? "999999" : "0");
         editText.getEditText().setInputType(NUMBER_WITH_DECIMAL);
         editText.setKey(prefPrefix + ((upper) ? "Upper" :"Lower"));
-        editText.setTitle(getString((upper) ? R.string.pref_alert_lower_threshold:  R.string.pref_alert_lower_threshold, exchangeName, widgetCurrency));
+        editText.setTitle(getString((upper) ? R.string.pref_alert_upper_limit :  R.string.pref_alert_lower_limit, exchangeName, widgetCurrency));
         editText.setSummary(getString((upper) ? R.string.pref_alert_over_summary : R.string.pref_alert_under_summary));
 
         return editText;
