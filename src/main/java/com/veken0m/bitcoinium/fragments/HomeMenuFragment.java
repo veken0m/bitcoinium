@@ -145,8 +145,8 @@ public class HomeMenuFragment extends Fragment {
                 public void onClick(View v) {
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-                    // TODO: externalize
-                    final CharSequence items[] = new CharSequence[]{"bitstampUSD", "btcchinaCNY", "krakenUSD", "krakenEUR", "btceUSD", "btceRUR", "btceEUR"};
+
+                    final CharSequence items[] = getResources().getStringArray(R.array.exchangesBitcoiniumWS);
                     adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
 
                         @Override

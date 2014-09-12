@@ -135,15 +135,29 @@
         <item>VirtEx</item>
     </string-array>
 
-    <!-- Array for Exchanges supported by BitcoiniumWS -->
     <string-array name="exchangesBitcoiniumWS">
+        <item>bitstampUSD</item>
+        <item>btcchinaCNY</item>
+        <!--item>btceEUR</item-->
+        <item>bitfinexUSD</item>
+        <!--item>BTCE_RUR</item-->
+        <item>btceUSD</item>
+        <item>krakenEUR</item>
+        <item>vaultofsatoshiCAD</item>
+        <!--item>KRAKEN_USD</item-->
+    </string-array>
+
+    <!-- Array for Exchanges supported by BitcoiniumWS -->
+    <string-array name="exchangesBitcoiniumWSvalues">
         <item>BITSTAMP_USD</item>
         <item>BTCCHINA_CNY</item>
-        <item>BTCE_EUR</item>
-        <item>BTCE_RUR</item>
+        <!--item>BTCE_EUR</item-->
+        <item>BITFINEX_USD</item>
+        <!--item>BTCE_RUR</item-->
         <item>BTCE_USD</item>
         <item>KRAKEN_EUR</item>
-        <item>KRAKEN_USD</item>
+        <item>VOS_CAD</item>
+        <!--item>KRAKEN_USD</item-->
     </string-array>
 
 
@@ -234,7 +248,7 @@
         <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
         <item>BTC/USD</item>
         <item>btce</item>
-        <item>BTC-e</item>
+        <item>BTCe</item>
     </string-array>
 
     <string-array name="btcchina">

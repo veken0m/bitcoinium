@@ -83,7 +83,7 @@ dependencies {
     compile("com.xeiam.xchange:xchange-bitbay:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcoinium:2.0.0")
+    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-bitmarket:$xchangeVersion")

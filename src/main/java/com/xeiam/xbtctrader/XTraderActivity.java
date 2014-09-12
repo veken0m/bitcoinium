@@ -52,7 +52,6 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     public static ExchangeProperties exchangeInfo;
     public static String tradableIdentifier = "BTC";
     public static String transactionCurrency = "USD";
-    public static String currencyPair;
     public static int DIALOG_EXCHANGE_CONNECTION_FAIL = 0;
     public static int DIALOG_INTERNET_CONNECTION_FAIL = 1;
     public static int CHART_TARGET_RESOLUTION = 1000;
@@ -244,7 +243,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         if (key.equals("enableTradingKey"))
             showTradingInterface(preferences.getBoolean("enableTradingKey", false));
 
-        if (needToUpdate || key.equals("timewindow") || key.equals("pricewindow") || key.equals("ordergridsize"))
+        if (needToUpdate || key.equals("time_window") || key.equals("price_window") || key.equals("ordergridsize"))
             queryHistoricalData();
     }
 
@@ -323,21 +322,19 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     }
 
     public float getPriceWindow() {
-        String pw = preferences.getString("pricewindow", "5p");
+        String pw = preferences.getString("price_window", "FIVE_PERCENT");
 
-        if (pw.equalsIgnoreCase("1p")) {
-            return .01f;
-        } else if (pw.equalsIgnoreCase("2p")) {
+        if (pw.equalsIgnoreCase("TWO_PERCENT")) {
             return .02f;
-        } else if (pw.equalsIgnoreCase("5p")) {
+        } else if (pw.equalsIgnoreCase("FIVE_PERCENT")) {
             return .05f;
-        } else if (pw.equalsIgnoreCase("10p")) {
+        } else if (pw.equalsIgnoreCase("TEN_PERCENT")) {
             return .1f;
-        } else if (pw.equalsIgnoreCase("20p")) {
+        } else if (pw.equalsIgnoreCase("TWENTY_PERCENT")) {
             return .2f;
-        } else if (pw.equalsIgnoreCase("50p")) {
+        } else if (pw.equalsIgnoreCase("FIFTY_PERCENT")) {
             return .5f;
-        } else if (pw.equalsIgnoreCase("100p")) {
+        } else if (pw.equalsIgnoreCase("ONE_HUNDRED_PERCENT")) {
             return 1f;
         }
 

@@ -59,39 +59,39 @@ public class Painter {
 
         BitcoiniumOrderbook orderBook = XTraderActivity.exchangeAccount.getOrderBook();
         //set the scale
-        if (orderBook.getAskVolumeList().get(orderBook.getAskVolumeList().size() - 1).floatValue() > orderBook.getBidVolumeList().get(orderBook.getBidVolumeList().size() - 1).floatValue()) {
-            depthScalar = mainView.getHeight() / orderBook.getAskVolumeList().get(orderBook.getAskVolumeList().size() - 1).floatValue();
+        if (orderBook.getAsks()[orderBook.getAsks().length - 1].getVolume().floatValue() > orderBook.getBids()[orderBook.getBids().length - 1].getVolume().floatValue()) {
+            depthScalar = mainView.getHeight() / orderBook.getAsks()[orderBook.getAsks().length - 1].getVolume().floatValue();
         } else {
-            depthScalar = mainView.getHeight() / orderBook.getBidVolumeList().get(orderBook.getBidVolumeList().size() - 1).floatValue();
+            depthScalar = mainView.getHeight() / orderBook.getBids()[orderBook.getBids().length - 1].getVolume().floatValue();
         }
         //paint the paths.
-        this.askPath = getOrderBookPath(orderBook.getAskPriceList(), orderBook.getAskVolumeList(), true);
-        this.bidPath = getOrderBookPath(orderBook.getBidPriceList(), orderBook.getBidVolumeList(), true);
+        this.askPath = getOrderBookPath(orderBook.getAsks(), true);
+        this.bidPath = getOrderBookPath(orderBook.getBids(), true);
 
         BitcoiniumOrderbook orderBookLast = XTraderActivity.exchangeAccount.getLastOrderBook();
 
         if (orderBookLast != null) {
-            this.askPathLast = getOrderBookPath(orderBookLast.getAskPriceList(), orderBookLast.getAskVolumeList(), false);
-            this.bidPathLast = getOrderBookPath(orderBookLast.getBidPriceList(), orderBookLast.getBidVolumeList(), false);
+            this.askPathLast = getOrderBookPath(orderBookLast.getAsks(), false);
+            this.bidPathLast = getOrderBookPath(orderBookLast.getBids(), false);
         }
 
     }
 
-    private Path getOrderBookPath(List<BigDecimal> price, List<BigDecimal> volume, boolean isFilled) {
+    private Path getOrderBookPath(BitcoiniumOrderbook.CondensedOrder[] orders, boolean isFilled) {
 
         int x;
         int y;
 
         Path p = new Path();
         //start on the y=axis.
-        x = (int) ((price.get(0).floatValue() - priceLowBound) * priceScalar);
+        x = (int) ((orders[0].getPrice().floatValue() - priceLowBound) * priceScalar);
         y = mainView.getHeight();
         p.moveTo(x, y);
 
         //now plot the line
-        for (int j = 0; j < price.size(); j++) {
-            x = (int) ((price.get(j).floatValue() - priceLowBound) * priceScalar);
-            y = (int) (mainView.getHeight() - volume.get(j).floatValue() * depthScalar);
+        for (int j = 0; j < orders.length; j++) {
+            x = (int) ((orders[j].getPrice().floatValue() - priceLowBound) * priceScalar);
+            y = (int) (mainView.getHeight() - orders[j].getVolume().floatValue() * depthScalar);
             p.lineTo(x, y);
         }
 
@@ -107,14 +107,13 @@ public class Painter {
         }
         p.lineTo(x, y);
 
-
         //now drop down
         //x is the same
         y = mainView.getHeight();//drop to bottom
         p.lineTo(x, mainView.getHeight());
 
         //and return to start
-        x = (int) ((price.get(0).floatValue() - priceLowBound) * priceScalar);
+        x = (int) ((orders[0].getPrice().floatValue() - priceLowBound) * priceScalar);
         y = mainView.getHeight();
         p.moveTo(x, y);
 
