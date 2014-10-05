@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <PreferenceCategory
         android:summary="Chart Scale"
         android:title="Display Settings">
@@ -125,6 +124,13 @@
                 android:summary="Enter your VoS Secret Key"
                 android:title="Secret Key"/>
         </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Bitcoinium License">
+        <Preference
+            android:title="Apache License 2.0"
+            android:key="pref_license" />
     </PreferenceCategory>
 
 </PreferenceScreen>
