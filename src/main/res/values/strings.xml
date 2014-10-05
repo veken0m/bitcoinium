@@ -138,7 +138,7 @@
     <string name="label_priceGraph">Price Graph</string>
     <string name="label_updateWidgets">Update Widget(s)</string>
     <string name="label_webCharts">Web Charts</string>
-    <string name="label_xtrader">XTrader PREVIEW</string>
+    <string name="label_xtrader">XTrader</string>
 
     <!-- Dialog Messages -->
     <string name="error_BitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>

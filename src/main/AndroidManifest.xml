@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.bitcoinium"
-    android:versionCode="63"
+    android:versionCode="64"
     android:versionName="@string/version_name">
 
     <uses-sdk
@@ -156,7 +156,7 @@
         <activity
             android:name="com.xeiam.xbtctrader.XTraderActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:label="XTrader PREVIEW"
+            android:label="XTrader"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
