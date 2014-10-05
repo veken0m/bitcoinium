@@ -90,7 +90,7 @@ public class ExchangeAccount {
     public void cancelLimitOrder(String id) {
         CancelOrderTask cancelOrderTask = new CancelOrderTask(id, this);
         cancelOrderTask.go();
-        generateToast("Cancelation order sent to exchange.", Toast.LENGTH_SHORT);
+        generateToast("Cancellation order sent to exchange.", Toast.LENGTH_SHORT);
     }
 
     public void placeLimitOrder(float price, float amount, OrderType orderType, Activity activity) {
@@ -115,7 +115,7 @@ public class ExchangeAccount {
             // TODO: input BitcoiniumWS API key before release!
             bitcoiniumExchangeSpec.setApiKey("INSERT_KEY_HERE");
             // SSL issues on Android 2.2, works on Android 2.3.3
-            bitcoiniumExchangeSpec.setPlainTextUri("http://173.10.241.154:9090");
+            //bitcoiniumExchangeSpec.setPlainTextUri("http://173.10.241.154:9090");
 
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
             bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getPollingMarketDataService();
@@ -268,7 +268,7 @@ public class ExchangeAccount {
             synchronized(tradesLock) {
                 //get the data. It comes pre-sorted.
                 this.trades = new LinkedList<BitcoiniumTicker>();
-                this.timewindow = XTraderActivity.preferences.getString("time_window", "TWENTY_PERCENT");
+                this.timewindow = XTraderActivity.preferences.getString("time_window", "TWENTY_FOUR_HOURS");
                 // Use the factory to get Bitcoinium exchange API using default settings
                 BitcoiniumTickerHistory tickerHistory = bitcoiniumMarketDataService.getBitcoiniumTickerHistory(XTraderActivity.tradableIdentifier, XTraderActivity.exchangeInfo.getShortName().toUpperCase() + "_" + XTraderActivity.transactionCurrency, this.timewindow);
 
@@ -296,7 +296,7 @@ public class ExchangeAccount {
                 accountInfo = info;
             }
 
-            System.out.println("AcountInfo Received: " + info);
+            System.out.println("AccountInfo Received: " + info);
             mainActivity.onAccountInfoUpdate();
             connectionGood = true;
             return true;

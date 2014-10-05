@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.veken0m.compatibility.WebViewSherlockFragment;
 // import com.veken0m.utils.KarmaAdsUtils;
@@ -81,11 +82,19 @@ public class WebViewerActivity extends BaseActivity {
 
             mWebView = new WebView(getActivity());
             mWebView.setInitialScale(100);
+            mWebView.clearCache(true);
             mWebView.setLayoutParams(MATCH_PARENT);
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.getSettings().setSupportZoom(true);
+            mWebView.setWebViewClient(new WebViewClient(){
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url){
+                        view.loadUrl(url);
+                        return true;
+                    }
+                });
             mWebView.getSettings().setBuiltInZoomControls(true);
-            mWebView.loadUrl("https://bitcoinium.com/");
+            mWebView.loadUrl("https://bitcoinium.com");
             mIsWebViewAvailable = true;
 
             return mWebView;

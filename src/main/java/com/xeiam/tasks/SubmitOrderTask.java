@@ -34,9 +34,15 @@ public class SubmitOrderTask implements Runnable {
         System.out.println("SubmitOrderTask.doInBackGround()");
         PollingTradeService tradeService = exchangeAccount.getTradeService();
         System.out.println("placing order...");
-        String orderID = null;
         try {
-            orderID = tradeService.placeLimitOrder(limitOrder);
+            final String orderID = tradeService.placeLimitOrder(limitOrder);
+            System.out.println("order placed. OrderID=" + orderID);
+            activity.runOnUiThread(
+                    new Runnable() {
+                        public void run() {
+                            Toast.makeText(activity.getApplicationContext(), "Order placed successfully. OrderID=" + orderID, Toast.LENGTH_LONG).show();
+                        }
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ExchangeException e){
@@ -49,7 +55,7 @@ public class SubmitOrderTask implements Runnable {
                        }
                     });
         }
-        System.out.println("order placed. OrderID=" + orderID);
+
         exchangeAccount.queryOpenOrders();
     }
 

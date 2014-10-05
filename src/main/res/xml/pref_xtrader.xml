@@ -31,7 +31,6 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory
         android:summary="Username and password information"
         android:title="Login information">
@@ -60,17 +59,6 @@
                 android:key="bitstampSecretKey"
                 android:summary="Enter your Bitstamp Secret Key"
                 android:title="Secret Key"/>
-            <!--PreferenceCategory
-                android:summary="Trading Settings"
-                android:title="Settings">
-                <ListPreference
-                    android:defaultValue="BTC/USD"
-                    android:entries="@array/bitstampcurrencies"
-                    android:entryValues="@array/bitstampcurrencies"
-                    android:key="bitstampTradeCurrency"
-                    android:summary="Set your main trading currency"
-                    android:title="Trade Currency" />
-            </PreferenceCategory-->
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -84,17 +72,6 @@
                 android:key="btceSecretKey"
                 android:summary="Enter your BTC-E Secret Key"
                 android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/USD"-->
-            <!--android:entries="@array/btcecurrencies"-->
-            <!--android:entryValues="@array/btcecurrencies"-->
-            <!--android:key="btceTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -108,17 +85,6 @@
                 android:key="btcchinaSecretKey"
                 android:summary="Enter your BTC China Secret Key"
                 android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/CNY"-->
-            <!--android:entries="@array/btcchinacurrencies"-->
-            <!--android:entryValues="@array/btcchinacurrencies"-->
-            <!--android:key="btcchinaTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -132,17 +98,6 @@
                 android:key="krakenSecretKey"
                 android:summary="Enter your Kraken Secret Key"
                 android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/EUR"-->
-            <!--android:entries="@array/krakencurrencies"-->
-            <!--android:entryValues="@array/krakencurrencies"-->
-            <!--android:key="krakenTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
