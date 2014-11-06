@@ -7,6 +7,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.ActionBarActivity;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.R;

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TableLayout;
@@ -61,10 +62,12 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoinaverage_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(R.color.holo_blue_light,
-                R.color.holo_green_light,
-                R.color.holo_orange_light,
-                R.color.holo_red_light);
+        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
+
+        // Temp fix to show refresh indicator. This is a bug in android.support.v4 v21.0.1
+        // https://code.google.com/p/android/issues/detail?id=77712
+        swipeLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);

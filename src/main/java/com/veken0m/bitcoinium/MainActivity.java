@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
 
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setLogo(R.drawable.bitcoiniumlogo);
 
         Bundle extras = getIntent().getExtras();
         String exchange = (extras != null) ? extras.getString("exchangeKey") : "";

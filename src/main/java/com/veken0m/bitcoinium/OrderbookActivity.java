@@ -106,10 +106,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.orderbook_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(R.color.holo_blue_light,
-                R.color.holo_green_light,
-                R.color.holo_orange_light,
-                R.color.holo_red_light);
+        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -129,7 +126,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         readPreferences();
         populateExchangeDropdown();
         populateCurrencyDropdown();
-
         // KarmaAdsUtils.initAd(this);
     }
 
@@ -181,8 +177,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
     boolean getOrderBook() {
-        if(swipeLayout != null)
-            swipeLayout.setRefreshing(true);
 
         if (listAsks != null && listBids != null) {
             listAsks.clear();
@@ -325,6 +319,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 }
 
     private void viewOrderbook() {
+
+        swipeLayout.setRefreshing(true);
         if (Utils.isConnected(getApplicationContext())) {
             if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
@@ -448,9 +444,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             populateExchangeDropdown();
             populateCurrencyDropdown();
             drawOrderbookUI();
-        } else {
-            // Fetch data
-            viewOrderbook();
         }
     }
 
@@ -471,7 +464,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             else
                 mOrderHandler.post(mError);
             threadRunning = false;
-            swipeLayout.setRefreshing(false);
         }
     }
 

@@ -5,10 +5,6 @@
     android:versionCode="64"
     android:versionName="@string/version_name">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="20" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SET_ALARM" />
@@ -175,6 +171,7 @@
 
         <receiver
             android:name=".WidgetProvider"
+            android:enabled="true"
             android:label="@string/widget_price">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -192,6 +189,7 @@
 
         <receiver
             android:name=".MinerWidgetProvider"
+            android:enabled="true"
             android:label="@string/widget_mining">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -209,7 +207,7 @@
 
         <receiver
             android:name=".BalanceWidgetProvider"
-            android:exported="false"
+            android:enabled="true"
             android:label="@string/balance_widget_name">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.BalanceWidgetProvider.ACTION_WIDGET_RECEIVER" />
