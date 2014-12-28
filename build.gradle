@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.+'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
@@ -21,7 +21,7 @@ android {
     }
 
     compileSdkVersion 21
-    buildToolsVersion '21.1'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 8
@@ -35,20 +35,20 @@ android {
     buildTypes {
         release {
             debuggable false
-            runProguard true
+            minifyEnabled true
             proguardFiles 'proguard.cfg'
         }
 
         debug {
             debuggable true
-            runProguard true
+            minifyEnabled true
             proguardFiles 'proguard.cfg'
         }
     }
 }
 
 ext {
-    xchangeVersion = "2.1.0"
+    xchangeVersion = "2.2.0-SNAPSHOT"
     jacksonVersion = "2.3.2"
 }
 
@@ -73,7 +73,7 @@ dependencies {
     compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
 
     // XChange dependencies
-    compile('com.github.mmazi:rescu:1.7.2-SNAPSHOT')
+    compile('com.github.mmazi:rescu:1.7.3-SNAPSHOT')
     compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
     compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
@@ -107,13 +107,22 @@ dependencies {
     compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-hitbtc:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-mintpal:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-poloniex:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
+
+    compile("com.xeiam.xchange:xchange-bitcointoyou:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitkonan:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bitvc:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-bleutrade:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-coinsetter:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-mercadobitcoin:$xchangeVersion")
+    compile("com.xeiam.xchange:xchange-okcoin:$xchangeVersion")
+
 
     // Available modules but not used
     //compile("com.xeiam.xchange:xchange-openexchangerates:$xchangeVersion")
