@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
+
 // import com.veken0m.utils.KarmaAdsUtils;
 
 public class GraphActivity extends BaseActivity implements OnItemSelectedListener {
@@ -156,7 +158,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         }
 
         try {
-            List<Trade> tradesList = new ArrayList<Trade>();
+            List<Trade> tradesList = new ArrayList<>();
             if (trades != null) tradesList = trades.getTrades();
 
             float[] values = new float[tradesList.size()];
@@ -284,15 +286,15 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     void createExchangeDropdown() {
 
         // Re-populate the dropdown menu
-        String[] exchanges = getResources().getStringArray(R.array.exchangesTrades);
+        List<String> exchanges  = getDropdownItems(this, ExchangeProperties.ItemType.TRADES_ENABLED).first;
         Spinner spinner = (Spinner) findViewById(R.id.graph_exchange_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, exchanges);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
+        int index = exchanges.indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
     }
 
@@ -300,7 +302,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         // Re-populate the dropdown menu
         String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencies);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);

@@ -6,8 +6,6 @@
         android:title="@string/pref_price_widget_title">
         <ListPreference
             android:defaultValue="bitstamp"
-            android:entries="@array/exchanges"
-            android:entryValues="@array/exchangeID"
             android:key="widgetExchangePref"
             android:summary="@string/pref_exchange_summary"
             android:title="@string/pref_pickexchange"/>

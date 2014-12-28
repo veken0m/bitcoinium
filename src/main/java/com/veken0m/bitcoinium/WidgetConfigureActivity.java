@@ -10,10 +10,15 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.util.Pair;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
+
+import java.util.List;
+
+import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
 
 public class WidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener{
 
@@ -95,15 +100,18 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
         ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangePref");
         ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
+        Pair<List<String>,List<String>> exchanges  = getDropdownItems(getApplicationContext(), ExchangeProperties.ItemType.TICKER_ENABLED);
+        widgetExchangePref.setEntries(exchanges.first.toArray(new CharSequence[exchanges.first.size()]));
+        widgetExchangePref.setEntryValues(exchanges.second.toArray(new CharSequence[exchanges.second.size()]));
+
         // get the Resource ID for the currency array
-        String sExchange = (widgetExchangePref != null) ? widgetExchangePref.getValue() : Constants.DEFAULT_EXCHANGE;
-        int nCurrencyArrayId = getResources().getIdentifier(sExchange + "currencies", "array", this.getPackageName());
+        ExchangeProperties ex = new ExchangeProperties(this, widgetExchangePref.getValue());
+        int nCurrencyArrayId = getResources().getIdentifier(ex.getIdentifier() + "currencies", "array", this.getPackageName());
 
         // populate the list with the Exchange's Currency Pairs
         setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-        if(widgetExchangePref != null)
-            widgetExchangePref.setOnPreferenceChangeListener(this);
+        widgetExchangePref.setOnPreferenceChangeListener(this);
 
 
         Preference OKpref = findPreference("OKpref");

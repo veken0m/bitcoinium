@@ -42,6 +42,8 @@ import com.xeiam.xchange.service.polling.PollingMarketDataService;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
+
 // import com.veken0m.utils.KarmaAdsUtils;
 
 public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
@@ -387,15 +389,15 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     void populateExchangeDropdown() {
 
         // Re-populate the dropdown menu
-        String[] exchanges = getResources().getStringArray(R.array.exchangesOrderbook);
+        List<String> exchanges  = getDropdownItems(getApplicationContext(), ExchangeProperties.ItemType.ORDERBOOK_ENABLED).first;
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, exchanges);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
+        int index = exchanges.indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
     }
 
@@ -404,7 +406,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         // Re-populate the dropdown menu
         String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencies);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);

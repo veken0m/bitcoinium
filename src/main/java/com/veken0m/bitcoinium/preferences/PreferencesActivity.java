@@ -12,6 +12,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
+import android.support.v4.util.Pair;
 import android.view.MenuItem;
 
 import com.veken0m.bitcoinium.BalanceWidgetProvider;
@@ -24,6 +25,10 @@ import com.veken0m.utils.Constants;
 import com.veken0m.utils.Utils;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
+
+import java.util.List;
+
+import static com.veken0m.utils.ExchangeUtils.getAllDropdownItems;
 
 public class PreferencesActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
@@ -38,8 +43,12 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         generateMinerDownAlertPreferences();
         addPreferencesFromResource(R.xml.pref_about);
 
-        String[] sExchanges = getResources().getStringArray(getResources().getIdentifier("exchanges", "array", getPackageName()));
-        populateDefaultCurrenciesScreen(sExchanges);
+        ListPreference defaultPref = (ListPreference) findPreference("defaultExchangePref");
+        Pair<List<String>,List<String>> exchanges  = getAllDropdownItems(this);
+        defaultPref.setEntries(exchanges.first.toArray(new CharSequence[exchanges.first.size()]));
+        defaultPref.setEntryValues(exchanges.second.toArray(new CharSequence[exchanges.second.size()]));
+
+        populateDefaultCurrenciesScreen(exchanges.second);
         populateNotificationSettingsScreen();
 
         // Widget Customization
@@ -93,7 +102,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         }
     }
 
-    public void populateDefaultCurrenciesScreen(String[] sExchanges){
+    public void populateDefaultCurrenciesScreen(List<String> sExchanges){
 
         PreferenceScreen defaultCurrencyPref = (PreferenceScreen) findPreference("defaultCurrencyPref");
 
@@ -101,16 +110,18 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
             ExchangeProperties exchange = new ExchangeProperties(this, sExchange);
             String[] sCurrencies = exchange.getCurrencies();
 
-            // Default Currency List
-            ListPreference currencies = new ListPreference(this);
-            currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
-            currencies.setEntries(sCurrencies);
-            currencies.setEntryValues(sCurrencies);
-            currencies.setTitle(sExchange + " " + getString(R.string.currency));
-            currencies.setSummary(getString(R.string.pref_currency_displayed, sExchange));
-            currencies.setDefaultValue(exchange.getDefaultCurrency());
+            if(sCurrencies != null) {
+                // Default Currency List
+                ListPreference currencies = new ListPreference(this);
+                currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
+                currencies.setEntries(sCurrencies);
+                currencies.setEntryValues(sCurrencies);
+                currencies.setTitle(exchange.getExchangeName() + " " + getString(R.string.currency));
+                currencies.setSummary(getString(R.string.pref_currency_displayed, sExchange));
+                currencies.setDefaultValue(exchange.getDefaultCurrency());
 
-            defaultCurrencyPref.addPreference(currencies);
+                defaultCurrencyPref.addPreference(currencies);
+            }
         }
     }
 
