@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.mining.bitminter.BitMinterData;
 import com.veken0m.mining.btcguild.BTCGuild;
-import com.veken0m.mining.deepbit.DeepBitData;
 import com.veken0m.mining.eligius.Eligius;
 import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.emc.EMC;
@@ -131,23 +130,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             try {
                 // TODO: fix this ugly mess
-                if (sMiningPool.equalsIgnoreCase("DeepBit")) {
-                    String pref_apiKey = prefs.getString("deepbitKey", "");
-
-                    HttpGet post = new HttpGet("http://deepbit.net/api/"
-                            + pref_apiKey);
-
-                    HttpResponse response = client.execute(post);
-                    DeepBitData data = mapper.readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                            DeepBitData.class
-                    );
-                    btcBalance = data.getConfirmed_reward();
-                    hashRate = data.getHashrate();
-
-                    return true;
-
-                } else if (sMiningPool.equalsIgnoreCase("BitMinter")) {
+                if (sMiningPool.equalsIgnoreCase("BitMinter")) {
                     String pref_apiKey = prefs.getString("bitminterKey", "");
 
                     HttpGet post = new HttpGet(
@@ -260,6 +243,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
                     String pref_apiKey = prefs.getString("eligiusKey", "");
 
+                    // NOTE: eligius.st does not use HTTPS
                     HttpGet post = new HttpGet(
                             "http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
                                     + pref_apiKey

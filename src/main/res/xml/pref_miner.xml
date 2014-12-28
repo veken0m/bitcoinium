@@ -7,11 +7,6 @@
             <PreferenceCategory android:title="@string/minerApiTokens">
                 <EditTextPreference
                     android:defaultValue=""
-                    android:key="deepbitKey"
-                    android:summary="Enter your Deepbit API token to use MinerStats"
-                    android:title="Deepbit API token"/>
-                <EditTextPreference
-                    android:defaultValue=""
                     android:key="bitminterKey"
                     android:summary="Enter your BitMinter API token to use MinerStats \n *NOTE* - Remember to enable API perk!"
                     android:title="BitMinter API token"/>
