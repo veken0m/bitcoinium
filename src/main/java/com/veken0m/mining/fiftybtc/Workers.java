@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Workers {
-    private final List<Worker> workers = new ArrayList<Worker>();
+    private final List<Worker> workers = new ArrayList<>();
 
     @JsonAnySetter
     public void setWorker(String name, Worker worker) {

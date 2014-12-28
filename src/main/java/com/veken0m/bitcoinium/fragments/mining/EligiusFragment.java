@@ -93,6 +93,7 @@ public class EligiusFragment extends Fragment {
             // Test key
             //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
 
+            // NOTE: eligius.st does not use HTTPS
             HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
                     + pref_eligiusKey);
 
@@ -199,7 +200,7 @@ public class EligiusFragment extends Fragment {
                 t1.addView(tr3);
 
                 // WORKER INFO
-                ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
+                ArrayList<TimeInterval> intervals = new ArrayList<>();
 
                 intervals.add(data.get128());
                 intervals.add(data.get256());

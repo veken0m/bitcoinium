@@ -2,14 +2,12 @@ package com.veken0m.bitcoinium;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
-import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 

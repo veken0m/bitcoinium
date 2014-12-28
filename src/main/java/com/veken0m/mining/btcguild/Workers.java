@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Workers {
-    private final List<Worker> workers = new ArrayList<Worker>();
-    private final List<String> names = new ArrayList<String>();
+    private final List<Worker> workers = new ArrayList<>();
+    private final List<String> names = new ArrayList<>();
 
     public Worker getWorker(int i) {
         return workers.get(i);

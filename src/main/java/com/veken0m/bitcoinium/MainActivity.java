@@ -133,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
         private final Context mContext;
         private final ActionBar mBar;
         private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+        private final ArrayList<TabInfo> mTabs = new ArrayList<>();
 
         public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager) {
 

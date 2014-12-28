@@ -128,7 +128,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
 
         Spinner spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
         if (spinner != null) {
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, dropdownValues);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);

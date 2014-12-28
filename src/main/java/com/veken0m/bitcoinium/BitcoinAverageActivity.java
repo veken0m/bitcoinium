@@ -49,7 +49,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
             errorOccured();
         }
     };
-    private Map<String, BitcoinAverageTicker> tickers = new HashMap<String, BitcoinAverageTicker>();
+    private Map<String, BitcoinAverageTicker> tickers = new HashMap<>();
 
     public BitcoinAverageActivity() {
 
@@ -138,7 +138,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
             // Clear table
             bitcoinAverageTable.removeAllViews();
 
-            List<Map.Entry<String, BitcoinAverageTicker>> entries = new LinkedList<Map.Entry<String, BitcoinAverageTicker>>(tickers.entrySet());
+            List<Map.Entry<String, BitcoinAverageTicker>> entries = new LinkedList<>(tickers.entrySet());
 
             // Sort Tickers by volume
             Collections.sort(entries, new Comparator<Map.Entry<String, BitcoinAverageTicker>>() {

@@ -153,7 +153,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity {
     public EditTextPreference createAlarmLimitPref(String prefPrefix, String exchangeName, String widgetCurrency, Boolean upper){
 
         EditTextPreference editText = new EditTextPreference(this);
-        editText.setDefaultValue((upper) ? "999999" : "0");
+        editText.setDefaultValue((upper) ? Constants.ALERT_UPPER_DEFAULT : Constants.ALERT_LOWER_DEFAULT);
         editText.getEditText().setInputType(NUMBER_WITH_DECIMAL);
         editText.setKey(prefPrefix + ((upper) ? "Upper" :"Lower"));
         editText.setTitle(getString((upper) ? R.string.pref_alert_upper_limit :  R.string.pref_alert_lower_limit, exchangeName, widgetCurrency));

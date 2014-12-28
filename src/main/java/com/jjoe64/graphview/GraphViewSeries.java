@@ -10,7 +10,7 @@ import java.util.List;
 public class GraphViewSeries {
     final String description;
     final GraphViewSeriesStyle style;
-    private final List<GraphView> graphViews = new ArrayList<GraphView>();
+    private final List<GraphView> graphViews = new ArrayList<>();
     GraphViewData[] values;
 
     public GraphViewSeries(GraphViewData[] values) {
