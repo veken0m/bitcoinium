@@ -136,5 +136,4 @@ public class MainView extends ImageView
     {
         return painter;
     }
-
 }

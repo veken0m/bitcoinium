@@ -192,7 +192,6 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         }
 
         System.out.println("on create was called.");
-
     }
 
 

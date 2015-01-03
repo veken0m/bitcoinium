@@ -30,13 +30,16 @@ public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean>
             if (query.equals("ticker"))
             {
                 XTraderActivity.exchangeAccount.queryLastTicker();
-            } else if (query.equals("orderbook"))
+            }
+            else if (query.equals("orderbook"))
             {
                 XTraderActivity.exchangeAccount.queryOrderBook();
-            } else if (query.equals("account"))
+            }
+            else if (query.equals("account"))
             {
                 XTraderActivity.exchangeAccount.queryRemoteAccountInfo();
-            } else if (query.equals("orders"))
+            }
+            else if (query.equals("orders"))
             {
                 XTraderActivity.exchangeAccount.queryOpenOrders();
             }
@@ -64,12 +67,11 @@ public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean>
         try
         {
             Thread.sleep(PERIOD);
-        } catch (InterruptedException e)
+        }
+        catch (InterruptedException e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
-
 }

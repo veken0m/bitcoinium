@@ -91,7 +91,6 @@ public class AlphaPatternDrawable extends Drawable
         numRectanglesVertical = (int) Math.ceil(height / mRectangleSize);
 
         generatePatternBitmap();
-
     }
 
     /**
@@ -132,9 +131,6 @@ public class AlphaPatternDrawable extends Drawable
             }
 
             verticalStartWhite = !verticalStartWhite;
-
         }
-
     }
-
 }

@@ -115,6 +115,4 @@ public class Pallet
         lastTickPaint.setARGB(255, 255, 0, 0);
         lastTickPaint.setStyle(Style.FILL);
     }
-
-
 }

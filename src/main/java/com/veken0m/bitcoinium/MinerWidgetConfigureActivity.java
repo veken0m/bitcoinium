@@ -87,5 +87,4 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity implements 
         finish();
         return true;
     }
-
 }

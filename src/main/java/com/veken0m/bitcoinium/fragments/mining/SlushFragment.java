@@ -50,7 +50,8 @@ public class SlushFragment extends Fragment
             try
             {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
@@ -312,7 +313,6 @@ public class SlushFragment extends Fragment
                     t1.addView(tr12);
                     t1.addView(tr13);
                 }
-
             }
             catch (Exception e)
             {

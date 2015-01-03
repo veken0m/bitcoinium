@@ -121,7 +121,6 @@ public class ColorPickerPanelView extends View
         mDrawingRect.bottom = h - getPaddingBottom();
 
         setUpColorRect();
-
     }
 
     private void setUpColorRect()
@@ -143,7 +142,6 @@ public class ColorPickerPanelView extends View
                 Math.round(mColorRect.right),
                 Math.round(mColorRect.bottom)
         );
-
     }
 
     /**
@@ -185,5 +183,4 @@ public class ColorPickerPanelView extends View
         mBorderColor = color;
         invalidate();
     }
-
 }

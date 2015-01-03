@@ -57,7 +57,8 @@ public class SubmitOrderDialog extends DialogFragment
         if (orderType == orderType.BID)
         {
             ((TextView) orderView.findViewById(R.id.order_type)).setText("BUY");
-        } else
+        }
+        else
         {
             orderView.setBackgroundColor(Color.CYAN);
             ((TextView) orderView.findViewById(R.id.order_type)).setText("SELL");
@@ -75,7 +76,8 @@ public class SubmitOrderDialog extends DialogFragment
                     float amount = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_btc)).getText().toString());
                     float price = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_price)).getText().toString());
                     XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     // TODO: handle exception
                 }
@@ -89,7 +91,5 @@ public class SubmitOrderDialog extends DialogFragment
                     }
                 });
         return builder.create();
-
     }
-
 }

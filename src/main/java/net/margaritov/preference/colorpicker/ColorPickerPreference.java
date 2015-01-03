@@ -126,7 +126,8 @@ public class ColorPickerPreference
             red = Integer.parseInt(argb.substring(2, 4), 16);
             green = Integer.parseInt(argb.substring(4, 6), 16);
             blue = Integer.parseInt(argb.substring(6, 8), 16);
-        } else if (argb.length() == 6)
+        }
+        else if (argb.length() == 6)
         {
             alpha = 255;
             red = Integer.parseInt(argb.substring(0, 2), 16);
@@ -228,7 +229,8 @@ public class ColorPickerPreference
         try
         {
             getOnPreferenceChangeListener().onPreferenceChange(this, color);
-        } catch (NullPointerException e)
+        }
+        catch (NullPointerException e)
         {
 
         }

@@ -32,11 +32,20 @@ public class ExchangeProperties
         supportsTrades = exchangeProperties[ItemType.TRADES_ENABLED].equals("1");
     }
 
-    public String getExchangeName() { return exchange_name; }
+    public String getExchangeName()
+    {
+        return exchange_name;
+    }
 
-    public String getClassName() { return class_name; }
+    public String getClassName()
+    {
+        return class_name;
+    }
 
-    public String getDefaultCurrency() { return main_currency; }
+    public String getDefaultCurrency()
+    {
+        return main_currency;
+    }
 
     public String getIdentifier()
     {
@@ -48,11 +57,20 @@ public class ExchangeProperties
         return shortName;
     }
 
-    public Boolean supportsTicker() { return supportsTicker; }
+    public Boolean supportsTicker()
+    {
+        return supportsTicker;
+    }
 
-    public Boolean supportsTrades() { return supportsTrades; }
+    public Boolean supportsTrades()
+    {
+        return supportsTrades;
+    }
 
-    public Boolean supportsOrderbook() { return supportsOrderbook; }
+    public Boolean supportsOrderbook()
+    {
+        return supportsOrderbook;
+    }
 
     public String[] getCurrencies()
     {

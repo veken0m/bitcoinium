@@ -22,5 +22,4 @@ public class NoNetworkAlert extends DialogFragment
         });
         return builder.create();
     }
-
 }

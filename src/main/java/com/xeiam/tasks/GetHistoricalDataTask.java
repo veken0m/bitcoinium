@@ -27,5 +27,4 @@ public class GetHistoricalDataTask implements Runnable
         exchangeAccount.queryTradeHistory();
         exchangeAccount.queryOrderBook();
     }
-
 }

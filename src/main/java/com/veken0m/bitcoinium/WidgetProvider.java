@@ -183,7 +183,6 @@ public class WidgetProvider extends BaseWidgetProvider
                 // Update last price map
                 String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
                 prevPrice.put(pairId.hashCode(), lastFloat);
-
             }
             catch (Exception e)
             {

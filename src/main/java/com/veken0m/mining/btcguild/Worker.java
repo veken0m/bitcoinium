@@ -161,5 +161,4 @@ public class Worker
     {
         return last_share;
     }
-
 }

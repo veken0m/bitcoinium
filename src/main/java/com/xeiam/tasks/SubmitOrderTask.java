@@ -50,10 +50,12 @@ public class SubmitOrderTask implements Runnable
                             Toast.makeText(activity.getApplicationContext(), "Order placed successfully. OrderID=" + orderID, Toast.LENGTH_LONG).show();
                         }
                     });
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
-        } catch (ExchangeException e)
+        }
+        catch (ExchangeException e)
         {
             e.printStackTrace();
             final String message = e.getMessage();
@@ -69,5 +71,4 @@ public class SubmitOrderTask implements Runnable
 
         exchangeAccount.queryOpenOrders();
     }
-
 }

@@ -54,7 +54,6 @@ public class ColorPickerDialog
         getWindow().setFormat(PixelFormat.RGBA_8888);
 
         setUp(color);
-
     }
 
     private void setUp(int color)
@@ -84,7 +83,6 @@ public class ColorPickerDialog
         mColorPicker.setOnColorChangedListener(this);
         mOldColor.setColor(color);
         mColorPicker.setColor(color, true);
-
     }
 
     @Override

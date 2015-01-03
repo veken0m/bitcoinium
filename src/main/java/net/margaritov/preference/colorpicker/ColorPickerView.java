@@ -182,8 +182,6 @@ public class ColorPickerView extends View
         mAlphaTextPaint.setAntiAlias(true);
         mAlphaTextPaint.setTextAlign(Align.CENTER);
         mAlphaTextPaint.setFakeBoldText(true);
-
-
     }
 
     private float calculateRequiredOffset()
@@ -217,7 +215,6 @@ public class ColorPickerView extends View
         drawSatValPanel(canvas);
         drawHuePanel(canvas);
         drawAlphaPanel(canvas);
-
     }
 
     private void drawSatValPanel(Canvas canvas)
@@ -253,7 +250,6 @@ public class ColorPickerView extends View
 
         mSatValTrackerPaint.setColor(0xffdddddd);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS, mSatValTrackerPaint);
-
     }
 
     private void drawHuePanel(Canvas canvas)
@@ -291,7 +287,6 @@ public class ColorPickerView extends View
 
 
         canvas.drawRoundRect(r, 2, 2, mHueTrackerPaint);
-
     }
 
     private void drawAlphaPanel(Canvas canvas)
@@ -342,7 +337,6 @@ public class ColorPickerView extends View
         r.bottom = rect.bottom + RECTANGLE_TRACKER_OFFSET;
 
         canvas.drawRoundRect(r, 2, 2, mHueTrackerPaint);
-
     }
 
     private Point hueToPoint(float hue)
@@ -386,7 +380,6 @@ public class ColorPickerView extends View
         p.y = (int) rect.top;
 
         return p;
-
     }
 
     private float[] pointToSatVal(float x, float y)
@@ -401,10 +394,12 @@ public class ColorPickerView extends View
         if (x < rect.left)
         {
             x = 0f;
-        } else if (x > rect.right)
+        }
+        else if (x > rect.right)
         {
             x = width;
-        } else
+        }
+        else
         {
             x = x - rect.left;
         }
@@ -412,10 +407,12 @@ public class ColorPickerView extends View
         if (y < rect.top)
         {
             y = 0f;
-        } else if (y > rect.bottom)
+        }
+        else if (y > rect.bottom)
         {
             y = height;
-        } else
+        }
+        else
         {
             y = y - rect.top;
         }
@@ -437,10 +434,12 @@ public class ColorPickerView extends View
         if (y < rect.top)
         {
             y = 0f;
-        } else if (y > rect.bottom)
+        }
+        else if (y > rect.bottom)
         {
             y = height;
-        } else
+        }
+        else
         {
             y = y - rect.top;
         }
@@ -457,16 +456,17 @@ public class ColorPickerView extends View
         if (x < rect.left)
         {
             x = 0;
-        } else if (x > rect.right)
+        }
+        else if (x > rect.right)
         {
             x = width;
-        } else
+        }
+        else
         {
             x = x - (int) rect.left;
         }
 
         return 0xff - (x * 0xff / width);
-
     }
 
     @Override
@@ -495,7 +495,8 @@ public class ColorPickerView extends View
                     if (sat < 0f)
                     {
                         sat = 0f;
-                    } else if (sat > 1f)
+                    }
+                    else if (sat > 1f)
                     {
                         sat = 1f;
                     }
@@ -503,7 +504,8 @@ public class ColorPickerView extends View
                     if (val < 0f)
                     {
                         val = 0f;
-                    } else if (val > 1f)
+                    }
+                    else if (val > 1f)
                     {
                         val = 1f;
                     }
@@ -522,7 +524,8 @@ public class ColorPickerView extends View
                     if (hue < 0f)
                     {
                         hue = 0f;
-                    } else if (hue > 360f)
+                    }
+                    else if (hue > 360f)
                     {
                         hue = 360f;
                     }
@@ -538,7 +541,8 @@ public class ColorPickerView extends View
                     if (!mShowAlphaPanel || mAlphaRect == null)
                     {
                         update = false;
-                    } else
+                    }
+                    else
                     {
 
                         int alpha = (int) (mAlpha - x * 10);
@@ -546,7 +550,8 @@ public class ColorPickerView extends View
                         if (alpha < 0)
                         {
                             alpha = 0;
-                        } else if (alpha > 0xff)
+                        }
+                        else if (alpha > 0xff)
                         {
                             alpha = 0xff;
                         }
@@ -559,8 +564,6 @@ public class ColorPickerView extends View
 
                     break;
             }
-
-
         }
 
 
@@ -610,7 +613,6 @@ public class ColorPickerView extends View
                 update = moveTrackersIfNeeded(event);
 
                 break;
-
         }
 
         if (update)
@@ -647,7 +649,8 @@ public class ColorPickerView extends View
             mHue = pointToHue(event.getY());
 
             update = true;
-        } else if (mSatValRect.contains(startX, startY))
+        }
+        else if (mSatValRect.contains(startX, startY))
         {
 
             mLastTouchedPanel = PANEL_SAT_VAL;
@@ -658,7 +661,8 @@ public class ColorPickerView extends View
             mVal = result[1];
 
             update = true;
-        } else if (mAlphaRect != null && mAlphaRect.contains(startX, startY))
+        }
+        else if (mAlphaRect != null && mAlphaRect.contains(startX, startY))
         {
 
             mLastTouchedPanel = PANEL_ALPHA;
@@ -698,11 +702,13 @@ public class ColorPickerView extends View
             {
                 height = heightAllowed;
                 width = (int) (height + PANEL_SPACING + HUE_PANEL_WIDTH);
-            } else
+            }
+            else
             {
                 width = widthAllowed;
             }
-        } else
+        }
+        else
         {
 
             width = (int) (heightAllowed - ALPHA_PANEL_HEIGHT + HUE_PANEL_WIDTH);
@@ -711,11 +717,11 @@ public class ColorPickerView extends View
             {
                 width = widthAllowed;
                 height = (int) (widthAllowed - HUE_PANEL_WIDTH + ALPHA_PANEL_HEIGHT);
-            } else
+            }
+            else
             {
                 height = heightAllowed;
             }
-
         }
 
         setMeasuredDimension(width, height);
@@ -726,7 +732,8 @@ public class ColorPickerView extends View
         if (mode == MeasureSpec.AT_MOST || mode == MeasureSpec.EXACTLY)
         {
             return size;
-        } else
+        }
+        else
         { // (mode == MeasureSpec.UNSPECIFIED)
             return getPrefferedWidth();
         }
@@ -737,7 +744,8 @@ public class ColorPickerView extends View
         if (mode == MeasureSpec.AT_MOST || mode == MeasureSpec.EXACTLY)
         {
             return size;
-        } else
+        }
+        else
         { // (mode == MeasureSpec.UNSPECIFIED)
             return getPrefferedHeight();
         }
@@ -755,7 +763,6 @@ public class ColorPickerView extends View
 
 
         return (int) (width + HUE_PANEL_WIDTH + PANEL_SPACING);
-
     }
 
     private int getPrefferedHeight()
@@ -839,7 +846,6 @@ public class ColorPickerView extends View
                 Math.round(mAlphaRect.right),
                 Math.round(mAlphaRect.bottom)
         );
-
     }
 
     /**
@@ -963,7 +969,6 @@ public class ColorPickerView extends View
 
             requestLayout();
         }
-
     }
 
     public int getSliderTrackerColor()

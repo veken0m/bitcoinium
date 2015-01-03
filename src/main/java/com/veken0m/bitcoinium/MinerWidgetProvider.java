@@ -111,7 +111,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                         views.setTextViewText(R.id.refreshtime, refreshedTime);
 
                         updateWidgetTheme(views);
-
                     }
                     else
                     {
@@ -153,7 +152,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                     btcBalance = data.getBalances().getBTC();
                     hashRate = data.getHash_rate();
                     return true;
-
                 }
                 else if (sMiningPool.equalsIgnoreCase("EclipseMC"))
                 {
@@ -216,7 +214,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                         hashRate += workers.getWorker(i).getHashrate();
                     }
                     return true;
-
                 }
                 else if (sMiningPool.equalsIgnoreCase("50BTC"))
                 {
@@ -232,7 +229,6 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                     hashRate = data.getUser().getHash_rate();
 
                     return true;
-
                 }
                 else if (sMiningPool.equalsIgnoreCase("BTCGuild"))
                 {
@@ -270,9 +266,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                     mapper.setSerializationInclusion(Include.NON_NULL);
 
                     Eligius data = mapper.readValue(new InputStreamReader(response
-                                            .getEntity().getContent(), "UTF-8"),
-                                    Eligius.class
-                            );
+                                    .getEntity().getContent(), "UTF-8"),
+                            Eligius.class
+                    );
 
                     hashRate = data.get256().getHashrate() / 1000000;
 

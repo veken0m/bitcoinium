@@ -5,9 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
 
 import com.veken0m.utils.Utils;
 

@@ -103,7 +103,8 @@ public class HomeMenuFragment extends Fragment
                 try
                 {
                     exchange = new ExchangeProperties(context, exchangeName);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     // Do nothing
                 }
@@ -179,7 +180,6 @@ public class HomeMenuFragment extends Fragment
                             intent.putExtra("exchange", items[n]);
                             startActivity(intent);
                         }
-
                     });
                     adb.setNegativeButton(getString(R.string.cancel), null);
                     adb.setTitle("Select a market symbol");

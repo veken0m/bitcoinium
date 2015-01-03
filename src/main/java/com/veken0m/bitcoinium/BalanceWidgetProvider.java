@@ -118,7 +118,6 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
 
                         e.printStackTrace();
                         views.setTextColor(R.id.label, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
-
                     }
                     finally
                     {

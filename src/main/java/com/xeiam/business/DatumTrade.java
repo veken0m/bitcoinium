@@ -28,7 +28,8 @@ public class DatumTrade implements Comparable<DatumTrade>
         if (another.getTime() > this.getTime())
         {
             return -1;
-        } else if (another.getTime() < this.getTime())
+        }
+        else if (another.getTime() < this.getTime())
         {
             return 1;
         }
@@ -40,5 +41,4 @@ public class DatumTrade implements Comparable<DatumTrade>
     {
         return price + "/" + time;
     }
-
 }

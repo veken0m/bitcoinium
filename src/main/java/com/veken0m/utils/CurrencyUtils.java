@@ -29,7 +29,6 @@ public class CurrencyUtils
                 }
             }
             return "";
-
         }
         catch (Exception e)
         {

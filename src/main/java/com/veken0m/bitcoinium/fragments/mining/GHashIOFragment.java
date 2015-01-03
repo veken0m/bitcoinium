@@ -55,7 +55,8 @@ public class GHashIOFragment extends Fragment
             try
             {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
@@ -63,7 +64,9 @@ public class GHashIOFragment extends Fragment
         }
     };
 
-    public GHashIOFragment() { }
+    public GHashIOFragment()
+    {
+    }
 
     private static void readPreferences(Context context)
     {
@@ -111,19 +114,18 @@ public class GHashIOFragment extends Fragment
             try
             {
                 workers = pollingService.getWorkers();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
                 // no workers... suppress
             }
-
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
         }
-
     }
 
     private void viewMinerStats(View view)

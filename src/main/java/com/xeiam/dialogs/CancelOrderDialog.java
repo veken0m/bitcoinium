@@ -83,7 +83,5 @@ public class CancelOrderDialog extends DialogFragment
                     }
                 });
         return builder.create();
-
     }
-
 }

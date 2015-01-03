@@ -46,7 +46,8 @@ public class ScaleGestureDetector
                             SimpleOnScaleGestureListener.class);
             realScaleGestureDetector = constructor.newInstance(context, this,
                     simpleOnScaleGestureListener);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             // not available
             Log.w("com.jjoe64.graphview",
@@ -63,7 +64,8 @@ public class ScaleGestureDetector
             {
                 return (Float) method_getScaleFactor
                         .invoke(realScaleGestureDetector);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
                 return 1.0;
@@ -80,7 +82,8 @@ public class ScaleGestureDetector
             {
                 return (Boolean) method_isInProgress
                         .invoke(realScaleGestureDetector);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
                 return false;
@@ -96,7 +99,8 @@ public class ScaleGestureDetector
             try
             {
                 method_onTouchEvent.invoke(realScaleGestureDetector, event);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

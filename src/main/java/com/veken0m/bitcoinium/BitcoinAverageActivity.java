@@ -55,7 +55,9 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     };
     private Map<String, BitcoinAverageTicker> tickers = new HashMap<>();
 
-    public BitcoinAverageActivity() { }
+    public BitcoinAverageActivity()
+    {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)

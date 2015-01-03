@@ -49,7 +49,6 @@ public class OrderCollider
 
         return null;
     }
-
 }
 
 class OrderAtCoord
@@ -85,7 +84,6 @@ class OrderAtCoord
     {
         return limitOrder;
     }
-
 }
 
 

@@ -23,7 +23,9 @@ public class WebViewSherlockFragment extends Fragment
     protected WebView mWebView = null;
     protected boolean mIsWebViewAvailable = false;
 
-    public WebViewSherlockFragment() { }
+    public WebViewSherlockFragment()
+    {
+    }
 
     /**
      * Called to instantiate the view. Creates and returns the WebView.

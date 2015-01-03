@@ -50,7 +50,8 @@ public class FiftyBTCFragment extends Fragment
             try
             {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
@@ -58,7 +59,9 @@ public class FiftyBTCFragment extends Fragment
         }
     };
 
-    public FiftyBTCFragment() { }
+    public FiftyBTCFragment()
+    {
+    }
 
     private static void readPreferences(Context context)
     {

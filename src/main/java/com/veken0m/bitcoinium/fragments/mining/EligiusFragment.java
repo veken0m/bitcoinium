@@ -54,7 +54,8 @@ public class EligiusFragment extends Fragment
             try
             {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
@@ -123,13 +124,12 @@ public class EligiusFragment extends Fragment
                                     .getEntity().getContent(), "UTF-8"),
                             EligiusBalance.class
                     );
-
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
         }
-
     }
 
     private void viewMinerStats(View view)
@@ -256,7 +256,8 @@ public class EligiusFragment extends Fragment
                     if (hashRatef > 0)
                     {
                         tvMinerName.setTextColor(Color.GREEN);
-                    } else
+                    }
+                    else
                     {
                         tvMinerName.setTextColor(Color.RED);
                     }
@@ -269,11 +270,10 @@ public class EligiusFragment extends Fragment
                     t1.addView(tr10);
                     t1.addView(tr11);
                 }
-
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
-
             }
         }
     }
@@ -288,5 +288,4 @@ public class EligiusFragment extends Fragment
             mMinerHandler.post(mGraphView);
         }
     }
-
 }

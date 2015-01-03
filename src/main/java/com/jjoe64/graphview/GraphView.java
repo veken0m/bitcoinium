@@ -94,7 +94,8 @@ abstract public class GraphView extends LinearLayout
         {
             // all data
             return values;
-        } else
+        }
+        else
         {
             // viewport
             List<GraphViewData> listData = new ArrayList<GraphViewData>();
@@ -106,11 +107,13 @@ abstract public class GraphView extends LinearLayout
                     {
                         listData.add(value); // one more for nice scrolling
                         break;
-                    } else
+                    }
+                    else
                     {
                         listData.add(value);
                     }
-                } else
+                }
+                else
                 {
                     if (listData.isEmpty())
                     {
@@ -195,16 +198,20 @@ abstract public class GraphView extends LinearLayout
             if (highestvalue - lowestvalue < 0.1)
             {
                 numberformatter[i].setMaximumFractionDigits(6);
-            } else if (highestvalue - lowestvalue < 1)
+            }
+            else if (highestvalue - lowestvalue < 1)
             {
                 numberformatter[i].setMaximumFractionDigits(4);
-            } else if (highestvalue - lowestvalue < 20)
+            }
+            else if (highestvalue - lowestvalue < 20)
             {
                 numberformatter[i].setMaximumFractionDigits(3);
-            } else if (highestvalue - lowestvalue < 100)
+            }
+            else if (highestvalue - lowestvalue < 100)
             {
                 numberformatter[i].setMaximumFractionDigits(1);
-            } else
+            }
+            else
             {
                 numberformatter[i].setMaximumFractionDigits(0);
             }
@@ -279,7 +286,8 @@ abstract public class GraphView extends LinearLayout
         if (!ignoreViewport && viewportSize != 0)
         {
             return viewportStart + viewportSize;
-        } else
+        }
+        else
         {
             // otherwise use the max x value
             // values must be sorted by x, so the last value has the largest X
@@ -291,7 +299,8 @@ abstract public class GraphView extends LinearLayout
                 if (values.length == 0)
                 {
                     highest = 0;
-                } else
+                }
+                else
                 {
                     highest = values[values.length - 1].valueX;
                     for (int i = 1; i < graphSeries.size(); i++)
@@ -316,7 +325,8 @@ abstract public class GraphView extends LinearLayout
         if (manualYAxis)
         {
             largest = manualMaxYValue;
-        } else
+        }
+        else
         {
             largest = Integer.MIN_VALUE;
             for (int i = 0; i < graphSeries.size(); i++)
@@ -343,7 +353,8 @@ abstract public class GraphView extends LinearLayout
         if (!ignoreViewport && viewportSize != 0)
         {
             return viewportStart;
-        } else
+        }
+        else
         {
             // otherwise use the min x value
             // values must be sorted by x, so the first value has the smallest X
@@ -355,7 +366,8 @@ abstract public class GraphView extends LinearLayout
                 if (values.length == 0)
                 {
                     lowest = 0;
-                } else
+                }
+                else
                 {
                     lowest = values[0].valueX;
                     for (int i = 1; i < graphSeries.size(); i++)
@@ -379,7 +391,8 @@ abstract public class GraphView extends LinearLayout
         if (manualYAxis)
         {
             smallest = manualMinYValue;
-        } else
+        }
+        else
         {
             smallest = Integer.MAX_VALUE;
             for (int i = 0; i < graphSeries.size(); i++)
@@ -527,7 +540,8 @@ abstract public class GraphView extends LinearLayout
                                 if (viewportStart - overlap > minX)
                                 {
                                     viewportStart -= overlap;
-                                } else
+                                }
+                                else
                                 {
                                     // maximal scale
                                     viewportStart = minX;
@@ -708,7 +722,8 @@ abstract public class GraphView extends LinearLayout
                 if (viewportStart < minX)
                 {
                     viewportStart = minX;
-                } else if (viewportStart + viewportSize > maxX)
+                }
+                else if (viewportStart + viewportSize > maxX)
                 {
                     viewportStart = maxX - viewportSize;
                 }

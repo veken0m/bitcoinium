@@ -249,7 +249,6 @@ public class MinerStatsActivity extends ActionBarActivity
         {
             ft.remove(fragment);
         }
-
     }
 
     private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean>

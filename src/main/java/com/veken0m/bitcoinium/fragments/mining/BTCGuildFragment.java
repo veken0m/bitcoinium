@@ -50,7 +50,8 @@ public class BTCGuildFragment extends Fragment
             try
             {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
@@ -58,7 +59,9 @@ public class BTCGuildFragment extends Fragment
         }
     };
 
-    public BTCGuildFragment() { }
+    public BTCGuildFragment()
+    {
+    }
 
     private static void readPreferences(Context context)
     {
@@ -98,7 +101,6 @@ public class BTCGuildFragment extends Fragment
 
             ObjectMapper mapper = new ObjectMapper();
             data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), BTCGuild.class);
-
         }
         catch (Exception e)
         {

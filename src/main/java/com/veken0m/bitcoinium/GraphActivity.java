@@ -71,7 +71,6 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
                 graphLinearLayout.removeAllViews(); // make sure layout has no child
                 graphLinearLayout.addView(graphView);
-
             }
             else if (noTradesFound)
             {
@@ -207,7 +206,8 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                     if (isValueX)
                     {
                         return Utils.dateFormat(getBaseContext(), (long) value);
-                    } else
+                    }
+                    else
                         return super.formatLabel(value, false);
                 }
             };
@@ -227,12 +227,10 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
             }
             connectionFail = false;
             noTradesFound = false;
-
         }
         catch (ArrayIndexOutOfBoundsException e)
         {
             noTradesFound = true;
-
         }
         catch (Exception e)
         {
@@ -255,7 +253,6 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
-
     }
 
     @Override

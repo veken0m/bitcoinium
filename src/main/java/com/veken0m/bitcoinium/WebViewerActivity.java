@@ -75,7 +75,9 @@ public class WebViewerActivity extends BaseActivity
 
     static public class BitcoiniumFragment extends WebViewSherlockFragment
     {
-        public BitcoiniumFragment() { }
+        public BitcoiniumFragment()
+        {
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -108,7 +110,9 @@ public class WebViewerActivity extends BaseActivity
 
     static public class BitcoinityFragment extends WebViewSherlockFragment
     {
-        public BitcoinityFragment() { }
+        public BitcoinityFragment()
+        {
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
