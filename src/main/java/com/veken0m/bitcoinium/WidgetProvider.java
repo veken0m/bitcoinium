@@ -12,6 +12,8 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
+import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
+import com.veken0m.bitcoinium.preferences.TickerPreferencesActivity;
 import com.veken0m.utils.CompatUtil;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
@@ -54,7 +56,7 @@ public class WidgetProvider extends BaseWidgetProvider {
 
                 String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
 
-                removePermanentNotification(context, pairId.hashCode());
+                clearOngoingNotification(context, pairId.hashCode());
                 // Reset the preference for this combo
                 prefs.edit().putBoolean(pairId + "TickerPref", false).commit();
                 prefs.edit().putBoolean(pairId + "AlarmPref", false).commit();
@@ -90,84 +92,95 @@ public class WidgetProvider extends BaseWidgetProvider {
         public void buildUpdate() {
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
-            ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
-            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
+            if ((widgetManager == null) || (pref_wifiOnly && !Utils.isWiFiAvailable(this)))
+                return; // no widgets and no WiFi when required? bail.
 
-                CompatUtil.convertAlarmPrefs(this);
+            CompatUtil.convertAlarmPrefs(this);
 
-                for (int appWidgetId : widgetIds) {
-
-                    // Load widget configuration
-                    String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                    if (exchangePref == null) continue; // skip to next widget
-
-                    ExchangeProperties exchange = getExchange(this, exchangePref);
-                    String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
-                    String shortName = exchange.getShortName();
-                    String exchangeKey = exchange.getIdentifier();
-
-                    RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
-                    setTapBehaviour(appWidgetId, exchangeKey, views);
-
-                    try {
-                        // if altcoin append baseCurrency
-                        CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                        if (!pair.baseSymbol.equals(Currencies.BTC))
-                            shortName += " " + pair.baseSymbol;
-
-                        // Get ticker using XChange
-                        Ticker ticker = ExchangeUtils.getMarketData(exchange, pair).getTicker(pair);
-
-                        // Retrieve values from ticker
-                        float lastFloat = ticker.getLast().floatValue();
-                        String lastString = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
-
-                        String volumeString = (ticker.getVolume() != null) ?
-                                Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true) : getString(R.string.notAvailable);
-                        volumeString += " " + pair.baseSymbol;
-
-                        setBidAskHighLow(ticker, views, pair);
-
-                        views.setTextViewText(R.id.widgetExchange, shortName);
-                        views.setTextViewText(R.id.widgetLastText, lastString);
-                        views.setTextViewText(R.id.widgetVolText, getString(R.string.volume_short) + ": " + volumeString);
-                        views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
-                        updateWidgetTheme(views);
-
-                        prefs.edit().remove("alarmPref").commit();
-                        checkAlarm(pair, lastFloat, exchange);
-                        createTickerNotif(pair, lastString, exchange);
-
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
-                        views.setTextColor(R.id.label, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
-
-                    } finally {
-                        if (widgetManager != null)
-                            widgetManager.updateAppWidget(appWidgetId, views);
-                    }
-                }
+            // Get all price widgets and loop over them to update
+            ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
+            int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            for (int appWidgetId : widgetIds) {
+                RemoteViews view = updateWidgetView(appWidgetId);
+                if(view != null) widgetManager.updateAppWidget(appWidgetId, view);
             }
         }
 
-        private void createTickerNotif(CurrencyPair pair, String lastString, ExchangeProperties exchange) {
+        public RemoteViews updateWidgetView(int appWidgetId){
+            // Load widget configuration
+            String exchangePref = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
+            if (exchangePref == null) return null; // skip to next widget
+
+            ExchangeProperties exchange = getExchange(this, exchangePref);
+            String currencyPair = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
+            String shortName = exchange.getShortName();
+            String exchangeKey = exchange.getIdentifier();
+
+            RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget);
+            setTapBehaviour(appWidgetId, exchangeKey, views);
+
+            try {
+                // if altcoin append baseCurrency
+                CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
+                if (!pair.baseSymbol.equals(Currencies.BTC))
+                    shortName += " " + pair.baseSymbol;
+
+                // Get ticker using XChange
+                Ticker ticker = ExchangeUtils.getMarketData(exchange, pair).getTicker(pair);
+
+                // Retrieve values from ticker
+                float lastFloat = ticker.getLast().floatValue();
+                String sLast = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
+
+                String sVolume;
+                if(ticker.getVolume() != null){
+                    sVolume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true);
+                    sVolume += " " + pair.baseSymbol;
+                } else {
+                    sVolume = getString(R.string.notAvailable);
+                }
+
+                setBidAskHighLow(ticker, views, pair);
+
+                views.setTextViewText(R.id.widgetExchange, shortName);
+                views.setTextViewText(R.id.widgetLastText, sLast);
+                views.setTextViewText(R.id.widgetVolText, getString(R.string.volume_short) + ": " + sVolume);
+                views.setTextViewText(R.id.label, getString(R.string.updated) + " @ " + Utils.getCurrentTime(this));
+                updateWidgetTheme(views);
+
+                checkAlarm(pair, lastFloat, exchange);
+                updateOngoingTickerNotification(pair, lastFloat, exchange);
+
+                // Update last price map
+                String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+                prevPrice.put(pairId.hashCode(),lastFloat);
+
+            } catch (Exception e) {
+                views.setTextColor(R.id.label, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
+            }
+
+            return views;
+        }
+
+        private void updateOngoingTickerNotification(CurrencyPair pair, float lastFloat, ExchangeProperties exchange) {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
 
             if (prefs.getBoolean(pairId + "TickerPref", false)) {
-
-                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
+                String lastString = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
+                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastFloat, exchange.getExchangeName());
                 String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
 
-                createPermanentNotification(this, title, msg, pairId.hashCode());
+                Intent notificationIntent = new Intent(this, TickerPreferencesActivity.class);
+                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+                sendNotification(this, title, msg, contentIntent, null, pairId.hashCode(), true, lastFloat);
             } else {
-                removePermanentNotification(this, pairId.hashCode());
+                clearOngoingNotification(this, 100 + pairId.hashCode());
             }
         }
 

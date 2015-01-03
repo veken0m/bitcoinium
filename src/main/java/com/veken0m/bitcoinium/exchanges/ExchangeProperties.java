@@ -68,14 +68,7 @@ public class ExchangeProperties {
 
     public Boolean supportsTicker() {
 
-        int resId = context.getResources().getIdentifier("exchangeID", "array", context.getPackageName());
-        String[] exchangesSupportTicker = context.getResources().getStringArray(resId);
-
-        for (String exchangeName : exchangesSupportTicker) {
-            if (exchangeName.equals(identifier))
-                return true;
-        }
-        return false;
+        return supportsTicker;
     }
 
     public Boolean supportsTrades() {

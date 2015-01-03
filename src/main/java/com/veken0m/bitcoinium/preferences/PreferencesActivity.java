@@ -1,15 +1,11 @@
 package com.veken0m.bitcoinium.preferences;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.Pair;
@@ -18,7 +14,6 @@ import android.view.MenuItem;
 import com.veken0m.bitcoinium.BalanceWidgetProvider;
 import com.veken0m.bitcoinium.MinerWidgetProvider;
 import com.veken0m.bitcoinium.R;
-import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
@@ -49,7 +44,6 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         defaultPref.setEntryValues(exchanges.second.toArray(new CharSequence[exchanges.second.size()]));
 
         populateDefaultCurrenciesScreen(exchanges.second);
-        populateNotificationSettingsScreen();
 
         // Widget Customization
         Preference widgetBackgroundColorPref = findPreference("widgetBackgroundColorPref");
@@ -62,44 +56,8 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         // Donation addresses
         Preference bitcoinDonationAddressPref = findPreference("bitcoinDonationAddressPref");
         bitcoinDonationAddressPref.setOnPreferenceClickListener(this);
-        Preference litecoinDonationAddressPref = findPreference("litecoinDonationAddressPref");
-        litecoinDonationAddressPref.setOnPreferenceClickListener(this);
-        Preference dogecoinDonationAddressPref = findPreference("dogecoinDonationAddressPref");
-        dogecoinDonationAddressPref.setOnPreferenceClickListener(this);
-
-    }
-
-    public void populateNotificationSettingsScreen(){
-
-        PreferenceCategory notificationSettingsPref = (PreferenceCategory) findPreference("notificationSettingsPref");
-
-        AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
-        ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
-        int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
-
-        if (widgetIds.length > 0) {
-            for (int appWidgetId : widgetIds) {
-
-                // Obtain Widget configuration
-                String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
-                String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                if(widgetCurrency == null || widgetExchange == null)
-                    continue;
-
-                ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
-
-                // Create Checkbox
-                CheckBoxPreference tickerCheckBox = new CheckBoxPreference(this);
-                tickerCheckBox.setDefaultValue(false);
-                tickerCheckBox.setKey(widgetExchange + widgetCurrency.replace("/", "") + "TickerPref");
-                tickerCheckBox.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);
-
-                // Add to screen
-                notificationSettingsPref.addPreference(tickerCheckBox);
-            }
-        } else {
-            notificationSettingsPref.addPreference(noWidgetFound());
-        }
+        Preference xchangeDonationAddressPref = findPreference("xchangeDonationAddressPref");
+        xchangeDonationAddressPref.setOnPreferenceClickListener(this);
     }
 
     public void populateDefaultCurrenciesScreen(List<String> sExchanges){

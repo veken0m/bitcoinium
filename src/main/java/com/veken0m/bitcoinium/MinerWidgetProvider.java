@@ -79,7 +79,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider {
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.isWiFiAvailable(this))) {
 
                 for (int appWidgetId : widgetIds) {
 

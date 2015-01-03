@@ -58,7 +58,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
 
             readGeneralPreferences(this);
 
-            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.checkWiFiConnected(this))) {
+            if (widgetIds.length > 0 && (!pref_wifiOnly || Utils.isWiFiAvailable(this))) {
 
                 for (int appWidgetId : widgetIds) {
 
@@ -131,9 +131,9 @@ public class BalanceWidgetProvider extends BaseWidgetProvider {
                 String msg = String.format(getString(R.string.priceContentNotif), pair.baseSymbol, lastString, exchange.getExchangeName());
                 String title = String.format(getString(R.string.permPriceTitleNotif), exchange.getIdentifier(), pair.baseSymbol, lastString);
 
-                createPermanentNotification(this, title, msg, pairId.hashCode());
+                updateOngoingNotification(this, title, msg, pairId.hashCode());
             } else {
-                removePermanentNotification(this, pairId.hashCode());
+                clearOngoingNotification(this, pairId.hashCode());
             }
 
         }

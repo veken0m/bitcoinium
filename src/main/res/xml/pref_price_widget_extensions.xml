@@ -9,15 +9,12 @@
             <intent android:action="com.veken0m.bitcoinium.PriceAlertPreferencesActivity" />
         </Preference>
 
-
-        <PreferenceScreen
+        <Preference
+            android:key="notificationSettingsPref"
             android:summary="@string/pref_notification_ticker_summary"
             android:title="@string/notificationDrawerTickers">
+            <intent android:action="com.veken0m.bitcoinium.TickerPreferencesActivity" />
+        </Preference>
 
-            <PreferenceCategory
-                android:key="notificationSettingsPref"
-                android:title="@string/notificationDrawerTickers"/>
-
-        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.1.3</string>
+    <string name="version_name">2.2.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
@@ -61,7 +61,7 @@
     <string name="displayCurrencySymbols">Display Currency Symbols</string>
     <string name="dogecoin">Dogecoin</string>
     <string name="donationAddress">Donation Address</string>
-    <string name="donations">Donations</string>
+    <string name="donations">Bitcoin Donations</string>
     <string name="email">Email</string>
     <string name="enable">Enable</string>
     <string name="enableLiquidityHighlighting">Enable Liquidity Highlighting</string>
@@ -213,8 +213,8 @@
     <string name="pref_price_alert_summary">Notifies when price crosses the alert limit</string>
     <string name="pref_price_alert_title">Price Alert Notifications</string>
     <string name="pref_alert_limits">%1$s alert limits"</string>
-    <string name="pref_enable_alert_summary">Enable notifications when alert is triggered for %1$s %2$s</string>
-    <string name="pref_enable_alert_title">Enable Price Alerts</string>
+    <string name="pref_enable_alert_summary">Push notification when alert triggered for %1$s %2$s</string>
+    <string name="pref_enable_alert_title">Enable Price Alert</string>
     <string name="pref_miner_widget_alert_summary">Use Price Alert settings to enable sound and vibration during notification</string>
 
     <!-- Balance Widget -->
@@ -262,6 +262,7 @@
     <string name="address_donation_bitcoin">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
     <string name="address_donation_dogecoin">D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y</string>
     <string name="address_donation_litecoin">LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp</string>
+    <string name="address_donation_bitcoin_xchange">1MHMpzFxx4fRSaeYGSxhyEcgux7j4Gqwsc</string>
     <string name="link_twitter">https://twitter.com/veken0m</string>
     <string name="link_bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="link_xchangeGithub">https://github.com/timmolter/xchange</string>

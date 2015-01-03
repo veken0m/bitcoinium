@@ -155,7 +155,7 @@ public class Utils {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
-    public static boolean checkWiFiConnected(Context context) {
+    public static boolean isWiFiAvailable(Context context) {
 
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
