@@ -27,7 +27,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity;
 import com.veken0m.utils.Constants;
@@ -428,14 +427,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false)) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -447,12 +438,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             populateCurrencyDropdown();
             drawOrderbookUI();
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     private class OrderbookThread extends Thread {

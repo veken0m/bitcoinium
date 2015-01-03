@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
@@ -215,19 +214,6 @@ public class MinerStatsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     class MyTabsListener implements ActionBar.TabListener {

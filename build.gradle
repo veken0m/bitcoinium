@@ -64,8 +64,6 @@ dependencies {
         //resolutionStrategy.cacheChangingModulesFor 0, 'seconds' // uncomment to force refresh SNAPSHOT dependencies
     }
 
-    compile files('libs/libGoogleAnalyticsServices.jar')
-
     compile 'com.android.support:appcompat-v7:20.+' // PreferenceActivity is broken in v7:21, no title bar
     compile 'com.android.support:support-v4:21.+'
 

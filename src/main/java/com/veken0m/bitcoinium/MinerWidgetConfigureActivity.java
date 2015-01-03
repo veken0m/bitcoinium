@@ -9,7 +9,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 
 public class MinerWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener{
@@ -64,18 +63,10 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity implements 
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
 
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
-        EasyTracker.getInstance(this).activityStop(this);
     }
     @Override
     public boolean onPreferenceClick(Preference preference) {

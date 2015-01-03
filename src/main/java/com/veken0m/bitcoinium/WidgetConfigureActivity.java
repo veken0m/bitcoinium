@@ -12,7 +12,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.util.Pair;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 
@@ -119,19 +118,10 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
 
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

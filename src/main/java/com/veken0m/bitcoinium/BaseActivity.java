@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Utils;
 
 public class BaseActivity extends ActionBarActivity {
@@ -52,19 +51,6 @@ public class BaseActivity extends ActionBarActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action, menu);
         return true;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

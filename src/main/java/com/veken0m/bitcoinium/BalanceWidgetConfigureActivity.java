@@ -10,7 +10,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.utils.Constants;
 
 public class BalanceWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener {
@@ -103,9 +102,6 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity implement
     @Override
     public void onStart() {
         super.onStart();
-
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -113,7 +109,6 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity implement
         super.onStop();
 
         sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

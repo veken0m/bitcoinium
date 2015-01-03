@@ -5,10 +5,8 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.R;
 
 public class BasePreferenceActivity extends PreferenceActivity {
@@ -41,19 +39,6 @@ public class BasePreferenceActivity extends PreferenceActivity {
         pref.setSummary(getString(R.string.pref_requires_widget));
 
         return pref;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     /* A nasty hack to fix a bug with PreferenceScreen background color on pre-Honeycomb devices with light themes */

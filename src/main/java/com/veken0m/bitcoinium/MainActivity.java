@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
@@ -49,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
 
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setLogo(R.drawable.bitcoiniumlogo);
+        actionbar.setLogo(R.drawable.ic_launcher);
 
         Bundle extras = getIntent().getExtras();
         String exchange = (extras != null) ? extras.getString("exchangeKey") : "";
@@ -92,22 +90,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
     public void onPause() {
         super.onPause();
         // clear the extra
         getIntent().removeExtra("exchangeKey");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
