@@ -3,7 +3,8 @@ package com.veken0m.mining.emc;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class User {
+public class User
+{
     private final long blocks_found;
     private final float confirmed_rewards;
     private final float estimated_rewards;
@@ -19,7 +20,8 @@ public class User {
                 @JsonProperty("total_payout")
                 float total_payout,
                 @JsonProperty("unconfirmed_rewards")
-                float unconfirmed_rewards) {
+                float unconfirmed_rewards)
+    {
         this.blocks_found = blocks_found;
         this.confirmed_rewards = confirmed_rewards;
         this.estimated_rewards = estimated_rewards;
@@ -27,23 +29,28 @@ public class User {
         this.unconfirmed_rewards = unconfirmed_rewards;
     }
 
-    public long getBlocks_found() {
+    public long getBlocks_found()
+    {
         return this.blocks_found;
     }
 
-    public float getConfirmed_rewards() {
+    public float getConfirmed_rewards()
+    {
         return this.confirmed_rewards;
     }
 
-    public float getEstimated_rewards() {
+    public float getEstimated_rewards()
+    {
         return this.estimated_rewards;
     }
 
-    public float getTotal_payout() {
+    public float getTotal_payout()
+    {
         return this.total_payout;
     }
 
-    public float getUnconfirmed_rewards() {
+    public float getUnconfirmed_rewards()
+    {
         return this.unconfirmed_rewards;
     }
 }

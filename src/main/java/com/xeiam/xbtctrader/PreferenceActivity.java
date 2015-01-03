@@ -12,10 +12,12 @@ import android.widget.Toast;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.preferences.BasePreferenceActivity;
 
-public class PreferenceActivity extends BasePreferenceActivity{
+public class PreferenceActivity extends BasePreferenceActivity
+{
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         // Display the fragment as the main content.
 
@@ -27,12 +29,14 @@ public class PreferenceActivity extends BasePreferenceActivity{
 
         Preference prefLicense = findPreference("pref_license");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(!prefs.getBoolean("pref_licenseViewed", false))
+        if (!prefs.getBoolean("pref_licenseViewed", false))
             showLicenseDialog(this);
 
-        prefLicense.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        prefLicense.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+        {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceClick(Preference preference)
+            {
 
                 showLicenseDialog(preference.getContext());
 
@@ -41,25 +45,31 @@ public class PreferenceActivity extends BasePreferenceActivity{
         });
     }
 
-    public void showLicenseDialog(final Context context){
+    public void showLicenseDialog(final Context context)
+    {
         AlertDialog.Builder ab = new AlertDialog.Builder(context);
         ab.setTitle("License");
         ab.setMessage(R.string.license);
 
-        ab.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        ab.setPositiveButton("Accept", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 prefs.putBoolean("pref_licenseViewed", true);
                 prefs.commit();
             }
         });
 
-        ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        ab.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                if(!prefs.getBoolean("pref_licenseViewed", false)) {
+                if (!prefs.getBoolean("pref_licenseViewed", false))
+                {
                     Toast.makeText(context, "Please accept the License to proceed", Toast.LENGTH_LONG).show();
                     finish();
                 }

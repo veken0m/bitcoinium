@@ -2,7 +2,8 @@ package com.veken0m.mining.btcguild;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Worker {
+public class Worker
+{
 
     private final String worker_name;
     private final float hash_rate;
@@ -42,7 +43,8 @@ public class Worker {
                   @JsonProperty("stale_shares_nmc_since_reset") float stale_shares_nmc_since_reset,
                   @JsonProperty("dupe_shares_nmc_since_reset") float dupe_shares_nmc_since_reset,
                   @JsonProperty("unknown_shares_nmc_since_reset") float unknown_shares_nmc_since_reset,
-                  @JsonProperty("last_share") float last_share) {
+                  @JsonProperty("last_share") float last_share)
+    {
 
         this.worker_name = worker_name;
         this.hash_rate = hash_rate;
@@ -65,79 +67,98 @@ public class Worker {
         this.last_share = last_share;
     }
 
-    public String getWorker_name() {
+    public String getWorker_name()
+    {
         return worker_name;
     }
 
-    public float getHash_rate() {
+    public float getHash_rate()
+    {
         return hash_rate;
     }
 
-    public float getValid_shares() {
+    public float getValid_shares()
+    {
         return valid_shares;
     }
 
-    public float getStale_shares() {
+    public float getStale_shares()
+    {
         return stale_shares;
     }
 
-    public float getDupe_shares() {
+    public float getDupe_shares()
+    {
         return dupe_shares;
     }
 
-    public float getUnknown_shares() {
+    public float getUnknown_shares()
+    {
         return unknown_shares;
     }
 
-    public float getValid_shares_since_reset() {
+    public float getValid_shares_since_reset()
+    {
         return valid_shares_since_reset;
     }
 
-    public float getStale_shares_since_reset() {
+    public float getStale_shares_since_reset()
+    {
         return stale_shares_since_reset;
     }
 
-    public float getDupe_shares_since_reset() {
+    public float getDupe_shares_since_reset()
+    {
         return dupe_shares_since_reset;
     }
 
-    public float getUnknown_shares_since_reset() {
+    public float getUnknown_shares_since_reset()
+    {
         return unknown_shares_since_reset;
     }
 
-    public float getValid_shares_nmc() {
+    public float getValid_shares_nmc()
+    {
         return valid_shares_nmc;
     }
 
-    public float getStale_shares_nmc() {
+    public float getStale_shares_nmc()
+    {
         return stale_shares_nmc;
     }
 
-    public float getDupe_shares_nmc() {
+    public float getDupe_shares_nmc()
+    {
         return dupe_shares_nmc;
     }
 
-    public float getUnknown_shares_nmc() {
+    public float getUnknown_shares_nmc()
+    {
         return unknown_shares_nmc;
     }
 
-    public float getValid_shares_nmc_since_reset() {
+    public float getValid_shares_nmc_since_reset()
+    {
         return valid_shares_nmc_since_reset;
     }
 
-    public float getStale_shares_nmc_since_reset() {
+    public float getStale_shares_nmc_since_reset()
+    {
         return stale_shares_nmc_since_reset;
     }
 
-    public float getDupe_shares_nmc_since_reset() {
+    public float getDupe_shares_nmc_since_reset()
+    {
         return dupe_shares_nmc_since_reset;
     }
 
-    public float getUnknown_shares_nmc_since_reset() {
+    public float getUnknown_shares_nmc_since_reset()
+    {
         return unknown_shares_nmc_since_reset;
     }
 
-    public float getLast_share() {
+    public float getLast_share()
+    {
         return last_share;
     }
 

@@ -2,7 +2,8 @@ package com.veken0m.mining.eligius;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EligiusBalance {
+public class EligiusBalance
+{
 
     private final float confirmed;
     private final float expected;
@@ -11,17 +12,20 @@ public class EligiusBalance {
             @JsonProperty("confirmed")
             float confirmed,
             @JsonProperty("expected")
-            float expected) {
+            float expected)
+    {
 
         this.confirmed = confirmed;
         this.expected = expected;
     }
 
-    public float getConfirmed() {
+    public float getConfirmed()
+    {
         return this.confirmed;
     }
 
-    public float getExpected() {
+    public float getExpected()
+    {
         return this.expected;
     }
 }

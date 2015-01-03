@@ -27,8 +27,8 @@ import com.xeiam.xchange.currency.CurrencyPair;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseWidgetProvider extends AppWidgetProvider {
-
+public class BaseWidgetProvider extends AppWidgetProvider
+{
     static boolean pref_widgetBidAsk = false;
     static boolean pref_wifiOnly = false;
     static boolean pref_alarmClock = false;
@@ -53,8 +53,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     private static boolean pref_alarmVibrate = false;
     private static String pref_notificationSound = null;
 
-    static void readGeneralPreferences(Context context) {
-
+    static void readGeneralPreferences(Context context)
+    {
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
         readAlarmPreferences(context);
 
@@ -66,7 +66,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         // Theming
         pref_enableWidgetCustomization = prefs.getBoolean("enableWidgetCustomizationPref", false);
-        if (pref_enableWidgetCustomization) {
+        if (pref_enableWidgetCustomization)
+        {
             pref_mainWidgetTextColor = prefs.getInt("widgetMainTextColorPref", R.color.widgetMainTextColor);
             pref_secondaryWidgetTextColor = prefs.getInt("widgetSecondaryTextColorPref", R.color.widgetSecondaryTextColor);
             pref_backgroundWidgetColor = prefs.getInt("widgetBackgroundColorPref", R.color.widgetBackgroundColor);
@@ -75,8 +76,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private static void readAlarmPreferences(Context context) {
-
+    private static void readAlarmPreferences(Context context)
+    {
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
@@ -86,8 +87,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
     }
 
     // Sets a repeating alarm on a class that extends IntentService
-    static void setRefreshServiceAlarm(Context context, Class<? extends IntentService> cls) {
-
+    static void setRefreshServiceAlarm(Context context, Class<? extends IntentService> cls)
+    {
         // Get refresh settings
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int alarmType = prefs.getBoolean("wakeupPref", true) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
@@ -100,8 +101,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         alarmManager.setRepeating(alarmType, System.currentTimeMillis(), refreshInterval, refreshIntent);
     }
 
-    static void setAlarmClock(Context context) {
-
+    static void setAlarmClock(Context context)
+    {
         if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Editor editor = prefs.edit();
@@ -121,8 +122,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         context.startActivity(i);
     }
 
-    static void createNotification(Context context, float last, String exchange, int notifyId, CurrencyPair pair) {
-
+    static void createNotification(Context context, float last, String exchange, int notifyId, CurrencyPair pair)
+    {
         String baseCurrency = pair.baseSymbol;
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
@@ -137,8 +138,8 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         sendNotification(context, contentTitle, contentText, contentIntent, tickerText, notifyId, false, last);
     }
 
-    static void createMinerDownNotification(Context context, String sMiningPool) {
-
+    static void createMinerDownNotification(Context context, String sMiningPool)
+    {
         Resources res = context.getResources();
         String tickerText = res.getString(R.string.msg_minerDownTicker);
         String contentTitle = res.getString(R.string.msg_minerDownTitle);
@@ -176,7 +177,7 @@ public class BaseWidgetProvider extends AppWidgetProvider {
 
         if (lastPrice != 0.0 && prevPrice.containsKey(notifyId))
         {
-            int nCompare = Float.compare(lastPrice,prevPrice.get(notifyId));
+            int nCompare = Float.compare(lastPrice, prevPrice.get(notifyId));
 
             if (nCompare == 0)
             {
@@ -202,10 +203,13 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         // This will show-up in the devices with Android 4.2 and above only
         //builder.setSubText("");
 
-        if(isOngoing){
+        if (isOngoing)
+        {
             builder.setOngoing(true);
             notifyId += 100; // Ongoing ID is offset by 100;
-        } else {
+        }
+        else
+        {
             if (pref_alarmVibrate) builder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
             if (pref_alarmSound) builder.setSound(Uri.parse(pref_notificationSound));
         }
@@ -215,9 +219,9 @@ public class BaseWidgetProvider extends AppWidgetProvider {
         mNotificationManager.notify(notifyId, builder.build());
     }
 
-    static void clearOngoingNotification(Context context, int notifyId) {
+    static void clearOngoingNotification(Context context, int notifyId)
+    {
         NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(context);
         mNotificationManager.cancel(notifyId);
     }
-
 }

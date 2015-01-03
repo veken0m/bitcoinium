@@ -16,38 +16,47 @@ import com.xeiam.xchange.utils.CertHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExchangeUtils {
-
+public class ExchangeUtils
+{
     // Some exchanges need to be handled differently; Do the funky stuff here...
-    public static PollingMarketDataService getMarketData(ExchangeProperties exchange, CurrencyPair currencyPair) {
-
+    public static PollingMarketDataService getMarketData(ExchangeProperties exchange, CurrencyPair currencyPair)
+    {
         // TODO: find way to import required certificates
-        if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade")) {
-            try {
+        if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade"))
+        {
+            try
+            {
                 CertHelper.trustAllCerts();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
 
         // Crypsy has a different API for public and private...
         Exchange exchangeInstance = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName());
-        if (exchange.getIdentifier().equals("cryptsy")) {
+        if (exchange.getIdentifier().equals("cryptsy"))
+        {
             return ((CryptsyExchange) exchangeInstance).getPublicPollingMarketDataService();
-        } else {  // Other exchanges...
+        }
+        else
+        {  // Other exchanges...
             return exchangeInstance.getPollingMarketDataService();
         }
     }
 
-    public static Pair<List<String>,List<String>> getAllDropdownItems(Context context){
+    public static Pair<List<String>, List<String>> getAllDropdownItems(Context context)
+    {
         return getDropdownItems(context, 0, true);
     }
 
-    public static Pair<List<String>,List<String>> getDropdownItems(Context context, int serviceType){
+    public static Pair<List<String>, List<String>> getDropdownItems(Context context, int serviceType)
+    {
         return getDropdownItems(context, serviceType, false);
     }
 
-    public static Pair<List<String>,List<String>> getDropdownItems(Context context, int serviceType, boolean includeAll)
+    public static Pair<List<String>, List<String>> getDropdownItems(Context context, int serviceType, boolean includeAll)
     {
         Resources res = context.getResources();
         String[] exchangeIds = res.getStringArray(R.array.exchangeID);
@@ -55,12 +64,13 @@ public class ExchangeUtils {
         List<String> dropdown = new ArrayList<>();
         List<String> dropdownIds = new ArrayList<>();
 
-        for(String exchangeId : exchangeIds)
+        for (String exchangeId : exchangeIds)
         {
             int id = res.getIdentifier(exchangeId, "array", pkgName);
             String[] exchangeMeta = context.getResources().getStringArray(id);
 
-            if(includeAll || exchangeMeta[serviceType].equals("1")) {
+            if (includeAll || exchangeMeta[serviceType].equals("1"))
+            {
                 dropdown.add(exchangeMeta[ExchangeProperties.ItemType.EXCHANGE_NAME]); // Add exchange name
                 dropdownIds.add(exchangeMeta[ExchangeProperties.ItemType.IDENTIFIER]);
             }
@@ -68,5 +78,4 @@ public class ExchangeUtils {
 
         return new Pair(dropdown, dropdownIds);
     }
-
 }

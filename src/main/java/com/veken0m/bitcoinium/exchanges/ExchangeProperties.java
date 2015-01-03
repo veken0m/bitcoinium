@@ -2,8 +2,8 @@ package com.veken0m.bitcoinium.exchanges;
 
 import android.content.Context;
 
-public class ExchangeProperties {
-
+public class ExchangeProperties
+{
     private final String exchange_name;
     private final String class_name;
     private final String main_currency;
@@ -14,19 +14,8 @@ public class ExchangeProperties {
     private final boolean supportsTrades;
     private Context context = null;
 
-    public static class ItemType {
-        public static final int EXCHANGE_NAME = 0;
-        public static final int CLASS_NAME = 1;
-        public static final int DEFAULT_CURRENCY_PAIR = 2;
-        public static final int IDENTIFIER = 3;
-        public static final int SHORT_NAME = 4;
-        public static final int TICKER_ENABLED = 5;
-        public static final int ORDERBOOK_ENABLED = 6;
-        public static final int TRADES_ENABLED = 7;
-    }
-
-    public ExchangeProperties(Context context, String exchangeName) {
-
+    public ExchangeProperties(Context context, String exchangeName)
+    {
         // ToLower and Remove Exchange to keep compatibility with previous indexing system
         exchangeName = exchangeName.toLowerCase().replace("exchange", "").replaceAll("[ .-]", "");
         int resId = context.getResources().getIdentifier(exchangeName, "array", context.getPackageName());
@@ -43,48 +32,44 @@ public class ExchangeProperties {
         supportsTrades = exchangeProperties[ItemType.TRADES_ENABLED].equals("1");
     }
 
-    public String getExchangeName() {
+    public String getExchangeName() { return exchange_name; }
 
-        return exchange_name;
-    }
+    public String getClassName() { return class_name; }
 
-    public String getClassName() {
+    public String getDefaultCurrency() { return main_currency; }
 
-        return class_name;
-    }
-
-    public String getDefaultCurrency() {
-
-        return main_currency;
-    }
-
-    public String getIdentifier() {
+    public String getIdentifier()
+    {
         return identifier;
     }
 
-    public String getShortName() {
+    public String getShortName()
+    {
         return shortName;
     }
 
-    public Boolean supportsTicker() {
+    public Boolean supportsTicker() { return supportsTicker; }
 
-        return supportsTicker;
-    }
+    public Boolean supportsTrades() { return supportsTrades; }
 
-    public Boolean supportsTrades() {
+    public Boolean supportsOrderbook() { return supportsOrderbook; }
 
-        return supportsTrades;
-    }
-
-    public Boolean supportsOrderbook() {
-
-        return supportsOrderbook;
-    }
-
-    public String[] getCurrencies() {
-
+    public String[] getCurrencies()
+    {
         int resId = context.getResources().getIdentifier(identifier + "currencies", "array", context.getPackageName());
 
-        return (resId!=0) ? context.getResources().getStringArray(resId) : null;
+        return (resId != 0) ? context.getResources().getStringArray(resId) : null;
+    }
+
+    public static class ItemType
+    {
+        public static final int EXCHANGE_NAME = 0;
+        public static final int CLASS_NAME = 1;
+        public static final int DEFAULT_CURRENCY_PAIR = 2;
+        public static final int IDENTIFIER = 3;
+        public static final int SHORT_NAME = 4;
+        public static final int TICKER_ENABLED = 5;
+        public static final int ORDERBOOK_ENABLED = 6;
+        public static final int TRADES_ENABLED = 7;
     }
 }

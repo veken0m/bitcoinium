@@ -13,7 +13,8 @@ import com.veken0m.bitcoinium.R;
 import com.xeiam.paint.Painter;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 
-public class MainView extends ImageView {
+public class MainView extends ImageView
+{
 
     private final int FRAME_RATE = 30;
     private XTraderActivity mainActivity;
@@ -23,14 +24,17 @@ public class MainView extends ImageView {
     private Handler h;
     private Painter painter;
 
-    private Runnable redrawThread = new Runnable() {
+    private Runnable redrawThread = new Runnable()
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             invalidate();
         }
     };
 
-    public MainView(Context context, AttributeSet attrs) {
+    public MainView(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         h = new Handler();
         painter = new Painter(this);
@@ -38,7 +42,8 @@ public class MainView extends ImageView {
     }
 
 
-    private String getOrderString() {
+    private String getOrderString()
+    {
         float[] orderCoords = getOrderCoords();
         float orderTotal = orderCoords[0] * orderCoords[1];
 
@@ -50,7 +55,8 @@ public class MainView extends ImageView {
         return builder.toString();
     }
 
-    public float[] getOrderCoords() {
+    public float[] getOrderCoords()
+    {
 
         float[] oc = new float[2];
         double y = getHeight() - y_touch;
@@ -60,28 +66,35 @@ public class MainView extends ImageView {
         return oc;
     }
 
-    private void setTouchListener() {
-        this.setOnTouchListener(new OnTouchListener() {
+    private void setTouchListener()
+    {
+        this.setOnTouchListener(new OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
                 x_touch = (int) event.getX();
                 y_touch = (int) event.getY();
 
                 View parent = (View) v.getParent();
-                if (parent != null) {
+                if (parent != null)
+                {
                     TextView txtView = (TextView) parent.findViewById(R.id.order_coords);
                     txtView.setText(getOrderString());
                 }
 
                 LimitOrder limitOrder = null;
-                if (painter != null && painter.getOrderCollider() != null) {
+                if (painter != null && painter.getOrderCollider() != null)
+                {
                     limitOrder = painter.getOrderCollider().getHit(x_touch, y_touch, painter.getOrderRadius());
-                    if (limitOrder != null) {
+                    if (limitOrder != null)
+                    {
                         mainActivity.vibrate(50);
                     }
                 }
 
-                if (event.getAction() == MotionEvent.ACTION_UP && limitOrder != null) {
+                if (event.getAction() == MotionEvent.ACTION_UP && limitOrder != null)
+                {
                     mainActivity.cancle(limitOrder);
                 }
 
@@ -92,29 +105,35 @@ public class MainView extends ImageView {
     }
 
 
-    protected void onDraw(Canvas c) {
+    protected void onDraw(Canvas c)
+    {
         painter.paint(c);
 
         h.postDelayed(redrawThread, FRAME_RATE);
     }
 
-    public int getXTouch() {
+    public int getXTouch()
+    {
         return x_touch;
     }
 
-    public int getYTouch() {
+    public int getYTouch()
+    {
         return y_touch;
     }
 
-    public XTraderActivity getMainActivity() {
+    public XTraderActivity getMainActivity()
+    {
         return mainActivity;
     }
 
-    public void setMainActivity(XTraderActivity mainActivity) {
+    public void setMainActivity(XTraderActivity mainActivity)
+    {
         this.mainActivity = mainActivity;
     }
 
-    public Painter getPainter() {
+    public Painter getPainter()
+    {
         return painter;
     }
 

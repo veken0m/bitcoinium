@@ -3,7 +3,7 @@
 
     <PreferenceCategory
         android:key="notificationSettingsPref"
-        android:title="@string/notificationDrawerTickers"/>
+        android:title="@string/notificationDrawerTickers" />
 
 </PreferenceScreen>
 

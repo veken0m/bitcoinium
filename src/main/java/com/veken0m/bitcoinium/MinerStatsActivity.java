@@ -42,8 +42,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 //import com.veken0m.utils.KarmaAdsUtils;
 
-public class MinerStatsActivity extends ActionBarActivity {
-
+public class MinerStatsActivity extends ActionBarActivity
+{
     private static final int MIN_KEY_LENGTH = 20;
     private static String pref_emcKey = null;
     private static String pref_slushKey = null;
@@ -55,8 +55,8 @@ public class MinerStatsActivity extends ActionBarActivity {
     private ActionBar actionbar = null;
     private Bundle extras = null;
 
-    private static void readPreferences(Context context) {
-
+    private static void readPreferences(Context context)
+    {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
@@ -72,7 +72,8 @@ public class MinerStatsActivity extends ActionBarActivity {
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // ActionBar gets initiated and set to tabbed mode
@@ -83,7 +84,8 @@ public class MinerStatsActivity extends ActionBarActivity {
         // Add the pools that have API keys
         readPreferences(this);
 
-        if (checkAtLeastOneKeySet()) {
+        if (checkAtLeastOneKeySet())
+        {
             // If not API token set, switch to Preferences and ask User to enter one
             Toast toast = Toast.makeText(this, getString(R.string.msg_enterAPIToken), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -104,8 +106,8 @@ public class MinerStatsActivity extends ActionBarActivity {
         //KarmaAdsUtils.initAd(this);
     }
 
-    private void addTabs(ActionBar actionbar, String poolkey) {
-
+    private void addTabs(ActionBar actionbar, String poolkey)
+    {
         actionbar.removeAllTabs();
 
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
@@ -124,8 +126,8 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "GHash.IO", new GHashIOFragment(), poolkey.equalsIgnoreCase("ghashio"));
     }
 
-    private void addTabs(ActionBar actionbar) {
-
+    private void addTabs(ActionBar actionbar)
+    {
         actionbar.removeAllTabs();
 
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
@@ -144,38 +146,41 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "GHash.IO", new GHashIOFragment());
     }
 
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
-        if (extras != null) {
+        if (extras != null)
+        {
             String poolKey = extras.getString("poolKey");
             readPreferences(this);
             addTabs(actionbar, poolKey);
         }
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment, boolean selectedTab) {
-
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment, boolean selectedTab)
+    {
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab, selectedTab);
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment) {
-
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment)
+    {
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab);
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         finish();
     }
 
-    private boolean checkAtLeastOneKeySet() {
-
+    private boolean checkAtLeastOneKeySet()
+    {
         return (pref_bitminterKey.length() <= MIN_KEY_LENGTH
                 && pref_emcKey.length() <= MIN_KEY_LENGTH
                 && pref_50BTCKey.length() <= MIN_KEY_LENGTH
@@ -186,22 +191,25 @@ public class MinerStatsActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_minerstats);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -216,40 +224,46 @@ public class MinerStatsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class MyTabsListener implements ActionBar.TabListener {
+    class MyTabsListener implements ActionBar.TabListener
+    {
         public final Fragment fragment;
 
-        public MyTabsListener(Fragment fragment) {
+        public MyTabsListener(Fragment fragment)
+        {
             this.fragment = fragment;
         }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft)
+        {
         }
 
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(Tab tab, FragmentTransaction ft)
+        {
             ft.replace(R.id.table_fragment, fragment);
         }
 
         @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft)
+        {
             ft.remove(fragment);
         }
 
     }
 
-    private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean> {
-
+    private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean>
+    {
         String CurrentDifficulty = "";
         String NextDifficulty = "";
         String BlockCount = "";
         String NextRetarget = "";
 
         @Override
-        protected Boolean doInBackground(Boolean... params) {
-
-            try {
+        protected Boolean doInBackground(Boolean... params)
+        {
+            try
+            {
                 HttpClient client = new DefaultHttpClient();
 
                 // Get current difficulty
@@ -279,15 +293,19 @@ public class MinerStatsActivity extends ActionBarActivity {
 
                 reader.close();
                 return true;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
                 return false;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (result) {
+        protected void onPostExecute(Boolean result)
+        {
+            if (result)
+            {
                 LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
                 Context context = getBaseContext();
                 TextView tvCurrentDifficulty = new TextView(context);
@@ -295,7 +313,8 @@ public class MinerStatsActivity extends ActionBarActivity {
                 TextView tvBlockCount = new TextView(context);
                 TextView tvNextRetarget = new TextView(context);
 
-                try {
+                try
+                {
                     // TODO: move this to XML layout
                     tvCurrentDifficulty.setText(getString(R.string.currentDifficulty) + ": " + Utils.formatDecimal(
                             Float.valueOf(CurrentDifficulty), 0, 0, true));
@@ -324,12 +343,12 @@ public class MinerStatsActivity extends ActionBarActivity {
                     view.addView(tvBlockCount, 1);
                     view.addView(tvNextDifficulty, 1);
                     view.addView(tvCurrentDifficulty, 1);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     // Difficulty was NaN... don't display anything
                 }
             }
         }
-
     }
-
 }

@@ -25,11 +25,12 @@ import java.util.List;
 
 import static com.veken0m.utils.ExchangeUtils.getAllDropdownItems;
 
-public class PreferencesActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
-
+public class PreferencesActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener
+{
     @SuppressWarnings("deprecation")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.pref_general);
@@ -39,7 +40,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         addPreferencesFromResource(R.xml.pref_about);
 
         ListPreference defaultPref = (ListPreference) findPreference("defaultExchangePref");
-        Pair<List<String>,List<String>> exchanges  = getAllDropdownItems(this);
+        Pair<List<String>, List<String>> exchanges = getAllDropdownItems(this);
         defaultPref.setEntries(exchanges.first.toArray(new CharSequence[exchanges.first.size()]));
         defaultPref.setEntryValues(exchanges.second.toArray(new CharSequence[exchanges.second.size()]));
 
@@ -60,15 +61,17 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         xchangeDonationAddressPref.setOnPreferenceClickListener(this);
     }
 
-    public void populateDefaultCurrenciesScreen(List<String> sExchanges){
-
+    public void populateDefaultCurrenciesScreen(List<String> sExchanges)
+    {
         PreferenceScreen defaultCurrencyPref = (PreferenceScreen) findPreference("defaultCurrencyPref");
 
-        for (String sExchange : sExchanges) {
+        for (String sExchange : sExchanges)
+        {
             ExchangeProperties exchange = new ExchangeProperties(this, sExchange);
             String[] sCurrencies = exchange.getCurrencies();
 
-            if(sCurrencies != null) {
+            if (sCurrencies != null)
+            {
                 // Default Currency List
                 ListPreference currencies = new ListPreference(this);
                 currencies.setKey(exchange.getIdentifier() + "CurrencyPref");
@@ -84,9 +87,10 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -96,7 +100,8 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
 
         // Tell the widgets to update pref_xtrader
@@ -107,15 +112,15 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
 
 
     @Override
-    public boolean onPreferenceClick(Preference preference) {
-
+    public boolean onPreferenceClick(Preference preference)
+    {
         Utils.copyDonationAddressToClipboard(getApplication(), preference.getSummary().toString());
         return true;
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object o) {
-
+    public boolean onPreferenceChange(Preference preference, Object o)
+    {
         preference.setSummary(ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(o))));
         return true;
     }

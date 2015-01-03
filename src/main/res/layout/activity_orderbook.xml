@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/orderbooklayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -141,23 +140,24 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/orderbook_swipe_container"
-        android:background="@color/dark"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ScrollView
-        android:id="@+id/table_scroll"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/dark"
-        android:fillViewport="false">
+        android:layout_height="match_parent"
+        android:background="@color/dark">
 
-        <TableLayout
-            android:id="@+id/orderlist"
+        <ScrollView
+            android:id="@+id/table_scroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"/>
-    </ScrollView>
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:fillViewport="false">
+
+            <TableLayout
+                android:id="@+id/orderlist"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*" />
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <!-- <WebView

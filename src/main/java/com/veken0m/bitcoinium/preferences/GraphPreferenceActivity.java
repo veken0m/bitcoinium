@@ -7,20 +7,21 @@ import android.view.MenuItem;
 
 import com.veken0m.bitcoinium.R;
 
-public class GraphPreferenceActivity extends PreferenceActivity {
-
-
+public class GraphPreferenceActivity extends PreferenceActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.pref_graph);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -28,5 +29,4 @@ public class GraphPreferenceActivity extends PreferenceActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

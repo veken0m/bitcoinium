@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/powerSaving">
-    <ListPreference
-        android:defaultValue="1800"
-        android:entries="@array/interval"
-        android:entryValues="@array/intervalvalues"
-        android:key="refreshPref"
-        android:summary="@string/pref_refresh_interval_summary"
-        android:title="@string/widgetUpdateInterval"/>
+    <PreferenceCategory android:title="@string/powerSaving">
+        <ListPreference
+            android:defaultValue="1800"
+            android:entries="@array/interval"
+            android:entryValues="@array/intervalvalues"
+            android:key="refreshPref"
+            android:summary="@string/pref_refresh_interval_summary"
+            android:title="@string/widgetUpdateInterval" />
     </PreferenceCategory>
 
     <!--PreferenceCategory android:title="@string/enable">
@@ -23,7 +22,7 @@
     <PreferenceCategory
         android:key="alertSettingsPref"
         android:title="@string/alertLimits">
-        <Preference android:summary="@string/msg_EnterUnscaledValues"/>
+        <Preference android:summary="@string/msg_EnterUnscaledValues" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -33,25 +32,25 @@
             android:defaultValue="false"
             android:key="alarmVibratePref"
             android:summary="@string/pref_alert_vibrate_summary"
-            android:title="@string/vibration"/>
+            android:title="@string/vibration" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmSoundPref"
             android:summary="@string/pref_alert_sound_summary"
-            android:title="@string/sound"/>
+            android:title="@string/sound" />
 
         <RingtonePreference
             android:key="notificationSoundPref"
             android:ringtoneType="ringtone|alarm|notification"
             android:showDefault="true"
             android:summary="@string/pref_alert_sound_pick_summary"
-            android:title="@string/selectSound"/>
+            android:title="@string/selectSound" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="alarmClockPref"
             android:summary="@string/pref_alert_alarm_summary"
-            android:title="@string/alarmClockMode"/>
+            android:title="@string/alarmClockMode" />
     </PreferenceCategory>
 
 </PreferenceScreen>

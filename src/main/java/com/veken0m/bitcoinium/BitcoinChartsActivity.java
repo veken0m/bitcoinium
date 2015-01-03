@@ -31,34 +31,39 @@ import java.util.Comparator;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
-
-
+public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
+{
     private final static Handler mOrderHandler = new Handler();
     private final Runnable mBitcoinChartsView;
     private final Runnable mError;
     private BitcoinChartsTicker[] marketData = null;
     private String currencyFilter;
 
-    public BitcoinChartsActivity() {
+    public BitcoinChartsActivity()
+    {
         currencyFilter = "SHOW ALL";
-        mBitcoinChartsView = new Runnable() {
+        mBitcoinChartsView = new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 if (marketData != null) drawBitcoinChartsUI();
             }
         };
 
-        mError = new Runnable() {
+        mError = new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 errorOccured();
             }
         };
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitcoincharts);
 
@@ -80,11 +85,11 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         onRefresh();
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -100,7 +105,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_bitcoincharts);
         populateCurrencyDropdown();
@@ -109,8 +115,8 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+    {
         String prevCurrencyfilter = currencyFilter;
         currencyFilter = (String) parent.getItemAtPosition(pos);
         if (prevCurrencyfilter != null && currencyFilter != null && !currencyFilter.equals(prevCurrencyfilter))
@@ -118,16 +124,19 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
+    public void onNothingSelected(AdapterView<?> arg0)
+    {
         // Do nothing
     }
 
-    void populateCurrencyDropdown() {
+    void populateCurrencyDropdown()
+    {
         // Re-populate the dropdown menu
         final String[] dropdownValues = getResources().getStringArray(R.array.bitcoinChartsDropdown);
 
         Spinner spinner = (Spinner) findViewById(R.id.bitcoincharts_currency_spinner);
-        if (spinner != null) {
+        if (spinner != null)
+        {
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, dropdownValues);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -139,11 +148,15 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     /**
      * Fetch the Bitcoin Charts data
      */
-    boolean getBitcoinCharts() {
-        try {
+    boolean getBitcoinCharts()
+    {
+        try
+        {
             marketData = BitcoinChartsFactory.createInstance().getMarketData();
             return true;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return false;
         }
     }
@@ -151,32 +164,35 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     /**
      * Draw the Tickers to the screen in a table
      */
-    void drawBitcoinChartsUI() {
-        if(swipeLayout != null)
+    void drawBitcoinChartsUI()
+    {
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
         TableLayout bitcoinChartsTable = (TableLayout) findViewById(R.id.bitcoincharts_list);
 
-        if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null) {
-
+        if (marketData != null && marketData.length > 0 && bitcoinChartsTable != null)
+        {
             // Clear table
             bitcoinChartsTable.removeAllViews();
 
             // Sort Tickers by volume
-            Arrays.sort(marketData, new Comparator<BitcoinChartsTicker>() {
+            Arrays.sort(marketData, new Comparator<BitcoinChartsTicker>()
+            {
                 @Override
                 public int compare(BitcoinChartsTicker entry1,
-                                   BitcoinChartsTicker entry2) {
+                                   BitcoinChartsTicker entry2)
+                {
                     return entry2.getVolume().compareTo(entry1.getVolume());
                 }
             });
 
             boolean bBackGroundColor = false;
-            for (BitcoinChartsTicker data : marketData) {
-
+            for (BitcoinChartsTicker data : marketData)
+            {
                 // Only print active exchanges... vol != 0 or contains selected currency
                 if (data.getVolume().floatValue() != 0.0
-                        && (currencyFilter.equals("SHOW ALL") || data.getCurrency().contains(currencyFilter))) {
-
+                        && (currencyFilter.equals("SHOW ALL") || data.getCurrency().contains(currencyFilter)))
+                {
                     final TextView tvSymbol = new TextView(this);
                     final TextView tvLast = new TextView(this);
                     final TextView tvVolume = new TextView(this);
@@ -214,15 +230,18 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
                     bitcoinChartsTable.addView(newRow);
                 }
             }
-        } else {
+        }
+        else
+        {
             failedToDrawUI();
         }
-        if(swipeLayout != null)
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
     }
 
-    private void viewBitcoinCharts() {
-        if(swipeLayout != null)
+    private void viewBitcoinCharts()
+    {
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
         if (Utils.isConnected(this))
             (new bitcoinChartsThread()).start();
@@ -230,38 +249,48 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
             notConnected();
     }
 
-    private void errorOccured() {
-        if(swipeLayout != null)
+    private void errorOccured()
+    {
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
-        try {
-            if (dialog == null || !dialog.isShowing()) {
+        try
+        {
+            if (dialog == null || !dialog.isShowing())
+            {
                 // Display error Dialog
                 Resources res = getResources();
                 dialog = Utils.errorDialog(this, String.format(res.getString(R.string.error_exchangeConnection), "tickers", "Bitcoin Charts"));
             }
-        } catch (WindowManager.BadTokenException e) {
+        }
+        catch (WindowManager.BadTokenException e)
+        {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
-    private void failedToDrawUI() {
-        if(swipeLayout != null)
+    private void failedToDrawUI()
+    {
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
-        if (dialog == null || !dialog.isShowing()) {
+
+        if (dialog == null || !dialog.isShowing())
+        {
             // Display error Dialog
             dialog = Utils.errorDialog(this, "A problem occurred when generating Bitcoin Charts table", "Error");
         }
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh()
+    {
         viewBitcoinCharts();
     }
 
-    private class bitcoinChartsThread extends Thread {
-
+    private class bitcoinChartsThread extends Thread
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             if (getBitcoinCharts())
                 mOrderHandler.post(mBitcoinChartsView);
             else

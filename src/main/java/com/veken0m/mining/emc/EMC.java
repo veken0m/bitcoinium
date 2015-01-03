@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class EMC {
+public class EMC
+{
     private final String apikey;
     private final Data data;
     private final List<Workers> workers;
@@ -14,21 +15,25 @@ public class EMC {
                @JsonProperty("data")
                Data data,
                @JsonProperty("workers")
-               List<Workers> workers) {
+               List<Workers> workers)
+    {
         this.apikey = apikey;
         this.data = data;
         this.workers = workers;
     }
 
-    public String getApikey() {
+    public String getApikey()
+    {
         return this.apikey;
     }
 
-    public Data getData() {
+    public Data getData()
+    {
         return this.data;
     }
 
-    public List<Workers> getWorkers() {
+    public List<Workers> getWorkers()
+    {
         return this.workers;
     }
 }

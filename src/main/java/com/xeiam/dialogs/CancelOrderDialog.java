@@ -15,19 +15,22 @@ import com.xeiam.xbtctrader.XTraderActivity;
 import com.xeiam.xchange.dto.Order.OrderType;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 
-public class CancelOrderDialog extends DialogFragment {
+public class CancelOrderDialog extends DialogFragment
+{
 
 
     LimitOrder limitOrder;
     View orderView;
 
-    public void set(LimitOrder limitOrder) {
+    public void set(LimitOrder limitOrder)
+    {
         this.limitOrder = limitOrder;
     }
 
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
@@ -44,9 +47,12 @@ public class CancelOrderDialog extends DialogFragment {
         //set the price
         ((TextView) orderView.findViewById(R.id.cancel_order_price)).setText("" + limitOrder.getLimitPrice().floatValue());
 
-        if (limitOrder.getType() == OrderType.BID) {
+        if (limitOrder.getType() == OrderType.BID)
+        {
             ((TextView) orderView.findViewById(R.id.cancel_order_type)).setText("BUY");
-        } else {
+        }
+        else
+        {
             orderView.setBackgroundColor(Color.CYAN);
             ((TextView) orderView.findViewById(R.id.cancel_order_type)).setText("SELL");
         }
@@ -58,17 +64,21 @@ public class CancelOrderDialog extends DialogFragment {
         ((TextView) orderView.findViewById(R.id.cancel_order_id)).setText(limitOrder.getId());
 
         // Add action buttons
-        builder.setView(orderView).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setView(orderView).setPositiveButton("YES", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id)
+            {
                 System.out.println("CancelOrderDialog.onClick()");
                 String orderId = ((TextView) orderView.findViewById(R.id.cancel_order_id)).getText().toString();
                 System.out.println("orderId=" + orderId);
                 XTraderActivity.exchangeAccount.cancelLimitOrder(orderId);
             }
         })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                .setNegativeButton("NO", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
 
                     }
                 });

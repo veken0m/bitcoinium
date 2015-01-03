@@ -38,7 +38,8 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener {
+public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener
+{
     private static final String TAG = "XTraderActivity";
     public static ExchangeAccount exchangeAccount;
     public static MainView mainView;
@@ -58,89 +59,109 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     private GeneralUpdateDeamon dataUpdateDeamon;
     private Vibrator vibrator;
 
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
 //		if(dataUpdateDeamon!=null){
 //			dataUpdateDeamon.setActive(false);
 //		}
     }
 
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
-        if (dataUpdateDeamon != null) {
+        if (dataUpdateDeamon != null)
+        {
             dataUpdateDeamon.setActive(false);
         }
     }
 
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
         System.out.println("On Resume called");
 
         //check internet connection
-        if (!isNetworkConnected()) {
+        if (!isNetworkConnected())
+        {
             showAlert(DIALOG_INTERNET_CONNECTION_FAIL);
             return;
         }
 
         //try to initialize the exchange
-        if (exchangeAccount.isConnectionGood()) {
+        if (exchangeAccount.isConnectionGood())
+        {
             startAccountDeamon();
             queryHistoricalData();
-        } else if (exchangeAccount.init()) {
+        }
+        else if (exchangeAccount.init())
+        {
             startAccountDeamon();
             queryHistoricalData();
-        } else {
+        }
+        else
+        {
             showAlert(DIALOG_EXCHANGE_CONNECTION_FAIL);
             return;
         }
     }
 
-    private void showTradingInterface(boolean showTrading) {
+    private void showTradingInterface(boolean showTrading)
+    {
 
         View tradingBalances = findViewById(R.id.tradingBalances);
         View tradingButtons = findViewById(R.id.tradingButtons);
-        if (showTrading) {
+        if (showTrading)
+        {
             tradingBalances.setVisibility(View.VISIBLE);
             tradingButtons.setVisibility(View.VISIBLE);
-        } else {
+        }
+        else
+        {
             tradingBalances.setVisibility(View.GONE);
             tradingButtons.setVisibility(View.GONE);
         }
     }
 
-    private void queryHistoricalData() {
+    private void queryHistoricalData()
+    {
         Log.v("PreferenceChange", "queryHistoricalData");
         GetHistoricalDataTask getHistoricalDataTask = new GetHistoricalDataTask(exchangeAccount);
         getHistoricalDataTask.go();
     }
 
-    public void showAlert(int key) {
-        if (key == DIALOG_INTERNET_CONNECTION_FAIL) {
-
+    public void showAlert(int key)
+    {
+        if (key == DIALOG_INTERNET_CONNECTION_FAIL)
+        {
             FragmentManager fm = getSupportFragmentManager();
             NoNetworkAlert noNetworkAlert = new NoNetworkAlert();
             noNetworkAlert.show(fm, "NoticeDialogFragment");
-
-        } else if (key == DIALOG_EXCHANGE_CONNECTION_FAIL) {
+        }
+        else if (key == DIALOG_EXCHANGE_CONNECTION_FAIL)
+        {
             ApiKeyAlert apiKeyAlert = new ApiKeyAlert();
             apiKeyAlert.show(getSupportFragmentManager(), "NoticeDialogFragment");
         }
     }
 
-    public void startAccountDeamon() {
+    public void startAccountDeamon()
+    {
         dataUpdateDeamon = new GeneralUpdateDeamon(this);
         dataUpdateDeamon.execute();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xtrader_main);
 
         Bundle extras = getIntent().getExtras();
         String sCurrencyPair = Constants.DEFAULT_CURRENCY_PAIR;
-        if (extras != null) {
+        if (extras != null)
+        {
             String symbol = extras.getString("exchange");
 
             int currencyPosition = symbol.length();
@@ -165,7 +186,8 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
         showTradingInterface(preferences.getBoolean("enableTradingKey", false));
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
+        {
             exchangeAccount = new ExchangeAccount(this);
         }
 
@@ -174,13 +196,15 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     }
 
 
-    public void vibrate(int duration) {
+    public void vibrate(int duration)
+    {
         vibrator.vibrate(duration);
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action, menu);
 
@@ -196,9 +220,11 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle item selection
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.action_preferences:
                 openPrefs();
                 return true;
@@ -211,23 +237,26 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     }
 
 
-    private void refresh() {
+    private void refresh()
+    {
         queryHistoricalData();
     }
 
-    private void openPrefs() {
+    private void openPrefs()
+    {
         Intent intent = new Intent(XTraderActivity.this,
                 PreferenceActivity.class);
         startActivity(intent);
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
+    {
 
         Log.v("PreferenceChange", "key=" + key);
 
         boolean needToUpdate = false;
-        if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password")) {
-
+        if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password"))
+        {
             //String id = XTraderActivity.exchangeInfo.getIdentifier();
             //String sCurrencyPair = XTraderActivity.pref_xtrader.getString(id + "TradeCurrency", "");
             //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
@@ -247,9 +276,12 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
             queryHistoricalData();
     }
 
-    public void onAccountInfoUpdate() {
-        runOnUiThread(new Runnable() {
-            public void run() {
+    public void onAccountInfoUpdate()
+    {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
                 //fiat account
                 String fiatSymbol = XTraderActivity.transactionCurrency;
                 float fiatBalance = exchangeAccount.getTotalFiatBalance(fiatSymbol);
@@ -265,9 +297,12 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
                 TextView accountValueView = ((TextView) findViewById(R.id.account_value));
                 accountValueView.setText(fiatFormatter.format(accountValue));
 
-                if (exchangeAccount.accountValueIncreasing()) {
+                if (exchangeAccount.accountValueIncreasing())
+                {
                     accountValueView.setTextColor(Color.GREEN);
-                } else {
+                }
+                else
+                {
                     accountValueView.setTextColor(Color.RED);
                 }
             }
@@ -275,12 +310,14 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     }
 
 
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
         preferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public void buy(View view) {
+    public void buy(View view)
+    {
         MainView mainView = (MainView) findViewById(R.id.main_view);
         float[] orderCoord = mainView.getOrderCoords();
         SubmitOrderDialog submitOrderDialog = new SubmitOrderDialog();
@@ -288,7 +325,8 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         submitOrderDialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
-    public void sell(View view) {
+    public void sell(View view)
+    {
         MainView mainView = (MainView) findViewById(R.id.main_view);
         float[] orderCoord = mainView.getOrderCoords();
         SubmitOrderDialog submitOrderDialog = new SubmitOrderDialog();
@@ -296,61 +334,83 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         submitOrderDialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
-    public void cancle(LimitOrder limitOrder) {
+    public void cancle(LimitOrder limitOrder)
+    {
         CancelOrderDialog cancelOrderDialog = new CancelOrderDialog();
         cancelOrderDialog.set(limitOrder);
         cancelOrderDialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
-    private boolean isNetworkConnected() {
+    private boolean isNetworkConnected()
+    {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null) {
+        if (ni == null)
+        {
             // There are no active networks.
             return false;
-        } else
+        }
+        else
             return true;
     }
 
-    public float getOrderGridSize() {
-        try {
+    public float getOrderGridSize()
+    {
+        try
+        {
             float gridSize = Float.parseFloat(preferences.getString("ordergridsize", ".5"));
             return gridSize;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return .5f;
         }
     }
 
-    public float getPriceWindow() {
+    public float getPriceWindow()
+    {
         String pw = preferences.getString("price_window", "FIVE_PERCENT");
 
-        if (pw.equalsIgnoreCase("TWO_PERCENT")) {
+        if (pw.equalsIgnoreCase("TWO_PERCENT"))
+        {
             return .02f;
-        } else if (pw.equalsIgnoreCase("FIVE_PERCENT")) {
+        }
+        else if (pw.equalsIgnoreCase("FIVE_PERCENT"))
+        {
             return .05f;
-        } else if (pw.equalsIgnoreCase("TEN_PERCENT")) {
+        }
+        else if (pw.equalsIgnoreCase("TEN_PERCENT"))
+        {
             return .1f;
-        } else if (pw.equalsIgnoreCase("TWENTY_PERCENT")) {
+        }
+        else if (pw.equalsIgnoreCase("TWENTY_PERCENT"))
+        {
             return .2f;
-        } else if (pw.equalsIgnoreCase("FIFTY_PERCENT")) {
+        }
+        else if (pw.equalsIgnoreCase("FIFTY_PERCENT"))
+        {
             return .5f;
-        } else if (pw.equalsIgnoreCase("ONE_HUNDRED_PERCENT")) {
+        }
+        else if (pw.equalsIgnoreCase("ONE_HUNDRED_PERCENT"))
+        {
             return 1f;
         }
 
         return .02f;
     }
 
-    public Painter getPainter() {
-
-        if (mainView == null) {
+    public Painter getPainter()
+    {
+        if (mainView == null)
+        {
             return null;
         }
 
         return mainView.getPainter();
     }
 
-    public void generateToast(String msg, int duration) {
+    public void generateToast(String msg, int duration)
+    {
         Context context = getApplicationContext();
         Toast toast = Toast.makeText(context, msg, duration);
         toast.show();

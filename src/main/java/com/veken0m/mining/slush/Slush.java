@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Slush {
+public class Slush
+{
     private final float confirmed_nmc_reward;
     private final float confirmed_reward;
     private final float estimated_reward;
@@ -40,7 +41,8 @@ public class Slush {
             @JsonProperty("username")
             String username,
             @JsonProperty("workers")
-            Workers workers) {
+            Workers workers)
+    {
         this.confirmed_nmc_reward = confirmed_nmc_reward;
         this.confirmed_reward = confirmed_reward;
         this.estimated_reward = estimated_reward;
@@ -51,55 +53,68 @@ public class Slush {
         this.workers = workers;
     }
 
-    public float getConfirmed_nmc_reward() {
+    public float getConfirmed_nmc_reward()
+    {
         return this.confirmed_nmc_reward;
     }
 
-    public float getConfirmed_reward() {
+    public float getConfirmed_reward()
+    {
         return this.confirmed_reward;
     }
 
-    public float getEstimated_reward() {
+    public float getEstimated_reward()
+    {
         return this.estimated_reward;
     }
 
-    public float getHashrate() {
+    public float getHashrate()
+    {
         return this.hashrate;
     }
 
-    public float getNmc_send_threshold() {
+    public float getNmc_send_threshold()
+    {
         return this.nmc_send_threshold;
     }
 
-    public String getRating() {
+    public String getRating()
+    {
         return this.rating;
     }
 
-    public float getSend_threshold() {
+    public float getSend_threshold()
+    {
         return this.send_threshold;
     }
 
-    public float getUnconfirmed_nmc_reward() {
+    public float getUnconfirmed_nmc_reward()
+    {
         return this.unconfirmed_nmc_reward;
     }
 
-    public void setUnconfirmed_nmc_reward(float unconfirmed_nmc_reward) {
+    public void setUnconfirmed_nmc_reward(float unconfirmed_nmc_reward)
+    {
         this.unconfirmed_nmc_reward = unconfirmed_nmc_reward;
     }
 
-    public float getUnconfirmed_reward() {
+    public float getUnconfirmed_reward()
+    {
         return this.unconfirmed_reward;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return this.username;
     }
 
-    public String getWallet() {
+    public String getWallet()
+    {
         return this.wallet;
     }
 
-    public Workers getWorkers() {
+    public Workers getWorkers()
+    {
         return this.workers;
     }
 }

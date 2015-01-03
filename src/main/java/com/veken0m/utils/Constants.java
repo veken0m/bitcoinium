@@ -3,8 +3,8 @@ package com.veken0m.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Constants {
-
+public class Constants
+{
     //Constants
     public static final String REFRESH = "com.veken0m.bitcoinium.REFRESH";
     public static final String PREFS_NAME_MINER = "com.veken0m.bitcoinium.MinerWidgetProvider";
@@ -21,7 +21,8 @@ public class Constants {
     public static final String DEFAULT_MINING_POOL = "BitMinter";
     public static Map<String, String> CRYPTO_SYMBOLS = new HashMap<>();
 
-    static {
+    static
+    {
         CRYPTO_SYMBOLS = new HashMap<>();
         CRYPTO_SYMBOLS.put("BTC", "฿");
         CRYPTO_SYMBOLS.put("XBT", "฿");

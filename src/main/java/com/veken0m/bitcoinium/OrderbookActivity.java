@@ -45,8 +45,8 @@ import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
-
+public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
+{
     private final static Handler mOrderHandler = new Handler();
     /**
      * List of preference variables
@@ -64,15 +64,19 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private static Boolean threadRunning = false;
     private static Boolean noOrdersFound = false;
 
-    private final Runnable mOrderView = new Runnable() {
+    private final Runnable mOrderView = new Runnable()
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             drawOrderbookUI();
         }
     };
-    private final Runnable mError = new Runnable() {
+    private final Runnable mError = new Runnable()
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             errorOccured();
         }
     };
@@ -80,17 +84,19 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private List<LimitOrder> listAsks = null;
     private List<LimitOrder> listBids = null;
 
-    private static void readPreferences() {
-
+    private static void readPreferences()
+    {
         pref_enableHighlight = prefs.getBoolean("highlightPref", true);
         pref_highlightHigh = Integer.parseInt(prefs.getString("depthHighlightUpperPref", "10"));
         pref_highlightLow = Integer.parseInt(prefs.getString("depthHighlightLowerPref", "1"));
         currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
-        pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref",
-                true);
-        try {
+        pref_showCurrencySymbol = prefs.getBoolean("showCurrencySymbolPref", true);
+        try
+        {
             pref_orderbookLimiter = Integer.parseInt(prefs.getString("orderbookLimiterPref", "100"));
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             pref_orderbookLimiter = 100;
             // If preference is not set a valid integer set to "100"
             Editor editor = prefs.edit();
@@ -100,7 +106,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_orderbook);
@@ -130,21 +137,25 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         // KarmaAdsUtils.initAd(this);
     }
 
-    @Override public void onRefresh() {
+    @Override
+    public void onRefresh()
+    {
         viewOrderbook();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -160,15 +171,19 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_orderbook);
 
-        if (listAsks != null && listBids != null) {
+        if (listAsks != null && listBids != null)
+        {
             populateExchangeDropdown();
             populateCurrencyDropdown();
             drawOrderbookUI();
-        } else {
+        }
+        else
+        {
             // Fetch data
             viewOrderbook();
         }
@@ -177,9 +192,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     /**
      * Fetch the OrderbookActivity and split into Ask/Bids lists
      */
-    boolean getOrderBook() {
-
-        if (listAsks != null && listBids != null) {
+    boolean getOrderBook()
+    {
+        if (listAsks != null && listBids != null)
+        {
             listAsks.clear();
             listBids.clear();
         }
@@ -188,22 +204,27 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         PollingMarketDataService marketData = ExchangeUtils.getMarketData(exchange, currencyPair);
         OrderBook orderbook;
 
-        try {
+        try
+        {
             orderbook = marketData.getOrderBook(currencyPair);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             return false;
         }
 
-        if (orderbook != null) {
+        if (orderbook != null)
+        {
             listAsks = orderbook.getAsks();
             listBids = orderbook.getBids();
 
-            if(listAsks.isEmpty() && listBids.isEmpty())
+            if (listAsks.isEmpty() && listBids.isEmpty())
                 noOrdersFound = true;
 
             // Limit OrderbookActivity orders drawn to improve performance
-            if (pref_orderbookLimiter != 0) {
+            if (pref_orderbookLimiter != 0)
+            {
                 if (listAsks.size() > pref_orderbookLimiter)
                     listAsks = listAsks.subList(0, pref_orderbookLimiter);
 
@@ -211,7 +232,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                     listBids = listBids.subList(0, pref_orderbookLimiter);
             }
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
@@ -219,26 +242,29 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     /**
      * Draw the Orders to the screen in a table
      */
-    void drawOrderbookUI() {
-        if(swipeLayout != null)
+    void drawOrderbookUI()
+    {
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
         final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
-        if (orderbookTable != null) {
-
+        if (orderbookTable != null)
+        {
             orderbookTable.removeAllViews();
 
             boolean bBackGroundColor = true;
 
             String baseCurrencySymbol = "";
             String counterCurrencySymbol = "";
-            if (pref_showCurrencySymbol) {
+            if (pref_showCurrencySymbol)
+            {
                 counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
                 baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.baseSymbol);
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
             int priceUnitIndex = 0;
-            if (!listBids.isEmpty() || !listAsks.isEmpty()){
+            if (!listBids.isEmpty() || !listAsks.isEmpty())
+            {
                 LimitOrder tempOrder = listBids.isEmpty() ? listAsks.get(0) : listBids.get(0);
                 priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
             }
@@ -264,35 +290,39 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             int bidSize = listBids.size();
 
             int length = Math.max(askSize, bidSize);
-            for (int i = 0; i < length; i++) {
-
+            for (int i = 0; i < length; i++)
+            {
                 TextView tvAskAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvAskPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
                 TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
 
-                if (bidSize > i) {
+                if (bidSize > i)
+                {
                     LimitOrder limitorderBid = listBids.get(i);
                     float bidPrice = limitorderBid.getLimitPrice().floatValue();
                     float bidAmount = limitorderBid.getTradableAmount().floatValue();
                     tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
                     tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
 
-                    if (pref_enableHighlight) {
+                    if (pref_enableHighlight)
+                    {
                         int bidTextColor = depthColor(bidAmount);
                         tvBidAmount.setTextColor(bidTextColor);
                         tvBidPrice.setTextColor(bidTextColor);
                     }
                 }
 
-                if (askSize > i) {
+                if (askSize > i)
+                {
                     LimitOrder limitorderAsk = listAsks.get(i);
                     float askPrice = limitorderAsk.getLimitPrice().floatValue();
                     float askAmount = limitorderAsk.getTradableAmount().floatValue();
                     tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
                     tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
 
-                    if (pref_enableHighlight) {
+                    if (pref_enableHighlight)
+                    {
                         int askTextColor = depthColor(askAmount);
                         tvAskAmount.setTextColor(askTextColor);
                         tvAskPrice.setTextColor(askTextColor);
@@ -312,35 +342,42 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
                 orderbookTable.addView(newRow);
             }
-        } else {
+        }
+        else
+        {
             failedToDrawUI();
         }
-        if(swipeLayout != null)
+        if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
-}
+    }
 
-    private void viewOrderbook() {
-
+    private void viewOrderbook()
+    {
         swipeLayout.setRefreshing(true);
-        if (Utils.isConnected(getApplicationContext())) {
+        if (Utils.isConnected(getApplicationContext()))
+        {
             if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
-        } else {
+        }
+        else
+        {
             notConnected();
         }
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+    {
         CurrencyPair prevCurrencyPair = currencyPair;
         String prevExchangeName = exchangeName;
 
-        switch (parent.getId()) {
+        switch (parent.getId())
+        {
             case R.id.orderbook_exchange_spinner:
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
-                if (exchangeChanged) {
+                if (exchangeChanged)
+                {
                     exchange = new ExchangeProperties(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     populateCurrencyDropdown();
@@ -356,39 +393,44 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> parent)
+    {
         // Do nothing...
     }
 
-    private void errorOccured() {
-
+    private void errorOccured()
+    {
         swipeLayout.setRefreshing(false);
 
-        try {
-            if (dialog == null || !dialog.isShowing()) {
+        try
+        {
+            if (dialog == null || !dialog.isShowing())
+            {
                 // Display error Dialog
                 Resources res = getResources();
                 String text = String.format(res.getString(R.string.error_exchangeConnection),
                         res.getString(R.string.orderbook), exchange.getExchangeName());
                 dialog = Utils.errorDialog(this, text);
             }
-        } catch (WindowManager.BadTokenException e) {
+        }
+        catch (WindowManager.BadTokenException e)
+        {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
     }
 
-    private void failedToDrawUI() {
-
+    private void failedToDrawUI()
+    {
         swipeLayout.setRefreshing(false);
         // Display error Dialog
         if (dialog == null || !dialog.isShowing())
             dialog = Utils.errorDialog(this, getString(R.string.error_BitcoinAverageTable), getString(R.string.error));
     }
 
-    void populateExchangeDropdown() {
-
+    void populateExchangeDropdown()
+    {
         // Re-populate the dropdown menu
-        List<String> exchanges  = getDropdownItems(getApplicationContext(), ExchangeProperties.ItemType.ORDERBOOK_ENABLED).first;
+        List<String> exchanges = getDropdownItems(getApplicationContext(), ExchangeProperties.ItemType.ORDERBOOK_ENABLED).first;
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_exchange_spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, exchanges);
 
@@ -400,8 +442,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         spinner.setSelection(index);
     }
 
-    void populateCurrencyDropdown() {
-
+    void populateCurrencyDropdown()
+    {
         // Re-populate the dropdown menu
         String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.orderbook_currency_spinner);
@@ -411,13 +453,15 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        if (exchangeChanged) {
+        if (exchangeChanged)
+        {
             int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
             spinner.setSelection(index);
         }
     }
 
-    int depthColor(float amount) {
+    int depthColor(float amount)
+    {
         if ((int) amount >= pref_highlightHigh)
             return Color.GREEN;
         else if ((int) amount < pref_highlightLow)
@@ -427,24 +471,26 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
         readPreferences();
         populateExchangeDropdown();
 
-        if (listAsks != null && listBids != null) {
+        if (listAsks != null && listBids != null)
+        {
             populateExchangeDropdown();
             populateCurrencyDropdown();
             drawOrderbookUI();
         }
     }
 
-    private class OrderbookThread extends Thread {
-
+    private class OrderbookThread extends Thread
+    {
         @Override
-        public void run() {
-
+        public void run()
+        {
             threadRunning = true;
             if (getOrderBook())
                 mOrderHandler.post(mOrderView);
@@ -453,5 +499,4 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             threadRunning = false;
         }
     }
-
 }

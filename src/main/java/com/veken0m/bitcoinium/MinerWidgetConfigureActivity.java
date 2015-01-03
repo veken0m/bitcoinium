@@ -11,18 +11,19 @@ import android.preference.PreferenceManager;
 
 import com.veken0m.utils.Constants;
 
-public class MinerWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener{
-
+public class MinerWidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener
+{
     private static final String PREF_MININGPOOL_KEY = "miningpool_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
-    public MinerWidgetConfigureActivity() {
+    public MinerWidgetConfigureActivity()
+    {
         super();
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    private static void saveMiningPoolPref(Context context, int appWidgetId, String miningPool) {
-
+    private static void saveMiningPoolPref(Context context, int appWidgetId, String miningPool)
+    {
         SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0).edit();
         prefs.putString(PREF_MININGPOOL_KEY + appWidgetId, miningPool);
         prefs.commit();
@@ -30,15 +31,15 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity implements 
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    static String loadMiningPoolPref(Context context, int appWidgetId) {
-
+    static String loadMiningPoolPref(Context context, int appWidgetId)
+    {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_MINER, 0);
         return prefs.getString(PREF_MININGPOOL_KEY + appWidgetId, null);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_miner_widget);
         addPreferencesFromResource(R.xml.pref_miner);
@@ -63,14 +64,16 @@ public class MinerWidgetConfigureActivity extends PreferenceActivity implements 
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
 
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
     }
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
 
+    @Override
+    public boolean onPreferenceClick(Preference preference)
+    {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String pref_widgetMiningPool = prefs.getString("widgetMiningPoolPref", Constants.DEFAULT_MINING_POOL);
 

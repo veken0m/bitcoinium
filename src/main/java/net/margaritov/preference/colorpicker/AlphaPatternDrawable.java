@@ -31,7 +31,8 @@ import android.graphics.drawable.Drawable;
  *
  * @author Daniel Nilsson
  */
-public class AlphaPatternDrawable extends Drawable {
+public class AlphaPatternDrawable extends Drawable
+{
 
     private int mRectangleSize = 10;
 
@@ -47,34 +48,40 @@ public class AlphaPatternDrawable extends Drawable {
      */
     private Bitmap mBitmap;
 
-    public AlphaPatternDrawable(int rectangleSize) {
+    public AlphaPatternDrawable(int rectangleSize)
+    {
         mRectangleSize = rectangleSize;
         mPaintWhite.setColor(0xffffffff);
         mPaintGray.setColor(0xffcbcbcb);
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas)
+    {
         canvas.drawBitmap(mBitmap, null, getBounds(), mPaint);
     }
 
     @Override
-    public int getOpacity() {
+    public int getOpacity()
+    {
         return 0;
     }
 
     @Override
-    public void setAlpha(int alpha) {
+    public void setAlpha(int alpha)
+    {
         throw new UnsupportedOperationException("Alpha is not supported by this drawwable.");
     }
 
     @Override
-    public void setColorFilter(ColorFilter cf) {
+    public void setColorFilter(ColorFilter cf)
+    {
         throw new UnsupportedOperationException("ColorFilter is not supported by this drawwable.");
     }
 
     @Override
-    protected void onBoundsChange(Rect bounds) {
+    protected void onBoundsChange(Rect bounds)
+    {
         super.onBoundsChange(bounds);
 
         int height = bounds.height();
@@ -94,9 +101,11 @@ public class AlphaPatternDrawable extends Drawable {
      * recreate it each time draw() is called since it
      * takes a few milliseconds.
      */
-    private void generatePatternBitmap() {
+    private void generatePatternBitmap()
+    {
 
-        if (getBounds().width() <= 0 || getBounds().height() <= 0) {
+        if (getBounds().width() <= 0 || getBounds().height() <= 0)
+        {
             return;
         }
 
@@ -105,10 +114,12 @@ public class AlphaPatternDrawable extends Drawable {
 
         Rect r = new Rect();
         boolean verticalStartWhite = true;
-        for (int i = 0; i <= numRectanglesVertical; i++) {
+        for (int i = 0; i <= numRectanglesVertical; i++)
+        {
 
             boolean isWhite = verticalStartWhite;
-            for (int j = 0; j <= numRectanglesHorizontal; j++) {
+            for (int j = 0; j <= numRectanglesHorizontal; j++)
+            {
 
                 r.top = i * mRectangleSize;
                 r.left = j * mRectangleSize;
