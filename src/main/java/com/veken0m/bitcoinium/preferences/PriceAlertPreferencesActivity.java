@@ -41,17 +41,24 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity
         {
             final AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
-            int[] widgetIds = (widgetManager != null) ? widgetManager.getAppWidgetIds(widgetComponent) : new int[0];
 
-            if (widgetIds.length > 0)
+            if (widgetManager != null)
             {
+                int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+                if(widgetIds.length == 0)
+                    alertSettingsPref.addPreference(noWidgetFound());
+
                 for (final int appWidgetId : widgetIds)
                 {
                     // Obtain Widget configuration
                     String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                    if (widgetCurrency == null || widgetExchange == null)
+                    if (widgetCurrency == null || widgetExchange == null){
+                        // Bad widget, destroy it.
+                        AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);
+                        host.deleteAppWidgetId(appWidgetId);
                         continue;
+                    }
 
                     ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
                     String exchangeName = exchange.getExchangeName();
@@ -101,10 +108,6 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity
 
                     alertSettingsPref.addPreference(alertLimits);
                 }
-            }
-            else
-            {
-                alertSettingsPref.addPreference(noWidgetFound());
             }
         }
     }

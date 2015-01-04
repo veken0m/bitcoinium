@@ -1,5 +1,6 @@
 package com.veken0m.bitcoinium.preferences;
 
+import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -34,13 +35,20 @@ public class TickerPreferencesActivity extends BasePreferenceActivity
         if (widgetManager != null)
         {
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            if(widgetIds.length == 0)
+                notificationSettingsPref.addPreference(noWidgetFound());
+
             for (int appWidgetId : widgetIds)
             {
                 // Obtain Widget configuration
                 String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                 String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                if (widgetCurrency == null || widgetExchange == null)
+                if (widgetCurrency == null || widgetExchange == null){
+                    // Bad widget, destroy it.
+                    AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);
+                    host.deleteAppWidgetId(appWidgetId);
                     continue;
+                }
 
                 ExchangeProperties exchange = new ExchangeProperties(this, widgetExchange);
 
@@ -53,10 +61,6 @@ public class TickerPreferencesActivity extends BasePreferenceActivity
                 // Add to screen
                 notificationSettingsPref.addPreference(tickerCheckBox);
             }
-        }
-        else
-        {
-            notificationSettingsPref.addPreference(noWidgetFound());
         }
     }
 
