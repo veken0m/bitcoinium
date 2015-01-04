@@ -72,8 +72,8 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
 
                     CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(walletCurrency);
 
-                    Exchange blockchainExchangexchange = ExchangeFactory.INSTANCE.createExchange(BlockchainExchange.class.getName());
-                    Blockchain blockchain = RestProxyFactory.createProxy(Blockchain.class, blockchainExchangexchange.getExchangeSpecification().getPlainTextUri());
+                    Exchange exBlockchain = ExchangeFactory.INSTANCE.createExchange(BlockchainExchange.class.getName());
+                    Blockchain blockchain = RestProxyFactory.createProxy(Blockchain.class, exBlockchain.getExchangeSpecification().getPlainTextUri());
 
                     RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.appwidget_balance);
                     try

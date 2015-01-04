@@ -29,5 +29,7 @@ public class Constants
         CRYPTO_SYMBOLS.put("LTC", "Ł");
         CRYPTO_SYMBOLS.put("DOGE", "Ð");
         CRYPTO_SYMBOLS.put("XDG", "Ð");
+        CRYPTO_SYMBOLS.put("XRP", "Ʀ");
+        CRYPTO_SYMBOLS.put("NMC", "ℕ");
     }
 }

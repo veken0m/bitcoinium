@@ -124,8 +124,8 @@ public class BalanceWidgetConfigureActivity extends PreferenceActivity implement
         String sBalanceValue = prefs.getString("widgetBalanceValuePref", Constants.DEFAULT_CURRENCY_PAIR);
 
         // Save widget configuration
-        saveAddressPref(this, mAppWidgetId, sAddress);
-        saveNicknamePref(this, mAppWidgetId, sAddressNickname);
+        saveAddressPref(this, mAppWidgetId, sAddress.trim());
+        saveNicknamePref(this, mAppWidgetId, sAddressNickname.trim());
         saveCurrencyPref(this, mAppWidgetId, sBalanceValue);
 
         // Clear potentially sensitive information

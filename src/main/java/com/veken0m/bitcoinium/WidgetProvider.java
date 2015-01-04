@@ -200,7 +200,7 @@ public class WidgetProvider extends BaseWidgetProvider
             if (prefs.getBoolean(pairId + "TickerPref", false))
             {
                 String lastString = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
-                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastFloat, exchange.getExchangeName());
+                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
                 String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
 
                 Intent notificationIntent = new Intent(this, TickerPreferencesActivity.class);
