@@ -7,11 +7,15 @@ Currently supported exchanges include:
   - [ANX](https://anxbtc.com)
   - [BitBay](https://bitbay.pl)
   - [Bitcoin-Central](http://bitcoin-central.net)
+  - [BitcoinToYou](https://www.bitcointoyou.com)
   - [Bitcurex](https://bitcurex.com)
   - [Bitfinex](https://bitfinex.com.com)
+  - [BitKonan](https://bitkonan.com)
   - [Bittrex](https://bittrex.com)
   - [BitMarket.pl](https://bitmarket.pl)
   - [Bitstamp](https://www.bitstamp.net)
+  - [BitVC](https://www.bitvc.com)
+  - [BleuTrade](https://bleutrade.com)
   - [BTC-E](https://btc-e.com)
   - [BTC-Trade](https://www.btctrade.com)
   - [BTC China](https://btcchina.com)
@@ -20,6 +24,7 @@ Currently supported exchanges include:
   - [Canadian Virtex](https://www.cavirtex.com)
   - [CEX.IO](https://cex.io)
   - [Coinbase](https://coinbase.com)
+  - [Coinsetter](https://www.coinsetter.com)
   - [Crypto-Trade](https://crypto-trade.com)
   - [Cryptonit](https://cryptonit.net)
   - [Cryptsy](https://www.cryptsy.com)
@@ -29,6 +34,8 @@ Currently supported exchanges include:
   - [Kraken](https://www.kraken.com)
   - [LakeBTC](https://lakebtc.com)
   - [MintPal](https://www.mintpal.com)
+  - [Mercado](https://www.mercadobitcoin.com.br)
+  - [OKCoin](https://www.okcoin.com)
   - [Poloniex](https://poloniex.com)
   - [Vault of Satoshi](https://www.vaultofsatoshi.com)
   - [VirCurEx](https://vircurex.com)
@@ -53,8 +60,6 @@ Supported Mining Pools:
   - [Eligius.st](http://eligius.st)
   - [GHash.IO](https://ghash.io/)
   - [Slush](http://mining.bitcoin.cz)
-
-  - [Deepbit](http://deepbit.net) (removed)
 
 Features
 ===============
@@ -95,8 +100,7 @@ Google Play
 [Bitcoinium Prime (Ad-Free/Paid)](https://play.google.com/store/apps/details?id=com.veken0m.bitcoinium)
 
 
-Donations
+Bitcoin Donations
 ===============
-- Bitcoin: 1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54
-- Litecoin: LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp
-- Dogecoin: D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y
+- Bitcoinium: 1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54
+- XChange Library: 1MHMpzFxx4fRSaeYGSxhyEcgux7j4Gqwsc
