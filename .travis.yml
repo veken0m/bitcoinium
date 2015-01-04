@@ -7,12 +7,12 @@ branches:
     
 env:
   matrix:
-    - ANDROID_TARGET=android-20
+    - ANDROID_TARGET=android-21
 
 android:
   components:
-    - build-tools-20.0.0
-    - android-20                
+    - build-tools-21.1.2
+    - android-21
     - extra-android-support
     
 licenses:

@@ -196,7 +196,7 @@
     <string name="pref_refresh_interval_summary">Time interval between widget updates. Shorter intervals increase battery drain.</string>
     <string name="pref_tap_refresh_summary">Tapping the widget will update instead of opening app</string>
     <string name="pref_widget_config_summary">Various display and power saving settings</string>
-    <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active</string>
+    <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active.</string>
     <string name="pref_milli_btc_summary">Changes all BTC widget prices to mBTC. \nEx: $1010.00 will show as $1.010 \nDoes not affect other crypto-currencies</string>
 
     <!-- Price Alert -->
@@ -270,7 +270,7 @@
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
     <string name="pref_widget_deactivate">Force Deactivate Widget</string>
-    <string name="pref_widget_deactivate_summary">Android has a bug that sometimes leaves invisible widgets. If this widget doesn\'t exist, deactivate it.</string>
+    <string name="pref_widget_deactivate_summary">Android has a bug that sometimes leaves invisible widgets. If this widget doesn\'t exist, deactivate it</string>
     <string name="please_delete">PLEASE DELETE</string>
     <string name="deactivated">DEACTIVATED</string>
     <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>

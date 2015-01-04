@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.bitcoinium"
-    android:versionCode="64"
+    android:versionCode="65"
     android:versionName="@string/version_name">
 
+    <!-- Used for accessing internet -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Used to check WiFi and Mobile network state -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Used to set an Alarm in the Android Clock app -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <!-- Used to set vibration on push notifications -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"

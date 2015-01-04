@@ -172,11 +172,10 @@ public class HomeMenuFragment extends Fragment
                     final CharSequence items[] = getResources().getStringArray(R.array.exchangesBitcoiniumWS);
                     adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
                     {
-
                         @Override
                         public void onClick(DialogInterface d, int n)
                         {
-                            Intent intent = new Intent(getActivity().getApplicationContext(), XTraderActivity.class);
+                            Intent intent = new Intent(activity.getApplicationContext(), XTraderActivity.class);
                             intent.putExtra("exchange", items[n]);
                             startActivity(intent);
                         }
