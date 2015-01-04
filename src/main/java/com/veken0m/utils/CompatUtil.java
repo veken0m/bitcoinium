@@ -13,12 +13,12 @@ import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.xeiam.xchange.currency.CurrencyPair;
 
 // This class will contain all conversions required to maintain backwards compatibility with settings from previous version of the app
-public class CompatUtil {
-
-    static public void convertAlarmPrefs(Context context) {
-
+public class CompatUtil
+{
+    static public void convertAlarmPrefs(Context context)
+    {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if(!prefs.getBoolean("alarmPref", false))
+        if (!prefs.getBoolean("alarmPref", false))
             return;
 
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
@@ -26,7 +26,8 @@ public class CompatUtil {
 
         int widgetIds[] = widgetManager.getAppWidgetIds(widgetComponent);
         // This preference was removed, if was previously enabled update it
-        for (int appWidgetId : widgetIds) {
+        for (int appWidgetId : widgetIds)
+        {
             String exchangePref = WidgetConfigureActivity.loadExchangePref(context, appWidgetId);
             if (exchangePref == null) continue; // skip to next widget
 

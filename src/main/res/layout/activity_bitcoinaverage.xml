@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bitcoinaverage_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -70,26 +69,26 @@
         android:background="@color/ics_blue"
         android:visibility="visible" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bitcoinaverage_swipe_container"
-        android:background="@color/dark"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ScrollView
-        android:id="@+id/bitcoinaverage_tablescroll"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:background="@color/dark">
 
-        <TableLayout
-            android:id="@+id/bitcoinaverage_list"
+        <ScrollView
+            android:id="@+id/bitcoinaverage_tablescroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:showDividers="beginning"
-            android:stretchColumns="5"/>
-    </ScrollView>
+            android:layout_weight="1"
+            android:background="@color/dark">
+
+            <TableLayout
+                android:id="@+id/bitcoinaverage_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="beginning"
+                android:stretchColumns="5" />
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--     <WebView

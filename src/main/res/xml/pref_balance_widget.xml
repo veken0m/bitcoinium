@@ -8,13 +8,13 @@
             android:defaultValue=""
             android:key="widgetAddressPref"
             android:summary="@string/pref_address_summary"
-            android:title="@string/pref_input_address"/>
+            android:title="@string/pref_input_address" />
 
         <EditTextPreference
             android:defaultValue=""
             android:key="widgetAddressNicknamePref"
             android:summary="@string/pref_address_nickname_summary"
-            android:title="@string/addressNickname"/>
+            android:title="@string/addressNickname" />
 
         <ListPreference
             android:defaultValue="@string/default_currency"
@@ -22,7 +22,7 @@
             android:entryValues="@array/bitcoinaveragecurrencies"
             android:key="widgetBalanceValuePref"
             android:summary="@string/pref_balance_value_summary"
-            android:title="@string/localCurrency"/>
+            android:title="@string/localCurrency" />
     </PreferenceCategory>
 
 </PreferenceScreen>

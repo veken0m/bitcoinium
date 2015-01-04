@@ -49,11 +49,12 @@ Supported Mining Pools:
   - [50BTC](https://50btc.com/en)
   - [BitMinter](http://bitminter.com)
   - [BTC Guild](https://www.btcguild.com)
-  - [Deepbit](http://deepbit.net)
   - [EclipseMC](https://eclipsemc.com)
   - [Eligius.st](http://eligius.st)
   - [GHash.IO](https://ghash.io/)
   - [Slush](http://mining.bitcoin.cz)
+
+  - [Deepbit](http://deepbit.net) (removed)
 
 Features
 ===============

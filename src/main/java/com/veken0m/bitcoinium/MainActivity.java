@@ -3,7 +3,6 @@ package com.veken0m.bitcoinium;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
@@ -27,13 +25,14 @@ import java.util.ArrayList;
  * @author Michael Lagacé a.k.a. veken0m
  * @version 1.9.1 Jan 12 2014
  */
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity
+{
     /**
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -44,11 +43,13 @@ public class MainActivity extends ActionBarActivity {
         // KarmaAdsUtils.initAd(this);
     }
 
-    void initTabbedActionBar() {
+    void initTabbedActionBar()
+    {
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 
         // ActionBar gets initiated
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setLogo(R.drawable.ic_launcher);
 
         Bundle extras = getIntent().getExtras();
         String exchange = (extras != null) ? extras.getString("exchangeKey") : "";
@@ -59,8 +60,8 @@ public class MainActivity extends ActionBarActivity {
         actionbar.show();
     }
 
-    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, String identity, Class<? extends Fragment> viewFragment) {
-
+    private void addTab(ActionBar actionbar, TabsAdapter tabsAdapter, String identity, Class<? extends Fragment> viewFragment)
+    {
         ActionBar.Tab tab = actionbar.newTab();//.setText(identity);
 
         Bundle args = new Bundle();
@@ -70,16 +71,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.action_preferences:
                 startActivity(new Intent(this, PreferencesActivity.class));
                 return true;
@@ -91,26 +94,16 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         // clear the extra
         getIntent().removeExtra("exchangeKey");
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent)
+    {
         super.onNewIntent(intent);
 
         setIntent(intent);
@@ -127,15 +120,15 @@ public class MainActivity extends ActionBarActivity {
      * listens to changes in tabs, and takes care of switch to the correct paged
      * in the ViewPager whenever the selected tab changes.
      */
-    public static class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
-
+    public static class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, ActionBar.TabListener
+    {
         private final Context mContext;
         private final ActionBar mBar;
         private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+        private final ArrayList<TabInfo> mTabs = new ArrayList<>();
 
-        public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager) {
-
+        public TabsAdapter(ActionBarActivity activity, ActionBar bar, ViewPager pager)
+        {
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mBar = bar;
@@ -144,7 +137,8 @@ public class MainActivity extends ActionBarActivity {
             mViewPager.setOnPageChangeListener(this);
         }
 
-        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss, Bundle args, String ident) {
+        public void addTab(ActionBar.Tab tab, Class<? extends Fragment> clss, Bundle args, String ident)
+        {
             TabInfo info = new TabInfo(clss, args, ident);
             tab.setTag(info);
             tab.setTabListener(this);
@@ -154,19 +148,23 @@ public class MainActivity extends ActionBarActivity {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return mTabs.size();
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position)
+        {
             TabInfo info = mTabs.get(position);
             return Fragment.instantiate(mContext, info.clss.getName(),
                     info.args);
         }
 
-        public int getIndexForIdentity(String identity) {
-            for (int i = 0; i < mTabs.size(); i++) {
+        public int getIndexForIdentity(String identity)
+        {
+            for (int i = 0; i < mTabs.size(); i++)
+            {
                 TabInfo info = mTabs.get(i);
                 if (identity.equals(info.ident))
                     return i;
@@ -175,41 +173,50 @@ public class MainActivity extends ActionBarActivity {
         }
 
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
         }
 
         @Override
-        public void onPageSelected(int position) {
+        public void onPageSelected(int position)
+        {
             mBar.setSelectedNavigationItem(position);
         }
 
         @Override
-        public void onPageScrollStateChanged(int state) {
+        public void onPageScrollStateChanged(int state)
+        {
         }
 
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(Tab tab, FragmentTransaction ft)
+        {
             Object tag = tab.getTag();
-            for (int i = 0; i < mTabs.size(); i++) {
+            for (int i = 0; i < mTabs.size(); i++)
+            {
                 if (mTabs.get(i) == tag)
                     mViewPager.setCurrentItem(i);
             }
         }
 
         @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft)
+        {
         }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft)
+        {
         }
 
-        static final class TabInfo {
+        static final class TabInfo
+        {
             private final Class<?> clss;
             private final Bundle args;
             private final String ident;
 
-            TabInfo(Class<?> _class, Bundle _args, String _ident) {
+            TabInfo(Class<?> _class, Bundle _args, String _ident)
+            {
                 clss = _class;
                 args = _args;
                 ident = _ident;

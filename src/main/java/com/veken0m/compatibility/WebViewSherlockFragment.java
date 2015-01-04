@@ -18,20 +18,23 @@ import android.webkit.WebView;
  * The WebView is automatically paused or resumed when the Fragment is paused or
  * resumed.
  */
-public class WebViewSherlockFragment extends Fragment {
+public class WebViewSherlockFragment extends Fragment
+{
     protected WebView mWebView = null;
     protected boolean mIsWebViewAvailable = false;
 
-    public WebViewSherlockFragment() {
+    public WebViewSherlockFragment()
+    {
     }
 
     /**
      * Called to instantiate the view. Creates and returns the WebView.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (mWebView != null) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        if (mWebView != null)
+        {
             mWebView.destroy();
         }
         mWebView = new WebView(getActivity());
@@ -44,7 +47,8 @@ public class WebViewSherlockFragment extends Fragment {
      * Resumes the WebView.
      */
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mWebView.onPause();
     }
@@ -53,7 +57,8 @@ public class WebViewSherlockFragment extends Fragment {
      * Called when the fragment is no longer resumed. Pauses the WebView.
      */
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         mWebView.onResume();
         super.onResume();
     }
@@ -63,7 +68,8 @@ public class WebViewSherlockFragment extends Fragment {
      * is no longer available after this time.
      */
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         mIsWebViewAvailable = false;
         super.onDestroyView();
     }
@@ -73,8 +79,10 @@ public class WebViewSherlockFragment extends Fragment {
      * of the WebView.
      */
     @Override
-    public void onDestroy() {
-        if (mWebView != null) {
+    public void onDestroy()
+    {
+        if (mWebView != null)
+        {
             mWebView.destroy();
             mWebView = null;
         }
@@ -84,7 +92,8 @@ public class WebViewSherlockFragment extends Fragment {
     /**
      * Gets the WebView.
      */
-    public WebView getWebView() {
+    public WebView getWebView()
+    {
         return mIsWebViewAvailable ? mWebView : null;
     }
 }

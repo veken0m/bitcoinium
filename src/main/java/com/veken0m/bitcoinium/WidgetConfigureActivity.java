@@ -10,31 +10,36 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.util.Pair;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 
-public class WidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener{
+import java.util.List;
 
+import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
+
+public class WidgetConfigureActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener
+{
     private static final String PREF_EXCHANGE_KEY = "exchange_";
     private static final String PREF_CURRENCY_KEY = "currency_";
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
-    public WidgetConfigureActivity() {
+    public WidgetConfigureActivity()
+    {
         super();
     }
 
-    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId) {
-
+    private static void setCurrencyItems(ListPreference pCurrency, int nCurrencyArrayId)
+    {
         pCurrency.setEntries(nCurrencyArrayId);
         pCurrency.setEntryValues(nCurrencyArrayId);
         pCurrency.setValueIndex(0);
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    private static void saveCurrencyPref(Context context, int appWidgetId, String currency) {
-
+    private static void saveCurrencyPref(Context context, int appWidgetId, String currency)
+    {
         SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
         prefs.putString(PREF_CURRENCY_KEY + appWidgetId, currency);
         prefs.commit();
@@ -42,15 +47,15 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    public static String loadCurrencyPref(Context context, int appWidgetId) {
-
+    public static String loadCurrencyPref(Context context, int appWidgetId)
+    {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         return prefs.getString(PREF_CURRENCY_KEY + appWidgetId, null);
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    private static void saveExchangePref(Context context, int appWidgetId, String exchange) {
-
+    private static void saveExchangePref(Context context, int appWidgetId, String exchange)
+    {
         SharedPreferences.Editor prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0).edit();
         prefs.putString(PREF_EXCHANGE_KEY + appWidgetId, exchange);
         prefs.commit();
@@ -58,8 +63,8 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
-    public static String loadExchangePref(Context context, int appWidgetId) {
-
+    public static String loadExchangePref(Context context, int appWidgetId)
+    {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME_PRICE, 0);
         String exchangePref = prefs.getString(PREF_EXCHANGE_KEY + appWidgetId, null);
 
@@ -72,8 +77,8 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_price_widget);
         addPreferencesFromResource(R.xml.pref_widgets);
@@ -95,47 +100,44 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
         ListPreference widgetExchangePref = (ListPreference) findPreference("widgetExchangePref");
         ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
 
+        Pair<List<String>, List<String>> exchanges = getDropdownItems(getApplicationContext(), ExchangeProperties.ItemType.TICKER_ENABLED);
+        widgetExchangePref.setEntries(exchanges.first.toArray(new CharSequence[exchanges.first.size()]));
+        widgetExchangePref.setEntryValues(exchanges.second.toArray(new CharSequence[exchanges.second.size()]));
+
         // get the Resource ID for the currency array
-        String sExchange = (widgetExchangePref != null) ? widgetExchangePref.getValue() : Constants.DEFAULT_EXCHANGE;
-        int nCurrencyArrayId = getResources().getIdentifier(sExchange + "currencies", "array", this.getPackageName());
+        ExchangeProperties ex = new ExchangeProperties(this, widgetExchangePref.getValue());
+        int nCurrencyArrayId = getResources().getIdentifier(ex.getIdentifier() + "currencies", "array", this.getPackageName());
 
         // populate the list with the Exchange's Currency Pairs
         setCurrencyItems(pCurrency, nCurrencyArrayId);
 
-        if(widgetExchangePref != null)
-            widgetExchangePref.setOnPreferenceChangeListener(this);
-
+        widgetExchangePref.setOnPreferenceChangeListener(this);
 
         Preference OKpref = findPreference("OKpref");
         OKpref.setOnPreferenceClickListener(this);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
 
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override
-    public boolean onPreferenceClick(Preference preference) {
-
+    public boolean onPreferenceClick(Preference preference)
+    {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String pref_widgetExchange = prefs.getString("widgetExchangePref", Constants.DEFAULT_EXCHANGE);
 
         ExchangeProperties exchange;
-        try {
+        try
+        {
             exchange = new ExchangeProperties(this, pref_widgetExchange);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Editor editor = prefs.edit();
             editor.putString("widgetExchangePref", Constants.DEFAULT_EXCHANGE).commit();
             exchange = new ExchangeProperties(this, Constants.DEFAULT_EXCHANGE);
@@ -157,8 +159,8 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object o) {
-
+    public boolean onPreferenceChange(Preference preference, Object o)
+    {
         ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
         int nCurrencyArrayId = getResources().getIdentifier(o.toString() + "currencies", "array", getBaseContext().getPackageName());
 

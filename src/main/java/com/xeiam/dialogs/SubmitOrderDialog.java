@@ -15,7 +15,8 @@ import com.xeiam.xbtctrader.XTraderActivity;
 import com.xeiam.xchange.dto.Order.OrderType;
 
 
-public class SubmitOrderDialog extends DialogFragment {
+public class SubmitOrderDialog extends DialogFragment
+{
 
     float amount = 0;
     float price = 0;
@@ -23,7 +24,8 @@ public class SubmitOrderDialog extends DialogFragment {
     private OrderType orderType;
 
 
-    public void set(OrderType orderType, float amount, float price) {
+    public void set(OrderType orderType, float amount, float price)
+    {
         this.amount = amount;
         this.price = price;
         this.orderType = orderType;
@@ -31,7 +33,8 @@ public class SubmitOrderDialog extends DialogFragment {
 
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
@@ -51,34 +54,42 @@ public class SubmitOrderDialog extends DialogFragment {
         //set the price
         ((TextView) orderView.findViewById(R.id.order_price)).setText(XTraderActivity.twoDecimalFormatter.format(price));
 
-        if (orderType == orderType.BID) {
+        if (orderType == orderType.BID)
+        {
             ((TextView) orderView.findViewById(R.id.order_type)).setText("BUY");
-        } else {
+        }
+        else
+        {
             orderView.setBackgroundColor(Color.CYAN);
             ((TextView) orderView.findViewById(R.id.order_type)).setText("SELL");
         }
 
         // Add action buttons
-        builder.setView(orderView).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setView(orderView).setPositiveButton("OK", new DialogInterface.OnClickListener()
+        {
 
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                try {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                try
+                {
                     float amount = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_btc)).getText().toString());
                     float price = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_price)).getText().toString());
                     XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     // TODO: handle exception
                 }
             }
         })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
 
                     }
                 });
         return builder.create();
-
     }
-
 }

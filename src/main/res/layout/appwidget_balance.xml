@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_layout"
     android:layout_width="140dp"
     android:layout_height="82dp"
@@ -17,7 +16,7 @@
         android:paddingTop="1dp"
         android:text="@string/address"
         android:textColor="#FDD017"
-        android:textSize="11dp"/>
+        android:textSize="11dp" />
 
     <TextView
         android:id="@+id/widgetBalance"
@@ -36,7 +35,7 @@
         android:layout_below="@id/widgetBalance"
         android:layout_centerHorizontal="true"
         android:text="@string/balanceValue"
-        android:textSize="12dp"/>
+        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/label"

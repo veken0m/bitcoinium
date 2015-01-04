@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-public class Eligius {
+public class Eligius
+{
     private final TimeInterval threeHours;
     private final TimeInterval twoMinutes;
     private final TimeInterval twentyTwoMinutes;
@@ -23,7 +24,8 @@ public class Eligius {
                    @JsonProperty("43200")
                    TimeInterval twelveHours,
                    @JsonProperty("intervals")
-                   ArrayList<String> intervals) {
+                   ArrayList<String> intervals)
+    {
         this.twoMinutes = twoMinutes;
         this.fourMinutes = fourMinutes;
         this.twentyTwoMinutes = twentyTwoMinutes;
@@ -32,27 +34,33 @@ public class Eligius {
         this.intervals = intervals;
     }
 
-    public TimeInterval get43200() {
+    public TimeInterval get43200()
+    {
         return this.twelveHours;
     }
 
-    public TimeInterval get10800() {
+    public TimeInterval get10800()
+    {
         return this.threeHours;
     }
 
-    public TimeInterval get128() {
+    public TimeInterval get128()
+    {
         return this.twoMinutes;
     }
 
-    public TimeInterval get1350() {
+    public TimeInterval get1350()
+    {
         return this.twentyTwoMinutes;
     }
 
-    public TimeInterval get256() {
+    public TimeInterval get256()
+    {
         return this.fourMinutes;
     }
 
-    public ArrayList<String> getIntervalsNames() {
+    public ArrayList<String> getIntervalsNames()
+    {
         return this.intervals;
     }
 }

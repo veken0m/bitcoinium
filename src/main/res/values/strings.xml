@@ -3,10 +3,22 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.1.1</string>
+    <string name="version_name">2.2.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
+
+    <string name="license">Copyright 2012-2014 Michael Lagacé\n\nLicensed under the Apache License, Version 2.0 (the "License")
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+    \n\n
+    http://www.apache.org/licenses/LICENSE-2.0
+    \n\n
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.</string>
 
     <!-- Widget Strings -->
     <string name="widget_price">Bitcoinium Price</string>
@@ -49,7 +61,7 @@
     <string name="displayCurrencySymbols">Display Currency Symbols</string>
     <string name="dogecoin">Dogecoin</string>
     <string name="donationAddress">Donation Address</string>
-    <string name="donations">Donations</string>
+    <string name="donations">Bitcoin Donations</string>
     <string name="email">Email</string>
     <string name="enable">Enable</string>
     <string name="enableLiquidityHighlighting">Enable Liquidity Highlighting</string>
@@ -60,7 +72,6 @@
     <string name="extraSettings">Extra Settings</string>
     <string name="feedback">Feedback</string>
     <string name="general">General</string>
-    <string name="googleAnalytics">Google Analytics</string>
     <string name="hashrate">Hashrate</string>
     <string name="high">High</string>
     <string name="highDepth">High Depth</string>
@@ -126,7 +137,7 @@
     <string name="label_priceGraph">Price Graph</string>
     <string name="label_updateWidgets">Update Widget(s)</string>
     <string name="label_webCharts">Web Charts</string>
-    <string name="label_xtrader">XTrader PREVIEW</string>
+    <string name="label_xtrader">XTrader</string>
 
     <!-- Dialog Messages -->
     <string name="error_BitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>
@@ -185,7 +196,7 @@
     <string name="pref_refresh_interval_summary">Time interval between widget updates. Shorter intervals increase battery drain.</string>
     <string name="pref_tap_refresh_summary">Tapping the widget will update instead of opening app</string>
     <string name="pref_widget_config_summary">Various display and power saving settings</string>
-    <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active</string>
+    <string name="pref_requires_widget">This feature requires the price widget associated with the exchange and currency pair to be active.</string>
     <string name="pref_milli_btc_summary">Changes all BTC widget prices to mBTC. \nEx: $1010.00 will show as $1.010 \nDoes not affect other crypto-currencies</string>
 
     <!-- Price Alert -->
@@ -201,8 +212,8 @@
     <string name="pref_price_alert_summary">Notifies when price crosses the alert limit</string>
     <string name="pref_price_alert_title">Price Alert Notifications</string>
     <string name="pref_alert_limits">%1$s alert limits"</string>
-    <string name="pref_enable_alert_summary">Enable notifications when alert is triggered for %1$s %2$s</string>
-    <string name="pref_enable_alert_title">Enable Price Alerts</string>
+    <string name="pref_enable_alert_summary">Push notification when alert triggered for %1$s %2$s</string>
+    <string name="pref_enable_alert_title">Enable Price Alert</string>
     <string name="pref_miner_widget_alert_summary">Use Price Alert settings to enable sound and vibration during notification</string>
 
     <!-- Balance Widget -->
@@ -250,6 +261,7 @@
     <string name="address_donation_bitcoin">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
     <string name="address_donation_dogecoin">D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y</string>
     <string name="address_donation_litecoin">LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp</string>
+    <string name="address_donation_bitcoin_xchange">1MHMpzFxx4fRSaeYGSxhyEcgux7j4Gqwsc</string>
     <string name="link_twitter">https://twitter.com/veken0m</string>
     <string name="link_bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="link_xchangeGithub">https://github.com/timmolter/xchange</string>
@@ -258,7 +270,7 @@
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
     <string name="pref_widget_deactivate">Force Deactivate Widget</string>
-    <string name="pref_widget_deactivate_summary">Android has a bug that sometimes leaves invisible widgets. If this widget doesn\'t exist, deactivate it.</string>
+    <string name="pref_widget_deactivate_summary">Android has a bug that sometimes leaves invisible widgets. If this widget doesn\'t exist, deactivate it</string>
     <string name="please_delete">PLEASE DELETE</string>
     <string name="deactivated">DEACTIVATED</string>
     <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>

@@ -3,7 +3,8 @@ package com.veken0m.mining.emc;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Workers {
+public class Workers
+{
     private final String hash_rate;
     private final String last_activity;
     private final float reset_shares;
@@ -22,7 +23,8 @@ public class Workers {
                    @JsonProperty("total_shares")
                    float total_shares,
                    @JsonProperty("worker_name")
-                   String worker_name) {
+                   String worker_name)
+    {
         this.hash_rate = hash_rate;
         this.last_activity = last_activity;
         this.reset_shares = reset_shares;
@@ -31,27 +33,33 @@ public class Workers {
         this.worker_name = worker_name;
     }
 
-    public String getHash_rate() {
+    public String getHash_rate()
+    {
         return this.hash_rate;
     }
 
-    public String getLast_activity() {
+    public String getLast_activity()
+    {
         return this.last_activity;
     }
 
-    public float getReset_shares() {
+    public float getReset_shares()
+    {
         return this.reset_shares;
     }
 
-    public float getRound_shares() {
+    public float getRound_shares()
+    {
         return this.round_shares;
     }
 
-    public float getTotal_shares() {
+    public float getTotal_shares()
+    {
         return this.total_shares;
     }
 
-    public String getWorker_name() {
+    public String getWorker_name()
+    {
         return this.worker_name;
     }
 }

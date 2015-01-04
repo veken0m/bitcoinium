@@ -2,7 +2,8 @@ package com.veken0m.mining.slush;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Worker {
+public class Worker
+{
     private final boolean alive;
     private final float hashrate;
     private final String score;
@@ -18,7 +19,8 @@ public class Worker {
                   @JsonProperty("score")
                   String score,
                   @JsonProperty("last_share")
-                  long last_share) {
+                  long last_share)
+    {
         this.alive = alive;
         this.hashrate = hashrate;
         this.last_share = last_share;
@@ -27,23 +29,28 @@ public class Worker {
         this.last_share = last_share;
     }
 
-    public boolean getAlive() {
+    public boolean getAlive()
+    {
         return this.alive;
     }
 
-    public float getHashrate() {
+    public float getHashrate()
+    {
         return this.hashrate;
     }
 
-    public long getLast_share() {
+    public long getLast_share()
+    {
         return this.last_share;
     }
 
-    public String getScore() {
+    public String getScore()
+    {
         return this.score;
     }
 
-    public float getShares() {
+    public float getShares()
+    {
         return this.shares;
     }
 }

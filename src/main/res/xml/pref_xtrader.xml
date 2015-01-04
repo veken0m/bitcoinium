@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <PreferenceCategory
         android:summary="Chart Scale"
         android:title="Display Settings">
 
         <ListPreference
-            android:defaultValue="24h"
+            android:defaultValue="TWENTY_FOUR_HOURS"
             android:entries="@array/timewindow"
             android:entryValues="@array/timewindow_values"
-            android:key="timewindow"
+            android:key="time_window"
             android:summary="Chart Time Scale"
-            android:title="Chart Time Scale"/>
+            android:title="Chart Time Scale" />
 
         <ListPreference
-            android:defaultValue="5p"
+            android:defaultValue="FIVE_PERCENT"
             android:entries="@array/pricewindow"
             android:entryValues="@array/pricewindow_values"
-            android:key="pricewindow"
+            android:key="price_window"
             android:summary="Chart Price Scale"
-            android:title="Chart Price Scale"/>
+            android:title="Chart Price Scale" />
 
         <EditTextPreference
             android:defaultValue=".5"
             android:inputType="numberDecimal"
             android:key="ordergridsize"
             android:summary="Set the grid to multiples of this value."
-            android:title="Order Grid Size (BTC)"/>
+            android:title="Order Grid Size (BTC)" />
 
     </PreferenceCategory>
-
 
     <PreferenceCategory
         android:summary="Username and password information"
@@ -39,7 +37,7 @@
             android:defaultValue="true"
             android:key="enableTradingKey"
             android:summary="Unhides the Buy and Sell buttons"
-            android:title="Show trading buttons"/>
+            android:title="Show trading buttons" />
         <PreferenceScreen
             android:enabled="true"
             android:summary="Account credentials"
@@ -47,30 +45,19 @@
             <EditTextPreference
                 android:key="bitstampUsername"
                 android:summary="Enter your Bitstamp Username"
-                android:title="Username"/>
+                android:title="Username" />
             <EditTextPreference
                 android:key="bitstampPassword"
                 android:summary="Enter your Bitstamp Password"
-                android:title="Password"/>
+                android:title="Password" />
             <EditTextPreference
                 android:key="bitstampApiKey"
                 android:summary="Enter your Bitstamp API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="bitstampSecretKey"
                 android:summary="Enter your Bitstamp Secret Key"
-                android:title="Secret Key"/>
-            <!--PreferenceCategory
-                android:summary="Trading Settings"
-                android:title="Settings">
-                <ListPreference
-                    android:defaultValue="BTC/USD"
-                    android:entries="@array/bitstampcurrencies"
-                    android:entryValues="@array/bitstampcurrencies"
-                    android:key="bitstampTradeCurrency"
-                    android:summary="Set your main trading currency"
-                    android:title="Trade Currency" />
-            </PreferenceCategory-->
+                android:title="Secret Key" />
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -79,22 +66,11 @@
             <EditTextPreference
                 android:key="btceApiKey"
                 android:summary="Enter your BTC-E API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="btceSecretKey"
                 android:summary="Enter your BTC-E Secret Key"
-                android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/USD"-->
-            <!--android:entries="@array/btcecurrencies"-->
-            <!--android:entryValues="@array/btcecurrencies"-->
-            <!--android:key="btceTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
+                android:title="Secret Key" />
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -103,22 +79,11 @@
             <EditTextPreference
                 android:key="btcchinaApiKey"
                 android:summary="Enter your BTC China API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="btcchinaSecretKey"
                 android:summary="Enter your BTC China Secret Key"
-                android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/CNY"-->
-            <!--android:entries="@array/btcchinacurrencies"-->
-            <!--android:entryValues="@array/btcchinacurrencies"-->
-            <!--android:key="btcchinaTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
+                android:title="Secret Key" />
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="true"
@@ -127,23 +92,44 @@
             <EditTextPreference
                 android:key="krakenApiKey"
                 android:summary="Enter your Kraken API Key"
-                android:title="API Key"/>
+                android:title="API Key" />
             <EditTextPreference
                 android:key="krakenSecretKey"
                 android:summary="Enter your Kraken Secret Key"
-                android:title="Secret Key"/>
-            <!--<PreferenceCategory-->
-            <!--android:summary="Trading Settings"-->
-            <!--android:title="Settings">-->
-            <!--<ListPreference-->
-            <!--android:defaultValue="BTC/EUR"-->
-            <!--android:entries="@array/krakencurrencies"-->
-            <!--android:entryValues="@array/krakencurrencies"-->
-            <!--android:key="krakenTradeCurrency"-->
-            <!--android:summary="Set your main trading currency"-->
-            <!--android:title="Trade Currency" />-->
-            <!--</PreferenceCategory>-->
+                android:title="Secret Key" />
         </PreferenceScreen>
+        <PreferenceScreen
+            android:enabled="true"
+            android:summary="Account credentials"
+            android:title="Bitfinex Account">
+            <EditTextPreference
+                android:key="bitfinexApiKey"
+                android:summary="Enter your Bitfinex API Key"
+                android:title="API Key" />
+            <EditTextPreference
+                android:key="bitfinexSecretKey"
+                android:summary="Enter your Bitfinex Secret Key"
+                android:title="Secret Key" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:enabled="true"
+            android:summary="Account credentials"
+            android:title="VoS Account">
+            <EditTextPreference
+                android:key="vaultofsatoshiApiKey"
+                android:summary="Enter your VoS API Key"
+                android:title="API Key" />
+            <EditTextPreference
+                android:key="vaultofsatoshiSecretKey"
+                android:summary="Enter your VoS Secret Key"
+                android:title="Secret Key" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Bitcoinium License">
+        <Preference
+            android:key="pref_license"
+            android:title="Apache License 2.0" />
     </PreferenceCategory>
 
 </PreferenceScreen>

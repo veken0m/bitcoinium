@@ -5,12 +5,13 @@ import android.preference.PreferenceFragment;
 
 import com.veken0m.bitcoinium.R;
 
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment
+{
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_xtrader);
     }
-
 }

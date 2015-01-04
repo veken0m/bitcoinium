@@ -34,40 +34,46 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class FiftyBTCFragment extends Fragment {
-
+public class FiftyBTCFragment extends Fragment
+{
     private static String pref_50BTCKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
     private static FiftyBTC data = null;
     private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable()
+    {
         @Override
-        public void run() {
-            try {
+        public void run()
+        {
+            try
+            {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
             drawMinerUI();
         }
     };
 
-    public FiftyBTCFragment() {
+    public FiftyBTCFragment()
+    {
     }
 
-    private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private static void readPreferences(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -76,15 +82,17 @@ public class FiftyBTCFragment extends Fragment {
         return view;
     }
 
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
     }
 
-    void getMinerStats() {
-
-        try {
+    void getMinerStats()
+    {
+        try
+        {
             HttpClient client = new DefaultHttpClient();
 
             HttpGet post = new HttpGet("https://50btc.com/api/" + pref_50BTCKey);
@@ -95,16 +103,17 @@ public class FiftyBTCFragment extends Fragment {
             //InputStream raw = getResources().openRawResource(R.raw.fiftybtc);
             //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
             //data = mapper.readValue(is, FiftyBTC.class);
-            data = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), FiftyBTC.class);
-
-        } catch (Exception e) {
+            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), FiftyBTC.class);
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             connectionFail = true;
         }
     }
 
-    private void viewMinerStats(View view) {
+    private void viewMinerStats(View view)
+    {
         if (minerProgressDialog != null && minerProgressDialog.isShowing())
             return;
 
@@ -116,20 +125,24 @@ public class FiftyBTCFragment extends Fragment {
         gt.start();
     }
 
-    private void safelyDismiss(ProgressDialog dialog) {
-        if (dialog != null && dialog.isShowing()) {
+    private void safelyDismiss(ProgressDialog dialog)
+    {
+        if (dialog != null && dialog.isShowing())
+        {
             dialog.dismiss();
         }
-        if (connectionFail) {
-
+        if (connectionFail)
+        {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             Resources res = getResources();
             String text = String.format(res.getString(R.string.error_minerConnection), "50BTC");
             builder.setMessage(text);
             builder.setPositiveButton(R.string.ok,
-                    new DialogInterface.OnClickListener() {
+                    new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
                             dialog.cancel();
                         }
                     }
@@ -140,14 +153,15 @@ public class FiftyBTCFragment extends Fragment {
         }
     }
 
-    void drawMinerUI() {
-
+    void drawMinerUI()
+    {
         View view = getView();
 
-        if (view != null) {
-            try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+        if (view != null)
+        {
+            try
+            {
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 Activity activity = getActivity();
 
@@ -183,8 +197,8 @@ public class FiftyBTCFragment extends Fragment {
 
                 // WORKER INFO
                 List<Worker> workers = data.getWorkers().getWorkers();
-                for (Worker worker : workers) {
-
+                for (Worker worker : workers)
+                {
                     String name = "\nMiner: " + worker.getWorker_name();
                     String lastShare = "Last Share: " + Utils.dateFormat(activity, worker.getLast_share() * 1000);
                     String totalShares = "Total Shares: " + worker.getTotal_shares();
@@ -213,21 +227,21 @@ public class FiftyBTCFragment extends Fragment {
                     t1.addView(tr12);
                     t1.addView(tr13);
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
+            }
+            catch (Exception e)
+            {
+                //e.printStackTrace();
             }
         }
     }
 
-    private class MinerStatsThread extends Thread {
-
+    private class MinerStatsThread extends Thread
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
-
 }

@@ -31,7 +31,8 @@ public class ColorPickerDialog
         Dialog
         implements
         ColorPickerView.OnColorChangedListener,
-        View.OnClickListener {
+        View.OnClickListener
+{
 
     private ColorPickerView mColorPicker;
 
@@ -40,21 +41,23 @@ public class ColorPickerDialog
 
     private OnColorChangedListener mListener;
 
-    public ColorPickerDialog(Context context, int initialColor) {
+    public ColorPickerDialog(Context context, int initialColor)
+    {
         super(context);
 
         init(initialColor);
     }
 
-    private void init(int color) {
+    private void init(int color)
+    {
         // To fight color banding.
         getWindow().setFormat(PixelFormat.RGBA_8888);
 
         setUp(color);
-
     }
 
-    private void setUp(int color) {
+    private void setUp(int color)
+    {
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -80,11 +83,11 @@ public class ColorPickerDialog
         mColorPicker.setOnColorChangedListener(this);
         mOldColor.setColor(color);
         mColorPicker.setColor(color, true);
-
     }
 
     @Override
-    public void onColorChanged(int color) {
+    public void onColorChanged(int color)
+    {
 
         mNewColor.setColor(color);
 
@@ -96,7 +99,8 @@ public class ColorPickerDialog
 
     }
 
-    public void setAlphaSliderVisible(boolean visible) {
+    public void setAlphaSliderVisible(boolean visible)
+    {
         mColorPicker.setAlphaSliderVisible(visible);
     }
 
@@ -106,18 +110,23 @@ public class ColorPickerDialog
      *
      * @param listener
      */
-    public void setOnColorChangedListener(OnColorChangedListener listener) {
+    public void setOnColorChangedListener(OnColorChangedListener listener)
+    {
         mListener = listener;
     }
 
-    public int getColor() {
+    public int getColor()
+    {
         return mColorPicker.getColor();
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.new_color_panel) {
-            if (mListener != null) {
+    public void onClick(View v)
+    {
+        if (v.getId() == R.id.new_color_panel)
+        {
+            if (mListener != null)
+            {
                 mListener.onColorChanged(mNewColor.getColor());
             }
         }
@@ -125,7 +134,8 @@ public class ColorPickerDialog
     }
 
     @Override
-    public Bundle onSaveInstanceState() {
+    public Bundle onSaveInstanceState()
+    {
         Bundle state = super.onSaveInstanceState();
         state.putInt("old_color", mOldColor.getColor());
         state.putInt("new_color", mNewColor.getColor());
@@ -133,13 +143,15 @@ public class ColorPickerDialog
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState)
+    {
         super.onRestoreInstanceState(savedInstanceState);
         mOldColor.setColor(savedInstanceState.getInt("old_color"));
         mColorPicker.setColor(savedInstanceState.getInt("new_color"), true);
     }
 
-    public interface OnColorChangedListener {
+    public interface OnColorChangedListener
+    {
         public void onColorChanged(int color);
     }
 }

@@ -37,10 +37,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
+
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class GraphActivity extends BaseActivity implements OnItemSelectedListener {
-
+public class GraphActivity extends BaseActivity implements OnItemSelectedListener
+{
     private static final Handler mOrderHandler = new Handler();
     private static Boolean connectionFail = true;
     private static Boolean noTradesFound = false;
@@ -59,17 +61,23 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     /**
      * mGraphView run() is called when our GraphThread is finished
      */
-    private final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable()
+    {
         @Override
-        public void run() {
-            if (graphView != null && !connectionFail && !noTradesFound) {
+        public void run()
+        {
+            if (graphView != null && !connectionFail && !noTradesFound)
+            {
                 LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
                 graphLinearLayout.removeAllViews(); // make sure layout has no child
                 graphLinearLayout.addView(graphView);
-
-            } else if (noTradesFound) {
+            }
+            else if (noTradesFound)
+            {
                 createPopup(getString(R.string.msg_noTradesFound));
-            } else {
+            }
+            else
+            {
                 Resources res = getResources();
                 String text = String.format(res.getString(R.string.error_exchangeConnection), res.getString(R.string.trades), exchangeName);
                 createPopup(text);
@@ -77,14 +85,15 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         }
     };
 
-    private static void readPreferences() {
-
+    private static void readPreferences()
+    {
         pref_scaleMode = prefs.getBoolean("graphscalePref", false);
         currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         ActionBar actionbar = getSupportActionBar();
@@ -114,16 +123,18 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -145,18 +156,22 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
      * the API It connects to exchange, reads the JSON, and plots a GraphView of
      * it
      */
-    private void generatePriceGraph() {
-
+    private void generatePriceGraph()
+    {
         Trades trades = null;
 
-        try {
+        try
+        {
             trades = ExchangeUtils.getMarketData(exchange, currencyPair).getTrades(currencyPair);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
-        try {
-            List<Trade> tradesList = new ArrayList<Trade>();
+        try
+        {
+            List<Trade> tradesList = new ArrayList<>();
             if (trades != null) tradesList = trades.getTrades();
 
             float[] values = new float[tradesList.size()];
@@ -167,25 +182,32 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
             float smallest = Integer.MAX_VALUE;
 
             final int tradesListSize = tradesList.size();
-            for (int i = 0; i < tradesListSize; i++) {
+            for (int i = 0; i < tradesListSize; i++)
+            {
                 final Trade trade = tradesList.get(i);
                 values[i] = trade.getPrice().floatValue();
                 dates[i] = trade.getTimestamp().getTime();
-                if (values[i] > largest) {
+                if (values[i] > largest)
+                {
                     largest = values[i];
                 }
-                if (values[i] < smallest) {
+                if (values[i] < smallest)
+                {
                     smallest = values[i];
                 }
                 data[i] = new GraphViewData(dates[i], values[i]);
             }
 
-            graphView = new LineGraphView(this, exchangeName + ": " + currencyPair.toString()) {
+            graphView = new LineGraphView(this, exchangeName + ": " + currencyPair.toString())
+            {
                 @Override
-                protected String formatLabel(double value, boolean isValueX) {
-                    if (isValueX) {
+                protected String formatLabel(double value, boolean isValueX)
+                {
+                    if (isValueX)
+                    {
                         return Utils.dateFormat(getBaseContext(), (long) value);
-                    } else
+                    }
+                    else
                         return super.formatLabel(value, false);
                 }
             };
@@ -199,49 +221,63 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
             graphView.setScrollable(true);
             graphView.setScalable(true);
 
-            if (!pref_scaleMode) {
+            if (!pref_scaleMode)
+            {
                 graphView.setManualYAxisBounds(largest, smallest);
             }
             connectionFail = false;
             noTradesFound = false;
-
-        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
             noTradesFound = true;
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             connectionFail = true;
             e.printStackTrace();
         }
     }
 
-    private void createPopup(String pMessage) {
-        try {
-            if (dialog == null || !dialog.isShowing()) {
+    private void createPopup(String pMessage)
+    {
+        try
+        {
+            if (dialog == null || !dialog.isShowing())
+            {
                 // Display error Dialog
                 dialog = Utils.errorDialog(this, pMessage);
             }
-        } catch (WindowManager.BadTokenException e) {
+        }
+        catch (WindowManager.BadTokenException e)
+        {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
-
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
-        if (graphView != null) {
+        if (graphView != null)
+        {
             LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
             graphLinearLayout.removeAllViews();
             graphLinearLayout.addView(graphView);
-        } else {
+        }
+        else
+        {
             viewGraph();
         }
     }
 
-    private void viewGraph() {
-        runOnUiThread(new Runnable() {
+    private void viewGraph()
+    {
+        runOnUiThread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                 linlaHeaderProgress.setVisibility(View.VISIBLE);
             }
@@ -252,16 +288,18 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+    {
         CurrencyPair prevCurrencyPair = currencyPair;
         String prevExchangeName = exchangeName;
 
-        switch (parent.getId()) {
+        switch (parent.getId())
+        {
             case R.id.graph_exchange_spinner:
                 exchangeName = (String) parent.getItemAtPosition(pos);
                 exchangeChanged = prevExchangeName != null && exchangeName != null && !exchangeName.equals(prevExchangeName);
-                if (exchangeChanged) {
+                if (exchangeChanged)
+                {
                     exchange = new ExchangeProperties(this, exchangeName);
                     currencyPair = CurrencyUtils.stringToCurrencyPair(prefs.getString(exchange.getIdentifier() + "CurrencyPref", exchange.getDefaultCurrency()));
                     createCurrencyDropdown();
@@ -277,51 +315,56 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
+    public void onNothingSelected(AdapterView<?> arg0)
+    {
         // Do nothing
     }
 
-    void createExchangeDropdown() {
-
+    void createExchangeDropdown()
+    {
         // Re-populate the dropdown menu
-        String[] exchanges = getResources().getStringArray(R.array.exchangesTrades);
+        List<String> exchanges = getDropdownItems(this, ExchangeProperties.ItemType.TRADES_ENABLED).first;
         Spinner spinner = (Spinner) findViewById(R.id.graph_exchange_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exchanges);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, exchanges);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        int index = Arrays.asList(exchanges).indexOf(exchange.getExchangeName());
+        int index = exchanges.indexOf(exchange.getExchangeName());
         spinner.setSelection(index);
     }
 
-    void createCurrencyDropdown() {
+    void createCurrencyDropdown()
+    {
         // Re-populate the dropdown menu
         String[] currencies = exchange.getCurrencies();
         Spinner spinner = (Spinner) findViewById(R.id.graph_currency_spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencies);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
 
-        if (exchangeChanged) {
+        if (exchangeChanged)
+        {
             int index = Arrays.asList(currencies).indexOf(currencyPair.toString());
             spinner.setSelection(index);
         }
     }
 
-    private class GraphThread extends Thread {
-
+    private class GraphThread extends Thread
+    {
         @Override
-        public void run() {
-
+        public void run()
+        {
             generatePriceGraph();
 
-            runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
                     linlaHeaderProgress.setVisibility(View.INVISIBLE);
                 }

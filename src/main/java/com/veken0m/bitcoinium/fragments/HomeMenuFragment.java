@@ -26,14 +26,14 @@ import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.xeiam.xbtctrader.XTraderActivity;
 
-public class HomeMenuFragment extends Fragment {
-
+public class HomeMenuFragment extends Fragment
+{
     private Activity activity = null;
     private Context context = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         activity = getActivity();
         context = activity.getApplicationContext();
 
@@ -45,12 +45,14 @@ public class HomeMenuFragment extends Fragment {
     }
 
     // Attaches OnClickListeners to menu buttons
-    void buildMenu(View view, final String exchangeName) {
-
+    void buildMenu(View view, final String exchangeName)
+    {
         final Button widgetRefreshButton = (Button) view.findViewById(R.id.widgetrefresh);
-        widgetRefreshButton.setOnClickListener(new View.OnClickListener() {
+        widgetRefreshButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 activity.sendBroadcast(new Intent(context, WidgetProvider.class).setAction(Constants.REFRESH));
                 activity.sendBroadcast(new Intent(context, MinerWidgetProvider.class).setAction(Constants.REFRESH));
@@ -61,16 +63,21 @@ public class HomeMenuFragment extends Fragment {
         });
 
         final Button displayGraphButton = (Button) view.findViewById(R.id.displaygraph);
-        displayGraphButton.setOnClickListener(new View.OnClickListener() {
+        displayGraphButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 Intent graphActivity = new Intent(context, GraphActivity.class);
 
                 ExchangeProperties exchange = null;
-                try {
+                try
+                {
                     exchange = new ExchangeProperties(context, exchangeName);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     // Do nothing
                 }
 
@@ -84,16 +91,21 @@ public class HomeMenuFragment extends Fragment {
         });
 
         final Button orderbookButton = (Button) view.findViewById(R.id.orderbook);
-        orderbookButton.setOnClickListener(new View.OnClickListener() {
+        orderbookButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 Intent orderbookActivity = new Intent(context, OrderbookActivity.class);
 
                 ExchangeProperties exchange = null;
-                try {
+                try
+                {
                     exchange = new ExchangeProperties(context, exchangeName);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     // Do nothing
                 }
 
@@ -107,62 +119,72 @@ public class HomeMenuFragment extends Fragment {
         });
 
         final Button bitcoinChartsButton = (Button) view.findViewById(R.id.bitcoincharts);
-        bitcoinChartsButton.setOnClickListener(new View.OnClickListener() {
+        bitcoinChartsButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(context, BitcoinChartsActivity.class));
             }
         });
 
         final Button bitcoinAverageButton = (Button) view.findViewById(R.id.bitcoinaverage);
-        bitcoinAverageButton.setOnClickListener(new View.OnClickListener() {
+        bitcoinAverageButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(context, BitcoinAverageActivity.class));
             }
         });
 
         final Button minerStatsButton = (Button) view.findViewById(R.id.minerstats);
-        minerStatsButton.setOnClickListener(new View.OnClickListener() {
+        minerStatsButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(context, MinerStatsActivity.class));
             }
         });
 
         final Button marketDepth = (Button) view.findViewById(R.id.marketdepth);
-        marketDepth.setOnClickListener(new View.OnClickListener() {
+        marketDepth.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(context, WebViewerActivity.class));
             }
         });
 
         final Button xTrader = (Button) view.findViewById(R.id.xtrader);
-        if (xTrader != null) {
-            xTrader.setOnClickListener(new View.OnClickListener() {
+        if (xTrader != null)
+        {
+            xTrader.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-                    // TODO: externalize
-                    final CharSequence items[] = new CharSequence[]{"bitstampUSD", "btcchinaCNY", "krakenUSD", "krakenEUR", "btceUSD", "btceRUR", "btceEUR"};
-                    adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
 
+                    final CharSequence items[] = getResources().getStringArray(R.array.exchangesBitcoiniumWS);
+                    adb.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface d, int n) {
-                            Intent intent = new Intent(getActivity().getApplicationContext(), XTraderActivity.class);
+                        public void onClick(DialogInterface d, int n)
+                        {
+                            Intent intent = new Intent(activity.getApplicationContext(), XTraderActivity.class);
                             intent.putExtra("exchange", items[n]);
                             startActivity(intent);
                         }
-
                     });
-                    adb.setNegativeButton("Cancel", null);
+                    adb.setNegativeButton(getString(R.string.cancel), null);
                     adb.setTitle("Select a market symbol");
                     adb.show();
                 }
             });
         }
     }
-
 }

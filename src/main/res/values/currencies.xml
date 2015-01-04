@@ -80,6 +80,12 @@
         <item>BTC/ZAR</item>
     </string-array>
 
+    <!-- Arrays for BitcoinToYou Currencies -->
+    <string-array name="bitcointoyoucurrencies">
+        <item>BTC/BRL</item>
+        <item>LTC/BRL</item>
+    </string-array>
+
     <!-- Arrays for Bitcurex Currencies -->
     <string-array name="bitcurexcurrencies">
         <item>BTC/PLN</item>
@@ -87,6 +93,11 @@
     </string-array>
 
     <string-array name="bitfinexcurrencies">
+        <item>BTC/USD</item>
+    </string-array>
+
+    <!-- Arrays for BitKonan Currencies -->
+    <string-array name="bitkonancurrencies">
         <item>BTC/USD</item>
     </string-array>
 
@@ -100,6 +111,7 @@
         <item>LTC/BTC</item>
         <item>DOGE/BTC</item>
         <item>VTC/BTC</item>
+        <item>XPY/BTC</item>
         <item>RDD/BTC</item>
         <item>DRK/BTC</item>
         <item>POT/BTC</item>
@@ -333,6 +345,25 @@
         <item>BTC/CNY</item>
     </string-array>
 
+    <!-- Arrays for BitVC Currencies -->
+    <string-array name="bitvccurrencies">
+        <item>BTC/CNY</item>
+        <item>LTC/CNY</item>
+    </string-array>
+
+    <!-- Arrays for BleuTrade Currencies -->
+    <string-array name="bleutradecurrencies">
+        <item>BTC/USD</item>
+        <item>LTC/USD</item>
+        <item>XPY/USD</item>
+        <item>NMC/USD</item>
+        <item>BLEU/BTC</item>
+        <item>DOGE/BTC</item>
+        <item>LTC/BTC</item>
+        <item>NMC/BTC</item>
+        <item>XPY/BTC</item>
+    </string-array>
+
     <!-- Arrays for BTER Currencies -->
     <string-array name="btercurrencies">
         <item>BTC/CNY</item>
@@ -468,6 +499,11 @@
         <item>BTC/GBP</item>
     </string-array>
 
+    <!-- Arrays for Coinsetter Currencies -->
+    <string-array name="coinsettercurrencies">
+        <item>BTC/USD</item>
+    </string-array>
+
     <string-array name="cryptonitcurrencies">
         <item>BTC/USD</item>
         <item>LTC/USD</item>
@@ -488,6 +524,7 @@
     <string-array name="cryptotradecurrencies">
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
+        <item>XPY/BTC</item>
         <item>LTC/BTC</item>
         <item>LTC/USD</item>
         <item>LTC/EUR</item>
@@ -793,6 +830,12 @@
         <item>BTC/THB</item>
     </string-array>
 
+    <!-- Arrays for MercadoBitcoin Currencies -->
+    <string-array name="mercadobitcoincurrencies">
+        <item>BTC/BRL</item>
+        <item>LTC/BRL</item>
+    </string-array>
+
     <!-- Arrays for MintPal Currencies -->
     <string-array name="mintpalcurrencies">
         <item>LTC/BTC</item>
@@ -836,6 +879,14 @@
         <item>PND/BTC</item>
         <item>ZED/BTC</item>
         <item>MINT/BTC</item>
+    </string-array>
+
+    <!-- Arrays for OKCoin Currencies -->
+    <string-array name="okcoincurrencies">
+        <item>BTC/CNY</item>
+        <item>LTC/CNY</item>
+        <item>BTC/USD</item>
+        <item>LTC/USD</item>
     </string-array>
 
     <!-- Arrays for Poloniex Currencies -->

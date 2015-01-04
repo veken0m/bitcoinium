@@ -2,7 +2,8 @@ package com.veken0m.mining.eligius;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TimeInterval {
+public class TimeInterval
+{
 
     private final float hashrate;
     private final float interval;
@@ -17,7 +18,8 @@ public class TimeInterval {
             @JsonProperty("interval_name")
             String interval_name,
             @JsonProperty("shares")
-            float shares) {
+            float shares)
+    {
 
         this.hashrate = hashrate;
         this.interval = interval;
@@ -25,19 +27,23 @@ public class TimeInterval {
         this.shares = shares;
     }
 
-    public float getHashrate() {
+    public float getHashrate()
+    {
         return this.hashrate;
     }
 
-    public float getInterval() {
+    public float getInterval()
+    {
         return this.interval;
     }
 
-    public String getInterval_name() {
+    public String getInterval_name()
+    {
         return this.interval_name;
     }
 
-    public float getShares() {
+    public float getShares()
+    {
         return this.shares;
     }
 }

@@ -21,12 +21,12 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 
-public class Utils {
-
+public class Utils
+{
     public static final LayoutParams adjustParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
-    public static String formatDecimal(float valueToFormat, int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings) {
-
+    public static String formatDecimal(float valueToFormat, int numberOfDecimalPlaces, int scaleFactor, boolean useGroupings)
+    {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         // Remove grouping if commas cause errors when parsing to double/float
         numberFormat.setGroupingUsed(useGroupings);
@@ -36,7 +36,8 @@ public class Utils {
 
         // If too large, remove a digits behind decimal
         float tempAmount = valueToFormat;
-        while (tempAmount >= 1000 && numberOfDecimalPlaces >= 0) {
+        while (tempAmount >= 1000 && numberOfDecimalPlaces >= 0)
+        {
             numberOfDecimalPlaces--;
             tempAmount /= 10;
         }
@@ -44,32 +45,40 @@ public class Utils {
         numberFormat.setMaximumFractionDigits(numberOfDecimalPlaces);
         numberFormat.setMinimumFractionDigits(numberOfDecimalPlaces);
 
-        try {
+        try
+        {
             return numberFormat.format(valueToFormat);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return "N/A";
         }
     }
 
-    public static String formatWidgetMoney(float amount, CurrencyPair pair, boolean includeCurrencyCode, boolean displayInMilliBtc) {
-
+    public static String formatWidgetMoney(float amount, CurrencyPair pair, boolean includeCurrencyCode, boolean displayInMilliBtc)
+    {
         int numOfDecimals = 3;
         int unitIndex = 0;
         String currencyCode = (includeCurrencyCode) ? " " + pair.counterSymbol : "";
 
         // If BTC and user wants price in mBTC
         boolean isBTC = pair.baseSymbol.equalsIgnoreCase(Currencies.BTC);
-        if (displayInMilliBtc && isBTC) {
+        if (displayInMilliBtc && isBTC)
+        {
             amount /= 1000;
 
             // adjust altcoin units
             // at least one digit on the left side of decimal point
-        } else if (!isBTC && amount < 1) {
+        }
+        else if (!isBTC && amount < 1)
+        {
             unitIndex = getUnitIndex(amount);
             if (!includeCurrencyCode) numOfDecimals = 2;
             currencyCode = currencyCode.replace(" ", " " + Constants.METRIC_UNITS[unitIndex]);
             unitIndex++;
-        } else {
+        }
+        else
+        {
             numOfDecimals = 2;
         }
 
@@ -80,34 +89,38 @@ public class Utils {
 
     // returns the index for the proper units in Contants.METRIC_UNITS
     // is also used to scale the value to match units
-    public static int getUnitIndex(float price) {
+    public static int getUnitIndex(float price)
+    {
         int unitIndex = -1;
-        while (price < 0.5 && unitIndex < 4) {
+        while (price < 0.5 && unitIndex < 4)
+        {
             price *= 1000;
             unitIndex++;
         }
         return unitIndex;
     }
 
-    public static boolean isBetween(float value, float min, float max) {
-
+    public static boolean isBetween(float value, float min, float max)
+    {
         return ((value >= min) && (value <= max));
     }
 
-    public static String getCurrentTime(Context context) {
+    public static String getCurrentTime(Context context)
+    {
         Date time = new Date();
 
         return DateFormat.format("E", time) + " " + DateFormat.getTimeFormat(context).format(time);
     }
 
-    public static String dateFormat(Context ctxt, long date) {
+    public static String dateFormat(Context ctxt, long date)
+    {
         Date dateFormatted = new Date(date);
 
         return DateFormat.format("MMM dd", dateFormatted) + " @ " + DateFormat.getTimeFormat(ctxt).format(dateFormatted);
     }
 
-    public static void setTextViewParams(TextView tv, BigDecimal value) {
-
+    public static void setTextViewParams(TextView tv, BigDecimal value)
+    {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
 
         tv.setText(Utils.formatDecimal(value.floatValue(), 2, 0, true));
@@ -116,8 +129,8 @@ public class Utils {
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
-    public static String formatHashrate(float hashRate) {
-
+    public static String formatHashrate(float hashRate)
+    {
         DecimalFormat df = new DecimalFormat("#0.00");
         if (hashRate >= 1000000)
             return df.format((hashRate / 1000000)) + " TH/s";
@@ -127,8 +140,8 @@ public class Utils {
             return df.format((hashRate)) + " MH/s";
     }
 
-    public static Dialog errorDialog(Context context, String msg, String title) {
-
+    public static Dialog errorDialog(Context context, String msg, String title)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg).setTitle(title);
         builder.setPositiveButton(R.string.ok, null);
@@ -137,8 +150,8 @@ public class Utils {
         return builder.create();
     }
 
-    public static Dialog errorDialog(Context context, String msg) {
-
+    public static Dialog errorDialog(Context context, String msg)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg);
         builder.setPositiveButton(R.string.ok, null);
@@ -147,33 +160,35 @@ public class Utils {
         return builder.create();
     }
 
-    public static boolean isConnected(Context context) {
-
+    public static boolean isConnected(Context context)
+    {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
-    public static boolean checkWiFiConnected(Context context) {
-
+    public static boolean isWiFiAvailable(Context context)
+    {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
     }
 
-    public static void copyDonationAddressToClipboard(Context context, String donationAddress) {
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+    public static void copyDonationAddressToClipboard(Context context, String donationAddress)
+    {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+        {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(donationAddress);
-        } else {
+        }
+        else
+        {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
         }
 
         Toast.makeText(context, context.getString(R.string.msg_copiedClipboard), Toast.LENGTH_SHORT).show();
     }
-
 }

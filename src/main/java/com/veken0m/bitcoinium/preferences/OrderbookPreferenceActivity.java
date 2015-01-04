@@ -6,19 +6,21 @@ import android.view.MenuItem;
 
 import com.veken0m.bitcoinium.R;
 
-public class OrderbookPreferenceActivity extends BasePreferenceActivity {
-
+public class OrderbookPreferenceActivity extends BasePreferenceActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.pref_orderbook);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -26,5 +28,4 @@ public class OrderbookPreferenceActivity extends BasePreferenceActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -8,40 +8,49 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 
-public class CurrencyUtils {
-
-    public static String getSymbol(String currencyCode) {
-
-        try {
+public class CurrencyUtils
+{
+    public static String getSymbol(String currencyCode)
+    {
+        try
+        {
             List<String> ignoredCurrencies = Arrays.asList("DKK", "NMC", "PLN", "RUB", "SEK", "SGD", "XVN", "XRP", "CHF", "RUR");
 
-            if (!(ignoredCurrencies.contains(currencyCode))) {
-                if (Constants.CRYPTO_SYMBOLS.containsKey(currencyCode)) {
+            if (!(ignoredCurrencies.contains(currencyCode)))
+            {
+                if (Constants.CRYPTO_SYMBOLS.containsKey(currencyCode))
+                {
                     return Constants.CRYPTO_SYMBOLS.get(currencyCode);
-                } else {
+                }
+                else
+                {
                     String symbol = Currency.getInstance(currencyCode).getSymbol();
                     return symbol.substring(symbol.length() - 1);
                 }
             }
             return "";
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             return "";
         }
     }
 
-    public static CurrencyPair stringToCurrencyPair(String currencyPair) {
+    public static CurrencyPair stringToCurrencyPair(String currencyPair)
+    {
         String baseCurrency;
         String counterCurrency;
 
         String[] currPair = currencyPair.split("/");
 
-        if (currPair.length == 2) {
+        if (currPair.length == 2)
+        {
             baseCurrency = currPair[0];
             counterCurrency = currPair[1];
-        } else {
+        }
+        else
+        {
             baseCurrency = Currencies.BTC;
             counterCurrency = currencyPair;
         }
@@ -49,18 +58,24 @@ public class CurrencyUtils {
         return new CurrencyPair(baseCurrency, counterCurrency);
     }
 
-    public static String formatPayout(float amount, int payoutUnits, String symbol) {
-
+    public static String formatPayout(float amount, int payoutUnits, String symbol)
+    {
         DecimalFormat df = new DecimalFormat("#.#######");
 
-        switch (payoutUnits) {
+        switch (payoutUnits)
+        {
             case 0:
                 df = new DecimalFormat("#.####");
-                if (amount < 0.0001) {
+                if (amount < 0.0001)
+                {
                     return df.format(amount * 1000000) + " µ" + symbol;
-                } else if (amount < 0.1) {
+                }
+                else if (amount < 0.1)
+                {
                     return df.format(amount * 1000) + " m" + symbol;
-                } else {
+                }
+                else
+                {
                     return df.format(amount) + " " + symbol;
                 }
             case 1:
@@ -75,5 +90,4 @@ public class CurrencyUtils {
         }
         return df.format(amount) + " " + symbol;
     }
-
 }

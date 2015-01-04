@@ -36,7 +36,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class EligiusFragment extends Fragment {
+public class EligiusFragment extends Fragment
+{
 
     private static String pref_eligiusKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
@@ -45,22 +46,29 @@ public class EligiusFragment extends Fragment {
     private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable()
+    {
         @Override
-        public void run() {
-            try {
+        public void run()
+        {
+            try
+            {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
             drawMinerUI();
         }
     };
 
-    public EligiusFragment() {
+    public EligiusFragment()
+    {
     }
 
-    private static void readPreferences(Context context) {
+    private static void readPreferences(Context context)
+    {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
@@ -70,7 +78,8 @@ public class EligiusFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -79,20 +88,24 @@ public class EligiusFragment extends Fragment {
         return view;
     }
 
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
     }
 
-    void getMinerStats() {
+    void getMinerStats()
+    {
 
-        try {
+        try
+        {
             HttpClient client = new DefaultHttpClient();
 
             // Test key
             //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
 
+            // NOTE: eligius.st does not use HTTPS
             HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
                     + pref_eligiusKey);
 
@@ -111,15 +124,16 @@ public class EligiusFragment extends Fragment {
                                     .getEntity().getContent(), "UTF-8"),
                             EligiusBalance.class
                     );
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             connectionFail = true;
         }
-
     }
 
-    private void viewMinerStats(View view) {
+    private void viewMinerStats(View view)
+    {
         if (minerProgressDialog != null && minerProgressDialog.isShowing())
             return;
 
@@ -131,11 +145,14 @@ public class EligiusFragment extends Fragment {
         gt.start();
     }
 
-    private void safelyDismiss(ProgressDialog dialog) {
-        if (dialog != null && dialog.isShowing()) {
+    private void safelyDismiss(ProgressDialog dialog)
+    {
+        if (dialog != null && dialog.isShowing())
+        {
             dialog.dismiss();
         }
-        if (connectionFail) {
+        if (connectionFail)
+        {
 
             final Context context = getActivity();
 
@@ -144,9 +161,11 @@ public class EligiusFragment extends Fragment {
             String text = String.format(res.getString(R.string.error_minerConnection), "Eligius");
             builder.setMessage(text);
             builder.setPositiveButton(R.string.ok,
-                    new DialogInterface.OnClickListener() {
+                    new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
                             dialog.cancel();
                         }
                     }
@@ -157,12 +176,15 @@ public class EligiusFragment extends Fragment {
         }
     }
 
-    void drawMinerUI() {
+    void drawMinerUI()
+    {
 
         View view = getView();
 
-        if (view != null) {
-            try {
+        if (view != null)
+        {
+            try
+            {
                 TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 TableRow tr1 = new TableRow(getActivity());
@@ -199,7 +221,7 @@ public class EligiusFragment extends Fragment {
                 t1.addView(tr3);
 
                 // WORKER INFO
-                ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
+                ArrayList<TimeInterval> intervals = new ArrayList<>();
 
                 intervals.add(data.get128());
                 intervals.add(data.get256());
@@ -207,7 +229,8 @@ public class EligiusFragment extends Fragment {
                 intervals.add(data.get10800());
                 intervals.add(data.get43200());
 
-                for (TimeInterval timeInterval : intervals) {
+                for (TimeInterval timeInterval : intervals)
+                {
 
                     String name = "\nInterval: " + timeInterval.getInterval_name();
                     float hashRatef = timeInterval.getHashrate() / 1000000;
@@ -230,9 +253,12 @@ public class EligiusFragment extends Fragment {
                     tvMinerHashrate.setText(minerHashrate);
                     tvShares.setText(shares);
 
-                    if (hashRatef > 0) {
+                    if (hashRatef > 0)
+                    {
                         tvMinerName.setTextColor(Color.GREEN);
-                    } else {
+                    }
+                    else
+                    {
                         tvMinerName.setTextColor(Color.RED);
                     }
 
@@ -244,21 +270,22 @@ public class EligiusFragment extends Fragment {
                     t1.addView(tr10);
                     t1.addView(tr11);
                 }
-
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
-
             }
         }
     }
 
-    private class MinerStatsThread extends Thread {
+    private class MinerStatsThread extends Thread
+    {
 
         @Override
-        public void run() {
+        public void run()
+        {
             getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
-
 }

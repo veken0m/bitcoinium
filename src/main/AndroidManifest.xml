@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veken0m.bitcoinium"
-    android:versionCode="61"
+    android:versionCode="65"
     android:versionName="@string/version_name">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="20" />
-
+    <!-- Used for accessing internet -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Used to check WiFi and Mobile network state -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Used to set an Alarm in the Android Clock app -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <!-- Used to set vibration on push notifications -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/bitcoiniumlogo"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Bitcoinium">
 
@@ -33,20 +32,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".WidgetConfigureActivity">
+        <activity android:name=".WidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MinerWidgetConfigureActivity">
+        <activity android:name=".MinerWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BalanceWidgetConfigureActivity">
+        <activity android:name=".BalanceWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -144,6 +140,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".preferences.TickerPreferencesActivity"
+            android:label="@string/notificationDrawerTickers"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            <intent-filter>
+                <action android:name="com.veken0m.bitcoinium.TickerPreferencesActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".WebViewerActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="@string/label_webCharts"
@@ -156,7 +164,7 @@
         <activity
             android:name="com.xeiam.xbtctrader.XTraderActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:label="XTrader PREVIEW"
+            android:label="XTrader"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -175,6 +183,7 @@
 
         <receiver
             android:name=".WidgetProvider"
+            android:enabled="true"
             android:label="@string/widget_price">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.WidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -192,6 +201,7 @@
 
         <receiver
             android:name=".MinerWidgetProvider"
+            android:enabled="true"
             android:label="@string/widget_mining">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.MinerWidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -209,7 +219,7 @@
 
         <receiver
             android:name=".BalanceWidgetProvider"
-            android:exported="false"
+            android:enabled="true"
             android:label="@string/balance_widget_name">
             <intent-filter>
                 <action android:name="com.veken0m.bitcoinium.BalanceWidgetProvider.ACTION_WIDGET_RECEIVER" />

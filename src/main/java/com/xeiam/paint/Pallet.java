@@ -3,7 +3,8 @@ package com.xeiam.paint;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
-public class Pallet {
+public class Pallet
+{
     public Paint gridTickPaint = new Paint();
     //Grid lines
     public Paint gridLinePaint = new Paint();
@@ -41,7 +42,8 @@ public class Pallet {
     public Paint lastTickPaint = new Paint();
 
 
-    public Pallet() {
+    public Pallet()
+    {
         gridTickPaint.setARGB(255, 100, 130, 100);
         gridTickPaint.setStrokeWidth(3);
 
@@ -113,6 +115,4 @@ public class Pallet {
         lastTickPaint.setARGB(255, 255, 0, 0);
         lastTickPaint.setStyle(Style.FILL);
     }
-
-
 }

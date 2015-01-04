@@ -40,7 +40,8 @@ public class ColorPickerPreference
         Preference
         implements
         Preference.OnPreferenceClickListener,
-        ColorPickerDialog.OnColorChangedListener {
+        ColorPickerDialog.OnColorChangedListener
+{
 
     View mView;
     ColorPickerDialog mDialog;
@@ -48,17 +49,20 @@ public class ColorPickerPreference
     private float mDensity = 0;
     private boolean mAlphaSliderEnabled = false;
 
-    public ColorPickerPreference(Context context) {
+    public ColorPickerPreference(Context context)
+    {
         super(context);
         init(context, null);
     }
 
-    public ColorPickerPreference(Context context, AttributeSet attrs) {
+    public ColorPickerPreference(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyle)
+    {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -69,25 +73,30 @@ public class ColorPickerPreference
      * @param color
      * @author Unknown
      */
-    public static String convertToARGB(int color) {
+    public static String convertToARGB(int color)
+    {
         String alpha = Integer.toHexString(Color.alpha(color));
         String red = Integer.toHexString(Color.red(color));
         String green = Integer.toHexString(Color.green(color));
         String blue = Integer.toHexString(Color.blue(color));
 
-        if (alpha.length() == 1) {
+        if (alpha.length() == 1)
+        {
             alpha = "0" + alpha;
         }
 
-        if (red.length() == 1) {
+        if (red.length() == 1)
+        {
             red = "0" + red;
         }
 
-        if (green.length() == 1) {
+        if (green.length() == 1)
+        {
             green = "0" + green;
         }
 
-        if (blue.length() == 1) {
+        if (blue.length() == 1)
+        {
             blue = "0" + blue;
         }
 
@@ -101,20 +110,25 @@ public class ColorPickerPreference
      * @throws NumberFormatException
      * @author Unknown
      */
-    public static int convertToColorInt(String argb) throws NumberFormatException {
+    public static int convertToColorInt(String argb) throws NumberFormatException
+    {
 
-        if (argb.startsWith("#")) {
+        if (argb.startsWith("#"))
+        {
             argb = argb.replace("#", "");
         }
 
         int alpha = -1, red = -1, green = -1, blue = -1;
 
-        if (argb.length() == 8) {
+        if (argb.length() == 8)
+        {
             alpha = Integer.parseInt(argb.substring(0, 2), 16);
             red = Integer.parseInt(argb.substring(2, 4), 16);
             green = Integer.parseInt(argb.substring(4, 6), 16);
             blue = Integer.parseInt(argb.substring(6, 8), 16);
-        } else if (argb.length() == 6) {
+        }
+        else if (argb.length() == 6)
+        {
             alpha = 255;
             red = Integer.parseInt(argb.substring(0, 2), 16);
             green = Integer.parseInt(argb.substring(2, 4), 16);
@@ -125,31 +139,37 @@ public class ColorPickerPreference
     }
 
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
+    protected Object onGetDefaultValue(TypedArray a, int index)
+    {
         return a.getColor(index, Color.BLACK);
     }
 
     @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue)
+    {
         onColorChanged(restoreValue ? getPersistedInt(mValue) : (Integer) defaultValue);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs)
+    {
         mDensity = getContext().getResources().getDisplayMetrics().density;
         setOnPreferenceClickListener(this);
-        if (attrs != null) {
+        if (attrs != null)
+        {
             mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
         }
     }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(View view)
+    {
         super.onBindView(view);
         mView = view;
         setPreviewColor();
     }
 
-    private void setPreviewColor() {
+    private void setPreviewColor()
+    {
         if (mView == null) return;
         ImageView iView = new ImageView(getContext());
         LinearLayout widgetFrameView = ((LinearLayout) mView.findViewById(android.R.id.widget_frame));
@@ -163,7 +183,8 @@ public class ColorPickerPreference
         );
         // remove already create preview image
         int count = widgetFrameView.getChildCount();
-        if (count > 0) {
+        if (count > 0)
+        {
             widgetFrameView.removeViews(0, count);
         }
         widgetFrameView.addView(iView);
@@ -172,18 +193,22 @@ public class ColorPickerPreference
         iView.setImageBitmap(getPreviewBitmap());
     }
 
-    private Bitmap getPreviewBitmap() {
+    private Bitmap getPreviewBitmap()
+    {
         int d = (int) (mDensity * 31); //30dip
         int color = mValue;
         Bitmap bm = Bitmap.createBitmap(d, d, Config.ARGB_8888);
         int w = bm.getWidth();
         int h = bm.getHeight();
         int c = color;
-        for (int i = 0; i < w; i++) {
-            for (int j = i; j < h; j++) {
+        for (int i = 0; i < w; i++)
+        {
+            for (int j = i; j < h; j++)
+            {
                 c = (i <= 1 || j <= 1 || i >= w - 2 || j >= h - 2) ? Color.GRAY : color;
                 bm.setPixel(i, j, c);
-                if (i != j) {
+                if (i != j)
+                {
                     bm.setPixel(j, i, c);
                 }
             }
@@ -193,31 +218,40 @@ public class ColorPickerPreference
     }
 
     @Override
-    public void onColorChanged(int color) {
-        if (isPersistent()) {
+    public void onColorChanged(int color)
+    {
+        if (isPersistent())
+        {
             persistInt(color);
         }
         mValue = color;
         setPreviewColor();
-        try {
+        try
+        {
             getOnPreferenceChangeListener().onPreferenceChange(this, color);
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e)
+        {
 
         }
     }
 
-    public boolean onPreferenceClick(Preference preference) {
+    public boolean onPreferenceClick(Preference preference)
+    {
         showDialog(null);
         return false;
     }
 
-    protected void showDialog(Bundle state) {
+    protected void showDialog(Bundle state)
+    {
         mDialog = new ColorPickerDialog(getContext(), mValue);
         mDialog.setOnColorChangedListener(this);
-        if (mAlphaSliderEnabled) {
+        if (mAlphaSliderEnabled)
+        {
             mDialog.setAlphaSliderVisible(true);
         }
-        if (state != null) {
+        if (state != null)
+        {
             mDialog.onRestoreInstanceState(state);
         }
         mDialog.show();
@@ -228,14 +262,17 @@ public class ColorPickerPreference
      *
      * @param enable
      */
-    public void setAlphaSliderEnabled(boolean enable) {
+    public void setAlphaSliderEnabled(boolean enable)
+    {
         mAlphaSliderEnabled = enable;
     }
 
     @Override
-    protected Parcelable onSaveInstanceState() {
+    protected Parcelable onSaveInstanceState()
+    {
         final Parcelable superState = super.onSaveInstanceState();
-        if (mDialog == null || !mDialog.isShowing()) {
+        if (mDialog == null || !mDialog.isShowing())
+        {
             return superState;
         }
 
@@ -245,8 +282,10 @@ public class ColorPickerPreference
     }
 
     @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        if (state == null || !(state instanceof SavedState)) {
+    protected void onRestoreInstanceState(Parcelable state)
+    {
+        if (state == null || !(state instanceof SavedState))
+        {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state);
             return;
@@ -257,31 +296,38 @@ public class ColorPickerPreference
         showDialog(myState.dialogBundle);
     }
 
-    private static class SavedState extends BaseSavedState {
+    private static class SavedState extends BaseSavedState
+    {
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
+                new Parcelable.Creator<SavedState>()
+                {
+                    public SavedState createFromParcel(Parcel in)
+                    {
                         return new SavedState(in);
                     }
 
-                    public SavedState[] newArray(int size) {
+                    public SavedState[] newArray(int size)
+                    {
                         return new SavedState[size];
                     }
                 };
         Bundle dialogBundle;
 
-        public SavedState(Parcel source) {
+        public SavedState(Parcel source)
+        {
             super(source);
             dialogBundle = source.readBundle();
         }
 
-        public SavedState(Parcelable superState) {
+        public SavedState(Parcelable superState)
+        {
             super(superState);
         }
 
         @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        public void writeToParcel(Parcel dest, int flags)
+        {
             super.writeToParcel(dest, flags);
             dest.writeBundle(dialogBundle);
         }

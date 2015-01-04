@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WebView
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/karma_ad"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="50dip"
-    android:layout_gravity="bottom|center_horizontal"/>
+    android:layout_gravity="bottom|center_horizontal" />

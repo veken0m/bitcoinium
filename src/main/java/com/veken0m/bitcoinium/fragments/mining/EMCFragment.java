@@ -34,40 +34,46 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class EMCFragment extends Fragment {
-
+public class EMCFragment extends Fragment
+{
     private static String pref_emcKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
     private static EMC data = null;
     private final Handler mMinerHandler = new Handler();
     private Boolean connectionFail = false;
     private ProgressDialog minerProgressDialog;
-    private final Runnable mGraphView = new Runnable() {
+    private final Runnable mGraphView = new Runnable()
+    {
         @Override
-        public void run() {
-            try {
+        public void run()
+        {
+            try
+            {
                 safelyDismiss(minerProgressDialog);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
             }
             drawMinerUI();
         }
     };
 
-    public EMCFragment() {
+    public EMCFragment()
+    {
     }
 
-    private static void readPreferences(Context context) {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    private static void readPreferences(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         readPreferences(getActivity());
 
@@ -76,32 +82,33 @@ public class EMCFragment extends Fragment {
         return view;
     }
 
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mMinerHandler.removeCallbacks(mGraphView);
         minerProgressDialog.dismiss();
     }
 
-    void getMinerStats() {
-
-        try {
-
+    void getMinerStats()
+    {
+        try
+        {
             HttpClient client = new DefaultHttpClient();
-            HttpGet post = new HttpGet("https://eclipsemc.com/api.php?key="
-                    + pref_emcKey + "&action=userstats");
+            HttpGet post = new HttpGet("https://eclipsemc.com/api.php?key=" + pref_emcKey + "&action=userstats");
             HttpResponse response = client.execute(post);
 
             ObjectMapper mapper = new ObjectMapper();
-            data = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), EMC.class);
-
-        } catch (Exception e) {
+            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), EMC.class);
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             connectionFail = true;
         }
     }
 
-    private void viewMinerStats(View view) {
+    private void viewMinerStats(View view)
+    {
         if (minerProgressDialog != null && minerProgressDialog.isShowing())
             return;
 
@@ -109,17 +116,18 @@ public class EMCFragment extends Fragment {
         if (context != null)
             minerProgressDialog = ProgressDialog.show(context, getString(R.string.working), getString(R.string.retreivingMinerStats), true, false);
 
-
         MinerStatsThread gt = new MinerStatsThread();
         gt.start();
     }
 
-    private void safelyDismiss(ProgressDialog dialog) {
-        if (dialog != null && dialog.isShowing()) {
+    private void safelyDismiss(ProgressDialog dialog)
+    {
+        if (dialog != null && dialog.isShowing())
+        {
             dialog.dismiss();
         }
-        if (connectionFail) {
-
+        if (connectionFail)
+        {
             final Context context = getActivity();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -127,9 +135,11 @@ public class EMCFragment extends Fragment {
             String text = String.format(res.getString(R.string.error_minerConnection), "EclipseMC");
             builder.setMessage(text);
             builder.setPositiveButton(R.string.ok,
-                    new DialogInterface.OnClickListener() {
+                    new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
                             dialog.cancel();
                         }
                     }
@@ -140,14 +150,15 @@ public class EMCFragment extends Fragment {
         }
     }
 
-    void drawMinerUI() {
-
+    void drawMinerUI()
+    {
         View view = getView();
 
-        if (view != null) {
-            try {
-                TableLayout t1 = (TableLayout) view.findViewById(
-                        R.id.minerStatlist);
+        if (view != null)
+        {
+            try
+            {
+                TableLayout t1 = (TableLayout) view.findViewById(R.id.minerStatlist);
 
                 Activity activity = getActivity();
 
@@ -204,18 +215,14 @@ public class EMCFragment extends Fragment {
                 // Miner Data
                 List<Workers> workers = data.getWorkers();
 
-                for (Workers worker : workers) {
-                    String WorkerName = "\nWorker: "
-                            + worker.getWorker_name();
+                for (Workers worker : workers)
+                {
+                    String WorkerName = "\nWorker: " + worker.getWorker_name();
                     String HashRate = "Hashrate: " + worker.getHash_rate();
-                    String RoundShares = "Round Shares: "
-                            + worker.getRound_shares();
-                    String ResetShares = "Reset Shares: "
-                            + worker.getReset_shares();
-                    String TotalShares = "Total Shares: "
-                            + worker.getTotal_shares();
-                    String LastActivity = "Latest Activity: "
-                            + worker.getLast_activity();
+                    String RoundShares = "Round Shares: " + worker.getRound_shares();
+                    String ResetShares = "Reset Shares: " + worker.getReset_shares();
+                    String TotalShares = "Total Shares: " + worker.getTotal_shares();
+                    String LastActivity = "Latest Activity: " + worker.getLast_activity();
 
                     TableRow tr8 = new TableRow(activity);
                     TableRow tr9 = new TableRow(activity);
@@ -259,21 +266,21 @@ public class EMCFragment extends Fragment {
                     t1.addView(tr12);
                     t1.addView(tr13);
                 }
-
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
-
             }
         }
     }
 
-    private class MinerStatsThread extends Thread {
-
+    private class MinerStatsThread extends Thread
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             getMinerStats();
             mMinerHandler.post(mGraphView);
         }
     }
-
 }

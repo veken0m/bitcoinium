@@ -22,10 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
-import com.veken0m.bitcoinium.fragments.mining.DeepBitFragment;
 import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
 import com.veken0m.bitcoinium.fragments.mining.EligiusFragment;
 import com.veken0m.bitcoinium.fragments.mining.FiftyBTCFragment;
@@ -44,13 +42,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 //import com.veken0m.utils.KarmaAdsUtils;
 
-public class MinerStatsActivity extends ActionBarActivity {
-
+public class MinerStatsActivity extends ActionBarActivity
+{
     private static final int MIN_KEY_LENGTH = 20;
     private static String pref_emcKey = null;
     private static String pref_slushKey = null;
     private static String pref_bitminterKey = null;
-    private static String pref_deepbitKey = null;
     private static String pref_50BTCKey = null;
     private static String pref_btcguildKey = null;
     private static String pref_eligiusKey = null;
@@ -58,14 +55,13 @@ public class MinerStatsActivity extends ActionBarActivity {
     private ActionBar actionbar = null;
     private Bundle extras = null;
 
-    private static void readPreferences(Context context) {
-
+    private static void readPreferences(Context context)
+    {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_slushKey = prefs.getString("slushKey", "");
         pref_bitminterKey = prefs.getString("bitminterKey", "");
-        pref_deepbitKey = prefs.getString("deepbitKey", "");
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
         pref_eligiusKey = prefs.getString("eligiusKey", "");
@@ -76,7 +72,8 @@ public class MinerStatsActivity extends ActionBarActivity {
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // ActionBar gets initiated and set to tabbed mode
@@ -87,7 +84,8 @@ public class MinerStatsActivity extends ActionBarActivity {
         // Add the pools that have API keys
         readPreferences(this);
 
-        if (checkAtLeastOneKeySet()) {
+        if (checkAtLeastOneKeySet())
+        {
             // If not API token set, switch to Preferences and ask User to enter one
             Toast toast = Toast.makeText(this, getString(R.string.msg_enterAPIToken), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -108,14 +106,12 @@ public class MinerStatsActivity extends ActionBarActivity {
         //KarmaAdsUtils.initAd(this);
     }
 
-    private void addTabs(ActionBar actionbar, String poolkey) {
-
+    private void addTabs(ActionBar actionbar, String poolkey)
+    {
         actionbar.removeAllTabs();
 
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BitMinter", new BitMinterFragment(), poolkey.equalsIgnoreCase("bitminter"));
-        if (pref_deepbitKey.length() > MIN_KEY_LENGTH)
-            addTab(actionbar, "DeepBit", new DeepBitFragment(), poolkey.equalsIgnoreCase("deepbit"));
         if (pref_slushKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Slush", new SlushFragment(), poolkey.equalsIgnoreCase("slush"));
         if (pref_emcKey.length() > MIN_KEY_LENGTH)
@@ -130,14 +126,12 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "GHash.IO", new GHashIOFragment(), poolkey.equalsIgnoreCase("ghashio"));
     }
 
-    private void addTabs(ActionBar actionbar) {
-
+    private void addTabs(ActionBar actionbar)
+    {
         actionbar.removeAllTabs();
 
         if (pref_bitminterKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "BitMinter", new BitMinterFragment());
-        if (pref_deepbitKey.length() > MIN_KEY_LENGTH)
-            addTab(actionbar, "DeepBit", new DeepBitFragment());
         if (pref_slushKey.length() > MIN_KEY_LENGTH)
             addTab(actionbar, "Slush", new SlushFragment());
         if (pref_emcKey.length() > MIN_KEY_LENGTH)
@@ -152,41 +146,43 @@ public class MinerStatsActivity extends ActionBarActivity {
             addTab(actionbar, "GHash.IO", new GHashIOFragment());
     }
 
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
-        if (extras != null) {
+        if (extras != null)
+        {
             String poolKey = extras.getString("poolKey");
             readPreferences(this);
             addTabs(actionbar, poolKey);
         }
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment, boolean selectedTab) {
-
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment, boolean selectedTab)
+    {
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab, selectedTab);
     }
 
-    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment) {
-
+    private void addTab(ActionBar actionbar, String tabLabel, Fragment viewFragment)
+    {
         ActionBar.Tab tab = actionbar.newTab().setText(tabLabel);
         tab.setTabListener(new MyTabsListener(viewFragment));
         actionbar.addTab(tab);
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         finish();
     }
 
-    private boolean checkAtLeastOneKeySet() {
-
+    private boolean checkAtLeastOneKeySet()
+    {
         return (pref_bitminterKey.length() <= MIN_KEY_LENGTH
                 && pref_emcKey.length() <= MIN_KEY_LENGTH
-                && pref_deepbitKey.length() <= MIN_KEY_LENGTH
                 && pref_50BTCKey.length() <= MIN_KEY_LENGTH
                 && pref_slushKey.length() <= MIN_KEY_LENGTH
                 && pref_btcguildKey.length() <= MIN_KEY_LENGTH
@@ -195,22 +191,25 @@ public class MinerStatsActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig)
+    {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_minerstats);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -225,91 +224,87 @@ public class MinerStatsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("googleAnalyticsPref", false))
-            EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
-    class MyTabsListener implements ActionBar.TabListener {
+    class MyTabsListener implements ActionBar.TabListener
+    {
         public final Fragment fragment;
 
-        public MyTabsListener(Fragment fragment) {
+        public MyTabsListener(Fragment fragment)
+        {
             this.fragment = fragment;
         }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft)
+        {
         }
 
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(Tab tab, FragmentTransaction ft)
+        {
             ft.replace(R.id.table_fragment, fragment);
         }
 
         @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft)
+        {
             ft.remove(fragment);
         }
-
     }
 
-    private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean> {
-
+    private class getDifficultyAsync extends AsyncTask<Boolean, Void, Boolean>
+    {
         String CurrentDifficulty = "";
         String NextDifficulty = "";
         String BlockCount = "";
         String NextRetarget = "";
 
         @Override
-        protected Boolean doInBackground(Boolean... params) {
-
-            try {
+        protected Boolean doInBackground(Boolean... params)
+        {
+            try
+            {
                 HttpClient client = new DefaultHttpClient();
 
                 // Get current difficulty
-                HttpGet post = new HttpGet("http://blockexplorer.com/q/getdifficulty");
+                HttpGet post = new HttpGet("https://blockexplorer.com/q/getdifficulty");
                 HttpResponse response;
                 response = client.execute(post);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 CurrentDifficulty = reader.readLine();
 
                 // Get next difficulty
-                post = new HttpGet("http://blockexplorer.com/q/estimate");
+                post = new HttpGet("https://blockexplorer.com/q/estimate");
                 response = client.execute(post);
                 reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextDifficulty = reader.readLine();
 
                 // Get block count
-                post = new HttpGet("http://blockexplorer.com/q/getblockcount");
+                post = new HttpGet("https://blockexplorer.com/q/getblockcount");
                 response = client.execute(post);
                 reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 BlockCount = reader.readLine();
 
                 // Get next retarget
-                post = new HttpGet("http://blockexplorer.com/q/nextretarget");
+                post = new HttpGet("https://blockexplorer.com/q/nextretarget");
                 response = client.execute(post);
                 reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 NextRetarget = reader.readLine();
 
                 reader.close();
                 return true;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
                 return false;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (result) {
+        protected void onPostExecute(Boolean result)
+        {
+            if (result)
+            {
                 LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
                 Context context = getBaseContext();
                 TextView tvCurrentDifficulty = new TextView(context);
@@ -317,7 +312,8 @@ public class MinerStatsActivity extends ActionBarActivity {
                 TextView tvBlockCount = new TextView(context);
                 TextView tvNextRetarget = new TextView(context);
 
-                try {
+                try
+                {
                     // TODO: move this to XML layout
                     tvCurrentDifficulty.setText(getString(R.string.currentDifficulty) + ": " + Utils.formatDecimal(
                             Float.valueOf(CurrentDifficulty), 0, 0, true));
@@ -346,12 +342,12 @@ public class MinerStatsActivity extends ActionBarActivity {
                     view.addView(tvBlockCount, 1);
                     view.addView(tvNextDifficulty, 1);
                     view.addView(tvCurrentDifficulty, 1);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     // Difficulty was NaN... don't display anything
                 }
             }
         }
-
     }
-
 }

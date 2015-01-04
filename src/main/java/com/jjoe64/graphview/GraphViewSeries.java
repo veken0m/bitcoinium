@@ -7,23 +7,27 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphViewSeries {
+public class GraphViewSeries
+{
     final String description;
     final GraphViewSeriesStyle style;
-    private final List<GraphView> graphViews = new ArrayList<GraphView>();
+    private final List<GraphView> graphViews = new ArrayList<>();
     GraphViewData[] values;
 
-    public GraphViewSeries(GraphViewData[] values) {
+    public GraphViewSeries(GraphViewData[] values)
+    {
         description = null;
         style = new GraphViewSeriesStyle();
         this.values = values;
     }
 
     public GraphViewSeries(String description, GraphViewSeriesStyle style,
-                           GraphViewData[] values) {
+                           GraphViewData[] values)
+    {
         super();
         this.description = description;
-        if (style == null) {
+        if (style == null)
+        {
             style = new GraphViewSeriesStyle();
         }
         this.style = style;
@@ -35,7 +39,8 @@ public class GraphViewSeries {
      *
      * @param graphView
      */
-    public void addGraphView(GraphView graphView) {
+    public void addGraphView(GraphView graphView)
+    {
         this.graphViews.add(graphView);
     }
 
@@ -45,15 +50,18 @@ public class GraphViewSeries {
      * @param value       the new data to append
      * @param scrollToEnd true => graphview will scroll to the end (maxX)
      */
-    public void appendData(GraphViewData value, boolean scrollToEnd) {
+    public void appendData(GraphViewData value, boolean scrollToEnd)
+    {
         GraphViewData[] newValues = new GraphViewData[values.length + 1];
         int offset = values.length;
         System.arraycopy(values, 0, newValues, 0, offset);
 
         newValues[values.length] = value;
         values = newValues;
-        for (GraphView g : graphViews) {
-            if (scrollToEnd) {
+        for (GraphView g : graphViews)
+        {
+            if (scrollToEnd)
+            {
                 g.scrollToEnd();
             }
         }
@@ -64,9 +72,11 @@ public class GraphViewSeries {
      *
      * @param values new data
      */
-    public void resetData(GraphViewData[] values) {
+    public void resetData(GraphViewData[] values)
+    {
         this.values = values;
-        for (GraphView g : graphViews) {
+        for (GraphView g : graphViews)
+        {
             g.redrawAll();
         }
     }
@@ -74,27 +84,32 @@ public class GraphViewSeries {
     /**
      * graph series style: color and thickness
      */
-    static public class GraphViewSeriesStyle {
+    static public class GraphViewSeriesStyle
+    {
         public int color = Color.GREEN;
         public int thickness = 3;
         private ValueDependentColor valueDependentColor;
 
-        public GraphViewSeriesStyle() {
+        public GraphViewSeriesStyle()
+        {
             super();
         }
 
-        public GraphViewSeriesStyle(int color, int thickness) {
+        public GraphViewSeriesStyle(int color, int thickness)
+        {
             super();
             this.color = color;
             this.thickness = thickness;
         }
 
-        public ValueDependentColor getValueDependentColor() {
+        public ValueDependentColor getValueDependentColor()
+        {
             return valueDependentColor;
         }
 
         public void setValueDependentColor(
-                ValueDependentColor valueDependentColor) {
+                ValueDependentColor valueDependentColor)
+        {
             this.valueDependentColor = valueDependentColor;
         }
     }
