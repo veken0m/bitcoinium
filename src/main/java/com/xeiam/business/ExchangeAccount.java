@@ -22,8 +22,8 @@ import com.xeiam.xchange.dto.account.AccountInfo;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 import com.xeiam.xchange.dto.trade.OpenOrders;
 import com.xeiam.xchange.dto.trade.Wallet;
-import com.xeiam.xchange.service.polling.PollingAccountService;
-import com.xeiam.xchange.service.polling.PollingTradeService;
+import com.xeiam.xchange.service.polling.account.PollingAccountService;
+import com.xeiam.xchange.service.polling.trade.PollingTradeService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -115,10 +115,8 @@ public class ExchangeAccount
 
     public boolean init()
     {
-
         try
         {
-
             ExchangeSpecification bitcoiniumExchangeSpec = new ExchangeSpecification(BitcoiniumExchange.class.getName());
 
             // TODO: input BitcoiniumWS API key before release!

@@ -32,8 +32,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-// import com.veken0m.utils.KarmaAdsUtils;
-
 public class BitcoinAverageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener
 {
     private final static Handler mOrderHandler = new Handler();
@@ -67,7 +65,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoinaverage_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
+        swipeLayout.setColorSchemeResources(R.color.holo_blue_light);
 
         // Temp fix to show refresh indicator. This is a bug in android.support.v4 v21.0.1
         // https://code.google.com/p/android/issues/detail?id=77712
@@ -78,7 +76,6 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        // KarmaAdsUtils.initAd(this);
         viewBitcoinAverage();
     }
 

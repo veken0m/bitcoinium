@@ -20,10 +20,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.veken0m.bitcoinium.BaseActivity;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.KarmaAdsUtils;
 import com.xeiam.business.ExchangeAccount;
 import com.xeiam.dialogs.ApiKeyAlert;
 import com.xeiam.dialogs.CancelOrderDialog;
@@ -58,6 +60,13 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     public static int CHART_TARGET_RESOLUTION = 1000;
     private GeneralUpdateDeamon dataUpdateDeamon;
     private Vibrator vibrator;
+
+    @Override
+    public void onStart()
+    {
+        KarmaAdsUtils.initAd(this, Constants.XTRADER_PUBLISHER_ID);
+        super.onStart();
+    }
 
     public void onStop()
     {

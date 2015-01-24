@@ -45,7 +45,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity
             if (widgetManager != null)
             {
                 int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
-                if(widgetIds.length == 0)
+                if (widgetIds.length == 0)
                     alertSettingsPref.addPreference(noWidgetFound());
 
                 for (final int appWidgetId : widgetIds)
@@ -53,7 +53,8 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity
                     // Obtain Widget configuration
                     String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                     String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                    if (widgetCurrency == null || widgetExchange == null){
+                    if (widgetCurrency == null || widgetExchange == null)
+                    {
                         // Bad widget, destroy it.
                         AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);
                         host.deleteAppWidgetId(appWidgetId);

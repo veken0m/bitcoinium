@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +42,7 @@ import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
 
 // import com.veken0m.utils.KarmaAdsUtils;
 
-public class GraphActivity extends BaseActivity implements OnItemSelectedListener
+public class GraphActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
 {
     private static final Handler mOrderHandler = new Handler();
     private static Boolean connectionFail = true;
@@ -82,6 +83,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 String text = String.format(res.getString(R.string.error_exchangeConnection), res.getString(R.string.trades), exchangeName);
                 createPopup(text);
             }
+            swipeLayout.setRefreshing(false);
         }
     };
 
@@ -115,11 +117,13 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
         readPreferences();
         setContentView(R.layout.activity_graph);
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.graph_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeResources(R.color.holo_blue_light);
+
         createExchangeDropdown();
         createCurrencyDropdown();
-        viewGraph();
-
-        // KarmaAdsUtils.initAd(this);
+        onRefresh();
     }
 
     @Override
@@ -142,9 +146,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                 startActivity(new Intent(this, GraphPreferenceActivity.class));
                 return true;
             case R.id.action_refresh:
-                viewGraph();
-                LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
-                graphLinearLayout.removeAllViews();
+                onRefresh();
                 return true;
         }
 
@@ -219,7 +221,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
             graphView.addSeries(new GraphViewSeries(data));
             graphView.setViewPort(startValue, windowSize);
             graphView.setScrollable(true);
-            graphView.setScalable(true);
+            graphView.setScalable(false);
 
             if (!pref_scaleMode)
             {
@@ -273,16 +275,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
     private void viewGraph()
     {
-        runOnUiThread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                LinearLayout linlaHeaderProgress = (LinearLayout) findViewById(R.id.graph_loadSpinner);
-                linlaHeaderProgress.setVisibility(View.VISIBLE);
-            }
-        });
-
+        swipeLayout.setRefreshing(true);
         GraphThread gt = new GraphThread();
         gt.start();
     }
@@ -353,6 +346,15 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         }
     }
 
+    @Override
+    public void onRefresh()
+    {
+        LinearLayout graphLinearLayout = (LinearLayout) findViewById(R.id.graphView);
+        graphLinearLayout.removeAllViews();
+        viewGraph();
+        //swipeLayout.setRefreshing(false);
+    }
+
     private class GraphThread extends Thread
     {
         @Override
@@ -360,6 +362,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
         {
             generatePriceGraph();
 
+            /*
             runOnUiThread(new Runnable()
             {
                 @Override
@@ -369,6 +372,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
                     linlaHeaderProgress.setVisibility(View.INVISIBLE);
                 }
             });
+            */
             mOrderHandler.post(mGraphView);
         }
     }

@@ -24,6 +24,7 @@ android {
     buildToolsVersion '21.1.2'
 
     defaultConfig {
+        applicationId "com.veken0m.bitcoinium"
         minSdkVersion 8
         targetSdkVersion 21
     }
