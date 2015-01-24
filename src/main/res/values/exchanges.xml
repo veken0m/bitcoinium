@@ -36,7 +36,6 @@
         <item>okcoin</item>
         <item>poloniex</item>
         <!--item>vircurex</item--> <!-- not implemented -->
-        <item>vaultofsatoshi</item>
         <item>virtex</item>
     </string-array>
 
@@ -48,7 +47,6 @@
         <!--item>BTCE_RUR</item-->
         <item>btceUSD</item>
         <item>krakenEUR</item>
-        <item>vaultofsatoshiCAD</item>
         <!--item>KRAKEN_USD</item-->
     </string-array>
 
@@ -61,7 +59,6 @@
         <!--item>BTCE_RUR</item-->
         <item>BTCE_USD</item>
         <item>KRAKEN_EUR</item>
-        <item>VOS_CAD</item>
         <!--item>KRAKEN_USD</item-->
     </string-array>
 
@@ -459,17 +456,6 @@
         <item>LTC/BTC</item>
         <item>poloniex</item>
         <item>Poloniex</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-    </string-array>
-
-    <string-array name="vaultofsatoshi">
-        <item>Vault of Satoshi</item>
-        <item>com.xeiam.xchange.vaultofsatoshi.VaultOfSatoshiExchange</item>
-        <item>BTC/USD</item>
-        <item>vaultofsatoshi</item>
-        <item>VoS</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>

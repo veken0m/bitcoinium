@@ -104,7 +104,6 @@
     <orderEntry type="library" exported="" name="xchange-kraken-2.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.6.1-RC1" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoinium-2.2.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-vaultofsatoshi-2.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cavirtex-2.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitstamp-2.2.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitkonan-2.2.0-SNAPSHOT" level="project" />
