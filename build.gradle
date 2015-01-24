@@ -111,7 +111,6 @@ dependencies {
     compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-mintpal:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-poloniex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
 
     compile("com.xeiam.xchange:xchange-bitcointoyou:$xchangeVersion")

@@ -31,7 +31,6 @@ import com.veken0m.bitcoinium.fragments.mining.GHashIOFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.utils.Constants;
 import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 

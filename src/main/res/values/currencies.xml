@@ -1089,29 +1089,6 @@
         <item>YIN/BTC</item>
     </string-array>
 
-    <string-array name="vaultofsatoshicurrencies">
-        <item>BTC/USD</item>
-        <item>BTC/CAD</item>
-        <item>BTC/LTC</item>
-        <item>BTC/DOGE</item>
-        <item>LTC/USD</item>
-        <item>LTC/CAD</item>
-        <item>LTC/BTC</item>
-        <item>LTC/DOGE</item>
-        <item>PPC/USD</item>
-        <item>PPC/CAD</item>
-        <item>DOGE/USD</item>
-        <item>DOGE/CAD</item>
-        <item>DOGE/LTC</item>
-        <item>DOGE/BTC</item>
-        <item>FTC/USD</item>
-        <item>FTC/CAD</item>
-        <item>XPM/USD</item>
-        <item>XPM/CAD</item>
-        <item>QRK/USD</item>
-        <item>QRK/CAD</item>
-    </string-array>
-
     <string-array name="vircurexcurrencies">
         <item>BTC/EUR</item>
         <item>BTC/USD</item>
