@@ -35,7 +35,7 @@ public class TickerPreferencesActivity extends BasePreferenceActivity
         if (widgetManager != null)
         {
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
-            if(widgetIds.length == 0)
+            if (widgetIds.length == 0)
                 notificationSettingsPref.addPreference(noWidgetFound());
 
             for (int appWidgetId : widgetIds)
@@ -43,7 +43,8 @@ public class TickerPreferencesActivity extends BasePreferenceActivity
                 // Obtain Widget configuration
                 String widgetCurrency = WidgetConfigureActivity.loadCurrencyPref(this, appWidgetId);
                 String widgetExchange = WidgetConfigureActivity.loadExchangePref(this, appWidgetId);
-                if (widgetCurrency == null || widgetExchange == null){
+                if (widgetCurrency == null || widgetExchange == null)
+                {
                     // Bad widget, destroy it.
                     AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);
                     host.deleteAppWidgetId(appWidgetId);

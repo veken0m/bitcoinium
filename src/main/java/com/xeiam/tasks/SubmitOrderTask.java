@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.xeiam.business.ExchangeAccount;
 import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.polling.PollingTradeService;
+import com.xeiam.xchange.service.polling.trade.PollingTradeService;
 
 import java.io.IOException;
 

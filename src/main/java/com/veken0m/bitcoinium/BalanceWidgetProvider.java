@@ -20,7 +20,7 @@ import com.xeiam.xchange.blockchain.BlockchainExchange;
 import com.xeiam.xchange.blockchain.dto.BitcoinAddress;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
 
 import si.mazi.rescu.RestProxyFactory;
 

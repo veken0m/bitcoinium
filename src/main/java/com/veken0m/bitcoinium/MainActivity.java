@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * @author Michael Lagacé a.k.a. veken0m
  * @version 1.9.1 Jan 12 2014
  */
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends BaseActivity
 {
     /**
      * Called when the activity is first created.
@@ -39,8 +39,6 @@ public class MainActivity extends ActionBarActivity
         initTabbedActionBar();
         // Some hack to make widgets appear on devices without rebooting
         sendBroadcast(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
-
-        // KarmaAdsUtils.initAd(this);
     }
 
     void initTabbedActionBar()
