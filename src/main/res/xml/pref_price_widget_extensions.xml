@@ -6,14 +6,14 @@
             android:key="alarmSettingsPref"
             android:summary="@string/pref_price_alert_summary"
             android:title="@string/pref_price_alert_title">
-            <intent android:action="com.veken0m.bitcoinium.PriceAlertPreferencesActivity" />
+            <intent android:action="com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity" />
         </Preference>
 
         <Preference
             android:key="notificationSettingsPref"
             android:summary="@string/pref_notification_ticker_summary"
             android:title="@string/notificationDrawerTickers">
-            <intent android:action="com.veken0m.bitcoinium.TickerPreferencesActivity" />
+            <intent android:action="com.veken0m.bitcoinium.preferences.TickerPreferencesActivity" />
         </Preference>
 
     </PreferenceCategory>

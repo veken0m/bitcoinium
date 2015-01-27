@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.xeiam.xbtctrader.MainView;
-import com.xeiam.xbtctrader.XTraderActivity;
+import com.xeiam.xbtctrader.TraderActivity;
 import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
 import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
 import com.xeiam.xchange.dto.Order.OrderType;
@@ -59,7 +59,7 @@ public class Painter
     public void setBidAskPaths()
     {
 
-        BitcoiniumOrderbook orderBook = XTraderActivity.exchangeAccount.getOrderBook();
+        BitcoiniumOrderbook orderBook = TraderActivity.exchangeAccount.getOrderBook();
         //set the scale
         if (orderBook.getAsks()[orderBook.getAsks().length - 1].getVolume().floatValue() > orderBook.getBids()[orderBook.getBids().length - 1].getVolume().floatValue())
         {
@@ -73,7 +73,7 @@ public class Painter
         this.askPath = getOrderBookPath(orderBook.getAsks(), true);
         this.bidPath = getOrderBookPath(orderBook.getBids(), true);
 
-        BitcoiniumOrderbook orderBookLast = XTraderActivity.exchangeAccount.getLastOrderBook();
+        BitcoiniumOrderbook orderBookLast = TraderActivity.exchangeAccount.getLastOrderBook();
 
         if (orderBookLast != null)
         {
@@ -135,7 +135,7 @@ public class Painter
     {
         System.out.println("setTradeHistoryPath()");
 
-        LinkedList<BitcoiniumTicker> trades = XTraderActivity.exchangeAccount.getTrades();
+        LinkedList<BitcoiniumTicker> trades = TraderActivity.exchangeAccount.getTrades();
 
         System.out.println("setTradeHistoryPath(): trades.size()=" + trades.size());
         if (trades == null || trades.size() == 0)
@@ -162,7 +162,7 @@ public class Painter
         }
 
         //add the last ticker
-        BitcoiniumTicker ticker = XTraderActivity.exchangeAccount.getLastTicker();
+        BitcoiniumTicker ticker = TraderActivity.exchangeAccount.getLastTicker();
         x = (int) ((ticker.getLast().floatValue() - priceLowBound) * priceScalar);
         y = (int) ((ticker.getTimestamp() - tOffSet) * tScalar);
         tradePath.lineTo(x, y);
@@ -231,7 +231,7 @@ public class Painter
     public void setScales()
     {
         //System.out.println("SET SCALES CALLED!");
-        BitcoiniumTicker ticker = XTraderActivity.exchangeAccount.getReferenceTicker();
+        BitcoiniumTicker ticker = TraderActivity.exchangeAccount.getReferenceTicker();
 
 
         if (ticker == null)
@@ -262,27 +262,27 @@ public class Painter
 //	private void paintBidAskChange(){
 //		int dw=mainView.getWidth()/5;
 //		
-//		float askChange=XTraderActivity.exchangeAccount.getAskChange()/(GeneralUpdateDeamon.UPDATE_INTERVAL_ORDERBOOK_MS/1000);
-//		float bidChange=XTraderActivity.exchangeAccount.getBidChange()/(GeneralUpdateDeamon.UPDATE_INTERVAL_ORDERBOOK_MS/1000);
+//		float askChange=TraderActivity.exchangeAccount.getAskChange()/(GeneralUpdateDeamon.UPDATE_INTERVAL_ORDERBOOK_MS/1000);
+//		float bidChange=TraderActivity.exchangeAccount.getBidChange()/(GeneralUpdateDeamon.UPDATE_INTERVAL_ORDERBOOK_MS/1000);
 //
 //		if(askChange!=0){
-//			 c.drawText(XTraderActivity.oneDecimalFormatter.format(askChange)+"BTC/s", mainView.getWidth()-dw, mainView.getHeight()-40, pallet.bidAskChangePaint);
+//			 c.drawText(TraderActivity.oneDecimalFormatter.format(askChange)+"BTC/s", mainView.getWidth()-dw, mainView.getHeight()-40, pallet.bidAskChangePaint);
 //		}
 //		if(bidChange!=0){
-//			 c.drawText(XTraderActivity.oneDecimalFormatter.format(bidChange)+"BTC/s", dw, mainView.getHeight()-40, pallet.bidAskChangePaint);
+//			 c.drawText(TraderActivity.oneDecimalFormatter.format(bidChange)+"BTC/s", dw, mainView.getHeight()-40, pallet.bidAskChangePaint);
 //		}
 //
 //	}
 
     private void paintLastTickerText()
     {
-        BitcoiniumTicker lastTicker = XTraderActivity.exchangeAccount.getLastTicker();
+        BitcoiniumTicker lastTicker = TraderActivity.exchangeAccount.getLastTicker();
         if (lastTicker != null)
         {
-            String text = XTraderActivity.fiatFormatter.format(lastTicker.getLast());
+            String text = TraderActivity.fiatFormatter.format(lastTicker.getLast());
             c.drawText(text, mainView.getWidth() / 2, 60, pallet.tickerLastPaint);
 
-            long exchangeDelay = XTraderActivity.exchangeAccount.getExchangeDelay();
+            long exchangeDelay = TraderActivity.exchangeAccount.getExchangeDelay();
 
             Paint paint = pallet.exchangeDelay;
 
@@ -323,7 +323,7 @@ public class Painter
     private void paintOpenOrders()
     {
 
-        List<LimitOrder> orders = XTraderActivity.exchangeAccount.getOpenOrders();
+        List<LimitOrder> orders = TraderActivity.exchangeAccount.getOpenOrders();
         if (orders == null || orders.size() == 0 && orderCollider != null)
         {
             orderCollider.clearOrders();
@@ -378,7 +378,7 @@ public class Painter
     private void paintLastTick()
     {
 
-        BitcoiniumTicker ticker = XTraderActivity.exchangeAccount.getLastTicker();
+        BitcoiniumTicker ticker = TraderActivity.exchangeAccount.getLastTicker();
 
         if (ticker == null)
         {
@@ -449,7 +449,7 @@ public class Painter
         {
             c.drawLine(i * dX, h, i * dX, h - gridTickLength, pallet.gridTickPaint);
             float price = (float) ((float) i * dX / priceScalar + priceLowBound);
-            c.drawText(XTraderActivity.fiatFormatter.format(price), i * dX + 3, h - 5, pallet.axisTextPaint);
+            c.drawText(TraderActivity.fiatFormatter.format(price), i * dX + 3, h - 5, pallet.axisTextPaint);
         }
 
         //RIGHT ORDER BOOK
@@ -462,7 +462,7 @@ public class Painter
             c.drawLine(w, i * dY, w - gridTickLength, i * dY, pallet.gridTickPaint);
             float volume = (float) ((float) (h - i * dY) / depthScalar);
             volume /= 1E3;
-            c.drawText(XTraderActivity.twoDecimalFormatter.format(volume), w - 50, i * dY - 5, pallet.axisTextPaint);
+            c.drawText(TraderActivity.twoDecimalFormatter.format(volume), w - 50, i * dY - 5, pallet.axisTextPaint);
         }
 
         //LEFT YOUR ORDER VOLUME
@@ -472,7 +472,7 @@ public class Painter
         {
             c.drawLine(0, i * dY, gridTickLength, i * dY, pallet.gridTickPaint);
             float amount = (float) ((numGridTicks - i) * ordergridsize);
-            c.drawText(XTraderActivity.threeDecimalFormatter.format(amount), 5, (float) i * dY - 5f, pallet.axisTextPaint);
+            c.drawText(TraderActivity.threeDecimalFormatter.format(amount), 5, (float) i * dY - 5f, pallet.axisTextPaint);
         }
     }
 

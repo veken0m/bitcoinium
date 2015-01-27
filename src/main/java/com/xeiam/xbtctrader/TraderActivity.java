@@ -39,9 +39,9 @@ import com.xeiam.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener
+public class TraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener
 {
-    private static final String TAG = "XTraderActivity";
+    private static final String TAG = "TraderActivity";
     public static ExchangeAccount exchangeAccount;
     public static MainView mainView;
     public static SharedPreferences preferences;
@@ -63,7 +63,8 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     @Override
     public void onStart()
     {
-        KarmaAdsUtils.initAd(this, Constants.XTRADER_PUBLISHER_ID);
+        KarmaAdsUtils.initAd(this, Constants.getNextKarmaId());
+
         super.onStart();
     }
 
@@ -164,7 +165,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xtrader_main);
+        setContentView(R.layout.activity_trader_main);
 
         Bundle extras = getIntent().getExtras();
         String sCurrencyPair = Constants.DEFAULT_CURRENCY_PAIR;
@@ -184,7 +185,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
-        PreferenceManager.setDefaultValues(this, R.xml.pref_xtrader, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_trader, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
 
@@ -216,12 +217,12 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         getMenuInflater().inflate(R.menu.action, menu);
 
         //String fiat=pref_xtrader.getString("listCurrency", "USD");
-        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(XTraderActivity.transactionCurrency) + "#.##");
+        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(TraderActivity.transactionCurrency) + "#.##");
 
         //init the view variables.
         MainView view = (MainView) findViewById(R.id.main_view);
         view.setMainActivity(this);
-        XTraderActivity.mainView = view;
+        TraderActivity.mainView = view;
 
         return true;
     }
@@ -251,7 +252,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
     private void openPrefs()
     {
-        Intent intent = new Intent(XTraderActivity.this,
+        Intent intent = new Intent(TraderActivity.this,
                 PreferenceActivity.class);
         startActivity(intent);
     }
@@ -264,8 +265,8 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         boolean needToUpdate = false;
         if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password"))
         {
-            //String id = XTraderActivity.exchangeInfo.getIdentifier();
-            //String sCurrencyPair = XTraderActivity.pref_xtrader.getString(id + "TradeCurrency", "");
+            //String id = TraderActivity.exchangeInfo.getIdentifier();
+            //String sCurrencyPair = TraderActivity.pref_trader.getString(id + "TradeCurrency", "");
             //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
             //tradableIdentifier = currencyPair.baseSymbol;
             //transactionCurrency = currencyPair.counterSymbol;
@@ -290,7 +291,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
             public void run()
             {
                 //fiat account
-                String fiatSymbol = XTraderActivity.transactionCurrency;
+                String fiatSymbol = TraderActivity.transactionCurrency;
                 float fiatBalance = exchangeAccount.getTotalFiatBalance(fiatSymbol);
                 TextView fiatBalanceView = ((TextView) findViewById(R.id.balance_fiat));
                 fiatBalanceView.setText(fiatFormatter.format(fiatBalance));

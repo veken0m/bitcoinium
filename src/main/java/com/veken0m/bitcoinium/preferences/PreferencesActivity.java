@@ -142,7 +142,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
     {
         super.onStop();
 
-        // Tell the widgets to update pref_xtrader
+        // Tell the widgets to update
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));

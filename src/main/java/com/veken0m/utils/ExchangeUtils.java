@@ -22,7 +22,7 @@ public class ExchangeUtils
     public static PollingMarketDataService getMarketData(ExchangeProperties exchange, CurrencyPair currencyPair)
     {
         // TODO: find way to import required certificates
-        if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade"))
+        if (exchange.getIdentifier().equals("cryptotrade") || exchange.getIdentifier().equals("bitcoincentral"))
         {
             try
             {

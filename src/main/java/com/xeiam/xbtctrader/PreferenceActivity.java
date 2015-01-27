@@ -25,7 +25,7 @@ public class PreferenceActivity extends BasePreferenceActivity
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();*/
 
-        addPreferencesFromResource(R.xml.pref_xtrader);
+        addPreferencesFromResource(R.xml.pref_trader);
 
         Preference prefLicense = findPreference("pref_license");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

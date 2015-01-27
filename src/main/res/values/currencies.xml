@@ -836,51 +836,6 @@
         <item>LTC/BRL</item>
     </string-array>
 
-    <!-- Arrays for MintPal Currencies -->
-    <string-array name="mintpalcurrencies">
-        <item>LTC/BTC</item>
-        <item>CLOAK/BTC</item>
-        <item>DRK/BTC</item>
-        <item>XC/BTC</item>
-        <item>BC/BTC</item>
-        <item>VRC/BTC</item>
-        <item>XMR/BTC</item>
-        <item>DOGE/BTC</item>
-        <item>CYC/BTC</item>
-        <item>KARM/BTC</item>
-        <item>VTC/BTC</item>
-        <item>CRYPT/BTC</item>
-        <item>WC/BTC</item>
-        <item>JPC/BTC</item>
-        <item>TOR/BTC</item>
-        <item>SYNC/BTC</item>
-        <item>NAUT/BTC</item>
-        <item>KARM/LTC</item>
-        <item>ZET/BTC</item>
-        <item>DGB/BTC</item>
-        <item>CINNI/BTC</item>
-        <item>URO/BTC</item>
-        <item>POT/BTC</item>
-        <item>USDe/BTC</item>
-        <item>RZR/BTC</item>
-        <item>FLT/BTC</item>
-        <item>BC/LTC</item>
-        <item>TES/BTC</item>
-        <item>UNO/BTC</item>
-        <item>SILK/BTC</item>
-        <item>MYR/BTC</item>
-        <item>SUPER/BTC</item>
-        <item>NOBL/BTC</item>
-        <item>AC/BTC</item>
-        <item>MIN/BTC</item>
-        <item>DRK/BTC</item>
-        <item>N5K/BTC</item>
-        <item>AUR/BTC</item>
-        <item>PND/BTC</item>
-        <item>ZED/BTC</item>
-        <item>MINT/BTC</item>
-    </string-array>
-
     <!-- Arrays for OKCoin Currencies -->
     <string-array name="okcoincurrencies">
         <item>BTC/CNY</item>

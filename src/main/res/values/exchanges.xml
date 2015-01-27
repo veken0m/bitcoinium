@@ -32,7 +32,6 @@
         <item>kraken</item>
         <item>lakebtc</item>
         <item>mercadobitcoin</item>
-        <item>mintpal</item>
         <item>okcoin</item>
         <item>poloniex</item>
         <!--item>vircurex</item--> <!-- not implemented -->
@@ -415,17 +414,6 @@
         <item>1</item>
         <item>1</item>
         <item>0</item>
-    </string-array>
-
-    <string-array name="mintpal">
-        <item>MintPal</item>
-        <item>com.xeiam.xchange.mintpal.MintPalExchange</item>
-        <item>LTC/BTC</item>
-        <item>mintpal</item>
-        <item>MintPal</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
     </string-array>
 
     <string-array name="mtgox">

@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.2.0</string>
+    <string name="version_name">2.2.2</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
@@ -143,7 +143,7 @@
     <string name="label_priceGraph">Price Graph</string>
     <string name="label_updateWidgets">Update Widget(s)</string>
     <string name="label_webCharts">Web Charts</string>
-    <string name="label_xtrader">XTrader</string>
+    <string name="label_trader">Trader</string>
 
     <!-- Dialog Messages -->
     <string name="error_BitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>

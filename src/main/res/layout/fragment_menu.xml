@@ -72,12 +72,12 @@
         android:text="@string/label_webCharts" />
 
     <Button
-        android:id="@+id/xtrader"
+        android:id="@+id/trader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_xtrader" />
+        android:text="@string/label_trader" />
 
 </LinearLayout>

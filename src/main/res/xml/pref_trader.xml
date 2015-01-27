@@ -113,6 +113,16 @@
         </PreferenceScreen>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="Help">
+
+        <Preference android:title="Trader Overview (Youtube)" >
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://www.youtube.com/watch?v=RIZW3MMHlA4" />
+        </Preference>
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Bitcoinium License">
         <Preference
             android:key="pref_license"
