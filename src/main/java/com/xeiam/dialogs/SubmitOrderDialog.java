@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
-import com.xeiam.xbtctrader.XTraderActivity;
+import com.xeiam.xbtctrader.TraderActivity;
 import com.xeiam.xchange.dto.Order.OrderType;
 
 
@@ -45,14 +45,14 @@ public class SubmitOrderDialog extends DialogFragment
         orderView = inflater.inflate(R.layout.dialog_new_order, null);
 
         //set the amount
-        ((TextView) orderView.findViewById(R.id.order_btc)).setText(XTraderActivity.fiveDecimalFormatter.format(amount));
+        ((TextView) orderView.findViewById(R.id.order_btc)).setText(TraderActivity.fiveDecimalFormatter.format(amount));
 
         // Set currencies
-        ((TextView) orderView.findViewById(R.id.new_order_transaction_currency)).setText(XTraderActivity.transactionCurrency.toUpperCase());
-        ((TextView) orderView.findViewById(R.id.new_order_tradable_identifier)).setText(XTraderActivity.tradableIdentifier.toUpperCase());
+        ((TextView) orderView.findViewById(R.id.new_order_transaction_currency)).setText(TraderActivity.transactionCurrency.toUpperCase());
+        ((TextView) orderView.findViewById(R.id.new_order_tradable_identifier)).setText(TraderActivity.tradableIdentifier.toUpperCase());
 
         //set the price
-        ((TextView) orderView.findViewById(R.id.order_price)).setText(XTraderActivity.twoDecimalFormatter.format(price));
+        ((TextView) orderView.findViewById(R.id.order_price)).setText(TraderActivity.twoDecimalFormatter.format(price));
 
         if (orderType == orderType.BID)
         {
@@ -75,7 +75,7 @@ public class SubmitOrderDialog extends DialogFragment
                 {
                     float amount = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_btc)).getText().toString());
                     float price = Float.parseFloat(((TextView) orderView.findViewById(R.id.order_price)).getText().toString());
-                    XTraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
+                    TraderActivity.exchangeAccount.placeLimitOrder(price, amount, orderType, getActivity());
                 }
                 catch (Exception e)
                 {

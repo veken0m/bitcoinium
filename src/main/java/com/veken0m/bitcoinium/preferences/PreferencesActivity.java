@@ -1,11 +1,14 @@
 package com.veken0m.bitcoinium.preferences;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.support.v4.util.Pair;
@@ -38,6 +41,41 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
         addPreferencesFromResource(R.xml.pref_price_widget_extensions);
         generateMinerDownAlertPreferences();
         addPreferencesFromResource(R.xml.pref_about);
+
+
+        if (Constants.adSupported)
+        {
+            CheckBoxPreference tapToUpdatePref = (CheckBoxPreference) findPreference("widgetTapUpdatePref");
+            if (tapToUpdatePref != null)
+            {
+                tapToUpdatePref.setTitle(R.string.tapToUpdate_free);
+                tapToUpdatePref.setDefaultValue(false);
+                tapToUpdatePref.setEnabled(false);
+            }
+
+            Preference playstorePref = findPreference("playstorePref");
+            if (playstorePref != null)
+            {
+                Intent i = new Intent(android.content.Intent.ACTION_VIEW);
+                i.setData(Uri.parse(getString(R.string.link_bitcoiniumPlayStore_free)));
+                playstorePref.setIntent(i);
+            }
+
+            Preference emailPref = findPreference("devEmailPref");
+            if (emailPref != null)
+            {
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                emailIntent.setData(Uri.parse(getString(R.string.link_email_author_free)));
+                emailPref.setIntent(emailIntent);
+            }
+        }
+        else
+        {
+            Preference prefBuyPrime = findPreference("prefBuyPrime");
+            PreferenceGroup prefAboutCategory = (PreferenceGroup) findPreference("prefAboutCategory");
+            if (prefBuyPrime != null && prefAboutCategory != null)
+                prefAboutCategory.removePreference(prefBuyPrime);
+        }
 
         ListPreference defaultPref = (ListPreference) findPreference("defaultExchangePref");
         Pair<List<String>, List<String>> exchanges = getAllDropdownItems(this);
@@ -104,7 +142,7 @@ public class PreferencesActivity extends BasePreferenceActivity implements OnPre
     {
         super.onStop();
 
-        // Tell the widgets to update pref_xtrader
+        // Tell the widgets to update
         sendBroadcast(new Intent(this, WidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, MinerWidgetProvider.class).setAction(Constants.REFRESH));
         sendBroadcast(new Intent(this, BalanceWidgetProvider.class).setAction(Constants.REFRESH));

@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +37,7 @@ import com.veken0m.utils.Utils;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -114,7 +115,9 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.orderbook_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
+        swipeLayout.setColorSchemeResources(R.color.holo_blue_light);
+        swipeLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -134,7 +137,13 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         readPreferences();
         populateExchangeDropdown();
         populateCurrencyDropdown();
-        // KarmaAdsUtils.initAd(this);
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        viewOrderbook();
     }
 
     @Override

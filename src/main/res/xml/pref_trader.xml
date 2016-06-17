@@ -111,19 +111,16 @@
                 android:summary="Enter your Bitfinex Secret Key"
                 android:title="Secret Key" />
         </PreferenceScreen>
-        <PreferenceScreen
-            android:enabled="true"
-            android:summary="Account credentials"
-            android:title="VoS Account">
-            <EditTextPreference
-                android:key="vaultofsatoshiApiKey"
-                android:summary="Enter your VoS API Key"
-                android:title="API Key" />
-            <EditTextPreference
-                android:key="vaultofsatoshiSecretKey"
-                android:summary="Enter your VoS Secret Key"
-                android:title="Secret Key" />
-        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Help">
+
+        <Preference android:title="Trader Overview (Youtube)" >
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://www.youtube.com/watch?v=RIZW3MMHlA4" />
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Bitcoinium License">

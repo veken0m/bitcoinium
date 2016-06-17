@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
-import com.xeiam.xbtctrader.XTraderActivity;
+import com.xeiam.xbtctrader.TraderActivity;
 import com.xeiam.xchange.dto.Order.OrderType;
 import com.xeiam.xchange.dto.trade.LimitOrder;
 
@@ -72,7 +72,7 @@ public class CancelOrderDialog extends DialogFragment
                 System.out.println("CancelOrderDialog.onClick()");
                 String orderId = ((TextView) orderView.findViewById(R.id.cancel_order_id)).getText().toString();
                 System.out.println("orderId=" + orderId);
-                XTraderActivity.exchangeAccount.cancelLimitOrder(orderId);
+                TraderActivity.exchangeAccount.cancelLimitOrder(orderId);
             }
         })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener()

@@ -4,7 +4,9 @@
         <PreferenceScreen
             android:summary="@string/pref_about_summary"
             android:title="@string/aboutBitcoinium">
-            <PreferenceCategory android:title="@string/about">
+            <PreferenceCategory
+                android:key="prefAboutCategory"
+                android:title="@string/about">
                 <Preference
                     android:summary="@string/about_author"
                     android:title="@string/authorText" />
@@ -28,9 +30,18 @@
                     android:summary="@string/version_name"
                     android:title="@string/version" />
                 <Preference
-                    android:key="playstoreGithubPref"
+                    android:key="playstorePref"
                     android:summary="@string/pref_rate_bitcoinium_summary"
                     android:title="@string/msg_rateBitcoinium">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="@string/link_bitcoiniumPlayStore" />
+                </Preference>
+                <!-- this Preference is removed if Prime -->
+                <Preference
+                    android:key="prefBuyPrime"
+                    android:summary="Support the project by getting Bitcoinium Prime!"
+                    android:title="Buy Bitcoinium Prime">
                     <intent
                         android:action="android.intent.action.VIEW"
                         android:data="@string/link_bitcoiniumPlayStore" />

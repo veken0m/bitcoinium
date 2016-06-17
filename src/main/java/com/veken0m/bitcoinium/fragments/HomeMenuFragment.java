@@ -24,7 +24,7 @@ import com.veken0m.bitcoinium.WebViewerActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
-import com.xeiam.xbtctrader.XTraderActivity;
+import com.xeiam.xbtctrader.TraderActivity;
 
 public class HomeMenuFragment extends Fragment
 {
@@ -158,7 +158,7 @@ public class HomeMenuFragment extends Fragment
             }
         });
 
-        final Button xTrader = (Button) view.findViewById(R.id.xtrader);
+        final Button xTrader = (Button) view.findViewById(R.id.trader);
         if (xTrader != null)
         {
             xTrader.setOnClickListener(new View.OnClickListener()
@@ -175,7 +175,7 @@ public class HomeMenuFragment extends Fragment
                         @Override
                         public void onClick(DialogInterface d, int n)
                         {
-                            Intent intent = new Intent(activity.getApplicationContext(), XTraderActivity.class);
+                            Intent intent = new Intent(activity.getApplicationContext(), TraderActivity.class);
                             intent.putExtra("exchange", items[n]);
                             startActivity(intent);
                         }

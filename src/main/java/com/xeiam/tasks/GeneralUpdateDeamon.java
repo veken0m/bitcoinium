@@ -2,17 +2,17 @@ package com.xeiam.tasks;
 
 import android.os.AsyncTask;
 
-import com.xeiam.xbtctrader.XTraderActivity;
+import com.xeiam.xbtctrader.TraderActivity;
 
 public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean>
 {
 
     public static final int PERIOD = 2500;
     public static String[] updateOrder = {"ticker", "orderbook", "ticker", "account", "ticker", "orders"};
-    XTraderActivity a;
+    TraderActivity a;
     private boolean isActive = true;
 
-    public GeneralUpdateDeamon(XTraderActivity mainActivity)
+    public GeneralUpdateDeamon(TraderActivity mainActivity)
     {
         this.a = mainActivity;
     }
@@ -29,19 +29,19 @@ public class GeneralUpdateDeamon extends AsyncTask<String, Void, Boolean>
 
             if (query.equals("ticker"))
             {
-                XTraderActivity.exchangeAccount.queryLastTicker();
+                TraderActivity.exchangeAccount.queryLastTicker();
             }
             else if (query.equals("orderbook"))
             {
-                XTraderActivity.exchangeAccount.queryOrderBook();
+                TraderActivity.exchangeAccount.queryOrderBook();
             }
             else if (query.equals("account"))
             {
-                XTraderActivity.exchangeAccount.queryRemoteAccountInfo();
+                TraderActivity.exchangeAccount.queryRemoteAccountInfo();
             }
             else if (query.equals("orders"))
             {
-                XTraderActivity.exchangeAccount.queryOpenOrders();
+                TraderActivity.exchangeAccount.queryOpenOrders();
             }
 
             sleep();

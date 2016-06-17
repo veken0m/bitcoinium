@@ -24,6 +24,7 @@ android {
     buildToolsVersion '21.1.2'
 
     defaultConfig {
+        applicationId "com.veken0m.bitcoinium"
         minSdkVersion 8
         targetSdkVersion 21
     }
@@ -108,9 +109,8 @@ dependencies {
     //compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-mintpal:$xchangeVersion")
+    //compile("com.xeiam.xchange:xchange-mintpal:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-poloniex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
     compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
 
     compile("com.xeiam.xchange:xchange-bitcointoyou:$xchangeVersion")

@@ -31,6 +31,7 @@ import com.veken0m.bitcoinium.fragments.mining.GHashIOFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
+import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 
 import org.apache.http.HttpResponse;
@@ -103,7 +104,7 @@ public class MinerStatsActivity extends ActionBarActivity
         setContentView(R.layout.activity_minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
-        //KarmaAdsUtils.initAd(this);
+        KarmaAdsUtils.initAd(this);
     }
 
     private void addTabs(ActionBar actionbar, String poolkey)

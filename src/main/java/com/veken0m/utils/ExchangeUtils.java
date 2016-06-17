@@ -10,7 +10,7 @@ import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.cryptsy.CryptsyExchange;
 import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
 import com.xeiam.xchange.utils.CertHelper;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class ExchangeUtils
     public static PollingMarketDataService getMarketData(ExchangeProperties exchange, CurrencyPair currencyPair)
     {
         // TODO: find way to import required certificates
-        if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade"))
+        if (exchange.getIdentifier().equals("cryptotrade") || exchange.getIdentifier().equals("bitcoincentral"))
         {
             try
             {
