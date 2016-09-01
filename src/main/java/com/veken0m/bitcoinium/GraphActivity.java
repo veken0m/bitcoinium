@@ -40,8 +40,6 @@ import java.util.List;
 
 import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
 
-// import com.veken0m.utils.KarmaAdsUtils;
-
 public class GraphActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
 {
     private static final Handler mOrderHandler = new Handler();

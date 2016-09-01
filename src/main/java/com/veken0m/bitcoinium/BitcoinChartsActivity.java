@@ -29,8 +29,6 @@ import org.knowm.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 import java.util.Arrays;
 import java.util.Comparator;
 
-// import com.veken0m.utils.KarmaAdsUtils;
-
 public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
 {
     private final static Handler mOrderHandler = new Handler();

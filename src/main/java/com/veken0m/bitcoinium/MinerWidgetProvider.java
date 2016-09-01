@@ -37,8 +37,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-//import com.veken0m.utils.KarmaAdsUtils;
-
 public class MinerWidgetProvider extends BaseWidgetProvider
 {
     private static float hashRate = 0.0F;
@@ -121,8 +119,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider
         {
             if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            URL url = null;
-            HttpURLConnection urlConnection = null;
+            URL url;
+            HttpURLConnection urlConnection;
             ObjectMapper mapper = new ObjectMapper();
 
             // reset variables

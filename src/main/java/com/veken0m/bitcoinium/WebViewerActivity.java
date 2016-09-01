@@ -16,7 +16,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.veken0m.compatibility.WebViewSherlockFragment;
-// import com.veken0m.utils.KarmaAdsUtils;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class WebViewerActivity extends BaseActivity

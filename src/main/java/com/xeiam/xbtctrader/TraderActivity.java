@@ -13,6 +13,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,6 @@ import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
-import com.veken0m.utils.KarmaAdsUtils;
 import com.xeiam.business.ExchangeAccount;
 import com.xeiam.dialogs.ApiKeyAlert;
 import com.xeiam.dialogs.CancelOrderDialog;
@@ -39,7 +39,7 @@ import org.knowm.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class TraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener
+public class TraderActivity extends AppCompatActivity implements OnSharedPreferenceChangeListener
 {
     private static final String TAG = "TraderActivity";
     public static ExchangeAccount exchangeAccount;
@@ -63,8 +63,6 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
     @Override
     public void onStart()
     {
-        KarmaAdsUtils.initAd(this, Constants.getNextKarmaId());
-
         super.onStart();
     }
 
@@ -353,13 +351,7 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null)
-        {
-            // There are no active networks.
-            return false;
-        }
-        else
-            return true;
+        return ni != null;
     }
 
     public float getOrderGridSize()
