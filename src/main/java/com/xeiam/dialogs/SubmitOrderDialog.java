@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.xbtctrader.TraderActivity;
-import com.xeiam.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.Order.OrderType;
 
 
 public class SubmitOrderDialog extends DialogFragment

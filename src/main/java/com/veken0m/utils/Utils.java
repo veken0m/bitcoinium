@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
-import com.xeiam.xchange.currency.Currencies;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -59,10 +59,10 @@ public class Utils
     {
         int numOfDecimals = 3;
         int unitIndex = 0;
-        String currencyCode = (includeCurrencyCode) ? " " + pair.counterSymbol : "";
+        String currencyCode = (includeCurrencyCode) ? " " + pair.counter.getCurrencyCode() : "";
 
         // If BTC and user wants price in mBTC
-        boolean isBTC = pair.baseSymbol.equalsIgnoreCase(Currencies.BTC);
+        boolean isBTC = pair.base.equals(Currency.BTC);
         if (displayInMilliBtc && isBTC)
         {
             amount /= 1000;
@@ -84,7 +84,7 @@ public class Utils
 
         if (amount >= 1000 && !includeCurrencyCode) numOfDecimals = 0;
 
-        return CurrencyUtils.getSymbol(pair.counterSymbol) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
+        return CurrencyUtils.getSymbol(pair.counter.getCurrencyCode()) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
     }
 
     // returns the index for the proper units in Contants.METRIC_UNITS

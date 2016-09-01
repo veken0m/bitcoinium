@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import com.veken0m.bitcoinium.WidgetConfigureActivity;
 import com.veken0m.bitcoinium.WidgetProvider;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.CurrencyPair;
 
 // This class will contain all conversions required to maintain backwards compatibility with settings from previous version of the app
 public class CompatUtil
@@ -35,7 +35,7 @@ public class CompatUtil
             String currencyPair = WidgetConfigureActivity.loadCurrencyPref(context, appWidgetId);
             CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
 
-            prefs.edit().putBoolean(exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol + "AlarmPref", true).commit();
+            prefs.edit().putBoolean(exchange.getIdentifier() + pair.base.getCurrencyCode()+ pair.counter.getCurrencyCode() + "AlarmPref", true).commit();
         }
         prefs.edit().remove("alarmPref").commit();
     }

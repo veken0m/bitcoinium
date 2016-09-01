@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
-import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
+import org.knowm.xchange.bitcoincharts.BitcoinChartsFactory;
+import org.knowm.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 import java.util.Arrays;
 import java.util.Comparator;

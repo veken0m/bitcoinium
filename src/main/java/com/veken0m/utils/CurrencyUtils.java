@@ -1,7 +1,6 @@
 package com.veken0m.utils;
 
-import com.xeiam.xchange.currency.Currencies;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.CurrencyPair;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ public class CurrencyUtils
         }
         else
         {
-            baseCurrency = Currencies.BTC;
+            baseCurrency = org.knowm.xchange.currency.Currency.BTC.getCurrencyCode();
             counterCurrency = currencyPair;
         }
 

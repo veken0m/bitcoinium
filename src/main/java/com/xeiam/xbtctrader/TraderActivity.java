@@ -33,9 +33,9 @@ import com.xeiam.dialogs.SubmitOrderDialog;
 import com.xeiam.paint.Painter;
 import com.xeiam.tasks.GeneralUpdateDeamon;
 import com.xeiam.tasks.GetHistoricalDataTask;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.Order.OrderType;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
@@ -190,8 +190,8 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
         preferences.registerOnSharedPreferenceChangeListener(this);
 
         CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-        tradableIdentifier = currencyPair.baseSymbol;
-        transactionCurrency = currencyPair.counterSymbol;
+        tradableIdentifier = currencyPair.base.getCurrencyCode();
+        transactionCurrency = currencyPair.counter.getCurrencyCode();
 
         showTradingInterface(preferences.getBoolean("enableTradingKey", false));
 
@@ -199,6 +199,14 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
         {
             exchangeAccount = new ExchangeAccount(this);
         }
+
+        //init the view variables.
+        MainView view = (MainView) findViewById(R.id.main_view);
+        view.setMainActivity(this);
+        TraderActivity.mainView = view;
+
+        //String fiat=pref_xtrader.getString("listCurrency", "USD");
+        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(TraderActivity.transactionCurrency) + "#.##");
 
         System.out.println("on create was called.");
     }
@@ -215,14 +223,6 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action, menu);
-
-        //String fiat=pref_xtrader.getString("listCurrency", "USD");
-        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(TraderActivity.transactionCurrency) + "#.##");
-
-        //init the view variables.
-        MainView view = (MainView) findViewById(R.id.main_view);
-        view.setMainActivity(this);
-        TraderActivity.mainView = view;
 
         return true;
     }
@@ -268,8 +268,8 @@ public class TraderActivity extends ActionBarActivity implements OnSharedPrefere
             //String id = TraderActivity.exchangeInfo.getIdentifier();
             //String sCurrencyPair = TraderActivity.pref_trader.getString(id + "TradeCurrency", "");
             //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-            //tradableIdentifier = currencyPair.baseSymbol;
-            //transactionCurrency = currencyPair.counterSymbol;
+            //tradableIdentifier = currencyPair.base.getSymbol();
+            //transactionCurrency = currencyPair.counter.getSymbol();
 
             needToUpdate = true;
         }
