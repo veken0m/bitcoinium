@@ -90,8 +90,7 @@ public class PriceAlertPreferencesActivity extends BasePreferenceActivity
 
                             // Update the widget so the user doesn't think it's still active
                             RemoteViews views = populateWidgetView();
-                            if (widgetManager != null)
-                                widgetManager.updateAppWidget(appWidgetId, views);
+                            widgetManager.updateAppWidget(appWidgetId, views);
 
                             // Delete the widget Id
                             AppWidgetHost host = new AppWidgetHost(getApplicationContext(), 0);

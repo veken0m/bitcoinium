@@ -47,7 +47,6 @@ public class ExchangeAccount
     private String pricewindow;
     private ExchangeSpecification exchangeSpecification;
     private BitcoiniumMarketDataServiceRaw bitcoiniumMarketDataService;
-    private Exchange exchange;
     //private List<LimitOrder> pendingOrders=new ArrayList<LimitOrder>();
     private PollingAccountService accountService;
     private PollingTradeService tradeService;
@@ -56,7 +55,7 @@ public class ExchangeAccount
     private BitcoiniumTicker referenceTicker;
     //	private float askChange=0;
 //	private float bidChange=0;
-    private LinkedList<BitcoiniumTicker> trades;
+    private LinkedList<BitcoiniumTicker> trades = new LinkedList<BitcoiniumTicker>();
     private BitcoiniumOrderbook orderBook;
     private BitcoiniumOrderbook lastOrderBook;
     private BitcoiniumTicker lastTicker;
@@ -151,7 +150,7 @@ public class ExchangeAccount
             if (!(secretKey).equals(""))
                 exchangeSpecification.setSecretKey(secretKey);
 
-            exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
+            Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
             // Interested in the private account functionality (authentication)
             accountService = exchange.getPollingAccountService();
             tradeService = exchange.getPollingTradeService();

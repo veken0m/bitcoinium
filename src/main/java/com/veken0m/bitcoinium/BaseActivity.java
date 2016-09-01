@@ -2,12 +2,10 @@ package com.veken0m.bitcoinium;
 
 import android.app.Dialog;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 
 public class BaseActivity extends AppCompatActivity
@@ -18,7 +16,6 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public void onStart()
     {
-        KarmaAdsUtils.initAd(this);
         super.onStart();
     }
 

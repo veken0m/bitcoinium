@@ -1,7 +1,6 @@
 package com.veken0m.bitcoinium;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatDelegate;
@@ -13,12 +12,6 @@ import com.veken0m.bitcoinium.fragments.HomeMenuFragment;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 
-// import com.veken0m.utils.KarmaAdsUtils;
-
-/**
- * @author Michael Lagacé a.k.a. veken0m
- * @version 1.9.1 Jan 12 2014
- */
 public class MainActivity extends BaseActivity
 {
 

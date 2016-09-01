@@ -148,7 +148,7 @@ public class WidgetProvider extends BaseWidgetProvider
             {
                 // if altcoin append baseCurrency
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                if (!pair.base.getSymbol().equals(Currency.BTC))
+                if (!pair.base.equals(Currency.BTC))
                     shortName += " " + pair.base.getSymbol();
 
                 // Get ticker using XChange

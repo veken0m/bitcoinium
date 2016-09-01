@@ -121,8 +121,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
                     }
                     finally
                     {
-                        if (widgetManager != null)
-                            widgetManager.updateAppWidget(appWidgetId, views);
+                        widgetManager.updateAppWidget(appWidgetId, views);
                     }
                 }
             }

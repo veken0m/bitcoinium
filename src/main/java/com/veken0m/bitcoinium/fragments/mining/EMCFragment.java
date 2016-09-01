@@ -26,7 +26,6 @@ import com.veken0m.mining.emc.User;
 import com.veken0m.mining.emc.Workers;
 import com.veken0m.utils.CurrencyUtils;
 
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;

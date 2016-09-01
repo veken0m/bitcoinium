@@ -34,16 +34,9 @@ public class ExchangeUtils
             }
         }
 
-        // Crypsy has a different API for public and private...
         Exchange exchangeInstance = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName());
-        if (exchange.getIdentifier().equals("cryptsy"))
-        {
-            return ((CryptsyExchange) exchangeInstance).getPollingPublicMarketDataService();
-        }
-        else
-        {  // Other exchanges...
-            return exchangeInstance.getPollingMarketDataService();
-        }
+
+        return exchangeInstance.getPollingMarketDataService();
     }
 
     public static Pair<List<String>, List<String>> getAllDropdownItems(Context context)

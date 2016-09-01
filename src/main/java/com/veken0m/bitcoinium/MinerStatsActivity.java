@@ -13,7 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.veken0m.bitcoinium.fragments.mining.BTCGuildFragment;
 import com.veken0m.bitcoinium.fragments.mining.BitMinterFragment;
 import com.veken0m.bitcoinium.fragments.mining.EMCFragment;
@@ -32,16 +31,14 @@ import com.veken0m.bitcoinium.fragments.mining.GHashIOFragment;
 import com.veken0m.bitcoinium.fragments.mining.SlushFragment;
 import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
-import com.veken0m.utils.KarmaAdsUtils;
 import com.veken0m.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-//import com.veken0m.utils.KarmaAdsUtils;
 
-public class MinerStatsActivity extends ActionBarActivity
+public class MinerStatsActivity extends AppCompatActivity
 {
     private static final int MIN_KEY_LENGTH = 20;
     private static String pref_emcKey = null;
@@ -102,7 +99,6 @@ public class MinerStatsActivity extends ActionBarActivity
         setContentView(R.layout.activity_minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
-        KarmaAdsUtils.initAd(this);
     }
 
     private void addTabs(ActionBar actionbar, String poolkey)

@@ -44,8 +44,6 @@ import java.util.List;
 
 import static com.veken0m.utils.ExchangeUtils.getDropdownItems;
 
-// import com.veken0m.utils.KarmaAdsUtils;
-
 public class OrderbookActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
 {
     private final static Handler mOrderHandler = new Handler();
@@ -266,8 +264,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             String counterCurrencySymbol = "";
             if (pref_showCurrencySymbol)
             {
-                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counter.getSymbol());
-                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.base.getSymbol());
+                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counter.getCurrencyCode());
+                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.base.getCurrencyCode());
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
@@ -278,7 +276,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
             }
 
-            String sCounterCurrency = currencyPair.counter.getSymbol();
+            String sCounterCurrency = currencyPair.counter.getCurrencyCode();
             if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
             priceUnitIndex++; // increment to use a scale factor
@@ -288,10 +286,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             TextView tvBidPriceHeader = (TextView) findViewById(R.id.bidPriceHeader);
             TextView tvBidAmountHeader = (TextView) findViewById(R.id.bidAmountHeader);
 
-            tvAskAmountHeader.setText("(" + currencyPair.base.getSymbol() + ")");
+            tvAskAmountHeader.setText("(" + currencyPair.base.getCurrencyCode() + ")");
             tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
             tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
-            tvBidAmountHeader.setText("(" + currencyPair.base.getSymbol() + ")");
+            tvBidAmountHeader.setText("(" + currencyPair.base.getCurrencyCode() + ")");
 
             LayoutInflater mInflater = LayoutInflater.from(this);
 
