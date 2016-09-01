@@ -34,10 +34,10 @@ import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.OrderBook;
-import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.OrderBook;
+import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.service.polling.marketdata.PollingMarketDataService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -266,8 +266,8 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             String counterCurrencySymbol = "";
             if (pref_showCurrencySymbol)
             {
-                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counterSymbol);
-                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.baseSymbol);
+                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counter.getSymbol());
+                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.base.getSymbol());
             }
 
             // if numbers are too small adjust the units. Use first bid to determine the units
@@ -278,7 +278,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
             }
 
-            String sCounterCurrency = currencyPair.counterSymbol;
+            String sCounterCurrency = currencyPair.counter.getSymbol();
             if (priceUnitIndex >= 0)
                 sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
             priceUnitIndex++; // increment to use a scale factor
@@ -288,10 +288,10 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
             TextView tvBidPriceHeader = (TextView) findViewById(R.id.bidPriceHeader);
             TextView tvBidAmountHeader = (TextView) findViewById(R.id.bidAmountHeader);
 
-            tvAskAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
+            tvAskAmountHeader.setText("(" + currencyPair.base.getSymbol() + ")");
             tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
             tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
-            tvBidAmountHeader.setText("(" + currencyPair.baseSymbol + ")");
+            tvBidAmountHeader.setText("(" + currencyPair.base.getSymbol() + ")");
 
             LayoutInflater mInflater = LayoutInflater.from(this);
 

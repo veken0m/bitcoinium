@@ -30,9 +30,9 @@ import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.Trade;
-import com.xeiam.xchange.dto.marketdata.Trades;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.Trade;
+import org.knowm.xchange.dto.marketdata.Trades;
 
 import java.util.ArrayList;
 import java.util.Arrays;

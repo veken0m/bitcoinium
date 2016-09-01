@@ -1,6 +1,6 @@
 package com.xeiam.paint;
 
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.paint.Painter;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 public class MainView extends ImageView
 {

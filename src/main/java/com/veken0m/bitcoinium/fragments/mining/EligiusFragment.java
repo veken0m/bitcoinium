@@ -27,18 +27,13 @@ import com.veken0m.mining.eligius.EligiusBalance;
 import com.veken0m.mining.eligius.TimeInterval;
 import com.veken0m.utils.CurrencyUtils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class EligiusFragment extends Fragment
 {
-
     private static String pref_eligiusKey = "";
     private static int pref_widgetMiningPayoutUnit = 0;
     private static Eligius data = null;
@@ -69,9 +64,8 @@ public class EligiusFragment extends Fragment
 
     private static void readPreferences(Context context)
     {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        // "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF"
         pref_eligiusKey = prefs.getString("eligiusKey", "");
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
@@ -97,38 +91,28 @@ public class EligiusFragment extends Fragment
 
     void getMinerStats()
     {
-
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
+            URL url = new URL("http://eligius.st/~wizkid057/newstats/hashrate-json.php/" + pref_eligiusKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
-            // Test key
-            //pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";
-
-            // NOTE: eligius.st does not use HTTPS
-            HttpGet post = new HttpGet("http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
-                    + pref_eligiusKey);
-
-            HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
             mapper.setSerializationInclusion(Include.NON_NULL);
 
-            data = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), Eligius.class);
+            data = mapper.readValue(urlConnection.getInputStream(), Eligius.class);
 
-            post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr="
-                    + pref_eligiusKey);
+            url = new URL("http://eligius.st/~luke-jr/balance.php?addr=" + pref_eligiusKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
-            balanceData = mapper
-                    .readValue(new InputStreamReader(client.execute(post)
-                                    .getEntity().getContent(), "UTF-8"),
-                            EligiusBalance.class
-                    );
+            balanceData = mapper.readValue(urlConnection.getInputStream(), EligiusBalance.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

@@ -6,12 +6,12 @@ import android.support.v4.util.Pair;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.cryptsy.CryptsyExchange;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
-import com.xeiam.xchange.utils.CertHelper;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.cryptsy.CryptsyExchange;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.service.polling.marketdata.PollingMarketDataService;
+import org.knowm.xchange.utils.CertHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ExchangeUtils
         Exchange exchangeInstance = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName());
         if (exchange.getIdentifier().equals("cryptsy"))
         {
-            return ((CryptsyExchange) exchangeInstance).getPublicPollingMarketDataService();
+            return ((CryptsyExchange) exchangeInstance).getPollingPublicMarketDataService();
         }
         else
         {  // Other exchanges...

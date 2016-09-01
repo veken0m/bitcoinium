@@ -18,11 +18,11 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
-import com.xeiam.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
-import com.xeiam.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange;
+import org.knowm.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
+import org.knowm.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
 
 import java.io.IOException;
 import java.util.Collections;

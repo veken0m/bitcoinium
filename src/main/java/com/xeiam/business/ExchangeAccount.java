@@ -8,28 +8,30 @@ import android.widget.Toast;
 import com.xeiam.tasks.CancelOrderTask;
 import com.xeiam.tasks.SubmitOrderTask;
 import com.xeiam.xbtctrader.TraderActivity;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.ExchangeSpecification;
-import com.xeiam.xchange.bitcoinium.BitcoiniumExchange;
-import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
-import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
-import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumTickerHistory;
-import com.xeiam.xchange.bitcoinium.service.polling.BitcoiniumMarketDataServiceRaw;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.Order.OrderType;
-import com.xeiam.xchange.dto.account.AccountInfo;
-import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.dto.trade.OpenOrders;
-import com.xeiam.xchange.dto.trade.Wallet;
-import com.xeiam.xchange.service.polling.account.PollingAccountService;
-import com.xeiam.xchange.service.polling.trade.PollingTradeService;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.ExchangeSpecification;
+import org.knowm.xchange.bitcoinium.BitcoiniumExchange;
+import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
+import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
+import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumTickerHistory;
+import org.knowm.xchange.bitcoinium.service.polling.BitcoiniumMarketDataServiceRaw;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.trade.OpenOrders;
+import org.knowm.xchange.dto.account.Wallet;
+import org.knowm.xchange.service.polling.account.PollingAccountService;
+import org.knowm.xchange.service.polling.trade.PollingTradeService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ExchangeAccount
@@ -396,7 +398,7 @@ public class ExchangeAccount
             return 0.0f;
         }
 
-        return accountInfo.getBalance(TraderActivity.transactionCurrency).floatValue();
+        return accountInfo.getWallet().getBalance(new Currency(TraderActivity.transactionCurrency)).getTotal().floatValue();
     }
 
     public float getTotalBTC()
@@ -408,21 +410,17 @@ public class ExchangeAccount
             return totalBTC;
         }
 
-        List<Wallet> wallets = accountInfo.getWallets();
+        Map<String,Wallet> wallets = accountInfo.getWallets();
 
-        for (Wallet wallet : wallets)
+        for (Map.Entry<String, Wallet> wallet : wallets.entrySet())
         {
-            if (wallet.getCurrency().equals("BTC"))
-            {
-                totalBTC += wallet.getBalance().floatValue();
-            }
+            totalBTC += wallet.getValue().getBalance(Currency.BTC).getTotal().floatValue();
         }
         return totalBTC;
     }
 
     public float getAccountValue(String fiatSymbol)
     {
-
         float balance = getTotalBTC() * getLastTicker().getLast().floatValue() + getTotalFiatBalance(fiatSymbol);
 
         if (balance > lastAccountBalance)

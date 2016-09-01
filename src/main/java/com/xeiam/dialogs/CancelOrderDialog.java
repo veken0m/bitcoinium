@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.xbtctrader.TraderActivity;
-import com.xeiam.xchange.dto.Order.OrderType;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 public class CancelOrderDialog extends DialogFragment
 {
@@ -58,7 +58,7 @@ public class CancelOrderDialog extends DialogFragment
         }
 
         //set the currency
-        ((TextView) orderView.findViewById(R.id.cancel_order_fiat)).setText(limitOrder.getCurrencyPair().counterSymbol);
+        ((TextView) orderView.findViewById(R.id.cancel_order_fiat)).setText(limitOrder.getCurrencyPair().counter.getCurrencyCode());
 
         //set the order ID
         ((TextView) orderView.findViewById(R.id.cancel_order_id)).setText(limitOrder.getId());

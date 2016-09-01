@@ -37,7 +37,8 @@ public class HomeMenuFragment extends Fragment
         activity = getActivity();
         context = activity.getApplicationContext();
 
-        String exchangeName = getArguments().getString("exchange");
+        Bundle extras = getArguments();
+        String exchangeName = (extras != null) ? extras.getString("exchangeKey") : "";
 
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         buildMenu(view, exchangeName);

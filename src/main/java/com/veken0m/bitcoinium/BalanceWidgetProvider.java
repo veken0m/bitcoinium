@@ -12,15 +12,15 @@ import android.widget.RemoteViews;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
-import com.xeiam.xchange.blockchain.Blockchain;
-import com.xeiam.xchange.blockchain.BlockchainExchange;
-import com.xeiam.xchange.blockchain.dto.BitcoinAddress;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.polling.marketdata.PollingMarketDataService;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange;
+import org.knowm.xchange.blockchain.Blockchain;
+import org.knowm.xchange.blockchain.BlockchainExchange;
+import org.knowm.xchange.blockchain.dto.BitcoinAddress;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.Ticker;
+import org.knowm.xchange.service.polling.marketdata.PollingMarketDataService;
 
 import si.mazi.rescu.RestProxyFactory;
 

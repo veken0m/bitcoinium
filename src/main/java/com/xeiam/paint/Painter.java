@@ -6,10 +6,10 @@ import android.graphics.Path;
 
 import com.xeiam.xbtctrader.MainView;
 import com.xeiam.xbtctrader.TraderActivity;
-import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
-import com.xeiam.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
-import com.xeiam.xchange.dto.Order.OrderType;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
+import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
+import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 import java.util.Date;
 import java.util.LinkedList;

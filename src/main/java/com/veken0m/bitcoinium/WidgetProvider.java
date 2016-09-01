@@ -18,9 +18,9 @@ import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.currency.Currencies;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.Ticker;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.Ticker;
 
 public class WidgetProvider extends BaseWidgetProvider
 {
@@ -57,7 +57,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
                 ExchangeProperties exchange = UpdateService.getExchange(context, exchangePref);
 
-                String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+                String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
 
                 clearOngoingNotification(context, pairId.hashCode());
                 // Reset the preference for this combo
@@ -148,8 +148,8 @@ public class WidgetProvider extends BaseWidgetProvider
             {
                 // if altcoin append baseCurrency
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                if (!pair.baseSymbol.equals(Currencies.BTC))
-                    shortName += " " + pair.baseSymbol;
+                if (!pair.base.getSymbol().equals(Currency.BTC))
+                    shortName += " " + pair.base.getSymbol();
 
                 // Get ticker using XChange
                 Ticker ticker = ExchangeUtils.getMarketData(exchange, pair).getTicker(pair);
@@ -162,7 +162,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 if (ticker.getVolume() != null)
                 {
                     sVolume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true);
-                    sVolume += " " + pair.baseSymbol;
+                    sVolume += " " + pair.base.getSymbol();
                 }
                 else
                 {
@@ -181,7 +181,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 updateOngoingTickerNotification(pair, lastFloat, exchange);
 
                 // Update last price map
-                String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+                String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
                 prevPrice.put(pairId.hashCode(), lastFloat);
             }
             catch (Exception e)
@@ -195,13 +195,13 @@ public class WidgetProvider extends BaseWidgetProvider
         private void updateOngoingTickerNotification(CurrencyPair pair, float lastFloat, ExchangeProperties exchange)
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+            String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
 
             if (prefs.getBoolean(pairId + "TickerPref", false))
             {
                 String lastString = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
-                String msg = getString(R.string.msg_priceContentNotif, pair.baseSymbol, lastString, exchange.getExchangeName());
-                String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.baseSymbol, lastString);
+                String msg = getString(R.string.msg_priceContentNotif, pair.base.getSymbol(), lastString, exchange.getExchangeName());
+                String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.base.getSymbol(), lastString);
 
                 Intent notificationIntent = new Intent(this, TickerPreferencesActivity.class);
                 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
@@ -291,7 +291,7 @@ public class WidgetProvider extends BaseWidgetProvider
         public void checkAlarm(CurrencyPair pair, float lastFloat, ExchangeProperties exchange)
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pairId = exchange.getIdentifier() + pair.baseSymbol + pair.counterSymbol;
+            String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
             if (!prefs.getBoolean(pairId + "AlarmPref", false))
                 return; // Alarm not enabled
 

@@ -24,21 +24,17 @@ import com.veken0m.mining.slush.Workers;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.ExchangeSpecification;
-import com.xeiam.xchange.cexio.CexIOExchange;
-import com.xeiam.xchange.cexio.dto.account.CexIOBalance;
-import com.xeiam.xchange.cexio.dto.account.CexIOBalanceInfo;
-import com.xeiam.xchange.cexio.dto.account.GHashIOHashrate;
-import com.xeiam.xchange.cexio.service.polling.CexIOAccountServiceRaw;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.ExchangeSpecification;
+import org.knowm.xchange.cexio.CexIOExchange;
+import org.knowm.xchange.cexio.dto.account.CexIOBalance;
+import org.knowm.xchange.cexio.dto.account.CexIOBalanceInfo;
+import org.knowm.xchange.cexio.dto.account.GHashIOHashrate;
+import org.knowm.xchange.cexio.service.polling.CexIOAccountServiceRaw;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 //import com.veken0m.utils.KarmaAdsUtils;
@@ -125,7 +121,8 @@ public class MinerWidgetProvider extends BaseWidgetProvider
         {
             if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            HttpClient client = new DefaultHttpClient();
+            URL url = null;
+            HttpURLConnection urlConnection = null;
             ObjectMapper mapper = new ObjectMapper();
 
             // reset variables
@@ -139,32 +136,21 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                 {
                     String pref_apiKey = prefs.getString("bitminterKey", "");
 
-                    HttpGet post = new HttpGet(
-                            "https://bitminter.com/api/users" + "?key="
-                                    + pref_apiKey
-                    );
+                    url = new URL("https://bitminter.com/api/users?key=" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    BitMinterData data = mapper.readValue(urlConnection.getInputStream(), BitMinterData.class);
 
-                    HttpResponse response = client.execute(post);
-                    BitMinterData data = mapper.readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                            BitMinterData.class
-                    );
                     btcBalance = data.getBalances().getBTC();
                     hashRate = data.getHash_rate();
                     return true;
                 }
                 else if (sMiningPool.equalsIgnoreCase("EclipseMC"))
                 {
-
                     String pref_apiKey = prefs.getString("emcKey", "");
-                    HttpGet post = new HttpGet(
-                            "https://eclipsemc.com/api.php?key=" + pref_apiKey
-                                    + "&action=userstats"
-                    );
 
-                    HttpResponse response = client.execute(post);
-                    EMC data = mapper.readValue(new InputStreamReader(response
-                            .getEntity().getContent(), "UTF-8"), EMC.class);
+                    url = new URL("https://eclipsemc.com/api.php?key=" + pref_apiKey + "&action=userstats");
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    EMC data = mapper.readValue(urlConnection.getInputStream(), EMC.class);
 
                     btcBalance = data.getData().getUser().getConfirmed_rewards();
 
@@ -197,14 +183,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                 {
                     String pref_apiKey = prefs.getString("slushKey", "");
 
-                    HttpGet post = new HttpGet(
-                            "https://mining.bitcoin.cz/accounts/profile/json/"
-                                    + pref_apiKey
-                    );
+                    url = new URL("https://mining.bitcoin.cz/accounts/profile/json/" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    Slush data = mapper.readValue(urlConnection.getInputStream(), Slush.class);
 
-                    HttpResponse response = client.execute(post);
-                    Slush data = mapper.readValue(new InputStreamReader(response
-                            .getEntity().getContent(), "UTF-8"), Slush.class);
                     btcBalance = data.getConfirmed_reward();
 
                     Workers workers = data.getWorkers();
@@ -219,12 +201,10 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                 {
                     String pref_apiKey = prefs.getString("50BTCKey", "");
 
-                    HttpGet post = new HttpGet("https://50btc.com/api/" + pref_apiKey);
-                    HttpResponse response = client.execute(post);
-                    FiftyBTC data = mapper.readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                            FiftyBTC.class
-                    );
+                    url = new URL("https://50btc.com/api/" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    FiftyBTC data = mapper.readValue(urlConnection.getInputStream(), FiftyBTC.class);
+
                     btcBalance = data.getUser().getConfirmed_rewards();
                     hashRate = data.getUser().getHash_rate();
 
@@ -234,19 +214,14 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                 {
                     String pref_apiKey = prefs.getString("btcguildKey", "");
 
-                    HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key="
-                            + pref_apiKey);
-                    HttpResponse response = client.execute(post);
-                    BTCGuild data = mapper
-                            .readValue(new InputStreamReader(response
-                                            .getEntity().getContent(), "UTF-8"),
-                                    BTCGuild.class
-                            );
+                    url = new URL("https://www.btcguild.com/api.php?api_key=" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    BTCGuild data = mapper.readValue(urlConnection.getInputStream(), BTCGuild.class);
+
                     btcBalance = data.getUser().getUnpaid_rewards();
                     hashRate = 0.0f;
 
-                    List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers()
-                            .getWorkers();
+                    List<com.veken0m.mining.btcguild.Worker> workers = data.getWorkers().getWorkers();
                     for (com.veken0m.mining.btcguild.Worker worker : workers)
                     {
                         hashRate += worker.getHash_rate();
@@ -257,28 +232,17 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                 {
                     String pref_apiKey = prefs.getString("eligiusKey", "");
 
-                    // NOTE: eligius.st does not use HTTPS
-                    HttpGet post = new HttpGet(
-                            "http://eligius.st/~wizkid057/newstats/hashrate-json.php/"
-                                    + pref_apiKey
-                    );
-                    HttpResponse response = client.execute(post);
+                    url = new URL("http://eligius.st/~wizkid057/newstats/hashrate-json.php/" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
                     mapper.setSerializationInclusion(Include.NON_NULL);
-
-                    Eligius data = mapper.readValue(new InputStreamReader(response
-                                    .getEntity().getContent(), "UTF-8"),
-                            Eligius.class
-                    );
+                    Eligius data = mapper.readValue(urlConnection.getInputStream(), Eligius.class);
 
                     hashRate = data.get256().getHashrate() / 1000000;
 
-                    post = new HttpGet("http://eligius.st/~luke-jr/balance.php?addr=" + pref_apiKey);
-
-                    EligiusBalance data2 = mapper
-                            .readValue(new InputStreamReader(client.execute(post)
-                                            .getEntity().getContent(), "UTF-8"),
-                                    EligiusBalance.class
-                            );
+                    url = new URL("http://eligius.st/~luke-jr/balance.php?addr=" + pref_apiKey);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    mapper.setSerializationInclusion(Include.NON_NULL);
+                    EligiusBalance data2 = mapper.readValue(urlConnection.getInputStream(), EligiusBalance.class);
 
                     btcBalance = data2.getConfirmed() / 100000000;
 

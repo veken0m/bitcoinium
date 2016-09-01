@@ -26,12 +26,8 @@ import com.veken0m.mining.fiftybtc.Worker;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class FiftyBTCFragment extends Fragment
@@ -91,24 +87,21 @@ public class FiftyBTCFragment extends Fragment
 
     void getMinerStats()
     {
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
+            URL url = new URL("https://50btc.com/api/" + pref_50BTCKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
-            HttpGet post = new HttpGet("https://50btc.com/api/" + pref_50BTCKey);
-            HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
-
-            // Testing from raw resource
-            //InputStream raw = getResources().openRawResource(R.raw.fiftybtc);
-            //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
-            //data = mapper.readValue(is, FiftyBTC.class);
-            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), FiftyBTC.class);
+            data = mapper.readValue(urlConnection.getInputStream(), FiftyBTC.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

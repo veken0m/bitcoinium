@@ -26,12 +26,8 @@ import com.veken0m.mining.btcguild.Worker;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class BTCGuildFragment extends Fragment
@@ -92,20 +88,21 @@ public class BTCGuildFragment extends Fragment
 
     void getMinerStats()
     {
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
-
-            HttpGet post = new HttpGet("https://www.btcguild.com/api.php?api_key=" + pref_btcguildKey);
-            HttpResponse response = client.execute(post);
+            URL url = new URL("https://www.btcguild.com/api.php?api_key=" + pref_btcguildKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
             ObjectMapper mapper = new ObjectMapper();
-            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), BTCGuild.class);
+            data = mapper.readValue(urlConnection.getInputStream(), BTCGuild.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

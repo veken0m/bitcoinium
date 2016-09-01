@@ -27,12 +27,8 @@ import com.veken0m.mining.bitminter.Workers;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class BitMinterFragment extends Fragment
@@ -68,7 +64,7 @@ public class BitMinterFragment extends Fragment
     {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-
+        // "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"
         pref_bitminterKey = prefs.getString("bitminterKey", "");
         pref_widgetMiningPayoutUnit = Integer.parseInt(prefs.getString("widgetMiningPayoutUnitPref", "0"));
     }
@@ -93,24 +89,21 @@ public class BitMinterFragment extends Fragment
 
     void getMinerStats()
     {
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
-
-            // Test Key
-            // pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";
-
-            HttpGet post = new HttpGet("https://bitminter.com/api/users?key=" + pref_bitminterKey);
-            HttpResponse response = client.execute(post);
+            URL url = new URL("https://bitminter.com/api/users?key=" + pref_bitminterKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
             ObjectMapper mapper = new ObjectMapper();
-            data = mapper.readValue(new InputStreamReader(response.getEntity()
-                    .getContent(), "UTF-8"), BitMinterData.class);
+            data = mapper.readValue(urlConnection.getInputStream(), BitMinterData.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

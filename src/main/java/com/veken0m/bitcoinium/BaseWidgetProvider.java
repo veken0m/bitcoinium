@@ -22,7 +22,7 @@ import android.util.Log;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.CurrencyPair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -124,7 +124,7 @@ public class BaseWidgetProvider extends AppWidgetProvider
 
     static void createNotification(Context context, float last, String exchange, int notifyId, CurrencyPair pair)
     {
-        String baseCurrency = pair.baseSymbol;
+        String baseCurrency = pair.base.getCurrencyCode();
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();

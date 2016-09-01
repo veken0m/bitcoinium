@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import com.xeiam.business.ExchangeAccount;
-import com.xeiam.xchange.exceptions.ExchangeException;
-import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.polling.trade.PollingTradeService;
+import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.service.polling.trade.PollingTradeService;
 
 import java.io.IOException;
 
