@@ -7,20 +7,10 @@ import java.util.Random;
 public final class Constants
 {
     //Prime or Free
-    public static Random rand = new Random();
     public static final boolean adSupported = false;
     public static final String[] METRIC_UNITS = {"m", "µ", "n", "p", "f"};
     public static final String ALERT_UPPER_DEFAULT = "99999";
     public static final String ALERT_LOWER_DEFAULT = "0";
-
-    //Karma-Ad Publisher IDs
-    public static final String DEFAULT_PUBLISHER_ID = "5000";
-    public static final String TRADER_PUBLISHER_ID = "7000";
-    public static final String TRADER_PUBLISHER_ID2 = "8000";
-
-    public static String getNextKarmaId(){
-        return rand.nextBoolean() ? TRADER_PUBLISHER_ID : TRADER_PUBLISHER_ID2;
-    }
 
     // Defaults
     public static final String DEFAULT_EXCHANGE = "bitstamp";
