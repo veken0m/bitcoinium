@@ -147,7 +147,4 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" />
-
-    <include layout="@xml/karma_ad" />
-
 </LinearLayout>
