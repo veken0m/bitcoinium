@@ -3,7 +3,8 @@
     package="com.veken0m.bitcoinium"
     android:installLocation="auto"
     android:versionCode="68"
-    android:versionName="@string/version_name">
+    android:versionName="2.2.2">
+    <!--android:versionName="@string/version_name"-->
 
     <!-- Used for accessing internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,7 +24,7 @@
 
         <!-- TODO: Remove fully qualified name to simplify building of Prime and Ad-supported versions -->
         <activity
-            android:name="com.veken0m.bitcoinium.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -34,157 +35,157 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.veken0m.bitcoinium.WidgetConfigureActivity">
+        <activity android:name=".WidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name="com.veken0m.bitcoinium.MinerWidgetConfigureActivity">
+        <activity android:name=".MinerWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name="com.veken0m.bitcoinium.BalanceWidgetConfigureActivity">
+        <activity android:name=".BalanceWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.OrderbookActivity"
+            android:name=".OrderbookActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/orderbook"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.OrderbookPreferenceActivity"
+            android:name=".preferences.OrderbookPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/label_orderbookPreferences"
-            android:parentActivityName="com.veken0m.bitcoinium.OrderbookActivity">
+            android:parentActivityName=".OrderbookActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.OrderbookActivity" />
+                android:value=".OrderbookActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.GraphPreferenceActivity"
+            android:name=".preferences.GraphPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/label_graphPreferences"
-            android:parentActivityName="com.veken0m.bitcoinium.GraphActivity">
+            android:parentActivityName=".GraphActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.GraphActivity" />
+                android:value=".GraphActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.MinerPreferenceActivity"
+            android:name=".preferences.MinerPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/label_minerPreferences"
-            android:parentActivityName="com.veken0m.bitcoinium.MinerStatsActivity">
+            android:parentActivityName=".MinerStatsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.BitcoinChartsActivity"
+            android:name=".BitcoinChartsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/bitcoinCharts"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.BitcoinAverageActivity"
+            android:name=".BitcoinAverageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/bitcoinAverage"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.GraphActivity"
+            android:name=".GraphActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/label_priceGraph"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.MinerStatsActivity"
+            android:name=".MinerStatsActivity"
             android:label="@string/label_minerStats"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.PreferencesActivity"
+            android:name=".preferences.PreferencesActivity"
             android:label="@string/label_preferences"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity"
+            android:name=".preferences.PriceAlertPreferencesActivity"
             android:label="@string/label_priceAlertSettings"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
             <intent-filter>
-                <action android:name="com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity" />
+                <action android:name=".preferences.PriceAlertPreferencesActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.preferences.TickerPreferencesActivity"
+            android:name=".preferences.TickerPreferencesActivity"
             android:label="@string/notificationDrawerTickers"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
             <intent-filter>
-                <action android:name="com.veken0m.bitcoinium.preferences.TickerPreferencesActivity" />
+                <action android:name=".preferences.TickerPreferencesActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.veken0m.bitcoinium.WebViewerActivity"
+            android:name=".WebViewerActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="@string/label_webCharts"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <activity
             android:name="com.xeiam.xbtctrader.TraderActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="Trader"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <activity
             android:name="com.xeiam.xbtctrader.PreferenceActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:label="Trader"
-            android:parentActivityName="com.veken0m.bitcoinium.MainActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.veken0m.bitcoinium.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <receiver
-            android:name="com.veken0m.bitcoinium.WidgetProvider"
+            android:name=".WidgetProvider"
             android:enabled="true"
             android:label="@string/widget_price">
             <intent-filter>
@@ -199,10 +200,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
-        <service android:name="com.veken0m.bitcoinium.WidgetProvider$UpdateService" />
+        <service android:name=".WidgetProvider$UpdateService" />
 
         <receiver
-            android:name="com.veken0m.bitcoinium.MinerWidgetProvider"
+            android:name=".MinerWidgetProvider"
             android:enabled="true"
             android:label="@string/widget_mining">
             <intent-filter>
@@ -217,10 +218,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/miner_appwidget_info" />
         </receiver>
-        <service android:name="com.veken0m.bitcoinium.MinerWidgetProvider$MinerUpdateService" />
+        <service android:name=".MinerWidgetProvider$MinerUpdateService" />
 
         <receiver
-            android:name="com.veken0m.bitcoinium.BalanceWidgetProvider"
+            android:name=".BalanceWidgetProvider"
             android:enabled="true"
             android:label="@string/balance_widget_name">
             <intent-filter>
@@ -235,7 +236,7 @@
                 android:resource="@xml/appwidget_info_balance" />
         </receiver>
 
-        <service android:name="com.veken0m.bitcoinium.BalanceWidgetProvider$BalanceUpdateService" />
+        <service android:name=".BalanceWidgetProvider$BalanceUpdateService" />
     </application>
 
 </manifest>
