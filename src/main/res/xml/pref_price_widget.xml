@@ -12,8 +12,8 @@
 
         <ListPreference
             android:defaultValue="BTC/USD"
-            android:entries="@array/bitstampcurrencies"
-            android:entryValues="@array/bitstampcurrencies"
+            android:entries="@array/bitstamp_currencies"
+            android:entryValues="@array/bitstamp_currencies"
             android:key="widgetCurrencyPref"
             android:summary="@string/pref_currency_summary"
             android:title="@string/pref_pickcurrency" />

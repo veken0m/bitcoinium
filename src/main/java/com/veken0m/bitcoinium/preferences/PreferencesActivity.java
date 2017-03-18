@@ -30,7 +30,6 @@ import static com.veken0m.utils.ExchangeUtils.getAllDropdownItems;
 
 public class PreferencesActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener
 {
-    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

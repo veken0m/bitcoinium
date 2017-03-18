@@ -75,7 +75,7 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
         return exchangePref;
     }
 
-    @SuppressWarnings("deprecation")
+   // @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -106,7 +106,7 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
 
         // get the Resource ID for the currency array
         ExchangeProperties ex = new ExchangeProperties(this, widgetExchangePref.getValue());
-        int nCurrencyArrayId = getResources().getIdentifier(ex.getIdentifier() + "currencies", "array", this.getPackageName());
+        int nCurrencyArrayId = getResources().getIdentifier(ex.getIdentifier() + "_currencies", "array", this.getPackageName());
 
         // populate the list with the Exchange's Currency Pairs
         setCurrencyItems(pCurrency, nCurrencyArrayId);
@@ -162,7 +162,7 @@ public class WidgetConfigureActivity extends PreferenceActivity implements Prefe
     public boolean onPreferenceChange(Preference preference, Object o)
     {
         ListPreference pCurrency = (ListPreference) findPreference("widgetCurrencyPref");
-        int nCurrencyArrayId = getResources().getIdentifier(o.toString() + "currencies", "array", getBaseContext().getPackageName());
+        int nCurrencyArrayId = getResources().getIdentifier(o.toString() + "_currencies", "array", getBaseContext().getPackageName());
 
         setCurrencyItems(pCurrency, nCurrencyArrayId);
 
