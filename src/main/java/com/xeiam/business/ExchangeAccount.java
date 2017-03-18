@@ -15,7 +15,7 @@ import org.knowm.xchange.bitcoinium.BitcoiniumExchange;
 import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumOrderbook;
 import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumTicker;
 import org.knowm.xchange.bitcoinium.dto.marketdata.BitcoiniumTickerHistory;
-import org.knowm.xchange.bitcoinium.service.polling.BitcoiniumMarketDataServiceRaw;
+import org.knowm.xchange.bitcoinium.service.BitcoiniumMarketDataServiceRaw;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
@@ -23,8 +23,8 @@ import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.OpenOrders;
 import org.knowm.xchange.dto.account.Wallet;
-import org.knowm.xchange.service.polling.account.PollingAccountService;
-import org.knowm.xchange.service.polling.trade.PollingTradeService;
+import org.knowm.xchange.service.account.AccountService;
+import org.knowm.xchange.service.trade.TradeService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class ExchangeAccount
     private ExchangeSpecification exchangeSpecification;
     private BitcoiniumMarketDataServiceRaw bitcoiniumMarketDataService;
     //private List<LimitOrder> pendingOrders=new ArrayList<LimitOrder>();
-    private PollingAccountService accountService;
-    private PollingTradeService tradeService;
+    private AccountService accountService;
+    private TradeService tradeService;
     private AccountInfo accountInfo;
     private List<LimitOrder> openOrders = new ArrayList<>();
     private BitcoiniumTicker referenceTicker;
@@ -126,7 +126,7 @@ public class ExchangeAccount
             //bitcoiniumExchangeSpec.setPlainTextUri("http://173.10.241.154:9090");
 
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
-            bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getPollingMarketDataService();
+            bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getMarketDataService();
 
             // Use the factory to get the version 2 MtGox exchange API using default settings
             exchangeSpecification = new ExchangeSpecification(TraderActivity.exchangeInfo.getClassName());
@@ -152,8 +152,8 @@ public class ExchangeAccount
 
             Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
             // Interested in the private account functionality (authentication)
-            accountService = exchange.getPollingAccountService();
-            tradeService = exchange.getPollingTradeService();
+            accountService = exchange.getAccountService();
+            tradeService = exchange.getTradeService();
 
             connectionGood = true;
             return true;
@@ -244,35 +244,35 @@ public class ExchangeAccount
         String timewindow = TraderActivity.preferences.getString("time_window", "TWENTY_FOUR_HOURS");
         if (timewindow.equalsIgnoreCase("ONE_HOUR"))
         {
-            return (float) TimeUnit.MINUTES.toSeconds(60l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.MINUTES.toSeconds(60L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("THREE_HOURS"))
         {
-            return (float) TimeUnit.HOURS.toSeconds(3l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.HOURS.toSeconds(3L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("TWELVE_HOURS"))
         {
-            return (float) TimeUnit.HOURS.toSeconds(12l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.HOURS.toSeconds(12L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("TWENTY_FOUR_HOURS"))
         {
-            return (float) TimeUnit.HOURS.toSeconds(24l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.HOURS.toSeconds(24L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("THREE_DAYS"))
         {
-            return (float) TimeUnit.DAYS.toSeconds(3l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.DAYS.toSeconds(3L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("SEVEN_DAYS"))
         {
-            return (float) TimeUnit.DAYS.toSeconds(7l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.DAYS.toSeconds(7L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("THIRTY_DAYS"))
         {
-            return (float) TimeUnit.DAYS.toSeconds(30l) / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.DAYS.toSeconds(30L) / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         else if (timewindow.equalsIgnoreCase("TWO_MONTHS"))
         {
-            return (float) TimeUnit.DAYS.toSeconds(30l) * 2l / TraderActivity.CHART_TARGET_RESOLUTION;
+            return (float) TimeUnit.DAYS.toSeconds(30L) * 2L / TraderActivity.CHART_TARGET_RESOLUTION;
         }
         return 0;
     }
@@ -483,7 +483,7 @@ public class ExchangeAccount
         return lastOrderBook;
     }
 
-    public PollingTradeService getTradeService()
+    public TradeService getTradeService()
     {
         return tradeService;
     }

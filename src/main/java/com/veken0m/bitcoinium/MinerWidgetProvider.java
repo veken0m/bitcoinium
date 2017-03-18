@@ -31,7 +31,7 @@ import org.knowm.xchange.cexio.CexIOExchange;
 import org.knowm.xchange.cexio.dto.account.CexIOBalance;
 import org.knowm.xchange.cexio.dto.account.CexIOBalanceInfo;
 import org.knowm.xchange.cexio.dto.account.GHashIOHashrate;
-import org.knowm.xchange.cexio.service.polling.CexIOAccountServiceRaw;
+import org.knowm.xchange.cexio.service.CexIOAccountServiceRaw;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -261,7 +261,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                     specs.setUserName(pref_ghashioUsername);
                     cexioExchange.applySpecification(specs);
 
-                    CexIOAccountServiceRaw pollingService = (CexIOAccountServiceRaw) cexioExchange.getPollingAccountService();
+                    CexIOAccountServiceRaw pollingService = (CexIOAccountServiceRaw) cexioExchange.getAccountService();
                     CexIOBalanceInfo account = pollingService.getCexIOAccountInfo();
                     GHashIOHashrate hashrate = pollingService.getHashrate();
 

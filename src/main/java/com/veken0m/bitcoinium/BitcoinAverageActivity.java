@@ -22,7 +22,7 @@ import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange;
 import org.knowm.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
-import org.knowm.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
+import org.knowm.xchange.bitcoinaverage.service.BitcoinAverageMarketDataServiceRaw;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -113,7 +113,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     {
         tickers.clear();
         Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
-        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getPollingMarketDataService();
+        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getMarketDataService();
 
         if (pollingService != null)
         {

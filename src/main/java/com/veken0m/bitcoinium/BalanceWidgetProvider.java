@@ -20,7 +20,7 @@ import org.knowm.xchange.blockchain.BlockchainExchange;
 import org.knowm.xchange.blockchain.dto.BitcoinAddress;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
-import org.knowm.xchange.service.polling.marketdata.PollingMarketDataService;
+import org.knowm.xchange.service.marketdata.MarketDataService;
 
 import si.mazi.rescu.RestProxyFactory;
 
@@ -96,7 +96,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
                         {
                             // Interested in the public polling market data feed (no authentication)
                             Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
-                            PollingMarketDataService marketDataService = bitcoinAverageExchange.getPollingMarketDataService();
+                            MarketDataService marketDataService = bitcoinAverageExchange.getMarketDataService();
                             Ticker ticker = marketDataService.getTicker(currencyPair);
                             float value = ticker.getLast().floatValue();
 
