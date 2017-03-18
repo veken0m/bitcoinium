@@ -327,7 +327,7 @@ public class MinerStatsActivity extends AppCompatActivity
                     tvBlockCount.setTextColor(Color.BLACK);
 
                     int nNextRetarget = Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount);
-                    tvNextRetarget.setText(String.format(getString(R.string.msg_nextRetarget), nNextRetarget) + "\n");
+                    tvNextRetarget.setText(String.format(getString(R.string.msg_nextRetarget), nNextRetarget));
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextRetarget.setTextColor(Color.BLACK);
 

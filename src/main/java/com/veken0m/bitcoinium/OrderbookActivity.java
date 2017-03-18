@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -37,7 +38,7 @@ import com.veken0m.utils.Utils;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.trade.LimitOrder;
-import org.knowm.xchange.service.polling.marketdata.PollingMarketDataService;
+import org.knowm.xchange.service.marketdata.MarketDataService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -208,7 +209,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         }
         noOrdersFound = false;
 
-        PollingMarketDataService marketData = ExchangeUtils.getMarketData(exchange, currencyPair);
+        MarketDataService marketData = ExchangeUtils.getMarketData(exchange);
         OrderBook orderbook;
 
         try
@@ -503,6 +504,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
                 mOrderHandler.post(mOrderView);
             else
                 mOrderHandler.post(mError);
+
             threadRunning = false;
         }
     }

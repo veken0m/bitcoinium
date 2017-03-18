@@ -16,11 +16,14 @@ import com.veken0m.bitcoinium.preferences.TickerPreferencesActivity;
 import com.veken0m.utils.CompatUtil;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
+import com.veken0m.utils.DevUtils;
 import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
+
+import java.util.Set;
 
 public class WidgetProvider extends BaseWidgetProvider
 {
@@ -152,7 +155,7 @@ public class WidgetProvider extends BaseWidgetProvider
                     shortName += " " + pair.base.getSymbol();
 
                 // Get ticker using XChange
-                Ticker ticker = ExchangeUtils.getMarketData(exchange, pair).getTicker(pair);
+                Ticker ticker = ExchangeUtils.getMarketData(exchange).getTicker(pair);
 
                 // Retrieve values from ticker
                 float lastFloat = ticker.getLast().floatValue();

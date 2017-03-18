@@ -162,7 +162,7 @@ public class GraphActivity extends BaseActivity implements OnItemSelectedListene
 
         try
         {
-            trades = ExchangeUtils.getMarketData(exchange, currencyPair).getTrades(currencyPair);
+            trades = ExchangeUtils.getMarketData(exchange).getTrades(currencyPair);
         }
         catch (Exception e)
         {
