@@ -199,7 +199,9 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
                     // final TextView tvBid = new TextView(this);
                     // final TextView tvAsk = new TextView(this);
 
-                    tvSymbol.setText(data.getSymbol());
+                    // NOTE: XChange now uppercases symbols. So "btceUSD" shows up as BTCEUSD". Lowercase all except 3 last characters.
+                    String symbol = data.getSymbol();
+                    tvSymbol.setText(symbol.substring(0,symbol.length()-3).toLowerCase() + symbol.substring(symbol.length()-3,symbol.length()));
                     tvSymbol.setTextColor(Color.WHITE);
                     Utils.setTextViewParams(tvLast, data.getClose());
                     Utils.setTextViewParams(tvVolume, data.getVolume());
