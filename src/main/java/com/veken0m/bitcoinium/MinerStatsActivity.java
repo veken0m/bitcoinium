@@ -57,10 +57,10 @@ public class MinerStatsActivity extends AppCompatActivity
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_slushKey = prefs.getString("slushKey", "");
-        pref_bitminterKey = "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ";//prefs.getString("bitminterKey", "");
+        pref_bitminterKey = prefs.getString("bitminterKey", ""); // "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
-        pref_eligiusKey = "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF";//prefs.getString("eligiusKey", "");
+        pref_eligiusKey = prefs.getString("eligiusKey", ""); // "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF"
         pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
     }
 
