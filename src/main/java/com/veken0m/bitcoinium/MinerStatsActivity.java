@@ -256,7 +256,7 @@ public class MinerStatsActivity extends AppCompatActivity
         @Override
         protected Boolean doInBackground(Boolean... params)
         {
-            HttpURLConnection urlConnection = null;
+            HttpURLConnection urlConnection;
             try
             {
                 // Get current difficulty

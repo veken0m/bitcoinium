@@ -1,0 +1,10 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:summary="@string/pref_hashrate_notification_summary"
+    android:title="@string/bitcoinMinerAlert">
+    <PreferenceCategory
+        android:key="minerDownAlertPref"
+        android:title="@string/minerWidgetSettings">
+        <Preference android:summary="@string/pref_miner_widget_alert_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

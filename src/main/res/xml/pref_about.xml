@@ -1,78 +1,73 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <PreferenceCategory android:title="About">
-        <PreferenceScreen
-            android:summary="@string/pref_about_summary"
-            android:title="@string/aboutBitcoinium">
-            <PreferenceCategory
-                android:key="prefAboutCategory"
-                android:title="@string/about">
-                <Preference
-                    android:summary="@string/about_author"
-                    android:title="@string/authorText" />
-                <Preference
-                    android:key="devEmailPref"
-                    android:summary="@string/email_author"
-                    android:title="@string/email">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_email_author" />
-                </Preference>
-                <Preference
-                    android:key="devTwitterPref"
-                    android:summary=" @veken0m"
-                    android:title="@string/twitter">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_twitter" />
-                </Preference>
-                <Preference
-                    android:summary="@string/version_name"
-                    android:title="@string/version" />
-                <Preference
-                    android:key="playstorePref"
-                    android:summary="@string/pref_rate_bitcoinium_summary"
-                    android:title="@string/msg_rateBitcoinium">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_bitcoiniumPlayStore" />
-                </Preference>
-                <!-- this Preference is removed if Prime -->
-                <Preference
-                    android:key="prefBuyPrime"
-                    android:summary="Support the project by getting Bitcoinium Prime!"
-                    android:title="Buy Bitcoinium Prime">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_bitcoiniumPlayStore" />
-                </Preference>
-                <Preference
-                    android:key="bitcoiniumGithubPref"
-                    android:summary="@string/pref_submitFeatureRequest"
-                    android:title="@string/bitcoiniumGithub">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_bitcoiniumGithub" />
-                </Preference>
-                <Preference
-                    android:key="xchangeGithubPref"
-                    android:summary="@string/pref_xchange_summary"
-                    android:title="@string/xchangeGithub">
-                    <intent
-                        android:action="android.intent.action.VIEW"
-                        android:data="@string/link_xchangeGithub" />
-                </Preference>
-            </PreferenceCategory>
-            <PreferenceCategory android:title="@string/donations">
-                <Preference
-                    android:key="bitcoinDonationAddressPref"
-                    android:summary="@string/address_donation_bitcoin"
-                    android:title="Bitcoinium" />
-                <Preference
-                    android:key="xchangeDonationAddressPref"
-                    android:summary="@string/address_donation_bitcoin_xchange"
-                    android:title="XChange Library" />
-            </PreferenceCategory>
-        </PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:summary="@string/pref_about_summary"
+    android:title="@string/aboutBitcoinium">
+    <PreferenceCategory
+        android:key="prefAboutCategory"
+        android:title="@string/about">
+        <Preference
+            android:summary="@string/about_author"
+            android:title="@string/authorText" />
+        <Preference
+            android:key="devEmailPref"
+            android:summary="@string/email_author"
+            android:title="@string/email">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_email_author" />
+        </Preference>
+        <Preference
+            android:key="devTwitterPref"
+            android:summary=" @veken0m"
+            android:title="@string/twitter">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_twitter" />
+        </Preference>
+        <Preference
+            android:summary="@string/version_name"
+            android:title="@string/version" />
+        <Preference
+            android:key="playstorePref"
+            android:summary="@string/pref_rate_bitcoinium_summary"
+            android:title="@string/msg_rateBitcoinium">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_bitcoiniumPlayStore" />
+        </Preference>
+        <!-- this Preference is removed if Prime -->
+        <Preference
+            android:key="prefBuyPrime"
+            android:summary="Support the project by getting Bitcoinium Prime!"
+            android:title="Buy Bitcoinium Prime">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_bitcoiniumPlayStore" />
+        </Preference>
+        <Preference
+            android:key="bitcoiniumGithubPref"
+            android:summary="@string/pref_submitFeatureRequest"
+            android:title="@string/bitcoiniumGithub">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_bitcoiniumGithub" />
+        </Preference>
+        <Preference
+            android:key="xchangeGithubPref"
+            android:summary="@string/pref_xchange_summary"
+            android:title="@string/xchangeGithub">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_xchangeGithub" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/donations">
+        <Preference
+            android:key="bitcoinDonationAddressPref"
+            android:summary="@string/address_donation_bitcoin"
+            android:title="Bitcoinium" />
+        <Preference
+            android:key="xchangeDonationAddressPref"
+            android:summary="@string/address_donation_bitcoin_xchange"
+            android:title="XChange Library" />
     </PreferenceCategory>
 </PreferenceScreen>

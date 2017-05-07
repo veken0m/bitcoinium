@@ -1,19 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory android:title="@string/general">
         <ListPreference
             android:defaultValue="bitstamp"
             android:key="defaultExchangePref"
             android:summary="@string/pref_default_exchange_summary"
             android:title="@string/defaultExchange" />
-
-        <PreferenceScreen
-            android:key="defaultCurrencyPref"
+        <!-- TODO: move nested Preference Screen to separate Activity -->
+        <Preference
             android:summary="@string/pref_default_currency_summary"
             android:title="@string/defaultExchangeCurrency">
-            <!-- Dynamically generated -->
-        </PreferenceScreen>
+            <intent android:action=".preferences.DefaultCurrencyPreferenceActivity" />
+        </Preference>
     </PreferenceCategory>
-
+    <PreferenceCategory android:title="@string/label_widgetConfiguration">
+        <Preference
+            android:summary="@string/pref_widget_config_summary"
+            android:title="@string/widgetConfigurationText">
+            <intent android:action=".preferences.WidgetConfigurationPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Price Widget Extensions">
+        <Preference
+            android:key="alarmSettingsPref"
+            android:summary="@string/pref_price_alert_summary"
+            android:title="@string/pref_price_alert_title">
+            <intent android:action=".preferences.PriceAlertPreferencesActivity" />
+        </Preference>
+        <Preference
+            android:key="notificationSettingsPref"
+            android:summary="@string/pref_notification_ticker_summary"
+            android:title="@string/notificationDrawerTickers">
+            <intent android:action=".preferences.TickerPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Miner Settings">
+        <Preference
+            android:summary="@string/pref_miner_info_summary"
+            android:title="@string/minerApiTokens">
+            <intent android:action=".preferences.MinerApiPreferencesActivity" />
+        </Preference>
+        <Preference
+            android:summary="@string/pref_hashrate_notification_summary"
+            android:title="@string/bitcoinMinerAlert">
+            <intent android:action=".preferences.MinerAlertPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/about">
+        <Preference
+            android:summary="@string/pref_about_summary"
+            android:title="@string/aboutBitcoinium">
+            <intent android:action=".preferences.AboutPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
 </PreferenceScreen>
