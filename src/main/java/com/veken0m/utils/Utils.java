@@ -2,6 +2,7 @@ package com.veken0m.utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -160,34 +161,21 @@ public class Utils
         return builder.create();
     }
 
-    public static boolean isConnected(Context context)
+    public static boolean isConnected(Context context, boolean bWifiOnly)
     {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnected();
-    }
 
-    public static boolean isWiFiAvailable(Context context)
-    {
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
+        if(bWifiOnly){
+            return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI && activeNetwork.isConnected());
+        } else
+            return activeNetwork != null && activeNetwork.isConnected();
     }
 
     public static void copyDonationAddressToClipboard(Context context, String donationAddress)
     {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
-        {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(donationAddress);
-        }
-        else
-        {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
-        }
+        ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
 
         Toast.makeText(context, context.getString(R.string.msg_copiedClipboard), Toast.LENGTH_SHORT).show();
     }

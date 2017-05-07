@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.veken0m.utils.Constants;
@@ -59,7 +60,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
 
             readGeneralPreferences(this);
 
-            if (widgetManager != null && (!pref_wifiOnly || Utils.isWiFiAvailable(this)))
+            if (widgetManager != null && (!pref_wifiOnly || Utils.isConnected(this, true)))
             {
                 int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
                 for (int appWidgetId : widgetIds)
@@ -115,7 +116,6 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
                     }
                     catch (Exception e)
                     {
-
                         e.printStackTrace();
                         views.setTextColor(R.id.label, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
                     }
@@ -139,7 +139,6 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
             else
             {
                 Intent intent = new Intent(this, MainActivity.class);
-                //intent.putExtra("exchangeKey", exchangeKey);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
@@ -159,9 +158,9 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
             }
             else
             {
-                views.setInt(R.id.widget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
-                views.setTextColor(R.id.widgetAddress, getResources().getColor(R.color.widgetMainTextColor));
-                views.setTextColor(R.id.widgetBalance, getResources().getColor(R.color.widgetMainTextColor));
+                views.setInt(R.id.widget_layout, "setBackgroundColor", ContextCompat.getColor(this, R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetAddress, ContextCompat.getColor(this, R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetBalance, ContextCompat.getColor(this, R.color.widgetMainTextColor));
                 views.setTextColor(R.id.label, Color.GREEN);
             }
         }
