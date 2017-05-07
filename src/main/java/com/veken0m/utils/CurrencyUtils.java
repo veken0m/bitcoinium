@@ -38,23 +38,13 @@ public class CurrencyUtils
 
     public static CurrencyPair stringToCurrencyPair(String currencyPair)
     {
-        String baseCurrency;
-        String counterCurrency;
-
-        String[] currPair = currencyPair.split("/");
-
-        if (currPair.length == 2)
+        if (currencyPair.contains("/"))
         {
-            baseCurrency = currPair[0];
-            counterCurrency = currPair[1];
+            String[] currPair = currencyPair.split("/");
+            return new CurrencyPair(currPair[0], currPair[1]);
         }
         else
-        {
-            baseCurrency = org.knowm.xchange.currency.Currency.BTC.getCurrencyCode();
-            counterCurrency = currencyPair;
-        }
-
-        return new CurrencyPair(baseCurrency, counterCurrency);
+            return new CurrencyPair(org.knowm.xchange.currency.Currency.BTC.getCurrencyCode(), currencyPair);
     }
 
     public static String formatPayout(float amount, int payoutUnits, String symbol)

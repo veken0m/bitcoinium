@@ -84,12 +84,8 @@ public class ExchangeAccount
         {
             return false;
         }
-        if (lastTicker == null)
-        {
-            return false;
-        }
+        return lastTicker != null;
 
-        return true;
     }
 
 
@@ -422,14 +418,7 @@ public class ExchangeAccount
     {
         float balance = getTotalBTC() * getLastTicker().getLast().floatValue() + getTotalFiatBalance(fiatSymbol);
 
-        if (balance > lastAccountBalance)
-        {
-            accountValueIncreasing = true;
-        }
-        else
-        {
-            accountValueIncreasing = false;
-        }
+        accountValueIncreasing = balance > lastAccountBalance;
 
         lastAccountBalance = balance;
         return balance;

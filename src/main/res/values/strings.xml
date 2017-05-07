@@ -163,6 +163,7 @@
     <string name="msg_priceContentNotif">%1$s value: %2$s on %3$s</string>
     <string name="msg_priceTickerNotif">%1$s alert value has been reached! \n %1$s valued at %2$s on %3$s</string>
     <string name="msg_priceTitleNotif">%1$s @ %2$s</string>
+    <string name="msg_alarmMessage">Bitconium - %1$s @ %2$s on %3$s</string>
 
     <!-- General Preferences -->
     <string name="pref_currency_displayed">%1$s price will be displayed in this currency</string>
@@ -279,6 +280,5 @@
     <string name="deactivated">DEACTIVATED</string>
     <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>
     <string name="phantom_widget_removal">Phantom Widget Removal</string>
-
 
 </resources>

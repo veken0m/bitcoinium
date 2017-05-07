@@ -1,5 +1,6 @@
 package com.veken0m.bitcoinium;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,21 +10,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
 import com.veken0m.bitcoinium.preferences.TickerPreferencesActivity;
-import com.veken0m.utils.CompatUtil;
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
-import com.veken0m.utils.DevUtils;
 import com.veken0m.utils.ExchangeUtils;
 import com.veken0m.utils.Utils;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
-
-import java.util.Set;
 
 public class WidgetProvider extends BaseWidgetProvider
 {
@@ -58,14 +56,13 @@ public class WidgetProvider extends BaseWidgetProvider
                 String currencyPair = WidgetConfigureActivity.loadCurrencyPref(context, appWidgetId);
                 String exchangePref = WidgetConfigureActivity.loadExchangePref(context, appWidgetId);
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                ExchangeProperties exchange = UpdateService.getExchange(context, exchangePref);
-
-                String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
+                // TODO: confirm if currency pairid is just currency pair without "/"
+                String pairId = exchangePref + pair.base.getCurrencyCode() + pair.counter.getCurrencyCode();
 
                 clearOngoingNotification(context, pairId.hashCode());
                 // Reset the preference for this combo
-                prefs.edit().putBoolean(pairId + "TickerPref", false).commit();
-                prefs.edit().putBoolean(pairId + "AlarmPref", false).commit();
+                prefs.edit().putBoolean(pairId + "TickerPref", false).apply();
+                prefs.edit().putBoolean(pairId + "AlarmPref", false).apply();
             }
         }
         catch (Exception e)
@@ -75,19 +72,12 @@ public class WidgetProvider extends BaseWidgetProvider
     }
 
     @Override
-    public void onEnabled(Context context)
-    {
-        super.onEnabled(context);
-        // This is called when the first widget is created
-        // TODO enable update service here
-    }
-
-    @Override
     public void onDisabled(Context context)
     {
         super.onDisabled(context);
         // This is called when the last widget is deleted
-        // TODO disable update service here
+        PendingIntent refreshIntent = PendingIntent.getService(context, 0, new Intent(context, UpdateService.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).cancel(refreshIntent);
     }
 
     /**
@@ -118,10 +108,8 @@ public class WidgetProvider extends BaseWidgetProvider
 
             readGeneralPreferences(this);
 
-            if ((widgetManager == null) || (pref_wifiOnly && !Utils.isWiFiAvailable(this)))
-                return; // no widgets and no WiFi when required? bail.
-
-            CompatUtil.convertAlarmPrefs(this);
+            if ((widgetManager == null) || (pref_wifiOnly && !Utils.isConnected(this, true)))
+                return; // no widgets or no WiFi when required? bail.
 
             // Get all price widgets and loop over them to update
             ComponentName widgetComponent = new ComponentName(this, WidgetProvider.class);
@@ -152,7 +140,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 // if altcoin append baseCurrency
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
                 if (!pair.base.equals(Currency.BTC))
-                    shortName += " " + pair.base.getSymbol();
+                    shortName += " " + pair.base.getCurrencyCode();
 
                 // Get ticker using XChange
                 Ticker ticker = ExchangeUtils.getMarketData(exchange).getTicker(pair);
@@ -161,15 +149,11 @@ public class WidgetProvider extends BaseWidgetProvider
                 float lastFloat = ticker.getLast().floatValue();
                 String sLast = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
 
-                String sVolume;
+                String sVolume = getString(R.string.notAvailable);
                 if (ticker.getVolume() != null)
                 {
                     sVolume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true);
-                    sVolume += " " + pair.base.getSymbol();
-                }
-                else
-                {
-                    sVolume = getString(R.string.notAvailable);
+                    sVolume += " " + pair.base.getCurrencyCode();
                 }
 
                 setBidAskHighLow(ticker, views, pair);
@@ -184,7 +168,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 updateOngoingTickerNotification(pair, lastFloat, exchange);
 
                 // Update last price map
-                String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
+                String pairId = exchange.getIdentifier() + pair.base.getCurrencyCode() + pair.counter.getCurrencyCode();
                 prevPrice.put(pairId.hashCode(), lastFloat);
             }
             catch (Exception e)
@@ -198,13 +182,13 @@ public class WidgetProvider extends BaseWidgetProvider
         private void updateOngoingTickerNotification(CurrencyPair pair, float lastFloat, ExchangeProperties exchange)
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
+            String pairId = exchange.getIdentifier() + pair.toString().replace("/","");
 
             if (prefs.getBoolean(pairId + "TickerPref", false))
             {
                 String lastString = Utils.formatWidgetMoney(lastFloat, pair, true, pref_pricesInMilliBtc);
-                String msg = getString(R.string.msg_priceContentNotif, pair.base.getSymbol(), lastString, exchange.getExchangeName());
-                String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.base.getSymbol(), lastString);
+                String msg = getString(R.string.msg_priceContentNotif, pair.base.getCurrencyCode(), lastString, exchange.getExchangeName());
+                String title = getString(R.string.msg_permPriceTitleNotif, exchange.getIdentifier(), pair.base.getCurrencyCode(), lastString);
 
                 Intent notificationIntent = new Intent(this, TickerPreferencesActivity.class);
                 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
@@ -284,9 +268,9 @@ public class WidgetProvider extends BaseWidgetProvider
             }
             else
             {
-                views.setInt(R.id.widget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
-                views.setTextColor(R.id.widgetLastText, getResources().getColor(R.color.widgetMainTextColor));
-                views.setTextColor(R.id.widgetExchange, getResources().getColor(R.color.widgetMainTextColor));
+                views.setInt(R.id.widget_layout, "setBackgroundColor", ContextCompat.getColor(this, R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetLastText, ContextCompat.getColor(this, R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetExchange, ContextCompat.getColor(this, R.color.widgetMainTextColor));
                 views.setTextColor(R.id.label, Color.GREEN);
             }
         }
@@ -294,7 +278,7 @@ public class WidgetProvider extends BaseWidgetProvider
         public void checkAlarm(CurrencyPair pair, float lastFloat, ExchangeProperties exchange)
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String pairId = exchange.getIdentifier() + pair.base.getSymbol() + pair.counter.getSymbol();
+            String pairId = exchange.getIdentifier() + pair.base.getCurrencyCode() + pair.counter.getCurrencyCode();
             if (!prefs.getBoolean(pairId + "AlarmPref", false))
                 return; // Alarm not enabled
 
@@ -306,7 +290,7 @@ public class WidgetProvider extends BaseWidgetProvider
                 {
                     createNotification(this, lastFloat, exchange.getExchangeName(), pairId.hashCode(), pair);
                     if (pref_alarmClock)
-                        setAlarmClock(this);
+                        setAlarmClock(this, lastFloat, exchange.getExchangeName(), pair);
                 }
             }
             catch (Exception e)

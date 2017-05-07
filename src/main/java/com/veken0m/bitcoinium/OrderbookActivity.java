@@ -3,19 +3,17 @@ package com.veken0m.bitcoinium;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -99,9 +97,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         {
             pref_orderbookLimiter = 100;
             // If preference is not set a valid integer set to "100"
-            Editor editor = prefs.edit();
-            editor.putString("orderbookLimiterPref", "100");
-            editor.commit();
+            prefs.edit().putString("orderbookLimiterPref", "100").apply();
         }
     }
 
@@ -254,107 +250,86 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     {
         if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
-        final TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
-        if (orderbookTable != null)
+
+        TableLayout orderbookTable = (TableLayout) findViewById(R.id.orderlist);
+        orderbookTable.removeAllViews();
+
+        String baseCurrencySymbol = "";
+        String counterCurrencySymbol = "";
+        if (pref_showCurrencySymbol)
         {
-            orderbookTable.removeAllViews();
-
-            boolean bBackGroundColor = true;
-
-            String baseCurrencySymbol = "";
-            String counterCurrencySymbol = "";
-            if (pref_showCurrencySymbol)
-            {
-                counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counter.getCurrencyCode());
-                baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.base.getCurrencyCode());
-            }
-
-            // if numbers are too small adjust the units. Use first bid to determine the units
-            int priceUnitIndex = 0;
-            if (!listBids.isEmpty() || !listAsks.isEmpty())
-            {
-                LimitOrder tempOrder = listBids.isEmpty() ? listAsks.get(0) : listBids.get(0);
-                priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
-            }
-
-            String sCounterCurrency = currencyPair.counter.getCurrencyCode();
-            if (priceUnitIndex >= 0)
-                sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
-            priceUnitIndex++; // increment to use a scale factor
-
-            TextView tvAskAmountHeader = (TextView) findViewById(R.id.askAmountHeader);
-            TextView tvAskPriceHeader = (TextView) findViewById(R.id.askPriceHeader);
-            TextView tvBidPriceHeader = (TextView) findViewById(R.id.bidPriceHeader);
-            TextView tvBidAmountHeader = (TextView) findViewById(R.id.bidAmountHeader);
-
-            tvAskAmountHeader.setText("(" + currencyPair.base.getCurrencyCode() + ")");
-            tvAskPriceHeader.setText("(" + sCounterCurrency + ")");
-            tvBidPriceHeader.setText("(" + sCounterCurrency + ")");
-            tvBidAmountHeader.setText("(" + currencyPair.base.getCurrencyCode() + ")");
-
-            LayoutInflater mInflater = LayoutInflater.from(this);
-
-            int askSize = listAsks.size();
-            int bidSize = listBids.size();
-
-            int length = Math.max(askSize, bidSize);
-            for (int i = 0; i < length; i++)
-            {
-                TextView tvAskAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
-                TextView tvAskPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
-                TextView tvBidPrice = (TextView) mInflater.inflate(R.layout.table_textview, null);
-                TextView tvBidAmount = (TextView) mInflater.inflate(R.layout.table_textview, null);
-
-                if (bidSize > i)
-                {
-                    LimitOrder limitorderBid = listBids.get(i);
-                    float bidPrice = limitorderBid.getLimitPrice().floatValue();
-                    float bidAmount = limitorderBid.getTradableAmount().floatValue();
-                    tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
-                    tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
-
-                    if (pref_enableHighlight)
-                    {
-                        int bidTextColor = depthColor(bidAmount);
-                        tvBidAmount.setTextColor(bidTextColor);
-                        tvBidPrice.setTextColor(bidTextColor);
-                    }
-                }
-
-                if (askSize > i)
-                {
-                    LimitOrder limitorderAsk = listAsks.get(i);
-                    float askPrice = limitorderAsk.getLimitPrice().floatValue();
-                    float askAmount = limitorderAsk.getTradableAmount().floatValue();
-                    tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
-                    tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
-
-                    if (pref_enableHighlight)
-                    {
-                        int askTextColor = depthColor(askAmount);
-                        tvAskAmount.setTextColor(askTextColor);
-                        tvAskPrice.setTextColor(askTextColor);
-                    }
-                }
-
-                final TableRow newRow = new TableRow(this);
-
-                // Toggle background color
-                if (bBackGroundColor = !bBackGroundColor)
-                    newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
-
-                newRow.addView(tvBidPrice);
-                newRow.addView(tvBidAmount);
-                newRow.addView(tvAskPrice);
-                newRow.addView(tvAskAmount);
-
-                orderbookTable.addView(newRow);
-            }
+            counterCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.counter.getCurrencyCode());
+            baseCurrencySymbol = CurrencyUtils.getSymbol(currencyPair.base.getCurrencyCode());
         }
-        else
+
+        // if numbers are too small adjust the units. Use first bid to determine the units
+        int priceUnitIndex = 0;
+        if (!listBids.isEmpty() || !listAsks.isEmpty())
         {
-            failedToDrawUI();
+            LimitOrder tempOrder = listBids.isEmpty() ? listAsks.get(0) : listBids.get(0);
+            priceUnitIndex = Utils.getUnitIndex(tempOrder.getLimitPrice().floatValue());
         }
+
+        String sCounterCurrency = currencyPair.counter.getCurrencyCode();
+        if (priceUnitIndex >= 0)
+            sCounterCurrency = Constants.METRIC_UNITS[priceUnitIndex] + sCounterCurrency;
+        priceUnitIndex++; // increment to use a scale factor
+
+        ((TextView) findViewById(R.id.askAmountHeader)).setText("(" + currencyPair.base.getCurrencyCode() + ")");
+        ((TextView) findViewById(R.id.askPriceHeader)).setText("(" + sCounterCurrency + ")");
+        ((TextView) findViewById(R.id.bidPriceHeader)).setText("(" + sCounterCurrency + ")");
+        ((TextView) findViewById(R.id.bidAmountHeader)).setText("(" + currencyPair.base.getCurrencyCode() + ")");
+
+        int askSize = listAsks.size();
+        int bidSize = listBids.size();
+
+        int length = Math.max(askSize, bidSize);
+        for (int i = 0; i < length; i++)
+        {
+            TableRow tr = (TableRow)getLayoutInflater().inflate(R.layout.table_textview, orderbookTable, false);
+            TextView tvBidPrice = (TextView) tr.getChildAt(0);
+            TextView tvBidAmount = (TextView) tr.getChildAt(1);
+            TextView tvAskPrice = (TextView) tr.getChildAt(2);
+            TextView tvAskAmount = (TextView) tr.getChildAt(3);
+
+            if (bidSize > i)
+            {
+                LimitOrder limitorderBid = listBids.get(i);
+                float bidPrice = limitorderBid.getLimitPrice().floatValue();
+                float bidAmount = limitorderBid.getTradableAmount().floatValue();
+                tvBidAmount.setText(baseCurrencySymbol + Utils.formatDecimal(bidAmount, 4, 0, true));
+                tvBidPrice.setText(counterCurrencySymbol + Utils.formatDecimal(bidPrice, 3, priceUnitIndex, true));
+
+                if (pref_enableHighlight)
+                {
+                    int bidTextColor = depthColor(bidAmount);
+                    tvBidAmount.setTextColor(bidTextColor);
+                    tvBidPrice.setTextColor(bidTextColor);
+                }
+            }
+
+            if (askSize > i)
+            {
+                LimitOrder limitorderAsk = listAsks.get(i);
+                float askPrice = limitorderAsk.getLimitPrice().floatValue();
+                float askAmount = limitorderAsk.getTradableAmount().floatValue();
+                tvAskAmount.setText(baseCurrencySymbol + Utils.formatDecimal(askAmount, 4, 0, true));
+                tvAskPrice.setText(counterCurrencySymbol + Utils.formatDecimal(askPrice, 3, priceUnitIndex, true));
+
+                if (pref_enableHighlight)
+                {
+                    int askTextColor = depthColor(askAmount);
+                    tvAskAmount.setTextColor(askTextColor);
+                    tvAskPrice.setTextColor(askTextColor);
+                }
+            }
+
+            if (i%2 == 0) // Toggle background color
+                tr.setBackgroundColor(ContextCompat.getColor(this,R.color.light_tableRow));
+
+            orderbookTable.addView(tr);
+        }
+
         if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
     }
@@ -362,7 +337,7 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
     private void viewOrderbook()
     {
         swipeLayout.setRefreshing(true);
-        if (Utils.isConnected(getApplicationContext()))
+        if (Utils.isConnected(getApplicationContext(),false))
         {
             if (!threadRunning) // if thread running don't start a another one
                 (new OrderbookThread()).start();
@@ -425,14 +400,6 @@ public class OrderbookActivity extends BaseActivity implements OnItemSelectedLis
         {
             // This happens when we try to show a dialog when app is not in the foreground. Suppress it for now
         }
-    }
-
-    private void failedToDrawUI()
-    {
-        swipeLayout.setRefreshing(false);
-        // Display error Dialog
-        if (dialog == null || !dialog.isShowing())
-            dialog = Utils.errorDialog(this, getString(R.string.error_BitcoinAverageTable), getString(R.string.error));
     }
 
     void populateExchangeDropdown()

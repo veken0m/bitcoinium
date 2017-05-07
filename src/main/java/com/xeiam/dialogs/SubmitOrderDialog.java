@@ -54,7 +54,7 @@ public class SubmitOrderDialog extends DialogFragment
         //set the price
         ((TextView) orderView.findViewById(R.id.order_price)).setText(TraderActivity.twoDecimalFormatter.format(price));
 
-        if (orderType == orderType.BID)
+        if (orderType == OrderType.BID)
         {
             ((TextView) orderView.findViewById(R.id.order_type)).setText("BUY");
         }

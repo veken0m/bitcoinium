@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -187,7 +188,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
 
                     // Toggle background color
                     if (bBackGroundColor = !bBackGroundColor)
-                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+                        newRow.setBackgroundColor(ContextCompat.getColor(this, R.color.light_tableRow));
 
                     newRow.addView(tvSymbol, Utils.adjustParams);
                     newRow.addView(tvLast);
@@ -212,7 +213,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     private void viewBitcoinAverage()
     {
         swipeLayout.setRefreshing(true);
-        if (Utils.isConnected(this))
+        if (Utils.isConnected(this, false))
             (new bitcoinAverageThread()).start();
         else
             notConnected();

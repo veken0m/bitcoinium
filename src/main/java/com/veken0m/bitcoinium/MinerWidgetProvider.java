@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -75,7 +76,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider
 
             readGeneralPreferences(this);
 
-            if (widgetManager != null && (!pref_wifiOnly || Utils.isWiFiAvailable(this)))
+            if (widgetManager != null && (!pref_wifiOnly || Utils.isConnected(this, true)))
             {
                 int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
                 for (int appWidgetId : widgetIds)
@@ -110,7 +111,7 @@ public class MinerWidgetProvider extends BaseWidgetProvider
                     {
                         views.setTextColor(R.id.refreshtime, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
                     }
-                    if (widgetManager != null) widgetManager.updateAppWidget(appWidgetId, views);
+                    widgetManager.updateAppWidget(appWidgetId, views);
                 }
             }
         }
@@ -317,9 +318,9 @@ public class MinerWidgetProvider extends BaseWidgetProvider
             }
             else
             {
-                views.setInt(R.id.minerwidget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
-                views.setTextColor(R.id.widgetMinerHashrate, getResources().getColor(R.color.widgetMainTextColor));
-                views.setTextColor(R.id.widgetMiner, getResources().getColor(R.color.widgetMainTextColor));
+                views.setInt(R.id.minerwidget_layout, "setBackgroundColor", ContextCompat.getColor(this, R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetMinerHashrate, ContextCompat.getColor(this, R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetMiner, ContextCompat.getColor(this, R.color.widgetMainTextColor));
                 views.setTextColor(R.id.widgetBTCPayout, Color.LTGRAY);
                 views.setTextColor(R.id.refreshtime, Color.GREEN);
             }
