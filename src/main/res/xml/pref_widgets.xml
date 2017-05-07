@@ -1,95 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/general">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="bidasktogglePref"
+            android:summary="@string/pref_bid_ask_replace_summary"
+            android:title="@string/bidAskOnWidget" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="displayPricesInMilliBtcPref"
+            android:summary="@string/pref_milli_btc_summary"
+            android:title="@string/displayMilliBtc" />
 
-    <PreferenceCategory android:title="@string/label_widgetConfiguration">
-        <PreferenceScreen
-            android:summary="@string/pref_widget_config_summary"
-            android:title="@string/widgetConfigurationText">
-            <PreferenceCategory android:title="@string/general">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="bidasktogglePref"
-                    android:summary="@string/pref_bid_ask_replace_summary"
-                    android:title="@string/bidAskOnWidget" />
-                <CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="displayPricesInMilliBtcPref"
-                    android:summary="@string/pref_milli_btc_summary"
-                    android:title="@string/displayMilliBtc" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/payoutUnits"
+            android:entryValues="@array/payoutUnitsValues"
+            android:key="widgetMiningPayoutUnitPref"
+            android:summary="@string/pref_payout_unit_summary"
+            android:title="@string/balanceUnits" />
 
-                <ListPreference
-                    android:defaultValue="0"
-                    android:entries="@array/payoutUnits"
-                    android:entryValues="@array/payoutUnitsValues"
-                    android:key="widgetMiningPayoutUnitPref"
-                    android:summary="@string/pref_payout_unit_summary"
-                    android:title="@string/balanceUnits" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="wifiRefreshOnlyPref"
+            android:summary="@string/disableUpdatesMobile"
+            android:title="@string/refreshOnlyWifi" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="widgetTapUpdatePref"
+            android:summary="@string/pref_tap_refresh_summary"
+            android:title="@string/tapToUpdate" />
 
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="wifiRefreshOnlyPref"
-                    android:summary="@string/disableUpdatesMobile"
-                    android:title="@string/refreshOnlyWifi" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="widgetTapUpdatePref"
-                    android:summary="@string/pref_tap_refresh_summary"
-                    android:title="@string/tapToUpdate" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/powerSaving">
+        <ListPreference
+            android:defaultValue="1800"
+            android:entries="@array/interval"
+            android:entryValues="@array/intervalvalues"
+            android:key="refreshPref"
+            android:summary="@string/pref_refresh_interval_summary"
+            android:title="@string/widgetUpdateInterval" />
 
-            </PreferenceCategory>
-            <PreferenceCategory android:title="@string/powerSaving">
-                <ListPreference
-                    android:defaultValue="1800"
-                    android:entries="@array/interval"
-                    android:entryValues="@array/intervalvalues"
-                    android:key="refreshPref"
-                    android:summary="@string/pref_refresh_interval_summary"
-                    android:title="@string/widgetUpdateInterval" />
-
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="wakeupPref"
-                    android:summary="@string/pref_battery_saving_mode_summary"
-                    android:title="@string/batterySavingMode" />
-            </PreferenceCategory>
-
-            <PreferenceCategory android:title="@string/label_customizeWidget">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="enableWidgetCustomizationPref"
-                    android:summary="@string/pref_widget_theme_summary"
-                    android:title="@string/label_enableCustomization" />
-
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                    android:defaultValue="@color/widgetMainTextColor"
-                    android:key="widgetMainTextColorPref"
-                    android:summary="@string/pref_widget_main_color_summary"
-                    android:title="@string/label_mainWidgetColor" />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                    android:defaultValue="@color/widgetSecondaryTextColor"
-                    android:key="widgetSecondaryTextColorPref"
-                    android:summary="@string/pref_widget_second_color_summary"
-                    android:title="@string/label_secondaryWidgetColor" />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                    alphaSlider="true"
-                    android:defaultValue="@color/widgetBackgroundColor"
-                    android:key="widgetBackgroundColorPref"
-                    android:summary="@string/pref_background_wiget_color_summary"
-                    android:title="@string/label_backgroundWidgetColor" />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                    alphaSlider="true"
-                    android:defaultValue="@color/widgetRefreshSuccessColor"
-                    android:key="widgetRefreshSuccessColorPref"
-                    android:summary="@string/pref_update_time_color_success_summary"
-                    android:title="@string/label_updateTimeColorSuccess" />
-                <net.margaritov.preference.colorpicker.ColorPickerPreference
-                    alphaSlider="true"
-                    android:defaultValue="@color/widgetRefreshFailedColor"
-                    android:key="widgetRefreshFailedColorPref"
-                    android:summary="@string/pref_update_time_color_fail_summary"
-                    android:title="@string/label_updateTimeColorFail" />
-            </PreferenceCategory>
-        </PreferenceScreen>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="wakeupPref"
+            android:summary="@string/pref_battery_saving_mode_summary"
+            android:title="@string/batterySavingMode" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/label_customizeWidget">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enableWidgetCustomizationPref"
+            android:summary="@string/pref_widget_theme_summary"
+            android:title="@string/label_enableCustomization" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/widgetMainTextColor"
+            android:key="widgetMainTextColorPref"
+            android:summary="@string/pref_widget_main_color_summary"
+            android:title="@string/label_mainWidgetColor" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/widgetSecondaryTextColor"
+            android:key="widgetSecondaryTextColorPref"
+            android:summary="@string/pref_widget_second_color_summary"
+            android:title="@string/label_secondaryWidgetColor" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            alphaSlider="true"
+            android:defaultValue="@color/widgetBackgroundColor"
+            android:key="widgetBackgroundColorPref"
+            android:summary="@string/pref_background_wiget_color_summary"
+            android:title="@string/label_backgroundWidgetColor" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            alphaSlider="true"
+            android:defaultValue="@color/widgetRefreshSuccessColor"
+            android:key="widgetRefreshSuccessColorPref"
+            android:summary="@string/pref_update_time_color_success_summary"
+            android:title="@string/label_updateTimeColorSuccess" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            alphaSlider="true"
+            android:defaultValue="@color/widgetRefreshFailedColor"
+            android:key="widgetRefreshFailedColorPref"
+            android:summary="@string/pref_update_time_color_fail_summary"
+            android:title="@string/label_updateTimeColorFail" />
+    </PreferenceCategory>
 </PreferenceScreen>
