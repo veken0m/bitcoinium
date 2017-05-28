@@ -3,7 +3,7 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.2.2</string>
+    <string name="version_name">2.3.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
