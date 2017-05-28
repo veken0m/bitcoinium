@@ -139,8 +139,8 @@ public class WidgetProvider extends BaseWidgetProvider
             {
                 // if altcoin append baseCurrency
                 CurrencyPair pair = CurrencyUtils.stringToCurrencyPair(currencyPair);
-                if (!pair.base.equals(Currency.BTC))
-                    shortName += " " + pair.base.getCurrencyCode();
+                //if (!pair.base.equals(Currency.BTC))
+                //    shortName += " " + pair.base.getCurrencyCode();
 
                 // Get ticker using XChange
                 Ticker ticker = ExchangeUtils.getMarketData(exchange).getTicker(pair);
@@ -151,10 +151,9 @@ public class WidgetProvider extends BaseWidgetProvider
 
                 String sVolume = getString(R.string.notAvailable);
                 if (ticker.getVolume() != null)
-                {
                     sVolume = Utils.formatDecimal(ticker.getVolume().floatValue(), 2, 0, true);
-                    sVolume += " " + pair.base.getCurrencyCode();
-                }
+
+                sVolume += " " + pair.base.getCurrencyCode();
 
                 setBidAskHighLow(ticker, views, pair);
 
