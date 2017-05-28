@@ -286,7 +286,7 @@
     <string-array name="cexio">
         <item>CEX.IO</item>
         <item>org.knowm.xchange.cexio.CexIOExchange</item>
-        <item>LTC/BTC</item>
+        <item>BTC/USD</item>
         <item>CEX.IO</item>
         <item>1</item>
         <item>1</item>
