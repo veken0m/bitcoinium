@@ -845,13 +845,10 @@
     <string-array name="cexio_currencies" >
         <item>BTC/USD</item>
         <item>BTC/EUR</item>
-        <item>LTC/USD</item>
         <item>GHS/BTC</item>
-        <item>LTC/BTC</item>
         <item>ETH/BTC</item>
         <item>ETH/USD</item>
         <item>ETH/EUR</item>
-        <item>LTC/EUR</item>
         <item>BTC/RUB</item>
     </string-array>
 
