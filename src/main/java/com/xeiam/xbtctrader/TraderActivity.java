@@ -357,8 +357,7 @@ public class TraderActivity extends AppCompatActivity implements OnSharedPrefere
     {
         try
         {
-            float gridSize = Float.parseFloat(preferences.getString("ordergridsize", ".5"));
-            return gridSize;
+            return Float.parseFloat(preferences.getString("ordergridsize", ".5"));
         }
         catch (Exception e)
         {

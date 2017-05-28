@@ -25,6 +25,7 @@
             <intent android:action=".preferences.WidgetConfigurationPreferencesActivity" />
         </Preference>
     </PreferenceCategory>
+
     <PreferenceCategory android:title=" ">
         <Preference
             android:key="OKpref"

@@ -220,6 +220,7 @@
         <receiver
             android:name=".WidgetProvider"
             android:enabled="true"
+            android:exported="false"
             android:label="@string/widget_price">
             <intent-filter>
                 <action android:name=".WidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -238,6 +239,7 @@
         <receiver
             android:name=".MinerWidgetProvider"
             android:enabled="true"
+            android:exported="false"
             android:label="@string/widget_mining">
             <intent-filter>
                 <action android:name=".MinerWidgetProvider.ACTION_WIDGET_RECEIVER" />
@@ -256,6 +258,7 @@
         <receiver
             android:name=".BalanceWidgetProvider"
             android:enabled="true"
+            android:exported="false"
             android:label="@string/balance_widget_name">
             <intent-filter>
                 <action android:name=".BalanceWidgetProvider.ACTION_WIDGET_RECEIVER" />

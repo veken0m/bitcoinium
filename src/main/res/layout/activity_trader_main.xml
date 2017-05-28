@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Balances: "
+            android:text="@string/balances"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="14sp" />
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="*****"
+            android:text="@string/asterisks"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="14sp">
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="*****"
+            android:text="@string/asterisks"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="14sp">
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Market Value: "
+            android:text="@string/market_value"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="14sp" />
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="*****"
+            android:text="@string/asterisks"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             android:textSize="14sp">
