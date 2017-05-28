@@ -78,6 +78,11 @@ public class PriceAlertPreferencesActivity extends AppCompatActivity
                         alertLimits.setTitle(exchange.getExchangeName() + " - " + widgetCurrency);
                         String prefix = exchange.getIdentifier() + widgetCurrency.replace("/", "");
 
+                        // Add category
+                        PreferenceCategory prefCat = new PreferenceCategory(activity);
+                        prefCat.setTitle(exchange.getExchangeName() + " Alerts - " + widgetCurrency);
+                        alertLimits.addPreference(prefCat);
+
                         // Enable
                         alertLimits.addPreference(createEnablePref(prefix, exchangeName, widgetCurrency));
                         // Upper limit
@@ -86,9 +91,9 @@ public class PriceAlertPreferencesActivity extends AppCompatActivity
                         alertLimits.addPreference(createAlarmLimitPref(prefix, exchangeName, widgetCurrency, false));
 
                         // Add category
-                        PreferenceCategory prefCat = new PreferenceCategory(activity);
-                        prefCat.setTitle(getString(R.string.phantom_widget_removal));
-                        alertLimits.addPreference(prefCat);
+                        PreferenceCategory prefCatWidget = new PreferenceCategory(activity);
+                        prefCatWidget.setTitle(getString(R.string.phantom_widget_removal));
+                        alertLimits.addPreference(prefCatWidget);
 
                         // Preference that allows user to deactivate a widget
                         Preference deactivateWidget = createDeactivateWidgetPref();
@@ -153,7 +158,7 @@ public class PriceAlertPreferencesActivity extends AppCompatActivity
             CheckBoxPreference enableCheckbox = new CheckBoxPreference(this.getActivity());
             enableCheckbox.setDefaultValue(false);
             enableCheckbox.setKey(prefPrefix + "AlarmPref");
-            enableCheckbox.setTitle(getString(R.string.pref_enable_alert_title, exchangeName, widgetCurrency));
+            enableCheckbox.setTitle(getString(R.string.pref_enable_alert_title));
             enableCheckbox.setSummary(getString(R.string.pref_enable_alert_summary, exchangeName, widgetCurrency));
 
             return enableCheckbox;

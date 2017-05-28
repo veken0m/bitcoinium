@@ -55,7 +55,6 @@ public class BaseWidgetProvider extends AppWidgetProvider
         return prefs;
     }
 
-    //static Map<Integer, Float> prevPrice = new HashMap<>(); //
     static SparseArray<Float> prevPrice = new SparseArray<>();
     /**
      * List of preference variables

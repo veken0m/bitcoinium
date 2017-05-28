@@ -24,5 +24,11 @@
             android:summary="@string/pref_balance_value_summary"
             android:title="@string/localCurrency" />
     </PreferenceCategory>
+    <PreferenceCategory android:title=" ">
+        <Preference
+            android:key="OKpref"
+            android:layout="@layout/green_preference_button"
+            android:title="@string/createWidget" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

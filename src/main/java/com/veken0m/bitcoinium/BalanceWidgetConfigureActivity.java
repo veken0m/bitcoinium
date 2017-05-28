@@ -72,7 +72,6 @@ public class BalanceWidgetConfigureActivity extends AppCompatActivity
         prefs.apply();
     }
 
-
     public static class BalanceWidgetConfigureFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener
     {
         private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;

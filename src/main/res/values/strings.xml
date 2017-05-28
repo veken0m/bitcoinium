@@ -129,6 +129,7 @@
     <string name="powerSaving">Power Saving</string>
     <string name="batterySavingMode">Battery Saver</string>
     <string name="widgetUpdateInterval">Widget Update Interval</string>
+    <string name="referrals">Referrals</string>
 
     <!-- Main Menu Button Strings -->
     <string name="label_bitcoinAverage">Bitcoin Average</string>
@@ -271,6 +272,8 @@
     <string name="link_bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="link_xchangeGithub">https://github.com/timmolter/xchange</string>
     <string name="link_bitcoiniumPlayStore">market://details?id=com.veken0m.bitcoinium</string>
+    <string name="link_quadriga_referral">https://www.quadrigacx.com/?ref=2fqgym8g6a6x66m4o6nowyu0</string>
+
     <string name="msg_cancelOrder">CANCEL THIS ORDER?</string>
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
@@ -280,5 +283,14 @@
     <string name="deactivated">DEACTIVATED</string>
     <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>
     <string name="phantom_widget_removal">Phantom Widget Removal</string>
+    <string name="balances">Balances:</string>
+    <string name="asterisks">*****</string>
+    <string name="market_value">Market Value:</string>
+    <string name="buy_all_caps">BUY</string>
+    <string name="btc_all_caps">BTC</string>
+    <string name="usd_all_caps">USD</string>
+    <string name="please_confirm_order">PLEASE CONFIRM ORDER:</string>
+    <string name="buy_colon">BUY:</string>
+    <string name="for_colon">FOR:</string>
 
 </resources>

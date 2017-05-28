@@ -70,4 +70,18 @@
             android:summary="@string/address_donation_bitcoin_xchange"
             android:title="XChange Library" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/referrals"
+        android:summary="Help improve Bitcoinium by signing up these links.">
+        <Preference
+            android:key="quadrigaReferralPref"
+            android:title="QuadrigaCX Sign Up Referral" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_quadriga_referral" />
+        </Preference>
+        <!--Preference
+            android:key="krakenReferralPref"
+            android:summary="@string/kraken_referral_link"
+            android:title="Kraken Referral" /-->
+    </PreferenceCategory>
 </PreferenceScreen>
