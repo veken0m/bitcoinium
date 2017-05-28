@@ -118,13 +118,10 @@ public class ExchangeAccount
 
             // TODO: input BitcoiniumWS API key before release!
             bitcoiniumExchangeSpec.setApiKey("INSERT_KEY_HERE");
-            // SSL issues on Android 2.2, works on Android 2.3.3
             //bitcoiniumExchangeSpec.setPlainTextUri("http://173.10.241.154:9090");
 
             Exchange bitcoiniumExchange = ExchangeFactory.INSTANCE.createExchange(bitcoiniumExchangeSpec);
             bitcoiniumMarketDataService = (BitcoiniumMarketDataServiceRaw) bitcoiniumExchange.getMarketDataService();
-
-            // Use the factory to get the version 2 MtGox exchange API using default settings
             exchangeSpecification = new ExchangeSpecification(TraderActivity.exchangeInfo.getClassName());
 
             String exchangeId = TraderActivity.exchangeInfo.getIdentifier();
@@ -145,6 +142,9 @@ public class ExchangeAccount
 
             if (!(secretKey).equals(""))
                 exchangeSpecification.setSecretKey(secretKey);
+
+            // Don't load metadata
+            exchangeSpecification.setShouldLoadRemoteMetaData(false);
 
             Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exchangeSpecification);
             // Interested in the private account functionality (authentication)
