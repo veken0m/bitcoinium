@@ -10,5 +10,18 @@
             android:summary="@string/pref_select_mining_pool_summary"
             android:title="@string/miningWidget" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/label_widgetConfiguration">
+        <Preference
+            android:summary="@string/pref_widget_config_summary"
+            android:title="@string/widgetConfigurationText">
+            <intent android:action=".preferences.WidgetConfigurationPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title=" ">
+        <Preference
+            android:key="OKpref"
+            android:layout="@layout/green_preference_button"
+            android:title="@string/createWidget" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

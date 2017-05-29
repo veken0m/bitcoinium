@@ -1,29 +1,29 @@
 package com.veken0m.bitcoinium.preferences;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
+import android.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatActivity;
 
-public class MinerPreferenceActivity extends BasePreferenceActivity
+import com.veken0m.bitcoinium.R;
+
+public class MinerPreferenceActivity extends AppCompatActivity
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public static class MinerPreferenceFragment extends PreferenceFragment
     {
-        super.onCreate(savedInstanceState);
-
-        generateMinerDownAlertPreferences();
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_miner);
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        return super.onOptionsItemSelected(item);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new MinerPreferenceFragment())
+                .commit();
     }
 }

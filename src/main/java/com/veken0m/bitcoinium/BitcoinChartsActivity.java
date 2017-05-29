@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -23,13 +24,11 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.bitcoincharts.BitcoinChartsFactory;
-import com.xeiam.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
+import org.knowm.xchange.bitcoincharts.BitcoinChartsFactory;
+import org.knowm.xchange.bitcoincharts.dto.marketdata.BitcoinChartsTicker;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
-// import com.veken0m.utils.KarmaAdsUtils;
 
 public class BitcoinChartsActivity extends BaseActivity implements OnItemSelectedListener, SwipeRefreshLayout.OnRefreshListener
 {
@@ -69,7 +68,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoincharts_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
+        swipeLayout.setColorSchemeResources(R.color.holo_blue_light);
 
         // Temp fix to show refresh indicator. This is a bug in android.support.v4 v21.0.1
         // https://code.google.com/p/android/issues/detail?id=77712
@@ -81,7 +80,6 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        //KarmaAdsUtils.initAd(this);
         onRefresh();
     }
 
@@ -202,7 +200,9 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
                     // final TextView tvBid = new TextView(this);
                     // final TextView tvAsk = new TextView(this);
 
-                    tvSymbol.setText(data.getSymbol());
+                    // NOTE: XChange now uppercases symbols. So "btceUSD" shows up as BTCEUSD". Lowercase all except 3 last characters.
+                    String symbol = data.getSymbol();
+                    tvSymbol.setText(symbol.substring(0,symbol.length()-3).toLowerCase() + symbol.substring(symbol.length()-3,symbol.length()));
                     tvSymbol.setTextColor(Color.WHITE);
                     Utils.setTextViewParams(tvLast, data.getClose());
                     Utils.setTextViewParams(tvVolume, data.getVolume());
@@ -216,7 +216,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
 
                     // Toggle background color
                     if (bBackGroundColor = !bBackGroundColor)
-                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+                        newRow.setBackgroundColor(ContextCompat.getColor(this, R.color.light_tableRow));
 
                     newRow.addView(tvSymbol, Utils.adjustParams);
                     newRow.addView(tvLast);
@@ -243,7 +243,7 @@ public class BitcoinChartsActivity extends BaseActivity implements OnItemSelecte
     {
         if (swipeLayout != null)
             swipeLayout.setRefreshing(true);
-        if (Utils.isConnected(this))
+        if (Utils.isConnected(this, false))
             (new bitcoinChartsThread()).start();
         else
             notConnected();

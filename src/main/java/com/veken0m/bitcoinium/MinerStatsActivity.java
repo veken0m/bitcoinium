@@ -13,7 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,16 +33,12 @@ import com.veken0m.bitcoinium.preferences.MinerPreferenceActivity;
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-//import com.veken0m.utils.KarmaAdsUtils;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-public class MinerStatsActivity extends ActionBarActivity
+public class MinerStatsActivity extends AppCompatActivity
 {
     private static final int MIN_KEY_LENGTH = 20;
     private static String pref_emcKey = null;
@@ -61,10 +57,10 @@ public class MinerStatsActivity extends ActionBarActivity
 
         pref_emcKey = prefs.getString("emcKey", "");
         pref_slushKey = prefs.getString("slushKey", "");
-        pref_bitminterKey = prefs.getString("bitminterKey", "");
+        pref_bitminterKey = prefs.getString("bitminterKey", ""); // "M3IIJ5OCN2SQKRGRYVIXUFCJGG44DPNJ"
         pref_50BTCKey = prefs.getString("50BTCKey", "");
         pref_btcguildKey = prefs.getString("btcguildKey", "");
-        pref_eligiusKey = prefs.getString("eligiusKey", "");
+        pref_eligiusKey = prefs.getString("eligiusKey", ""); // "1EXfBqvLTyFbL6Dr5CG1fjxNKEPSezg7yF"
         pref_ghashioAPIKey = prefs.getString("ghashioAPIKey", "");
     }
 
@@ -103,7 +99,6 @@ public class MinerStatsActivity extends ActionBarActivity
         setContentView(R.layout.activity_minerstats);
         new getDifficultyAsync().execute();
         actionbar.show();
-        //KarmaAdsUtils.initAd(this);
     }
 
     private void addTabs(ActionBar actionbar, String poolkey)
@@ -261,33 +256,33 @@ public class MinerStatsActivity extends ActionBarActivity
         @Override
         protected Boolean doInBackground(Boolean... params)
         {
+            HttpURLConnection urlConnection;
             try
             {
-                HttpClient client = new DefaultHttpClient();
-
                 // Get current difficulty
-                HttpGet post = new HttpGet("https://blockexplorer.com/q/getdifficulty");
-                HttpResponse response;
-                response = client.execute(post);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                URL url = new URL("https://blockchain.info/q/getdifficulty");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                 CurrentDifficulty = reader.readLine();
 
+                /*
                 // Get next difficulty
-                post = new HttpGet("https://blockexplorer.com/q/estimate");
-                response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                url = new URL("https://blockexplorer.com/q/estimate");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                 NextDifficulty = reader.readLine();
+                */
 
                 // Get block count
-                post = new HttpGet("https://blockexplorer.com/q/getblockcount");
-                response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                url = new URL("https://blockchain.info/q/getblockcount");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                 BlockCount = reader.readLine();
 
                 // Get next retarget
-                post = new HttpGet("https://blockexplorer.com/q/nextretarget");
-                response = client.execute(post);
-                reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                url = new URL("https://blockchain.info/q/nextretarget");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                 NextRetarget = reader.readLine();
 
                 reader.close();
@@ -308,7 +303,7 @@ public class MinerStatsActivity extends ActionBarActivity
                 LinearLayout view = (LinearLayout) findViewById(R.id.minerStatslayout);
                 Context context = getBaseContext();
                 TextView tvCurrentDifficulty = new TextView(context);
-                TextView tvNextDifficulty = new TextView(context);
+                //TextView tvNextDifficulty = new TextView(context);
                 TextView tvBlockCount = new TextView(context);
                 TextView tvNextRetarget = new TextView(context);
 
@@ -319,28 +314,33 @@ public class MinerStatsActivity extends ActionBarActivity
                             Float.valueOf(CurrentDifficulty), 0, 0, true));
                     tvCurrentDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvCurrentDifficulty.setTextColor(Color.BLACK);
+
+                    /*
                     tvNextDifficulty.setText(getString(R.string.estimatedNextDifficulty) + ": " + Utils.formatDecimal(
-                            Float.valueOf(NextDifficulty), 0, 0, true));
+                                                Float.valueOf(NextDifficulty), 0, 0, true));
                     tvNextDifficulty.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextDifficulty.setTextColor(Color.BLACK);
+                    */
 
                     tvBlockCount.setText(getString(R.string.blockCount) + ": " + BlockCount);
                     tvBlockCount.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvBlockCount.setTextColor(Color.BLACK);
 
                     int nNextRetarget = Integer.parseInt(NextRetarget) - Integer.parseInt(BlockCount);
-                    tvNextRetarget.setText(String.format(getString(R.string.msg_nextRetarget), nNextRetarget) + "\n");
+                    tvNextRetarget.setText(String.format(getString(R.string.msg_nextRetarget), nNextRetarget));
                     tvNextRetarget.setGravity(Gravity.CENTER_HORIZONTAL);
                     tvNextRetarget.setTextColor(Color.BLACK);
 
+                    /*
                     if (Float.valueOf(NextDifficulty) < Float.valueOf(CurrentDifficulty))
                         tvNextDifficulty.setTextColor(Color.GREEN);
                     else
                         tvNextDifficulty.setTextColor(Color.RED);
+                        */
 
                     view.addView(tvNextRetarget, 1);
                     view.addView(tvBlockCount, 1);
-                    view.addView(tvNextDifficulty, 1);
+                    //view.addView(tvNextDifficulty, 1);
                     view.addView(tvCurrentDifficulty, 1);
                 }
                 catch (Exception e)

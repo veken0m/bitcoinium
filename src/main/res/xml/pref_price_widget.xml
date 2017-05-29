@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory
         android:key="priceWidgetPreferences"
         android:title="@string/pref_price_widget_title">
@@ -12,11 +11,26 @@
 
         <ListPreference
             android:defaultValue="BTC/USD"
-            android:entries="@array/bitstampcurrencies"
-            android:entryValues="@array/bitstampcurrencies"
+            android:entries="@array/bitstamp_currencies"
+            android:entryValues="@array/bitstamp_currencies"
             android:key="widgetCurrencyPref"
             android:summary="@string/pref_currency_summary"
             android:title="@string/pref_pickcurrency" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/label_widgetConfiguration">
+        <Preference
+            android:summary="@string/pref_widget_config_summary"
+            android:title="@string/widgetConfigurationText">
+            <intent android:action=".preferences.WidgetConfigurationPreferencesActivity" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title=" ">
+        <Preference
+            android:key="OKpref"
+            android:layout="@layout/green_preference_button"
+            android:title="@string/createWidget" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,17 +1,12 @@
 package com.veken0m.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.util.Pair;
 
 import com.veken0m.bitcoinium.R;
 import com.veken0m.bitcoinium.exchanges.ExchangeProperties;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.cryptsy.CryptsyExchange;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
-import com.xeiam.xchange.utils.CertHelper;
+import org.knowm.xchange.*;
+import org.knowm.xchange.service.marketdata.MarketDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,31 +14,13 @@ import java.util.List;
 public class ExchangeUtils
 {
     // Some exchanges need to be handled differently; Do the funky stuff here...
-    public static PollingMarketDataService getMarketData(ExchangeProperties exchange, CurrencyPair currencyPair)
+    public static MarketDataService getMarketData(ExchangeProperties exchange)
     {
-        // TODO: find way to import required certificates
-        if (exchange.getIdentifier().equals("bitfinex") || exchange.getIdentifier().equals("cryptotrade"))
-        {
-            try
-            {
-                CertHelper.trustAllCerts();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+        ExchangeSpecification exchangeSpec = new ExchangeSpecification(exchange.getClassName());
+        exchangeSpec.setShouldLoadRemoteMetaData(false); // Don't remote init metadata.
+        Exchange exchangeInstance = ExchangeFactory.INSTANCE.createExchange(exchangeSpec);
 
-        // Crypsy has a different API for public and private...
-        Exchange exchangeInstance = ExchangeFactory.INSTANCE.createExchange(exchange.getClassName());
-        if (exchange.getIdentifier().equals("cryptsy"))
-        {
-            return ((CryptsyExchange) exchangeInstance).getPublicPollingMarketDataService();
-        }
-        else
-        {  // Other exchanges...
-            return exchangeInstance.getPollingMarketDataService();
-        }
+        return exchangeInstance.getMarketDataService();
     }
 
     public static Pair<List<String>, List<String>> getAllDropdownItems(Context context)
@@ -58,21 +35,16 @@ public class ExchangeUtils
 
     public static Pair<List<String>, List<String>> getDropdownItems(Context context, int serviceType, boolean includeAll)
     {
-        Resources res = context.getResources();
-        String[] exchangeIds = res.getStringArray(R.array.exchangeID);
-        String pkgName = context.getPackageName();
+        String[] exchangeIds = context.getResources().getStringArray(R.array.exchangeId);
         List<String> dropdown = new ArrayList<>();
         List<String> dropdownIds = new ArrayList<>();
 
-        for (String exchangeId : exchangeIds)
-        {
-            int id = res.getIdentifier(exchangeId, "array", pkgName);
-            String[] exchangeMeta = context.getResources().getStringArray(id);
+        for (String exchangeId : exchangeIds) {
+            ExchangeProperties exchangeMetadata = new ExchangeProperties(context, exchangeId);
 
-            if (includeAll || exchangeMeta[serviceType].equals("1"))
-            {
-                dropdown.add(exchangeMeta[ExchangeProperties.ItemType.EXCHANGE_NAME]); // Add exchange name
-                dropdownIds.add(exchangeMeta[ExchangeProperties.ItemType.IDENTIFIER]);
+            if (includeAll || exchangeMetadata.supportsServiceType(serviceType)) {
+                dropdown.add(exchangeMetadata.getExchangeName()); // Add exchange name
+                dropdownIds.add(exchangeMetadata.getIdentifier());
             }
         }
 

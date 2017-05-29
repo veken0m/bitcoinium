@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.R;
 import com.xeiam.paint.Painter;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 public class MainView extends ImageView
 {
 
     private final int FRAME_RATE = 30;
-    private XTraderActivity mainActivity;
+    private TraderActivity mainActivity;
     //init offscreen
     private int x_touch = -20;
     private int y_touch = -20;
@@ -48,10 +48,10 @@ public class MainView extends ImageView
         float orderTotal = orderCoords[0] * orderCoords[1];
 
         StringBuilder builder = new StringBuilder();
-        builder.append(XTraderActivity.threeDecimalFormatter.format(orderCoords[1]));
+        builder.append(TraderActivity.threeDecimalFormatter.format(orderCoords[1]));
         builder.append("@");
-        builder.append(XTraderActivity.fiatFormatter.format(orderCoords[0]));
-        builder.append(" (" + XTraderActivity.fiatFormatter.format(orderTotal) + ") ");
+        builder.append(TraderActivity.fiatFormatter.format(orderCoords[0]));
+        builder.append(" (" + TraderActivity.fiatFormatter.format(orderTotal) + ") ");
         return builder.toString();
     }
 
@@ -122,12 +122,12 @@ public class MainView extends ImageView
         return y_touch;
     }
 
-    public XTraderActivity getMainActivity()
+    public TraderActivity getMainActivity()
     {
         return mainActivity;
     }
 
-    public void setMainActivity(XTraderActivity mainActivity)
+    public void setMainActivity(TraderActivity mainActivity)
     {
         this.mainActivity = mainActivity;
     }

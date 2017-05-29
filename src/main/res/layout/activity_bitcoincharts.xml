@@ -115,6 +115,7 @@
         android:id="@+id/bitcoincharts_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="@color/dark">
 
         <ScrollView
@@ -132,11 +133,4 @@
                 android:stretchColumns="5" />
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <!--     <WebView
-            android:id="@+id/karma_ad"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_gravity="bottom|center_horizontal" /> -->
-
 </TableLayout>

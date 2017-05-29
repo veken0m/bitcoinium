@@ -3,10 +3,16 @@
 
     <!-- General and Defaults -->
     <string name="app_name">Bitcoinium Prime</string>
-    <string name="version_name">2.2.0</string>
+    <string name="version_name">2.3.0</string>
     <string name="default_exchange">bitstamp</string>
     <string name="default_miningpool">BitMinter</string>
     <string name="default_currency">BTC/USD</string>
+
+    <!-- Ad supported version -->
+    <string name="app_name_free">Bitcoinium</string>
+    <string name="link_email_author_free">mailto:veken0m.apps@gmail.com?subject=Bitcoinium Feedback</string>
+    <string name="tapToUpdate_free">Tap to Update *Prime Only*</string>
+    <string name="link_bitcoiniumPlayStore_free">market://details?id=com.veken0m.cavirtex</string>
 
     <string name="license">Copyright 2012-2014 Michael Lagacé\n\nLicensed under the Apache License, Version 2.0 (the "License")
    you may not use this file except in compliance with the License.
@@ -123,6 +129,7 @@
     <string name="powerSaving">Power Saving</string>
     <string name="batterySavingMode">Battery Saver</string>
     <string name="widgetUpdateInterval">Widget Update Interval</string>
+    <string name="referrals">Referrals</string>
 
     <!-- Main Menu Button Strings -->
     <string name="label_bitcoinAverage">Bitcoin Average</string>
@@ -137,7 +144,7 @@
     <string name="label_priceGraph">Price Graph</string>
     <string name="label_updateWidgets">Update Widget(s)</string>
     <string name="label_webCharts">Web Charts</string>
-    <string name="label_xtrader">XTrader</string>
+    <string name="label_trader">Trader</string>
 
     <!-- Dialog Messages -->
     <string name="error_BitcoinAverageTable">A problem occurred when generating BitcoinAverage table</string>
@@ -157,6 +164,7 @@
     <string name="msg_priceContentNotif">%1$s value: %2$s on %3$s</string>
     <string name="msg_priceTickerNotif">%1$s alert value has been reached! \n %1$s valued at %2$s on %3$s</string>
     <string name="msg_priceTitleNotif">%1$s @ %2$s</string>
+    <string name="msg_alarmMessage">Bitconium - %1$s @ %2$s on %3$s</string>
 
     <!-- General Preferences -->
     <string name="pref_currency_displayed">%1$s price will be displayed in this currency</string>
@@ -248,7 +256,7 @@
     <string name="msg_pressColorToApply">Press on Color to apply</string>
 
     <!-- Miner Stats -->
-    <string name="msg_nextRetarget">Next retarget in %1$s blocks</string>
+    <string name="msg_nextRetarget">Next retarget in %1$d blocks\n</string>
     <string name="pref_hashrate_notification_summary">Notifications when hashrate is below 0.01 Mh/s</string>
     <string name="pref_miner_info_summary">Required to access your miner\'s information</string>
     <string name="pref_payout_unit_summary">Select units used to display balances</string>
@@ -259,13 +267,13 @@
     <string name="email_author">veken0m.apps@gmail.com</string>
     <string name="link_email_author">mailto:veken0m.apps@gmail.com?subject=Bitcoinium Prime Feedback</string>
     <string name="address_donation_bitcoin">1yjDmiukhB2i1XyVw5t7hpAK4WXo32d54</string>
-    <string name="address_donation_dogecoin">D7GQR2WqQLPtrpwFHdc9uU3UbXwHXf9c5y</string>
-    <string name="address_donation_litecoin">LhjBwNdERVB8DPTubYFwCsDfzRGJsTcqWp</string>
     <string name="address_donation_bitcoin_xchange">1MHMpzFxx4fRSaeYGSxhyEcgux7j4Gqwsc</string>
     <string name="link_twitter">https://twitter.com/veken0m</string>
     <string name="link_bitcoiniumGithub">https://github.com/veken0m/bitcoinium</string>
     <string name="link_xchangeGithub">https://github.com/timmolter/xchange</string>
     <string name="link_bitcoiniumPlayStore">market://details?id=com.veken0m.bitcoinium</string>
+    <string name="link_quadriga_referral">https://www.quadrigacx.com/?ref=2fqgym8g6a6x66m4o6nowyu0</string>
+
     <string name="msg_cancelOrder">CANCEL THIS ORDER?</string>
     <string name="label_id">ID:</string>
     <string name="label_orderId">orderId</string>
@@ -275,6 +283,14 @@
     <string name="deactivated">DEACTIVATED</string>
     <string name="toast_widget_deactivated">Widget deactivated. If still on homescreen, please delete</string>
     <string name="phantom_widget_removal">Phantom Widget Removal</string>
-
+    <string name="balances">Balances:</string>
+    <string name="asterisks">*****</string>
+    <string name="market_value">Market Value:</string>
+    <string name="buy_all_caps">BUY</string>
+    <string name="btc_all_caps">BTC</string>
+    <string name="usd_all_caps">USD</string>
+    <string name="please_confirm_order">PLEASE CONFIRM ORDER:</string>
+    <string name="buy_colon">BUY:</string>
+    <string name="for_colon">FOR:</string>
 
 </resources>

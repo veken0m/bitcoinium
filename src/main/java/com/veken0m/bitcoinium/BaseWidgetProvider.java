@@ -7,25 +7,24 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.text.format.Time;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.bitcoinium.preferences.PriceAlertPreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.CurrencyPair;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Calendar;
 
 public class BaseWidgetProvider extends AppWidgetProvider
 {
@@ -36,16 +35,27 @@ public class BaseWidgetProvider extends AppWidgetProvider
     static boolean pref_enableWidgetCustomization = false;
     static boolean pref_pricesInMilliBtc = false;
 
+    @ColorInt
     static int pref_mainWidgetTextColor = R.color.widgetMainTextColor;
+    @ColorInt
     static int pref_secondaryWidgetTextColor = R.color.widgetSecondaryTextColor;
+    @ColorInt
     static int pref_backgroundWidgetColor = R.color.widgetBackgroundColor;
+    @ColorInt
     static int pref_widgetRefreshSuccessColor = R.color.widgetRefreshSuccessColor;
+    @ColorInt
     static int pref_widgetRefreshFailedColor = R.color.widgetRefreshFailedColor;
     static int pref_widgetPayoutUnits = 0;
 
     static SharedPreferences prefs = null;
+    public static SharedPreferences getPrefs(Context context){
+        if(prefs == null)
+            prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-    static Map<Integer, Float> prevPrice = new HashMap<>(); //
+        return prefs;
+    }
+
+    static SparseArray<Float> prevPrice = new SparseArray<>();
     /**
      * List of preference variables
      */
@@ -55,8 +65,8 @@ public class BaseWidgetProvider extends AppWidgetProvider
 
     static void readGeneralPreferences(Context context)
     {
-        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        readAlarmPreferences(context);
+        SharedPreferences prefs = getPrefs(context);
+        readAlarmPreferences(prefs);
 
         pref_tapToUpdate = prefs.getBoolean("widgetTapUpdatePref", false);
         pref_wifiOnly = prefs.getBoolean("wifiRefreshOnlyPref", false);
@@ -76,10 +86,8 @@ public class BaseWidgetProvider extends AppWidgetProvider
         }
     }
 
-    private static void readAlarmPreferences(Context context)
+    private static void readAlarmPreferences(SharedPreferences prefs)
     {
-        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
         pref_alarmSound = prefs.getBoolean("alarmSoundPref", false);
         pref_alarmVibrate = prefs.getBoolean("alarmVibratePref", false);
         pref_notificationSound = prefs.getString("notificationSoundPref", "DEFAULT_RINGTONE_URI");
@@ -90,33 +98,32 @@ public class BaseWidgetProvider extends AppWidgetProvider
     static void setRefreshServiceAlarm(Context context, Class<? extends IntentService> cls)
     {
         // Get refresh settings
-        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = getPrefs(context);
         int alarmType = prefs.getBoolean("wakeupPref", true) ? AlarmManager.RTC : AlarmManager.RTC_WAKEUP;
         int refreshInterval = Integer.parseInt(prefs.getString("refreshPref", "1800")) * 1000; // milliseconds
 
-        Intent intent = new Intent(context, cls);
-        PendingIntent refreshIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent refreshIntent = PendingIntent.getService(context, 0, new Intent(context, cls), PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(alarmType, System.currentTimeMillis(), refreshInterval, refreshIntent);
     }
 
-    static void setAlarmClock(Context context)
+    static void setAlarmClock(Context context, float last, String exchange, CurrencyPair pair)
     {
-        if (prefs == null) prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        // Disable preference so it only rings once
+        getPrefs(context).edit().putBoolean("alarmClockPref", false).apply();
 
-        Editor editor = prefs.edit();
-        editor.putBoolean("alarmClockPref", false);
-        editor.commit();
+        String baseCurrency = pair.base.getCurrencyCode();
+        String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
+        String alarmMessage = context.getString(R.string.msg_alarmMessage, baseCurrency, lastPrice, exchange);
 
-        Time dtNow = new Time();
-        dtNow.setToNow();
-
+        // Note: alarm will automatically deleted after it is dismissed
+        Calendar now = Calendar.getInstance();
         Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(AlarmClock.EXTRA_MESSAGE, "Bitcoinium alarm (delete)");
-        i.putExtra(AlarmClock.EXTRA_HOUR, dtNow.hour);
-        i.putExtra(AlarmClock.EXTRA_MINUTES, (dtNow.minute + 1));
+        i.putExtra(AlarmClock.EXTRA_MESSAGE, alarmMessage);
+        i.putExtra(AlarmClock.EXTRA_HOUR, now.get(Calendar.HOUR_OF_DAY));
+        i.putExtra(AlarmClock.EXTRA_MINUTES, now.get(Calendar.MINUTE) + 1);
         i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
 
         context.startActivity(i);
@@ -124,7 +131,7 @@ public class BaseWidgetProvider extends AppWidgetProvider
 
     static void createNotification(Context context, float last, String exchange, int notifyId, CurrencyPair pair)
     {
-        String baseCurrency = pair.baseSymbol;
+        String baseCurrency = pair.base.getCurrencyCode();
         String lastPrice = Utils.formatWidgetMoney(last, pair, true, pref_pricesInMilliBtc);
 
         Resources res = context.getResources();
@@ -154,18 +161,11 @@ public class BaseWidgetProvider extends AppWidgetProvider
     /**
      * Generic method to send notification using the NotificationCompat API.
      */
-    public static void sendNotification(Context context,
-                                        String contentTitle,
-                                        String contentText,
-                                        PendingIntent contentIntent,
-                                        String contentTicker,
-                                        int notifyId,
-                                        boolean isOngoing,
-                                        float lastPrice)
+    public static void sendNotification(Context context, String contentTitle, String contentText, PendingIntent contentIntent,
+                                        String contentTicker, int notifyId, boolean isOngoing, float lastPrice)
     {
-        // Use NotificationCompat.Builder to set up our notification.
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(contentIntent);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
         builder.setContentTitle(contentTitle);
@@ -175,9 +175,10 @@ public class BaseWidgetProvider extends AppWidgetProvider
 
         Log.d("Previous price", prevPrice.toString());
 
-        if (lastPrice != 0.0 && prevPrice.containsKey(notifyId))
+        Float previousPrice = prevPrice.get(notifyId);
+        if (lastPrice != 0.0 && previousPrice != null)
         {
-            int nCompare = Float.compare(lastPrice, prevPrice.get(notifyId));
+            int nCompare = Float.compare(lastPrice, previousPrice);
 
             if (nCompare == 0)
             {

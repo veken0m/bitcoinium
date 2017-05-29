@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="exchangeID">
+    <string-array name="exchangeId">
         <item>anx</item>
         <item>bitbay</item>
         <item>bitcoinaverage</item>
-        <item>bitcoincentral</item>
-        <item>bitcointoyou</item>
-        <item>bitcurex</item>
-        <item>bitkonan</item>
+        <!--item>bitcoincharts</item--> <!-- not an exchange -->
+        <!--item>bitcoinde</item--> <!-- requires API key -->
+        <!--item>bitcoinium</item--> <!-- not an exchange -->
+        <!--item>bitcurex</item--> <!-- shutdown -->
         <item>bitfinex</item>
+        <item>bitkonan</item>
         <item>bitmarket</item>
-        <item>bittrex</item>
+        <item>bitso</item>
         <item>bitstamp</item>
-        <item>bitvc</item>
+        <item>bittrex</item>
         <item>bleutrade</item>
-        <item>btce</item>
+        <!--item>blockchain</item--> <!-- not an exchange -->
+        <!--item>btc38</item--> <!-- crashes -->
         <item>btcchina</item>
+        <item>btce</item>
+        <item>btcmarkets</item>
         <item>btctrade</item>
         <item>bter</item>
         <item>campbx</item>
+        <!--item>ccex</item-->
         <item>cexio</item>
+        <item>chbtc</item>
         <item>coinbase</item>
-        <item>coinsetter</item>
-        <!--item>coinfloor</item--> <!-- streaming only -->
+        <item>coinmate</item>
+        <!--item>cryptofacilities</item--> <!-- contracts only? -->
         <item>cryptonit</item>
-        <item>cryptotrade</item>
-        <item>cryptsy</item>
+        <item>empoex</item>
+        <!--item>gatecoin</item--> <!-- hostname has changed to https://api.gatecoin.com -->
+        <item>gdax</item>
+        <item>gemini</item> <!-- parsing error on Ticker -->
         <item>hitbtc</item>
+        <item>huobi</item> <!-- times out on depth call -->
+        <!--item>independentreserve</item--> <!-- Parsing failed -->
         <item>itbit</item>
-        <!--item>justcoin</item--> <!-- Shut down? -->
+        <item>jubi</item>
         <item>kraken</item>
         <item>lakebtc</item>
+        <!--item>livecoin</item-->
+        <item>loyalbit</item>
         <item>mercadobitcoin</item>
-        <item>mintpal</item>
         <item>okcoin</item>
-        <item>poloniex</item>
+        <!--item>openexchangerates</item--> <!-- not an exchange -->
+        <item>paymium</item>
+        <!--item>poloniex</item--> <!-- crash! -->
+        <item>quadrigacx</item>
+        <item>quoine</item>
+        <!--item>ripple</item--> <!-- RippleMarketDataParams is missing -->
+        <item>taurus</item> <!-- no trades, empty orderbook -->
+        <item>therock</item>
+        <item>vaultoro</item>
         <!--item>vircurex</item--> <!-- not implemented -->
-        <item>vaultofsatoshi</item>
-        <item>virtex</item>
+        <!--item>yobit</item-->
     </string-array>
 
     <string-array name="exchangesBitcoiniumWS">
@@ -48,7 +66,6 @@
         <!--item>BTCE_RUR</item-->
         <item>btceUSD</item>
         <item>krakenEUR</item>
-        <item>vaultofsatoshiCAD</item>
         <!--item>KRAKEN_USD</item-->
     </string-array>
 
@@ -61,17 +78,15 @@
         <!--item>BTCE_RUR</item-->
         <item>BTCE_USD</item>
         <item>KRAKEN_EUR</item>
-        <item>VOS_CAD</item>
         <!--item>KRAKEN_USD</item-->
     </string-array>
 
     <!-- Arrays that define properties of Exchanges -->
     <!--
-        <string-array name="ExampleExchange">
+        <string-array name="identifier">
         <item>ExchangeName</item>
         <item>xchangeClassName</item>
         <item>mainCurrency</item>
-        <item>identifier</item>
         <item>short name</item>
         <item>supportsTicker</item>
         <item>supportsOrderbook</item>
@@ -80,9 +95,8 @@
 
     <string-array name="anx">
         <item>ANX</item>
-        <item>com.xeiam.xchange.anx.v2.ANXExchange</item>
+        <item>org.knowm.xchange.anx.v2.ANXExchange</item>
         <item>BTC/USD</item>
-        <item>anx</item>
         <item>ANX</item>
         <item>1</item>
         <item>1</item>
@@ -91,9 +105,8 @@
 
     <string-array name="bitbay">
         <item>BitBay</item>
-        <item>com.xeiam.xchange.bitbay.BitbayExchange</item>
+        <item>org.knowm.xchange.bitbay.BitbayExchange</item>
         <item>BTC/PLN</item>
-        <item>bitbay</item>
         <item>BitBay</item>
         <item>1</item>
         <item>1</item>
@@ -102,20 +115,28 @@
 
     <string-array name="bitcoinaverage">
         <item>Bitcoin Average</item>
-        <item>com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange</item>
+        <item>org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange</item>
         <item>BTC/USD</item>
-        <item>bitcoinaverage</item>
         <item>BTCAvg</item>
         <item>1</item>
         <item>0</item>
         <item>0</item>
     </string-array>
 
+    <string-array name="bitcoinde">
+        <item>Bitcoin.de</item>
+        <item>org.knowm.xchange.bitcoinde.BitcoindeExchange</item>
+        <item>BTC/EUR</item>
+        <item>Bitcoin.de</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="bitcurex">
         <item>Bitcurex</item>
-        <item>com.xeiam.xchange.bitcurex.BitcurexExchange</item>
+        <item>org.knowm.xchange.bitcurex.BitcurexExchange</item>
         <item>BTC/PLN</item>
-        <item>bitcurex</item>
         <item>Bitcurex</item>
         <item>1</item>
         <item>1</item>
@@ -124,9 +145,8 @@
 
     <string-array name="bitkonan">
         <item>BitKonan</item>
-        <item>com.xeiam.xchange.bitkonan.BitKonanExchange</item>
+        <item>org.knowm.xchange.bitkonan.BitKonanExchange</item>
         <item>BTC/USD</item>
-        <item>bitkonan</item>
         <item>BitKonan</item>
         <item>1</item>
         <item>1</item>
@@ -135,9 +155,8 @@
 
     <string-array name="bitfinex">
         <item>Bitfinex</item>
-        <item>com.xeiam.xchange.bitfinex.v1.BitfinexExchange</item>
+        <item>org.knowm.xchange.bitfinex.v1.BitfinexExchange</item>
         <item>BTC/USD</item>
-        <item>bitfinex</item>
         <item>Bitfinex</item>
         <item>1</item>
         <item>1</item>
@@ -146,10 +165,19 @@
 
     <string-array name="bitmarket">
         <item>BitMarket</item>
-        <item>com.xeiam.xchange.bitmarket.BitMarketExchange</item>
+        <item>org.knowm.xchange.bitmarket.BitMarketExchange</item>
         <item>BTC/PLN</item>
-        <item>bitmarket</item>
         <item>BitMarket</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="bitso">
+        <item>Bitso</item>
+        <item>org.knowm.xchange.bitso.BitsoExchange</item>
+        <item>BTC/MXN</item>
+        <item>Bitso</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
@@ -157,21 +185,19 @@
 
     <string-array name="bitstamp">
         <item>Bitstamp</item>
-        <item>com.xeiam.xchange.bitstamp.BitstampExchange</item>
+        <item>org.knowm.xchange.bitstamp.BitstampExchange</item>
         <item>BTC/USD</item>
-        <item>bitstamp</item>
         <item>Bitstamp</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
     </string-array>
 
-    <string-array name="bitvc">
-        <item>BitKonan</item>
-        <item>com.xeiam.xchange.bitvc.BitVcExchange</item>
-        <item>BTC/USD</item>
-        <item>bitvc</item>
-        <item>BitVC</item>
+    <string-array name="bittrex">
+        <item>Bittrex</item>
+        <item>org.knowm.xchange.bittrex.v1.BittrexExchange</item>
+        <item>VRC/BTC</item>
+        <item>Bittrex</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
@@ -179,54 +205,19 @@
 
     <string-array name="bleutrade">
         <item>BleuTrade</item>
-        <item>com.xeiam.xchange.bleutrade.BleutradeExchange</item>
+        <item>org.knowm.xchange.bleutrade.BleutradeExchange</item>
         <item>XPY/BTC</item>
-        <item>bleutrade</item>
         <item>BleuTrade</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
 
-    <string-array name="bittrex">
-        <item>Bittrex</item>
-        <item>com.xeiam.xchange.bittrex.v1.BittrexExchange</item>
-        <item>VRC/BTC</item>
-        <item>bittrex</item>
-        <item>Bittrex</item>
-        <item>1</item>
-        <item>1</item>
-        <item>0</item>
-    </string-array>
-
-    <string-array name="bitcoincentral">
-        <item>Bitcoin-Central</item>
-        <item>com.xeiam.xchange.btccentral.BTCCentralExchange</item>
-        <item>BTC/EUR</item>
-        <item>bitcoincentral</item>
-        <item>BTCCentral</item>
-        <item>1</item>
-        <item>1</item>
-        <item>0</item>
-    </string-array>
-
-    <string-array name="bitcointoyou">
-        <item>BitcoinToYou</item>
-        <item>com.xeiam.xchange.bitcointoyou.BitcoinToYouExchange</item>
-        <item>BTC/BRL</item>
-        <item>bitcointoyou</item>
-        <item>BTCToYou</item>
-        <item>1</item>
-        <item>1</item>
-        <item>0</item>
-    </string-array>
-
-    <string-array name="btce">
-        <item>BTC-e</item>
-        <item>com.xeiam.xchange.btce.v3.BTCEExchange</item>
-        <item>BTC/USD</item>
-        <item>btce</item>
-        <item>BTCe</item>
+    <string-array name="btc38">
+        <item>BTC38</item>
+        <item>org.knowm.xchange.btc38.Btc38Exchange</item>
+        <item>BTC/CNY</item>
+        <item>BTC38</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
@@ -234,20 +225,38 @@
 
     <string-array name="btcchina">
         <item>BTC China</item>
-        <item>com.xeiam.xchange.btcchina.BTCChinaExchange</item>
+        <item>org.knowm.xchange.btcchina.BTCChinaExchange</item>
         <item>BTC/CNY</item>
-        <item>btcchina</item>
         <item>BTCChina</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
     </string-array>
 
+    <string-array name="btce">
+        <item>BTC-e</item>
+        <item>org.knowm.xchange.btce.v3.BTCEExchange</item>
+        <item>BTC/USD</item>
+        <item>BTCe</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="btcmarkets">
+        <item>BTC Markets</item>
+        <item>org.knowm.xchange.btcmarkets.BTCMarketsExchange</item>
+        <item>BTC/AUD</item>
+        <item>BtcMarkets</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
     <string-array name="btctrade">
         <item>BtcTrade</item>
-        <item>com.xeiam.xchange.btctrade.BTCTradeExchange</item>
+        <item>org.knowm.xchange.btctrade.BTCTradeExchange</item>
         <item>BTC/CHY</item>
-        <item>btctrade</item>
         <item>BtcTrade</item>
         <item>1</item>
         <item>1</item>
@@ -256,9 +265,8 @@
 
     <string-array name="bter">
         <item>BTER</item>
-        <item>com.xeiam.xchange.bter.BTERExchange</item>
+        <item>org.knowm.xchange.bter.BTERExchange</item>
         <item>BTC/CNY</item>
-        <item>bter</item>
         <item>BTER</item>
         <item>1</item>
         <item>1</item>
@@ -267,9 +275,8 @@
 
     <string-array name="campbx">
         <item>CampBX</item>
-        <item>com.xeiam.xchange.campbx.CampBXExchange</item>
+        <item>org.knowm.xchange.campbx.CampBXExchange</item>
         <item>BTC/USD</item>
-        <item>campbx</item>
         <item>CampBX</item>
         <item>1</item>
         <item>1</item>
@@ -278,10 +285,19 @@
 
     <string-array name="cexio">
         <item>CEX.IO</item>
-        <item>com.xeiam.xchange.cexio.CexIOExchange</item>
-        <item>LTC/BTC</item>
-        <item>cexio</item>
+        <item>org.knowm.xchange.cexio.CexIOExchange</item>
+        <item>BTC/USD</item>
         <item>CEX.IO</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="chbtc">
+        <item>CHBTC</item>
+        <item>org.knowm.xchange.chbtc.ChbtcExchange</item>
+        <item>BTC/CNY</item>
+        <item>CHBTC</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
@@ -289,109 +305,138 @@
 
     <string-array name="coinbase">
         <item>Coinbase</item>
-        <item>com.xeiam.xchange.coinbase.CoinbaseExchange</item>
+        <item>org.knowm.xchange.coinbase.CoinbaseExchange</item>
         <item>BTC/USD</item>
-        <item>coinbase</item>
         <item>Coinbase</item>
         <item>1</item>
         <item>0</item>
         <item>0</item>
     </string-array>
 
-    <!-- Streaming API only -->
-    <string-array name="coinfloor">
-        <item>Coinfloor</item>
-        <item>com.xeiam.xchange.coinfloor.CoinfloorExchange</item>
-        <item>BTC/GBP</item>
-        <item>coinfloor</item>
-        <item>Coinfloor</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
+    <string-array name="coinmate">
+        <item>Coinmate</item>
+        <item>org.knowm.xchange.coinmate.CoinmateExchange</item>
+        <item>BTC/EUR</item>
+        <item>Coinmate</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
     </string-array>
 
-    <string-array name="coinsetter">
-        <item>Coinsetter</item>
-        <item>com.xeiam.xchange.coinsetter.CoinsetterExchange</item>
+    <string-array name="cryptofacilities">
+        <item>CryptoFacilities</item>
+        <item>org.knowm.xchange.cryptofacilities.CryptoFacilitiesExchange</item>
         <item>BTC/USD</item>
-        <item>coinsetter</item>
-        <item>Coinsetter</item>
+        <item>CryptoFac</item>
         <item>1</item>
         <item>1</item>
-        <item>0</item>
+        <item>1</item>
     </string-array>
 
     <string-array name="cryptonit">
         <item>Cryptonit</item>
-        <item>com.xeiam.xchange.cryptonit.v2.CryptonitExchange</item>
+        <item>org.knowm.xchange.cryptonit.v2.CryptonitExchange</item>
         <item>BTC/USD</item>
-        <item>cryptonit</item>
         <item>Cryptonit</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
     </string-array>
 
-    <string-array name="cryptotrade">
-        <item>Crypto-Trade</item>
-        <item>com.xeiam.xchange.cryptotrade.CryptoTradeExchange</item>
+    <string-array name="empoex">
+        <item>EmpoEx</item>
+        <item>org.knowm.xchange.empoex.EmpoExExchange</item>
         <item>LTC/BTC</item>
-        <item>cryptotrade</item>
-        <item>Crypto-T</item>
+        <item>EmpoEx</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
 
-    <string-array name="cryptsy">
-        <item>Cryptsy</item>
-        <item>com.xeiam.xchange.cryptsy.CryptsyExchange</item>
+    <string-array name="gatecoin">
+        <item>Gatecoin</item>
+        <item>org.knowm.xchange.gatecoin.GatecoinExchange</item>
         <item>BTC/USD</item>
-        <item>cryptsy</item>
-        <item>Cryptsy</item>
+        <item>Gatecoin</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
+    </string-array>
+
+    <string-array name="gdax">
+        <item>GDAX</item>
+        <item>org.knowm.xchange.gdax.GDAXExchange</item>
+        <item>BTC/USD</item>
+        <item>GDAX</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="gemini">
+        <item>Gemini</item>
+        <item>org.knowm.xchange.gemini.v1.GeminiExchange</item>
+        <item>BTC/USD</item>
+        <item>Gemini</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="hitbtc">
         <item>HitBTC</item>
-        <item>com.xeiam.xchange.hitbtc.HitbtcExchange</item>
+        <item>org.knowm.xchange.hitbtc.HitbtcExchange</item>
         <item>BTC/USD</item>
-        <item>hitbtc</item>
         <item>HitBTC</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
 
+    <string-array name="huobi">
+        <item>Huobi</item>
+        <item>org.knowm.xchange.huobi.HuobiExchange</item>
+        <item>BTC/CNY</item>
+        <item>Huobi</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="independentreserve">
+        <item>IndependentReserve</item>
+        <item>org.knowm.xchange.independentreserve.IndependentReserveExchange</item>
+        <item>BTC/USD</item>
+        <item>IndieReserve</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="itbit">
         <item>ItBit</item>
-        <item>com.xeiam.xchange.itbit.v1.ItBitExchange</item>
+        <item>org.knowm.xchange.itbit.v1.ItBitExchange</item>
         <item>XBT/USD</item>
-        <item>itbit</item>
         <item>ItBit</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
     </string-array>
 
-    <string-array name="justcoin">
-        <item>Justcoin</item>
-        <item>com.xeiam.xchange.justcoin.JustcoinExchange</item>
-        <item>BTC/EUR</item>
-        <item>justcoin</item>
-        <item>Justcoin</item>
+    <string-array name="jubi">
+        <item>Jubi</item>
+        <item>org.knowm.xchange.jubi.JubiExchange</item>
+        <item>BTC/CNY</item>
+        <item>Jubi</item>
         <item>1</item>
-        <item>1</item>
+        <item>0</item>
         <item>0</item>
     </string-array>
 
     <string-array name="kraken">
         <item>Kraken</item>
-        <item>com.xeiam.xchange.kraken.KrakenExchange</item>
+        <item>org.knowm.xchange.kraken.KrakenExchange</item>
         <item>BTC/EUR</item>
-        <item>kraken</item>
         <item>Kraken</item>
         <item>1</item>
         <item>1</item>
@@ -400,54 +445,49 @@
 
     <string-array name="lakebtc">
         <item>LakeBTC</item>
-        <item>com.xeiam.xchange.lakebtc.LakeBTCExchange</item>
+        <item>org.knowm.xchange.lakebtc.LakeBTCExchange</item>
         <item>BTC/USD</item>
-        <item>lakebtc</item>
         <item>LakeBTC</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
 
+    <string-array name="loyalbit">
+        <item>Loyalbit</item>
+        <item>org.knowm.xchange.loyalbit.LoyalbitExchange</item>
+        <item>BTC/USD</item>
+        <item>Loyalbit</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="mercadobitcoin">
         <item>MercadoBitcoin</item>
-        <item>com.xeiam.xchange.mercadobitcoin.MercadoBitcoinExchange</item>
+        <item>org.knowm.xchange.mercadobitcoin.MercadoBitcoinExchange</item>
         <item>BTC/BRL</item>
-        <item>mercadobitcoin</item>
         <item>Mercado</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
 
-    <string-array name="mintpal">
-        <item>MintPal</item>
-        <item>com.xeiam.xchange.mintpal.MintPalExchange</item>
-        <item>LTC/BTC</item>
-        <item>mintpal</item>
-        <item>MintPal</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-    </string-array>
-
-    <string-array name="mtgox">
-        <item>MtGox</item>
-        <item>com.xeiam.xchange.mtgox.v2.MtGoxExchange</item>
-        <item>BTC/USD</item>
-        <item>mtgox</item>
-        <item>MtGox</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-    </string-array>
-
     <string-array name="okcoin">
         <item>OKCoin</item>
-        <item>com.xeiam.xchange.okcoin.OkCoinExchange</item>
+        <item>org.knowm.xchange.okcoin.OkCoinExchange</item>
         <item>BTC/CNY</item>
-        <item>okcoin</item>
         <item>OKCoin</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="paymium">
+        <item>Paymium</item>
+        <item>org.knowm.xchange.paymium.PaymiumExchange</item>
+        <item>BTC/EUR</item>
+        <item>Paymium</item>
         <item>1</item>
         <item>1</item>
         <item>0</item>
@@ -455,21 +495,69 @@
 
     <string-array name="poloniex">
         <item>Poloniex</item>
-        <item>com.xeiam.xchange.poloniex.PoloniexExchange</item>
+        <item>org.knowm.xchange.poloniex.PoloniexExchange</item>
         <item>LTC/BTC</item>
-        <item>poloniex</item>
         <item>Poloniex</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
     </string-array>
 
-    <string-array name="vaultofsatoshi">
-        <item>Vault of Satoshi</item>
-        <item>com.xeiam.xchange.vaultofsatoshi.VaultOfSatoshiExchange</item>
+    <string-array name="quadrigacx">
+        <item>QuadrigaCX</item>
+        <item>org.knowm.xchange.quadrigacx.QuadrigaCxExchange</item>
+        <item>BTC/CAD</item>
+        <item>Quadriga</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="quoine">
+        <item>Quoine</item>
+        <item>org.knowm.xchange.quoine.QuoineExchange</item>
         <item>BTC/USD</item>
-        <item>vaultofsatoshi</item>
-        <item>VoS</item>
+        <item>Quoine</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="ripple">
+        <item>Ripple</item>
+        <item>org.knowm.xchange.ripple.RippleExchange</item>
+        <item>BTC/XRP</item>
+        <item>Ripple</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="taurus">
+        <item>Taurus</item>
+        <item>org.knowm.xchange.taurus.TaurusExchange</item>
+        <item>BTC/CAD</item>
+        <item>Taurus</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="therock">
+        <item>TheRock</item>
+        <item>org.knowm.xchange.therock.TheRockExchange</item>
+        <item>BTC/EUR</item>
+        <item>TheRock</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="vaultoro">
+        <item>Vaultoro</item>
+        <item>org.knowm.xchange.vaultoro.VaultoroExchange</item>
+        <item>BTC/GLD</item>
+        <item>Vaultoro</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
@@ -477,24 +565,12 @@
 
     <string-array name="vircurex">
         <item>VirCurEx</item>
-        <item>com.xeiam.xchange.vircurex.VircurexExchange</item>
+        <item>org.knowm.xchange.vircurex.VircurexExchange</item>
         <item>BTC/USD</item>
-        <item>vircurex</item>
         <item>VirCurEx</item>
         <item>0</item>
         <item>1</item>
         <item>0</item>
-    </string-array>
-
-    <string-array name="virtex">
-        <item>VirtEx</item>
-        <item>com.xeiam.xchange.virtex.v2.VirtExExchange</item>
-        <item>BTC/CAD</item>
-        <item>virtex</item>
-        <item>VirtEx</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
     </string-array>
 
 </resources>

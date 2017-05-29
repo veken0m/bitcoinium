@@ -23,15 +23,15 @@ import android.widget.TextView;
 import com.veken0m.bitcoinium.R;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.ExchangeSpecification;
-import com.xeiam.xchange.cexio.CexIOExchange;
-import com.xeiam.xchange.cexio.dto.account.CexIOBalance;
-import com.xeiam.xchange.cexio.dto.account.CexIOBalanceInfo;
-import com.xeiam.xchange.cexio.dto.account.GHashIOHashrate;
-import com.xeiam.xchange.cexio.dto.account.GHashIOWorker;
-import com.xeiam.xchange.cexio.service.polling.CexIOAccountServiceRaw;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.ExchangeSpecification;
+import org.knowm.xchange.cexio.CexIOExchange;
+import org.knowm.xchange.cexio.dto.account.CexIOBalance;
+import org.knowm.xchange.cexio.dto.account.CexIOBalanceInfo;
+import org.knowm.xchange.cexio.dto.account.GHashIOHashrate;
+import org.knowm.xchange.cexio.dto.account.GHashIOWorker;
+import org.knowm.xchange.cexio.service.CexIOAccountServiceRaw;
 
 import java.util.Map;
 
@@ -107,7 +107,7 @@ public class GHashIOFragment extends Fragment
             specs.setUserName(pref_ghashioUsername);
             cexioExchange.applySpecification(specs);
 
-            CexIOAccountServiceRaw pollingService = (CexIOAccountServiceRaw) cexioExchange.getPollingAccountService();
+            CexIOAccountServiceRaw pollingService = (CexIOAccountServiceRaw) cexioExchange.getAccountService();
             account = pollingService.getCexIOAccountInfo();
             hashrate = pollingService.getHashrate();
 

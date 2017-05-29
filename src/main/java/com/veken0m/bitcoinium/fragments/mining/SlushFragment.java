@@ -26,12 +26,8 @@ import com.veken0m.mining.slush.Worker;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class SlushFragment extends Fragment
@@ -92,25 +88,21 @@ public class SlushFragment extends Fragment
 
     void getMinerStats()
     {
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
+            URL url = new URL("https://mining.bitcoin.cz/accounts/profile/json/" + pref_slushKey);
+            urlConnection = (HttpURLConnection) url.openConnection();
 
-            HttpGet post = new HttpGet("https://mining.bitcoin.cz/accounts/profile/json/" + pref_slushKey);
-            HttpResponse response = client.execute(post);
             ObjectMapper mapper = new ObjectMapper();
-
-            // Testing from raw resource
-            //InputStream raw = getResources().openRawResource(R.raw.slush);
-            //Reader is = new BufferedReader(new InputStreamReader(raw, "UTF8"));
-            //data = mapper.readValue(is, Slush.class);
-
-            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), Slush.class);
+            data = mapper.readValue(urlConnection.getInputStream(), Slush.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

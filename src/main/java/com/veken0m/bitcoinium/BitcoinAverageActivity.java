@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -18,11 +19,11 @@ import android.widget.TextView;
 
 import com.veken0m.bitcoinium.preferences.PreferencesActivity;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
-import com.xeiam.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
-import com.xeiam.xchange.bitcoinaverage.service.polling.BitcoinAverageMarketDataServiceRaw;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange;
+import org.knowm.xchange.bitcoinaverage.dto.marketdata.BitcoinAverageTicker;
+import org.knowm.xchange.bitcoinaverage.service.BitcoinAverageMarketDataServiceRaw;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -31,8 +32,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-// import com.veken0m.utils.KarmaAdsUtils;
 
 public class BitcoinAverageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener
 {
@@ -67,7 +66,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.bitcoinaverage_swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeColors(R.color.holo_blue_light);
+        swipeLayout.setColorSchemeResources(R.color.holo_blue_light);
 
         // Temp fix to show refresh indicator. This is a bug in android.support.v4 v21.0.1
         // https://code.google.com/p/android/issues/detail?id=77712
@@ -78,7 +77,6 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
 
-        // KarmaAdsUtils.initAd(this);
         viewBitcoinAverage();
     }
 
@@ -116,7 +114,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     {
         tickers.clear();
         Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
-        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getPollingMarketDataService();
+        BitcoinAverageMarketDataServiceRaw pollingService = (BitcoinAverageMarketDataServiceRaw) bitcoinAverageExchange.getMarketDataService();
 
         if (pollingService != null)
         {
@@ -190,7 +188,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
 
                     // Toggle background color
                     if (bBackGroundColor = !bBackGroundColor)
-                        newRow.setBackgroundColor(getResources().getColor(R.color.light_tableRow));
+                        newRow.setBackgroundColor(ContextCompat.getColor(this, R.color.light_tableRow));
 
                     newRow.addView(tvSymbol, Utils.adjustParams);
                     newRow.addView(tvLast);
@@ -215,7 +213,7 @@ public class BitcoinAverageActivity extends BaseActivity implements SwipeRefresh
     private void viewBitcoinAverage()
     {
         swipeLayout.setRefreshing(true);
-        if (Utils.isConnected(this))
+        if (Utils.isConnected(this, false))
             (new bitcoinAverageThread()).start();
         else
             notConnected();

@@ -2,6 +2,7 @@ package com.veken0m.utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -13,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veken0m.bitcoinium.R;
-import com.xeiam.xchange.currency.Currencies;
-import com.xeiam.xchange.currency.CurrencyPair;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -59,10 +60,10 @@ public class Utils
     {
         int numOfDecimals = 3;
         int unitIndex = 0;
-        String currencyCode = (includeCurrencyCode) ? " " + pair.counterSymbol : "";
+        String currencyCode = (includeCurrencyCode) ? " " + pair.counter.getCurrencyCode() : "";
 
         // If BTC and user wants price in mBTC
-        boolean isBTC = pair.baseSymbol.equalsIgnoreCase(Currencies.BTC);
+        boolean isBTC = pair.base.equals(Currency.BTC);
         if (displayInMilliBtc && isBTC)
         {
             amount /= 1000;
@@ -84,7 +85,7 @@ public class Utils
 
         if (amount >= 1000 && !includeCurrencyCode) numOfDecimals = 0;
 
-        return CurrencyUtils.getSymbol(pair.counterSymbol) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
+        return CurrencyUtils.getSymbol(pair.counter.getCurrencyCode()) + formatDecimal(amount, numOfDecimals, unitIndex, false) + currencyCode;
     }
 
     // returns the index for the proper units in Contants.METRIC_UNITS
@@ -160,34 +161,21 @@ public class Utils
         return builder.create();
     }
 
-    public static boolean isConnected(Context context)
+    public static boolean isConnected(Context context, boolean bWifiOnly)
     {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnected();
-    }
 
-    public static boolean isWiFiAvailable(Context context)
-    {
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        return (wifi != null && ((wifi.isAvailable()) && wifi.getDetailedState() == NetworkInfo.DetailedState.CONNECTED));
+        if(bWifiOnly){
+            return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI && activeNetwork.isConnected());
+        } else
+            return activeNetwork != null && activeNetwork.isConnected();
     }
 
     public static void copyDonationAddressToClipboard(Context context, String donationAddress)
     {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
-        {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(donationAddress);
-        }
-        else
-        {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
-        }
+        ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(android.content.ClipData.newPlainText(context.getString(R.string.donationAddress), donationAddress));
 
         Toast.makeText(context, context.getString(R.string.msg_copiedClipboard), Toast.LENGTH_SHORT).show();
     }

@@ -7,20 +7,21 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import com.veken0m.utils.Constants;
 import com.veken0m.utils.CurrencyUtils;
 import com.veken0m.utils.Utils;
-import com.xeiam.xchange.Exchange;
-import com.xeiam.xchange.ExchangeFactory;
-import com.xeiam.xchange.bitcoinaverage.BitcoinAverageExchange;
-import com.xeiam.xchange.blockchain.Blockchain;
-import com.xeiam.xchange.blockchain.BlockchainExchange;
-import com.xeiam.xchange.blockchain.dto.BitcoinAddress;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.marketdata.Ticker;
-import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.bitcoinaverage.BitcoinAverageExchange;
+import org.knowm.xchange.blockchain.Blockchain;
+import org.knowm.xchange.blockchain.BlockchainExchange;
+import org.knowm.xchange.blockchain.dto.BitcoinAddress;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.marketdata.Ticker;
+import org.knowm.xchange.service.marketdata.MarketDataService;
 
 import si.mazi.rescu.RestProxyFactory;
 
@@ -59,7 +60,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
 
             readGeneralPreferences(this);
 
-            if (widgetManager != null && (!pref_wifiOnly || Utils.isWiFiAvailable(this)))
+            if (widgetManager != null && (!pref_wifiOnly || Utils.isConnected(this, true)))
             {
                 int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
                 for (int appWidgetId : widgetIds)
@@ -96,7 +97,7 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
                         {
                             // Interested in the public polling market data feed (no authentication)
                             Exchange bitcoinAverageExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinAverageExchange.class.getName());
-                            PollingMarketDataService marketDataService = bitcoinAverageExchange.getPollingMarketDataService();
+                            MarketDataService marketDataService = bitcoinAverageExchange.getMarketDataService();
                             Ticker ticker = marketDataService.getTicker(currencyPair);
                             float value = ticker.getLast().floatValue();
 
@@ -115,14 +116,12 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
                     }
                     catch (Exception e)
                     {
-
                         e.printStackTrace();
                         views.setTextColor(R.id.label, pref_enableWidgetCustomization ? pref_widgetRefreshFailedColor : Color.RED);
                     }
                     finally
                     {
-                        if (widgetManager != null)
-                            widgetManager.updateAppWidget(appWidgetId, views);
+                        widgetManager.updateAppWidget(appWidgetId, views);
                     }
                 }
             }
@@ -140,7 +139,6 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
             else
             {
                 Intent intent = new Intent(this, MainActivity.class);
-                //intent.putExtra("exchangeKey", exchangeKey);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
@@ -160,9 +158,9 @@ public class BalanceWidgetProvider extends BaseWidgetProvider
             }
             else
             {
-                views.setInt(R.id.widget_layout, "setBackgroundColor", getResources().getColor(R.color.widgetBackgroundColor));
-                views.setTextColor(R.id.widgetAddress, getResources().getColor(R.color.widgetMainTextColor));
-                views.setTextColor(R.id.widgetBalance, getResources().getColor(R.color.widgetMainTextColor));
+                views.setInt(R.id.widget_layout, "setBackgroundColor", ContextCompat.getColor(this, R.color.widgetBackgroundColor));
+                views.setTextColor(R.id.widgetAddress, ContextCompat.getColor(this, R.color.widgetMainTextColor));
+                views.setTextColor(R.id.widgetBalance, ContextCompat.getColor(this, R.color.widgetMainTextColor));
                 views.setTextColor(R.id.label, Color.GREEN);
             }
         }

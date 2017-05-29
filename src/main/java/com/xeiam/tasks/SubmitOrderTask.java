@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import com.xeiam.business.ExchangeAccount;
-import com.xeiam.xchange.ExchangeException;
-import com.xeiam.xchange.dto.trade.LimitOrder;
-import com.xeiam.xchange.service.polling.PollingTradeService;
+import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.service.trade.TradeService;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ public class SubmitOrderTask implements Runnable
     public void run()
     {
         System.out.println("SubmitOrderTask.doInBackGround()");
-        PollingTradeService tradeService = exchangeAccount.getTradeService();
+        TradeService tradeService = exchangeAccount.getTradeService();
         System.out.println("placing order...");
         try
         {

@@ -26,12 +26,8 @@ import com.veken0m.mining.emc.User;
 import com.veken0m.mining.emc.Workers;
 import com.veken0m.utils.CurrencyUtils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class EMCFragment extends Fragment
@@ -91,19 +87,21 @@ public class EMCFragment extends Fragment
 
     void getMinerStats()
     {
+        HttpURLConnection urlConnection = null;
         try
         {
-            HttpClient client = new DefaultHttpClient();
-            HttpGet post = new HttpGet("https://eclipsemc.com/api.php?key=" + pref_emcKey + "&action=userstats");
-            HttpResponse response = client.execute(post);
+            URL url = new URL("https://eclipsemc.com/api.php?key=" + pref_emcKey + "&action=userstats");
+            urlConnection = (HttpURLConnection) url.openConnection();
 
             ObjectMapper mapper = new ObjectMapper();
-            data = mapper.readValue(new InputStreamReader(response.getEntity().getContent(), "UTF-8"), EMC.class);
+            data = mapper.readValue(urlConnection.getInputStream(), EMC.class);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             connectionFail = true;
+        } finally {
+            if(urlConnection != null) urlConnection.disconnect();
         }
     }
 

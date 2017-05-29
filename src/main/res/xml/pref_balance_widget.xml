@@ -18,11 +18,17 @@
 
         <ListPreference
             android:defaultValue="@string/default_currency"
-            android:entries="@array/bitcoinaveragecurrencies"
-            android:entryValues="@array/bitcoinaveragecurrencies"
+            android:entries="@array/bitcoinaverage_currencies"
+            android:entryValues="@array/bitcoinaverage_currencies"
             android:key="widgetBalanceValuePref"
             android:summary="@string/pref_balance_value_summary"
             android:title="@string/localCurrency" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title=" ">
+        <Preference
+            android:key="OKpref"
+            android:layout="@layout/green_preference_button"
+            android:title="@string/createWidget" />
     </PreferenceCategory>
 
 </PreferenceScreen>

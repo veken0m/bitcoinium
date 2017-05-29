@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="PLEASE CONFIRM ORDER:"
+            android:text="@string/please_confirm_order"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -34,7 +34,7 @@
             android:id="@+id/order_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BUY:"
+            android:text="@string/buy_colon"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/new_order_tradable_identifier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BTC" />
+            android:text="@string/btc_all_caps" />
 
     </LinearLayout>
 
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FOR:"
+            android:text="@string/for_colon"
             android:textSize="20sp" />
 
         <EditText
@@ -75,7 +75,7 @@
             android:id="@+id/new_order_transaction_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="USD" />
+            android:text="@string/usd_all_caps" />
 
     </LinearLayout>
 

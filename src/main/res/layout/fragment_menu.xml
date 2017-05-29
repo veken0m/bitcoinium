@@ -14,7 +14,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_updateWidgets" />
+        android:text="@string/label_updateWidgets"
+        android:onClick="refreshWidgets"/>
     <!--  android:drawableLeft="@drawable/bitcoiniumlogo" -->
 
     <Button
@@ -24,7 +25,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_orderbook" />
+        android:text="@string/label_orderbook"
+        android:onClick="startActivity"/>
 
     <Button
         android:id="@+id/bitcoincharts"
@@ -33,7 +35,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_bitcoinCharts" />
+        android:text="@string/label_bitcoinCharts"
+        android:onClick="startActivity"/>
 
     <Button
         android:id="@+id/bitcoinaverage"
@@ -42,7 +45,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_bitcoinAverage" />
+        android:text="@string/label_bitcoinAverage"
+        android:onClick="startActivity"/>
 
     <Button
         android:id="@+id/minerstats"
@@ -51,7 +55,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_minerStats" />
+        android:text="@string/label_minerStats"
+        android:onClick="startActivity"/>
 
     <Button
         android:id="@+id/displaygraph"
@@ -60,7 +65,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_priceGraph" />
+        android:text="@string/label_priceGraph"
+        android:onClick="startActivity"/>
 
     <Button
         android:id="@+id/marketdepth"
@@ -69,15 +75,17 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_webCharts" />
+        android:text="@string/label_webCharts"
+        android:onClick="startActivity"/>
 
     <Button
-        android:id="@+id/xtrader"
+        android:id="@+id/trader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="@drawable/ab_stacked_solid_bitcoinium"
-        android:text="@string/label_xtrader" />
+        android:text="@string/label_trader"
+        android:onClick="startXTraderActivity"/>
 
 </LinearLayout>

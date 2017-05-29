@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,15 +32,15 @@ import com.xeiam.dialogs.SubmitOrderDialog;
 import com.xeiam.paint.Painter;
 import com.xeiam.tasks.GeneralUpdateDeamon;
 import com.xeiam.tasks.GetHistoricalDataTask;
-import com.xeiam.xchange.currency.CurrencyPair;
-import com.xeiam.xchange.dto.Order.OrderType;
-import com.xeiam.xchange.dto.trade.LimitOrder;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.Order.OrderType;
+import org.knowm.xchange.dto.trade.LimitOrder;
 
 import java.text.DecimalFormat;
 
-public class XTraderActivity extends ActionBarActivity implements OnSharedPreferenceChangeListener
+public class TraderActivity extends AppCompatActivity implements OnSharedPreferenceChangeListener
 {
-    private static final String TAG = "XTraderActivity";
+    private static final String TAG = "TraderActivity";
     public static ExchangeAccount exchangeAccount;
     public static MainView mainView;
     public static SharedPreferences preferences;
@@ -58,6 +58,12 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     public static int CHART_TARGET_RESOLUTION = 1000;
     private GeneralUpdateDeamon dataUpdateDeamon;
     private Vibrator vibrator;
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+    }
 
     public void onStop()
     {
@@ -156,7 +162,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xtrader_main);
+        setContentView(R.layout.activity_trader_main);
 
         Bundle extras = getIntent().getExtras();
         String sCurrencyPair = Constants.DEFAULT_CURRENCY_PAIR;
@@ -176,13 +182,13 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
-        PreferenceManager.setDefaultValues(this, R.xml.pref_xtrader, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_trader, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
 
         CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-        tradableIdentifier = currencyPair.baseSymbol;
-        transactionCurrency = currencyPair.counterSymbol;
+        tradableIdentifier = currencyPair.base.getCurrencyCode();
+        transactionCurrency = currencyPair.counter.getCurrencyCode();
 
         showTradingInterface(preferences.getBoolean("enableTradingKey", false));
 
@@ -190,6 +196,14 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         {
             exchangeAccount = new ExchangeAccount(this);
         }
+
+        //init the view variables.
+        MainView view = (MainView) findViewById(R.id.main_view);
+        view.setMainActivity(this);
+        TraderActivity.mainView = view;
+
+        //String fiat=pref_xtrader.getString("listCurrency", "USD");
+        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(TraderActivity.transactionCurrency) + "#.##");
 
         System.out.println("on create was called.");
     }
@@ -206,14 +220,6 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action, menu);
-
-        //String fiat=pref_xtrader.getString("listCurrency", "USD");
-        fiatFormatter = new DecimalFormat(CurrencyUtils.getSymbol(XTraderActivity.transactionCurrency) + "#.##");
-
-        //init the view variables.
-        MainView view = (MainView) findViewById(R.id.main_view);
-        view.setMainActivity(this);
-        XTraderActivity.mainView = view;
 
         return true;
     }
@@ -243,7 +249,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
 
     private void openPrefs()
     {
-        Intent intent = new Intent(XTraderActivity.this,
+        Intent intent = new Intent(TraderActivity.this,
                 PreferenceActivity.class);
         startActivity(intent);
     }
@@ -256,11 +262,11 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
         boolean needToUpdate = false;
         if (key.contains("SecretKey") || key.contains("ApiKey") || key.contains("Username") || key.contains("Password"))
         {
-            //String id = XTraderActivity.exchangeInfo.getIdentifier();
-            //String sCurrencyPair = XTraderActivity.pref_xtrader.getString(id + "TradeCurrency", "");
+            //String id = TraderActivity.exchangeInfo.getIdentifier();
+            //String sCurrencyPair = TraderActivity.pref_trader.getString(id + "TradeCurrency", "");
             //CurrencyPair currencyPair = CurrencyUtils.stringToCurrencyPair(sCurrencyPair);
-            //tradableIdentifier = currencyPair.baseSymbol;
-            //transactionCurrency = currencyPair.counterSymbol;
+            //tradableIdentifier = currencyPair.base.getSymbol();
+            //transactionCurrency = currencyPair.counter.getSymbol();
 
             needToUpdate = true;
         }
@@ -282,7 +288,7 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
             public void run()
             {
                 //fiat account
-                String fiatSymbol = XTraderActivity.transactionCurrency;
+                String fiatSymbol = TraderActivity.transactionCurrency;
                 float fiatBalance = exchangeAccount.getTotalFiatBalance(fiatSymbol);
                 TextView fiatBalanceView = ((TextView) findViewById(R.id.balance_fiat));
                 fiatBalanceView.setText(fiatFormatter.format(fiatBalance));
@@ -344,21 +350,14 @@ public class XTraderActivity extends ActionBarActivity implements OnSharedPrefer
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null)
-        {
-            // There are no active networks.
-            return false;
-        }
-        else
-            return true;
+        return ni != null;
     }
 
     public float getOrderGridSize()
     {
         try
         {
-            float gridSize = Float.parseFloat(preferences.getString("ordergridsize", ".5"));
-            return gridSize;
+            return Float.parseFloat(preferences.getString("ordergridsize", ".5"));
         }
         catch (Exception e)
         {

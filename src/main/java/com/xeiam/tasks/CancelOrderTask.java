@@ -1,7 +1,7 @@
 package com.xeiam.tasks;
 
 import com.xeiam.business.ExchangeAccount;
-import com.xeiam.xchange.service.polling.PollingTradeService;
+import org.knowm.xchange.service.trade.TradeService;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class CancelOrderTask implements Runnable
     @Override
     public void run()
     {
-        PollingTradeService tradeService = exchangeAccount.getTradeService();
+        TradeService tradeService = exchangeAccount.getTradeService();
 
         try
         {

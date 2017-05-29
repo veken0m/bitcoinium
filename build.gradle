@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
     }
 }
 
@@ -20,12 +20,14 @@ android {
         //exclude 'AndroidManifest.xml'
     }
 
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 21
+        vectorDrawables.useSupportLibrary = true
+        applicationId "com.veken0m.bitcoinium"
+        minSdkVersion 14
+        targetSdkVersion 25
     }
     
     lintOptions {
@@ -36,20 +38,15 @@ android {
         release {
             debuggable false
             minifyEnabled true
-            proguardFiles 'proguard.cfg'
+            //proguardFiles 'proguard.cfg'
         }
 
         debug {
             debuggable true
-            minifyEnabled true
-            proguardFiles 'proguard.cfg'
+            minifyEnabled false
+            //proguardFiles 'proguard.cfg'
         }
     }
-}
-
-ext {
-    xchangeVersion = "2.2.0-SNAPSHOT"
-    jacksonVersion = "2.3.2"
 }
 
 repositories {
@@ -59,71 +56,101 @@ repositories {
 
 dependencies {
 
+    final XCHANGE_VERSION = '4.2.1-SNAPSHOT'
+    final JACKSON_VERSION = "2.3.2"
+    final SUPPORT_VERSION = "25.3.0"
+
     configurations.all {
         transitive = false
         //resolutionStrategy.cacheChangingModulesFor 0, 'seconds' // uncomment to force refresh SNAPSHOT dependencies
     }
 
-    compile 'com.android.support:appcompat-v7:20.+' // PreferenceActivity is broken in v7:21, no title bar
-    compile 'com.android.support:support-v4:21.+'
+    // Android Support dependencies
+    compile("com.android.support:appcompat-v7:$SUPPORT_VERSION")
+    compile("com.android.support:preference-v7:$SUPPORT_VERSION")
+    compile("com.android.support:support-v4:$SUPPORT_VERSION")
+    compile("com.android.support:support-compat:$SUPPORT_VERSION")
+    compile("com.android.support:support-annotations:$SUPPORT_VERSION") // @ColorInt
+    compile("com.android.support:support-fragment:$SUPPORT_VERSION")
+    compile("com.android.support:support-core-utils:$SUPPORT_VERSION") // NavUtils
+    compile("com.android.support:support-core-ui:$SUPPORT_VERSION") // SwipeRefreshLayout
+    compile("com.android.support:design:$SUPPORT_VERSION")
+
+    compile("com.android.support:support-vector-drawable:$SUPPORT_VERSION") // VectorDrawableCompat
+    compile("com.android.support:animated-vector-drawable:$SUPPORT_VERSION") // VectorDrawableCompat
+
+    // Other Dependencies
+    compile("com.jjoe64:graphview:4.2.1")
+    compile("com.robbypond:android-ColorPickerPreference:1.11.1")
 
     // XChange Core
-    compile("com.xeiam.xchange:xchange-core:$xchangeVersion")
+    compile("org.knowm.xchange:xchange-core:$XCHANGE_VERSION")
+    //compile files("/libs/xchange-core-4.2.1-SNAPSHOT.jar")
 
     // XChange dependencies
-    compile('com.github.mmazi:rescu:1.7.3-SNAPSHOT')
-    compile("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-    compile("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-    compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    compile('com.github.mmazi:rescu:1.9.1-SNAPSHOT')
+    compile("com.fasterxml.jackson.core:jackson-annotations:$JACKSON_VERSION")
+    compile("com.fasterxml.jackson.core:jackson-core:$JACKSON_VERSION")
+    compile("com.fasterxml.jackson.core:jackson-databind:$JACKSON_VERSION")
     compile('javax.ws.rs:jsr311-api:1.1.1')
     compile('org.slf4j:slf4j-android:1.6.1-RC1')
-    compile('org.apache.commons:commons-lang3:3.3.2')
+    compile('org.apache.commons:commons-lang3:3.4')
+    compile('commons-io:commons-io:2.4')
 
     // XChange Exchange Modules
-    compile("com.xeiam.xchange:xchange-anx:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitbay:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcoinaverage:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcoincharts:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcoinium:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitcurex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitfinex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitmarket:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitstamp:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bittrex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-blockchain:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-btccentral:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-btcchina:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-btce:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-btctrade:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bter:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-campbx:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-cavirtex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-cexio:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-coinbase:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-cryptonit:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-cryptotrade:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-cryptsy:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-hitbtc:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-itbit:$xchangeVersion")
-    //compile("com.xeiam.xchange:xchange-justcoin:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-kraken:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-lakebtc:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-mintpal:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-poloniex:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-vaultofsatoshi:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-vircurex:$xchangeVersion")
-
-    compile("com.xeiam.xchange:xchange-bitcointoyou:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitkonan:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bitvc:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-bleutrade:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-coinsetter:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-mercadobitcoin:$xchangeVersion")
-    compile("com.xeiam.xchange:xchange-okcoin:$xchangeVersion")
-
-
-    // Available modules but not used
-    //compile("com.xeiam.xchange:xchange-openexchangerates:$xchangeVersion")
-    // Streaming only
-    //compile "com.xeiam.xchange:xchange-coinfloor:$xchangeVersion"
+    compile("org.knowm.xchange:xchange-anx:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitbay:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitcoinaverage:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitcoincharts:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitcoinde:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitcoinium:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-bitcurex:$XCHANGE_VERSION")  <!-- shutdown -->
+    compile("org.knowm.xchange:xchange-bitfinex:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitkonan:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitmarket:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitso:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bitstamp:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bittrex:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bleutrade:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-blockchain:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-btc38:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-btcchina:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-btce:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-btcmarkets:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-btctrade:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-bter:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-campbx:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-ccex:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-cexio:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-chbtc:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-coinbase:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-coinmate:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-cryptofacilities:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-cryptonit:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-empoex:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-gatecoin:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-gdax:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-gemini:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-hitbtc:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-huobi:$XCHANGE_VERSION")
+    // compile("org.knowm.xchange:xchange-independentreserve:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-itbit:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-jubi:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-kraken:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-lakebtc:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-livecoin:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-loyalbit:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-mercadobitcoin:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-okcoin:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-openexchangerates:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-paymium:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-poloniex:$XCHANGE_VERSION")// exchange.getExchangeSymbols() broken
+    compile("org.knowm.xchange:xchange-quadrigacx:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-quoine:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-ripple:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-taurus:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-therock:$XCHANGE_VERSION")
+    compile("org.knowm.xchange:xchange-vaultoro:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-vircurex:$XCHANGE_VERSION")
+    //compile("org.knowm.xchange:xchange-yobit:$XCHANGE_VERSION")
 }
