@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
     }
 }
 
@@ -37,7 +37,7 @@ android {
     buildTypes {
         release {
             debuggable false
-            minifyEnabled true
+            minifyEnabled false
             //proguardFiles 'proguard.cfg'
         }
 
@@ -57,8 +57,8 @@ repositories {
 dependencies {
 
     final XCHANGE_VERSION = '4.2.1-SNAPSHOT'
-    final JACKSON_VERSION = "2.3.2"
-    final SUPPORT_VERSION = "25.3.0"
+    final JACKSON_VERSION = "2.8.8"
+    final SUPPORT_VERSION = "25.3.1"
 
     configurations.all {
         transitive = false
@@ -139,12 +139,11 @@ dependencies {
     compile("org.knowm.xchange:xchange-kraken:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-lakebtc:$XCHANGE_VERSION")
     //compile("org.knowm.xchange:xchange-livecoin:$XCHANGE_VERSION")
-    compile("org.knowm.xchange:xchange-loyalbit:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-mercadobitcoin:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-okcoin:$XCHANGE_VERSION")
     //compile("org.knowm.xchange:xchange-openexchangerates:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-paymium:$XCHANGE_VERSION")
-    compile("org.knowm.xchange:xchange-poloniex:$XCHANGE_VERSION")// exchange.getExchangeSymbols() broken
+    compile("org.knowm.xchange:xchange-poloniex:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-quadrigacx:$XCHANGE_VERSION")
     compile("org.knowm.xchange:xchange-quoine:$XCHANGE_VERSION")
     //compile("org.knowm.xchange:xchange-ripple:$XCHANGE_VERSION")

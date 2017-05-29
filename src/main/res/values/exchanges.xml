@@ -7,7 +7,6 @@
         <!--item>bitcoincharts</item--> <!-- not an exchange -->
         <!--item>bitcoinde</item--> <!-- requires API key -->
         <!--item>bitcoinium</item--> <!-- not an exchange -->
-        <!--item>bitcurex</item--> <!-- shutdown -->
         <item>bitfinex</item>
         <item>bitkonan</item>
         <item>bitmarket</item>
@@ -42,12 +41,11 @@
         <item>kraken</item>
         <item>lakebtc</item>
         <!--item>livecoin</item-->
-        <item>loyalbit</item>
         <item>mercadobitcoin</item>
         <item>okcoin</item>
         <!--item>openexchangerates</item--> <!-- not an exchange -->
         <item>paymium</item>
-        <!--item>poloniex</item--> <!-- crash! -->
+        <item>poloniex</item> <!-- crash! -->
         <item>quadrigacx</item>
         <item>quoine</item>
         <!--item>ripple</item--> <!-- RippleMarketDataParams is missing -->
@@ -128,16 +126,6 @@
         <item>org.knowm.xchange.bitcoinde.BitcoindeExchange</item>
         <item>BTC/EUR</item>
         <item>Bitcoin.de</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-    </string-array>
-
-    <string-array name="bitcurex">
-        <item>Bitcurex</item>
-        <item>org.knowm.xchange.bitcurex.BitcurexExchange</item>
-        <item>BTC/PLN</item>
-        <item>Bitcurex</item>
         <item>1</item>
         <item>1</item>
         <item>1</item>
@@ -451,16 +439,6 @@
         <item>1</item>
         <item>1</item>
         <item>0</item>
-    </string-array>
-
-    <string-array name="loyalbit">
-        <item>Loyalbit</item>
-        <item>org.knowm.xchange.loyalbit.LoyalbitExchange</item>
-        <item>BTC/USD</item>
-        <item>Loyalbit</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
     </string-array>
 
     <string-array name="mercadobitcoin">

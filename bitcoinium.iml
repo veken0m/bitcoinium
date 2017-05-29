@@ -91,7 +91,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-files" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -101,6 +103,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
@@ -125,40 +128,38 @@
     <orderEntry type="library" exported="" name="xchange-quoine-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-hitbtc-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-jubi-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="xchange-loyalbit-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="jackson-core-2.3.2" level="project" />
-    <orderEntry type="library" exported="" name="jackson-databind-2.3.2" level="project" />
+    <orderEntry type="library" exported="" name="jackson-annotations-2.8.8" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoinde-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-paymium-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-compat-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-btcmarkets-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-cryptofacilities-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-okcoin-4.2.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="graphview-4.2.1" level="project" />
     <orderEntry type="library" exported="" name="xchange-mercadobitcoin-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-btctrade-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitcoinaverage-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitfinex-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-vaultoro-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-campbx-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-itbit-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-poloniex-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="design-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-btce-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-kraken-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="jackson-annotations-2.3.2" level="project" />
+    <orderEntry type="library" exported="" name="design-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="xchange-bittrex-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-core-ui-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="xchange-chbtc-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-bter-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="support-core-utils-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="support-fragment-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitkonan-4.2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="preference-v7-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="preference-v7-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="jackson-databind-2.8.8" level="project" />
     <orderEntry type="library" exported="" name="xchange-bitso-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-empoex-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-lakebtc-4.2.1-SNAPSHOT" level="project" />
@@ -170,8 +171,9 @@
     <orderEntry type="library" exported="" name="xchange-core-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="xchange-cexio-4.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="rescu-1.9.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="jackson-core-2.8.8" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="android-android-25" level="project" />
   </component>
 </module>

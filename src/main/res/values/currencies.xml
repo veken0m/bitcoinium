@@ -226,12 +226,6 @@
         <item>BTC/EUR</item>
     </string-array>
 
-    <string-array name="bitcurex_currencies" >
-        <item>BTC/USD</item>
-        <item>BTC/EUR</item>
-        <item>BTC/PLN</item>
-    </string-array>
-
     <string-array name="bitfinex_currencies" >
         <item>BTC/USD</item>
         <item>LTC/USD</item>
@@ -1062,10 +1056,6 @@
     <string-array name="lakebtc_currencies">
         <item>BTC/USD</item>
         <item>BTC/CNY</item>
-    </string-array>
-
-    <string-array name="loyalbit_currencies" >
-        <item>BTC/USD</item>
     </string-array>
 
     <string-array name="mercadobitcoin_currencies">
